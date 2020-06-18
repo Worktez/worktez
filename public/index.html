@@ -21,43 +21,14 @@
 </head>
 
 <body>
-    
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-        
-            <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
-                <img src="image/logo.png" width="30" height="30" alt="" loading="lazy">
-                Work Trolly
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon text-white"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active pr-5 py-1">
-                        <button type="button" class="btn btn-outline-info" id="createNewTaskButton">Create New
-                            Task</button>
-                    </li>
-                    <li class="nav-item pr-5 py-1">
-                        <button type="button" class="btn btn-outline-info">All Task</button>
-                    </li>
-                    <li class="nav-item py-1">
-                        <button class="btn btn-primary" type="button">Login</button>
-                    </li>
-                </ul>
-
-            </div>
-        
-    </nav>
 
     <!-- create new task   ------------------------------------------------------->
-
-    <div class="row my-5 mx-5" id="createNewTask">
-        <div class="container bg-light py-3 px-5">
+    <div class="container bg-light">
+        <div class="my-5 mx-5" id="createNewTask">
             <form>
                 <div class="row mt-5">
                     <div class="col-md-11 col-10"></div>
-                    <span type="button" class="col-md-1 col-2" id="backToMainFromCreateNewTask">
+                    <span type="button" class="col-md-1 col-2 mt-5" id="backToMainFromCreateNewTask">
                         <img src="image/close.png">
                     </span>
                 </div>
@@ -146,7 +117,6 @@
     </div>
 
     <!-- JS, Popper.js, and jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -156,7 +126,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
-    <script src="script/workTrolly.js"></script>
+    <script src="script/workTrollyUI.js"></script>
 </body>
 
 </html>
