@@ -9,23 +9,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.14.6/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.14.6/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.14.6/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.14.6/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.14.6/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-functions.js"></script>
+<script src="scripts/firebaseConfig.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: black;">
-        <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
-            <img src="logo.png" width="30" height="30" alt="" loading="lazy"> Work Trolly
-        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-white"></span>
         </button>
@@ -47,7 +39,7 @@
     <!-- create new task   ------------------------------------------------------->
     <div class="container bg-light">
         <div class="my-5 mx-5" id="createNewTask">
-            <form>
+        
                 <div class="row mt-5">
                     <div class="col-md-11 col-10"></div>
                     <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCreateNewTask">
@@ -60,40 +52,40 @@
                         <hr class="w-75 ml-0">
                     </div>
                     <div class="alert bg-light form-inline w-50 col-md-3 mb-5" style="font-size: 20px;" role="alert">
-                        <font style="font-weight: bold;" class="mr-3">Date:</font>
+                        <div style="font-weight: bold;" class="mr-3">Date:</div>
                         <div id="creationDateCreateNewTask"></div>
                     </div>
                 </div>
                 <div class="form-group row mt-2">
                     <label for="input" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="#">
+                        <input type="text" class="form-control" id="titleCreateNewTask">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="description" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="#">
+                        <input type="text" class="form-control" id="desCreateNewTask">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="input">Assignee</label>
-                        <input type="text" class="form-control" id="#">
+                        <input type="text" class="form-control" id="assigneeCreateNewTask">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="text">Creator</label>
-                        <input type="text" class="form-control" id="#">
+                        <input type="text" class="form-control" id="creatorCreateNewTask">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="text">Estimated Time</label>
-                        <input type="number" class="form-control" id="#">
+                        <input type="number" class="form-control" id="estimatedTimeCreateNewTask">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="input">Category</label>
-                        <input type="text" class="form-control" id="#" list="category">
+                        <input type="text" class="form-control" id="categoryCreateNewTask" list="category">
                         <datalist id="category">
                             <option>Bussiness</option>
                             <option>Development</option>
@@ -102,7 +94,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="text">Priority</label>
-                        <input type="text" class="form-control" id="#" list="Priority">
+                        <input type="text" class="form-control" id="priorityCreateNewTask" list="Priority">
                         <datalist id="Priority">
                             <option>High</option>
                             <option>Medium</option>
@@ -111,7 +103,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="text">Difficulty</label>
-                        <input type="text" class="form-control" id="#" list="Difficulty">
+                        <input type="text" class="form-control" id="difficultyCreateNewTask" list="Difficulty">
                         <datalist id="Difficulty">
                             <option>High</option>
                             <option>Medium</option>
@@ -122,7 +114,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputState">Status</label>
-                        <input type="text" class="form-control" id="#" list="statusCheck">
+                        <input type="text" class="form-control" id="statusCreateNewTask" list="statusCheck">
                         <datalist id="statusCheck">
                             <option>Ice Box</option>
                             <option>Ready to start</option>
@@ -133,15 +125,15 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-2 mb-5">Submit</button>
-            </form>
+                <button type="submit" class="btn btn-primary mt-2 mb-5" id="submitNewTask">Submit</button>
+            
         </div>
     </div>
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="scripts/worktrollyUI.js"></script>
+    <script src="js/worktrollyUI.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </body>
