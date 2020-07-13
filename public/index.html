@@ -7,7 +7,6 @@
     <title>Work Trolly</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
@@ -24,8 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active pr-5 py-1">
-                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New
-                        Task</button>
+                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New Task</button>
                 </li>
                 <li class="nav-item pr-5 py-1">
                     <button type="button" class="btn btn-outline-light">All Task</button>
@@ -124,11 +122,63 @@
                         </datalist>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary mt-2 mb-5" id="submitNewTask">Submit</button>
-            
+                <button type="submit" class="btn btn-primary mt-2 mb-5" id="submitCreateNewTask">Submit</button>
+         
         </div>
     </div>
+
+    <!-- task cards------------------ -->
+
+    <div id="bodyContent">
+        <div class="container my-5 pl-2">
+            <h3 class="ml-1 fontHeading">Tasks</h3>
+            <hr class="w-75 ml-0">
+            <div class="card text-white bg-dark my-5" style="max-width: 32rem;">
+                <div class="card-header" id="cardDate"></div>
+                <div class="card-body py-3">
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Id: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="#">
+                            2020625A
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Title: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardTitle">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Priority: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardPriority">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Assignee: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardAssignee">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Creator: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardCreator">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

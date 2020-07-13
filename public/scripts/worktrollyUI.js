@@ -1,11 +1,9 @@
 $("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
-
-
 });
 
 $("#createNewTaskButton").click(function() {
-    $("#createNewTask").show();
+    $("#createNewTask").show(100);
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
 
@@ -15,7 +13,7 @@ $("#backToMainFromCreateNewTask").click(function() {
     $('#createNewTask').hide(100);
 });
 
-$("#submitNewTask").click(function() {
+$("#submitCreateNewTask").click(function() {
     // e.preventDefault();
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
@@ -42,4 +40,5 @@ $("#submitNewTask").click(function() {
     console.log(result.data);
     $("#createNewTask").hide(100);
     });
+    $("#bodyContent").show(100);
 });
