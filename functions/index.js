@@ -7,18 +7,18 @@ admin.initializeApp();
 const db = admin.firestore();
 
 
-exports.createNewTask = functions.https.onRequest((req, resp) => {
-    cors(req, resp, () => {
-        console.log(req);
-        var title = req.body.data.Title;
-        var des = req.body.data.Description;
-        var priority = req.body.data.Priority;
-        var difficulty = req.body.data.Difficulty;
-        var creator = req.body.data.Creator;
-        var assignee = req.body.data.Assignee;
-        var estimatedTime = req.body.data.EstimatedTime;
-        var status = req.body.data.Status;
-        var category = req.body.data.Category;
+exports.createNewTask = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+        var title = request.body.data.Title;
+        var des = request.body.data.Description;
+        var priority = request.body.data.Priority;
+        var difficulty = request.body.data.Difficulty;
+        var creator = request.body.data.Creator;
+        var assignee = request.body.data.Assignee;
+        var estimatedTime = request.body.data.EstimatedTime;
+        var status = request.body.data.Status;
+        var category = request.body.data.Category;
         var taskIdNumber = getIdNumber();
         var taskId = category[0] + taskIdNumber;
         var loggedWorkTotalTime = 0;
@@ -49,7 +49,7 @@ exports.createNewTask = functions.https.onRequest((req, resp) => {
             })
             .then(() => {
                 var work = { data: "working" }
-                resp.status(200).send(work);
+                response.status(200).send(work);
                 console.log("Document successfully written!");
             })
             .catch(() => {

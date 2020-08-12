@@ -38,8 +38,8 @@ $("#submitNewTask").click(function() {
     console.log(status);
     console.log(category);
 
-    var createNewTask = firebase.functions().httpsCallable('createNewTask');
-    createNewTask({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
+    var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
         console.log(result.data);
         $("#createNewTask").hide(100);
     });
