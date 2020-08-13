@@ -1,11 +1,3 @@
-const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
-
-const admin = require('firebase-admin');
-admin.initializeApp();
-
-const db = admin.firestore();
-
 
 exports.createNewTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -58,3 +50,4 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
     });
 });
+
