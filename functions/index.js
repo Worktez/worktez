@@ -4,7 +4,6 @@ var cors = require('cors')({ origin: true });
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-<<<<<<< HEAD
 const db = admin.firestore();
 
 
@@ -59,6 +58,3 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
     });
 });
-=======
-const db = admin.firestore();
->>>>>>> e027b08c65c15a54bc3b17964c8132263094dcb6
