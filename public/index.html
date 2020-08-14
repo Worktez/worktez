@@ -43,6 +43,7 @@
         </div>
     </nav>
     <!-- create new task   ------------------------------------------------------->
+
     <div class="container py-5">
         <div class="bg-light px-5" id="createNewTask">
             <form>
@@ -57,20 +58,33 @@
                         <h3 class="ml-1 fontHeading">Create New Task</h3>
                         <hr class="w-75 ml-0">
                     </div>
+
                     <div class="row">
                         <div class="col-md-4">
-                            <h3 class="pl-1 fontHeading">Create New Task</h3>
+                            <h3 class="ml-1 fontHeading">Create New Task</h3>
                             <hr class="w-75 ml-0">
                         </div>
-                        <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
-                            <div style="font-weight: bold;" class="pr-3">Date:</div>
-                            <div id="creationDateCreateNewTask"></div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3 class="pl-1 fontHeading">Create New Task</h3>
+                                <hr class="w-75 ml-0">
+                            </div>
+                            <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
+                                <div style="font-weight: bold;" class="pr-3">Date:</div>
+                                <div id="creationDateCreateNewTask"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row pt-2">
+                            <label for="input" class="col-sm-2 col-form-label">Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="titleCreateNewTask">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row pt-2">
-                        <label for="input" class="col-sm-2 col-form-label">Title</label>
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="titleCreateNewTask">
+                            <input type="text" class="form-control" id="desCreateNewTask">
                         </div>
                     </div>
                 </div>
@@ -85,48 +99,53 @@
                         <label for="input">Assignee</label>
                         <input type="text" class="form-control" id="assigneeCreateNewTask">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Creator</label>
-                        <input type="text" class="form-control" id="creatorCreateNewTask">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="input">Assignee</label>
+                            <input type="text" class="form-control" id="assigneeCreateNewTask">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Creator</label>
+                            <input type="text" class="form-control" id="creatorCreateNewTask">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Estimated Time</label>
+                            <input type="number" class="form-control" id="estimatedTimeCreateNewTask">
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Estimated Time</label>
-                        <input type="number" class="form-control" id="estimatedTimeCreateNewTask">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Category</label>
-                        <select class="form-control" id="categoryCreateNewTask">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="input">Category</label>
+                            <select class="form-control" id="categoryCreateNewTask">
                             <option selected>choose...</option>
                             <option>Bussiness</option>
                             <option>Development</option>
                             <option>Marketing</option>
                            </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Priority</label>
-                        <select class="form-control" id="priorityCreateNewTask">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Priority</label>
+                            <select class="form-control" id="priorityCreateNewTask">
                             <option selected>choose...</option>
                             <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
                            </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Difficulty</label>
-                        <select class="form-control" id="difficultyCreateNewTask">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Difficulty</label>
+                            <select class="form-control" id="difficultyCreateNewTask">
                             <option selected>choose...</option>
                             <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Status</label>
-                        <select class="form-control" id="statusCreateNewTask">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Status</label>
+                            <select class="form-control" id="statusCreateNewTask">
                             <option selected>choose...</option>
                             <option>Ice Box</option>
                             <option>Ready to start</option>
@@ -134,218 +153,218 @@
                             <option>Blocked</option>
                             <option>Completed</option>
                            </select>
-                    </div>
-                    <div class="pt-2 pb-5">
-                        <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit</button>
-                    </div>
+                        </div>
+
+                        <div class="pt-2 pb-5">
+                            <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit</button>
+                        </div>
             </form>
             </div>
-        </div>
 
-        <!-- task cards------------------ -->
+            <!-- task cards------------------ -->
 
-        <div id="bodyContent">
-            <div class="container py-5 pl-2">
-                <h3 class="ml-1 fontHeading">Tasks</h3>
-                <hr class="w-75 ml-0">
-                <div class="card text-white bg-dark" style="max-width: 32rem;">
-                    <div class="card-header" id="cardDate"></div>
-                    <div class="card-body py-3">
-                        <div class="row pb-2">
-                            <div class="col-md-4 col-4">
-                                <h6 class="card-title text-center py-1" style="background-color: black;">Id: </h6>
+            <div id="bodyContent">
+                <div class="container py-5 pl-2">
+                    <h3 class="ml-1 fontHeading">Tasks</h3>
+                    <hr class="w-75 ml-0">
+                    <div class="card text-white bg-dark" style="max-width: 32rem;">
+                        <div class="card-header" id="cardDate"></div>
+                        <div class="card-body py-3">
+                            <div class="row pb-2">
+                                <div class="col-md-4 col-4">
+                                    <h6 class="card-title text-center py-1" style="background-color: black;">Id: </h6>
+                                </div>
+                                <div class="col-md-8 col-8 px-2" id="#">
+                                    2020625A
+                                </div>
                             </div>
-                            <div class="col-md-8 col-8 px-2" id="#">
-                                2020625A
+                            <div class="row pb-2">
+                                <div class="col-md-4 col-4">
+                                    <h6 class="card-title text-center py-1" style="background-color: black;">Title: </h6>
+                                </div>
+                                <div class="col-md-8 col-8 px-2" id="cardTitle">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row pb-2">
-                            <div class="col-md-4 col-4">
-                                <h6 class="card-title text-center py-1" style="background-color: black;">Title: </h6>
+                            <div class="row pb-2">
+                                <div class="col-md-4 col-4">
+                                    <h6 class="card-title text-center py-1" style="background-color: black;">Priority: </h6>
+                                </div>
+                                <div class="col-md-8 col-8 px-2" id="cardPriority">
+                                </div>
                             </div>
-                            <div class="col-md-8 col-8 px-2" id="cardTitle">
+                            <div class="row pb-2">
+                                <div class="col-md-4 col-4">
+                                    <h6 class="card-title text-center py-1" style="background-color: black;">Assignee: </h6>
+                                </div>
+                                <div class="col-md-8 col-8 px-2" id="cardAssignee">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row pb-2">
-                            <div class="col-md-4 col-4">
-                                <h6 class="card-title text-center py-1" style="background-color: black;">Priority: </h6>
+                            <div class="row pb-2">
+                                <div class="col-md-4 col-4">
+                                    <h6 class="card-title text-center py-1" style="background-color: black;">Creator: </h6>
+                                </div>
+                                <div class="col-md-8 col-8 px-2" id="cardCreator">
+                                </div>
                             </div>
-                            <div class="col-md-8 col-8 px-2" id="cardPriority">
-                            </div>
-                        </div>
-                        <div class="row pb-2">
-                            <div class="col-md-4 col-4">
-                                <h6 class="card-title text-center py-1" style="background-color: black;">Assignee: </h6>
-                            </div>
-                            <div class="col-md-8 col-8 px-2" id="cardAssignee">
-                            </div>
-                        </div>
-                        <div class="row pb-2">
-                            <div class="col-md-4 col-4">
-                                <h6 class="card-title text-center py-1" style="background-color: black;">Creator: </h6>
-                            </div>
-                            <div class="col-md-8 col-8 px-2" id="cardCreator">
-                            </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- card description--------------------------------------------------- -->
+            <!-- card description--------------------------------------------------- -->
 
-        <div class="container bg-dark text-white">
-            <div class="px-3" id="createNewTask">
-                <div class="row pt-3">
-                    <div class="col-md-11 col-10"></div>
-                    <span type="button" class="col-md-1 col-2 pt-5 material-icons pb-3" id="backToMainFromCreateNewTask">
+            <div class="container bg-dark text-white">
+                <div class="px-3" id="createNewTask">
+                    <div class="row pt-3">
+                        <div class="col-md-11 col-10"></div>
+                        <span type="button" class="col-md-1 col-2 pt-5 material-icons pb-3" id="backToMainFromCreateNewTask">
                        close
                     </span>
-                </div>
-                <div class="row">
-                    <div class="alert form-inline w-50 col-md-4 col-10 pb-3" style="font-size: 20px;" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Date:</div>
-                        <div id="creationDateCreateNewTask"></div>
                     </div>
-                    <div class="col-md-5 col-1"></div>
-                    <div class="col-md-2 col-6 pt-2 pb-5 px-3">
-                        <button type="submit" class="btn btn-primary" id="#">Log Work</button>
+                    <div class="row">
+                        <div class="alert form-inline w-50 col-md-4 col-10 pb-3" style="font-size: 20px;" role="alert">
+                            <div style="font-weight: bold;" class="pr-3">Date:</div>
+                            <div id="creationDateCreateNewTask"></div>
+                        </div>
+                        <div class="col-md-5 col-1"></div>
+                        <div class="col-md-2 col-6 pt-2 pb-5 px-3">
+                            <button type="submit" class="btn btn-primary" id="#">Log Work</button>
+                        </div>
+                        <div class="col-md-1 col-3 pt-2 pb-5">
+                            <button type="submit" class="btn btn-primary" id="#">Edit</button>
+                        </div>
                     </div>
-                    <div class="col-md-1 col-3 pt-2 pb-5">
-                        <button type="submit" class="btn btn-primary" id="#">Edit</button>
+                    <div class="form-group row pt-2">
+                        <label for="input" class="col-sm-2 col-form-label">Title</label>
+                        <div class="alert alert-info form-inline col-sm-10" role="alert">
+                            <div id="#"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-2 col-form-label">Title</label>
-                    <div class="alert alert-info form-inline col-sm-10" role="alert">
-                        <div id="#"></div>
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="alert alert-info form-inline col-sm-10" role="alert">
+                            <div id="#"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="description" class="col-sm-2 col-form-label">Description</label>
-                    <div class="alert alert-info form-inline col-sm-10" role="alert">
-                        <div id="#"></div>
-                    </div>
-                </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Assignee</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="input">Assignee</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Creator</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Estimated Time</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Creator</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="input">Category</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Priority</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Difficulty</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Estimated Time</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Category</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Priority</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Difficulty</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Status</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="#"></div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Status</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="#"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- log work-------------------------------------------------------- -->
+            <!-- log work-------------------------------------------------------- -->
 
-        <!--py= padding in y axis, px= padding in x axis, pl= paddingLeft, pr= paddingRight, pt=paddingTop, pb= paddingBottom ,
+            <!--py= padding in y axis, px= padding in x axis, pl= paddingLeft, pr= paddingRight, pt=paddingTop, pb= paddingBottom ,
          Similarly for margin my, mx, ml, mr, mt, mb
         and w=width  -->
 
-        <div class="container py-5 px-0">
-            <div class="bg-dark py-2 px-5">
-                <h3 class="pt-5 fontHeading text-white">Log Work</h3>
-                <div class="row pt-5 pb-2 ml-1">
-                    <div class="alert alert-info form-inline col-sm-4" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Id:</div>
+            <div class="container py-5 px-0">
+                <div class="bg-dark py-2 px-5">
+                    <h3 class="pt-5 fontHeading text-white">Log Work</h3>
+                    <div class="row pt-5 pb-2 ml-1">
+                        <div class="alert alert-info form-inline col-sm-4" role="alert">
+                            <div style="font-weight: bold;" class="pr-3">Id:</div>
+                            <div id="Id">XXXXXXXXXX</div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="alert alert-info form-inline col-md-7" role="alert">
+                            <div style="font-weight: bold;" class="pr-3">Title: </div>
+                            <div id="Id">Web app using Bootstrap</div>
+                        </div>
+                    </div>
+                    <div class="alert bg-light form-inline w-50 pt-3" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
                         <div id="Id">XXXXXXXXXX</div>
                     </div>
-                    <div class="col-sm-1"></div>
-                    <div class="alert alert-info form-inline col-md-7" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Title: </div>
-                        <div id="Id">Web app using Bootstrap</div>
+                    <div class="alert bg-light form-inline w-50" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
+                        <div id="Id">XXXXXXXXXX</div>
                     </div>
-                </div>
-                <div class="alert bg-light form-inline w-50 pt-3" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
-                    <div id="Id">XXXXXXXXXX</div>
-                </div>
-                <div class="alert bg-light form-inline w-50" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
-                    <div id="Id">XXXXXXXXXX</div>
-                </div>
-                <div class="alert bg-light form-inline w-50" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
-                    <div id="Id">XXXXXXXXXX</div>
-                </div>
-                <div class="row pt-3 text-white">
-                    <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
-                    <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
-                    <small id="LogWorkHour" class="col text-muted">
+                    <div class="alert bg-light form-inline w-50" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
+                        <div id="Id">XXXXXXXXXX</div>
+                    </div>
+                    <div class="row pt-3 text-white">
+                        <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
+                        <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
+                        <small id="LogWorkHour" class="col text-muted">
                     hours
                 </small>
-                </div>
+                    </div>
 
-                <div class="row py-2 text-white">
-                    <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
-                    <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
-                    <small id="LogWorkHour" class="col text-muted">
+                    <div class="row py-2 text-white">
+                        <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
+                        <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
+                        <small id="LogWorkHour" class="col text-muted">
                     in percentage(%)
                 </small>
-                </div>
-                <div class="form-group row text-white">
-                    <label for="comment" class="col-md-2 col-form-label">Comment</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="comment">
+                    </div>
+                    <div class="form-group row text-white">
+                        <label for="comment" class="col-md-2 col-form-label">Comment</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="comment">
+                        </div>
+                    </div>
+                    <div class="pt-3 pb-5">
+                        <button class="btn btn-primary" type="submit ">Submit</button>
                     </div>
                 </div>
-                <div class="pt-3 pb-5">
-                    <button class="btn btn-primary" type="submit ">Submit</button>
-                </div>
             </div>
-        </div>
 
 
-        <!-- JS, Popper.js, and jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-        <script src="scripts/worktrollyUI.js"></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <!-- JS, Popper.js, and jQuery -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+            <script src="scripts/worktrollyUI.js"></script>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </body>
 
