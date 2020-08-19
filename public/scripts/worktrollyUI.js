@@ -14,6 +14,11 @@ $("#backToMainFromCreateNewTask").click(function() {
     $("#bodyContent").show(100);
 });
 
+$("#bodyContent").ready(function() {
+    var result = getTasks();
+    console.log(result);
+});
+
 
 
 $("#submitNewTask").click(function() {
