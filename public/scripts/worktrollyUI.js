@@ -21,7 +21,7 @@ $("#bodyContent").ready(function() {
 
 
 
-$("#submitNewTask").click(function() {
+$("#submitCreateNewTask").click(function() {
 
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
@@ -49,13 +49,3 @@ $("#submitNewTask").click(function() {
         $("#createNewTask").hide(100);
     });
 });
-
-function getIdNumber() {
-    var today = new Date();
-    var date = today.getFullYear() + "" + (today.getMonth() + 1) + "" + today.getDate();
-    var time = today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
-
-    var result = date + time;
-
-    return result;
-}
