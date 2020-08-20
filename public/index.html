@@ -8,15 +8,15 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.14.6/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.14.6/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.14.6/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.14.6/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.14.6/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-remote-config.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+    <script src="scripts/config.js"></script>
 
 </head>
 
@@ -45,82 +45,81 @@
     <!-- create new task   ------------------------------------------------------->
     <div class="container py-5">
         <div class="bg-light px-5" id="createNewTask">
-            <form>
-                <div class="row pt-2">
-                    <div class="col-md-11 col-10"></div>
-                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromCreateNewTask">
+            <div class="row pt-2">
+                <div class="col-md-11 col-10"></div>
+                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromCreateNewTask">
                        close
                     </span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="pl-1 fontHeading">Create New Task</h3>
+                    <hr class="w-75 ml-0">
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <h3 class="pl-1 fontHeading">Create New Task</h3>
-                        <hr class="w-75 ml-0">
-                    </div>
-                    <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Date:</div>
-                        <div id="creationDateCreateNewTask"></div>
-                    </div>
+                <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Date:</div>
+                    <div id="creationDateCreateNewTask"></div>
                 </div>
-                <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-2 col-form-label">Title</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="titleCreateNewTask">
-                    </div>
+            </div>
+            <div class="form-group row pt-2">
+                <label for="input" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="titleCreateNewTask">
                 </div>
-                <div class="form-group row">
-                    <label for="description" class="col-sm-2 col-form-label">Description</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="#">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="#">
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Assignee</label>
-                        <input type="text" class="form-control" id="assigneeCreateNewTask">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Creator</label>
-                        <input type="text" class="form-control" id="creatorCreateNewTask">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Estimated Time</label>
-                        <input type="number" class="form-control" id="#">
-                    </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Assignee</label>
+                    <input type="text" class="form-control" id="assigneeCreateNewTask">
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Category</label>
-                        <select class="form-control" id="categoryCreateNewTask">
+                <div class="form-group col-md-4">
+                    <label for="text">Creator</label>
+                    <input type="text" class="form-control" id="creatorCreateNewTask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Estimated Time</label>
+                    <input type="number" class="form-control" id="#">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Category</label>
+                    <select class="form-control" id="categoryCreateNewTask">
                         <option selected>choose...</option>
                         <option>Bussiness</option>
                         <option>Development</option>
                         <option>Marketing</option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Priority</label>
-                        <select class="form-control" id="priorityCreateNewTask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Priority</label>
+                    <select class="form-control" id="priorityCreateNewTask">
                         <option selected>choose...</option>
                             <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
                         </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Difficulty</label>
-                        <select class="form-control" id="difficultyCreateNewTask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Difficulty</label>
+                    <select class="form-control" id="difficultyCreateNewTask">
                             <option selected>choose...</option>
                             <option>High</option>
                             <option>Medium</option>
                             <option>Low</option>
                             </select>
-                    </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Status</label>
-                        <select class="form-control" id="statusCreateNewTask">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <select class="form-control" id="statusCreateNewTask">
                             <option selected>choose...</option>
                             <option>Ice Box</option>
                             <option>Ready to start</option>
@@ -128,12 +127,11 @@
                             <option>Blocked</option>
                             <option>Completed</option>
                     </select>
-                    </div>
                 </div>
-                <div class="pt-2 pb-5">
-                    <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit</button>
-                </div>
-            </form>
+            </div>
+            <div class="pt-2 pb-5">
+                <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit</button>
+            </div>
         </div>
     </div>
 
@@ -143,7 +141,8 @@
         <div class="container py-5 pl-2">
             <h3 class="ml-1 fontHeading">Tasks</h3>
             <hr class="w-75 ml-0">
-            <div class="card text-white bg-dark" style="max-width: 32rem;">
+            <div id="cardsList">
+                <!-- <div class="card text-white bg-dark" style="max-width: 32rem;">
                 <div class="card-header" id="cardDate"></div>
                 <div class="card-body py-3">
                     <div class="row pb-2">
@@ -184,6 +183,7 @@
                     </div>
 
                 </div>
+            </div> -->
             </div>
         </div>
     </div>
@@ -339,8 +339,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="scripts/worktrollyUI.js"></script>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="scripts/worktrollyUI.js"></script>
+    <script src="scripts/worktrollyClassData.js"></script>
+    <script src="scripts/frames.js"></script>
+
 
 </body>
 

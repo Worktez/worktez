@@ -47,10 +47,11 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 LogWorkTotalTime: loggedWorkTotalTime,
                 WorkDone: workDone
             })
+            // eslint-disable-next-line promise/always-return
             .then(() => {
                 var work = { data: "working" }
-                response.status(200).send(work);
                 console.log("Document successfully written!");
+                response.status(200).send(work);
             })
             .catch(() => {
                 console.error("Error writing document: ", error);
@@ -58,3 +59,13 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
     });
 });
+
+function getIdNumber() {
+    var today = new Date();
+    var date = String(String(today.getFullYear()) + (today.getMonth() + 1)) + today.getDate();
+    var time = String(String(today.getHours()) + today.getMinutes()) + today.getSeconds();
+
+    var result = date + time;
+
+    return result;
+}
