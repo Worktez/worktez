@@ -42,8 +42,96 @@
             </ul>
         </div>
     </nav>
+
+    <!-- Dashboard---------------------------------------------------------------------------- -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <h3 class="py-3 fontHeading">Category Overview</h3>
+            <div class="row pb-5">
+                <div class="col-md-4 col-12">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
+                        <div class="card-body">
+                            <h5 class="card-title">Business</h5>
+                            <div class="row card-text">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
+                        <div class="card-body">
+                            <h5 class="card-title">Development</h5>
+                            <div class="row card-text">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
+                        <div class="card-body">
+                            <h5 class="card-title">Marketing</h5>
+                            <div class="row card-text">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" style="max-width: 66rem; font-weight: bold; background-color: #e3f2fd;">
+                <div class="row">
+                    <div class="col-md-2 col-4">
+                        <h5 class="pl-2">Sprint No:</h5>
+                    </div>
+                    <div class="col-md-7 col-4">
+                        <h5>XXXXX</h5>
+                    </div>
+                    <div class="form-group col-md-3 col-4">
+                        <select class="form-control" id="filterSprint">
+                                <option selected>filter...</option>
+                                <option>Current Sprint</option>
+                                <option>Completed Sprint</option>
+                                <option>Backlog</option>
+                                </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" style="background-color: white; max-width: 66rem;">
+                <div class="row py-2">
+                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Details: </h6>
+                    <h6 class="card-text col-md-10 col-8">With supporting text below as a natural lead-in to additional content.</h6>
+                </div>
+                <div class="row py-2">
+                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Start Date: </h6>
+                    <h6 class="card-text col-md-10 col-8">XXXXXX</h6>
+                </div>
+                <div class="row py-2">
+                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">End Date: </h6>
+                    <h6 class="card-text col-md-10 col-8">XXXXXX</h6>
+                </div>
+                <div class="row py-2">
+                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Status: </h6>
+                    <h6 class="card-text col-md-10 col-8">Progress</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- create new task   ------------------------------------------------------->
-    <div class="container py-5">
+
+    <div class="container pt-3 pb-5">
         <div class="bg-light px-5" id="createNewTask">
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
@@ -138,7 +226,7 @@
     <!-- task cards------------------ -->
 
     <div id="bodyContent">
-        <div class="container py-5 pl-2">
+        <div class="container pt-2 pb-5 pl-2">
             <h3 class="ml-1 fontHeading">Tasks</h3>
             <hr class="w-75 ml-0">
             <div id="cardsList">
