@@ -6,17 +6,38 @@ $("#createNewTaskButton").click(function() {
     $("#createNewTask").show(100);
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+    $("#bodyContent").hide(100);
+    $("#work").hide(100);
+    $("#close").hide(100);
 
 });
 
 $("#backToMainFromCreateNewTask").click(function() {
     $('#createNewTask').hide(100);
     $("#bodyContent").show(100);
+    $("#work").hide(100);
+    $("#close").hide(100);
+
 });
 
 $("#bodyContent").ready(function() {
     var result = getTasks();
     console.log(result);
+    $("#work").hide(100);
+    $("#close").hide(100);
+
+});
+
+$("#log").click(function()  {
+    $("#bodyContent").hide(100);
+    $("#close").hide(100);
+    $("#work").show(100);
+
+});
+
+$("#cardsList").click(function()  {
+    $('#createNewTask').show(100);
+    
 });
 
 
