@@ -18,9 +18,10 @@ class StoreData {
 class StoreSprintData {
     constructor(data) {
         this.sprintStatus = data.sprintStatus;
-        this.endDate = data.endDate;
-        this.startDate = data.startDate;
+        this.sprintEndDate = data.sprintEndDate;
+        this.sprintStartDate = data.sprintStartDate;
         this.sprintId = data.sprintId;
+        this.sprintDetail = data.sprintDetail;
         this.totalDevelopmentTask = data.totalDevelopmentTask;
         this.totalBusinessTask = data.totalBusinessTask;
         this.totalMarketingTask = data.totalMarketingTask;

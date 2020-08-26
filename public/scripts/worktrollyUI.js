@@ -25,6 +25,10 @@ $("#filterSprint").click(function() {
     sprintFilter(filterSprintNumber);
 });
 
+$("#currentSprint").click(function() {
+    currentSprintDashboard();
+});
+
 
 
 $("#submitCreateNewTask").click(function() {
