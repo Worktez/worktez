@@ -63,7 +63,7 @@ function removeInstance(data) {
 
 function setDataIntoCard() {
 
-    //document.getElementById("cardsList").innerHTML = "";
+    document.getElementById("cardsList").innerHTML = "";
 
     dataset.forEach(dataObj => {
         console.log(dataObj.status);
@@ -143,12 +143,12 @@ function filteredData(option)
                     frames(dataObj);
                 break;
                 
-            case "development":
+            case "Bussiness":
                 if(dataObj.category == "Bussiness")
                     frames(dataObj);
                 break;
                     
-            case "development":
+            case "Marketing":
                 if(dataObj.category == "Marketing")
                     frames(dataObj);
                 break;
