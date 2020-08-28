@@ -66,7 +66,6 @@ function setDataIntoCard() {
     document.getElementById("cardsList").innerHTML = "";
 
     dataset.forEach(dataObj => {
-        console.log(dataObj.status);
         frames(dataObj);
     });
 
