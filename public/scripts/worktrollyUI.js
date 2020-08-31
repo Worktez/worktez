@@ -9,10 +9,22 @@ $("#createNewTaskButton").click(function() {
 
 });
 
+$("#createNewSprintButton").click(function() {
+    $("#createNewSprint").show(100);
+});
+  
+
+
 $("#backToMainFromCreateNewTask").click(function() {
     $('#createNewTask').hide(100);
     $("#bodyContent").show(100);
 });
+
+$("#backToMainFromCreateNewSprint").click(function() {
+    $('#createNewSprint').hide(100);
+    $("#bodyContent").show(100);
+});
+
 
 $("#bodyContent").ready(function() {
     var result = getTasks();
