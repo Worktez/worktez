@@ -20,7 +20,7 @@
 
 </head>
 
-<body id="body" style="visibility: hidden;"> 
+<body> 
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: black;">
         <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
             <img src="logo.png" width="30" height="30" alt="" loading="lazy"> Work Trolly
@@ -29,13 +29,20 @@
             <span class="navbar-toggler-icon text-white"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active pr-5 py-1">
+            <ul class="navbar-nav ">
+                <li class="nav-item active pr-5 py-1 " >
                     <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New Task</button>
                 </li>
-                <li class="nav-item pr-5 py-1">
+                <!-- <li class="nav-item pr-5 py-1">
                     <button type="button" class="btn btn-outline-light">All Task</button>
-                </li>
+                </li> -->
+                
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                
+                <!-- <li class="nav-item pr-5 py-1">
+                    <button type="button" class="btn btn-outline-light">All Task</button>
+                </li> -->
                 <li class="nav-item py-1">
                     <button class="btn btn-primary" type="button">Login</button>
                 </li>
@@ -97,8 +104,8 @@
     </div>
 
         <!-- create new task   ------------------------------------------------------->
-        <div class="container py-5">
-            <div class="bg-light px-5" id="createNewTask">
+        <div class="container py-5" id="createNewTask">
+            <div class="bg-light px-5" >
                 <div class="row pt-2">
                     <div class="col-md-11 col-10"></div>
                     <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromCreateNewTask">
@@ -191,8 +198,8 @@
 
     <!-- card description--------------------------------------------------- -->
 
-    <div class="container bg-dark text-white">
-        <div class="px-3" id="editTask">
+    <div class="container bg-dark text-white" id="editTask">
+        <div class="px-3" >
             <div class="row pt-3">
                 <div class="col-md-11 col-10"></div>
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons pb-3" id="backToMainFromCreateNewTask">
@@ -282,8 +289,8 @@
          Similarly for margin my, mx, ml, mr, mt, mb
         and w=width  -->
 
-    <div class="container py-5 px-0">
-        <div class="bg-dark py-2 px-5" id="logWork">
+    <div class="container py-5 px-0" id="logWork">
+        <div class="bg-dark py-2 px-5" >
             <h3 class="pt-5 fontHeading text-white">Log Work</h3>
             <div class="row pt-5 pb-2 ml-1">
                 <div class="alert alert-info form-inline col-sm-4" role="alert">

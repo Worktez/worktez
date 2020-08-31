@@ -1,22 +1,32 @@
 $("#createNewTaskButton").click(function() {
-    uiLoader("createNewTask")
+    newPage = "createNewTask";
+    uiLoader();
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
 
 });
 
 $("#backToMainFromCreateNewTask").click(function() {
-    uiLoader("backToMainFromCreateNewTask")    
+    newPage = "bodyContent";
+    uiLoader();    
 });
 
 $("#bodyContent").ready(function() {
-    document.getElementById("body").style.visibility = "visible";
     var result = getTasks();
-    uiLoader("homePage");
     console.log(result);
 });
 
+$("#createNewTask").ready(function(){
+    $("#createNewTask").hide(0);
+});
 
+$("#editTask").ready(function(){
+    $("#editTask").hide(0);
+});
+
+$("#logWork").ready(function(){
+    $("#logWork").hide(0);
+});
 
 $("#submitCreateNewTask").click(function() {
 
@@ -43,6 +53,7 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
         console.log(result.data);
-        uiLoader("submitNewTask");
+        newPage = "bodyContent"; 
+        uiLoader();
     });
 });

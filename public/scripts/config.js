@@ -13,3 +13,5 @@ firebase.initializeApp(firebaseConfig);
 var firestore = firebase.firestore();
 
 var dataset = [];
+var newPage = "";
+var currentPage = "bodyContent";
