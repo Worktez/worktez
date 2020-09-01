@@ -8,6 +8,7 @@ function getTasks() {
 
 function getTasksData() {
     var result = "ok";
+
     document.getElementById("cardsList").innerHTML = "";
     firestore.collection(collectionName)
         .onSnapshot(function(snapshot) {
