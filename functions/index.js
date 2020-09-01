@@ -19,7 +19,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var estimatedTime = request.body.data.EstimatedTime;
         var status = request.body.data.Status;
         var category = request.body.data.Category;
-        var taskIdNumber = getIdNumber();
+        var sprintId = request.body.data.SprintId;
+        var taskIdNumber = getTaskId();
         var taskId = category[0] + taskIdNumber;
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -33,8 +34,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(estimatedTime);
         console.log(status);
         console.log(category);
+        console.log(sprintId);
 
-        db.collection(category).doc(taskId).set({
+        db.collection(sprintNumber).doc(taskId).set({
                 Title: title,
                 Description: des,
                 Priority: priority,
@@ -45,7 +47,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 Status: status,
                 Category: category,
                 LogWorkTotalTime: loggedWorkTotalTime,
-                WorkDone: workDone
+                WorkDone: workDone,
+                SprintId: sprintId
             })
             // eslint-disable-next-line promise/always-return
             .then(() => {
@@ -60,12 +63,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
-function getIdNumber() {
-    var today = new Date();
-    var date = String(String(today.getFullYear()) + (today.getMonth() + 1)) + today.getDate();
-    var time = String(String(today.getHours()) + today.getMinutes()) + today.getSeconds();
+function getTaskId() {
+    if (category == 'Business') {
 
-    var result = date + time;
-
-    return result;
+    }
 }

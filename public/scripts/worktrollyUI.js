@@ -8,7 +8,7 @@ $("#createNewTaskButton").click(function() {
 
 $("#backToMainFromCreateNewTask").click(function() {
     newPage = "bodyContent";
-    uiLoader();    
+    uiLoader();
 });
 
 $("#bodyContent").ready(function() {
@@ -16,15 +16,15 @@ $("#bodyContent").ready(function() {
     console.log(result);
 });
 
-$("#createNewTask").ready(function(){
+$("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-$("#editTask").ready(function(){
+$("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function(){
+$("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
@@ -39,6 +39,7 @@ $("#submitCreateNewTask").click(function() {
     var estimatedTime = $("#estimatedTimeCreateNewTask").val();
     var status = $("#statusCreateNewTask").val();
     var category = $("#categoryCreateNewTask").val();
+    var sprintId = $("#sprintId").val();
 
     console.log(title);
     console.log(des);
@@ -49,11 +50,12 @@ $("#submitCreateNewTask").click(function() {
     console.log(estimatedTime);
     console.log(status);
     console.log(category);
+    console.log(sprintId);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintId: sprintId }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent"; 
+        newPage = "bodyContent";
         uiLoader();
     });
 });
