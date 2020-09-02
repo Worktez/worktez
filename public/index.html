@@ -50,10 +50,120 @@
         </div>
     </nav>
 
+    <!-- Dashboard---------------------------------------------------------------------------- -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <h3 class="py-3 fontHeading">Task Overview</h3>
+            <div class="row">
+                <div class="col-md-4 col-12">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
+                        <div class="card-body">
+                            <h5 class="card-title">Business</h5>
+                            <div class="row card-text">
+                                <div class="col-md-5">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalBusinessTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
+                        <div class="card-body">
+                            <h5 class="card-title">Development</h5>
+                            <div class="row card-text">
+                                <div class="col-md-5">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalDevelopmentTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
+                        <div class="card-body">
+                            <h5 class="card-title">Marketing</h5>
+                            <div class="row card-text">
+                                <div class="col-md-5">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalMarketingTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark text-white" style="max-width: 66rem;">
+                <div class="card-body row">
+                    <div class="col-md-4">
+                        <div class="row">
+                            <h5 class="col-md-8 col-6">Total Task Completed: </h5>
+                            <h5 class="col-md-4 col-6" id="totalCompletedTask"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-3">
+                <div class="card" style="max-width: 66rem;">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card-body" style="font-weight: bold; background-color: #e3f2fd;">
+                                <div class="row">
+                                    <div class="col-md-3 col-4">
+                                        <h5 class="pl-2">Sprint No:</h5>
+                                    </div>
+                                    <div class="col-md-5 col-4">
+                                        <h5 id="sprintId"></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body" style="background-color: white;">
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Details: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintDetail"></h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Start Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStartDate"></h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">End Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintEndDate"></h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Status: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStatus"></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-body">
+                                <h3 class="py-2" style="text-align: center;">Filter</h3>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-block" id="currentSprint">Current Sprint</button>
+                                </div>
+                                <div class="row py-3">
+                                    <input class="col-md-8 col-8" type="number" id="filterSprintNumber" placeholder="enter sprint number">
+                                    <div class="col-md-4 col-4 pl-2">
+                                        <button class="btn btn-primary" id="filterSprint">Filter</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-block" id="#">Backlog</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
     <!-- task cards------------------ -->
 
     <div id="bodyContent">
-        <div class="container py-5 pl-2">
+        <div class="container pt-2 pb-5 pl-2">
             <h3 class="ml-1 fontHeading">Tasks</h3>
             <hr class="w-75 ml-0">
             <div id="cardsList">
@@ -262,7 +372,10 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="scripts/dashboard.js"></script>
     <script src="scripts/loaderUI.js"></script>
     <script src="scripts/worktrollyUI.js"></script>
     <script src="scripts/worktrollyClassData.js"></script>
