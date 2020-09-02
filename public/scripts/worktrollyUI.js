@@ -9,16 +9,16 @@ $("#createNewTaskButton").click(function() {
 
 });
 
-$("#createNewSprint").ready(function() {
-    $("#createNewSprint").hide(0);
+$("#startNewSprint").ready(function() {
+    $("#startNewSprint").hide(0);
 });
 
-$("#createNewSprintButton").click(function() {
-    $("#createNewSprint").show(100);
+$("#startNewSprintButton").click(function() {
+    $("#startNewSprint").show(100);
     var date = new Date();
-    $("#creationDateCreateNewSprint").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" +   date.getFullYear());
+    $("#creationDateNewSprint").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
 });
-  
+
 
 
 $("#backToMainFromCreateNewTask").click(function() {
@@ -26,8 +26,8 @@ $("#backToMainFromCreateNewTask").click(function() {
     $("#bodyContent").show(100);
 });
 
-$("#backToMainFromCreateNewSprint").click(function() {
-    $('#createNewSprint').hide(100);
+$("#backToMainFromNewSprint").click(function() {
+    $('#startNewSprint').hide(100);
     $("#bodyContent").show(100);
 });
 

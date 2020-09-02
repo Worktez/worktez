@@ -84,18 +84,18 @@ exports.createNewSprint = functions.https.onRequest((request, response) => {
         console.log(status);
 
 
-        db.collection().doc().set({
-                Title: title,
-                Description: des,
-                EndDate: endDate,
-                StartDate: startDate,
-                development: totalDevelopmentTask,
-                business: totalDevelopmentTask,
-                marketing: totalMarketingTask,
-                Status: status
-            })
-            // eslint-disable-next-line promise/always-return
-            .then(() => {
+        db.collection("Main").doc().set({
+            Title: title,
+            Description: des,
+            EndDate: endDate,
+            StartDate: startDate,
+            development: totalDevelopmentTask,
+            business: totalDevelopmentTask,
+            marketing: totalMarketingTask,
+            Status: status
+        })
+
+        .then(() => {
                 var work = { data: "working" }
                 console.log("Document successfully written!");
                 response.status(200).send(work);
