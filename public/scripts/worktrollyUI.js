@@ -1,9 +1,6 @@
-$("#createNewTask").ready(function() {
-    $("#createNewTask").hide(0);
-});
-
 $("#createNewTaskButton").click(function() {
-    $("#createNewTask").show(100);
+    newPage = "createNewTask";
+    uiLoader();
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
 
@@ -22,8 +19,8 @@ $("#startNewSprintButton").click(function() {
 
 
 $("#backToMainFromCreateNewTask").click(function() {
-    $('#createNewTask').hide(100);
-    $("#bodyContent").show(100);
+    newPage = "bodyContent";
+    uiLoader();    
 });
 
 $("#backToMainFromNewSprint").click(function() {
@@ -37,7 +34,17 @@ $("#bodyContent").ready(function() {
     console.log(result);
 });
 
+$("#createNewTask").ready(function(){
+    $("#createNewTask").hide(0);
+});
 
+$("#editTask").ready(function(){
+    $("#editTask").hide(0);
+});
+
+$("#logWork").ready(function(){
+    $("#logWork").hide(0);
+});
 
 $("#submitCreateNewTask").click(function() {
 
@@ -64,6 +71,7 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
         console.log(result.data);
-        $("#createNewTask").hide(100);
+        newPage = "bodyContent"; 
+        uiLoader();
     });
 });
