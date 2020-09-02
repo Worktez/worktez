@@ -28,6 +28,10 @@ $("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
+function getTaskId() {
+    return ++initialTaskNumber;
+}
+
 $("#submitCreateNewTask").click(function() {
 
     var title = $("#titleCreateNewTask").val();

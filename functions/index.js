@@ -20,6 +20,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var sprintId = request.body.data.SprintId;
+        var getSprintId = "S" + sprintId;
         var taskIdNumber = getTaskId();
         var taskId = category[0] + taskIdNumber;
         var loggedWorkTotalTime = 0;
@@ -36,7 +37,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(category);
         console.log(sprintId);
 
-        db.collection(sprintNumber).doc(taskId).set({
+        db.collection(getSprintId).doc(taskId).set({
                 Title: title,
                 Description: des,
                 Priority: priority,
@@ -62,9 +63,3 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
     });
 });
-
-function getTaskId() {
-    if (category == 'Business') {
-
-    }
-}
