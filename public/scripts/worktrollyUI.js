@@ -9,8 +9,14 @@ $("#createNewTaskButton").click(function() {
 
 });
 
+$("#createNewSprint").ready(function() {
+    $("#createNewSprint").hide(0);
+});
+
 $("#createNewSprintButton").click(function() {
     $("#createNewSprint").show(100);
+    var date = new Date();
+    $("#creationDateCreateNewSprint").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" +   date.getFullYear());
 });
   
 

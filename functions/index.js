@@ -60,6 +60,53 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.createNewSprint = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+        var title = request.body.data.Title;
+        var des = request.body.data.Description;
+        var startDate = request.body.data.StartDate;
+        var endDate = request.body.data.EndDate;
+        var status = request.body.data.Status;
+        var totalDevelopmentTask = request.body.data.development;
+        var totalBusinessTask = request.body.data.business;
+        var totalMarketingTask = request.body.data.marketing;
+
+
+        console.log(title);
+        console.log(des);
+        console.log(endDate);
+        console.log(startDate);
+        console.log(totalDevelopmentTask);
+        console.log(totalBusinessTask);
+        console.log(totalMarketingTask);
+        console.log(SprintID);
+        console.log(status);
+
+
+        db.collection().doc().set({
+                Title: title,
+                Description: des,
+                EndDate: endDate,
+                StartDate: startDate,
+                development: totalDevelopmentTask,
+                business: totalDevelopmentTask,
+                marketing: totalMarketingTask,
+                Status: status
+            })
+            // eslint-disable-next-line promise/always-return
+            .then(() => {
+                var work = { data: "working" }
+                console.log("Document successfully written!");
+                response.status(200).send(work);
+            })
+            .catch(() => {
+                console.error("Error writing document: ", error);
+            });
+
+    });
+});
+
 function getIdNumber() {
     var today = new Date();
     var date = String(String(today.getFullYear()) + (today.getMonth() + 1)) + today.getDate();
