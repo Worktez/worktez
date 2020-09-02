@@ -61,63 +61,98 @@ function removeInstance(data) {
     });
 }
 
-function setDataIntoCard() {
+// function setDataIntoCard() {
 
+//     document.getElementById("cardsList").innerHTML = "";
+
+//     dataset.forEach(dataObj => {
+//         frames(dataObj);
+//     });
+
+//     return "ok";
+// }
+
+function frames(dataObj) {
+    var title = dataObj.title;
+    var priority = dataObj.priority;
+    var assignee = dataObj.assignee;
+    var creator = dataObj.creator;
+    console.log(dataObj.category);
+
+    var tickets = document.getElementById("cardsList").innerHTML;
+    var frame = "<div class=\"card text-white bg-dark\" style=\"max-width: 32rem;\">";
+
+    frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
+    frame += "<div class=\"card-body py-3\">";
+    frame += "<div class=\"row pb-2\">";
+    frame += "<div class=\"col-md-4 col-4\">";
+    frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Id: </h6>";
+    frame += "</div>";
+    // frame += "<div class=\"col-md-8 col-8 px-2\">" + id + "</div>";
+    frame += "</div>";
+
+    frame += "<div class=\"row pb-2\">";
+    frame += "<div class=\"col-md-4 col-4\">";
+    frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Title: </h6>";
+    frame += "</div>";
+    frame += "<div class=\"col-md-8 col-8 px-2\">" + title + "</div>";
+    frame += "</div>";
+
+    frame += "<div class=\"row pb-2\">";
+    frame += "<div class=\"col-md-4 col-4\">";
+    frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Priority: </h6>";
+    frame += "</div>";
+    frame += "<div class=\"col-md-8 col-8 px-2\">" + priority + "</div>";
+    frame += "</div>";
+
+    frame += "<div class=\"row pb-2\">";
+    frame += "<div class=\"col-md-4 col-4\">";
+    frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Assignee: </h6>";
+    frame += "</div>";
+    frame += "<div class=\"col-md-8 col-8 px-2\">" + assignee + "</div>";
+    frame += "</div>";
+
+    frame += "<div class=\"row pb-2\">";
+    frame += "<div class=\"col-md-4 col-4\">";
+    frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Creator: </h6>";
+    frame += "</div>";
+    frame += "<div class=\"col-md-8 col-8 px-2\">" + creator + "</div>";
+    frame += "</div>";
+
+    frame += "</div>";
+    frame += "</div>";
+    frame += "<br>";
+    tickets += frame;
+
+    document.getElementById("cardsList").innerHTML = tickets;
+}
+
+function filteredData(option) {
     document.getElementById("cardsList").innerHTML = "";
-
     dataset.forEach(dataObj => {
-        var title = dataObj.title;
-        var priority = dataObj.priority;
-        var assignee = dataObj.assignee;
-        var creator = dataObj.creator;
+        switch (option) {
+            case "backlog":
+                if (dataObj.status != "Completed")
+                    frames(dataObj);
+                break;
 
-        var tickets = document.getElementById("cardsList").innerHTML;
+            case "Development":
+                if (dataObj.category == "Development")
+                    frames(dataObj);
+                break;
 
-        var frame = "<div class=\"card text-white bg-dark\" style=\"max-width: 32rem;\">";
+            case "Bussiness":
+                if (dataObj.category == "Bussiness")
+                    frames(dataObj);
+                break;
 
-        frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
-        frame += "<div class=\"card-body py-3\">";
-        frame += "<div class=\"row pb-2\">";
-        frame += "<div class=\"col-md-4 col-4\">";
-        frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Id: </h6>";
-        frame += "</div>";
-        // frame += "<div class=\"col-md-8 col-8 px-2\">" + id + "</div>";
-        frame += "</div>";
+            case "Marketing":
+                if (dataObj.category == "Marketing")
+                    frames(dataObj);
+                break;
 
-        frame += "<div class=\"row pb-2\">";
-        frame += "<div class=\"col-md-4 col-4\">";
-        frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Title: </h6>";
-        frame += "</div>";
-        frame += "<div class=\"col-md-8 col-8 px-2\">" + title + "</div>";
-        frame += "</div>";
-
-        frame += "<div class=\"row pb-2\">";
-        frame += "<div class=\"col-md-4 col-4\">";
-        frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Priority: </h6>";
-        frame += "</div>";
-        frame += "<div class=\"col-md-8 col-8 px-2\">" + priority + "</div>";
-        frame += "</div>";
-
-        frame += "<div class=\"row pb-2\">";
-        frame += "<div class=\"col-md-4 col-4\">";
-        frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Assignee: </h6>";
-        frame += "</div>";
-        frame += "<div class=\"col-md-8 col-8 px-2\">" + assignee + "</div>";
-        frame += "</div>";
-
-        frame += "<div class=\"row pb-2\">";
-        frame += "<div class=\"col-md-4 col-4\">";
-        frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Creator: </h6>";
-        frame += "</div>";
-        frame += "<div class=\"col-md-8 col-8 px-2\">" + creator + "</div>";
-        frame += "</div>";
-
-        frame += "</div>";
-        frame += "</div>";
-        tickets += frame;
-
-        document.getElementById("cardsList").innerHTML = tickets;
+            default:
+                frames(dataObj);
+        }
     });
-
-    return "ok";
 }
