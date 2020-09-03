@@ -65,7 +65,15 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 });
 
 function getTaskId() {
-
+    dashboardDataset.forEach(element => {
+        if (category == Development) {
+            return element.totalDevelopmentTask + 1;
+        } else if (category == Business) {
+            return element.totalBusinessTask + 1;
+        } else {
+            return element.totalMarketingTask + 1;
+        }
+    });
 }
 
 function checkSprintId() {

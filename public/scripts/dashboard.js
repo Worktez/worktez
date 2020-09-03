@@ -12,6 +12,7 @@ function getDashboardData() {
                 }
             });
             currentSprintDashboard();
+            getTaskId()
         });
     return "ok";
 }
