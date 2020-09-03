@@ -11,21 +11,20 @@ $("#startNewSprint").ready(function() {
 });
 
 $("#startNewSprintButton").click(function() {
-    $("#startNewSprint").show(100);
-    var date = new Date();
-    $("#creationDateNewSprint").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+    newPage = "startNewSprint";
+    uiLoader();
 });
 
 
 
 $("#backToMainFromCreateNewTask").click(function() {
     newPage = "bodyContent";
-    uiLoader();    
+    uiLoader();
 });
 
 $("#backToMainFromNewSprint").click(function() {
-    $('#startNewSprint').hide(100);
-    $("#bodyContent").show(100);
+    newPage = "bodyContent";
+    uiLoader();
 });
 
 
@@ -34,15 +33,15 @@ $("#bodyContent").ready(function() {
     console.log(result);
 });
 
-$("#createNewTask").ready(function(){
+$("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-$("#editTask").ready(function(){
+$("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function(){
+$("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
@@ -71,7 +70,7 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent"; 
+        newPage = "bodyContent";
         uiLoader();
     });
 });

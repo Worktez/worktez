@@ -65,13 +65,18 @@ exports.createNewSprint = functions.https.onRequest((request, response) => {
         console.log(request);
         var title = request.body.data.Title;
         var des = request.body.data.Description;
-        var startDate = request.body.data.StartDate;
-        var endDate = request.body.data.EndDate;
         var status = request.body.data.Status;
         var totalDevelopmentTask = request.body.data.development;
         var totalBusinessTask = request.body.data.business;
         var totalMarketingTask = request.body.data.marketing;
-
+        var lastSprintId = 0;
+        var newtSprintId = lastSprintId + 1;
+        var currentSprintId = "S" + newtSprintId;
+        var totalTask = totalDevelopmentTask + totalBusinessTask + totalMarketingTask;
+        var date = new Date();
+        var startDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+        var date = new Date();
+        var endDate = (date.getDate() + 14) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
         console.log(title);
         console.log(des);
@@ -80,22 +85,21 @@ exports.createNewSprint = functions.https.onRequest((request, response) => {
         console.log(totalDevelopmentTask);
         console.log(totalBusinessTask);
         console.log(totalMarketingTask);
-        console.log(SprintID);
         console.log(status);
+        console.log(totalTask);
 
-
-        db.collection("Main").doc().set({
-            Title: title,
-            Description: des,
-            EndDate: endDate,
-            StartDate: startDate,
-            development: totalDevelopmentTask,
-            business: totalDevelopmentTask,
-            marketing: totalMarketingTask,
-            Status: status
-        })
-
-        .then(() => {
+        db.collection("Main").doc(currentSprintId).set({
+                Title: title,
+                Description: des,
+                EndDate: endDate,
+                StartDate: startDate,
+                development: totalDevelopmentTask,
+                business: totalDevelopmentTask,
+                marketing: totalMarketingTask,
+                Status: status,
+                Totaltask: totalTask
+            })
+            .then(() => {
                 var work = { data: "working" }
                 console.log("Document successfully written!");
                 response.status(200).send(work);
