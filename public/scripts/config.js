@@ -14,6 +14,9 @@ firebase.initializeApp(firebaseConfig);
 var firestore = firebase.firestore();
 
 var dataset = [];
+var dashboardDataset = [];
+
+var collectionName = "Main";
 var newPage = "";
 var currentPage = "bodyContent";
 var initialTaskNumber = 0;
