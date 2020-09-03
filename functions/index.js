@@ -20,7 +20,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var sprintId = request.body.data.SprintId;
-        var getSprintId = "S" + sprintId;
+        var fullSprintId = checkSprintId();
         var taskIdNumber = getTaskId();
         var taskId = category[0] + taskIdNumber;
         var loggedWorkTotalTime = 0;
@@ -37,7 +37,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(category);
         console.log(sprintId);
 
-        db.collection(getSprintId).doc(taskId).set({
+        db.collection(fullSprintId).doc(taskId).set({
                 Title: title,
                 Description: des,
                 Priority: priority,
@@ -63,3 +63,15 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
     });
 });
+
+function getTaskId() {
+
+}
+
+function checkSprintId() {
+    if (sprintId == -1) {
+        return "Backlog";
+    } else {
+        return "S" + sprintId;
+    }
+}
