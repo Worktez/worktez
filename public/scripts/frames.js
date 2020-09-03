@@ -10,7 +10,7 @@ function getTasksData() {
     var result = "ok";
 
     document.getElementById("cardsList").innerHTML = "";
-    firestore.collection("Bussiness")
+    firestore.collection(collectionName)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {
@@ -73,7 +73,7 @@ function setDataIntoCard() {
 
         var tickets = document.getElementById("cardsList").innerHTML;
 
-        var frame = "<div class=\"card text-white bg-dark\" style=\"max-width: 32rem;\">";
+        var frame = "<div class=\"card text-white bg-dark mb-4\" style=\"max-width: 32rem;\">";
 
         frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
         frame += "<div class=\"card-body py-3\">";

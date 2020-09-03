@@ -29,8 +29,17 @@ $("#backToMainFromNewSprint").click(function() {
 
 
 $("#bodyContent").ready(function() {
-    var result = getTasks();
+    var result = getDashboardData();
     console.log(result);
+});
+
+$("#filterSprint").click(function() {
+    var filterSprintNumber = $("#filterSprintNumber").val();
+    sprintFilter(filterSprintNumber);
+});
+
+$("#currentSprint").click(function() {
+    currentSprintDashboard();
 });
 
 $("#createNewTask").ready(function() {
