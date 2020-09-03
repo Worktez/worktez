@@ -75,7 +75,6 @@ exports.createNewSprint = functions.https.onRequest((request, response) => {
         var totalTask = totalDevelopmentTask + totalBusinessTask + totalMarketingTask;
         var date = new Date();
         var startDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-        var date = new Date();
         var endDate = (date.getDate() + 14) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
         console.log(title);
