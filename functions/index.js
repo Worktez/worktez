@@ -20,8 +20,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var sprintId = request.body.data.SprintId;
-        var fullSprintId = checkSprintId();
-        var taskIdNumber = getTaskId();
+        var fullSprintId = createSprintId(sprintId);
+        var taskIdNumber = "A";
         var taskId = category[0] + taskIdNumber;
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -37,6 +37,16 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(category);
         console.log(sprintId);
 
+        var taskIdReference = db.collection("Main").doc('RawData');
+        const doc = await taskIdReference.get();
+        if (!doc.exists) {
+            console.log('No such document!');
+        } else {
+            console.log('Document data:', doc.data());
+            var result = doc.data();
+            console.log(result.totalDevelopmentTask);
+        }
+
         db.collection(fullSprintId).doc(taskId).set({
                 Title: title,
                 Description: des,
@@ -51,11 +61,10 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 WorkDone: workDone,
                 SprintId: sprintId
             })
-            // eslint-disable-next-line promise/always-return
             .then(() => {
                 var work = { data: "working" }
                 console.log("Document successfully written!");
-                response.status(200).send(work);
+                return response.status(200).send(work);
             })
             .catch(() => {
                 console.error("Error writing document: ", error);
@@ -64,22 +73,26 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
-function getTaskId() {
-    dashboardDataset.forEach(element => {
-        if (category == Development) {
-            return element.totalDevelopmentTask + 1;
-        } else if (category == Business) {
-            return element.totalBusinessTask + 1;
-        } else {
-            return element.totalMarketingTask + 1;
-        }
-    });
-}
+// function getTaskId(category) {
 
-function checkSprintId() {
+//     var result;
+
+
+// dashboardDataset.forEach(element => {
+//     if (category == Development) {
+//         return element.totalDevelopmentTask + 1;
+//     } else if (category == Business) {
+//         return element.totalBusinessTask + 1;
+//     } else {
+//         return element.totalMarketingTask + 1;
+//     }
+// });
+// }
+
+function createSprintId(SprintId) {
     if (sprintId == -1) {
         return "Backlog";
     } else {
-        return "S" + sprintId;
+        return ("S" + sprintId);
     }
 }
