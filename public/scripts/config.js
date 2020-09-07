@@ -19,4 +19,4 @@ var dashboardDataset = [];
 
 var collectionName = "Main";
 var newPage = "";
-var currentPage = "bodyContent";
+var currentPage = "dashboard";

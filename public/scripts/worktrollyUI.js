@@ -7,7 +7,7 @@ $("#createNewTaskButton").click(function() {
 });
 
 $("#backToMainFromCreateNewTask").click(function() {
-    newPage = "bodyContent";
+    newPage = "dashboard";
     uiLoader();
 });
 
@@ -27,6 +27,14 @@ $("#currentSprint").click(function() {
 
 $("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
+});
+
+$("#bodyContent").ready(function() {
+    $("#bodyContent").hide(0);
+});
+
+$("#dashboard").ready(function() {
+    $("#dashboard").show(0);
 });
 
 $("#editTask").ready(function() {
@@ -62,7 +70,7 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent";
+        newPage = "dashboard";
         uiLoader();
     });
 });
