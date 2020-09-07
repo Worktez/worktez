@@ -14,3 +14,16 @@ class StoreData {
         this.creationDate = data.CreationDate;
     }
 }
+
+class StoreSprintData {
+    constructor(data) {
+        this.sprintStatus = data.sprintStatus;
+        this.sprintEndDate = data.sprintEndDate;
+        this.sprintStartDate = data.sprintStartDate;
+        this.sprintId = data.sprintId;
+        this.sprintDetail = data.sprintDetail;
+        this.totalDevelopmentTask = data.totalDevelopmentTask;
+        this.totalBusinessTask = data.totalBusinessTask;
+        this.totalMarketingTask = data.totalMarketingTask;
+    }
+}
