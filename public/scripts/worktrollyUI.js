@@ -48,6 +48,7 @@ $("#submitCreateNewTask").click(function() {
     var estimatedTime = $("#estimatedTimeCreateNewTask").val();
     var status = $("#statusCreateNewTask").val();
     var category = $("#categoryCreateNewTask").val();
+    var createNewTaskSprintNumber = $("#createNewTaskSprintNumber").val();
 
     console.log(title);
     console.log(des);
@@ -58,9 +59,10 @@ $("#submitCreateNewTask").click(function() {
     console.log(estimatedTime);
     console.log(status);
     console.log(category);
+    console.log(createNewTaskSprintNumber);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
         console.log(result.data);
         newPage = "bodyContent";
         uiLoader();
