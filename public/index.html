@@ -53,7 +53,12 @@
     <!-- Dashboard---------------------------------------------------------------------------- -->
     <section class="bg-light" id="dashboard">
         <div class="container py-5">
-            <h3 class="py-3 fontHeading" style="font-size: 24px;">Dashboard</h3>
+            <div class="row py-4">
+                <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
+                <div class="col-md-1 col-3">
+                    <button type="submit" class="btn btn-primary" id="#" style="font-size: 14px;">Backlog</button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-3 col-12">
                     <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
@@ -112,14 +117,27 @@
                 <div class="card">
                     <div class="card-body" style="font-weight: bold; background-color: #e3f2fd;">
                         <div class="row">
-                            <div class="col-md-2 col-4">
+                            <div class="col-md-2 col-3">
                                 <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                             </div>
-                            <div class="col-md-8 col-4">
+                            <div class="col-md-6 col-2">
                                 <h5 id="sprintId"></h5>
                             </div>
-                            <div class="col-md-2 col-4">
-                                <button type="submit" class="btn btn-primary" id="#" style="font-size: 14px;">Backlog</button>
+                            <div class="col-md-4 col-7">
+                                <div class="dropdown">
+                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Filter
+                                    </button>
+                                    <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
+                                        <button type="submit" class="btn btn-info" id="currentSprint" style="font-size: 14px;">Current Sprint</button>
+                                        <div class="row py-3">
+                                            <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumber" placeholder="enter sprint number">
+                                            <div class="col-md-4 col-4 pl-2">
+                                                <button class="btn btn-info" id="filterSprint" style="font-size: 14px;">Filter</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,24 +159,6 @@
                                 <div class="row py-2">
                                     <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Status: </h6>
                                     <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;"></h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card-body">
-                                <div class="dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Filter
-                                    </button>
-                                    <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
-                                        <button type="submit" class="btn btn-info" id="currentSprint" style="font-size: 14px;">Current Sprint</button>
-                                        <div class="row py-3">
-                                            <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumber" placeholder="enter sprint number">
-                                            <div class="col-md-4 col-4 pl-2">
-                                                <button class="btn btn-info" id="filterSprint" style="font-size: 14px;">Filter</button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
