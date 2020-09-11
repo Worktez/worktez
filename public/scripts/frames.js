@@ -10,7 +10,7 @@ function getTasksData() {
     var result = "ok";
 
     document.getElementById("cardsList").innerHTML = "";
-    firestore.collection("S0001")
+    db.collection("S0001")
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {

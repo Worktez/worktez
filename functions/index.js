@@ -89,7 +89,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 // });
 // }
 
-function createSprintId(SprintId) {
+function createSprintId(sprintId) {
     if (sprintId == -1) {
         return "Backlog";
     } else {
