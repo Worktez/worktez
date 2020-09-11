@@ -1,5 +1,5 @@
 function getDashboardData() {
-    db.collection(collectinName)
+    db.collection(collectionName)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {
@@ -12,7 +12,7 @@ function getDashboardData() {
                 }
             });
             currentSprintDashboard();
-            getTaskId()
+            // getTaskId()
         });
     return "ok";
 }
