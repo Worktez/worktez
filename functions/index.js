@@ -19,10 +19,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var estimatedTime = request.body.data.EstimatedTime;
         var status = request.body.data.Status;
         var category = request.body.data.Category;
-        var sprintId = request.body.data.SprintId;
-        var fullSprintId = createSprintId(sprintId);
-        var taskIdNumber = "A";
-        var taskId = category[0] + taskIdNumber;
+        var createNewTaskSprintNumber = request.body.data.CreateNewTaskSprintNumber;
+        var fullSprintId = createSprintId(createNewTaskSprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
 
@@ -35,19 +33,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(estimatedTime);
         console.log(status);
         console.log(category);
-        console.log(sprintId);
+        console.log(createNewTaskSprintNumber);
 
-        var taskIdReference = db.collection("Main").doc('RawData');
-        const doc = await taskIdReference.get();
-        if (!doc.exists) {
-            console.log('No such document!');
-        } else {
-            console.log('Document data:', doc.data());
-            var result = doc.data();
-            console.log(result.totalDevelopmentTask);
-        }
-
-        db.collection(fullSprintId).doc(taskId).set({
+        db.collection(fullSprintId).doc(category).set({
                 Title: title,
                 Description: des,
                 Priority: priority,
@@ -59,7 +47,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 Category: category,
                 LogWorkTotalTime: loggedWorkTotalTime,
                 WorkDone: workDone,
-                SprintId: sprintId
+                CreateNewTaskSprintNumber: createNewTaskSprintNumber
             })
             .then(() => {
                 var work = { data: "working" }
@@ -73,26 +61,10 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
-// function getTaskId(category) {
-
-//     var result;
-
-
-// dashboardDataset.forEach(element => {
-//     if (category == Development) {
-//         return element.totalDevelopmentTask + 1;
-//     } else if (category == Business) {
-//         return element.totalBusinessTask + 1;
-//     } else {
-//         return element.totalMarketingTask + 1;
-//     }
-// });
-// }
-
-function createSprintId(sprintId) {
-    if (sprintId == -1) {
+function createSprintId(createNewTaskSprintNumber) {
+    if (createNewTaskSprintNumber === -1) {
         return "Backlog";
     } else {
-        return ("S" + sprintId);
+        return ("S" + createNewTaskSprintNumber);
     }
 }
