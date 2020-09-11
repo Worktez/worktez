@@ -11,7 +11,7 @@ $("#backToMainFromCreateNewTask").click(function() {
     uiLoader();
 });
 
-$("#bodyContent").ready(function() {
+$("#dashboard").ready(function() {
     var result = getDashboardData();
     console.log(result);
 });
@@ -29,13 +29,6 @@ $("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-$("#bodyContent").ready(function() {
-    $("#bodyContent").hide(0);
-});
-
-$("#dashboard").ready(function() {
-    $("#dashboard").show(0);
-});
 
 $("#editTask").ready(function() {
     $("#editTask").hide(0);
