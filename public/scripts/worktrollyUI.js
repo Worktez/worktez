@@ -30,6 +30,7 @@ $("#backToMainFromNewSprint").click(function() {
 
 $("#bodyContent").ready(function() {
     var result = getDashboardData();
+    getTasks();
     console.log(result);
 });
 

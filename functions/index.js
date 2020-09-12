@@ -69,10 +69,11 @@ exports.createNewSprint = functions.https.onRequest((request, response) => {
         var totalDevelopmentTask = request.body.data.development;
         var totalBusinessTask = request.body.data.business;
         var totalMarketingTask = request.body.data.marketing;
-        var lastSprintId = 0;
-        var newtSprintId = lastSprintId + 1;
-        var currentSprintId = "S" + newtSprintId;
+        var lastSprintId = 1;
+        var newSprintId = lastSprintId + 1;
+        var currentSprintId = "S" + newSprintId;
         var totalTask = totalDevelopmentTask + totalBusinessTask + totalMarketingTask;
+        document.getElementById("SprintNo").innerHTML = currentSprintId;
         var date = new Date();
         var startDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
         var endDate = (date.getDate() + 14) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
@@ -87,15 +88,10 @@ exports.createNewSprint = functions.https.onRequest((request, response) => {
         console.log(status);
         console.log(totalTask);
 
-        db.collection("Main").doc(currentSprintId).set({
-                Title: title,
-                Description: des,
-                EndDate: endDate,
-                StartDate: startDate,
+        db.collection("Main").doc("RawData").set({
                 development: totalDevelopmentTask,
                 business: totalDevelopmentTask,
                 marketing: totalMarketingTask,
-                Status: status,
                 Totaltask: totalTask
             })
             .then(() => {
@@ -119,3 +115,19 @@ function getIdNumber() {
 
     return result;
 }
+
+// function fetchRawData() {
+//     dataset.forEach((element) => {
+//         const development = dataset.filter(element => element.category == "Development");
+//         console.log(development.length);
+//         document.getElementById("totalDevelopmentTask").innerHTML = development.length;
+
+//         const business = dataset.filter(element => element.category == "Business");
+//         console.log(business.length);
+//         document.getElementById("totalBusinessTask").innerHTML = business.length;
+
+//         const marketing = dataset.filter(element => element.category == "Marketing");
+//         console.log(marketing.length);
+//         document.getElementById("totalMarketingTask").innerHTML = marketing.length;
+//     });
+// }
