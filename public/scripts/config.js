@@ -21,7 +21,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var firestore = firebase.firestore();
+var db = firebase.firestore();
 
 var dataset = [];
 var dashboardDataset = [];
