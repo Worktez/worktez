@@ -1,68 +1,62 @@
-$("#createNewTaskButton").click(function () {
+$("#createNewTaskButton").click(function() {
     newPage = "createNewTask";
     uiLoader();
     var date = new Date();
-    $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
-
+    $("#creationDateCreateNewTask").html(
+        date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    );
 });
 
-$("#backToMainFromCreateNewTask").click(function () {
+$("#backToMainFromCreateNewTask").click(function() {
     newPage = "bodyContent";
     uiLoader();
 });
 
-// $("#bodyContent").ready(function () {
-//     var result = getDashboardData();
-//     console.log(result);
-// });
-
-$("#Business").click(function () {
+$("#Business").click(function() {
     selectedCategory = "Business";
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
 });
 
-$("#Development").click(function () {
+$("#Development").click(function() {
     selectedCategory = "Development";
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
 });
-$("#Marketing").click(function () {
+$("#Marketing").click(function() {
     selectedCategory = "Marketing";
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
 });
-$("#filterSprint").click(function () {
+$("#filterSprint").click(function() {
     var filterSprintNumber = $("#filterSprintNumber").val();
     sprintFilter(filterSprintNumber);
 });
 
-
-$("#currentSprint").click(function () {
+$("#currentSprint").click(function() {
     currentSprintDashboard();
 });
 
-$("#taskPage").ready(function () {
+$("#taskPage").ready(function() {
     $("#taskPage").hide(0);
 });
 
-$("#createNewTask").ready(function () {
+$("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-$("#editTask").ready(function () {
+$("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function () {
+$("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
-$("#submitCreateNewTask").click(function () {
-
+$("#submitCreateNewTask").click(function() {
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
     var priority = $("#priorityCreateNewTask").val();
@@ -85,8 +79,21 @@ $("#submitCreateNewTask").click(function () {
     console.log(category);
     console.log(createNewTaskSprintNumber);
 
-    var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
+    var createNewTaskFunction = firebase
+        .functions()
+        .httpsCallable("createNewTask");
+    createNewTaskFunction({
+        Title: title,
+        Description: des,
+        Priority: priority,
+        Difficulty: difficulty,
+        Creator: creator,
+        Assignee: assignee,
+        EstimatedTime: estimatedTime,
+        Status: status,
+        Category: category,
+        CreateNewTaskSprintNumber: createNewTaskSprintNumber,
+    }).then((result) => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
