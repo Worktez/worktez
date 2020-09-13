@@ -1,4 +1,4 @@
-$("#createNewTaskButton").click(function() {
+$("#createNewTaskButton").click(function () {
     newPage = "createNewTask";
     uiLoader();
     var date = new Date();
@@ -6,38 +6,62 @@ $("#createNewTaskButton").click(function() {
 
 });
 
-$("#backToMainFromCreateNewTask").click(function() {
+$("#backToMainFromCreateNewTask").click(function () {
     newPage = "bodyContent";
     uiLoader();
 });
 
-$("#bodyContent").ready(function() {
-    var result = getDashboardData();
-    console.log(result);
+// $("#bodyContent").ready(function () {
+//     var result = getDashboardData();
+//     console.log(result);
+// });
+
+$("#Business").click(function () {
+    selectedCategory = "Business";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
 });
 
-$("#filterSprint").click(function() {
+$("#Development").click(function () {
+    selectedCategory = "Development";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+$("#Marketing").click(function () {
+    selectedCategory = "Marketing";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+$("#filterSprint").click(function () {
     var filterSprintNumber = $("#filterSprintNumber").val();
     sprintFilter(filterSprintNumber);
 });
 
-$("#currentSprint").click(function() {
+
+$("#currentSprint").click(function () {
     currentSprintDashboard();
 });
 
-$("#createNewTask").ready(function() {
+$("#taskPage").ready(function () {
+    $("#taskPage").hide(0);
+});
+
+$("#createNewTask").ready(function () {
     $("#createNewTask").hide(0);
 });
 
-$("#editTask").ready(function() {
+$("#editTask").ready(function () {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function() {
+$("#logWork").ready(function () {
     $("#logWork").hide(0);
 });
 
-$("#submitCreateNewTask").click(function() {
+$("#submitCreateNewTask").click(function () {
 
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
@@ -64,7 +88,7 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent";
+        newPage = "dashboard";
         uiLoader();
     });
 });

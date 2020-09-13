@@ -1,7 +1,7 @@
 function getDashboardData() {
-    db.collection(collectionName)
-        .onSnapshot(function(snapshot) {
-            snapshot.docChanges().forEach(function(change) {
+    db.collection(Main)
+        .onSnapshot(function (snapshot) {
+            snapshot.docChanges().forEach(function (change) {
                 if (change.type === "added") {
                     console.log(change.doc.data());
                     createDashboardInstance(change.doc.data());
@@ -37,6 +37,7 @@ function currentSprintDashboard() {
             document.getElementById("sprintEndDate").innerHTML = element.sprintEndDate;
             document.getElementById("sprintStatus").innerHTML = element.sprintStatus;
 
+            getTasks();
         }
     });
 
@@ -57,6 +58,7 @@ function sprintFilter(sprintFilterId) {
             document.getElementById("sprintEndDate").innerHTML = element.sprintEndDate;
             document.getElementById("sprintStatus").innerHTML = element.sprintStatus;
 
+            getTasks();
         }
 
     });

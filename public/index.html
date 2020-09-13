@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Work Trolly</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
@@ -25,13 +26,15 @@
         <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
             <img src="logo.png" width="30" height="30" alt="" loading="lazy"> Work Trolly
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-white"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ">
                 <li class="nav-item active pr-5 py-1 ">
-                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New Task</button>
+                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New
+                        Task</button>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -43,12 +46,13 @@
     </nav>
 
     <!-- Dashboard---------------------------------------------------------------------------- -->
-    <section class="bg-light">
+    <section id="dashboard" class="bg-light">
         <div class="container py-5">
             <h3 class="py-3 fontHeading">Task Overview</h3>
             <div class="row">
                 <div class="col-md-4 col-12">
-                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
+                    <span id="Business" type="button" class="card text-white mb-3"
+                        style="max-width: 18rem; background-color: #1976d2;">
                         <div class="card-body">
                             <h5 class="card-title">Business</h5>
                             <div class="row card-text">
@@ -58,10 +62,11 @@
                                 <div class="col-md-6" id="totalBusinessTask"></div>
                             </div>
                         </div>
-                    </div>
+                    </span>
                 </div>
                 <div class="col-md-4 col-12">
-                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
+                    <span id="Development" type="button" class="card text-white mb-3"
+                        style="max-width: 18rem; background-color: #ef6c00;">
                         <div class="card-body">
                             <h5 class="card-title">Development</h5>
                             <div class="row card-text">
@@ -71,10 +76,11 @@
                                 <div class="col-md-6" id="totalDevelopmentTask"></div>
                             </div>
                         </div>
-                    </div>
+                    </span>
                 </div>
                 <div class="col-md-4 col-12">
-                    <div class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
+                    <span id="Marketing" type="button" class="card text-white mb-3"
+                        style="max-width: 18rem; background-color:#00bfa5 ;">
                         <div class="card-body">
                             <h5 class="card-title">Marketing</h5>
                             <div class="row card-text">
@@ -84,7 +90,7 @@
                                 <div class="col-md-6" id="totalMarketingTask"></div>
                             </div>
                         </div>
-                    </div>
+                    </span>
                 </div>
             </div>
             <div class="card bg-dark text-white" style="max-width: 66rem;">
@@ -134,10 +140,12 @@
                             <div class="card-body">
                                 <h3 class="py-2" style="text-align: center;">Filter</h3>
                                 <div class="row">
-                                    <button type="submit" class="btn btn-primary btn-block" id="currentSprint">Current Sprint</button>
+                                    <button type="submit" class="btn btn-primary btn-block" id="currentSprint">Current
+                                        Sprint</button>
                                 </div>
                                 <div class="row py-3">
-                                    <input class="col-md-8 col-8" type="number" id="filterSprintNumber" placeholder="enter sprint number">
+                                    <input class="col-md-8 col-8" type="number" id="filterSprintNumber"
+                                        placeholder="enter sprint number">
                                     <div class="col-md-4 col-4 pl-2">
                                         <button class="btn btn-primary" id="filterSprint">Filter</button>
                                     </div>
@@ -154,7 +162,7 @@
 
     <!-- task cards------------------ -->
 
-    <div id="bodyContent">
+    <div id="taskPage">
         <div class="container pt-2 pb-5 pl-2">
             <h3 class="ml-1 fontHeading">Tasks</h3>
             <hr class="w-75 ml-0">
@@ -212,8 +220,8 @@
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromCreateNewTask">
-                           close
-                        </span>
+                    close
+                </span>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -255,42 +263,42 @@
                 <div class="form-group col-md-4">
                     <label for="input">Category</label>
                     <select class="form-control" id="categoryCreateNewTask">
-                            <option selected>choose...</option>
-                            <option>Business</option>
-                            <option>Development</option>
-                            <option>Marketing</option>
-                            </select>
+                        <option selected>choose...</option>
+                        <option>Business</option>
+                        <option>Development</option>
+                        <option>Marketing</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Priority</label>
                     <select class="form-control" id="priorityCreateNewTask">
-                            <option selected>choose...</option>
-                                <option>High</option>
-                                <option>Medium</option>
-                                <option>Low</option>
-                            </select>
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Difficulty</label>
                     <select class="form-control" id="difficultyCreateNewTask">
-                                <option selected>choose...</option>
-                                <option>High</option>
-                                <option>Medium</option>
-                                <option>Low</option>
-                                </select>
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="inputState">Status</label>
                     <select class="form-control" id="statusCreateNewTask">
-                                <option selected>choose...</option>
-                                <option>Ice Box</option>
-                                <option>Ready to start</option>
-                                <option>Under Progress</option>
-                                <option>Blocked</option>
-                                <option>Completed</option>
-                        </select>
+                        <option selected>choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputState">Sprint Number</label>
@@ -364,9 +372,15 @@
 
 
     <!-- JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
