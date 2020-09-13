@@ -1,5 +1,5 @@
 function getDashboardData() {
-    firestore.collection(collectionName)
+    db.collection(collectionName)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {

@@ -19,8 +19,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var estimatedTime = request.body.data.EstimatedTime;
         var status = request.body.data.Status;
         var category = request.body.data.Category;
-        var taskIdNumber = getIdNumber();
-        var taskId = category[0] + taskIdNumber;
+        var createNewTaskSprintNumber = request.body.data.CreateNewTaskSprintNumber;
+        var fullSprintId = createSprintId(createNewTaskSprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
 
@@ -33,8 +33,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(estimatedTime);
         console.log(status);
         console.log(category);
+        console.log(createNewTaskSprintNumber);
 
-        db.collection(category).doc(taskId).set({
+        db.collection(fullSprintId).doc(category).set({
                 Title: title,
                 Description: des,
                 Priority: priority,
@@ -45,13 +46,13 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 Status: status,
                 Category: category,
                 LogWorkTotalTime: loggedWorkTotalTime,
-                WorkDone: workDone
+                WorkDone: workDone,
+                CreateNewTaskSprintNumber: createNewTaskSprintNumber
             })
-            // eslint-disable-next-line promise/always-return
             .then(() => {
                 var work = { data: "working" }
                 console.log("Document successfully written!");
-                response.status(200).send(work);
+                return response.status(200).send(work);
             })
             .catch(() => {
                 console.error("Error writing document: ", error);
@@ -60,12 +61,10 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
-function getIdNumber() {
-    var today = new Date();
-    var date = String(String(today.getFullYear()) + (today.getMonth() + 1)) + today.getDate();
-    var time = String(String(today.getHours()) + today.getMinutes()) + today.getSeconds();
-
-    var result = date + time;
-
-    return result;
+function createSprintId(createNewTaskSprintNumber) {
+    if (createNewTaskSprintNumber === -1) {
+        return "Backlog";
+    } else {
+        return ("S" + createNewTaskSprintNumber);
+    }
 }

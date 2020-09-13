@@ -12,6 +12,8 @@ class StoreData {
         this.logWorkTotalTime = data.LogWorkTotalTime;
         this.workDone = data.WorkDone;
         this.creationDate = data.CreationDate;
+        this.createNewTaskSprintNumber = data.CreateNewTaskSprintNumber;
+
     }
 }
 
@@ -20,7 +22,6 @@ class StoreSprintData {
         this.sprintStatus = data.sprintStatus;
         this.sprintEndDate = data.sprintEndDate;
         this.sprintStartDate = data.sprintStartDate;
-        this.sprintId = data.sprintId;
         this.sprintDetail = data.sprintDetail;
         this.totalDevelopmentTask = data.totalDevelopmentTask;
         this.totalBusinessTask = data.totalBusinessTask;
