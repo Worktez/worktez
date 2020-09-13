@@ -13,6 +13,7 @@ $("#startNewSprint").ready(function() {
 $("#startNewSprintButton").click(function() {
     newPage = "startNewSprint";
     uiLoader();
+    getRawData();
 });
 
 
@@ -81,6 +82,24 @@ $("#submitCreateNewTask").click(function() {
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
+        console.log(result.data);
+        newPage = "bodyContent";
+        uiLoader();
+    });
+});
+
+$("#submitNewSprint").click(function() {
+    var startDate = $("#startdateNewSprint").val();
+    var endDate = $("#enddateNewSprint").val();
+    var status = $("#statusNewSprint").val();
+
+
+    console.log(startDate);
+    console.log(endDate);
+    console.log(status);
+
+    var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
+    startNewSprintFunction({ Startdate: startDate, Enddate: endDate, Status: status }).then(result => {
         console.log(result.data);
         newPage = "bodyContent";
         uiLoader();

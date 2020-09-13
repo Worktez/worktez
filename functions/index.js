@@ -61,77 +61,50 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
-exports.createNewSprint = functions.https.onRequest((request, response) => {
+exports.startNewSprint = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
-        var title = request.body.data.Title;
-        var des = request.body.data.Description;
+
         var status = request.body.data.Status;
-        var totalDevelopmentTask = request.body.data.development;
-        var totalBusinessTask = request.body.data.business;
-        var totalMarketingTask = request.body.data.marketing;
-        var lastSprintId = 1;
-        var newSprintId = lastSprintId + 1;
-        var currentSprintId = "S" + newSprintId;
-        var totalTask = totalDevelopmentTask + totalBusinessTask + totalMarketingTask;
-        document.getElementById("SprintNo").innerHTML = currentSprintId;
-        var date = new Date();
-        var startDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-        var endDate = (date.getDate() + 14) + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+        var startDate = request.body.data.Startdate;
+        var endDate = request.body.data.Enddate;
+        var newSprintId;
+        console.log("End Date from Backend: " + endDate);
+        console.log("Start Date from Backend: " + startDate);
+        console.log("Status from Backend: " + status);
 
-        console.log(title);
-        console.log(des);
-        console.log(endDate);
-        console.log(startDate);
-        console.log(totalDevelopmentTask);
-        console.log(totalBusinessTask);
-        console.log(totalMarketingTask);
-        console.log(status);
-        console.log(totalTask);
+        db.collection("Main").doc("RawData").get()
+            .then(function(doc) {
+                newSprintId = doc.data().CurrentSprintId + 1;
+                var newSprintIdString = "S" + newSprintId.toString();
 
-        db.collection("Main").doc("RawData").set({
-                development: totalDevelopmentTask,
-                business: totalDevelopmentTask,
-                marketing: totalMarketingTask,
-                Totaltask: totalTask
+                var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).update({
+                    EndDate: endDate,
+                    StartDate: startDate,
+                    Status: status
+                });
+                return Promise.resolve(setNewSprintPromise);
             })
-            .then(() => {
+            .then(function(setNewSprintPromise) {
+                var setNewSprintCounterPromise = db.collection("Main").doc("RawData").update({
+                    CurrentSprintId: newSprintId
+                });
+                return Promise.resolve(setNewSprintCounterPromise);
+            })
+            .then(function(setNewSprintCounterPromise) {
+                console.log("Sprint started successfully");
                 var work = { data: "working" }
                 console.log("Document successfully written!");
-                response.status(200).send(work);
+                return response.status(200).send(work);
             })
-            .catch(() => {
-                console.error("Error writing document: ", error);
+            .catch(function(error) {
+                console.log("error", error);
             });
+
 
     });
 });
 
-function getIdNumber() {
-    var today = new Date();
-    var date = String(String(today.getFullYear()) + (today.getMonth() + 1)) + today.getDate();
-    var time = String(String(today.getHours()) + today.getMinutes()) + today.getSeconds();
-
-    var result = date + time;
-
-    return result;
-}
-
-// function fetchRawData() {
-//     dataset.forEach((element) => {
-//         const development = dataset.filter(element => element.category == "Development");
-//         console.log(development.length);
-//         document.getElementById("totalDevelopmentTask").innerHTML = development.length;
-
-//         const business = dataset.filter(element => element.category == "Business");
-//         console.log(business.length);
-//         document.getElementById("totalBusinessTask").innerHTML = business.length;
-
-//         const marketing = dataset.filter(element => element.category == "Marketing");
-//         console.log(marketing.length);
-//         document.getElementById("totalMarketingTask").innerHTML = marketing.length;
-//     });
-// }
 function createSprintId(createNewTaskSprintNumber) {
     if (createNewTaskSprintNumber === -1) {
         return "Backlog";
