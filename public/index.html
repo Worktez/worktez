@@ -117,12 +117,12 @@
         </div>
     </div>
     <!-- Dashboard---------------------------------------------------------------------------- -->
-    <section class="bg-light">
+    <section id="dashboard" class="bg-light">
         <div class="container py-5">
             <h3 class="py-3 fontHeading">Task Overview</h3>
             <div class="row">
                 <div class="col-md-4 col-12">
-                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
+                    <div id="Business" class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
                         <div class="card-body">
                             <h5 class="card-title">Business</h5>
                             <div class="row card-text">
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-12">
-                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
+                    <div id="Development" class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
                         <div class="card-body">
                             <h5 class="card-title">Development</h5>
                             <div class="row card-text">
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-12">
-                    <div class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
+                    <div id="Marketing" class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
                         <div class="card-body">
                             <h5 class="card-title">Marketing</h5>
                             <div class="row card-text">
@@ -208,7 +208,8 @@
                             <div class="card-body">
                                 <h3 class="py-2" style="text-align: center;">Filter</h3>
                                 <div class="row">
-                                    <button type="submit" class="btn btn-primary btn-block" id="currentSprint">Current Sprint</button>
+                                    <button type="submit" class="btn btn-primary btn-block" id="currentSprint">Current
+                                        Sprint</button>
                                 </div>
                                 <div class="row py-3">
                                     <input class="col-md-8 col-8" type="number" id="filterSprintNumber" placeholder="enter sprint number">
@@ -227,7 +228,8 @@
     </section>
 
     <!-- task cards------------------ -->
-    <div id="bodyContent">
+
+    <div id="taskPage">
         <div class="container pt-2 pb-5 pl-2">
             <h3 class="ml-1 fontHeading">Tasks</h3>
             <hr class="w-75 ml-0">
@@ -285,8 +287,8 @@
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromCreateNewTask">
-                           close
-                        </span>
+                    close
+                </span>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -328,42 +330,42 @@
                 <div class="form-group col-md-4">
                     <label for="input">Category</label>
                     <select class="form-control" id="categoryCreateNewTask">
-                            <option selected>choose...</option>
-                            <option>Business</option>
-                            <option>Development</option>
-                            <option>Marketing</option>
-                            </select>
+                        <option selected>choose...</option>
+                        <option>Business</option>
+                        <option>Development</option>
+                        <option>Marketing</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Priority</label>
                     <select class="form-control" id="priorityCreateNewTask">
-                            <option selected>choose...</option>
-                                <option>High</option>
-                                <option>Medium</option>
-                                <option>Low</option>
-                            </select>
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Difficulty</label>
                     <select class="form-control" id="difficultyCreateNewTask">
-                                <option selected>choose...</option>
-                                <option>High</option>
-                                <option>Medium</option>
-                                <option>Low</option>
-                                </select>
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="inputState">Status</label>
                     <select class="form-control" id="statusCreateNewTask">
-                                <option selected>choose...</option>
-                                <option>Ice Box</option>
-                                <option>Ready to start</option>
-                                <option>Under Progress</option>
-                                <option>Blocked</option>
-                                <option>Completed</option>
-                        </select>
+                        <option selected>choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputState">Sprint Number</label>

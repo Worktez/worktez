@@ -3,7 +3,6 @@ $("#createNewTaskButton").click(function() {
     uiLoader();
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
-
 });
 
 $("#startNewSprint").ready(function() {
@@ -21,17 +20,25 @@ $("#backToMainFromCreateNewTask").click(function() {
     uiLoader();
 });
 
-$("#backToMainFromNewSprint").click(function() {
-    newPage = "bodyContent";
+$("#Business").click(function() {
+    selectedCategory = "Business";
+    newPage = "taskPage";
     uiLoader();
+    setDataIntoCard();
 });
 
-$("#bodyContent").ready(function() {
-    var result = getDashboardData();
-    getTasks();
-    console.log(result);
+$("#Development").click(function() {
+    selectedCategory = "Development";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
 });
-
+$("#Marketing").click(function() {
+    selectedCategory = "Marketing";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
 $("#filterSprint").click(function() {
     var filterSprintNumber = $("#filterSprintNumber").val();
     sprintFilter(filterSprintNumber);
@@ -39,6 +46,10 @@ $("#filterSprint").click(function() {
 
 $("#currentSprint").click(function() {
     currentSprintDashboard();
+});
+
+$("#taskPage").ready(function() {
+    $("#taskPage").hide(0);
 });
 
 $("#createNewTask").ready(function() {
@@ -54,7 +65,6 @@ $("#logWork").ready(function() {
 });
 
 $("#submitCreateNewTask").click(function() {
-
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
     var priority = $("#priorityCreateNewTask").val();
@@ -80,7 +90,7 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent";
+        newPage = "dashboard";
         uiLoader();
     });
 });
@@ -97,7 +107,7 @@ $("#submitNewSprint").click(function() {
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
     startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent";
+        newPage = "dashboard";
         uiLoader();
     });
 });
