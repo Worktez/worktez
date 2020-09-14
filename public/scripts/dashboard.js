@@ -16,6 +16,38 @@ function getDashboardData() {
     return "ok";
 }
 
+function getRawData() {
+    var newSprintId = "";
+    db.collection("Main").doc("RawData").get()
+        .then(function(doc) {
+            console.log("Sprint: ", doc.data().CurrentSprintId);
+            newSprintId = "S" + (doc.data().CurrentSprintId + 1).toString();
+            console.log(newSprintId);
+            document.getElementById("SprintNo").innerHTML = newSprintId;
+            readSprintData(newSprintId);
+        })
+        .catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+}
+
+function readSprintData(newSprintId) {
+    db.collection("Main").doc(newSprintId).get()
+        .then(function(doc) {
+            console.log(doc.data().TotalDevelopmentTask);
+            console.log(doc.data().TotalBusinessTask);
+            console.log(doc.data().TotalMarketingTask);
+            var totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+            var totalBusinessTask = doc.data().TotalBusinessTask;
+            var totalMarketingTask = doc.data().TotalMarketingTask;
+            document.getElementById("totalDevelopmentTaskNewSprint").innerHTML = totalDevelopmentTask;
+            document.getElementById("totalBusinessTaskNewSprint").innerHTML = totalBusinessTask;
+            document.getElementById("totalMarketingTaskNewSprint").innerHTML = totalMarketingTask;
+        })
+        .catch(function(error) {
+            console.log("Error", error);
+        });
+}
 
 function createDashboardInstance(data) {
     var dashboardDataObj = new StoreSprintData(data);
@@ -39,7 +71,6 @@ function currentSprintDashboard() {
 
         }
     });
-
 }
 
 function sprintFilter(sprintFilterId) {
@@ -58,6 +89,5 @@ function sprintFilter(sprintFilterId) {
             document.getElementById("sprintStatus").innerHTML = element.sprintStatus;
 
         }
-
     });
 }
