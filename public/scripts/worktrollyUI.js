@@ -3,10 +3,24 @@ $("#createNewTaskButton").click(function() {
     uiLoader();
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+});
 
+$("#startNewSprint").ready(function() {
+    $("#startNewSprint").hide(0);
+});
+
+$("#startNewSprintButton").click(function() {
+    newPage = "startNewSprint";
+    uiLoader();
+    getRawData();
 });
 
 $("#backToMainFromCreateNewTask").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
+$("#backToMainFromNewSprint").click(function() {
     newPage = "dashboard";
     uiLoader();
 });
@@ -16,6 +30,25 @@ $("#dashboard").ready(function() {
     console.log(result);
 });
 
+$("#Business").click(function() {
+    selectedCategory = "Business";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
+$("#Development").click(function() {
+    selectedCategory = "Development";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+$("#Marketing").click(function() {
+    selectedCategory = "Marketing";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
 $("#filterSprint").click(function() {
     var filterSprintNumber = $("#filterSprintNumber").val();
     sprintFilter(filterSprintNumber);
@@ -23,6 +56,10 @@ $("#filterSprint").click(function() {
 
 $("#currentSprint").click(function() {
     currentSprintDashboard();
+});
+
+$("#taskPage").ready(function() {
+    $("#taskPage").hide(0);
 });
 
 $("#createNewTask").ready(function() {
@@ -39,7 +76,6 @@ $("#logWork").ready(function() {
 });
 
 $("#submitCreateNewTask").click(function() {
-
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
     var priority = $("#priorityCreateNewTask").val();
@@ -64,6 +100,23 @@ $("#submitCreateNewTask").click(function() {
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
+});
+
+$("#submitNewSprint").click(function() {
+    var startDate = $("#startdateNewSprint").val();
+    var endDate = $("#enddateNewSprint").val();
+    var status = $("#statusNewSprint").val();
+
+    console.log(startDate);
+    console.log(endDate);
+    console.log(status);
+
+    var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

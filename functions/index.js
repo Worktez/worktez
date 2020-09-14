@@ -96,6 +96,48 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.startNewSprint = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+
+        var status = request.body.data.Status;
+        var startDate = request.body.data.StartDate;
+        var endDate = request.body.data.EndDate;
+        var newSprintId;
+        console.log("End Date from Backend: " + endDate);
+        console.log("Start Date from Backend: " + startDate);
+        console.log("Status from Backend: " + status);
+
+        db.collection("Main").doc("RawData").get()
+            .then(function(doc) {
+                newSprintId = doc.data().CurrentSprintId + 1;
+                var newSprintIdString = "S" + newSprintId.toString();
+
+                var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).update({
+                    EndDate: endDate,
+                    StartDate: startDate,
+                    Status: status
+                });
+                return Promise.resolve(setNewSprintPromise);
+            })
+            .then(function(setNewSprintPromise) {
+                var setNewSprintCounterPromise = db.collection("Main").doc("RawData").update({
+                    CurrentSprintId: newSprintId
+                });
+                return Promise.resolve(setNewSprintCounterPromise);
+            })
+            .then(function(setNewSprintCounterPromise) {
+                console.log("Sprint started successfully");
+                var work = { data: "working" }
+                console.log("Document successfully written!");
+                return response.status(200).send(work);
+            })
+            .catch(function(error) {
+                console.log("error", error);
+            });
+    });
+});
+
 function createSprintId(createNewTaskSprintNumber) {
     if (createNewTaskSprintNumber === -1) {
         return "Backlog";
