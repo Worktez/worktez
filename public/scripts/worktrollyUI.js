@@ -5,6 +5,16 @@ $("#createNewTaskButton").click(function() {
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
 });
 
+$("#startNewSprint").ready(function() {
+    $("#startNewSprint").hide(0);
+});
+
+$("#startNewSprintButton").click(function() {
+    newPage = "startNewSprint";
+    uiLoader();
+    getRawData();
+});
+
 $("#backToMainFromCreateNewTask").click(function() {
     newPage = "bodyContent";
     uiLoader();
@@ -77,22 +87,27 @@ $("#submitCreateNewTask").click(function() {
     console.log(category);
     console.log(createNewTaskSprintNumber);
 
-    var createNewTaskFunction = firebase.functions().httpsCallable("createNewTask");
-    createNewTaskFunction({
-            Title: title,
-            Description: des,
-            Priority: priority,
-            Difficulty: difficulty,
-            Creator: creator,
-            Assignee: assignee,
-            EstimatedTime: estimatedTime,
-            Status: status,
-            Category: category,
-            CreateNewTaskSprintNumber: createNewTaskSprintNumber,
-        })
-        .then((result) => {
-            console.log(result.data);
-            newPage = "dashboard";
-            uiLoader();
-        });
+    var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
+});
+
+$("#submitNewSprint").click(function() {
+    var startDate = $("#startdateNewSprint").val();
+    var endDate = $("#enddateNewSprint").val();
+    var status = $("#statusNewSprint").val();
+
+    console.log(startDate);
+    console.log(endDate);
+    console.log(status);
+
+    var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
 });

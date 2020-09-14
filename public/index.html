@@ -33,6 +33,12 @@
                 <li class="nav-item active pr-5 py-1 ">
                     <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New Task</button>
                 </li>
+                <!-- <li class="nav-item pr-5 py-1">
+                    <button type="button" class="btn btn-outline-light">All Task</button>
+                    </li> -->
+                <li class="nav-item active pr-5 py-1 ">
+                    <button type="button" class="btn btn-outline-light" id="startNewSprintButton">Start New Sprint</button>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item py-1">
@@ -42,6 +48,74 @@
         </div>
     </nav>
 
+    <!-- new sprint   ------------------------------------------------------->
+    <div class="container py-5">
+        <div class="bg-light px-5" id="startNewSprint">
+            <div class="row pt-2">
+                <div class="col-md-11 col-10"></div>
+                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
+                       close
+                    </span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="pl-1 fontHeading">Create New Sprint</h3>
+                    <hr class="w-75 ml-0">
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <div class="alert alert-info form-inline col-sm-4" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Sprint:</div>
+                    <div id="SprintNo"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Development</label>
+                    <div class="alert bg-dark text-white form-inline" role="alert">
+                        <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                        <div id="totalDevelopmentTaskNewSprint"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Business</label>
+                    <div class="alert bg-dark text-white form-inline" role="alert">
+                        <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                        <div id="totalBusinessTaskNewSprint"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Marketing</label>
+                    <div class="alert bg-dark text-white form-inline" role="alert">
+                        <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                        <div id="totalMarketingTaskNewSprint"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Start Date</label>
+                    <input class="form-control" type="date" value="" id="startdateNewSprint">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="input">End Date</label>
+                    <input class="form-control" type="date" value="" id="enddateNewSprint">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <select class="form-control" id="statusNewSprint">
+                            <option selected>choose...</option>
+                            <option>Ready to Start</option>
+                            <option>Under Progress</option>
+                            <option>Completed</option>
+                    </select>
+                </div>
+            </div>
+            <div class="pt-2 pb-5">
+                <button type="submit" class="btn btn-primary" id="submitNewSprint">Submit</button>
+            </div>
+        </div>
+    </div>
     <!-- Dashboard---------------------------------------------------------------------------- -->
     <section id="dashboard" class="bg-light">
         <div class="container py-5">
