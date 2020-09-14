@@ -26,7 +26,7 @@ $("#backToMainFromNewSprint").click(function() {
 });
 
 $("#dashboard").ready(function() {
-    var result = getDashboardData();
+    var result = getRawData();
     console.log(result);
 });
 

@@ -1,12 +1,3 @@
-function getDashboardData() {
-    db.collection(collectionName).get().then(function(doc) {
-        console.log(doc.data());
-        createDashboardInstance(doc.data());
-        currentSprintDashboard();
-    });
-    return "ok";
-}
-
 function getRawData() {
     var newSprintId = "";
     db.collection("Main").doc("RawData").get()
@@ -16,11 +7,14 @@ function getRawData() {
             console.log(newSprintId);
             document.getElementById("SprintNo").innerHTML = newSprintId;
             readSprintData(newSprintId);
+            createDashboardInstance(doc.data());
+            currentSprintDashboard();
         })
         .catch(function(error) {
             console.log("Error getting document:", error);
         });
 }
+
 
 function readSprintData(newSprintId) {
     db.collection("Main").doc(newSprintId).get()
