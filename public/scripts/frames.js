@@ -9,8 +9,8 @@ function getTasks() {
 function getTasksData() {
     var result = "ok";
     db.collection(selectedSprint)
-        .onSnapshot(function (snapshot) {
-            snapshot.docChanges().forEach(function (change) {
+        .onSnapshot(function(snapshot) {
+            snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {
                     console.log('added');
                     createInstance(change.doc.data());
@@ -124,4 +124,3 @@ function setDataIntoCard() {
 
     return "ok";
 }
-
