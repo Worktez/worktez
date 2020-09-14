@@ -16,8 +16,6 @@ $("#startNewSprintButton").click(function() {
     getRawData();
 });
 
-
-
 $("#backToMainFromCreateNewTask").click(function() {
     newPage = "bodyContent";
     uiLoader();
@@ -27,7 +25,6 @@ $("#backToMainFromNewSprint").click(function() {
     newPage = "bodyContent";
     uiLoader();
 });
-
 
 $("#bodyContent").ready(function() {
     var result = getDashboardData();
@@ -93,13 +90,12 @@ $("#submitNewSprint").click(function() {
     var endDate = $("#enddateNewSprint").val();
     var status = $("#statusNewSprint").val();
 
-
     console.log(startDate);
     console.log(endDate);
     console.log(status);
 
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-    startNewSprintFunction({ Startdate: startDate, Enddate: endDate, Status: status }).then(result => {
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
         console.log(result.data);
         newPage = "bodyContent";
         uiLoader();

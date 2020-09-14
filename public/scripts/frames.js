@@ -16,7 +16,6 @@ function getTasksData() {
                 if (change.type === "added") {
                     console.log('added');
                     createInstance(change.doc.data());
-                    // fetchRawData(change.doc.data());
                 }
                 if (change.type === "modified") {
                     console.log('modified');

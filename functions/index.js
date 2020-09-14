@@ -57,7 +57,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             .catch(() => {
                 console.error("Error writing document: ", error);
             });
-
     });
 });
 
@@ -66,8 +65,8 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         console.log(request);
 
         var status = request.body.data.Status;
-        var startDate = request.body.data.Startdate;
-        var endDate = request.body.data.Enddate;
+        var startDate = request.body.data.StartDate;
+        var endDate = request.body.data.EndDate;
         var newSprintId;
         console.log("End Date from Backend: " + endDate);
         console.log("Start Date from Backend: " + startDate);
@@ -100,8 +99,6 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
             .catch(function(error) {
                 console.log("error", error);
             });
-
-
     });
 });
 

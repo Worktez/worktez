@@ -29,7 +29,6 @@ function getRawData() {
         .catch(function(error) {
             console.log("Error getting document:", error);
         });
-
 }
 
 function readSprintData(newSprintId) {
@@ -48,11 +47,7 @@ function readSprintData(newSprintId) {
         .catch(function(error) {
             console.log("Error", error);
         });
-
 }
-
-
-
 
 function createDashboardInstance(data) {
     var dashboardDataObj = new StoreSprintData(data);
@@ -76,7 +71,6 @@ function currentSprintDashboard() {
 
         }
     });
-
 }
 
 function sprintFilter(sprintFilterId) {
@@ -95,6 +89,5 @@ function sprintFilter(sprintFilterId) {
             document.getElementById("sprintStatus").innerHTML = element.sprintStatus;
 
         }
-
     });
 }
