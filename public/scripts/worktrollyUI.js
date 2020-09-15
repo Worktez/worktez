@@ -58,6 +58,13 @@ $("#backlogButton").click(function() {
     setDataIntoCard();
 });
 
+$("#totalCompletedTask").click(function() {
+    selectedStatus = "Completed";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
 $("#filterSprint").click(function() {
     var filterSprintNumber = $("#filterSprintNumber").val();
     sprintFilter(filterSprintNumber);
