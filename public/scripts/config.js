@@ -20,4 +20,6 @@ var collectionName = "Main";
 var newPage = "";
 var currentPage = "dashboard";
 var selectedCategory = "";
-var selectedSprint = "S4";
+var selectedStatus = "";
+var selectedSprint;
+var currentSprint;

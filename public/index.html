@@ -120,7 +120,7 @@
             <div class="row py-4">
                 <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
                 <div class="col-md-1 col-3">
-                    <button type="submit" class="btn btn-primary" id="#" style="font-size: 14px;">Backlog</button>
+                    <button type="submit" class="btn btn-primary" id="backlogButton" style="font-size: 14px;">Backlog</button>
                 </div>
             </div>
             <div class="row">
@@ -193,7 +193,6 @@
                                       Filter
                                     </button>
                                     <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
-                                        <button type="submit" class="btn btn-info" id="currentSprint" style="font-size: 14px;">Current Sprint</button>
                                         <div class="row py-3">
                                             <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumber" placeholder="enter sprint number">
                                             <div class="col-md-4 col-4 pl-2">
@@ -374,6 +373,10 @@
                 <div class="form-group col-md-4">
                     <label for="inputState">Sprint Number</label>
                     <input type="number" class="form-control" id="createNewTaskSprintNumber">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Story Point</label>
+                    <input type="number" min="0" class="form-control" id="storyPointNumber">
                 </div>
             </div>
             <div class="pt-2 pb-5">

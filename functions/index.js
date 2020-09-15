@@ -19,6 +19,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var estimatedTime = request.body.data.EstimatedTime;
         var status = request.body.data.Status;
         var category = request.body.data.Category;
+        var storyPointNumber = request.body.data.StoryPointNumber;
         var createNewTaskSprintNumber = request.body.data.CreateNewTaskSprintNumber;
         var fullSprintId = createSprintId(createNewTaskSprintNumber);
         var loggedWorkTotalTime = 0;
@@ -39,6 +40,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(status);
         console.log(category);
         console.log(createNewTaskSprintNumber);
+        console.log(storyPointNumber);
 
         db.collection("Main").doc("RawData").get().then((doc) => {
 
@@ -69,7 +71,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     Category: category,
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
-                    CreateNewTaskSprintNumber: createNewTaskSprintNumber
+                    CreateNewTaskSprintNumber: createNewTaskSprintNumber,
+                    StoryPointNumber: storyPointNumber
                 });
                 return Promise.resolve(setDataPromise);
             })
@@ -79,11 +82,11 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     TotalBusinessTask: totalBusinessTask,
                     TotalMarketingTask: totalMarketingTask,
                     TotalNumberOfTask: totalNumberOfTask
+
                 });
                 return Promise.resolve(updateSetDataPromise);
             })
-
-        .then(() => {
+            .then((updateSetDataPromise) => {
                 var result = { data: "working" }
                 console.log("Document successfully written!");
                 return response.status(200).send(result);
@@ -91,7 +94,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             .catch(() => {
                 var error = "not Working";
                 console.error("Error writing document: ", error);
-                return error;
+                return response.status(500).send(error);
             });
     });
 });
@@ -133,7 +136,9 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                 return response.status(200).send(work);
             })
             .catch(function(error) {
+                var error = "not Working";
                 console.log("error", error);
+                return response.status(500).send(error);
             });
     });
 });
