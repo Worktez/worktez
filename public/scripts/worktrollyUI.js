@@ -3,33 +3,92 @@ $("#createNewTaskButton").click(function() {
     uiLoader();
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+});
 
+$("#startNewSprint").ready(function() {
+    $("#startNewSprint").hide(0);
+});
+
+$("#startNewSprintButton").click(function() {
+    newPage = "startNewSprint";
+    uiLoader();
+    getNewSprintId();
 });
 
 $("#backToMainFromCreateNewTask").click(function() {
-    newPage = "bodyContent";
-    uiLoader();    
+    newPage = "dashboard";
+    uiLoader();
 });
 
-$("#bodyContent").ready(function() {
-    var result = getTasks();
+$("#backToMainFromNewSprint").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
+$("#dashboard").ready(function() {
+    var result = getDashboardData();
     console.log(result);
 });
 
-$("#createNewTask").ready(function(){
+$("#Business").click(function() {
+    selectedCategory = "Business";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
+$("#Development").click(function() {
+    selectedCategory = "Development";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
+$("#Marketing").click(function() {
+    selectedCategory = "Marketing";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
+$("#backlogButton").click(function() {
+    selectedStatus = "Completed";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
+$("#totalCompletedTask").click(function() {
+    selectedStatus = "Completed";
+    newPage = "taskPage";
+    uiLoader();
+    setDataIntoCard();
+});
+
+$("#filterSprint").click(function() {
+    var filterSprintNumber = $("#filterSprintNumber").val();
+    sprintFilter(filterSprintNumber);
+});
+
+
+$("#taskPage").ready(function() {
+    $("#taskPage").hide(0);
+});
+
+$("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-$("#editTask").ready(function(){
+
+$("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function(){
+$("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
 $("#submitCreateNewTask").click(function() {
-
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
     var priority = $("#priorityCreateNewTask").val();
@@ -39,6 +98,8 @@ $("#submitCreateNewTask").click(function() {
     var estimatedTime = $("#estimatedTimeCreateNewTask").val();
     var status = $("#statusCreateNewTask").val();
     var category = $("#categoryCreateNewTask").val();
+    var storyPointNumber = $("#storyPointNumber").val();
+    var createNewTaskSprintNumber = $("#createNewTaskSprintNumber").val();
 
     console.log(title);
     console.log(des);
@@ -49,11 +110,30 @@ $("#submitCreateNewTask").click(function() {
     console.log(estimatedTime);
     console.log(status);
     console.log(category);
+    console.log(createNewTaskSprintNumber);
+    console.log(storyPointNumber);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
         console.log(result.data);
-        newPage = "bodyContent"; 
+        newPage = "dashboard";
+        uiLoader();
+    });
+});
+
+$("#submitNewSprint").click(function() {
+    var startDate = $("#startdateNewSprint").val();
+    var endDate = $("#enddateNewSprint").val();
+    var status = $("#statusNewSprint").val();
+
+    console.log(startDate);
+    console.log(endDate);
+    console.log(status);
+
+    var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
         uiLoader();
     });
 });
