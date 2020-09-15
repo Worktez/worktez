@@ -8,7 +8,7 @@ function getTasks() {
 
 function getTasksData() {
     var result = "ok";
-    db.collection("S1")
+    db.collection(selectedSprint)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {

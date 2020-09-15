@@ -29,6 +29,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var totalBusinessTask;
         var totalMarketingTask;
         var totalNumberOfTask;
+        var result;
+        var totalCompletedTask = 0;
+        var totalUnCompletedTask = 0;
 
         console.log(title);
         console.log(des);
@@ -47,7 +50,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask + 1;
                 totalBusinessTask = doc.data().TotalBusinessTask + 1;
                 totalMarketingTask = doc.data().TotalBusinessTask + 1;
-                totalNumberOfTask = (totalDevelopmentTask + totalBusinessTask + totalMarketingTask);
+                totalNumberOfTask = doc.data().TotalNumberOfTask;
 
                 if (category === "Development") {
                     taskId = category[0] + totalDevelopmentTask;
@@ -56,7 +59,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 } else {
                     taskId = category[0] + totalMarketingTask;
                 }
-
                 console.log(taskId);
 
                 var setDataPromise = db.collection(fullSprintId).doc(taskId).set({
@@ -81,20 +83,22 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     TotalDevelopmentTask: totalDevelopmentTask,
                     TotalBusinessTask: totalBusinessTask,
                     TotalMarketingTask: totalMarketingTask,
-                    TotalNumberOfTask: totalNumberOfTask
-
+                    TotalNumberOfTask: totalNumberOfTask,
+                    TotalCompletedTask: totalCompletedTask,
+                    TotalUnCompletedTask: totalUnCompletedTask
                 });
                 return Promise.resolve(updateSetDataPromise);
             })
-            .then((updateSetDataPromise) => {
-                var result = { data: "working" }
+
+        .then((updateSetDataPromise) => {
+                result = { data: "OK" }
                 console.log("Document successfully written!");
                 return response.status(200).send(result);
             })
-            .catch(() => {
-                var error = "not Working";
+            .catch((error) => {
+                result = { data: error }
                 console.error("Error writing document: ", error);
-                return response.status(500).send(error);
+                return response.status(500).send(result);
             });
     });
 });
@@ -107,6 +111,8 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         var startDate = request.body.data.StartDate;
         var endDate = request.body.data.EndDate;
         var newSprintId;
+        var result;
+
         console.log("End Date from Backend: " + endDate);
         console.log("Start Date from Backend: " + startDate);
         console.log("Status from Backend: " + status);
@@ -131,14 +137,14 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
             })
             .then(function(setNewSprintCounterPromise) {
                 console.log("Sprint started successfully");
-                var work = { data: "working" }
+                result = { data: "OK" }
                 console.log("Document successfully written!");
-                return response.status(200).send(work);
+                return response.status(200).send(result);
             })
             .catch(function(error) {
-                var error = "not Working";
+                result = { data: error }
                 console.log("error", error);
-                return response.status(500).send(error);
+                return response.status(500).send(result);
             });
     });
 });
