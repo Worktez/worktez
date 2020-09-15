@@ -33,9 +33,6 @@
                 <li class="nav-item active pr-5 py-1 ">
                     <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New Task</button>
                 </li>
-                <!-- <li class="nav-item pr-5 py-1">
-                    <button type="button" class="btn btn-outline-light">All Task</button>
-                    </li> -->
                 <li class="nav-item active pr-5 py-1 ">
                     <button type="button" class="btn btn-outline-light" id="startNewSprintButton">Start New Sprint</button>
                 </li>
@@ -49,8 +46,8 @@
     </nav>
 
     <!-- new sprint   ------------------------------------------------------->
-    <div class="container py-5">
-        <div class="bg-light px-5" id="startNewSprint">
+    <div class="container">
+        <div class="bg-light px-5 py-5" id="startNewSprint">
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
@@ -116,17 +113,23 @@
             </div>
         </div>
     </div>
+
     <!-- Dashboard---------------------------------------------------------------------------- -->
-    <section id="dashboard" class="bg-light">
+    <section class="bg-light" id="dashboard">
         <div class="container py-5">
-            <h3 class="py-3 fontHeading">Task Overview</h3>
+            <div class="row py-4">
+                <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
+                <div class="col-md-1 col-3">
+                    <button type="submit" class="btn btn-primary" id="backlogButton" style="font-size: 14px;">Backlog</button>
+                </div>
+            </div>
             <div class="row">
-                <div class="col-md-4 col-12">
-                    <div id="Business" class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
+                <div class="col-md-3 col-12" id="Business" type="button">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
                         <div class="card-body">
-                            <h5 class="card-title">Business</h5>
-                            <div class="row card-text">
-                                <div class="col-md-5">
+                            <h5 class="card-title" style="font-size: 18px;">Business</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
                                     No. of Task:
                                 </div>
                                 <div class="col-md-6" id="totalBusinessTask"></div>
@@ -134,12 +137,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-12">
-                    <div id="Development" class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
+                <div class="col-md-3 col-12" id="Development" type="button">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
                         <div class="card-body">
-                            <h5 class="card-title">Development</h5>
-                            <div class="row card-text">
-                                <div class="col-md-5">
+                            <h5 class="card-title" style="font-size: 18px;">Development</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
                                     No. of Task:
                                 </div>
                                 <div class="col-md-6" id="totalDevelopmentTask"></div>
@@ -147,12 +150,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-12">
-                    <div id="Marketing" class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
+                <div class="col-md-3 col-12" id="Marketing" type="button">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
                         <div class="card-body">
-                            <h5 class="card-title">Marketing</h5>
-                            <div class="row card-text">
-                                <div class="col-md-5">
+                            <h5 class="card-title" style="font-size: 18px;">Marketing</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
                                     No. of Task:
                                 </div>
                                 <div class="col-md-6" id="totalMarketingTask"></div>
@@ -160,65 +163,65 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card bg-dark text-white" style="max-width: 66rem;">
-                <div class="card-body row">
-                    <div class="col-md-4">
-                        <div class="row">
-                            <h5 class="col-md-8 col-6">Total Task Completed: </h5>
-                            <h5 class="col-md-4 col-6" id="totalCompletedTask"></h5>
+                <div class="col-md-3 col-12" type="button">
+                    <div class="card text-white mb-3 bg-dark" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 18px;">Total Completed Task</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalCompletedTask"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="pt-3">
-                <div class="card" style="max-width: 66rem;">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="card-body" style="font-weight: bold; background-color: #e3f2fd;">
-                                <div class="row">
-                                    <div class="col-md-3 col-4">
-                                        <h5 class="pl-2">Sprint No:</h5>
-                                    </div>
-                                    <div class="col-md-5 col-4">
-                                        <h5 id="sprintId"></h5>
-                                    </div>
-                                </div>
+                <div class="card">
+                    <div class="card-body" style="font-weight: bold; background-color: #e3f2fd;">
+                        <div class="row">
+                            <div class="col-md-2 col-3">
+                                <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                             </div>
-                            <div class="card-body" style="background-color: white;">
-                                <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Details: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintDetail"></h6>
-                                </div>
-                                <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Start Date: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintStartDate"></h6>
-                                </div>
-                                <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">End Date: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintEndDate"></h6>
-                                </div>
-                                <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;">Status: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintStatus"></h6>
+                            <div class="col-md-6 col-2">
+                                <h5 id="sprintId"></h5>
+                            </div>
+                            <div class="col-md-4 col-7">
+                                <div class="dropdown">
+                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Filter
+                                    </button>
+                                    <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
+                                        <div class="row py-3">
+                                            <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumber" placeholder="enter sprint number">
+                                            <div class="col-md-4 col-4 pl-2">
+                                                <button class="btn btn-info" id="filterSprint" style="font-size: 14px;">Filter</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card-body">
-                                <h3 class="py-2" style="text-align: center;">Filter</h3>
-                                <div class="row">
-                                    <button type="submit" class="btn btn-primary btn-block" id="currentSprint">Current
-                                        Sprint</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card-body" style="background-color: white;">
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Details: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintDetail" style="font-size: 12px;"></h6>
                                 </div>
-                                <div class="row py-3">
-                                    <input class="col-md-8 col-8" type="number" id="filterSprintNumber" placeholder="enter sprint number">
-                                    <div class="col-md-4 col-4 pl-2">
-                                        <button class="btn btn-primary" id="filterSprint">Filter</button>
-                                    </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;"></h6>
                                 </div>
-                                <div class="row">
-                                    <button type="submit" class="btn btn-primary btn-block" id="#">Backlog</button>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;"></h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Status: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;"></h6>
                                 </div>
                             </div>
                         </div>
@@ -370,6 +373,10 @@
                 <div class="form-group col-md-4">
                     <label for="inputState">Sprint Number</label>
                     <input type="number" class="form-control" id="createNewTaskSprintNumber">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Story Point</label>
+                    <input type="number" min="0" class="form-control" id="storyPointNumber">
                 </div>
             </div>
             <div class="pt-2 pb-5">

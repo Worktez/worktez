@@ -8,7 +8,8 @@ function getTasks() {
 
 function getTasksData() {
     var result = "ok";
-    db.collection(selectedSprint)
+    var selectedDocument = "S" + selectedSprint;
+    db.collection(selectedDocument)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
                 if (change.type === "added") {
@@ -68,11 +69,12 @@ function setDataIntoCard() {
         var assignee = dataObj.assignee;
         var creator = dataObj.creator;
         var category = dataObj.category;
+        var status = dataObj.status;
         var tickets = document.getElementById("cardsList").innerHTML;
 
         if (category == selectedCategory) {
-            var frame = "<div class=\"card text-white bg-dark mb-4\" style=\"max-width: 32rem;\">";
 
+            var frame = "<div class=\"card text-white bg-dark mb-4\" style=\"max-width: 32rem;\">";
             frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
             frame += "<div class=\"card-body py-3\">";
             frame += "<div class=\"row pb-2\">";
@@ -114,10 +116,13 @@ function setDataIntoCard() {
             frame += "</div>";
             tickets += frame;
 
-            // document.getElementById("cardsList").innerHTML = tickets;
-
             document.getElementById("cardsList").innerHTML = tickets;
         }
+
+        // if (status != selectedStatus) {
+        //     document.getElementById("cardsList").innerHTML = tickets;
+        // }
+
     });
 
 
