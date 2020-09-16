@@ -20,3 +20,7 @@ var dashboardDataset = [];
 var collectionName = "Main";
 var newPage = "";
 var currentPage = "dashboard";
+var selectedCategory = "";
+var selectedStatus = "";
+var selectedSprint;
+var currentSprint;

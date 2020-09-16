@@ -13,18 +13,6 @@ class StoreData {
         this.workDone = data.WorkDone;
         this.creationDate = data.CreationDate;
         this.createNewTaskSprintNumber = data.CreateNewTaskSprintNumber;
-
-    }
-}
-
-class StoreSprintData {
-    constructor(data) {
-        this.sprintStatus = data.sprintStatus;
-        this.sprintEndDate = data.sprintEndDate;
-        this.sprintStartDate = data.sprintStartDate;
-        this.sprintDetail = data.sprintDetail;
-        this.totalDevelopmentTask = data.totalDevelopmentTask;
-        this.totalBusinessTask = data.totalBusinessTask;
-        this.totalMarketingTask = data.totalMarketingTask;
+        this.storyPointNumber = data.StoryPointNumber;
     }
 }
