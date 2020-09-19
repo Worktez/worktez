@@ -188,6 +188,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
     });
 });
 
+
 exports.logWork = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
@@ -231,8 +232,10 @@ exports.logWork = functions.https.onRequest((request, response) => {
 
 function createSprintId(createNewTaskSprintNumber) {
     if (createNewTaskSprintNumber === -1) {
+function createSprintId(sprintNumber) {
+    if (sprintNumber === -1) {
         return "Backlog";
     } else {
-        return ("S" + createNewTaskSprintNumber);
+        return ("S" + sprintNumber);
     }
 }
