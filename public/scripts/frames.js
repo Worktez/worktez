@@ -118,7 +118,7 @@ function setDataIntoCard() {
             tickets += frame;
 
             document.getElementById("cardsList").innerHTML = tickets;
-            fillLogWork(title);
+            // fillLogWork();
         }
 
         // if (status != selectedStatus) {
@@ -130,8 +130,9 @@ function setDataIntoCard() {
     return "ok";
 }
 
-function fillLogWork() {
-
+function fillLogWork(logTaskId, title, estimatedTime, logWorkTotalTime, workDone) {
+    document.getElementById("logTaskId").innerHTML = logTaskId;
+    document.getElementById("sprintNumber").innerHTML = sprintNumber;
     document.getElementById("logWorkTitle").innerHTML = title;
     document.getElementById("logWorkET").innerHTML = estimatedTime;
     document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;

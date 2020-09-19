@@ -188,13 +188,6 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
     });
 });
 
-function createSprintId(createNewTaskSprintNumber) {
-    if (createNewTaskSprintNumber === -1) {
-        return "Backlog";
-    } else {
-        return ("S" + createNewTaskSprintNumber);
-    }
-}
 exports.logWork = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
@@ -204,13 +197,15 @@ exports.logWork = functions.https.onRequest((request, response) => {
         var loggedWorkTotalTime = request.body.data.LogWorkTotalTime;
         var workDone = request.body.data.LogWorkDone;
         var logWorkRT = estimatedTime - loggedWorkTotalTime;
+        var createNewTaskSprintNumber = request.body.data.SprintNumber;
+        var fullSprintId = createSprintId(createNewTaskSprintNumber);
 
         console.log("logWorkStatus: " + status);
         console.log("logWorkET: " + estimatedTime);
         console.log("logWorkTotalTime: " + loggedWorkTotalTime);
         console.log("logWorkDone: " + workDone);
 
-        db.collection(fullSprintId).doc(TaskIdString).update({
+        db.collection(fullSprintId).update({
             LogWorkRT: logWorkRT,
             Status: status,
             ET: estimatedTime,
@@ -219,3 +214,11 @@ exports.logWork = functions.https.onRequest((request, response) => {
         });
     });
 });
+
+function createSprintId(createNewTaskSprintNumber) {
+    if (createNewTaskSprintNumber === -1) {
+        return "Backlog";
+    } else {
+        return ("S" + createNewTaskSprintNumber);
+    }
+}
