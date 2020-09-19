@@ -85,9 +85,10 @@ $("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-// $("#logWork").ready(function() {
-//     $("#logWork").hide(0);
-// });
+$("#logWork").ready(function() {
+    // $("#logWork").hide(0);
+    fillDataIntoLogWorkPage("D1", "qwe", 1, 12, 0, 0);
+});
 
 $("#submitCreateNewTask").click(function() {
     var title = $("#titleCreateNewTask").val();
@@ -140,15 +141,22 @@ $("#submitNewSprint").click(function() {
 });
 
 $("#logWorkSubmit").click(function() {
-    var sprintNumber = $("#sprintNumber").val();
-    var logTaskId = $("#logTaskId").val();
+    var sprintNumber = $("#logSprintNumber").html();
+    var logTaskId = $("#logTaskId").html();
     var logWorkDone = $("#logWorkDone").val();
-    var logWorkComment = $("#logWorkComment").val();
+    var logWorkComment = "";
     var logWorkStatus = $("#logWorkStatus").val();
-    logWorkDone = parseInt(logWorkDone) + parseInt(logWorkRT);
+    var logWorkHour = $("#logWorkHour").val();
+
+    console.log(sprintNumber);
+    console.log(logTaskId);
+    console.log(logWorkDone);
+    console.log(logWorkComment);
+    console.log(logWorkStatus);
+    console.log(logWorkHour);
 
     var logWorkFunction = firebase.functions().httpsCallable('logWork');
-    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogWorkHour: logWorkHour, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

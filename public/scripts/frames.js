@@ -130,13 +130,13 @@ function setDataIntoCard() {
     return "ok";
 }
 
-function fillLogWork(logTaskId, title, estimatedTime, logWorkTotalTime, workDone) {
-    document.getElementById("logTaskId").innerHTML = logTaskId;
-    document.getElementById("sprintNumber").innerHTML = sprintNumber;
+function fillDataIntoLogWorkPage(taskId, title, sprintNumber, estimatedTime, logWorkTotalTime, workDone) {
+    document.getElementById("logTaskId").innerHTML = taskId;
+    document.getElementById("logSprintNumber").innerHTML = sprintNumber;
     document.getElementById("logWorkTitle").innerHTML = title;
     document.getElementById("logWorkET").innerHTML = estimatedTime;
     document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
     document.getElementById("logWorkDone").value = workDone;
     document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
-    document.getElementById("logWorkComment").value = commentDateTime + logWorkTotalTime + " : ";
+    // document.getElementById("logWorkComment").value = commentDateTime + logWorkTotalTime + " : ";
 }

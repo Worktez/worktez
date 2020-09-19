@@ -402,7 +402,7 @@
                 <div class="col-md-1"></div>
                 <div class="alert alert-info form-inline col-md-5" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Sprint Number:</div>
-                    <div id="sprintNumber"> </div>
+                    <div id="logSprintNumber"> </div>
                 </div>
             </div>
 
@@ -415,6 +415,7 @@
                 <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
                 <div id="logWorkET"> </div>
             </div>
+
             <div class="alert bg-light form-inline w-50" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
                 <div id="logWorkTotalTime"> </div>
@@ -423,13 +424,22 @@
                 <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
                 <div id="logWorkRT"> </div>
             </div>
-            <div class="alert bg-light form-inline w-50" role="alert">
-                <div style="font-weight: bold;" class="pr-3">Status:</div>
-                <div id="logWorkStatus"> </div>
+            <div class="row pt-3 text-white">
+
+                <label for="inputState" class="col-sm-2 col-form-label">Status</label>
+                <select class="form-control col-sm-3 form-control mx-sm-3" id="logWorkStatus">
+        <option selected>choose...</option>
+        <option>Ice Box</option>
+        <option>Ready to start</option>
+        <option>Under Progress</option>
+        <option>Blocked</option>
+        <option>Completed</option>
+    </select>
+
             </div>
             <div class="row pt-3 text-white">
                 <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
-                <input type="number" id="logWorkTotalTime" class="col-sm-3 form-control mx-sm-3">
+                <input type="number" id="logWorkHour" class="col-sm-3 form-control mx-sm-3">
                 <small id="LogWorkHour" class="col text-muted">
                     hours
                 </small>
@@ -468,9 +478,6 @@
     <script src="scripts/worktrollyUI.js"></script>
     <script src="scripts/worktrollyClassData.js"></script>
     <script src="scripts/frames.js"></script>
-    <script src="scripts/logWork.js"></script>
-
-
 </body>
 
 </html>

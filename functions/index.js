@@ -20,8 +20,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
-        var createNewTaskSprintNumber = request.body.data.CreateNewTaskSprintNumber;
-        var fullSprintId = createSprintId(createNewTaskSprintNumber);
+        var sprintNumber = request.body.data.CreateNewTaskSprintNumber;
+        var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
         var taskId = "";
@@ -41,7 +41,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(estimatedTime);
         console.log(status);
         console.log(category);
-        console.log(createNewTaskSprintNumber);
+        console.log(sprintNumber);
         console.log(storyPointNumber);
 
         db.collection("Main").doc("RawData").get().then((doc) => {
@@ -80,7 +80,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     Category: category,
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
-                    CreateNewTaskSprintNumber: createNewTaskSprintNumber,
+                    SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber
                 });
                 return Promise.resolve(setDataPromise);
@@ -193,25 +193,39 @@ exports.logWork = functions.https.onRequest((request, response) => {
         console.log(request);
 
         var status = request.body.data.LogWorkStatus;
-        var estimatedTime = request.body.data.LogWorkET;
-        var loggedWorkTotalTime = request.body.data.LogWorkTotalTime;
+        var taskId = request.body.data.LogTaskId;
+        var logWorkHour = request.body.data.LogWorkHour;
         var workDone = request.body.data.LogWorkDone;
-        var logWorkRT = estimatedTime - loggedWorkTotalTime;
-        var createNewTaskSprintNumber = request.body.data.SprintNumber;
-        var fullSprintId = createSprintId(createNewTaskSprintNumber);
+        var sprintNumber = request.body.data.SprintNumber;
+        var fullSprintId = createSprintId(sprintNumber);
+        var logWorkTotalTime;
+        console.log(status);
+        console.log(taskId);
+        console.log(logWorkHour);
+        console.log(workDone);
+        console.log(sprintNumber);
+        console.log(fullSprintId);
 
-        console.log("logWorkStatus: " + status);
-        console.log("logWorkET: " + estimatedTime);
-        console.log("logWorkTotalTime: " + loggedWorkTotalTime);
-        console.log("logWorkDone: " + workDone);
+        db.collection(fullSprintId).doc(taskId).get().then(function(doc) {
+                logWorkTotalTime = doc.data().LogWorkTotalTime;
+                logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logWorkHour);
 
-        db.collection(fullSprintId).update({
-            LogWorkRT: logWorkRT,
-            Status: status,
-            ET: estimatedTime,
-            LogWorkTotalTime: loggedWorkTotalTime,
-            WorkDone: workDone
-        });
+                var updatePromise = db.collection(fullSprintId).doc(taskId).update({
+                    LogWorkTotalTime: logWorkTotalTime,
+                    WorkDone: workDone,
+                    Status: status
+                });
+                return Promise.resolve(updatePromise);
+            })
+            .then(function(updatePromise) {
+                var result = { data: "ok" };
+                return response.status(200).send(result);
+            })
+            .catch(function(error) {
+                var result = { data: error };
+                console.log("error", error);
+                return response.status(500).send(result)
+            });
     });
 });
 
