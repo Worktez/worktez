@@ -42,6 +42,7 @@ $("#Development").click(function() {
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
+
 });
 
 $("#Marketing").click(function() {
@@ -136,4 +137,19 @@ $("#submitNewSprint").click(function() {
         newPage = "dashboard";
         uiLoader();
     });
+});
+
+$("#logWorkSubmit").click(function() {
+    var logWorkDone = $("#logWorkDone").val();
+    var logWorkComment = $("#logWorkComment").val();
+    var logWorkStatus = $("#logWorkStatus").val();
+    logWorkDone = parseInt(logWorkDone) + parseInt(logWorkRT);
+
+    var logWorkFunction = firebase.functions().httpsCallable('logWork');
+    logWorkFunction({ LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
+
 });

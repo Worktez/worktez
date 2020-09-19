@@ -1,5 +1,6 @@
 class StoreData {
     constructor(data) {
+        this.id = data.Id;
         this.title = data.Title;
         this.status = data.Status;
         this.priority = data.Priority;

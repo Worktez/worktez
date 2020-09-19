@@ -68,6 +68,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 console.log(taskId);
 
                 var setDataPromise = db.collection(fullSprintId).doc(taskId).set({
+                    Id: taskId,
                     Title: title,
                     Description: des,
                     Priority: priority,
@@ -194,3 +195,27 @@ function createSprintId(createNewTaskSprintNumber) {
         return ("S" + createNewTaskSprintNumber);
     }
 }
+exports.logWork = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+
+        var status = request.body.data.LogWorkStatus;
+        var estimatedTime = request.body.data.LogWorkET;
+        var loggedWorkTotalTime = request.body.data.LogWorkTotalTime;
+        var workDone = request.body.data.LogWorkDone;
+        var logWorkRT = estimatedTime - loggedWorkTotalTime;
+
+        console.log("logWorkStatus: " + status);
+        console.log("logWorkET: " + estimatedTime);
+        console.log("logWorkTotalTime: " + loggedWorkTotalTime);
+        console.log("logWorkDone: " + workDone);
+
+        db.collection(fullSprintId).doc(TaskIdString).update({
+            LogWorkRT: logWorkRT,
+            Status: status,
+            ET: estimatedTime,
+            LogWorkTotalTime: loggedWorkTotalTime,
+            WorkDone: workDone
+        });
+    });
+});

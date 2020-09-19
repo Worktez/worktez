@@ -9,7 +9,6 @@ var firebaseConfig = {
     measurementId: "G-FEQ8PFLLCV"
 };
 
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
@@ -24,3 +23,4 @@ var selectedCategory = "";
 var selectedStatus = "";
 var selectedSprint;
 var currentSprint;
+var selectedTaskId = "D1";

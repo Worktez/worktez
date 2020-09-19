@@ -397,29 +397,33 @@
             <div class="row pt-5 pb-2 ml-1">
                 <div class="alert alert-info form-inline col-sm-4" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Id:</div>
-                    <div id="Id">XXXXXXXXXX</div>
+                    <div id="logDetailTaskId"> </div>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="alert alert-info form-inline col-md-7" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Title: </div>
-                    <div id="Id">Web app using Bootstrap</div>
+                    <div id="logWorkTitle"></div>
                 </div>
             </div>
             <div class="alert bg-light form-inline w-50 pt-3" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
-                <div id="Id">XXXXXXXXXX</div>
+                <div id="logWorkET"> </div>
             </div>
             <div class="alert bg-light form-inline w-50" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
-                <div id="Id">XXXXXXXXXX</div>
+                <div id="logWorkTotalTime"> </div>
             </div>
             <div class="alert bg-light form-inline w-50" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
-                <div id="Id">XXXXXXXXXX</div>
+                <div id="logWorkRT"> </div>
+            </div>
+            <div class="alert bg-light form-inline w-50" role="alert">
+                <div style="font-weight: bold;" class="pr-3">Status:</div>
+                <div id="logWorkStatus"> </div>
             </div>
             <div class="row pt-3 text-white">
                 <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
-                <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
+                <input type="number" id="logWorkTotalTime" class="col-sm-3 form-control mx-sm-3">
                 <small id="LogWorkHour" class="col text-muted">
                     hours
                 </small>
@@ -427,7 +431,7 @@
 
             <div class="row py-2 text-white">
                 <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
-                <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
+                <input type="number" id="logWorkDone" class="col-sm-3 form-control mx-sm-3">
                 <small id="LogWorkHour" class="col text-muted">
                     in percentage(%)
                 </small>
@@ -435,11 +439,11 @@
             <div class="form-group row text-white">
                 <label for="comment" class="col-md-2 col-form-label">Comment</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="comment">
+                    <input type="text" class="form-control" id="logWorkComment">
                 </div>
             </div>
             <div class="pt-3 pb-5">
-                <button class="btn btn-primary" type="submit ">Submit</button>
+                <button class="btn btn-primary" type="submit" id="logWorkSubmit">Submit</button>
             </div>
         </div>
     </div>
@@ -458,6 +462,7 @@
     <script src="scripts/worktrollyUI.js"></script>
     <script src="scripts/worktrollyClassData.js"></script>
     <script src="scripts/frames.js"></script>
+    <script src="scripts/logWork.js"></script>
 
 
 </body>

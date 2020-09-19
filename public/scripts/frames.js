@@ -64,6 +64,7 @@ function setDataIntoCard() {
     document.getElementById("cardsList").innerHTML = "";
 
     dataset.forEach(dataObj => {
+        var id = dataObj.id;
         var title = dataObj.title;
         var priority = dataObj.priority;
         var assignee = dataObj.assignee;
@@ -81,7 +82,7 @@ function setDataIntoCard() {
             frame += "<div class=\"col-md-4 col-4\">";
             frame += "<h6 class=\"card-title text-center py-1\" style=\"background-color: black;\"> Id: </h6>";
             frame += "</div>";
-            // frame += "<div class=\"col-md-8 col-8 px-2\">" + id + "</div>";
+            frame += "<div class=\"col-md-8 col-8 px-2\">" + id + "</div>";
             frame += "</div>";
 
             frame += "<div class=\"row pb-2\">";
@@ -117,6 +118,7 @@ function setDataIntoCard() {
             tickets += frame;
 
             document.getElementById("cardsList").innerHTML = tickets;
+            fillLogWork(title);
         }
 
         // if (status != selectedStatus) {
@@ -125,7 +127,15 @@ function setDataIntoCard() {
 
     });
 
-
-
     return "ok";
+}
+
+function fillLogWork() {
+
+    document.getElementById("logWorkTitle").innerHTML = title;
+    document.getElementById("logWorkET").innerHTML = estimatedTime;
+    document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
+    document.getElementById("logWorkDone").value = workDone;
+    document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
+    document.getElementById("logWorkComment").value = commentDateTime + logWorkTotalTime + " : ";
 }
