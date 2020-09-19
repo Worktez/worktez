@@ -13,7 +13,7 @@ class StoreData {
         this.logWorkTotalTime = data.LogWorkTotalTime;
         this.workDone = data.WorkDone;
         this.creationDate = data.CreationDate;
-        this.createNewTaskSprintNumber = data.CreateNewTaskSprintNumber;
+        this.sprintNumber = data.sprintNumber;
         this.storyPointNumber = data.StoryPointNumber;
     }
 }

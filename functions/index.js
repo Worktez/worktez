@@ -20,7 +20,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
-        var createNewTaskSprintNumber = request.body.data.CreateNewTaskSprintNumber;
+        var sprintNumber = request.body.data.SprintNumber;
         var fullSprintId = createSprintId(createNewTaskSprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -41,7 +41,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(estimatedTime);
         console.log(status);
         console.log(category);
-        console.log(createNewTaskSprintNumber);
+        console.log(sprintNumber);
         console.log(storyPointNumber);
 
         db.collection("Main").doc("RawData").get().then((doc) => {
@@ -80,7 +80,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     Category: category,
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
-                    CreateNewTaskSprintNumber: createNewTaskSprintNumber,
+                    SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber
                 });
                 return Promise.resolve(setDataPromise);
@@ -188,56 +188,10 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
     });
 });
 
-function createSprintId(createNewTaskSprintNumber) {
-    if (createNewTaskSprintNumber === -1) {
+function createSprintId(sprintNumber) {
+    if (sprintNumber === -1) {
         return "Backlog";
     } else {
-        return ("S" + createNewTaskSprintNumber);
+        return ("S" + sprintNumber);
     }
 }
-
-// exports.editTaskPage = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         console.log(request);
-//         var title = request.body.data.Title;
-//         var des = request.body.data.Description;
-//         var priority = request.body.data.Priority;
-//         var difficulty = request.body.data.Difficulty;
-//         var creator = request.body.data.Creator;
-//         var assignee = request.body.data.Assignee;
-//         var estimatedTime = request.body.data.EstimatedTime;
-//         var status = request.body.data.Status;
-//         var category = request.body.data.Category;
-//         // var storyPointNumber = request.body.data.StoryPointNumber;
-//         // var sprintNumber = request.body.data.SprintNumber;
-
-
-//         console.log(title);
-//         console.log(des);
-//         console.log(priority);
-//         console.log(difficulty);
-//         console.log(creator);
-//         console.log(assignee);
-//         console.log(estimatedTime);
-//         console.log(status);
-//         console.log(category);
-//         // console.log(sprintNumber);
-//         // console.log(storyPointNumber);
-
-//         db.collection(fullSprintId).doc(taskId).update({
-//             Title: title,
-//             Description: des,
-//             Priority: priority,
-//             Difficulty: difficulty,
-//             Creator: creator,
-//             Assignee: assignee,
-//             ET: estimatedTime,
-//             Status: status,
-//             Category: category,
-//             LogWorkTotalTime: loggedWorkTotalTime,
-//             WorkDone: workDone,
-//             // SprintNumber: sprintNumber,
-//             // StoryPointNumber: storyPointNumber
-//         });
-//     });
-// });
