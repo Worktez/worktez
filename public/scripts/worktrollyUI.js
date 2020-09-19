@@ -88,6 +88,15 @@ $("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
+$("#cardDescription").ready(function() {
+    $("#cardDescription").hide(0);
+});
+
+$("#backToMainFromCardDescription").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
 $("#submitCreateNewTask").click(function() {
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
@@ -99,7 +108,7 @@ $("#submitCreateNewTask").click(function() {
     var status = $("#statusCreateNewTask").val();
     var category = $("#categoryCreateNewTask").val();
     var storyPointNumber = $("#storyPointNumber").val();
-    var createNewTaskSprintNumber = $("#createNewTaskSprintNumber").val();
+    var sprintNumber = $("#createNewTaskSprintNumber").val();
 
     console.log(title);
     console.log(des);
@@ -110,11 +119,11 @@ $("#submitCreateNewTask").click(function() {
     console.log(estimatedTime);
     console.log(status);
     console.log(category);
-    console.log(createNewTaskSprintNumber);
+    console.log(sprintNumber);
     console.log(storyPointNumber);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, CreateNewTaskSprintNumber: createNewTaskSprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SrintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

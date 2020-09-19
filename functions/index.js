@@ -20,7 +20,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
-        var createNewTaskSprintNumber = request.body.data.CreateNewTaskSprintNumber;
+        var sprintNumber = request.body.data.SprintNumber;
         var fullSprintId = createSprintId(createNewTaskSprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -41,7 +41,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(estimatedTime);
         console.log(status);
         console.log(category);
-        console.log(createNewTaskSprintNumber);
+        console.log(sprintNumber);
         console.log(storyPointNumber);
 
         db.collection("Main").doc("RawData").get().then((doc) => {
@@ -68,6 +68,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 console.log(taskId);
 
                 var setDataPromise = db.collection(fullSprintId).doc(taskId).set({
+                    Id: taskId,
                     Title: title,
                     Description: des,
                     Priority: priority,
@@ -79,7 +80,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     Category: category,
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
-                    CreateNewTaskSprintNumber: createNewTaskSprintNumber,
+                    SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber
                 });
                 return Promise.resolve(setDataPromise);
@@ -187,10 +188,10 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
     });
 });
 
-function createSprintId(createNewTaskSprintNumber) {
-    if (createNewTaskSprintNumber === -1) {
+function createSprintId(sprintNumber) {
+    if (sprintNumber === -1) {
         return "Backlog";
     } else {
-        return ("S" + createNewTaskSprintNumber);
+        return ("S" + sprintNumber);
     }
 }
