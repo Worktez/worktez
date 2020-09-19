@@ -88,6 +88,29 @@ $("#logWork").ready(function() {
     $("#logWork").hide(0);
 });
 
+$("#cardDescription").ready(function() {
+    $("#cardDescription").hide(0);
+});
+
+$("#backToMainFromCardDescription").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
+$("#editPage").click(function() {
+    newPage = "editTaskPage";
+    uiLoader();
+});
+
+$("#editTaskPage").ready(function() {
+    $("#editTaskPage").hide(0);
+});
+
+$("#backToMainFromEditTaskPage").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
 $("#submitCreateNewTask").click(function() {
     var title = $("#titleCreateNewTask").val();
     var des = $("#desCreateNewTask").val();
@@ -132,6 +155,39 @@ $("#submitNewSprint").click(function() {
 
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
     startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
+});
+
+$("#editPage").click(function() {
+    var title = $("#editDetailsTitle").val();
+    var des = $("#editDetailsDescription").val();
+    var priority = $("#editDetailsPriority").val();
+    var difficulty = $("#editDetailsDifficulty").val();
+    var creator = $("#editDetailsCreator").val();
+    var assignee = $("#editDetailsAssignee").val();
+    var estimatedTime = $("#editDetailsEstimatedTime").val();
+    var status = $("#editDetailsStatus").val();
+    var category = $("#editDetailsCategory").val();
+    // var storyPointNumber = $("#editDetailsStoryPoint").val();
+    // var sprintNumber = $("#editDetailsSprintNumber").val();
+
+    console.log(title);
+    console.log(des);
+    console.log(priority);
+    console.log(difficulty);
+    console.log(creator);
+    console.log(assignee);
+    console.log(estimatedTime);
+    console.log(status);
+    console.log(category);
+    // console.log(sprintNumber);
+    // console.log(storyPointNumber);
+
+    var editTaskPageFunction = firebase.functions().httpsCallable('editTaskPage');
+    editTaskPageFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

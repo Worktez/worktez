@@ -236,7 +236,7 @@
         <div class="container pt-2 pb-5 pl-2">
             <h3 class="ml-1 fontHeading">Tasks</h3>
             <hr class="w-75 ml-0">
-            <div id="cardsList">
+            <div id="cardsList" type="button">
                 <!-- <div class="card text-white bg-dark" style="max-width: 32rem;">
                 <div class="card-header" id="cardDate"></div>
                 <div class="card-body py-3">
@@ -444,6 +444,207 @@
         </div>
     </div>
 
+    <!-- card description-------------------------------------------------------- -->
+    <div class="container bg-dark text-white">
+        <div class="my-5 mx-5" id="cardDescription">
+            <div class="row mt-5">
+                <div class="col-md-11 col-10"></div>
+                <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCardDescription">
+                       close
+                    </span>
+            </div>
+            <div class="row">
+                <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
+                    <div style="font-weight: bold;" class="mr-3">Date:</div>
+                    <div id="creationDateCreateNewTask"></div>
+                </div>
+                <div class="col-md-5 col-1"></div>
+                <div class="col-md-2 col-4">
+                    <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" id="#">Log Work</button>
+                </div>
+                <div class="col-md-1 col-2">
+                    <button type="submit" class="btn btn-primary mt-2 mb-5" id="editPage">Edit</button>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="input" class="col-sm-2 col-form-label">Title</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="framesDetailsTitle"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="framesDetailsDescription"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Assignee</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsAssignee"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Creator</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsCreator"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Estimated Time</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsEstimatedTime"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Category</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsCategory"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Priority</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsPriority"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Difficulty</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsDifficulty"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsStatus"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Logged Hours</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsLogHours"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Work Done</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="framesDetailsWorkDone"></div>
+                    </div>
+                </div>
+                <!-- <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Creation Date</label>
+                        <div class="alert alert-info form-inline" role="alert">
+                            <div id="framesDetailsCreationDate"></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- edit Page-------------------------------------------------------- -->
+    <div class="container py-5" id="editTaskPage">
+        <div class="bg-light px-5">
+            <div class="row pt-2">
+                <div class="col-md-11 col-10"></div>
+                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromEditTaskPage">
+                    close
+                </span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="pl-1 fontHeading">Edit Page</h3>
+                    <hr class="w-75 ml-0">
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <label for="input" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-10">
+                    <div class="alert alert-info form-inline col-sm-10" role="alert" id="editDetailsTitle"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="editDetailsDescription">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Assignee</label>
+                    <input type="text" class="form-control" id="editDetailsAssignee">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Creator</label>
+                    <div class="alert alert-info form-inline" role="alert" id="editDetailsCreator"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Estimated Time</label>
+                    <input type="number" class="form-control" id="editDetailsEstimatedTime">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Category</label>
+                    <select class="form-control" id="editDetailsCategory">
+                        <option selected>choose...</option>
+                        <option>Business</option>
+                        <option>Development</option>
+                        <option>Marketing</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Priority</label>
+                    <select class="form-control" id="editDetailsPriority">
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Difficulty</label>
+                    <select class="form-control" id="editDetailsDifficulty">
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <select class="form-control" id="editDetailsStatus">
+                        <option selected>choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
+                </div>
+                <!-- <div class="form-group col-md-4">
+                    <label for="inputState">Sprint Number</label>
+                    <input type="number" class="form-control" id="editDetailsSprintNumber">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Story Point</label>
+                    <input type="number" min="0" class="form-control" id="editDetailsStoryPoint">
+                </div> -->
+            </div>
+            <div class="pt-2 pb-5">
+                <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Update</button>
+            </div>
+        </div>
+    </div>
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
