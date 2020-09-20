@@ -10,6 +10,13 @@ $("#startNewSprint").ready(function() {
 });
 
 $("#logWorkPage").click(function() {
+    var id = $("#idTaskDescription").html();
+    var title = $("#titleTaskDescription").html();
+    var estimatedTime = $("#estimatedTimeTaskDescription").html();
+    var logWorkTotalTime = $("#logHoursTaskDescription").html();
+    var workDone = $("#workDoneTaskDescription").html();
+    var sprintNumber = $("#sprintNumberTaskDescription").html();
+    console.log(sprintNumber);
     newPage = "logWorkTask";
     uiLoader();
     fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);

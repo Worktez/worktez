@@ -24,7 +24,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
-        var logHours = 0;
         var taskId = "";
         var totalDevelopmentTask;
         var totalBusinessTask;
@@ -81,7 +80,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     Category: category,
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
-                    LogHours: logHours,
                     SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber
                 });

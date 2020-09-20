@@ -1,7 +1,6 @@
 class StoreData {
     constructor(data) {
         this.id = data.Id;
-        this.taskId = data.TaskId;
         this.title = data.Title;
         this.status = data.Status;
         this.priority = data.Priority;
@@ -13,7 +12,6 @@ class StoreData {
         this.assignee = data.Assignee;
         this.logWorkTotalTime = data.LogWorkTotalTime;
         this.workDone = data.WorkDone;
-        this.logHours = data.LogHours;
         this.creationDate = data.CreationDate;
         this.sprintNumber = data.SprintNumber;
         this.storyPointNumber = data.StoryPointNumber;
