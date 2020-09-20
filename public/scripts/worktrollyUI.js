@@ -160,17 +160,17 @@ $("#logWorkSubmit").click(function() {
     var logWorkDone = $("#logWorkDone").val();
     var logWorkComment = "";
     var logWorkStatus = $("#logWorkStatus").val();
-    var logWorkHour = $("#logWorkHour").val();
+    var logHours = $("#logWorkHour").val();
 
     console.log(sprintNumber);
     console.log(logTaskId);
     console.log(logWorkDone);
     console.log(logWorkComment);
     console.log(logWorkStatus);
-    console.log(logWorkHour);
+    console.log(logHours);
 
     var logWorkFunction = firebase.functions().httpsCallable('logWork');
-    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogWorkHour: logWorkHour, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

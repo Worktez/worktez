@@ -75,6 +75,7 @@ function setDataIntoCard() {
         var creator = dataObj.creator;
         var category = dataObj.category;
         var status = dataObj.status;
+        var taskId = dataObj.taskId;
         var logWorkTotalTime = dataObj.logWorkTotalTime;
         var workDone = dataObj.workDone;
         var creationDate = dataObj.creationDate;
@@ -105,6 +106,8 @@ function setDataIntoCard() {
             frame += category;
             frame += "','"
             frame += status;
+            frame += "','"
+            frame += taskId;
             frame += "','"
             frame += logWorkTotalTime;
             frame += "','"
@@ -158,7 +161,7 @@ function setDataIntoCard() {
             tickets += frame;
 
             document.getElementById("cardsList").innerHTML = tickets;
-            // fillLogWork();
+
         }
 
         // if (status != selectedStatus) {
@@ -170,22 +173,10 @@ function setDataIntoCard() {
     return "ok";
 }
 
-function fillDataIntoLogWorkPage(taskId, title, sprintNumber, estimatedTime, logWorkTotalTime, workDone) {
-    document.getElementById("logTaskId").innerHTML = taskId;
-    document.getElementById("logSprintNumber").innerHTML = sprintNumber;
-    document.getElementById("logWorkTitle").innerHTML = title;
-    document.getElementById("logWorkET").innerHTML = estimatedTime;
-    document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
-    document.getElementById("logWorkDone").value = workDone;
-    document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
-    // document.getElementById("logWorkComment").value = commentDateTime + logWorkTotalTime + " : ";
-}
-
-function showDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
+function showDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, taskId, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
     newPage = "cardDescription";
     uiLoader();
-
-    setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate);
+    setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, taskId, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate);
 }
 
 function setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
@@ -201,4 +192,23 @@ function setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHo
     document.getElementById("logHoursTaskDescription").innerHTML = logHours;
     document.getElementById("workDoneTaskDescription").innerHTML = workDone;
 
+}
+
+function fillDataIntoLogWorkPage() {
+    dataset.forEach(dataObj => {
+        var id = dataObj.id;
+        var title = dataObj.title;
+        var estimatedTime = dataObj.estimatedTime;
+        var logWorkTotalTime = dataObj.logWorkTotalTime;
+        var workDone = dataObj.workDone;
+        var sprintNumber = dataObj.sprintNumber;
+
+        document.getElementById("logTaskId").innerHTML = id;
+        document.getElementById("logSprintNumber").innerHTML = sprintNumber;
+        document.getElementById("logWorkTitle").innerHTML = title;
+        document.getElementById("logWorkET").innerHTML = estimatedTime;
+        document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
+        document.getElementById("logWorkDone").value = workDone;
+        document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
+    });
 }

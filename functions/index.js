@@ -24,6 +24,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
+        var logHours = 0;
         var taskId = "";
         var totalDevelopmentTask;
         var totalBusinessTask;
@@ -80,6 +81,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     Category: category,
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
+                    LogHours: logHours,
                     SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber
                 });
@@ -193,25 +195,26 @@ exports.logWork = functions.https.onRequest((request, response) => {
 
         var status = request.body.data.LogWorkStatus;
         var taskId = request.body.data.LogTaskId;
-        var logWorkHour = request.body.data.LogWorkHour;
+        var logHours = request.body.data.LogHours;
         var workDone = request.body.data.LogWorkDone;
         var sprintNumber = request.body.data.SprintNumber;
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
         console.log(status);
         console.log(taskId);
-        console.log(logWorkHour);
+        console.log(logHours);
         console.log(workDone);
         console.log(sprintNumber);
         console.log(fullSprintId);
 
         db.collection(fullSprintId).doc(taskId).get().then(function(doc) {
                 logWorkTotalTime = doc.data().LogWorkTotalTime;
-                logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logWorkHour);
+                logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
 
                 var updatePromise = db.collection(fullSprintId).doc(taskId).update({
                     LogWorkTotalTime: logWorkTotalTime,
                     WorkDone: workDone,
+                    LogHours: logHours,
                     Status: status
                 });
                 return Promise.resolve(updatePromise);
