@@ -20,7 +20,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
-        var sprintNumber = request.body.data.CreateNewTaskSprintNumber;
+        var sprintNumber = request.body.data.SprintNumber;
         var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -228,3 +228,11 @@ exports.logWork = functions.https.onRequest((request, response) => {
             });
     });
 });
+
+function createSprintId(sprintNumber) {
+    if (sprintNumber === -1) {
+        return "Backlog";
+    } else {
+        return ("S" + sprintNumber);
+    }
+}

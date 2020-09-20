@@ -130,7 +130,7 @@ $("#submitCreateNewTask").click(function() {
     console.log(storyPointNumber);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SrintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
