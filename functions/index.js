@@ -228,11 +228,3 @@ exports.logWork = functions.https.onRequest((request, response) => {
             });
     });
 });
-
-// function createSprintId(createNewTaskSprintNumber) {
-//     if (createNewTaskSprintNumber === -1) {
-//         return "Backlog";
-//     } else {
-//         return ("S" + createNewTaskSprintNumber);
-//     }
-// }
