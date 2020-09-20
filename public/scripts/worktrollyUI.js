@@ -85,10 +85,9 @@ $("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function() {
-    // $("#logWork").hide(0);
-    fillDataIntoLogWorkPage("D1", "qwe", 1, 12, 0, 0);
-});
+// $("#logWork").ready(function() {
+//      $("#logWork").hide(0);
+// });
 
 $("#submitCreateNewTask").click(function() {
     var title = $("#titleCreateNewTask").val();
