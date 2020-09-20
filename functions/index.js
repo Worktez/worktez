@@ -187,7 +187,6 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
             });
     });
 });
-
 exports.logWork = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
