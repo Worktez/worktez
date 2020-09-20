@@ -12,7 +12,7 @@ $("#startNewSprint").ready(function() {
 $("#logWorkPage").click(function() {
     newPage = "logWorkTask";
     uiLoader();
-    fillDataIntoLogWorkPage();
+    fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
 });
 
 $("#startNewSprintButton").click(function() {

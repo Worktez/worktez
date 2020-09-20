@@ -60,8 +60,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     totalBusinessTask = totalBusinessTask + 1;
                     taskId = category[0] + totalBusinessTask;
                 } else {
-                    totalMarketingTask = totalBusinessTask + 1;
-                    taskId = category[0] + totalBusinessTask;
+                    totalMarketingTask = totalMarketingTask + 1;
+                    taskId = category[0] + totalMarketingTask;
                 }
 
                 totalUnCompletedTask = totalUnCompletedTask + 1;

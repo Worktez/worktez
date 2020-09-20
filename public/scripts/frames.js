@@ -161,6 +161,7 @@ function setDataIntoCard() {
             tickets += frame;
 
             document.getElementById("cardsList").innerHTML = tickets;
+            fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
 
         }
 
@@ -179,7 +180,7 @@ function showDescription(id, title, des, estimatedTime, difficulty, logHours, pr
     setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, taskId, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate);
 }
 
-function setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
+function setDataIntoDescription(title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
     document.getElementById("titleTaskDescription").innerHTML = title;
     document.getElementById("descriptionTaskDescription").innerHTML = des;
     document.getElementById("priorityTaskDescription").innerHTML = priority;
@@ -194,21 +195,12 @@ function setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHo
 
 }
 
-function fillDataIntoLogWorkPage() {
-    dataset.forEach(dataObj => {
-        var id = dataObj.id;
-        var title = dataObj.title;
-        var estimatedTime = dataObj.estimatedTime;
-        var logWorkTotalTime = dataObj.logWorkTotalTime;
-        var workDone = dataObj.workDone;
-        var sprintNumber = dataObj.sprintNumber;
-
-        document.getElementById("logTaskId").innerHTML = id;
-        document.getElementById("logSprintNumber").innerHTML = sprintNumber;
-        document.getElementById("logWorkTitle").innerHTML = title;
-        document.getElementById("logWorkET").innerHTML = estimatedTime;
-        document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
-        document.getElementById("logWorkDone").value = workDone;
-        document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
-    });
+function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber) {
+    document.getElementById("logTaskId").innerHTML = id;
+    document.getElementById("logSprintNumber").innerHTML = sprintNumber;
+    document.getElementById("logWorkTitle").innerHTML = title;
+    document.getElementById("logWorkET").innerHTML = estimatedTime;
+    document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
+    document.getElementById("logWorkDone").value = workDone;
+    document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
 }
