@@ -21,7 +21,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
         var sprintNumber = request.body.data.SprintNumber;
-        var fullSprintId = createSprintId(createNewTaskSprintNumber);
+        var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
         var taskId = "";
@@ -59,8 +59,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     totalBusinessTask = totalBusinessTask + 1;
                     taskId = category[0] + totalBusinessTask;
                 } else {
-                    totalMarketingTask = totalBusinessTask + 1;
-                    taskId = category[0] + totalBusinessTask;
+                    totalMarketingTask = totalMarketingTask + 1;
+                    taskId = category[0] + totalMarketingTask;
                 }
 
                 totalUnCompletedTask = totalUnCompletedTask + 1;
@@ -184,6 +184,47 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                 result = { data: error }
                 console.log("error", error);
                 return response.status(500).send(result);
+            });
+    });
+});
+exports.logWork = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+
+        var status = request.body.data.LogWorkStatus;
+        var taskId = request.body.data.LogTaskId;
+        var logHours = request.body.data.LogHours;
+        var workDone = request.body.data.LogWorkDone;
+        var sprintNumber = request.body.data.SprintNumber;
+        var fullSprintId = createSprintId(sprintNumber);
+        var logWorkTotalTime;
+        console.log(status);
+        console.log(taskId);
+        console.log(logHours);
+        console.log(workDone);
+        console.log(sprintNumber);
+        console.log(fullSprintId);
+
+        db.collection(fullSprintId).doc(taskId).get().then(function(doc) {
+                logWorkTotalTime = doc.data().LogWorkTotalTime;
+                logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
+
+                var updatePromise = db.collection(fullSprintId).doc(taskId).update({
+                    LogWorkTotalTime: logWorkTotalTime,
+                    WorkDone: workDone,
+                    LogHours: logHours,
+                    Status: status
+                });
+                return Promise.resolve(updatePromise);
+            })
+            .then(function(updatePromise) {
+                var result = { data: "ok" };
+                return response.status(200).send(result);
+            })
+            .catch(function(error) {
+                var result = { data: error };
+                console.log("error", error);
+                return response.status(500).send(result)
             });
     });
 });

@@ -69,7 +69,6 @@ function setDataIntoCard() {
         var des = dataObj.des;
         var estimatedTime = dataObj.estimatedTime;
         var difficulty = dataObj.difficulty;
-        var logHours = dataObj.logHours;
         var priority = dataObj.priority;
         var assignee = dataObj.assignee;
         var creator = dataObj.creator;
@@ -83,6 +82,7 @@ function setDataIntoCard() {
         var tickets = document.getElementById("cardsList").innerHTML;
 
         if (category == selectedCategory) {
+            console.log(sprintNumber);
 
 
             var frame = "<div class=\"card text-white bg-dark mb-4\" onclick=\"showDescription('" + id + "','"
@@ -94,27 +94,25 @@ function setDataIntoCard() {
             frame += "','"
             frame += difficulty;
             frame += "','"
-            frame += logHours;
-            frame += "','"
             frame += priority;
             frame += "','"
             frame += assignee;
             frame += "','"
             frame += creator;
             frame += "','"
-            frame += category;
-            frame += "','"
             frame += status;
             frame += "','"
+            frame += category;
+            frame += "','"
             frame += logWorkTotalTime;
-            frame += "','"
-            frame += workDone;
-            frame += "','"
-            frame += creationDate;
             frame += "','"
             frame += sprintNumber;
             frame += "','"
             frame += storyPointNumber;
+            frame += "','"
+            frame += workDone;
+            frame += "','"
+            frame += creationDate;
             frame += "')\" style=\"max-width: 32rem;\">";
             frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
             frame += "<div class=\"card-body py-3\">";
@@ -159,24 +157,19 @@ function setDataIntoCard() {
 
             document.getElementById("cardsList").innerHTML = tickets;
         }
-
-        // if (status != selectedStatus) {
-        //     document.getElementById("cardsList").innerHTML = tickets;
-        // }
-
     });
 
     return "ok";
 }
 
-function showDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
+function showDescription(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
     newPage = "cardDescription";
     uiLoader();
-
-    setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate);
+    setDataIntoDescription(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate);
 }
 
-function setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHours, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
+function setDataIntoDescription(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, logWorkTotalTime, sprintNumber, storyPointNumber, workDone, creationDate) {
+    document.getElementById("idTaskDescription").innerHTML = id;
     document.getElementById("titleTaskDescription").innerHTML = title;
     document.getElementById("descriptionTaskDescription").innerHTML = des;
     document.getElementById("priorityTaskDescription").innerHTML = priority;
@@ -185,8 +178,18 @@ function setDataIntoDescription(id, title, des, estimatedTime, difficulty, logHo
     document.getElementById("categoryTaskDescription").innerHTML = category;
     document.getElementById("statusTaskDescription").innerHTML = status;
     document.getElementById("estimatedTimeTaskDescription").innerHTML = estimatedTime;
+    document.getElementById("sprintNumberTaskDescription").innerHTML = sprintNumber;
     document.getElementById("difficultyTaskDescription").innerHTML = difficulty;
-    document.getElementById("logHoursTaskDescription").innerHTML = logHours;
+    document.getElementById("logHoursTaskDescription").innerHTML = logWorkTotalTime;
     document.getElementById("workDoneTaskDescription").innerHTML = workDone;
+}
 
+function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber) {
+    document.getElementById("logTaskId").innerHTML = id;
+    document.getElementById("logSprintNumber").innerHTML = sprintNumber;
+    document.getElementById("logWorkTitle").innerHTML = title;
+    document.getElementById("logWorkET").innerHTML = estimatedTime;
+    document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
+    document.getElementById("logWorkDone").value = workDone;
+    document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
 }

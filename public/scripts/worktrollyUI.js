@@ -9,6 +9,19 @@ $("#startNewSprint").ready(function() {
     $("#startNewSprint").hide(0);
 });
 
+$("#logWorkPage").click(function() {
+    var id = $("#idTaskDescription").html();
+    var title = $("#titleTaskDescription").html();
+    var estimatedTime = $("#estimatedTimeTaskDescription").html();
+    var logWorkTotalTime = $("#logHoursTaskDescription").html();
+    var workDone = $("#workDoneTaskDescription").html();
+    var sprintNumber = $("#sprintNumberTaskDescription").html();
+    console.log(sprintNumber);
+    newPage = "logWorkTask";
+    uiLoader();
+    fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
+});
+
 $("#startNewSprintButton").click(function() {
     newPage = "startNewSprint";
     uiLoader();
@@ -42,6 +55,7 @@ $("#Development").click(function() {
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
+
 });
 
 $("#Marketing").click(function() {
@@ -84,8 +98,8 @@ $("#editTask").ready(function() {
     $("#editTask").hide(0);
 });
 
-$("#logWork").ready(function() {
-    $("#logWork").hide(0);
+$("#logWorkTask").ready(function() {
+    $("#logWorkTask").hide(0);
 });
 
 $("#cardDescription").ready(function() {
@@ -123,7 +137,7 @@ $("#submitCreateNewTask").click(function() {
     console.log(storyPointNumber);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SrintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
@@ -145,4 +159,28 @@ $("#submitNewSprint").click(function() {
         newPage = "dashboard";
         uiLoader();
     });
+});
+
+$("#logWorkSubmit").click(function() {
+    var sprintNumber = $("#logSprintNumber").html();
+    var logTaskId = $("#logTaskId").html();
+    var logWorkDone = $("#logWorkDone").val();
+    var logWorkComment = "";
+    var logWorkStatus = $("#logWorkStatus").val();
+    var logHours = $("#logWorkHour").val();
+
+    console.log(sprintNumber);
+    console.log(logTaskId);
+    console.log(logWorkDone);
+    console.log(logWorkComment);
+    console.log(logWorkStatus);
+    console.log(logHours);
+
+    var logWorkFunction = firebase.functions().httpsCallable('logWork');
+    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
+
 });

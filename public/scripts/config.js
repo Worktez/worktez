@@ -12,10 +12,8 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
-
 var dataset = [];
 var dashboardDataset = [];
-
 var collectionName = "Main";
 var newPage = "";
 var currentPage = "dashboard";

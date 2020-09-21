@@ -391,35 +391,55 @@
          Similarly for margin my, mx, ml, mr, mt, mb
         and w=width  -->
 
-    <div class="container py-5 px-0" id="logWork">
+    <div class="container py-5 px-0" id="logWorkTask">
         <div class="bg-dark py-2 px-5">
             <h3 class="pt-5 fontHeading text-white">Log Work</h3>
             <div class="row pt-5 pb-2 ml-1">
-                <div class="alert alert-info form-inline col-sm-4" role="alert">
+                <div class="alert alert-info form-inline col-md-5" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Id:</div>
-                    <div id="Id">XXXXXXXXXX</div>
+                    <div id="logTaskId"> </div>
                 </div>
-                <div class="col-sm-1"></div>
-                <div class="alert alert-info form-inline col-md-7" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Title: </div>
-                    <div id="Id">Web app using Bootstrap</div>
+                <div class="col-md-1"></div>
+                <div class="alert alert-info form-inline col-md-5" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Sprint Number:</div>
+                    <div id="logSprintNumber"> </div>
                 </div>
             </div>
+
+            <div class="alert alert-info form-inline col-md-12" role="alert">
+                <div style="font-weight: bold;" class="pr-3">Title: </div>
+                <div id="logWorkTitle"></div>
+            </div>
+
             <div class="alert bg-light form-inline w-50 pt-3" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
-                <div id="Id">XXXXXXXXXX</div>
+                <div id="logWorkET"> </div>
             </div>
+
             <div class="alert bg-light form-inline w-50" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
-                <div id="Id">XXXXXXXXXX</div>
+                <div id="logWorkTotalTime"> </div>
             </div>
             <div class="alert bg-light form-inline w-50" role="alert">
                 <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
-                <div id="Id">XXXXXXXXXX</div>
+                <div id="logWorkRT"> </div>
+            </div>
+            <div class="row pt-3 text-white">
+
+                <label for="inputState" class="col-sm-2 col-form-label">Status</label>
+                <select class="form-control col-sm-3 form-control mx-sm-3" id="logWorkStatus">
+        <option selected>choose...</option>
+        <option>Ice Box</option>
+        <option>Ready to start</option>
+        <option>Under Progress</option>
+        <option>Blocked</option>
+        <option>Completed</option>
+    </select>
+
             </div>
             <div class="row pt-3 text-white">
                 <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
-                <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
+                <input type="number" id="logWorkHour" class="col-sm-3 form-control mx-sm-3">
                 <small id="LogWorkHour" class="col text-muted">
                     hours
                 </small>
@@ -427,7 +447,7 @@
 
             <div class="row py-2 text-white">
                 <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
-                <input type="number" id="LogWorkHour" class="col-sm-3 form-control mx-sm-3">
+                <input type="number" id="logWorkDone" class="col-sm-3 form-control mx-sm-3">
                 <small id="LogWorkHour" class="col text-muted">
                     in percentage(%)
                 </small>
@@ -435,11 +455,11 @@
             <div class="form-group row text-white">
                 <label for="comment" class="col-md-2 col-form-label">Comment</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" id="comment">
+                    <input type="text" class="form-control" id="logWorkComment">
                 </div>
             </div>
             <div class="pt-3 pb-5">
-                <button class="btn btn-primary" type="submit ">Submit</button>
+                <button class="btn btn-primary" type="submit" id="logWorkSubmit">Submit</button>
             </div>
         </div>
     </div>
@@ -460,10 +480,16 @@
                 </div>
                 <div class="col-md-5 col-1"></div>
                 <div class="col-md-2 col-4">
-                    <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" id="#">Log Work</button>
+                    <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" id="logWorkPage">Log Work</button>
                 </div>
                 <div class="col-md-1 col-2">
                     <button type="submit" class="btn btn-primary mt-2 mb-5" id="editPage">Edit</button>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="input" class="col-sm-2 col-form-label">ID</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="idTaskDescription"></div>
                 </div>
             </div>
             <div class="form-group row mt-2">
@@ -495,6 +521,12 @@
                     <label for="text">Estimated Time</label>
                     <div class="alert alert-info form-inline" role="alert">
                         <div id="estimatedTimeTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Sprint Number</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="sprintNumberTaskDescription"></div>
                     </div>
                 </div>
             </div>
@@ -554,8 +586,6 @@
     <script src="scripts/worktrollyUI.js"></script>
     <script src="scripts/worktrollyClassData.js"></script>
     <script src="scripts/frames.js"></script>
-
-
 </body>
 
 </html>
