@@ -25,6 +25,7 @@ function setDataIntoDashboard() {
 
             displayDataIntoDashboard(totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalCompletedTask, startDate, endDate, status);
             getTasks();
+            getBacklog();
         })
         .catch(function(error) {
             console.log("Error getting document:", error);

@@ -66,7 +66,7 @@ $("#Marketing").click(function() {
 });
 
 $("#backlogButton").click(function() {
-    selectedStatus = "Completed";
+    backlogSprint = "-1"
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
