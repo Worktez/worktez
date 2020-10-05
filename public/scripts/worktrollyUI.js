@@ -66,10 +66,8 @@ $("#Marketing").click(function() {
 });
 
 $("#backlogButton").click(function() {
-    selectedStatus = "Completed";
-    newPage = "taskPage";
-    uiLoader();
-    setDataIntoCard();
+    backlogSprint = "-1";
+    setDataIntoDashboard();
 });
 
 $("#totalCompletedTask").click(function() {
