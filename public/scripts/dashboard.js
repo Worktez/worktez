@@ -39,25 +39,15 @@ function setDataIntoDashboard() {
 
 function displayDataIntoDashboard(selectedDocument, totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalCompletedTask, startDate, endDate, status) {
 
-    if (selectedSprint == backlogSprint) {
-        document.getElementById("sprintId").innerHTML = selectedDocument;
-        document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
-        document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
-        document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
-        document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
-        document.getElementById("sprintStartDate").innerHTML = "Empty";
-        document.getElementById("sprintEndDate").innerHTML = "Empty";
-        document.getElementById("sprintStatus").innerHTML = "Empty";
-    } else {
-        document.getElementById("sprintId").innerHTML = selectedDocument;
-        document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
-        document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
-        document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
-        document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
-        document.getElementById("sprintStartDate").innerHTML = startDate;
-        document.getElementById("sprintEndDate").innerHTML = endDate;
-        document.getElementById("sprintStatus").innerHTML = status;
-    }
+    document.getElementById("sprintId").innerHTML = selectedDocument;
+    document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
+    document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
+    document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
+    document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
+    document.getElementById("sprintStartDate").innerHTML = startDate;
+    document.getElementById("sprintEndDate").innerHTML = endDate;
+    document.getElementById("sprintStatus").innerHTML = status;
+
 }
 
 function sprintFilter(sprintFilterId) {
