@@ -12,7 +12,13 @@ function getDashboardData() {
 }
 
 function setDataIntoDashboard() {
-    var selectedDocument = "S" + selectedSprint;
+
+    if (selectedSprint == backlogSprint) {
+        selectedDocument = "Backlog";
+    } else {
+        selectedDocument = "S" + selectedSprint;
+    }
+
     db.collection("Main").doc(selectedDocument).get()
         .then(function(doc) {
             var totalDevelopmentTask = doc.data().TotalDevelopmentTask;
@@ -25,7 +31,6 @@ function setDataIntoDashboard() {
 
             displayDataIntoDashboard(totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalCompletedTask, startDate, endDate, status);
             getTasks();
-            getBacklog();
         })
         .catch(function(error) {
             console.log("Error getting document:", error);
@@ -34,13 +39,23 @@ function setDataIntoDashboard() {
 
 function displayDataIntoDashboard(totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalCompletedTask, startDate, endDate, status) {
 
-    document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
-    document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
-    document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
-    document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
-    document.getElementById("sprintStartDate").innerHTML = startDate;
-    document.getElementById("sprintEndDate").innerHTML = endDate;
-    document.getElementById("sprintStatus").innerHTML = status;
+    if (selectedSprint == backlogSprint) {
+        document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
+        document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
+        document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
+        document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
+        document.getElementById("sprintStartDate").innerHTML = "Empty";
+        document.getElementById("sprintEndDate").innerHTML = "Empty";
+        document.getElementById("sprintStatus").innerHTML = "Empty";
+    } else {
+        document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
+        document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
+        document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
+        document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
+        document.getElementById("sprintStartDate").innerHTML = startDate;
+        document.getElementById("sprintEndDate").innerHTML = endDate;
+        document.getElementById("sprintStatus").innerHTML = status;
+    }
 }
 
 function sprintFilter(sprintFilterId) {

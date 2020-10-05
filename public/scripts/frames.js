@@ -8,7 +8,13 @@ function getTasks() {
 
 function getTasksData() {
     var result = "ok";
-    var selectedDocument = "S" + selectedSprint;
+
+    if (selectedSprint = "-1") {
+        selectedDocument = "Backlog";
+    } else {
+        selectedDocument = "S" + selectedSprint;
+    }
+
     db.collection(selectedDocument)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
@@ -81,7 +87,7 @@ function setDataIntoCard() {
         var storyPointNumber = dataObj.storyPointNumber;
         var tickets = document.getElementById("cardsList").innerHTML;
 
-        if ((category == selectedCategory) || (sprintNumber == backlogSprint)) {
+        if (category == selectedCategory) {
             console.log(sprintNumber);
 
 
