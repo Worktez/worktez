@@ -87,7 +87,7 @@ function setDataIntoCard() {
         var storyPointNumber = dataObj.storyPointNumber;
         var tickets = document.getElementById("cardsList").innerHTML;
 
-        if (category == selectedCategory) {
+        if ((category == selectedCategory) || (status == selectedStatus)) {
             console.log(sprintNumber);
 
 
