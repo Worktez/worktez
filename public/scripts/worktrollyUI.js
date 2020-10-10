@@ -66,7 +66,7 @@ $("#Marketing").click(function() {
 });
 
 $("#backlogButton").click(function() {
-    backlogSprint = "-1";
+    selectedSprint = "-1";
     setDataIntoDashboard();
 });
 
