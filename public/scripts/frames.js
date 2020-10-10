@@ -9,12 +9,12 @@ function getTasks() {
 function getTasksData() {
     var result = "ok";
 
-    if (selectedSprint = "-1") {
-        selectedDocument = "Backlog";
-    } else {
-        selectedDocument = "S" + selectedSprint;
-    }
-
+    // if (selectedSprint = "-1") {
+    //     selectedDocument = "Backlog";
+    // } else {
+    //     selectedDocument = "S" + selectedSprint;
+    // }
+    selectedDocument = "S" + selectedSprint;
     db.collection(selectedDocument)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {

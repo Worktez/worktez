@@ -70,7 +70,7 @@ $("#backlogButton").click(function() {
     setDataIntoDashboard();
 });
 
-$("#totalCompletedTask").click(function() {
+$("#completedTask").click(function() {
     selectedStatus = "Completed";
     newPage = "taskPage";
     uiLoader();
