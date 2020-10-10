@@ -22,6 +22,25 @@ $("#logWorkPage").click(function() {
     fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
 });
 
+$("#editPage").click(function() {
+    var id = $("#idTaskDescription").html();
+    var title = $("#titleTaskDescription").html();
+    var des = $("#descriptionTaskDescription").html();
+    var priority = $("#priorityTaskDescription").html();
+    var difficulty = $("#difficultyTaskDescription").html();
+    var creator = $("#creatorTaskDescription").html();
+    var assignee = $("#assigneeTaskDescription").html();
+    var estimatedTime = $("#estimatedTimeTaskDescription").html();
+    var status = $("#statusTaskDescription").html();
+    var category = $("#categoryTaskDescription").html();
+    // var storyPointNumber = $("#storyPointEditPageTask").html();
+    var sprintNumber = $("#sprintNumberTaskDescription").html();
+    console.log(title);
+    newPage = "editPageTask";
+    uiLoader();
+    fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber)
+});
+
 $("#startNewSprintButton").click(function() {
     newPage = "startNewSprint";
     uiLoader();
@@ -91,10 +110,14 @@ $("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-
-$("#editTask").ready(function() {
-    $("#editTask").hide(0);
+$("#editPageTask").ready(function() {
+    $("#editPageTask").hide(0);
 });
+
+// $("#editPage").click(function() {
+//     newPage = "editPageTask";
+//     uiLoader();
+// });
 
 $("#logWorkTask").ready(function() {
     $("#logWorkTask").hide(0);
@@ -105,6 +128,11 @@ $("#cardDescription").ready(function() {
 });
 
 $("#backToMainFromCardDescription").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
+$("#backToMainFromEditPageTask").click(function() {
     newPage = "dashboard";
     uiLoader();
 });
@@ -181,4 +209,37 @@ $("#logWorkSubmit").click(function() {
         uiLoader();
     });
 
+});
+
+$("#submitEditPageTask").click(function() {
+    var title = $("#titleEditPageTask").html();
+    var des = $("#descriptionEditPageTask").val();
+    var priority = $("#priorityEditPageTask").val();
+    var difficulty = $("#difficultyEditPageTask").val();
+    var creator = $("#creatorEditPageTask").html();
+    var assignee = $("#assigneeEditPageTask").val();
+    var estimatedTime = $("#estimatedTimeEditPageTask").val();
+    var status = $("#statusEditPageTask").val();
+    var category = $("#categoryEditPageTask").val();
+    var storyPointNumber = $("#storyPointEditPageTask").val();
+    var sprintNumber = $("#sprintNumberEditPageTask").val();
+
+    console.log(title);
+    console.log(des);
+    console.log(priority);
+    console.log(difficulty);
+    console.log(creator);
+    console.log(assignee);
+    console.log(estimatedTime);
+    console.log(status);
+    console.log(category);
+    console.log(sprintNumber);
+    console.log(storyPointNumber);
+
+    var editPageTaskFunction = firebase.functions().httpsCallable('editPageTask');
+    editPageTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
 });
