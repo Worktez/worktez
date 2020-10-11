@@ -33,12 +33,12 @@ $("#editPage").click(function() {
     var estimatedTime = $("#estimatedTimeTaskDescription").html();
     var status = $("#statusTaskDescription").html();
     var category = $("#categoryTaskDescription").html();
-    // var storyPointNumber = $("#storyPointEditPageTask").html();
+    var storyPointNumber = $("#storyPointNumberTaskDescription").html();
     var sprintNumber = $("#sprintNumberTaskDescription").html();
     console.log(title);
     newPage = "editPageTask";
     uiLoader();
-    fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber)
+    fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber, storyPointNumber)
 });
 
 $("#startNewSprintButton").click(function() {
@@ -113,11 +113,6 @@ $("#createNewTask").ready(function() {
 $("#editPageTask").ready(function() {
     $("#editPageTask").hide(0);
 });
-
-// $("#editPage").click(function() {
-//     newPage = "editPageTask";
-//     uiLoader();
-// });
 
 $("#logWorkTask").ready(function() {
     $("#logWorkTask").hide(0);
