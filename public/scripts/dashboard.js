@@ -13,7 +13,7 @@ function getDashboardData() {
 
 function setDataIntoDashboard() {
 
-    if (selectedSprint == backlogSprint) {
+    if (selectedSprint == "-1") {
         selectedDocument = "Backlog";
     } else {
         selectedDocument = "S" + selectedSprint;
