@@ -22,4 +22,3 @@ var selectedCategory = "";
 var selectedStatus = "";
 var selectedSprint;
 var currentSprint;
-var backlogSprint = "";
