@@ -31,8 +31,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var totalNumberOfTask;
         var result;
         var totalUnCompletedTask = 0;
-
-
         console.log(title);
         console.log(des);
         console.log(priority);
