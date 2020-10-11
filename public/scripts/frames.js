@@ -8,7 +8,6 @@ function getTasks() {
 
 function getTasksData() {
     var result = "ok";
-
     // if (selectedSprint = "-1") {
     //     selectedDocument = "Backlog";
     // } else {
