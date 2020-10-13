@@ -195,7 +195,8 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
             .then(function(doc) {
                 newSprintId = doc.data().CurrentSprintId + 1;
                 var newSprintIdString = "S" + newSprintId.toString();
-
+                if (doc.exists)
+                {
                 var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).update({
                     TotalDevelopmen: totalDevelopment,
                     TotalBusiness: totalBusiness,
@@ -203,7 +204,18 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                     EndDate: endDate,
                     StartDate: startDate,
                     Status: status
-                });
+                });}
+                else
+                {
+                    var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).set({
+                        TotalDevelopmen: totalDevelopment,
+                        TotalBusiness: totalBusiness,
+                        TotalMarketing: totalMarketing,
+                        EndDate: endDate,
+                        StartDate: startDate,
+                        Status: status
+                    });
+                }
                 return Promise.resolve(setNewSprintPromise);
             })
             .then(function(setNewSprintPromise) {
