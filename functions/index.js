@@ -197,14 +197,16 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                 var newSprintIdString = "S" + newSprintId.toString();
                 if (doc.exists)
                 {
-                var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).update({
+                var setOldSprintPromise = db.collection("Main").doc(newSprintIdString).update({
                     TotalDevelopmen: totalDevelopment,
                     TotalBusiness: totalBusiness,
                     TotalMarketing: totalMarketing,
                     EndDate: endDate,
                     StartDate: startDate,
                     Status: status
-                });}
+                });
+                return Promise.resolve(setOldSprintPromise);
+                }
                 else
                 {
                     var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).set({
@@ -215,8 +217,8 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                         StartDate: startDate,
                         Status: status
                     });
+                    return Promise.resolve(setNewSprintPromise);
                 }
-                return Promise.resolve(setNewSprintPromise);
             })
             .then(function(setNewSprintPromise) {
                 var setNewSprintCounterPromise = db.collection("Main").doc("RawData").update({
