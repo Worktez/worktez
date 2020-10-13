@@ -118,16 +118,33 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         totalUnCompletedTask = totalUnCompletedTask + 1;
                         
 
-                        var setSprintDataPromise = db.collection("Main").doc(fullSprintId).update({
+                        var updateSprintDataPromise = db.collection("Main").doc(fullSprintId).update({
                             TotalBusinessTask: totalBusinessTask,
                             TotalDevelopmentTask: totalDevelopmentTask,
                             TotalMarketingTask: totalMarketingTask,
                             TotalUnCompletedTask: totalUnCompletedTask,
                             TotalNumberOfTask: totalNumberOfTask
                         });
-                        return Promise.resolve(setSprintDataPromise);
+                        return Promise.resolve(updateSprintDataPromise);
                     }
                     else {
+                        totalBusinessTask = 0;
+                        totalDevelopmentTask = 0;
+                        totalMarketingTask = 0;
+                        totalUnCompletedTask = 0;
+                        totalNumberOfTask = 0;
+                        
+                        if (category === "Development") {
+                            totalDevelopmentTask = totalDevelopmentTask + 1;
+                        } else if (category === "Business") {
+                            totalBusinessTask = totalBusinessTask + 1;
+                        } else {
+                            totalMarketingTask = totalBusinessTask + 1;
+                        }
+
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        totalUnCompletedTask = totalUnCompletedTask + 1;
+
                         var setSprintDataPromise = db.collection("Main").doc(fullSprintId).set({
                             TotalBusinessTask: totalBusinessTask,
                             TotalDevelopmentTask: totalDevelopmentTask,
