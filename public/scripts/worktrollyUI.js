@@ -28,7 +28,7 @@ $("#startNewSprintButton").click(function() {
     getNewSprintId();
 });
 
-$("#backToMainFromCreateNewTask").click(function() {
+$("#backToDashboard").click(function() {
     newPage = "dashboard";
     uiLoader();
 });
@@ -121,6 +121,8 @@ $("#submitCreateNewTask").click(function() {
     var category = $("#categoryCreateNewTask").val();
     var storyPointNumber = $("#storyPointNumber").val();
     var sprintNumber = $("#createNewTaskSprintNumber").val();
+    // var Clear = document.querySelector('submit');
+    // var inputs = document.querySelectorAll('input');
 
     console.log(title);
     console.log(des);
@@ -140,6 +142,8 @@ $("#submitCreateNewTask").click(function() {
         newPage = "dashboard";
         uiLoader();
     });
+    $('input').val('');
+    $('select').val('');
 });
 
 $("#submitNewSprint").click(function() {
@@ -157,6 +161,7 @@ $("#submitNewSprint").click(function() {
         newPage = "dashboard";
         uiLoader();
     });
+    $('input').val('');
 });
 
 $("#logWorkSubmit").click(function() {
@@ -180,5 +185,4 @@ $("#logWorkSubmit").click(function() {
         newPage = "dashboard";
         uiLoader();
     });
-
 });
