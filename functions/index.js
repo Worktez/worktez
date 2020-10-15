@@ -31,7 +31,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var totalNumberOfTask;
         var result;
         var totalUnCompletedTask = 0;
-
+        var sprintDataPromise;
 
         console.log(title);
         console.log(des);
@@ -50,7 +50,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 totalNumberOfTask = doc.data().TotalNumberOfTask;
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                 totalBusinessTask = doc.data().TotalBusinessTask;
-                totalMarketingTask = doc.data().TotalBusinessTask;
+                totalMarketingTask = doc.data().TotalMarketingTask;
                 totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
                 if (category === "Development") {
@@ -118,14 +118,13 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         totalUnCompletedTask = totalUnCompletedTask + 1;
                         
 
-                        var updateSprintDataPromise = db.collection("Main").doc(fullSprintId).update({
+                            sprintDataPromise = db.collection("Main").doc(fullSprintId).update({
                             TotalBusinessTask: totalBusinessTask,
                             TotalDevelopmentTask: totalDevelopmentTask,
                             TotalMarketingTask: totalMarketingTask,
                             TotalUnCompletedTask: totalUnCompletedTask,
                             TotalNumberOfTask: totalNumberOfTask
                         });
-                        return Promise.resolve(updateSprintDataPromise);
                     }
                     else {
                         totalBusinessTask = 0;
@@ -145,17 +144,18 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         totalNumberOfTask = totalNumberOfTask + 1;
                         totalUnCompletedTask = totalUnCompletedTask + 1;
 
-                        var setSprintDataPromise = db.collection("Main").doc(fullSprintId).set({
+                            sprintDataPromise = db.collection("Main").doc(fullSprintId).set({
                             TotalBusinessTask: totalBusinessTask,
                             TotalDevelopmentTask: totalDevelopmentTask,
                             TotalMarketingTask: totalMarketingTask,
                             TotalUnCompletedTask: totalUnCompletedTask,
                             TotalNumberOfTask: totalNumberOfTask
                         });
-                        return Promise.resolve(setSprintDataPromise);
+                        
                     }
+                    return Promise.resolve(sprintDataPromise);
                     })
-                    .then((setSprintDataPromise) => {
+                    .then((sprintDataPromise) => {
                         result = { data: "OK" };
                         console.log("Document sucessfully written");
                         return response.status(200).send(result);
@@ -190,6 +190,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         console.log("End Date from Backend: " + endDate);
         console.log("Start Date from Backend: " + startDate);
         console.log("Status from Backend: " + status);
+        var createSprintPromise;
 
         db.collection("Main").doc("RawData").get()
             .then(function(doc) {
@@ -197,7 +198,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                 var newSprintIdString = "S" + newSprintId.toString();
                 if (doc.exists)
                 {
-                var setOldSprintPromise = db.collection("Main").doc(newSprintIdString).update({
+                    createSprintPromisee = db.collection("Main").doc(newSprintIdString).update({
                     TotalDevelopmen: totalDevelopment,
                     TotalBusiness: totalBusiness,
                     TotalMarketing: totalMarketing,
@@ -205,11 +206,10 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                     StartDate: startDate,
                     Status: status
                 });
-                return Promise.resolve(setOldSprintPromise);
                 }
                 else
                 {
-                    var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).set({
+                    createSprintPromise = db.collection("Main").doc(newSprintIdString).set({
                         TotalDevelopmen: totalDevelopment,
                         TotalBusiness: totalBusiness,
                         TotalMarketing: totalMarketing,
@@ -217,10 +217,10 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                         StartDate: startDate,
                         Status: status
                     });
-                    return Promise.resolve(setNewSprintPromise);
                 }
+                return Promise.resolve(createSprintPromise);
             })
-            .then(function(setNewSprintPromise) {
+            .then(function(createSprintPromise) {
                 var setNewSprintCounterPromise = db.collection("Main").doc("RawData").update({
                     CurrentSprintId: newSprintId
                 });
