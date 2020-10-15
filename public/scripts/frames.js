@@ -2,7 +2,6 @@ function getTasks() {
     var result = "ok";
     dataset = [];
     result = getTasksData();
-
     return result;
 }
 
