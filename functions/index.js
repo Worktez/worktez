@@ -229,40 +229,36 @@ exports.logWork = functions.https.onRequest((request, response) => {
     });
 });
 
-function createSprintId(sprintNumber) {
-    if (sprintNumber === "-1") {
-        return "Backlog";
-    } else {
-        return ("S" + sprintNumber);
-    }
-}
-
 exports.editPageTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-            console.log(request);
+        console.log(request);
 
-            var des = request.body.data.Description;
-            var priority = request.body.data.Priority;
-            var difficulty = request.body.data.Difficulty;
-            var assignee = request.body.data.Assignee;
-            var estimatedTime = request.body.data.EstimatedTime;
-            var status = request.body.data.Status;
-            var category = request.body.data.Category;
-            var storyPointNumber = request.body.data.StoryPointNumber;
-            var sprintNumber = request.body.data.SprintNumber;
-            var fullSprintId = createSprintId(sprintNumber);
+        var des = request.body.data.Description;
+        var priority = request.body.data.Priority;
+        var difficulty = request.body.data.Difficulty;
+        var assignee = request.body.data.Assignee;
+        var estimatedTime = request.body.data.EstimatedTime;
+        var status = request.body.data.Status;
+        var category = request.body.data.Category;
+        var storyPointNumber = request.body.data.StoryPointNumber;
+        var sprintNumber = request.body.data.SprintNumber;
+        var taskId = request.body.data.Id;
+        var fullSprintId = createSprintId(sprintNumber);
+        var result;
 
-            console.log(des);
-            console.log(priority);
-            console.log(difficulty);
-            console.log(assignee);
-            console.log(estimatedTime);
-            console.log(status);
-            console.log(category);
-            console.log(sprintNumber);
-            console.log(storyPointNumber);
+        console.log(des);
+        console.log(taskId);
+        console.log(priority);
+        console.log(difficulty);
+        console.log(assignee);
+        console.log(estimatedTime);
+        console.log(status);
+        console.log(category);
+        console.log(sprintNumber);
+        console.log(storyPointNumber);
 
-            var updateEditPromise = db.collection(fullSprintId).doc(taskId).update({
+        db.collection(fullSprintId).doc(taskId).update({
+                TaskId: taskId,
                 Description: des,
                 Priority: priority,
                 Difficulty: difficulty,
@@ -272,16 +268,24 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                 Category: category,
                 SprintNumber: sprintNumber,
                 StoryPointNumber: storyPointNumber
+            })
+            .then(() => {
+                result = { data: "OK" };
+                console.log("Document sucessfully written");
+                return response.status(200).send(result);
+            })
+            .catch(function(error) {
+                result = { data: error };
+                console.log("error", error);
+                return response.status(500).send(result)
             });
-            return Promise.resolve(updateEditPromise);
-        })
-        .then(function(updateEditPromise) {
-            var result = { data: "ok" };
-            return response.status(200).send(result);
-        })
-        .catch(function(error) {
-            var result = { data: error };
-            console.log("error", error);
-            return response.status(500).send(result)
-        });
+    });
 });
+
+function createSprintId(sprintNumber) {
+    if (sprintNumber === "-1") {
+        return "Backlog";
+    } else {
+        return ("S" + sprintNumber);
+    }
+}

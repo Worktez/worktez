@@ -9,13 +9,6 @@ function getTasks() {
 function getTasksData() {
     var result = "ok";
 
-    // if (selectedSprint = "-1") {
-    //     selectedDocument = "Backlog";
-    // } else {
-    //     selectedDocument = "S" + selectedSprint;
-    // }
-    selectedDocument = "S" + selectedSprint;
-
     db.collection(selectedDocument)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
@@ -214,5 +207,5 @@ function fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, pri
     document.getElementById("estimatedTimeEditPageTask").value = estimatedTime;
     document.getElementById("sprintNumberEditPageTask").value = sprintNumber;
     document.getElementById("difficultyEditPageTask").value = difficulty;
-    document.getElementById("storyPointEditPageTask").innerHTML = storyPointNumber;
+    document.getElementById("storyPointEditPageTask").value = storyPointNumber;
 }
