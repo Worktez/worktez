@@ -121,9 +121,6 @@ $("#submitCreateNewTask").click(function() {
     var category = $("#categoryCreateNewTask").val();
     var storyPointNumber = $("#storyPointNumber").val();
     var sprintNumber = $("#createNewTaskSprintNumber").val();
-    // var Clear = document.querySelector('submit');
-    // var inputs = document.querySelectorAll('input');
-
     console.log(title);
     console.log(des);
     console.log(priority);

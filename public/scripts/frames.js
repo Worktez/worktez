@@ -8,7 +8,6 @@ function getTasks() {
 
 function getTasksData() {
     var result = "ok";
-    selectedDocument = "S" + selectedSprint;
     db.collection(selectedDocument)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
