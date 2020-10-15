@@ -32,6 +32,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var result;
         var totalUnCompletedTask = 0;
 
+
         console.log(title);
         console.log(des);
         console.log(priority);
@@ -97,6 +98,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             })
             .then((updateSetDataPromise) => {
                 return db.collection("Main").doc(fullSprintId).get().then((doc) => {
+                        if(doc.exists)
+                        {
                         totalNumberOfTask = doc.data().TotalNumberOfTask;
                         totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                         totalBusinessTask = doc.data().TotalBusinessTask;
@@ -113,8 +116,36 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
                         totalNumberOfTask = totalNumberOfTask + 1;
                         totalUnCompletedTask = totalUnCompletedTask + 1;
+                        
 
-                        var setSprintDataPromise = db.collection("Main").doc(fullSprintId).update({
+                        var updateSprintDataPromise = db.collection("Main").doc(fullSprintId).update({
+                            TotalBusinessTask: totalBusinessTask,
+                            TotalDevelopmentTask: totalDevelopmentTask,
+                            TotalMarketingTask: totalMarketingTask,
+                            TotalUnCompletedTask: totalUnCompletedTask,
+                            TotalNumberOfTask: totalNumberOfTask
+                        });
+                        return Promise.resolve(updateSprintDataPromise);
+                    }
+                    else {
+                        totalBusinessTask = 0;
+                        totalDevelopmentTask = 0;
+                        totalMarketingTask = 0;
+                        totalUnCompletedTask = 0;
+                        totalNumberOfTask = 0;
+                        
+                        if (category === "Development") {
+                            totalDevelopmentTask = totalDevelopmentTask + 1;
+                        } else if (category === "Business") {
+                            totalBusinessTask = totalBusinessTask + 1;
+                        } else {
+                            totalMarketingTask = totalBusinessTask + 1;
+                        }
+
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        totalUnCompletedTask = totalUnCompletedTask + 1;
+
+                        var setSprintDataPromise = db.collection("Main").doc(fullSprintId).set({
                             TotalBusinessTask: totalBusinessTask,
                             TotalDevelopmentTask: totalDevelopmentTask,
                             TotalMarketingTask: totalMarketingTask,
@@ -122,6 +153,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                             TotalNumberOfTask: totalNumberOfTask
                         });
                         return Promise.resolve(setSprintDataPromise);
+                    }
                     })
                     .then((setSprintDataPromise) => {
                         result = { data: "OK" };
@@ -149,6 +181,9 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         var status = request.body.data.Status;
         var startDate = request.body.data.StartDate;
         var endDate = request.body.data.EndDate;
+        var totalDevelopment = request.body.data.TotalDevelopment;
+        var totalBusiness = request.body.data.TotalBusiness;
+        var totalMarketing = request.body.data.TotalMarketing;
         var newSprintId;
         var result;
 
@@ -160,13 +195,30 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
             .then(function(doc) {
                 newSprintId = doc.data().CurrentSprintId + 1;
                 var newSprintIdString = "S" + newSprintId.toString();
-
-                var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).update({
+                if (doc.exists)
+                {
+                var setOldSprintPromise = db.collection("Main").doc(newSprintIdString).update({
+                    TotalDevelopmen: totalDevelopment,
+                    TotalBusiness: totalBusiness,
+                    TotalMarketing: totalMarketing,
                     EndDate: endDate,
                     StartDate: startDate,
                     Status: status
                 });
-                return Promise.resolve(setNewSprintPromise);
+                return Promise.resolve(setOldSprintPromise);
+                }
+                else
+                {
+                    var setNewSprintPromise = db.collection("Main").doc(newSprintIdString).set({
+                        TotalDevelopmen: totalDevelopment,
+                        TotalBusiness: totalBusiness,
+                        TotalMarketing: totalMarketing,
+                        EndDate: endDate,
+                        StartDate: startDate,
+                        Status: status
+                    });
+                    return Promise.resolve(setNewSprintPromise);
+                }
             })
             .then(function(setNewSprintPromise) {
                 var setNewSprintCounterPromise = db.collection("Main").doc("RawData").update({
@@ -187,6 +239,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
             });
     });
 });
+
 exports.logWork = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
