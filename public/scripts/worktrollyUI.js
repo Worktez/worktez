@@ -146,19 +146,13 @@ $("#submitNewSprint").click(function() {
     var startDate = $("#startdateNewSprint").val();
     var endDate = $("#enddateNewSprint").val();
     var status = $("#statusNewSprint").val();
-    var totalDevelopment = $("#totalDevelopmentTaskNewSprint").html();
-    var totalBusiness = $("#totalBusinessTaskNewSprint").html();
-    var totalMarketing = $("#totalMarketingTaskNewSprint").html();
-    
-    console.log(totalDevelopment);
-    console.log(totalBusiness);
-    console.log(totalMarketing);
+
     console.log(startDate);
     console.log(endDate);
     console.log(status);
 
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing}).then(result => {
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
