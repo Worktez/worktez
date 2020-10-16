@@ -262,6 +262,59 @@ exports.logWork = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.editPageTask = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+
+        var des = request.body.data.Description;
+        var priority = request.body.data.Priority;
+        var difficulty = request.body.data.Difficulty;
+        var assignee = request.body.data.Assignee;
+        var estimatedTime = request.body.data.EstimatedTime;
+        var status = request.body.data.Status;
+        var category = request.body.data.Category;
+        var storyPointNumber = request.body.data.StoryPointNumber;
+        var sprintNumber = request.body.data.SprintNumber;
+        var taskId = request.body.data.Id;
+        var fullSprintId = createSprintId(sprintNumber);
+        var result;
+
+        console.log(des);
+        console.log(taskId);
+        console.log(priority);
+        console.log(difficulty);
+        console.log(assignee);
+        console.log(estimatedTime);
+        console.log(status);
+        console.log(category);
+        console.log(sprintNumber);
+        console.log(storyPointNumber);
+
+        db.collection(fullSprintId).doc(taskId).update({
+                TaskId: taskId,
+                Description: des,
+                Priority: priority,
+                Difficulty: difficulty,
+                Assignee: assignee,
+                ET: estimatedTime,
+                Status: status,
+                Category: category,
+                SprintNumber: sprintNumber,
+                StoryPointNumber: storyPointNumber
+            })
+            .then(() => {
+                result = { data: "OK" };
+                console.log("Document sucessfully written");
+                return response.status(200).send(result);
+            })
+            .catch(function(error) {
+                result = { data: error };
+                console.log("error", error);
+                return response.status(500).send(result)
+            });
+    });
+});
+
 function createSprintId(sprintNumber) {
     if (sprintNumber === "-1") {
         return "Backlog";
