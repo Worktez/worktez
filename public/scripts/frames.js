@@ -2,13 +2,11 @@ function getTasks() {
     var result = "ok";
     dataset = [];
     result = getTasksData();
-
     return result;
 }
 
 function getTasksData() {
     var result = "ok";
-
     db.collection(selectedDocument)
         .onSnapshot(function(snapshot) {
             snapshot.docChanges().forEach(function(change) {
@@ -81,7 +79,7 @@ function setDataIntoCard() {
         var storyPointNumber = dataObj.storyPointNumber;
         var tickets = document.getElementById("cardsList").innerHTML;
 
-        if (category == selectedCategory) {
+        if ((category == selectedCategory) || (status == selectedStatus)) {
             console.log(sprintNumber);
 
 
