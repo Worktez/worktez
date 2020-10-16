@@ -147,9 +147,9 @@ $("#submitNewSprint").click(function() {
     var startDate = $("#startdateNewSprint").val();
     var endDate = $("#enddateNewSprint").val();
     var status = $("#statusNewSprint").val();
-    var totalDevelopment = $("#totalDevelopmentTaskNewSprint").html();
-    var totalBusiness = $("#totalBusinessTaskNewSprint").html();
-    var totalMarketing = $("#totalMarketingTaskNewSprint").html();
+    var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
+    var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
+    var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
     
     console.log(totalDevelopment);
     console.log(totalBusiness);
