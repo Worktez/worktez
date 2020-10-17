@@ -180,6 +180,7 @@ function setDataIntoDescription(id, title, des, estimatedTime, difficulty, prior
     document.getElementById("difficultyTaskDescription").innerHTML = difficulty;
     document.getElementById("logHoursTaskDescription").innerHTML = logWorkTotalTime;
     document.getElementById("workDoneTaskDescription").innerHTML = workDone;
+    document.getElementById("storyPointNumberTaskDescription").innerHTML = storyPointNumber;
 }
 
 function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber) {
@@ -190,4 +191,19 @@ function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, wor
     document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
     document.getElementById("logWorkDone").value = workDone;
     document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
+}
+
+function fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber, storyPointNumber) {
+    document.getElementById("editPageTaskId").innerHTML = id;
+    document.getElementById("titleEditPageTask").innerHTML = title;
+    document.getElementById("descriptionEditPageTask").value = des;
+    document.getElementById("priorityEditPageTask").value = priority;
+    document.getElementById("assigneeEditPageTask").value = assignee;
+    document.getElementById("creatorEditPageTask").innerHTML = creator;
+    document.getElementById("categoryEditPageTask").value = category;
+    document.getElementById("statusEditPageTask").value = status;
+    document.getElementById("estimatedTimeEditPageTask").value = estimatedTime;
+    document.getElementById("sprintNumberEditPageTask").value = sprintNumber;
+    document.getElementById("difficultyEditPageTask").value = difficulty;
+    document.getElementById("storyPointEditPageTask").value = storyPointNumber;
 }
