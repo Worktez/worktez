@@ -71,21 +71,21 @@
                     <label for="input">Development</label>
                     <div class="alert bg-dark text-white form-inline" role="alert">
                         <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalDevelopmentTaskNewSprint"></div>
+                        <div id="totalDevelopmentTaskNewSprint" class="ml-auto"></div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Business</label>
                     <div class="alert bg-dark text-white form-inline" role="alert">
                         <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalBusinessTaskNewSprint"></div>
+                        <div id="totalBusinessTaskNewSprint" class="ml-auto"></div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Marketing</label>
                     <div class="alert bg-dark text-white form-inline" role="alert">
                         <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalMarketingTaskNewSprint"></div>
+                        <div id="totalMarketingTaskNewSprint" class="ml-auto"></div>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-12" type="button">
+                <div class="col-md-3 col-12" type="button" id="completedTask">
                     <div class="card text-white mb-3 bg-dark" style="max-width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title" style="font-size: 18px;">Total Completed Task</h5>
@@ -234,7 +234,12 @@
 
     <div id="taskPage">
         <div class="container pt-2 pb-5 pl-2">
-            <h3 class="ml-1 fontHeading">Tasks</h3>
+            <div class="row pt-5">
+                <h3 class="col-md-8 col-8 fontHeading">Tasks</h3>
+                <span type="button" class="col-md-4 col-1  material-icons" id="backToDashboard">
+                close
+            </span>
+            </div>
             <hr class="w-75 ml-0">
             <div id="cardsList">
                 <!-- <div class="card text-white bg-dark" style="max-width: 32rem;">
@@ -289,7 +294,7 @@
         <div class="bg-light px-5">
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromCreateNewTask">
+                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMain">
                     close
                 </span>
             </div>
@@ -529,6 +534,12 @@
                         <div id="sprintNumberTaskDescription"></div>
                     </div>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Story Pointer</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="storyPointNumberTaskDescription"></div>
+                    </div>
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -572,6 +583,111 @@
             </div>
         </div>
     </div>
+
+    <!-- edit page   ------------------------------------------------------->
+
+    <div class="container py-5" id="editPageTask">
+        <div class="bg-light px-5">
+            <div class="row pt-2">
+                <div class="col-md-11 col-10"></div>
+                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromEditPageTask">
+                    close
+                </span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="pl-1 fontHeading">Edit Page</h3>
+                    <hr class="w-75 ml-0">
+                </div>
+                <div class="alert alert-info form-inline col-md-5" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Id:</div>
+                    <div id="editPageTaskId"> </div>
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <label for="input" class="col-sm-2 col-form-label">Title</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="titleEditPageTask"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="descriptionEditPageTask">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Assignee</label>
+                    <input type="text" class="form-control" id="assigneeEditPageTask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Creator</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="creatorEditPageTask"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Estimated Time</label>
+                    <input type="number" class="form-control" id="estimatedTimeEditPageTask">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Category</label>
+                    <select class="form-control" id="categoryEditPageTask">
+                        <option selected>choose...</option>
+                        <option>Business</option>
+                        <option>Development</option>
+                        <option>Marketing</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Priority</label>
+                    <select class="form-control" id="priorityEditPageTask">
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Difficulty</label>
+                    <select class="form-control" id="difficultyEditPageTask">
+                        <option selected>choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <select class="form-control" id="statusEditPageTask">
+                        <option selected>choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Sprint Number</label>
+                    <input type="number" class="form-control" id="sprintNumberEditPageTask">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Story Point</label>
+                    <input type="number" min="0" class="form-control" id="storyPointEditPageTask">
+                </div>
+            </div>
+            <div class="pt-2 pb-5">
+                <button type="submit" class="btn btn-primary" id="submitEditPageTask">Submit</button>
+            </div>
+        </div>
+    </div>
+
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -22,13 +22,37 @@ $("#logWorkPage").click(function() {
     fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
 });
 
+$("#editPage").click(function() {
+    var id = $("#idTaskDescription").html();
+    var title = $("#titleTaskDescription").html();
+    var des = $("#descriptionTaskDescription").html();
+    var priority = $("#priorityTaskDescription").html();
+    var difficulty = $("#difficultyTaskDescription").html();
+    var creator = $("#creatorTaskDescription").html();
+    var assignee = $("#assigneeTaskDescription").html();
+    var estimatedTime = $("#estimatedTimeTaskDescription").html();
+    var status = $("#statusTaskDescription").html();
+    var category = $("#categoryTaskDescription").html();
+    var storyPointNumber = $("#storyPointNumberTaskDescription").html();
+    var sprintNumber = $("#sprintNumberTaskDescription").html();
+    console.log(title);
+    newPage = "editPageTask";
+    uiLoader();
+    fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber, storyPointNumber)
+});
+
 $("#startNewSprintButton").click(function() {
     newPage = "startNewSprint";
     uiLoader();
     getNewSprintId();
 });
 
-$("#backToMainFromCreateNewTask").click(function() {
+$("#backToDashboard").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
+$("#backToMain").click(function() {
     newPage = "dashboard";
     uiLoader();
 });
@@ -66,13 +90,11 @@ $("#Marketing").click(function() {
 });
 
 $("#backlogButton").click(function() {
-    selectedStatus = "Completed";
-    newPage = "taskPage";
-    uiLoader();
-    setDataIntoCard();
+    selectedSprint = "-1";
+    setDataIntoDashboard();
 });
 
-$("#totalCompletedTask").click(function() {
+$("#completedTask").click(function() {
     selectedStatus = "Completed";
     newPage = "taskPage";
     uiLoader();
@@ -93,9 +115,8 @@ $("#createNewTask").ready(function() {
     $("#createNewTask").hide(0);
 });
 
-
-$("#editTask").ready(function() {
-    $("#editTask").hide(0);
+$("#editPageTask").ready(function() {
+    $("#editPageTask").hide(0);
 });
 
 $("#logWorkTask").ready(function() {
@@ -107,6 +128,11 @@ $("#cardDescription").ready(function() {
 });
 
 $("#backToMainFromCardDescription").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
+$("#backToMainFromEditPageTask").click(function() {
     newPage = "dashboard";
     uiLoader();
 });
@@ -123,7 +149,6 @@ $("#submitCreateNewTask").click(function() {
     var category = $("#categoryCreateNewTask").val();
     var storyPointNumber = $("#storyPointNumber").val();
     var sprintNumber = $("#createNewTaskSprintNumber").val();
-
     console.log(title);
     console.log(des);
     console.log(priority);
@@ -142,23 +167,32 @@ $("#submitCreateNewTask").click(function() {
         newPage = "dashboard";
         uiLoader();
     });
+    $('input').val('');
+    $('select').val('');
 });
 
 $("#submitNewSprint").click(function() {
     var startDate = $("#startdateNewSprint").val();
     var endDate = $("#enddateNewSprint").val();
     var status = $("#statusNewSprint").val();
-
+    var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
+    var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
+    var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
+    
+    console.log(totalDevelopment);
+    console.log(totalBusiness);
+    console.log(totalMarketing);
     console.log(startDate);
     console.log(endDate);
     console.log(status);
 
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status }).then(result => {
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing}).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
     });
+    $('input').val('');
 });
 
 $("#logWorkSubmit").click(function() {
@@ -183,4 +217,35 @@ $("#logWorkSubmit").click(function() {
         uiLoader();
     });
 
+});
+
+$("#submitEditPageTask").click(function() {
+    var id = $("#editPageTaskId").html();
+    var des = $("#descriptionEditPageTask").val();
+    var priority = $("#priorityEditPageTask").val();
+    var difficulty = $("#difficultyEditPageTask").val();
+    var assignee = $("#assigneeEditPageTask").val();
+    var estimatedTime = $("#estimatedTimeEditPageTask").val();
+    var status = $("#statusEditPageTask").val();
+    var category = $("#categoryEditPageTask").val();
+    var storyPointNumber = $("#storyPointEditPageTask").val();
+    var sprintNumber = $("#sprintNumberEditPageTask").val();
+
+    console.log(id);
+    console.log(des);
+    console.log(priority);
+    console.log(difficulty);
+    console.log(assignee);
+    console.log(estimatedTime);
+    console.log(status);
+    console.log(category);
+    console.log(sprintNumber);
+    console.log(storyPointNumber);
+
+    var editPageTaskFunction = firebase.functions().httpsCallable('editPageTask');
+    editPageTaskFunction({ Id: id, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
 });
