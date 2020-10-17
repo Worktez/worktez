@@ -224,12 +224,13 @@ exports.logWork = functions.https.onRequest((request, response) => {
                     if (status === "Completed") {
                         totalCompletedTask = totalCompletedTask + 1;
                         totalUnCompletedTask = totalUnCompletedTask - 1;
-                        var updateStatus = db.collection("Main").doc("RawData").update({
-                            TotalCompletedTask: totalCompletedTask,
-                            TotalUnCompletedTask: totalUnCompletedTask
-                        });
-                        return Promise.resolve(updateStatus);
                     }
+                    var updateStatus = db.collection("Main").doc("RawData").update({
+                        TotalCompletedTask: totalCompletedTask,
+                        TotalUnCompletedTask: totalUnCompletedTask
+                    });
+                    return Promise.resolve(updateStatus);
+
                 });
             })
             .then(function(updatePromise) {
@@ -240,13 +241,12 @@ exports.logWork = functions.https.onRequest((request, response) => {
                     if (status === "Completed") {
                         totalCompletedTask = totalCompletedTask + 1;
                         totalUnCompletedTask = totalUnCompletedTask - 1;
-
-                        var updateSprintstatus = db.collection("Main").doc(fullSprintId).update({
-                            TotalCompletedTask: totalCompletedTask,
-                            TotalUnCompletedTask: totalUnCompletedTask
-                        });
-                        return Promise.resolve(updateSprintstatus);
                     }
+                    var updateSprintstatus = db.collection("Main").doc(fullSprintId).update({
+                        TotalCompletedTask: totalCompletedTask,
+                        TotalUnCompletedTask: totalUnCompletedTask
+                    });
+                    return Promise.resolve(updateSprintstatus);
                 });
             })
             .then(function(updateSprintstatus) {
