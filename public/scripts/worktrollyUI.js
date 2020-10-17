@@ -52,6 +52,11 @@ $("#backToDashboard").click(function() {
     uiLoader();
 });
 
+$("#backToMain").click(function() {
+    newPage = "dashboard";
+    uiLoader();
+});
+
 $("#backToMainFromNewSprint").click(function() {
     newPage = "dashboard";
     uiLoader();
