@@ -284,7 +284,7 @@ exports.logWork = functions.https.onRequest((request, response) => {
 
                 });
             })
-            .then(function(updatePromise) {
+            .then(function(updateStatus) {
                 return db.collection("Main").doc(fullSprintId).get().then(function(doc) {
                     totalCompletedTask = doc.data().TotalCompletedTask;
                     totalUnCompletedTask = doc.data().TotalUnCompletedTask;
