@@ -1,13 +1,13 @@
-**Functionality:**
+### Functionality:
 <-- please enter the functionality introduction -->
 
-**Solution:**
+### Solution:
 <-- please enter brief solution -->
 
-**Risk level:**
+### Risk level:
 - [ ] high 
 - [ ] medium
 - [ ] low
 
-**How to test:**
+### How to test:
 <-- please tell us how to test functionality/bug -->
