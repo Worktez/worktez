@@ -169,6 +169,7 @@ $("#submitCreateNewTask").click(function() {
     });
     $('input').val('');
     $('select').val('');
+    $('textarea').val('');
 });
 
 $("#submitNewSprint").click(function() {
@@ -178,7 +179,7 @@ $("#submitNewSprint").click(function() {
     var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
     var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
     var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
-    
+
     console.log(totalDevelopment);
     console.log(totalBusiness);
     console.log(totalMarketing);
@@ -187,7 +188,7 @@ $("#submitNewSprint").click(function() {
     console.log(status);
 
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing}).then(result => {
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
