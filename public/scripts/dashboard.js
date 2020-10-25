@@ -66,19 +66,18 @@ function getNewSprintId() {
 function readSprintData(newSprintId) {
     db.collection("Main").doc(newSprintId).get()
         .then(function(doc) {
-            if(doc.exists)
-            {console.log("working");
-            console.log(doc.data().TotalDevelopmentTask);
-            console.log(doc.data().TotalBusinessTask);
-            console.log(doc.data().TotalMarketingTask);
-            var totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-            var totalBusinessTask = doc.data().TotalBusinessTask;
-            var totalMarketingTask = doc.data().TotalMarketingTask;
-            document.getElementById("totalDevelopmentTaskNewSprint").innerHTML = totalDevelopmentTask;
-            document.getElementById("totalBusinessTaskNewSprint").innerHTML = totalBusinessTask;
-            document.getElementById("totalMarketingTaskNewSprint").innerHTML = totalMarketingTask;}
-            else
-            {
+            if (doc.exists) {
+                console.log("working");
+                console.log(doc.data().TotalDevelopmentTask);
+                console.log(doc.data().TotalBusinessTask);
+                console.log(doc.data().TotalMarketingTask);
+                var totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+                var totalBusinessTask = doc.data().TotalBusinessTask;
+                var totalMarketingTask = doc.data().TotalMarketingTask;
+                document.getElementById("totalDevelopmentTaskNewSprint").innerHTML = totalDevelopmentTask;
+                document.getElementById("totalBusinessTaskNewSprint").innerHTML = totalBusinessTask;
+                document.getElementById("totalMarketingTaskNewSprint").innerHTML = totalMarketingTask;
+            } else {
                 document.getElementById("totalDevelopmentTaskNewSprint").innerHTML = 0;
                 document.getElementById("totalBusinessTaskNewSprint").innerHTML = 0;
                 document.getElementById("totalMarketingTaskNewSprint").innerHTML = 0;
@@ -88,3 +87,5 @@ function readSprintData(newSprintId) {
             console.log("Error", error);
         });
 }
+
+// setInterval(readSprintData, 1000);

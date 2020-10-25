@@ -170,6 +170,7 @@ $("#submitCreateNewTask").click(function() {
     $('input').val('');
     $('select').val('');
     $('textarea').val('');
+    setInterval(setDataIntoDashboard, 1000);
 });
 
 $("#submitNewSprint").click(function() {
