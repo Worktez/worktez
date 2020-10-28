@@ -87,5 +87,3 @@ function readSprintData(newSprintId) {
             console.log("Error", error);
         });
 }
-
-// setInterval(readSprintData, 1000);
