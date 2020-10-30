@@ -79,5 +79,5 @@ function readSprintData(newSprintId) {
                 document.getElementById("totalBusinessTaskNewSprint").innerHTML = 0;
                 document.getElementById("totalMarketingTaskNewSprint").innerHTML = 0;
             }
-        })
+        });
 }
