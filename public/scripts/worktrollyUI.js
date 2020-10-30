@@ -164,8 +164,12 @@ $("#submitCreateNewTask").click(function() {
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
     createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
         console.log(result.data);
-        location.reload();
+        newPage = "dashboard";
+        uiLoader();
     });
+    $('input').val('');
+    $('select').val('');
+    $('textarea').val('');
 });
 
 $("#submitNewSprint").click(function() {

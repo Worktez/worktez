@@ -1,14 +1,11 @@
 function getDashboardData() {
-    db.collection("Main").doc("RawData").get()
-        .then(function(doc) {
+    db.collection("Main").doc("RawData")
+        .onSnapshot(function(doc) {
             currentSprint = doc.data().CurrentSprintId;
             console.log(currentSprint);
             selectedSprint = currentSprint;
             setDataIntoDashboard();
         })
-        .catch(function(error) {
-            console.log("Error getting document:", error);
-        });
 }
 
 function setDataIntoDashboard() {
@@ -64,8 +61,8 @@ function getNewSprintId() {
 }
 
 function readSprintData(newSprintId) {
-    db.collection("Main").doc(newSprintId).get()
-        .then(function(doc) {
+    db.collection("Main").doc(newSprintId)
+        .onSnapshot(function(doc) {
             if (doc.exists) {
                 console.log("working");
                 console.log(doc.data().TotalDevelopmentTask);
@@ -83,7 +80,4 @@ function readSprintData(newSprintId) {
                 document.getElementById("totalMarketingTaskNewSprint").innerHTML = 0;
             }
         })
-        .catch(function(error) {
-            console.log("Error", error);
-        });
 }
