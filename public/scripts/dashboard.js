@@ -5,7 +5,7 @@ function getDashboardData() {
             console.log(currentSprint);
             selectedSprint = currentSprint;
             setDataIntoDashboard();
-        })
+        });
 }
 
 function setDataIntoDashboard() {
