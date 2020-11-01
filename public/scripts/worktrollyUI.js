@@ -127,6 +127,21 @@ $("#cardDescription").ready(function() {
     $("#cardDescription").hide(0);
 });
 
+$("#deleteTaskCard").click(function() {
+    var id = $("#idTaskDescription").html();
+    var sprintNumber = $("#sprintNumberTaskDescription").html();
+    var category = $("#categoryTaskDescription").html();
+
+    console.log(id + " deleted");
+
+    var deleteCardTask = firebase.functions().httpsCallable('deleteTask');
+    deleteCardTask({ Id: id, SprintNumber: sprintNumber, Category: category }).then(result => {
+        console.log(result.data);
+        newPage = "dashboard";
+        uiLoader();
+    });
+});
+
 $("#backToMainFromCardDescription").click(function() {
     newPage = "dashboard";
     uiLoader();
@@ -169,6 +184,7 @@ $("#submitCreateNewTask").click(function() {
     });
     $('input').val('');
     $('select').val('');
+    $('textarea').val('');
 });
 
 $("#submitNewSprint").click(function() {
@@ -178,7 +194,7 @@ $("#submitNewSprint").click(function() {
     var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
     var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
     var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
-    
+
     console.log(totalDevelopment);
     console.log(totalBusiness);
     console.log(totalMarketing);
@@ -187,7 +203,7 @@ $("#submitNewSprint").click(function() {
     console.log(status);
 
     var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing}).then(result => {
+    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
