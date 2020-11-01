@@ -376,6 +376,94 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
     });
 });
 
+exports.deleteTask = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+
+        var sprintNumber = request.body.data.SprintNumber;
+        var taskId = request.body.data.Id;
+        var fullSprintId = createSprintId(sprintNumber);
+        var category = request.body.data.Category;
+        var totalDevelopmentTask;
+        var totalBusinessTask;
+        var totalMarketingTask;
+        var totalNumberOfTask;
+        var result;
+        var totalUnCompletedTask;
+
+        db.collection(fullSprintId).doc(taskId).delete()
+            .then(() => {
+                return db.collection("Main").doc("RawData").get().then((doc) => {
+                    totalNumberOfTask = doc.data().TotalNumberOfTask;
+                    totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+                    totalBusinessTask = doc.data().TotalBusinessTask;
+                    totalMarketingTask = doc.data().TotalMarketingTask;
+                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+
+                    if (category === "Development") {
+                        totalDevelopmentTask = totalDevelopmentTask - 1;
+                    } else if (category === "Business") {
+                        totalBusinessTask = totalBusinessTask - 1;
+                    } else {
+                        totalMarketingTask = totalMarketingTask - 1;
+                    }
+
+                    totalUnCompletedTask = totalUnCompletedTask - 1;
+                    totalNumberOfTask = totalNumberOfTask - 1;
+
+                    var updateDeleteCounter = db.collection("Main").doc("RawData").update({
+                        TotalDevelopmentTask: totalDevelopmentTask,
+                        TotalBusinessTask: totalBusinessTask,
+                        TotalMarketingTask: totalMarketingTask,
+                        TotalNumberOfTask: totalNumberOfTask,
+                        TotalUnCompletedTask: totalUnCompletedTask
+                    });
+                    return Promise.resolve(updateDeleteCounter);
+                });
+            })
+            .then(function(updateDeleteCounter) {
+                return db.collection("Main").doc(fullSprintId).get().then(function(doc) {
+                    totalNumberOfTask = doc.data().TotalNumberOfTask;
+                    totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+                    totalBusinessTask = doc.data().TotalBusinessTask;
+                    totalMarketingTask = doc.data().TotalMarketingTask;
+                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+
+                    if (category === "Development") {
+                        totalDevelopmentTask = totalDevelopmentTask - 1;
+                    } else if (category === "Business") {
+                        totalBusinessTask = totalBusinessTask - 1;
+                    } else {
+                        totalMarketingTask = totalMarketingTask - 1;
+                    }
+
+                    totalUnCompletedTask = totalUnCompletedTask - 1;
+                    totalNumberOfTask = totalNumberOfTask - 1;
+
+                    var updateDeleteTaskCounter = db.collection("Main").doc(fullSprintId).update({
+                        TotalDevelopmentTask: totalDevelopmentTask,
+                        TotalBusinessTask: totalBusinessTask,
+                        TotalMarketingTask: totalMarketingTask,
+                        TotalNumberOfTask: totalNumberOfTask,
+                        TotalUnCompletedTask: totalUnCompletedTask
+                    });
+                    return Promise.resolve(updateDeleteTaskCounter);
+                });
+            })
+            .then((updateDeleteTaskCounter) => {
+                result = { data: "OK" };
+                console.log("Document sucessfully deleted");
+                return response.status(200).send(result);
+            })
+            .catch(function(error) {
+                result = { data: error };
+                console.log("error", error);
+                return response.status(500).send(result)
+            });
+    });
+});
+
+
 function createSprintId(sprintNumber) {
     if (sprintNumber === "-1") {
         return "Backlog";
