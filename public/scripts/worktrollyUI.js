@@ -184,6 +184,7 @@ $("#submitCreateNewTask").click(function() {
     });
     $('input').val('');
     $('select').val('');
+    $('textarea').val('');
 });
 
 $("#submitNewSprint").click(function() {
