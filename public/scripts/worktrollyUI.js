@@ -237,6 +237,8 @@ $("#logWorkSubmit").click(function() {
 
 $("#submitEditPageTask").click(function() {
     var id = $("#editPageTaskId").html();
+    var title = $("#titleEditPageTask").html();
+    var creator = $("#creatorEditPageTask").html();
     var des = $("#descriptionEditPageTask").val();
     var priority = $("#priorityEditPageTask").val();
     var difficulty = $("#difficultyEditPageTask").val();
@@ -246,8 +248,13 @@ $("#submitEditPageTask").click(function() {
     var category = $("#categoryEditPageTask").val();
     var storyPointNumber = $("#storyPointEditPageTask").val();
     var sprintNumber = $("#sprintNumberEditPageTask").val();
+    var previousId = $("#sprintNumberTaskDescription").html();
+    var logWorkDone = $("#workDoneTaskDescription").html();
+    var logHours = $("#logHoursTaskDescription").html();
 
     console.log(id);
+    console.log(title);
+    console.log(creator);
     console.log(des);
     console.log(priority);
     console.log(difficulty);
@@ -259,7 +266,7 @@ $("#submitEditPageTask").click(function() {
     console.log(storyPointNumber);
 
     var editPageTaskFunction = firebase.functions().httpsCallable('editPageTask');
-    editPageTaskFunction({ Id: id, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+    editPageTaskFunction({ Id: id, Title: title, Creator: creator, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, PreviousId: previousId, LogHours: logHours, LogWorkDone: logWorkDone, }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
