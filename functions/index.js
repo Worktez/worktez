@@ -339,7 +339,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var storyPointNumber = request.body.data.StoryPointNumber;
         var sprintNumber = request.body.data.SprintNumber;
         var previousId = request.body.data.PreviousId;
-        var previousSprintId = "S" + previousId;
+        var previousSprintId = createSprintId(previousId);
         var logWorkDone = request.body.data.LogWorkDone;
         var logHours = request.body.data.LogHours;
         var taskId = request.body.data.Id;
