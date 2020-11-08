@@ -10,13 +10,17 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
 import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
+import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
+import { DashboardComponent } from './body/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BodyComponent,
-    CreateNewSessionComponent
+    CreateNewSessionComponent,
+    CreateNewSprintComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
