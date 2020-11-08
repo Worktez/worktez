@@ -12,7 +12,10 @@ import { BodyComponent } from './body/body.component';
 import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
 import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
 import { DashboardComponent } from './body/dashboard/dashboard.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material/button';
+import { FieldsComponent } from './body/dashboard/fields/fields.component';
+import { SprintDetailsComponent } from './body/dashboard/sprint-details/sprint-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,14 +23,18 @@ import { DashboardComponent } from './body/dashboard/dashboard.component';
     BodyComponent,
     CreateNewSessionComponent,
     CreateNewSprintComponent,
-    DashboardComponent
+    DashboardComponent,
+    FieldsComponent,
+    SprintDetailsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireFunctionsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
