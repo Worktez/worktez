@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "worktrolly": {
+      "hosting": {
+        "worktrolly-ui": [
+          "worktrolly"
+        ]
+      }
+    }
+  }
+}
