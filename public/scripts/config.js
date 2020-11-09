@@ -8,10 +8,16 @@ var firebaseConfig = {
     appId: "1:358996208239:web:73a1939b7267070d2dfb9a",
     measurementId: "G-FEQ8PFLLCV"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var firestore = firebase.firestore();
-
+var db = firebase.firestore();
 var dataset = [];
+var dashboardDataset = [];
+var collectionName = "Main";
 var newPage = "";
-var currentPage = "bodyContent";
+var currentPage = "dashboard";
+var selectedCategory = "";
+var selectedStatus = "";
+var selectedSprint;
+var currentSprint;
