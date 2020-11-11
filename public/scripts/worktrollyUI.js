@@ -22,7 +22,7 @@ $("#logWorkPage").click(function() {
     console.log(sprintNumber);
     newPage = "logWorkTask";
     uiLoader();
-    fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
+    fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber, );
 });
 
 $("#editPage").click(function() {
@@ -237,9 +237,11 @@ $("#logWorkSubmit").click(function() {
     var sprintNumber = $("#logSprintNumber").html();
     var logTaskId = $("#logTaskId").html();
     var logWorkDone = $("#logWorkDone").val();
-    var logWorkComment = "";
+    var logWorkComment = $("logWorkComment").val();
     var logWorkStatus = $("#logWorkStatus").val();
     var logHours = $("#logWorkHour").val();
+    // var comment = $("logWorkComment").val();
+
 
     console.log(sprintNumber);
     console.log(logTaskId);
@@ -247,6 +249,7 @@ $("#logWorkSubmit").click(function() {
     console.log(logWorkComment);
     console.log(logWorkStatus);
     console.log(logHours);
+    console.log(comment);
 
     var logWorkFunction = firebase.functions().httpsCallable('logWork');
     logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {

@@ -191,6 +191,11 @@ function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, wor
     document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
     document.getElementById("logWorkDone").value = workDone;
     document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
+    var today = new Date();
+    var date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var commentDateTime = date + "|" + time + "|";
+    document.getElementById("logWorkComment").value = commentDateTime + assigneeTaskDescription.innerHTML + " : ";
 }
 
 function fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber, storyPointNumber) {
