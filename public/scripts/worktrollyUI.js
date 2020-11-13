@@ -85,8 +85,7 @@ $("#log").click(function() {
 });
 
 $("#cardsList").click(function() {
-    $('#createNewTask').show(100);
-
+    $('#createNewTask').hide(100);
 });
 
 $("#Business").click(function() {
@@ -186,6 +185,7 @@ $("#submitCreateNewTask").click(function() {
     var category = $("#categoryCreateNewTask").val();
     var storyPointNumber = $("#storyPointNumber").val();
     var sprintNumber = $("#createNewTaskSprintNumber").val();
+    var creationDate = $("#creationDateCreateNewTask").html();
     console.log(title);
     console.log(des);
     console.log(priority);
@@ -197,9 +197,10 @@ $("#submitCreateNewTask").click(function() {
     console.log(category);
     console.log(sprintNumber);
     console.log(storyPointNumber);
+    console.log(creationDate);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, CreationDate: creationDate }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

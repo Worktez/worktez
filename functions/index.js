@@ -21,6 +21,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
         var sprintNumber = request.body.data.SprintNumber;
+        var creationDate = request.body.data.CreationDate;
         var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -44,6 +45,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         console.log(category);
         console.log(sprintNumber);
         console.log(storyPointNumber);
+        console.log(creationDate);
 
         db.collection("Main").doc("RawData").get().then((doc) => {
 
@@ -82,7 +84,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     LogWorkTotalTime: loggedWorkTotalTime,
                     WorkDone: workDone,
                     SprintNumber: sprintNumber,
-                    StoryPointNumber: storyPointNumber
+                    StoryPointNumber: storyPointNumber,
+                    CreationDate: creationDate
                 });
                 return Promise.resolve(setDataPromise);
             })

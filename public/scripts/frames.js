@@ -112,7 +112,7 @@ function setDataIntoCard() {
             frame += "','"
             frame += creationDate;
             frame += "')\" style=\"max-width: 32rem;\">";
-            frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
+            frame += "<div class=\"card-header\">" + creationDate + "</div>";
             frame += "<div class=\"card-body py-3\">";
             frame += "<div class=\"row pb-2\">";
             frame += "<div class=\"col-md-4 col-4\">";
@@ -181,6 +181,7 @@ function setDataIntoDescription(id, title, des, estimatedTime, difficulty, prior
     document.getElementById("logHoursTaskDescription").innerHTML = logWorkTotalTime;
     document.getElementById("workDoneTaskDescription").innerHTML = workDone;
     document.getElementById("storyPointNumberTaskDescription").innerHTML = storyPointNumber;
+    document.getElementById("creationDateTaskDescription").innerHTML = creationDate;
 }
 
 function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber) {
