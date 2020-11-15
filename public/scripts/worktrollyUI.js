@@ -252,9 +252,10 @@ $("#logWorkSubmit").click(function() {
     console.log(logWorkStatus);
     console.log(logHours);
     console.log(comment);
+    console.log(commentDateTime)
 
     var logWorkFunction = firebase.functions().httpsCallable('logWork');
-    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment, CommentDateTime: commentDateTime }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
