@@ -238,11 +238,9 @@ $("#logWorkSubmit").click(function() {
     var sprintNumber = $("#logSprintNumber").html();
     var logTaskId = $("#logTaskId").html();
     var logWorkDone = $("#logWorkDone").val();
-    var logWorkComment = $("logWorkComment").val();
     var logWorkStatus = $("#logWorkStatus").val();
     var logHours = $("#logWorkHour").val();
-    var commentDateTime = $("#logWorkComment").val();
-    // var comment = $("logWorkComment").val();
+    var logWorkComment = $("#logWorkComment").val();
 
 
     console.log(sprintNumber);
@@ -251,11 +249,9 @@ $("#logWorkSubmit").click(function() {
     console.log(logWorkComment);
     console.log(logWorkStatus);
     console.log(logHours);
-    console.log(comment);
-    console.log(commentDateTime)
 
     var logWorkFunction = firebase.functions().httpsCallable('logWork');
-    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment, CommentDateTime: commentDateTime }).then(result => {
+    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();

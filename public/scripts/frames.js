@@ -195,8 +195,8 @@ function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, wor
     var today = new Date();
     var date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
     var time = today.getHours() + ":" + today.getMinutes();
-    var commentDateTime = date + "|" + time + "|";
-    document.getElementById("logWorkComment").value = commentDateTime + assigneeTaskDescription.innerHTML + " : ";
+    var logWorkComment = date + "|" + time + "|";
+    document.getElementById("logWorkComment").value = logWorkComment + assigneeTaskDescription.innerHTML + " : ";
 }
 
 function fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber, storyPointNumber) {

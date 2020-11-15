@@ -15,6 +15,6 @@ class StoreData {
         this.creationDate = data.CreationDate;
         this.sprintNumber = data.SprintNumber;
         this.storyPointNumber = data.StoryPointNumber;
-        this.commentDateTime = data.CommentDateTime;
+        this.logWorkComment = data.LogWorkComment;
     }
 }
