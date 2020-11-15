@@ -241,6 +241,7 @@ $("#logWorkSubmit").click(function() {
     var logWorkComment = $("logWorkComment").val();
     var logWorkStatus = $("#logWorkStatus").val();
     var logHours = $("#logWorkHour").val();
+    var commentDateTime = $("#logWorkComment").val();
     // var comment = $("logWorkComment").val();
 
 

@@ -259,6 +259,7 @@ exports.logWork = functions.https.onRequest((request, response) => {
         var logHours = request.body.data.LogHours;
         var workDone = request.body.data.LogWorkDone;
         var sprintNumber = request.body.data.SprintNumber;
+        var commentDateTime = request.body.data.CommentDateTime;
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
         console.log(status);
@@ -267,6 +268,7 @@ exports.logWork = functions.https.onRequest((request, response) => {
         console.log(workDone);
         console.log(sprintNumber);
         console.log(fullSprintId);
+        console.log(commentDateTime);
 
         db.collection(fullSprintId).doc(taskId).get().then(function(doc) {
             logWorkTotalTime = doc.data().LogWorkTotalTime;
@@ -276,7 +278,8 @@ exports.logWork = functions.https.onRequest((request, response) => {
                 LogWorkTotalTime: logWorkTotalTime,
                 WorkDone: workDone,
                 LogHours: logHours,
-                Status: status
+                Status: status,
+                CommentDateTime: commentDateTime
             });
             return Promise.resolve(updatePromise);
         })
