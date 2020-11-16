@@ -3,6 +3,9 @@ $("#createNewTaskButton").click(function() {
     uiLoader();
     var date = new Date();
     $("#creationDateCreateNewTask").html(date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear());
+    $("#bodyContent").hide(100);
+    $("#work").hide(100);
+    $("#close").hide(100);
 });
 
 $("#startNewSprint").ready(function() {
@@ -19,7 +22,7 @@ $("#logWorkPage").click(function() {
     console.log(sprintNumber);
     newPage = "logWorkTask";
     uiLoader();
-    fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber);
+    fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber, );
 });
 
 $("#editPage").click(function() {
@@ -52,6 +55,10 @@ $("#backToDashboard").click(function() {
     uiLoader();
 });
 
+$("#backToMainFromCreateNewTask").click(function() {
+    newPage = "bodyContent";
+});
+
 $("#backToMain").click(function() {
     newPage = "dashboard";
     uiLoader();
@@ -65,6 +72,20 @@ $("#backToMainFromNewSprint").click(function() {
 $("#dashboard").ready(function() {
     var result = getDashboardData();
     console.log(result);
+    $("#work").hide(100);
+    $("#close").hide(100);
+
+});
+
+$("#log").click(function() {
+    $("#bodyContent").hide(100);
+    $("#close").hide(100);
+    $("#work").show(100);
+
+});
+
+$("#cardsList").click(function() {
+    $('#createNewTask').hide(100);
 });
 
 $("#Business").click(function() {
@@ -164,6 +185,7 @@ $("#submitCreateNewTask").click(function() {
     var category = $("#categoryCreateNewTask").val();
     var storyPointNumber = $("#storyPointNumber").val();
     var sprintNumber = $("#createNewTaskSprintNumber").val();
+    var creationDate = $("#creationDateCreateNewTask").html();
     console.log(title);
     console.log(des);
     console.log(priority);
@@ -175,9 +197,10 @@ $("#submitCreateNewTask").click(function() {
     console.log(category);
     console.log(sprintNumber);
     console.log(storyPointNumber);
+    console.log(creationDate);
 
     var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber }).then(result => {
+    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, CreationDate: creationDate }).then(result => {
         console.log(result.data);
         newPage = "dashboard";
         uiLoader();
@@ -215,9 +238,10 @@ $("#logWorkSubmit").click(function() {
     var sprintNumber = $("#logSprintNumber").html();
     var logTaskId = $("#logTaskId").html();
     var logWorkDone = $("#logWorkDone").val();
-    var logWorkComment = "";
     var logWorkStatus = $("#logWorkStatus").val();
     var logHours = $("#logWorkHour").val();
+    var logWorkComment = $("#logWorkComment").val();
+
 
     console.log(sprintNumber);
     console.log(logTaskId);
