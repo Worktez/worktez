@@ -52,6 +52,11 @@ function sprintFilter(sprintFilterId) {
     setDataIntoDashboard();
 }
 
+function currentSprintFilter() {
+    selectedSprint = currentSprint;
+    setDataIntoDashboard();
+}
+
 function getNewSprintId() {
     var newSprintId = "";
     newSprintId = "S" + (currentSprint + 1).toString();
