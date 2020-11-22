@@ -79,6 +79,7 @@ $("#dashboard").ready(function() {
 
 $("#log").click(function() {
     $("#bodyContent").hide(100);
+
     $("#close").hide(100);
     $("#work").show(100);
 
@@ -113,6 +114,10 @@ $("#Marketing").click(function() {
 $("#backlogButton").click(function() {
     selectedSprint = "-1";
     setDataIntoDashboard();
+});
+
+$("#currentSprintButton").click(function() {
+    currentSprintFilter();
 });
 
 $("#completedTask").click(function() {
