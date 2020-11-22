@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
+import { NgForm }   from '@angular/forms';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -16,8 +18,8 @@ export class CreateNewSprintComponent implements OnInit {
   totalBusiness:string
   totalMarketing:string
 
-  constructor() { }
 
+  constructor(private functions: AngularFireFunctions) { }
   ngOnInit(): void {
   }
 
@@ -28,6 +30,18 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.totalDevelopment);
     console.log(this.totalBusiness);
     console.log(this.totalMarketing);
+
+    const callable = this.functions.httpsCallable('startNewSprint');
+
+    try {
+      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing }).toPromise();
+
+      console.log("Successfully created the task");
+      console.log(result);
+    } catch (error) {
+      console.error("Error", error);
+    }
+
   }
 
 }

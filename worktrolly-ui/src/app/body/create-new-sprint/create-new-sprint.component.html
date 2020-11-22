@@ -16,7 +16,7 @@
             <div class="form-group row pt-2">
                 <div class="alert alert-info form-inline col-sm-4" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Sprint:</div>
-                    <div id="SprintNo"></div>
+                    <div> {{ sprintNumber }} </div>
                 </div>
             </div>
             <div class="form-row">
@@ -24,36 +24,36 @@
                     <label for="input">Development</label>
                     <div class="alert bg-dark text-white form-inline" role="alert">
                         <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalDevelopmentTaskNewSprint" class="ml-auto"></div>
+                        <div class="ml-auto"> {{totalDevelopment}} </div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Business</label>
                     <div class="alert bg-dark text-white form-inline" role="alert">
                         <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalBusinessTaskNewSprint" class="ml-auto"></div>
+                        <div class="ml-auto"> {{totalBusiness}} </div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Marketing</label>
                     <div class="alert bg-dark text-white form-inline" role="alert">
                         <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalMarketingTaskNewSprint" class="ml-auto"></div>
+                        <div class="ml-auto"> {{totalMarketing}} </div>
                     </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="input">Start Date</label>
-                    <input class="form-control" type="date" value="" id="startdateNewSprint">
+                    <input class="form-control" type="date" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="input">End Date</label>
-                    <input class="form-control" type="date" value="" id="enddateNewSprint">
+                    <input class="form-control" type="date" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputState">Status</label>
-                    <select class="form-control" id="statusNewSprint">
+                    <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                         <option selected>choose...</option>
                         <option>Ready to Start</option>
                         <option>Under Progress</option>
@@ -63,7 +63,7 @@
             </div>
         </form>
         <div class="pt-2 pb-5">
-            <button type="submit" class="btn btn-primary" id="submitNewSprint">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 </div>
