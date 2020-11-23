@@ -47,73 +47,88 @@
     </nav>
 
     <!-- new sprint   ------------------------------------------------------->
-    <div class="container">
-        <div class="bg-light px-5 py-5" id="startNewSprint">
-            <div class="row pt-2">
-                <div class="col-md-11 col-10"></div>
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
+    <form class="needs-validation" novalidate id="startNewSprintForm">
+        <div class="container">
+            <div class="bg-light px-5 py-5" id="startNewSprint">
+                <div class="row pt-2">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
                        close
                     </span>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h3 class="pl-1 fontHeading">Create New Sprint</h3>
-                    <hr class="w-75 ml-0">
                 </div>
-            </div>
-            <div class="form-group row pt-2">
-                <div class="alert alert-info form-inline col-sm-4" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Sprint:</div>
-                    <div id="SprintNo"></div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="input">Development</label>
-                    <div class="alert bg-dark text-white form-inline" role="alert">
-                        <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalDevelopmentTaskNewSprint" class="ml-auto"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="pl-1 fontHeading">Create New Sprint</h3>
+                        <hr class="w-75 ml-0">
                     </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Business</label>
-                    <div class="alert bg-dark text-white form-inline" role="alert">
-                        <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalBusinessTaskNewSprint" class="ml-auto"></div>
+                <div class="form-group row pt-2">
+                    <div class="alert alert-info form-inline col-sm-4" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Sprint:</div>
+                        <div id="SprintNo"></div>
                     </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Marketing</label>
-                    <div class="alert bg-dark text-white form-inline" role="alert">
-                        <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                        <div id="totalMarketingTaskNewSprint" class="ml-auto"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Development</label>
+                        <div class="alert bg-dark text-white form-inline" role="alert">
+                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                            <div id="totalDevelopmentTaskNewSprint" class="ml-auto"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Business</label>
+                        <div class="alert bg-dark text-white form-inline" role="alert">
+                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                            <div id="totalBusinessTaskNewSprint" class="ml-auto"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Marketing</label>
+                        <div class="alert bg-dark text-white form-inline" role="alert">
+                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                            <div id="totalMarketingTaskNewSprint" class="ml-auto"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="input">Start Date</label>
-                    <input class="form-control" type="date" value="" id="startdateNewSprint">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="input">End Date</label>
-                    <input class="form-control" type="date" value="" id="enddateNewSprint">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Status</label>
-                    <select class="form-control" id="statusNewSprint">
-                            <option selected>choose...</option>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Start Date</label>
+                        <input class="form-control" type="date" value="" id="startdateNewSprint" required>
+                        <div class="invalid-tooltip">
+                            Please Select Starting Date of Sprint
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="input">End Date</label>
+                        <input class="form-control" type="date" value="" id="enddateNewSprint" required>
+                        <div class="invalid-tooltip">
+                            Please Select End Date of Sprint
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Status</label>
+                        <select class="custom-select" id="statusNewSprint" required>
+                            <option selected disabled value="" >choose...</option>
                             <option>Ready to Start</option>
                             <option>Under Progress</option>
                             <option>Completed</option>
                     </select>
+                        <div class="invalid-tooltip">
+                            Please Select Status of New Sprint
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2 pb-5">
+                    <button type="submit" class="btn btn-primary" id="submitNewSprint">Submit
+                          <div class="ml-1 spinner-border text-light spinner-border-sm" id="submitNewSprintSpinner" style="display: none;"  role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                 </div>
             </div>
-            <div class="pt-2 pb-5">
-                <button type="submit" class="btn btn-primary" id="submitNewSprint">Submit</button>
-            </div>
         </div>
-    </div>
+    </form>
 
     <!-- Dashboard---------------------------------------------------------------------------- -->
     <section class="bg-light" id="dashboard">
@@ -292,185 +307,239 @@
     </div>
 
     <!-- create new task   ------------------------------------------------------->
-
-    <div class="container py-5 " id="createNewTask">
-        <div class="bg-light px-5">
-            <div class="row pt-2">
-                <div class="col-md-11 col-10"></div>
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMain">
+    <form class="needs-validation" novalidate id="createNewTaskForm">
+        <div class="container py-5 " id="createNewTask">
+            <div class="bg-light px-5">
+                <div class="row pt-2">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMain">
                     close
                 </span>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h3 class="pl-1 fontHeading">Create New Task</h3>
-                    <hr class="w-75 ml-0">
                 </div>
-                <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Date:</div>
-                    <div id="creationDateCreateNewTask"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="pl-1 fontHeading">Create New Task</h3>
+                        <hr class="w-75 ml-0">
+                    </div>
+                    <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Date:</div>
+                        <div id="creationDateCreateNewTask"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row pt-2">
-                <label for="input" class="col-sm-2 col-form-label">Title</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="titleCreateNewTask">
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="titleCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Please provide a Title
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-2 col-form-label">Description</label>
-                <div class="col-sm-10">
-                    <textarea type="text" class="form-control" id="desCreateNewTask" rows="1"></textarea>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" class="form-control" id="desCreateNewTask" rows="1" required></textarea>
+                        <div class="invalid-feedback">
+                            Please Provide the Description
+                        </div>
+                    </div>
+
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="input">Assignee</label>
-                    <input type="text" class="form-control" id="assigneeCreateNewTask">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Assignee</label>
+                        <input type="text" class="form-control" id="assigneeCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Enter Assignee Name
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Creator</label>
+                        <input type="text" class="form-control" id="creatorCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Enter Creator Name
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Estimated Time</label>
+                        <input type="number" min="0" class="form-control" id="estimatedTimeCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Enter Estimated Time
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Creator</label>
-                    <input type="text" class="form-control" id="creatorCreateNewTask">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Estimated Time</label>
-                    <input type="number" class="form-control" id="estimatedTimeCreateNewTask">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="input">Category</label>
-                    <select class="form-control" id="categoryCreateNewTask">
-                        <option selected>choose...</option>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Category</label>
+                        <select class="custom-select" id="categoryCreateNewTask" required> 
+                        <option selected disabled value="">choose...</option>
                         <option>Business</option>
                         <option>Development</option>
                         <option>Marketing</option>
                     </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Priority</label>
-                    <select class="form-control" id="priorityCreateNewTask">
-                        <option selected>choose...</option>
+                        <div class="invalid-feedback">
+                            Select a Category
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Priority</label>
+                        <select class="custom-select" id="priorityCreateNewTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>High</option>
                         <option>Medium</option>
                         <option>Low</option>
                     </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Difficulty</label>
-                    <select class="form-control" id="difficultyCreateNewTask">
-                        <option selected>choose...</option>
+                        <div class="invalid-feedback">
+                            Select Priority of the Task
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Difficulty</label>
+                        <select class="custom-select" id="difficultyCreateNewTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>High</option>
                         <option>Medium</option>
                         <option>Low</option>
                     </select>
+                        <div class="invalid-feedback">
+                            Select Difficulty Level of the Task
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inputState">Status</label>
-                    <select class="form-control" id="statusCreateNewTask">
-                        <option selected>choose...</option>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Status</label>
+                        <select class="custom-select" id="statusCreateNewTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>Ice Box</option>
                         <option>Ready to start</option>
                         <option>Under Progress</option>
                         <option>Blocked</option>
                         <option>Completed</option>
                     </select>
+                        <div class="invalid-feedback">
+                            Select Status of the work
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Sprint Number</label>
+                        <input type="number" min="-1" class="form-control" id="createNewTaskSprintNumber" required>
+                        <div class="invalid-feedback">
+                            Enter Sprint Number
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Story Point</label>
+                        <input type="number" min="0" class="form-control" id="storyPointNumber" required>
+                        <div class="invalid-feedback">
+                            Enter Story Point of Task
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Sprint Number</label>
-                    <input type="number" class="form-control" id="createNewTaskSprintNumber">
+                <div class="pt-2 pb-5">
+                    <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit
+                        <div class="ml-1 spinner-border text-light spinner-border-sm" id="createNewTaskSpinner" style="display: none;"  role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Story Point</label>
-                    <input type="number" min="0" class="form-control" id="storyPointNumber">
-                </div>
-            </div>
-            <div class="pt-2 pb-5">
-                <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit</button>
             </div>
         </div>
-    </div>
-
+    </form>
     <!-- log work-------------------------------------------------------- -->
 
     <!--py= padding in y axis, px= padding in x axis, pl= paddingLeft, pr= paddingRight, pt=paddingTop, pb= paddingBottom ,
          Similarly for margin my, mx, ml, mr, mt, mb
         and w=width  -->
 
-    <div class="container py-5 px-0" id="logWorkTask">
-        <div class="bg-dark py-2 px-5">
-            <h3 class="pt-5 fontHeading text-white">Log Work</h3>
-            <div class="row pt-5 pb-2 ml-1">
-                <div class="alert alert-info form-inline col-md-5" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Id:</div>
-                    <div id="logTaskId"> </div>
+    <form class="was-validated" id="logWorkTaskForm">
+        <div class="container py-5 px-0" id="logWorkTask">
+            <div class="bg-dark py-2 px-5">
+                <h3 class="pt-5 fontHeading text-white">Log Work</h3>
+                <div class="row pt-5 pb-2 ml-1">
+                    <div class="alert alert-info form-inline col-md-5" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Id:</div>
+                        <div id="logTaskId"> </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="alert alert-info form-inline col-md-5" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Sprint Number:</div>
+                        <div id="logSprintNumber"> </div>
+                    </div>
                 </div>
-                <div class="col-md-1"></div>
-                <div class="alert alert-info form-inline col-md-5" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Sprint Number:</div>
-                    <div id="logSprintNumber"> </div>
+
+                <div class="alert alert-info form-inline col-md-12" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Title: </div>
+                    <div id="logWorkTitle"></div>
                 </div>
-            </div>
 
-            <div class="alert alert-info form-inline col-md-12" role="alert">
-                <div style="font-weight: bold;" class="pr-3">Title: </div>
-                <div id="logWorkTitle"></div>
-            </div>
+                <div class="alert bg-light form-inline w-50 pt-3" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
+                    <div id="logWorkET"> </div>
+                </div>
 
-            <div class="alert bg-light form-inline w-50 pt-3" role="alert">
-                <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
-                <div id="logWorkET"> </div>
-            </div>
-
-            <div class="alert bg-light form-inline w-50" role="alert">
-                <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
-                <div id="logWorkTotalTime"> </div>
-            </div>
-            <div class="alert bg-light form-inline w-50" role="alert">
-                <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
-                <div id="logWorkRT"> </div>
-            </div>
-            <div class="row pt-3 text-white">
-
-                <label for="inputState" class="col-sm-2 col-form-label">Status</label>
-                <select class="form-control col-sm-3 form-control mx-sm-3" id="logWorkStatus">
-        <option selected>choose...</option>
-        <option>Ice Box</option>
-        <option>Ready to start</option>
-        <option>Under Progress</option>
-        <option>Blocked</option>
-        <option>Completed</option>
-    </select>
-
-            </div>
-            <div class="row pt-3 text-white">
-                <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
-                <input type="number" id="logWorkHour" class="col-sm-3 form-control mx-sm-3">
-                <small id="LogWorkHour" class="col text-muted">
+                <div class="alert bg-light form-inline w-50" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
+                    <div id="logWorkTotalTime"> </div>
+                </div>
+                <div class="alert bg-light form-inline w-50" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
+                    <div id="logWorkRT"> </div>
+                </div>
+                <div class="row pt-3 text-white">
+                    <label for="inputState" class="col-sm-2 col-form-label">Status</label>
+                    <select class="custom-select col-sm-3 mx-sm-3" id="logWorkStatus" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Select Status of the work
+                    </div>
+                </div>
+                <div class="row pt-3 text-white">
+                    <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
+                    <input type="number" min="1" id="logWorkHour" class="col-sm-3 form-control mx-sm-3" required>
+                    <small id="LogWorkHour" class="col text-muted">
                     hours
                 </small>
-            </div>
-
-            <div class="row py-2 text-white">
-                <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
-                <input type="number" id="logWorkDone" class="col-sm-3 form-control mx-sm-3">
-                <small id="LogWorkHour" class="col text-muted">
+                    <div class="invalid-feedback">
+                        Enter Worked Hours
+                    </div>
+                </div>
+                <div class="row py-2 text-white">
+                    <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
+                    <input type="number" min="1" max="100" id="logWorkDone" class="col-sm-3 form-control mx-sm-3" required>
+                    <small id="LogWorkHour" class="col text-muted">
                     in percentage(%)
                 </small>
-            </div>
-            <div class="form-group row text-white">
-                <label for="comment" class="col-md-2 col-form-label">Comment</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" id="logWorkComment">
+                    <div class="invalid-feedback">
+                        Enter % of work done
+                    </div>
+                </div>
+                <div class="form-group row text-white">
+                    <label for="comment" class="col-md-2 col-form-label">Comment</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="logWorkComment" required>
+                        <div class="invalid-feedback">
+                            Enter a comment
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 pb-5">
+                    <button class="btn btn-primary" type="submit" id="logWorkSubmit">Submit
+                    <div class="ml-1 spinner-border text-light spinner-border-sm" id="logWorkSpinner" style="display: none;"  role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    </button>
                 </div>
             </div>
-            <div class="pt-3 pb-5">
-                <button class="btn btn-primary" type="submit" id="logWorkSubmit">Submit</button>
-            </div>
         </div>
-    </div>
+    </form>
 
     <!-- card description-------------------------------------------------------- -->
     <div class="container bg-dark text-white">
@@ -589,109 +658,114 @@
     </div>
 
     <!-- edit page   ------------------------------------------------------->
+    <form class="needs-validation" novalidate id="editPageTaskForm">
 
-    <div class="container py-5" id="editPageTask">
-        <div class="bg-light px-5">
-            <div class="row pt-2">
-                <div class="col-md-11 col-10"></div>
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromEditPageTask">
+        <div class="container py-5" id="editPageTask">
+            <div class="bg-light px-5">
+                <div class="row pt-2">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromEditPageTask">
                     close
                 </span>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <h3 class="pl-1 fontHeading">Edit Page</h3>
-                    <hr class="w-75 ml-0">
                 </div>
-                <div class="alert alert-info form-inline col-md-5" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Id:</div>
-                    <div id="editPageTaskId"> </div>
-                </div>
-            </div>
-            <div class="form-group row pt-2">
-                <label for="input" class="col-sm-2 col-form-label">Title</label>
-                <div class="alert alert-info form-inline col-sm-10" role="alert">
-                    <div id="titleEditPageTask"></div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-2 col-form-label">Description</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="descriptionEditPageTask">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="input">Assignee</label>
-                    <input type="text" class="form-control" id="assigneeEditPageTask">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Creator</label>
-                    <div class="alert alert-info form-inline" role="alert">
-                        <div id="creatorEditPageTask"></div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="pl-1 fontHeading">Edit Page</h3>
+                        <hr class="w-75 ml-0">
+                    </div>
+                    <div class="alert alert-info form-inline col-md-5" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Id:</div>
+                        <div id="editPageTaskId"> </div>
                     </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Estimated Time</label>
-                    <input type="number" class="form-control" id="estimatedTimeEditPageTask">
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-2 col-form-label">Title</label>
+                    <div class="alert alert-info form-inline col-sm-10" role="alert">
+                        <div id="titleEditPageTask"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="input">Category</label>
-                    <select class="form-control" id="categoryEditPageTask">
-                        <option selected>choose...</option>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="descriptionEditPageTask" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Assignee</label>
+                        <input type="text" class="form-control" id="assigneeEditPageTask" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Creator</label>
+                        <div class="alert alert-info form-inline" role="alert" required>
+                            <div id="creatorEditPageTask"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Estimated Time</label>
+                        <input type="number" class="form-control" id="estimatedTimeEditPageTask" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Category</label>
+                        <select class="custom-select" id="categoryEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>Business</option>
                         <option>Development</option>
                         <option>Marketing</option>
                     </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Priority</label>
-                    <select class="form-control" id="priorityEditPageTask">
-                        <option selected>choose...</option>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Priority</label>
+                        <select class="custom-select" id="priorityEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>High</option>
                         <option>Medium</option>
                         <option>Low</option>
                     </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="text">Difficulty</label>
-                    <select class="form-control" id="difficultyEditPageTask">
-                        <option selected>choose...</option>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Difficulty</label>
+                        <select class="custom-select" id="difficultyEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>High</option>
                         <option>Medium</option>
                         <option>Low</option>
                     </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inputState">Status</label>
-                    <select class="form-control" id="statusEditPageTask">
-                        <option selected>choose...</option>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Status</label>
+                        <select class="custom-select" id="statusEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
                         <option>Ice Box</option>
                         <option>Ready to start</option>
                         <option>Under Progress</option>
                         <option>Blocked</option>
                         <option>Completed</option>
                     </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Sprint Number</label>
+                        <input type="number" min="-1" class="form-control" id="sprintNumberEditPageTask" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Story Point</label>
+                        <input type="number" min="0" class="form-control" id="storyPointEditPageTask" required>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Sprint Number</label>
-                    <input type="number" class="form-control" id="sprintNumberEditPageTask">
+                <div class="pt-2 pb-5">
+                    <button type="submit" class="btn btn-primary" id="submitEditPageTask">Submit
+                         <div class="ml-1 spinner-border text-light spinner-border-sm" id="editPageTaskSpinner" style="display: none;"  role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    </button>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Story Point</label>
-                    <input type="number" min="0" class="form-control" id="storyPointEditPageTask">
-                </div>
-            </div>
-            <div class="pt-2 pb-5">
-                <button type="submit" class="btn btn-primary" id="submitEditPageTask">Submit</button>
             </div>
         </div>
-    </div>
-
+    </form>
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
