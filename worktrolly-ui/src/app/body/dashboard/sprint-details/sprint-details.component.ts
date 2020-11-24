@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sprint-details',
@@ -12,9 +12,16 @@ export class SprintDetailsComponent implements OnInit {
   @Input('EndDate') EndDate: string;
   @Input('Status') Status: string;
 
+  @Output() changeSprint = new EventEmitter<{newSprintNumber: number}>();
+
+  filterSprintNumber: number;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  changeSprintNumber() {
+    this.changeSprint.emit({newSprintNumber: this.filterSprintNumber});
+  }
 }
