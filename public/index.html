@@ -45,7 +45,15 @@
             </ul>
         </div>
     </nav>
-
+    <div class="bg-light" id="spinnerContainer" style="display: none;">
+        <div class="container">
+            <div class="row d-flex justify-content-center mt-5" style="position: fixed;left:50%;top:50%;z-index:10;">
+                <div class="spinner-border text-dark" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- new sprint   ------------------------------------------------------->
     <form class="needs-validation" novalidate id="startNewSprintForm">
         <div class="container">
@@ -121,9 +129,6 @@
                 </div>
                 <div class="pt-2 pb-5">
                     <button type="submit" class="btn btn-primary" id="submitNewSprint">Submit
-                          <div class="ml-1 spinner-border text-light spinner-border-sm" id="submitNewSprintSpinner" style="display: none;"  role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
                     </button>
                 </div>
             </div>
@@ -439,9 +444,6 @@
                 </div>
                 <div class="pt-2 pb-5">
                     <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit
-                        <div class="ml-1 spinner-border text-light spinner-border-sm" id="createNewTaskSpinner" style="display: none;"  role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
                     </button>
                 </div>
             </div>
@@ -453,7 +455,7 @@
          Similarly for margin my, mx, ml, mr, mt, mb
         and w=width  -->
 
-    <form class="was-validated" id="logWorkTaskForm">
+    <form class="needs-validation" novalidate id="logWorkTaskForm">
         <div class="container py-5 px-0" id="logWorkTask">
             <div class="bg-dark py-2 px-5">
                 <h3 class="pt-5 fontHeading text-white">Log Work</h3>
@@ -532,9 +534,6 @@
                 </div>
                 <div class="pt-3 pb-5">
                     <button class="btn btn-primary" type="submit" id="logWorkSubmit">Submit
-                    <div class="ml-1 spinner-border text-light spinner-border-sm" id="logWorkSpinner" style="display: none;"  role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
                     </button>
                 </div>
             </div>
@@ -758,9 +757,6 @@
                 </div>
                 <div class="pt-2 pb-5">
                     <button type="submit" class="btn btn-primary" id="submitEditPageTask">Submit
-                         <div class="ml-1 spinner-border text-light spinner-border-sm" id="editPageTaskSpinner" style="display: none;"  role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
                     </button>
                 </div>
             </div>

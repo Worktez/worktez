@@ -179,7 +179,7 @@ $("#backToMainFromEditPageTask").click(function() {
 });
 
 const createNewTaskForm = document.getElementById("createNewTaskForm");
-const createNewTaskSpinner = document.getElementById("createNewTaskSpinner");
+const spinnerContainer = document.getElementById("spinnerContainer");
 createNewTaskForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (createNewTaskForm.checkValidity() === false) {
@@ -198,8 +198,9 @@ createNewTaskForm.addEventListener("submit", (e) => {
         var storyPointNumber = $("#storyPointNumber").val();
         var sprintNumber = $("#createNewTaskSprintNumber").val();
         var creationDate = $("#creationDateCreateNewTask").html();
-        createNewTaskSpinner.style.display = "inline-block";
         createNewTaskForm.classList.remove('was-validated');
+        createNewTaskForm.style.display = "none";
+        spinnerContainer.style.display = "block";
         console.log(title);
         console.log(des);
         console.log(priority);
@@ -218,7 +219,8 @@ createNewTaskForm.addEventListener("submit", (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            createNewTaskSpinner.style.display = "none";
+            spinnerContainer.style.display = "none";
+            createNewTaskForm.style.display = "block";
         });
         $('input').val('');
         $('select').val('');
@@ -226,7 +228,6 @@ createNewTaskForm.addEventListener("submit", (e) => {
     }
 });
 const startNewSprintForm = document.getElementById("startNewSprintForm");
-const submitNewSprintSpinner = document.getElementById("submitNewSprintSpinner");
 startNewSprintForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (startNewSprintForm.checkValidity() === false) {
@@ -239,10 +240,9 @@ startNewSprintForm.addEventListener("submit", (e) => {
         var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
         var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
         var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
-        submitNewSprintSpinner.style.display = "inline-block";
-
         startNewSprintForm.classList.remove('was-validated');
-
+        startNewSprintForm.style.display = "none";
+        spinnerContainer.style.display = "block";
         console.log(totalDevelopment);
         console.log(totalBusiness);
         console.log(totalMarketing);
@@ -255,46 +255,48 @@ startNewSprintForm.addEventListener("submit", (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            submitNewSprintSpinner.style.display = "none";
+            spinnerContainer.style.display = "none";
+            startNewSprintForm.style.display = "block";
         });
         $('input').val('');
     }
 });
 
-var logWorkTaskSubmit = document.getElementById("logWorkTaskForm");
-const logWorkSpinner = document.getElementById("logWorkSpinner");
-logWorkTaskSubmit.addEventListener("submit", (e) => {
+var logWorkTaskForm = document.getElementById("logWorkTaskForm");
+logWorkTaskForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (logWorkTaskSubmit.checkValidity() === false) {
+    if (logWorkTaskForm.checkValidity() === false) {
         e.stopPropagation();
+        logWorkTaskForm.classList.add('was-validated');
+    } else {
+        var sprintNumber = $("#logSprintNumber").html();
+        var logTaskId = $("#logTaskId").html();
+        var logWorkDone = $("#logWorkDone").val();
+        var logWorkStatus = $("#logWorkStatus").val();
+        var logHours = $("#logWorkHour").val();
+        var logWorkComment = $("#logWorkComment").val();
+        logWorkTaskForm.classList.remove('was-validated');
+        logWorkTaskForm.style.display = "none";
+        spinnerContainer.style.display = "block";
+        console.log(sprintNumber);
+        console.log(logTaskId);
+        console.log(logWorkDone);
+        console.log(logWorkComment);
+        console.log(logWorkStatus);
+        console.log(logHours);
+
+        var logWorkFunction = firebase.functions().httpsCallable('logWork');
+        logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+            console.log(result.data);
+            newPage = "dashboard";
+            uiLoader();
+            spinnerContainer.style.display = "none";
+            logWorkTaskForm.style.display = "block";
+            $('input').val('');
+        });
     }
-    logWorkSpinner.style.display = "inline-block";
-    var sprintNumber = $("#logSprintNumber").html();
-    var logTaskId = $("#logTaskId").html();
-    var logWorkDone = $("#logWorkDone").val();
-    var logWorkStatus = $("#logWorkStatus").val();
-    var logHours = $("#logWorkHour").val();
-    var logWorkComment = $("#logWorkComment").val();
-
-
-    console.log(sprintNumber);
-    console.log(logTaskId);
-    console.log(logWorkDone);
-    console.log(logWorkComment);
-    console.log(logWorkStatus);
-    console.log(logHours);
-
-    var logWorkFunction = firebase.functions().httpsCallable('logWork');
-    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
-        console.log(result.data);
-        newPage = "dashboard";
-        uiLoader();
-        logWorkSpinner.style.display = "none";
-    });
-
 });
 const editPageTaskForm = document.getElementById("editPageTaskForm");
-const editPageTaskSpinner = document.getElementById("editPageTaskSpinner");
 editPageTaskForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (editPageTaskForm.checkValidity() === false) {
@@ -316,9 +318,9 @@ editPageTaskForm.addEventListener('submit', (e) => {
         var previousId = $("#sprintNumberTaskDescription").html();
         var logWorkDone = $("#workDoneTaskDescription").html();
         var logHours = $("#logHoursTaskDescription").html();
-        editPageTaskSpinner.style.display = "inline-block";
         editPageTaskForm.classList.remove('was-validated');
-
+        editPageTaskForm.style.display = "none";
+        spinnerContainer.style.display = "block";
         console.log(id);
         console.log(title);
         console.log(creator);
@@ -337,7 +339,9 @@ editPageTaskForm.addEventListener('submit', (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            editPageTaskSpinner.style.display = "none";
+            spinnerContainer.style.display = "none";
+            editPageTaskForm.style.display = "block";
+            $('input').val('');
         });
     }
 });
