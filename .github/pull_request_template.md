@@ -1,13 +1,49 @@
-### Functionality:
-<-- please enter the functionality introduction -->
 
-### Solution:
-<-- please enter brief solution -->
+Name: Bug report/ Feature Request/ Issue
 
-### Risk level:
-- [ ] high 
-- [ ] medium
-- [ ] low
+About: Create a report to help us improve
 
-### How to test:
-<-- please tell us how to test functionality/bug -->
+Title: ''
+
+Labels: Bug,Issue etc
+
+---
+
+**Describe the bug:**
+
+A clear and concise description of what the bug is.
+
+**To Reproduce-**
+
+Steps to reproduce the behavior:
+
+1. Go to '...'
+
+2. Click on '....'
+
+3. Scroll down to '....'
+
+4. See error
+
+**Expected behavior:**
+
+A clear and concise description of what you expected to happen.
+
+**Screenshots:**
+
+Add the screenshot,if necessary.
+
+**Additional context:**
+
+Add any other context about the problem here.
+
+
+
+
+
+
+
+
+
+
+
