@@ -198,7 +198,6 @@ createNewTaskForm.addEventListener("submit", (e) => {
         var sprintNumber = $("#createNewTaskSprintNumber").val();
         var creationDate = $("#creationDateCreateNewTask").html();
         createNewTaskForm.classList.remove('was-validated');
-        createNewTaskForm.style.display = "none";
         console.log(title);
         console.log(des);
         console.log(priority);
@@ -217,7 +216,6 @@ createNewTaskForm.addEventListener("submit", (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            createNewTaskForm.style.display = "block";
         });
         $('input').val('');
         $('select').val('');
@@ -238,7 +236,6 @@ startNewSprintForm.addEventListener("submit", (e) => {
         var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
         var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
         startNewSprintForm.classList.remove('was-validated');
-        startNewSprintForm.style.display = "none";
         console.log(totalDevelopment);
         console.log(totalBusiness);
         console.log(totalMarketing);
@@ -251,7 +248,6 @@ startNewSprintForm.addEventListener("submit", (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            startNewSprintForm.style.display = "block";
         });
         $('input').val('');
     }
@@ -271,7 +267,6 @@ logWorkTaskForm.addEventListener("submit", (e) => {
         var logHours = $("#logWorkHour").val();
         var logWorkComment = $("#logWorkComment").val();
         logWorkTaskForm.classList.remove('was-validated');
-        logWorkTaskForm.style.display = "none";
         console.log(sprintNumber);
         console.log(logTaskId);
         console.log(logWorkDone);
@@ -284,7 +279,6 @@ logWorkTaskForm.addEventListener("submit", (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            logWorkTaskForm.style.display = "block";
             $('input').val('');
         });
     }
@@ -312,7 +306,6 @@ editPageTaskForm.addEventListener('submit', (e) => {
         var logWorkDone = $("#workDoneTaskDescription").html();
         var logHours = $("#logHoursTaskDescription").html();
         editPageTaskForm.classList.remove('was-validated');
-        editPageTaskForm.style.display = "none";
         console.log(id);
         console.log(title);
         console.log(creator);
@@ -331,7 +324,6 @@ editPageTaskForm.addEventListener('submit', (e) => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
-            editPageTaskForm.style.display = "block";
             $('input').val('');
         });
     }
