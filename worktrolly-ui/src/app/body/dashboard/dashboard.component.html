@@ -4,26 +4,26 @@
             <div class="row py-4">
                 <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
                 <div class="col-md-1 col-3">
-                    <button type="submit" class="btn btn-primary" id="backlogButton" style="font-size: 14px;">Backlog</button>
+                    <button type="submit" class="btn btn-primary" id="backlogButton" style="font-size: 14px;" (click)="showBacklog()">Backlog</button>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-3 col-12" type="button">
+                <div class="col-md-3 col-12" type="button" (click)="showTasks('Business')">
                     <app-feature-card [cardName]="'Business'" [tasks]="item.TotalBusinessTask"></app-feature-card>
                 </div>
-                <div class="col-md-3 col-12" type="button">
+                <div class="col-md-3 col-12" type="button" (click)="showTasks('Development')">
                     <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask"></app-feature-card>
                 </div>
-                <div class="col-md-3 col-12" type="button">
+                <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
                     <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
                 </div>
-                <div class="col-md-3 col-12" type="button">
+                <div class="col-md-3 col-12" type="button" (click)="showTasks('Others')">
                     <app-feature-card [cardName]="'Others'" [tasks]="item.TotalCompletedTask"></app-feature-card>
                 </div>
             </div>
 
-            <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status"></app-sprint-details>
+            <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)"></app-sprint-details>
         </div>
     </ng-container>
 </ng-container>

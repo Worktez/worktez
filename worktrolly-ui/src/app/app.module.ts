@@ -14,6 +14,8 @@ import { CreateNewSessionComponent } from './body/create-new-session/create-new-
 import { DashboardComponent } from './body/dashboard/dashboard.component';
 import { FeatureCardComponent } from './body/dashboard/feature-card/feature-card.component';
 import { SprintDetailsComponent } from './body/dashboard/sprint-details/sprint-details.component';
+import { TasksComponent } from './body/tasks/tasks.component';
+import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { SprintDetailsComponent } from './body/dashboard/sprint-details/sprint-d
     DashboardComponent,
     FeatureCardComponent,
     SprintDetailsComponent,
+    TasksComponent,
+    TaskCardsComponent,
   ],
   imports: [
     BrowserModule,

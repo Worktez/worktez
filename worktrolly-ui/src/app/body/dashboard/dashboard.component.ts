@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
@@ -21,7 +22,9 @@ export class DashboardComponent implements OnInit {
   public mainData: Observable<MainDataId[]>;
   public mainCollection: AngularFirestoreCollection<Main>;
 
-  constructor(private db: AngularFirestore) { }
+  filterSprintNumber: string;
+
+  constructor(private db: AngularFirestore, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     // Better way of use db.
@@ -41,17 +44,23 @@ export class DashboardComponent implements OnInit {
     this.readCurrentSprintData();
   }
 
-  getCurrentSprint() {
+  async getCurrentSprint() {
     this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
-    this.rawDocument.ref.get().then(doc=> {
-      if(doc.exists){
-        var rawData = doc.data();
-        this.currentSprintNumber = rawData.CurrentSprintId;
-        this.currentSprintName = "S" + this.currentSprintNumber;
-      } else {
-        console.error("Document does not exists!")
-      }
-    });
+    try {
+      await this.rawDocument.ref.get().then(doc=> {
+        if(doc.exists){
+          var rawData = doc.data();
+          this.currentSprintNumber = rawData.CurrentSprintId;
+          this.currentSprintName = "S" + this.currentSprintNumber;
+        } else {
+          console.error("Document does not exists!")
+        }
+      });
+      return "Success";
+    } catch (error) {
+      return "Error";
+    }
+
   }
 
   readCurrentSprintData() {
@@ -63,5 +72,19 @@ export class DashboardComponent implements OnInit {
         return { id, ...data };
       }))
     );
+  }
+
+  changeSprintName(data: {newSprintNumber: number}) {
+    this.currentSprintNumber = data.newSprintNumber;
+    this.currentSprintName = "S" + this.currentSprintNumber;
+  }
+
+  showBacklog() {
+    this.currentSprintNumber = -1;
+    this.currentSprintName = "Backlog";
+  }
+
+  showTasks(category: string) {
+    this.router.navigate(['/Tasks', category, this.currentSprintName])
   }
 }
