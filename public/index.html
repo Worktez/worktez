@@ -7,7 +7,8 @@
     <title>Work Trolly</title>
 
     <link rel="icon" href="logo.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
@@ -26,16 +27,19 @@
         <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
             <img src="logo.png" width="30" height="30" alt="" loading="lazy"> Work Trolly
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-white"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav ">
                 <li class="nav-item active pr-5 py-1 ">
-                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New Task</button>
+                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New
+                        Task</button>
                 </li>
                 <li class="nav-item active pr-5 py-1 ">
-                    <button type="button" class="btn btn-outline-light" id="startNewSprintButton">Start New Sprint</button>
+                    <button type="button" class="btn btn-outline-light" id="startNewSprintButton">Start New
+                        Sprint</button>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -52,8 +56,8 @@
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
-                       close
-                    </span>
+                    close
+                </span>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -102,10 +106,10 @@
                 <div class="form-group col-md-4">
                     <label for="inputState">Status</label>
                     <select class="form-control" id="statusNewSprint">
-                            <option selected>choose...</option>
-                            <option>Ready to Start</option>
-                            <option>Under Progress</option>
-                            <option>Completed</option>
+                        <option selected>choose...</option>
+                        <option>Ready to Start</option>
+                        <option>Under Progress</option>
+                        <option>Completed</option>
                     </select>
                 </div>
             </div>
@@ -122,8 +126,10 @@
                 <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
                 <div class="col-md-9"></div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary" id="currentSprintButton" style="font-size: 14px;">Current Sprint</button>
-                    <button type="submit" class="btn btn-primary" id="backlogButton" style="font-size: 14px;">Backlog</button>
+                    <button type="submit" class="btn btn-primary" id="currentSprintButton"
+                        style="font-size: 14px;">Current Sprint</button>
+                    <button type="submit" class="btn btn-primary" id="backlogButton"
+                        style="font-size: 14px;">Backlog</button>
                 </div>
             </div>
             <div class="row">
@@ -192,14 +198,17 @@
                             </div>
                             <div class="col-md-4 col-7">
                                 <div class="dropdown">
-                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Filter
+                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Filter
                                     </button>
                                     <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
                                         <div class="row py-3">
-                                            <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumber" placeholder="enter sprint number">
+                                            <input class="col-md-8 col-8" style="font-size: 11px;" type="number"
+                                                id="filterSprintNumber" placeholder="enter sprint number">
                                             <div class="col-md-4 col-4 pl-2">
-                                                <button class="btn btn-info" id="filterSprint" style="font-size: 14px;">Filter</button>
+                                                <button class="btn btn-info" id="filterSprint"
+                                                    style="font-size: 14px;">Filter</button>
                                             </div>
                                         </div>
                                     </div>
@@ -211,20 +220,28 @@
                         <div class="col-md-8">
                             <div class="card-body" style="background-color: white;">
                                 <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Details: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintDetail" style="font-size: 12px;"></h6>
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">
+                                        Details: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintDetail" style="font-size: 12px;">
+                                    </h6>
                                 </div>
                                 <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;"></h6>
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">
+                                        Start Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;">
+                                    </h6>
                                 </div>
                                 <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End Date: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;"></h6>
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End
+                                        Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;">
+                                    </h6>
                                 </div>
                                 <div class="row py-2">
-                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Status: </h6>
-                                    <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;"></h6>
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">
+                                        Status: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;">
+                                    </h6>
                                 </div>
                             </div>
                         </div>
@@ -240,8 +257,8 @@
             <div class="row pt-5">
                 <h3 class="col-md-8 col-8 fontHeading">Tasks</h3>
                 <span type="button" class="col-md-4 col-1  material-icons" id="backToDashboard">
-                close
-            </span>
+                    close
+                </span>
             </div>
             <hr class="w-75 ml-0">
             <div id="cardsList">
@@ -314,7 +331,7 @@
             <div class="form-group row pt-2">
                 <label for="input" class="col-sm-2 col-form-label">Title</label>
                 <div class="col-sm-10">
-                    <textarea type="text" class="form-control" id="titleCreateNewTask"></textarea>
+                    <input type="text" class="form-control" id="titleCreateNewTask">
                 </div>
             </div>
             <div class="form-group row">
@@ -436,13 +453,13 @@
 
                 <label for="inputState" class="col-sm-2 col-form-label">Status</label>
                 <select class="form-control col-sm-3 form-control mx-sm-3" id="logWorkStatus">
-        <option selected>choose...</option>
-        <option>Ice Box</option>
-        <option>Ready to start</option>
-        <option>Under Progress</option>
-        <option>Blocked</option>
-        <option>Completed</option>
-    </select>
+                    <option selected>choose...</option>
+                    <option>Ice Box</option>
+                    <option>Ready to start</option>
+                    <option>Under Progress</option>
+                    <option>Blocked</option>
+                    <option>Completed</option>
+                </select>
 
             </div>
             <div class="row pt-3 text-white">
@@ -479,8 +496,8 @@
                 <div class="col-md-9 col-7"></div>
                 <span type="button" class="material-icons mt-5 col-md-2 col-3" id="deleteTaskCard"> delete </span>
                 <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCardDescription">
-                       close
-                    </span>
+                    close
+                </span>
             </div>
             <div class="row">
                 <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
@@ -510,7 +527,7 @@
             <div class="form-group row">
                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                 <div class="alert alert-info form-inline col-sm-10" role="alert">
-                    <div id="descriptionTaskDescription" class="card" style="background-color: #d1ecf1;border: #d1ecf1;"></div>
+                    <div id="descriptionTaskDescription"></div>
                 </div>
             </div>
             <div class="form-row">
@@ -694,9 +711,15 @@
 
 
     <!-- JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
