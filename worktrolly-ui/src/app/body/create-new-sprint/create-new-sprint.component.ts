@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, ViewChild} from '@angular/core';
-import { NgForm }   from '@angular/forms';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Data } from '@angular/router';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
-import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -15,53 +14,73 @@ import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawD
 export class CreateNewSprintComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
-  @Input('currentSprintName') currentSprintName: string;
+  @Input('newSprintId') newSprintId: string;
 
-  startDate:string
-  endDate:string
-  status:string
-  totalDevelopment:string
-  totalBusiness:string
-  totalMarketing:string
-
+  startDate: string
+  endDate: string
+  status: string
+  totalDevelopment: number
+  totalBusiness: number
+  totalMarketing: number
 
   public rawData: Observable<RawDataId[]>;
-  public rawCollection: AngularFirestoreCollection<RawDataType>;
+  public rawDocument: AngularFirestoreDocument<RawDataType>;
+
+  public sprintData: Observable<RawDataId[]>;
+  public sprintDocument: AngularFirestoreDocument<RawDataType>;
 
   currentSprintNumber: number;
 
-  public mainData: Observable<MainDataId[]>;
-  public mainCollection: AngularFirestoreCollection<Main>;
-
-  constructor(private functions: AngularFireFunctions, private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
-    this.rawCollection = this.db.collection<RawDataType>('RawData');
-    this.rawData = this.rawCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as RawDataType;
-        this.currentSprintNumber = data.CurrentSprintId + 1;
-        this.currentSprintName = "S"+this.currentSprintNumber;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
-
-    this.readCurrentSprintData();
+    this.getNewSprintId();
   }
 
-  async readCurrentSprintData() {
-    this.mainCollection = this.db.collection<Main>('Main');
-    this.mainData = this.mainCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Main;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+  async getNewSprintId() {
+    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+    try {
+      await this.rawDocument.ref.get().then(doc => {
+        if (doc.exists) {
+          var rawData = doc.data();
+          this.currentSprintNumber = rawData.CurrentSprintId + 1;
+          this.newSprintId = "S" + this.currentSprintNumber;
+          this.readSprintData(this.newSprintId);
+        } else {
+          console.error("Document does not exists!")
+        }
+      });
+      return "Success";
+    } catch (error) {
+      return "Error";
+    }
+
   }
 
-  async createNewSprint(){
+  async readSprintData(newSprintId: string) {
+    var documentName = "Main/"+ newSprintId;
+    this.sprintDocument = this.db.doc<RawDataType>(documentName);
+    try {
+      await this.sprintDocument.ref.get().then(doc => {
+        if (doc.exists) {
+          var sprintData = doc.data();
+          this.totalDevelopment = sprintData.TotalDevelopmentTask;
+          this.totalBusiness = sprintData.TotalBusinessTask;
+          this.totalMarketing = sprintData.TotalMarketingTask;
+        }
+        else{
+          this.totalDevelopment = 0;
+          this.totalBusiness = 0;
+          this.totalMarketing = 0;
+        }
+      });
+      return "ok";
+    } catch (error) {
+      return "Error";
+    }
+  }
+
+  async createNewSprint() {
     console.log(this.startDate);
     console.log(this.endDate);
     console.log(this.status);
@@ -72,7 +91,7 @@ export class CreateNewSprintComponent implements OnInit {
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing }).toPromise();
+      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, Status: status }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

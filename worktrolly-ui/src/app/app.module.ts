@@ -17,6 +17,7 @@ import { FeatureCardComponent } from './body/dashboard/feature-card/feature-card
 import { SprintDetailsComponent } from './body/dashboard/sprint-details/sprint-details.component';
 import { TasksComponent } from './body/tasks/tasks.component';
 import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component';
+import { TaskDetailsComponent } from './body/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component
     SprintDetailsComponent,
     TasksComponent,
     TaskCardsComponent,
+    TaskDetailsComponent,
   ],
   imports: [
     BrowserModule,
