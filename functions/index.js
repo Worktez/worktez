@@ -347,7 +347,8 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var previousId = request.body.data.PreviousId;
         var previousSprintId = createSprintId(previousId);
         var logWorkDone = request.body.data.LogWorkDone;
-        var logHours = request.body.data.LogHours;
+        var logWorkTotalTime = request.body.data.LogWorkTotalTime;
+        var creationDate = request.body.data.CreationDate;
         var taskId = request.body.data.Id;
         var fullSprintId = createSprintId(sprintNumber);
         var totalDevelopmentTask;
@@ -370,7 +371,8 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         console.log(sprintNumber);
         console.log(storyPointNumber);
         console.log(logWorkDone);
-        console.log(logHours);
+        console.log(logWorkTotalTime);
+        console.log(creationDate);
         console.log(previousSprintId);
 
         return db.collection(fullSprintId).get().then((doc) => {
@@ -405,7 +407,8 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                 SprintNumber: sprintNumber,
                                 StoryPointNumber: storyPointNumber,
                                 WorkDone: logWorkDone,
-                                LogHours: logHours
+                                LogWorkTotalTime: logWorkTotalTime,
+                                CreationDate: creationDate
                             });
                             return Promise.resolve(editPageUpdate);
                         })

@@ -291,6 +291,7 @@ editPageTaskForm.addEventListener('submit', (e) => {
         editPageTaskForm.classList.add('was-validated');
     } else {
         var id = $("#editPageTaskId").html();
+        var creationDate = $("#creationDateTaskDescription").html();
         var title = $("#titleEditPageTask").html();
         var creator = $("#creatorEditPageTask").html();
         var des = $("#descriptionEditPageTask").val();
@@ -304,7 +305,7 @@ editPageTaskForm.addEventListener('submit', (e) => {
         var sprintNumber = $("#sprintNumberEditPageTask").val();
         var previousId = $("#sprintNumberTaskDescription").html();
         var logWorkDone = $("#workDoneTaskDescription").html();
-        var logHours = $("#logHoursTaskDescription").html();
+        var logWorkTotalTime = $("#logHoursTaskDescription").html();
         editPageTaskForm.classList.remove('was-validated');
         console.log(id);
         console.log(title);
@@ -318,9 +319,10 @@ editPageTaskForm.addEventListener('submit', (e) => {
         console.log(category);
         console.log(sprintNumber);
         console.log(storyPointNumber);
-
+        console.log(creationDate);
+        console.log(logWorkTotalTime);
         var editPageTaskFunction = firebase.functions().httpsCallable('editPageTask');
-        editPageTaskFunction({ Id: id, Title: title, Creator: creator, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, PreviousId: previousId, LogHours: logHours, LogWorkDone: logWorkDone, }).then(result => {
+        editPageTaskFunction({ Id: id, Title: title, Creator: creator, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, PreviousId: previousId, LogWorkTotalTime: logWorkTotalTime, LogWorkDone: logWorkDone, CreationDate: creationDate }).then(result => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
