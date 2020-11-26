@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-md-5 col-1"></div>
                 <div class="col-md-2 col-4">
-                    <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" id="logWorkPage">Log Work</button>
+                    <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" (click)="logWorkPage()">Log Work</button>
                 </div>
                 <div class="col-md-1 col-2">
                     <button type="submit" class="btn btn-primary mt-2 mb-5" id="editPage">Edit</button>
@@ -102,7 +102,7 @@
                 <div class="form-group col-md-4">
                     <label for="inputState">Logged Hours</label>
                     <div class="alert alert-info form-inline" role="alert">
-                        <div id="logHoursTaskDescription">{{task.LogHours}}</div>
+                        <div id="logHoursTaskDescription">{{task.LogWorkTotalTime}}</div>
                     </div>
                 </div>
                 <div class="form-group col-md-4">

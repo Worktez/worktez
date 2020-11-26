@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 
 @Component({
@@ -11,21 +11,21 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 export class TaskDetailsComponent implements OnInit {
 
   sprintName: string
-  taskId: string
+  Id: string
 
   task: Tasks
   private taskDocument: AngularFirestoreDocument<Tasks>
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore) { }
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, private router: Router) { }
 
   ngOnInit(): void {
     this.sprintName = this.route.snapshot.params['sprintName'];
-    this.taskId = this.route.snapshot.params['taskId'];
+    this.Id = this.route.snapshot.params['taskId'];
     this.getTaskDetail();
   }
 
   async getTaskDetail() {
-    var documentName = this.sprintName + '/' + this.taskId;
+    var documentName = this.sprintName + '/' + this.Id;
     this.taskDocument = this.db.doc<Tasks>(documentName);
     try {
       await this.taskDocument.ref.get().then(doc => {
@@ -42,6 +42,10 @@ export class TaskDetailsComponent implements OnInit {
       return "Error";
     }
 
+  }
+
+  logWorkPage() {
+    this.router.navigate(['/logWorkPage', this.sprintName, this.Id])
   }
 
 }
