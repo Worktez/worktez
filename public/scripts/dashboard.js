@@ -21,12 +21,13 @@ function setDataIntoDashboard() {
             var totalDevelopmentTask = doc.data().TotalDevelopmentTask;
             var totalBusinessTask = doc.data().TotalBusinessTask;
             var totalMarketingTask = doc.data().TotalMarketingTask;
+            var totalOtherTask = doc.data().TotalOtherTask;
             var startDate = doc.data().StartDate;
             var endDate = doc.data().EndDate;
             var status = doc.data().Status;
             var totalCompletedTask = doc.data().TotalCompletedTask;
 
-            displayDataIntoDashboard(selectedDocument, totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalCompletedTask, startDate, endDate, status);
+            displayDataIntoDashboard(selectedDocument, totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalOtherTask, totalCompletedTask, startDate, endDate, status);
             getTasks();
         })
         .catch(function(error) {
@@ -34,13 +35,14 @@ function setDataIntoDashboard() {
         });
 }
 
-function displayDataIntoDashboard(selectedDocument, totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalCompletedTask, startDate, endDate, status) {
+function displayDataIntoDashboard(selectedDocument, totalDevelopmentTask, totalBusinessTask, totalMarketingTask, totalOtherTask, totalCompletedTask, startDate, endDate, status) {
 
     document.getElementById("sprintId").innerHTML = selectedDocument;
     document.getElementById("totalDevelopmentTask").innerHTML = totalDevelopmentTask;
     document.getElementById("totalBusinessTask").innerHTML = totalBusinessTask;
     document.getElementById("totalMarketingTask").innerHTML = totalMarketingTask;
-    document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
+    document.getElementById("totalOtherTask").innerHTML = totalOtherTask;
+    // document.getElementById("totalCompletedTask").innerHTML = totalCompletedTask;
     document.getElementById("sprintStartDate").innerHTML = startDate;
     document.getElementById("sprintEndDate").innerHTML = endDate;
     document.getElementById("sprintStatus").innerHTML = status;
@@ -76,13 +78,16 @@ function readSprintData(newSprintId) {
                 var totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                 var totalBusinessTask = doc.data().TotalBusinessTask;
                 var totalMarketingTask = doc.data().TotalMarketingTask;
+                var totalOtherTask = doc.data().TotalOtherTask;
                 document.getElementById("totalDevelopmentTaskNewSprint").innerHTML = totalDevelopmentTask;
                 document.getElementById("totalBusinessTaskNewSprint").innerHTML = totalBusinessTask;
                 document.getElementById("totalMarketingTaskNewSprint").innerHTML = totalMarketingTask;
+                document.getElementById("totalOtherTaskNewSprint").innerHTML = totalOtherTask;
             } else {
                 document.getElementById("totalDevelopmentTaskNewSprint").innerHTML = 0;
                 document.getElementById("totalBusinessTaskNewSprint").innerHTML = 0;
                 document.getElementById("totalMarketingTaskNewSprint").innerHTML = 0;
+                document.getElementById("totalOtherTaskNewSprint").innerHTML = 0;
             }
         });
 }

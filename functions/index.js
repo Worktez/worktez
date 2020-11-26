@@ -33,6 +33,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var result;
         var totalUnCompletedTask = 0;
         var sprintDataPromise;
+        var  totalOtherTask;
 
         console.log(title);
         console.log(des);
@@ -54,16 +55,20 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 totalBusinessTask = doc.data().TotalBusinessTask;
                 totalMarketingTask = doc.data().TotalMarketingTask;
                 totalUnCompletedTask = doc.data().TotalUnCompletedTask;
-
+                totalOtherTask = doc.data().TotalOtherTask;
+                console.log(totalOtherTask);
                 if (category === "Development") {
                     totalDevelopmentTask = totalDevelopmentTask + 1;
                     taskId = category[0] + totalDevelopmentTask;
                 } else if (category === "Business") {
                     totalBusinessTask = totalBusinessTask + 1;
                     taskId = category[0] + totalBusinessTask;
-                } else {
+                } else if (category === "Marketing") {
                     totalMarketingTask = totalMarketingTask + 1;
                     taskId = category[0] + totalMarketingTask;
+                } else {
+                    totalOtherTask = totalOtherTask + 1;
+                    taskId = category[0] + totalOtherTask;
                 }
 
                 totalUnCompletedTask = totalUnCompletedTask + 1;
@@ -95,7 +100,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     TotalBusinessTask: totalBusinessTask,
                     TotalMarketingTask: totalMarketingTask,
                     TotalNumberOfTask: totalNumberOfTask,
-                    TotalUnCompletedTask: totalUnCompletedTask
+                    TotalUnCompletedTask: totalUnCompletedTask,
+                    TotalOtherTask: totalOtherTask
                 });
                 return Promise.resolve(updateSetDataPromise);
             })
@@ -107,13 +113,16 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                             totalBusinessTask = doc.data().TotalBusinessTask;
                             totalMarketingTask = doc.data().TotalMarketingTask;
                             totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+                            totalOtherTask = doc.data().TotalOtherTask;
 
                             if (category === "Development") {
                                 totalDevelopmentTask = totalDevelopmentTask + 1;
                             } else if (category === "Business") {
                                 totalBusinessTask = totalBusinessTask + 1;
-                            } else {
+                            } else if (category === "Marketing") {
                                 totalMarketingTask = totalMarketingTask + 1;
+                            } else {
+                                totalOtherTask = totalOtherTask + 1;
                             }
 
                             totalNumberOfTask = totalNumberOfTask + 1;
@@ -124,6 +133,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                                 TotalBusinessTask: totalBusinessTask,
                                 TotalDevelopmentTask: totalDevelopmentTask,
                                 TotalMarketingTask: totalMarketingTask,
+                                TotalOtherTask: totalOtherTask,
                                 TotalUnCompletedTask: totalUnCompletedTask,
                                 TotalNumberOfTask: totalNumberOfTask
                             });
@@ -131,6 +141,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                             totalBusinessTask = 0;
                             totalDevelopmentTask = 0;
                             totalMarketingTask = 0;
+                            totalOtherTask = 0;
                             totalUnCompletedTask = 0;
                             totalCompletedTask = 0;
                             totalNumberOfTask = 0;
@@ -139,8 +150,10 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                                 totalDevelopmentTask = totalDevelopmentTask + 1;
                             } else if (category === "Business") {
                                 totalBusinessTask = totalBusinessTask + 1;
-                            } else {
+                            } else if (category === "Marketing") {
                                 totalMarketingTask = totalMarketingTask + 1;
+                            } else {
+                                totalOtherTask = totalOtherTask + 1;
                             }
 
                             totalNumberOfTask = totalNumberOfTask + 1;
@@ -150,6 +163,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                                 TotalBusinessTask: totalBusinessTask,
                                 TotalDevelopmentTask: totalDevelopmentTask,
                                 TotalMarketingTask: totalMarketingTask,
+                                TotalOtherTask: totalOtherTask,
                                 TotalUnCompletedTask: totalUnCompletedTask,
                                 TotalCompletedTask: totalCompletedTask,
                                 TotalNumberOfTask: totalNumberOfTask
@@ -187,6 +201,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         var totalDevelopment = request.body.data.TotalDevelopment;
         var totalBusiness = request.body.data.TotalBusiness;
         var totalMarketing = request.body.data.TotalMarketing;
+        var totalOther = request.body.data.TotalOther;
         var newSprintId;
         var createSprintPromise;
         var result;
@@ -206,6 +221,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                             TotalDevelopmentTask: totalDevelopment,
                             TotalBusinessTask: totalBusiness,
                             TotalMarketingTask: totalMarketing,
+                            TotalOtherTask: totalOther,
                             EndDate: endDate,
                             StartDate: startDate,
                             Status: status
@@ -219,6 +235,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                             TotalDevelopmentTask: totalDevelopment,
                             TotalBusinessTask: totalBusiness,
                             TotalMarketingTask: totalMarketing,
+                            TotalOtherTask: totalOther,
                             EndDate: endDate,
                             StartDate: startDate,
                             Status: status,
@@ -354,6 +371,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var totalDevelopmentTask;
         var totalBusinessTask;
         var totalMarketingTask;
+        var totalOtherTask;
         var totalNumberOfTask;
         var result;
         var totalUnCompletedTask;
@@ -418,14 +436,17 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                                 totalBusinessTask = doc.data().TotalBusinessTask;
                                 totalMarketingTask = doc.data().TotalMarketingTask;
+                                totalOtherTask = doc.data().TotalOtherTask;
                                 totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
                                 if (category === "Development") {
                                     totalDevelopmentTask = totalDevelopmentTask - 1;
                                 } else if (category === "Business") {
                                     totalBusinessTask = totalBusinessTask - 1;
-                                } else {
+                                } else if (category === "Marketing") {
                                     totalMarketingTask = totalMarketingTask - 1;
+                                } else {
+                                    totalOtherTask = totalOtherTask -1;
                                 }
 
                                 totalNumberOfTask = totalNumberOfTask - 1;
@@ -449,14 +470,17 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                     totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                                     totalBusinessTask = doc.data().TotalBusinessTask;
                                     totalMarketingTask = doc.data().TotalMarketingTask;
+                                    totalOtherTask = doc.data().TotalOtherTask;
                                     totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
                                     if (category === "Development") {
                                         totalDevelopmentTask = totalDevelopmentTask + 1;
                                     } else if (category === "Business") {
                                         totalBusinessTask = totalBusinessTask + 1;
-                                    } else {
+                                    } else if (category === "Marketing") {
                                         totalMarketingTask = totalMarketingTask + 1;
+                                    } else {
+                                        totalOtherTask = totalOtherTask + 1;
                                     }
 
                                     totalNumberOfTask = totalNumberOfTask + 1;
@@ -467,6 +491,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                         TotalBusinessTask: totalBusinessTask,
                                         TotalDevelopmentTask: totalDevelopmentTask,
                                         TotalMarketingTask: totalMarketingTask,
+                                        TotalOtherTask: totalOtherTask,
                                         TotalUnCompletedTask: totalUnCompletedTask,
                                         TotalNumberOfTask: totalNumberOfTask
                                     });
@@ -474,6 +499,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                     totalBusinessTask = 0;
                                     totalDevelopmentTask = 0;
                                     totalMarketingTask = 0;
+                                    totalOtherTask = 0;
                                     totalUnCompletedTask = 0;
                                     totalCompletedTask = 0;
                                     totalNumberOfTask = 0;
@@ -482,8 +508,10 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                         totalDevelopmentTask = totalDevelopmentTask + 1;
                                     } else if (category === "Business") {
                                         totalBusinessTask = totalBusinessTask + 1;
-                                    } else {
+                                    } else if (category === "Marketing") {
                                         totalMarketingTask = totalMarketingTask + 1;
+                                    } else {
+                                        totalOtherTask = totalOtherTask + 1;
                                     }
 
                                     totalNumberOfTask = totalNumberOfTask + 1;
@@ -493,6 +521,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                                         TotalBusinessTask: totalBusinessTask,
                                         TotalDevelopmentTask: totalDevelopmentTask,
                                         TotalMarketingTask: totalMarketingTask,
+                                        TotalOtherTask: totalOtherTask,
                                         TotalUnCompletedTask: totalUnCompletedTask,
                                         TotalCompletedTask: totalCompletedTask,
                                         TotalNumberOfTask: totalNumberOfTask
@@ -528,6 +557,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         var totalDevelopmentTask;
         var totalBusinessTask;
         var totalMarketingTask;
+        var totalOtherTask;
         var totalNumberOfTask;
         var result;
         var totalUnCompletedTask;
@@ -539,14 +569,17 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                     totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                     totalBusinessTask = doc.data().TotalBusinessTask;
                     totalMarketingTask = doc.data().TotalMarketingTask;
+                    totalOtherTask = doc.data().TotalOtherTask;
                     totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
                     if (category === "Development") {
                         totalDevelopmentTask = totalDevelopmentTask - 1;
                     } else if (category === "Business") {
                         totalBusinessTask = totalBusinessTask - 1;
-                    } else {
+                    } else if (category === "Marketing") {
                         totalMarketingTask = totalMarketingTask - 1;
+                    } else {
+                        totalOtherTask = totalOtherTask -1;
                     }
 
                     totalUnCompletedTask = totalUnCompletedTask - 1;
@@ -556,6 +589,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                         TotalDevelopmentTask: totalDevelopmentTask,
                         TotalBusinessTask: totalBusinessTask,
                         TotalMarketingTask: totalMarketingTask,
+                        TotalOtherTask: totalOtherTask,
                         TotalNumberOfTask: totalNumberOfTask,
                         TotalUnCompletedTask: totalUnCompletedTask
                     });
@@ -568,14 +602,17 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                     totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                     totalBusinessTask = doc.data().TotalBusinessTask;
                     totalMarketingTask = doc.data().TotalMarketingTask;
+                    totalOtherTask = doc.data().TotalOtherTask;
                     totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
                     if (category === "Development") {
                         totalDevelopmentTask = totalDevelopmentTask - 1;
                     } else if (category === "Business") {
                         totalBusinessTask = totalBusinessTask - 1;
-                    } else {
+                    } else if (category === "Marketing") {
                         totalMarketingTask = totalMarketingTask - 1;
+                    } else {
+                        totalOtherTask = totalOtherTask -1;
                     }
 
                     totalUnCompletedTask = totalUnCompletedTask - 1;
@@ -585,6 +622,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                         TotalDevelopmentTask: totalDevelopmentTask,
                         TotalBusinessTask: totalBusinessTask,
                         TotalMarketingTask: totalMarketingTask,
+                        TotalOtherTask: totalOtherTask,
                         TotalNumberOfTask: totalNumberOfTask,
                         TotalUnCompletedTask: totalUnCompletedTask
                     });

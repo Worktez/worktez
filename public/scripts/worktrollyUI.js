@@ -120,8 +120,8 @@ $("#currentSprintButton").click(function() {
     currentSprintFilter();
 });
 
-$("#completedTask").click(function() {
-    selectedStatus = "Completed";
+$("#Other").click(function() {
+    selectedCategory = "Other";
     newPage = "taskPage";
     uiLoader();
     setDataIntoCard();
@@ -235,6 +235,7 @@ startNewSprintForm.addEventListener("submit", (e) => {
         var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
         var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
         var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
+        var totalOther = parseInt($("#totalOtherTaskNewSprint").html());
         startNewSprintForm.classList.remove('was-validated');
         console.log(totalDevelopment);
         console.log(totalBusiness);
@@ -244,7 +245,7 @@ startNewSprintForm.addEventListener("submit", (e) => {
         console.log(status);
 
         var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-        startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing }).then(result => {
+        startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing, TotalOther: totalOther }).then(result => {
             console.log(result.data);
             newPage = "dashboard";
             uiLoader();
