@@ -112,7 +112,7 @@ function setDataIntoCard() {
             frame += "','"
             frame += creationDate;
             frame += "')\" style=\"max-width: 32rem;\">";
-            frame += "<div class=\"card-header\"> XX/XX/XXXX </div>";
+            frame += "<div class=\"card-header\">" + creationDate + "</div>";
             frame += "<div class=\"card-body py-3\">";
             frame += "<div class=\"row pb-2\">";
             frame += "<div class=\"col-md-4 col-4\">";
@@ -181,6 +181,7 @@ function setDataIntoDescription(id, title, des, estimatedTime, difficulty, prior
     document.getElementById("logHoursTaskDescription").innerHTML = logWorkTotalTime;
     document.getElementById("workDoneTaskDescription").innerHTML = workDone;
     document.getElementById("storyPointNumberTaskDescription").innerHTML = storyPointNumber;
+    document.getElementById("creationDateTaskDescription").innerHTML = creationDate;
 }
 
 function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, workDone, sprintNumber) {
@@ -191,6 +192,11 @@ function fillDataIntoLogWorkPage(id, title, estimatedTime, logWorkTotalTime, wor
     document.getElementById("logWorkTotalTime").innerHTML = logWorkTotalTime;
     document.getElementById("logWorkDone").value = workDone;
     document.getElementById("logWorkRT").innerHTML = estimatedTime - logWorkTotalTime;
+    var today = new Date();
+    var date = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var logWorkComment = date + "|" + time + "|";
+    document.getElementById("logWorkComment").value = logWorkComment + assigneeTaskDescription.innerHTML + " : ";
 }
 
 function fillDataIntoEditPageTask(id, title, des, estimatedTime, difficulty, priority, assignee, creator, status, category, sprintNumber, storyPointNumber) {
