@@ -1,9 +1,9 @@
-<ng-container *ngIf="task">
+<ng-container>
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
-        <div class="container py-5 px-0" id="logWorkTask">
+        <div class="container px-0 py-5" id="logWorkPage">
             <div class="bg-dark py-2 px-5">
                 <h3 class="pt-5 fontHeading text-white">Log Work</h3>
-                <div class="row pt-5 pb-2 ml-1">
+                <!-- <div class="row pt-5 pb-2 ml-1">
                     <div class="alert alert-info form-inline col-md-5" role="alert">
                         <div style="font-weight: bold;" class="pr-3">Id:</div>
                         <div id="logTaskId">{{Id}}</div>
@@ -14,12 +14,10 @@
                         <div id="logSprintNumber">{{SprintName}}</div>
                     </div>
                 </div>
-
                 <div class="alert alert-info form-inline col-md-12" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Title: </div>
                     <div>{{task.Title}}</div>
-                </div>
-
+                </div> -->
                 <div class="alert bg-light form-inline w-50 pt-3" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
                     <div id="logWorkET">{{task.ET}}</div>
@@ -74,5 +72,5 @@
                 </div>
             </div>
         </div>
-    </form>
+     </form>
 </ng-container>

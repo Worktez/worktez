@@ -12,6 +12,8 @@ export class TaskDetailsComponent implements OnInit {
 
   sprintName: string
   Id: string
+  logWorkEnabled: boolean = false
+  editTaskEnabled: boolean = false
 
   task: Tasks
   private taskDocument: AngularFirestoreDocument<Tasks>
@@ -45,7 +47,18 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   logWorkPage() {
-    this.router.navigate(['/logWorkPage', this.sprintName, this.Id])
+    this.logWorkEnabled = true;
   }
 
+  editTask() {
+    this.editTaskEnabled = true;
+  }
+
+  logWorkCompleted(data: { completed: boolean }) {
+    this.logWorkEnabled = false;
+  }
+
+  editTaskCompleted(data:{ completed: boolean}){
+    this.editTaskEnabled = false;
+  }
 }
