@@ -79,6 +79,7 @@ $("#dashboard").ready(function() {
 
 $("#log").click(function() {
     $("#bodyContent").hide(100);
+
     $("#close").hide(100);
     $("#work").show(100);
 
@@ -113,6 +114,10 @@ $("#Marketing").click(function() {
 $("#backlogButton").click(function() {
     selectedSprint = "-1";
     setDataIntoDashboard();
+});
+
+$("#currentSprintButton").click(function() {
+    currentSprintFilter();
 });
 
 $("#completedTask").click(function() {
@@ -173,126 +178,155 @@ $("#backToMainFromEditPageTask").click(function() {
     uiLoader();
 });
 
-$("#submitCreateNewTask").click(function() {
-    var title = $("#titleCreateNewTask").val();
-    var des = $("#desCreateNewTask").val();
-    var priority = $("#priorityCreateNewTask").val();
-    var difficulty = $("#difficultyCreateNewTask").val();
-    var creator = $("#creatorCreateNewTask").val();
-    var assignee = $("#assigneeCreateNewTask").val();
-    var estimatedTime = $("#estimatedTimeCreateNewTask").val();
-    var status = $("#statusCreateNewTask").val();
-    var category = $("#categoryCreateNewTask").val();
-    var storyPointNumber = $("#storyPointNumber").val();
-    var sprintNumber = $("#createNewTaskSprintNumber").val();
-    var creationDate = $("#creationDateCreateNewTask").html();
-    console.log(title);
-    console.log(des);
-    console.log(priority);
-    console.log(difficulty);
-    console.log(creator);
-    console.log(assignee);
-    console.log(estimatedTime);
-    console.log(status);
-    console.log(category);
-    console.log(sprintNumber);
-    console.log(storyPointNumber);
-    console.log(creationDate);
+const createNewTaskForm = document.getElementById("createNewTaskForm");
+createNewTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (createNewTaskForm.checkValidity() === false) {
+        e.stopPropagation();
+        createNewTaskForm.classList.add('was-validated');
+    } else {
+        var title = $("#titleCreateNewTask").val();
+        var des = $("#desCreateNewTask").val();
+        var priority = $("#priorityCreateNewTask").val();
+        var difficulty = $("#difficultyCreateNewTask").val();
+        var creator = $("#creatorCreateNewTask").val();
+        var assignee = $("#assigneeCreateNewTask").val();
+        var estimatedTime = $("#estimatedTimeCreateNewTask").val();
+        var status = $("#statusCreateNewTask").val();
+        var category = $("#categoryCreateNewTask").val();
+        var storyPointNumber = $("#storyPointNumber").val();
+        var sprintNumber = $("#createNewTaskSprintNumber").val();
+        var creationDate = $("#creationDateCreateNewTask").html();
+        createNewTaskForm.classList.remove('was-validated');
+        console.log(title);
+        console.log(des);
+        console.log(priority);
+        console.log(difficulty);
+        console.log(creator);
+        console.log(assignee);
+        console.log(estimatedTime);
+        console.log(status);
+        console.log(category);
+        console.log(sprintNumber);
+        console.log(storyPointNumber);
+        console.log(creationDate);
 
-    var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
-    createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, CreationDate: creationDate }).then(result => {
-        console.log(result.data);
-        newPage = "dashboard";
-        uiLoader();
-    });
-    $('input').val('');
-    $('select').val('');
-    $('textarea').val('');
+        var createNewTaskFunction = firebase.functions().httpsCallable('createNewTask');
+        createNewTaskFunction({ Title: title, Description: des, Priority: priority, Difficulty: difficulty, Creator: creator, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, CreationDate: creationDate }).then(result => {
+            console.log(result.data);
+            newPage = "dashboard";
+            uiLoader();
+        });
+        $('input').val('');
+        $('select').val('');
+        $('textarea').val('');
+    }
+});
+const startNewSprintForm = document.getElementById("startNewSprintForm");
+startNewSprintForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (startNewSprintForm.checkValidity() === false) {
+        e.stopPropagation();
+        startNewSprintForm.classList.add('was-validated');
+    } else {
+        var startDate = $("#startdateNewSprint").val();
+        var endDate = $("#enddateNewSprint").val();
+        var status = $("#statusNewSprint").val();
+        var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
+        var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
+        var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
+        startNewSprintForm.classList.remove('was-validated');
+        console.log(totalDevelopment);
+        console.log(totalBusiness);
+        console.log(totalMarketing);
+        console.log(startDate);
+        console.log(endDate);
+        console.log(status);
+
+        var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
+        startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing }).then(result => {
+            console.log(result.data);
+            newPage = "dashboard";
+            uiLoader();
+        });
+        $('input').val('');
+    }
 });
 
-$("#submitNewSprint").click(function() {
-    var startDate = $("#startdateNewSprint").val();
-    var endDate = $("#enddateNewSprint").val();
-    var status = $("#statusNewSprint").val();
-    var totalDevelopment = parseInt($("#totalDevelopmentTaskNewSprint").html());
-    var totalBusiness = parseInt($("#totalBusinessTaskNewSprint").html());
-    var totalMarketing = parseInt($("#totalMarketingTaskNewSprint").html());
+var logWorkTaskForm = document.getElementById("logWorkTaskForm");
+logWorkTaskForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (logWorkTaskForm.checkValidity() === false) {
+        e.stopPropagation();
+        logWorkTaskForm.classList.add('was-validated');
+    } else {
+        var sprintNumber = $("#logSprintNumber").html();
+        var logTaskId = $("#logTaskId").html();
+        var logWorkDone = $("#logWorkDone").val();
+        var logWorkStatus = $("#logWorkStatus").val();
+        var logHours = $("#logWorkHour").val();
+        var logWorkComment = $("#logWorkComment").val();
+        logWorkTaskForm.classList.remove('was-validated');
+        console.log(sprintNumber);
+        console.log(logTaskId);
+        console.log(logWorkDone);
+        console.log(logWorkComment);
+        console.log(logWorkStatus);
+        console.log(logHours);
 
-    console.log(totalDevelopment);
-    console.log(totalBusiness);
-    console.log(totalMarketing);
-    console.log(startDate);
-    console.log(endDate);
-    console.log(status);
-
-    var startNewSprintFunction = firebase.functions().httpsCallable('startNewSprint');
-    startNewSprintFunction({ StartDate: startDate, EndDate: endDate, Status: status, TotalDevelopment: totalDevelopment, TotalBusiness: totalBusiness, TotalMarketing: totalMarketing }).then(result => {
-        console.log(result.data);
-        newPage = "dashboard";
-        uiLoader();
-    });
-    $('input').val('');
+        var logWorkFunction = firebase.functions().httpsCallable('logWork');
+        logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
+            console.log(result.data);
+            newPage = "dashboard";
+            uiLoader();
+            $('input').val('');
+        });
+    }
 });
-
-$("#logWorkSubmit").click(function() {
-    var sprintNumber = $("#logSprintNumber").html();
-    var logTaskId = $("#logTaskId").html();
-    var logWorkDone = $("#logWorkDone").val();
-    var logWorkStatus = $("#logWorkStatus").val();
-    var logHours = $("#logWorkHour").val();
-    var logWorkComment = $("#logWorkComment").val();
-
-
-    console.log(sprintNumber);
-    console.log(logTaskId);
-    console.log(logWorkDone);
-    console.log(logWorkComment);
-    console.log(logWorkStatus);
-    console.log(logHours);
-
-    var logWorkFunction = firebase.functions().httpsCallable('logWork');
-    logWorkFunction({ SprintNumber: sprintNumber, LogTaskId: logTaskId, LogHours: logHours, LogWorkDone: logWorkDone, LogWorkStatus: logWorkStatus, LogWorkComment: logWorkComment }).then(result => {
-        console.log(result.data);
-        newPage = "dashboard";
-        uiLoader();
-    });
-
-});
-
-$("#submitEditPageTask").click(function() {
-    var id = $("#editPageTaskId").html();
-    var title = $("#titleEditPageTask").html();
-    var creator = $("#creatorEditPageTask").html();
-    var des = $("#descriptionEditPageTask").val();
-    var priority = $("#priorityEditPageTask").val();
-    var difficulty = $("#difficultyEditPageTask").val();
-    var assignee = $("#assigneeEditPageTask").val();
-    var estimatedTime = $("#estimatedTimeEditPageTask").val();
-    var status = $("#statusEditPageTask").val();
-    var category = $("#categoryEditPageTask").val();
-    var storyPointNumber = $("#storyPointEditPageTask").val();
-    var sprintNumber = $("#sprintNumberEditPageTask").val();
-    var previousId = $("#sprintNumberTaskDescription").html();
-    var logWorkDone = $("#workDoneTaskDescription").html();
-    var logHours = $("#logHoursTaskDescription").html();
-
-    console.log(id);
-    console.log(title);
-    console.log(creator);
-    console.log(des);
-    console.log(priority);
-    console.log(difficulty);
-    console.log(assignee);
-    console.log(estimatedTime);
-    console.log(status);
-    console.log(category);
-    console.log(sprintNumber);
-    console.log(storyPointNumber);
-
-    var editPageTaskFunction = firebase.functions().httpsCallable('editPageTask');
-    editPageTaskFunction({ Id: id, Title: title, Creator: creator, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, PreviousId: previousId, LogHours: logHours, LogWorkDone: logWorkDone, }).then(result => {
-        console.log(result.data);
-        newPage = "dashboard";
-        uiLoader();
-    });
+const editPageTaskForm = document.getElementById("editPageTaskForm");
+editPageTaskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (editPageTaskForm.checkValidity() === false) {
+        e.stopPropagation();
+        editPageTaskForm.classList.add('was-validated');
+    } else {
+        var id = $("#editPageTaskId").html();
+        var creationDate = $("#creationDateTaskDescription").html();
+        var title = $("#titleEditPageTask").html();
+        var creator = $("#creatorEditPageTask").html();
+        var des = $("#descriptionEditPageTask").val();
+        var priority = $("#priorityEditPageTask").val();
+        var difficulty = $("#difficultyEditPageTask").val();
+        var assignee = $("#assigneeEditPageTask").val();
+        var estimatedTime = $("#estimatedTimeEditPageTask").val();
+        var status = $("#statusEditPageTask").val();
+        var category = $("#categoryEditPageTask").val();
+        var storyPointNumber = $("#storyPointEditPageTask").val();
+        var sprintNumber = $("#sprintNumberEditPageTask").val();
+        var previousId = $("#sprintNumberTaskDescription").html();
+        var logWorkDone = $("#workDoneTaskDescription").html();
+        var logWorkTotalTime = $("#logHoursTaskDescription").html();
+        editPageTaskForm.classList.remove('was-validated');
+        console.log(id);
+        console.log(title);
+        console.log(creator);
+        console.log(des);
+        console.log(priority);
+        console.log(difficulty);
+        console.log(assignee);
+        console.log(estimatedTime);
+        console.log(status);
+        console.log(category);
+        console.log(sprintNumber);
+        console.log(storyPointNumber);
+        console.log(creationDate);
+        console.log(logWorkTotalTime);
+        var editPageTaskFunction = firebase.functions().httpsCallable('editPageTask');
+        editPageTaskFunction({ Id: id, Title: title, Creator: creator, Description: des, Priority: priority, Difficulty: difficulty, Assignee: assignee, EstimatedTime: estimatedTime, Status: status, Category: category, SprintNumber: sprintNumber, StoryPointNumber: storyPointNumber, PreviousId: previousId, LogWorkTotalTime: logWorkTotalTime, LogWorkDone: logWorkDone, CreationDate: creationDate }).then(result => {
+            console.log(result.data);
+            newPage = "dashboard";
+            uiLoader();
+            $('input').val('');
+        });
+    }
 });
