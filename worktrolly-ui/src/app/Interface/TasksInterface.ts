@@ -10,10 +10,10 @@ export interface Tasks {
   Category: string;
   Assignee: string;
   LogHours: number;
-  WorkDone: string;
+  WorkDone: number;
   CreationDate: string;
   SprintNumber: number;
-  StoryPointNumber: string;
+  StoryPointNumber: number;
   LogWorkTotalTime: number;
 }
 
