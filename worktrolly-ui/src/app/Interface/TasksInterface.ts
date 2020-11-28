@@ -3,17 +3,18 @@ export interface Tasks {
   Title: string;
   Status: string;
   Priority: string;
-  ET: string;
+  ET: number;
   Difficulty: string;
   Description: string;
   Creator: string;
   Category: string;
   Assignee: string;
-  LogHours: string;
-  WorkDone: string;
-  // CreationDate: string;
+  LogHours: number;
+  WorkDone: number;
+  CreationDate: string;
   SprintNumber: number;
-  StoryPointNumber: string;
+  StoryPointNumber: number;
+  LogWorkTotalTime: number;
 }
 
 export interface TasksId extends Tasks {id: string;}

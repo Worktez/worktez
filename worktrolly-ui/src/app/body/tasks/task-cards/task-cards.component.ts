@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
+import { Router } from '@angular/router';
+import { TasksId } from 'src/app/Interface/TasksInterface';
 
 @Component({
   selector: 'app-task-cards',
@@ -10,9 +11,19 @@ export class TaskCardsComponent implements OnInit {
 
   @Input('task') task: TasksId
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  openTaskDetails(id: string) {
+    var sprintName = "";
+    if (this.task.SprintNumber == -1) {
+      sprintName = "Backlog";
+    }else {
+      sprintName = "S" + this.task.SprintNumber.toString();
+    }
+    this.router.navigate(['/TaskDetails', sprintName, id]);
   }
 
 }

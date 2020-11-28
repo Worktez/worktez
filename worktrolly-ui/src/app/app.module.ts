@@ -11,11 +11,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
 import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
+import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
 import { DashboardComponent } from './body/dashboard/dashboard.component';
 import { FeatureCardComponent } from './body/dashboard/feature-card/feature-card.component';
 import { SprintDetailsComponent } from './body/dashboard/sprint-details/sprint-details.component';
 import { TasksComponent } from './body/tasks/tasks.component';
 import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component';
+import { TaskDetailsComponent } from './body/task-details/task-details.component';
+import { LogWorkComponent } from './body/task-details/log-work/log-work.component';
+import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +27,15 @@ import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component
     HeaderComponent,
     BodyComponent,
     CreateNewSessionComponent,
+    CreateNewSprintComponent,
     DashboardComponent,
     FeatureCardComponent,
     SprintDetailsComponent,
     TasksComponent,
     TaskCardsComponent,
+    TaskDetailsComponent,
+    LogWorkComponent,
+    EditPageComponent,
   ],
   imports: [
     BrowserModule,
