@@ -9,9 +9,7 @@
         <hr class="w-75 ml-0">
         <div id="cardsList">
             <ng-container *ngFor="let item of tasksData | async">
-                <ng-container *ngIf="item.Category === category">
-                    <app-task-cards [task]="item"></app-task-cards>
-                </ng-container>
+                <app-task-cards [task]="item"></app-task-cards>
             </ng-container>
         </div>
     </div>

@@ -12,8 +12,8 @@ import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawD
 })
 export class DashboardComponent implements OnInit {
 
-  public rawData: Observable<RawDataId[]>;
-  public rawCollection: AngularFirestoreCollection<RawDataType>;
+  // public rawData: RawDataType;
+  public rawDataObservable: Observable<RawDataType>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
 
   currentSprintNumber: number;
@@ -40,27 +40,44 @@ export class DashboardComponent implements OnInit {
     // );
 
     // Efficient for now
-    this.getCurrentSprint();
+    var promise  = this.getCurrentSprint();
     this.readCurrentSprintData();
   }
 
-  async getCurrentSprint() {
-    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
-    try {
-      await this.rawDocument.ref.get().then(doc=> {
-        if(doc.exists){
-          var rawData = doc.data();
-          this.currentSprintNumber = rawData.CurrentSprintId;
-          this.currentSprintName = "S" + this.currentSprintNumber;
-        } else {
-          console.error("Document does not exists!")
-        }
-      });
-      return "Success";
-    } catch (error) {
-      return "Error";
-    }
+  // Reading data as get() method
 
+  // async getCurrentSprint() {
+  //   this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+  //   try {
+  //     await this.rawDocument.ref.get().then(doc=> {
+  //       if(doc.exists){
+  //         var rawData = doc.data();
+  //         this.currentSprintNumber = rawData.CurrentSprintId;
+  //         this.currentSprintName = "S" + this.currentSprintNumber;
+  //       } else {
+  //         console.error("Document does not exists!")
+  //       }
+  //     });
+  //     return "Success";
+  //   } catch (error) {
+  //     return "Error";
+  //   }
+
+  // }
+
+  // Reading synchronous snapshot of data
+
+  getCurrentSprint() {
+    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+    this.rawDataObservable = this.rawDocument.snapshotChanges().pipe(
+      map(actions => {
+        const data = actions.payload.data() as RawDataType;
+        // this.rawData = data;
+        this.currentSprintNumber = data.CurrentSprintId;
+        this.currentSprintName = "S" + this.currentSprintNumber;
+        return {...data}
+      })
+    )
   }
 
   readCurrentSprintData() {
@@ -72,6 +89,10 @@ export class DashboardComponent implements OnInit {
         return { id, ...data };
       }))
     );
+
+    // this.mainData = this.mainCollection.snapshotChanges().pipe(
+    //   map()
+    // )
   }
 
   changeSprintName(data: {newSprintNumber: number}) {

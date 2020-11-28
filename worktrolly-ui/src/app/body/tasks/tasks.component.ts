@@ -14,6 +14,7 @@ export class TasksComponent implements OnInit {
 
   currentSprintName: string
   category: string
+  currentSprintNumber: string
 
   tasksCollection: AngularFirestoreCollection<Tasks>
   tasksData: Observable<TasksId[]>
@@ -23,12 +24,13 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
+    this.currentSprintNumber = this.currentSprintName.slice(1);
 
     this.readCurrentSprintData();
   }
 
   readCurrentSprintData() {
-    this.tasksCollection = this.db.collection<Tasks>(this.currentSprintName);
+    this.tasksCollection = this.db.collection<Tasks>(this.currentSprintName, ref=>ref.where('SprintNumber', '==', this.currentSprintNumber).where('Category', '==', this.category));
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;

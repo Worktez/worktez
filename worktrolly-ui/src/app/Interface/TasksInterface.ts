@@ -9,12 +9,11 @@ export interface Tasks {
   Creator: string;
   Category: string;
   Assignee: string;
-  LogHours: number;
+  LogWorkTotalTime: number;
   WorkDone: number;
   CreationDate: string;
   SprintNumber: number;
   StoryPointNumber: number;
-  LogWorkTotalTime: number;
 }
 
 export interface TasksId extends Tasks {id: string;}
