@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 
@@ -19,7 +19,7 @@ export class TasksComponent implements OnInit {
   tasksCollection: AngularFirestoreCollection<Tasks>
   tasksData: Observable<TasksId[]>
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore, private router: Router) { }
+  constructor(private route: ActivatedRoute, private db: AngularFirestore) { }
 
   ngOnInit(): void {
     this.category = this.route.snapshot.params['category'];
@@ -30,7 +30,7 @@ export class TasksComponent implements OnInit {
   }
 
   readCurrentSprintData() {
-    this.tasksCollection = this.db.collection<Tasks>(this.currentSprintName, ref=>ref.where('SprintNumber', '==', this.currentSprintNumber).where('Category', '==', this.category));
+    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref=>ref.where('SprintNumber', '==', this.currentSprintNumber).where('Category', '==', this.category));
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;
