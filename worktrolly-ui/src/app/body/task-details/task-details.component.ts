@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 
@@ -18,7 +19,7 @@ export class TaskDetailsComponent implements OnInit {
   task: Tasks
   private taskDocument: AngularFirestoreDocument<Tasks>
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore, private router: Router) { }
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.sprintName = this.route.snapshot.params['sprintName'];
@@ -58,7 +59,20 @@ export class TaskDetailsComponent implements OnInit {
     this.logWorkEnabled = false;
   }
 
-  editTaskCompleted(data:{ completed: boolean}){
+  editTaskCompleted(data: { completed: boolean }) {
     this.editTaskEnabled = false;
+  }
+
+  async deleteTask() {
+    const callable = this.functions.httpsCallable('deleteTask');
+
+    try {
+      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category }).toPromise();
+      console.log(this.task.Id + " deleted");
+      console.log(result);
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.log("Error", error);
+    }
   }
 }
