@@ -18,33 +18,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-remote-config.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
     <script src="scripts/config.js"></script>
-
-    <style>
-        .nav-button{
-            border-color: #10be65;
-            border-radius: 20px;
-            border: solid 2px #10be65;
-        }
-        .nav-button:hover{
-            background-color: #10be65;
-        }
-
-        div.card-header{
-            background-color: #0A9A51;
-        }
-
-        div.card-body{
-            background-color: #10be65;
-        }
-        #cardsList .card-title{
-            border-radius: 8px;
-            background-color: #8120F0;
-        }
-
-        #dashboard-bottom{
-            background-color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">   
 
 </head>
 
@@ -75,7 +49,7 @@
     <!-- new sprint   ------------------------------------------------------->
 
     <form class="needs-validation" novalidate id="startNewSprintForm">
-        <div class="container">
+        <div class="container ">
             <div class="px-5 py-5" style="background-color: #10be65;" id="startNewSprint">
                 <div class="row pt-2">
                     <div class="col-md-11 col-10"></div>
@@ -154,10 +128,10 @@
     </form>
 
     <!-- Dashboard---------------------------------------------------------------------------- -->
-    <section class="bg-light" id="dashboard">
+    <section class="" id="dashboard">
         <div class="container py-5">
             <div class="row py-4">
-                <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
+                <h3 class="fontHeading text-white col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
 
                 <div class="col-md-9"></div>
                 <div class="col-md-3">
@@ -222,7 +196,7 @@
             <div class="pt-3">
                 <div class="card">
                     <div class="card-body" style="font-weight: bold; background-color: #8120F0;">
-                        <div class="row" style="color: white;">
+                        <div class="row pb-3" style="color: white;">
                             <div class="col-md-2 col-3">
                                 <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                             </div>
@@ -277,9 +251,9 @@
     <div id="taskPage">
         <div class="container pt-2 pb-5 pl-2">
             <div class="row pt-5">
-                <h3 class="col-md-8 col-8 fontHeading">Tasks</h3>
+                <h3 class="col-md-8 text-white col-8 fontHeading">Tasks</h3>
                 <span type="button" class="col-md-4 col-1  material-icons" id="backToDashboard">
-                close
+                <img src="close.png" alt="close">
             </span>
             </div>
             <hr class="w-75 ml-0">

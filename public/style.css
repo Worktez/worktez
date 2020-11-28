@@ -1,0 +1,27 @@
+body{
+    background-color:#141414;
+}
+.nav-button{
+    border-color: #10be65;
+    border-radius: 20px;
+    border: solid 2px #10be65;
+}
+.nav-button:hover{
+    background-color: #10be65;
+}
+
+div.card-header{
+    background-color: #0A9A51;
+}
+
+div.card-body{
+    background-color: #10be65;
+}
+#cardsList .card-title{
+    border-radius: 8px;
+    background-color: #8120F0;
+}
+
+#dashboard-bottom{
+    background-color: white;
+}
