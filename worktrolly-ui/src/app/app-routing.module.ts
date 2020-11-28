@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'CreateNewSession', component: CreateNewSessionComponent},
   {path: 'StartNewSprint', component: CreateNewSprintComponent},
   {path: 'Tasks/:category/:currentSprintName', component: TasksComponent},
-  {path: 'TaskDetails/:sprintName/:taskId', component: TaskDetailsComponent}
+  {path: 'TaskDetails/:taskId', component: TaskDetailsComponent}
 ];
 
 @NgModule({

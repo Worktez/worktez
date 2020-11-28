@@ -14,7 +14,7 @@ export class TasksComponent implements OnInit {
 
   currentSprintName: string
   category: string
-  currentSprintNumber: string
+  currentSprintNumber: number
 
   tasksCollection: AngularFirestoreCollection<Tasks>
   tasksData: Observable<TasksId[]>
@@ -24,7 +24,7 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
-    this.currentSprintNumber = this.currentSprintName.slice(1);
+    this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
 
     this.readCurrentSprintData();
   }

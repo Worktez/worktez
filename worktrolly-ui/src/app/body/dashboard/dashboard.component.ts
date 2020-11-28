@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
     // );
 
     // Efficient for now
-    var promise  = this.getCurrentSprint();
+    this.getCurrentSprint();
     this.readCurrentSprintData();
   }
 
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
   // Reading synchronous snapshot of data
 
   getCurrentSprint() {
-    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
     this.rawDataObservable = this.rawDocument.snapshotChanges().pipe(
       map(actions => {
         const data = actions.payload.data() as RawDataType;

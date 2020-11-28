@@ -3,7 +3,7 @@ export interface Tasks {
   Title: string;
   Status: string;
   Priority: string;
-  ET: number;
+  EstimatedTime: number;
   Difficulty: string;
   Description: string;
   Creator: string;

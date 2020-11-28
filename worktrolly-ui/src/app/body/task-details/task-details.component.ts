@@ -22,13 +22,12 @@ export class TaskDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-    this.sprintName = this.route.snapshot.params['sprintName'];
     this.Id = this.route.snapshot.params['taskId'];
     this.getTaskDetail();
   }
 
   async getTaskDetail() {
-    var documentName = this.sprintName + '/' + this.Id;
+    var documentName = 'Tasks/' + this.Id;
     this.taskDocument = this.db.doc<Tasks>(documentName);
     try {
       await this.taskDocument.ref.get().then(doc => {

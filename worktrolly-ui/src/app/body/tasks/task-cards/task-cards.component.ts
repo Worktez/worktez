@@ -17,13 +17,7 @@ export class TaskCardsComponent implements OnInit {
   }
 
   openTaskDetails(id: string) {
-    var sprintName = "";
-    if (this.task.SprintNumber == -1) {
-      sprintName = "Backlog";
-    }else {
-      sprintName = "S" + this.task.SprintNumber.toString();
-    }
-    this.router.navigate(['/TaskDetails', sprintName, id]);
+    this.router.navigate(['/TaskDetails', id]);
   }
 
 }

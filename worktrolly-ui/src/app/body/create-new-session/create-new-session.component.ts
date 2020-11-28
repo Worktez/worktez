@@ -39,19 +39,6 @@ export class CreateNewSessionComponent implements OnInit {
   }
 
   async createNewSession() {
-    console.log(this.title);
-    console.log(this.todayDate);
-    console.log(this.description);
-    console.log(this.assigneeName);
-    console.log(this.creatorName);
-    console.log(this.category);
-    console.log(this.estimatedTime);
-    console.log(this.priority);
-    console.log(this.difficulty);
-    console.log(this.status);
-    console.log(this.sprintNumber);
-    console.log(this.storyPoint);
-
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {

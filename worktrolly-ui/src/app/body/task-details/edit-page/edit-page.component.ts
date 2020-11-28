@@ -15,11 +15,13 @@ export class EditPageComponent implements OnInit {
   @Output() editTaskCompleted = new EventEmitter<{ completed: boolean }>();
 
   editTask: Tasks
+  previousSprintId: number
 
   constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.editTask = this.task;
+    this.previousSprintId = this.task.SprintNumber;
   }
 
   async editPage() {
@@ -30,7 +32,9 @@ export class EditPageComponent implements OnInit {
       console.log(this.editTask.Title);
       console.log(this.editTask.Creator);
 
-      const result = await callable({ Id: this.editTask.Id, Title: this.editTask.Title, Creator: this.editTask.Creator, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.ET, Status: this.editTask.Status, Category: this.editTask.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.task.SprintNumber, LogWorkTotalTime: this.editTask.LogWorkTotalTime, LogWorkDone: this.editTask.WorkDone, CreationDate: this.editTask.CreationDate }).toPromise();
+      console.log(this.editTask.SprintNumber);
+
+      const result = await callable({ Id: this.editTask.Id, Title: this.editTask.Title, Creator: this.editTask.Creator, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Status: this.editTask.Status, Category: this.editTask.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, LogWorkTotalTime: this.editTask.LogWorkTotalTime, LogWorkDone: this.editTask.WorkDone, CreationDate: this.editTask.CreationDate }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
