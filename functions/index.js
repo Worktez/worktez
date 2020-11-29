@@ -271,54 +271,51 @@ exports.logWork = functions.https.onRequest((request, response) => {
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
 
-        db.collection("Tasks").doc(taskId).get().then(function(doc) {
-                logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
-                logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
+        const promise1 = db.collection("Tasks").doc(taskId).get().then((doc) => {
+            logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
+            logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
 
-                var updatePromise = db.collection("Tasks").doc(taskId).update({
-                    LogWorkTotalTime: logWorkTotalTime,
-                    WorkDone: workDone,
-                    Status: status
-                });
-                return Promise.resolve(updatePromise);
-            })
-            .then(function(updatePromise) {
-                return db.collection("RawData").doc("AppDetails").get().then(function(doc) {
-                    totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
-                    totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
-                    if (status === "Completed") {
-                        totalCompletedTask = totalCompletedTask + 1;
-                        totalUnCompletedTask = totalUnCompletedTask - 1;
-                    }
-                    var updateStatus = db.collection("RawData").doc("AppDetails").update({
-                        TotalCompletedTask: totalCompletedTask,
-                        TotalUnCompletedTask: totalUnCompletedTask
-                    });
-                    return Promise.resolve(updateStatus);
-                });
-            })
-            .then(function(updatePromise) {
-                return db.collection("Main").doc(fullSprintId).get().then(function(doc) {
-                    totalCompletedTask = doc.data().TotalCompletedTask;
-                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+            var updatePromise = db.collection("Tasks").doc(taskId).update({
+                LogWorkTotalTime: logWorkTotalTime,
+                WorkDone: workDone,
+                Status: status
+            });
+            return Promise.resolve(updatePromise);
+        });
+        const promise2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
+            totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
+            totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
+            if (status === "Completed") {
+                totalCompletedTask = totalCompletedTask + 1;
+                totalUnCompletedTask = totalUnCompletedTask - 1;
+            }
+            var updateStatus = db.collection("RawData").doc("AppDetails").update({
+                TotalCompletedTask: totalCompletedTask,
+                TotalUnCompletedTask: totalUnCompletedTask
+            });
+            return Promise.resolve(updateStatus);
+        });
+        const promise3 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
+            totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
+            totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
 
-                    if (status === "Completed") {
-                        totalCompletedTask = totalCompletedTask + 1;
-                        totalUnCompletedTask = totalUnCompletedTask - 1;
-                    }
-                    var updateSprintstatus = db.collection("Main").doc(fullSprintId).update({
-                        TotalCompletedTask: totalCompletedTask,
-                        TotalUnCompletedTask: totalUnCompletedTask
-                    });
-                    return Promise.resolve(updateSprintstatus);
-                });
-            })
-            .then(function(updateSprintstatus) {
+            if (status === "Completed") {
+                totalCompletedTask = totalCompletedTask + 1;
+                totalUnCompletedTask = totalUnCompletedTask - 1;
+            }
+            var updateSprintstatus = db.collection("Main").doc(fullSprintId).update({
+                TotalCompletedTask: totalCompletedTask,
+                TotalUnCompletedTask: totalUnCompletedTask
+            });
+            return Promise.resolve(updateSprintstatus);
+        });
+        const logWorkPromises = [promise1, promise2, promise3];
+        Promise.all(logWorkPromises).then(() => {
                 result = { data: "OK" }
                 console.log("Document successfully written!");
                 return response.status(200).send(result);
             })
-            .catch(function(error) {
+            .catch((error) => {
                 var result = { data: error };
                 console.log("error", error);
                 return response.status(500).send(result)
