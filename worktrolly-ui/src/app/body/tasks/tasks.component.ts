@@ -24,7 +24,12 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
-    this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
+
+    if(this.currentSprintName == "Backlog") {
+      this.currentSprintNumber = -1;
+    } else {
+      this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
+    }
 
     this.readCurrentSprintData();
   }
