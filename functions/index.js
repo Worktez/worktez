@@ -327,19 +327,20 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
 
-        var des = request.body.data.Description;
+        var description = request.body.data.Description;
         var priority = request.body.data.Priority;
         var difficulty = request.body.data.Difficulty;
         var assignee = request.body.data.Assignee;
         var estimatedTime = request.body.data.EstimatedTime;
-        var status = request.body.data.Status;
         var category = request.body.data.Category;
         var storyPointNumber = request.body.data.StoryPointNumber;
-        var sprintNumber = request.body.data.SprintNumber;
+        var EditedsprintNumber = request.body.data.SprintNumber;
         var previousId = request.body.data.PreviousId;
+        var creationDate = request.body.data.CreationDate;
+        var status = request.body.data.Status;
         var previousSprintId = createSprintId(previousId);
         var taskId = request.body.data.Id;
-        var fullSprintId = createSprintId(sprintNumber);
+        var EditedSprintId = createSprintId(EditedsprintNumber);
         var totalDevelopmentTask;
         var totalBusinessTask;
         var totalMarketingTask;
@@ -348,113 +349,116 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var totalUnCompletedTask;
         var totalCompletedTask;
         var sprintEditPromise;
-
-        const p1 = db.collection("Main").doc(previousSprintId).get().then((doc) => {
-            totalNumberOfTask = doc.data().TotalNumberOfTask;
-            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-            totalBusinessTask = doc.data().TotalBusinessTask;
-            totalMarketingTask = doc.data().TotalMarketingTask;
-            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
-
-            if (category === "Development") {
-                totalDevelopmentTask = totalDevelopmentTask - 1;
-            } else if (category === "Business") {
-                totalBusinessTask = totalBusinessTask - 1;
-            } else {
-                totalMarketingTask = totalMarketingTask - 1;
-            }
-
-            totalNumberOfTask = totalNumberOfTask - 1;
-            totalUnCompletedTask = totalUnCompletedTask - 1;
-
-            var editSprintDeleteCounter = db.collection("Main").doc(previousSprintId).update({
-                TotalDevelopmentTask: totalDevelopmentTask,
-                TotalBusinessTask: totalBusinessTask,
-                TotalMarketingTask: totalMarketingTask,
-                TotalNumberOfTask: totalNumberOfTask,
-                TotalUnCompletedTask: totalUnCompletedTask
-            });
-
-            return Promise.resolve(editSprintDeleteCounter);
-        });
-
-        const p2 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
-            if (doc.exists) {
+        if (!(EditedsprintNumber === previousId)) {
+            const p1 = db.collection("Main").doc(previousSprintId).get().then((doc) => {
                 totalNumberOfTask = doc.data().TotalNumberOfTask;
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
                 totalBusinessTask = doc.data().TotalBusinessTask;
                 totalMarketingTask = doc.data().TotalMarketingTask;
+                totalCompletedTask = doc.data().TotalCompletedTask;
                 totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
                 if (category === "Development") {
-                    totalDevelopmentTask = totalDevelopmentTask + 1;
+                    totalDevelopmentTask = totalDevelopmentTask - 1;
                 } else if (category === "Business") {
-                    totalBusinessTask = totalBusinessTask + 1;
+                    totalBusinessTask = totalBusinessTask - 1;
                 } else {
-                    totalMarketingTask = totalMarketingTask + 1;
+                    totalMarketingTask = totalMarketingTask - 1;
                 }
 
-                totalNumberOfTask = totalNumberOfTask + 1;
-                totalUnCompletedTask = totalUnCompletedTask + 1;
-
-
-                sprintEditPromise = db.collection("Main").doc(fullSprintId).update({
-                    TotalBusinessTask: totalBusinessTask,
+                totalNumberOfTask = totalNumberOfTask - 1;
+                status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
+                var editSprintDeleteCounter = db.collection("Main").doc(previousSprintId).update({
                     TotalDevelopmentTask: totalDevelopmentTask,
+                    TotalBusinessTask: totalBusinessTask,
                     TotalMarketingTask: totalMarketingTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
-                    TotalNumberOfTask: totalNumberOfTask
+                    TotalNumberOfTask: totalNumberOfTask,
+                    TotalUnCompletedTask: totalUnCompletedTask
                 });
-            } else {
-                totalBusinessTask = 0;
-                totalDevelopmentTask = 0;
-                totalMarketingTask = 0;
-                totalUnCompletedTask = 0;
-                totalCompletedTask = 0;
-                totalNumberOfTask = 0;
 
-                if (category === "Development") {
-                    totalDevelopmentTask = totalDevelopmentTask + 1;
-                } else if (category === "Business") {
-                    totalBusinessTask = totalBusinessTask + 1;
+                return Promise.resolve(editSprintDeleteCounter);
+            });
+
+            const p2 = db.collection("Main").doc(EditedSprintId).get().then((doc) => {
+                if (doc.exists) {
+                    totalNumberOfTask = doc.data().TotalNumberOfTask;
+                    totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+                    totalBusinessTask = doc.data().TotalBusinessTask;
+                    totalMarketingTask = doc.data().TotalMarketingTask;
+                    totalCompletedTask = doc.data().TotalCompletedTask;
+                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+
+                    if (category === "Development") {
+                        totalDevelopmentTask = totalDevelopmentTask + 1;
+                    } else if (category === "Business") {
+                        totalBusinessTask = totalBusinessTask + 1;
+                    } else {
+                        totalMarketingTask = totalMarketingTask + 1;
+                    }
+
+                    totalNumberOfTask = totalNumberOfTask + 1;
+                    status === "Completed" ? totalCompletedTask = totalCompletedTask + 1 : totalUnCompletedTask = totalUnCompletedTask + 1;
+
+                    sprintEditPromise = db.collection("Main").doc(EditedSprintId).update({
+                        TotalBusinessTask: totalBusinessTask,
+                        TotalDevelopmentTask: totalDevelopmentTask,
+                        TotalMarketingTask: totalMarketingTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                        TotalCompletedTask: totalCompletedTask,
+                        TotalNumberOfTask: totalNumberOfTask
+                    });
                 } else {
-                    totalMarketingTask = totalMarketingTask + 1;
+                    totalBusinessTask = 0;
+                    totalDevelopmentTask = 0;
+                    totalMarketingTask = 0;
+                    totalUnCompletedTask = 0;
+                    totalCompletedTask = 0;
+                    totalNumberOfTask = 0;
+
+                    if (category === "Development") {
+                        totalDevelopmentTask = totalDevelopmentTask + 1;
+                    } else if (category === "Business") {
+                        totalBusinessTask = totalBusinessTask + 1;
+                    } else {
+                        totalMarketingTask = totalMarketingTask + 1;
+                    }
+
+                    totalNumberOfTask = totalNumberOfTask + 1;
+                    sprintEditPromise = db.collection("Main").doc(EditedSprintId).set({
+                        TotalBusinessTask: totalBusinessTask,
+                        TotalDevelopmentTask: totalDevelopmentTask,
+                        TotalMarketingTask: totalMarketingTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                        TotalCompletedTask: totalCompletedTask,
+                        TotalNumberOfTask: totalNumberOfTask
+                    });
                 }
-
-                totalNumberOfTask = totalNumberOfTask + 1;
-                totalUnCompletedTask = totalUnCompletedTask + 1;
-
-                sprintEditPromise = db.collection("Main").doc(fullSprintId).set({
-                    TotalBusinessTask: totalBusinessTask,
-                    TotalDevelopmentTask: totalDevelopmentTask,
-                    TotalMarketingTask: totalMarketingTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
-                    TotalCompletedTask: totalCompletedTask,
-                    TotalNumberOfTask: totalNumberOfTask
+                return Promise.resolve(sprintEditPromise)
+            });
+            var promises = [p1, p2];
+            Promise.all(promises).then(() => {
+                    result = { data: "OK" };
+                    console.log("Document sucessfully written");
+                    return response.status(200).send(result);
+                })
+                .catch((error) => {
+                    result = { data: error };
+                    console.log("error", error);
+                    return response.status(500).send(result)
                 });
-            }
-
-            return Promise.resolve(sprintEditPromise)
-        });
-
-        const p3 = db.collection("Tasks").doc(taskId).update({
-            Id: taskId,
-            Description: des,
-            Priority: priority,
-            Difficulty: difficulty,
-            Assignee: assignee,
-            EstimatedTime: estimatedTime,
-            Status: status,
-            Category: category,
-            SprintNumber: sprintNumber,
-            StoryPointNumber: storyPointNumber
-        });
-
-        var promises = [p1, p2, p3];
-
-        Promise.all(promises).then(() => {
+        }
+        db.collection("Tasks").doc(taskId).update({
+                Description: description,
+                CreationDate: creationDate,
+                Priority: priority,
+                Difficulty: difficulty,
+                Assignee: assignee,
+                EstimatedTime: estimatedTime,
+                SprintNumber: EditedsprintNumber,
+                StoryPointNumber: storyPointNumber
+            }).then(() => {
                 result = { data: "OK" };
-                console.log("Document sucessfully written");
+                console.log("Document sucessfully Updated");
                 return response.status(200).send(result);
             })
             .catch((error) => {
@@ -473,78 +477,77 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         var taskId = request.body.data.Id;
         var fullSprintId = createSprintId(sprintNumber);
         var category = request.body.data.Category;
+        var status = request.body.data.Status;
         var totalDevelopmentTask;
         var totalBusinessTask;
         var totalMarketingTask;
         var totalNumberOfTask;
         var result;
+        var totalCompletedTask;
         var totalUnCompletedTask;
 
-        db.collection("Tasks").doc(taskId).delete()
-            .then(() => {
-                return db.collection("RawData").doc("AppDetails").get().then((doc) => {
-                    totalNumberOfTask = doc.data().TotalNumberOfTask;
-                    totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-                    totalBusinessTask = doc.data().TotalBusinessTask;
-                    totalMarketingTask = doc.data().TotalMarketingTask;
-                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+        const p1 = db.collection("Tasks").doc(taskId).delete();
+        const p2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
+            totalNumberOfTask = doc.data().TotalNumberOfTask;
+            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+            totalBusinessTask = doc.data().TotalBusinessTask;
+            totalMarketingTask = doc.data().TotalMarketingTask;
+            totalCompletedTask = doc.data().TotalCompletedTask;
+            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
-                    if (category === "Development") {
-                        totalDevelopmentTask = totalDevelopmentTask - 1;
-                    } else if (category === "Business") {
-                        totalBusinessTask = totalBusinessTask - 1;
-                    } else {
-                        totalMarketingTask = totalMarketingTask - 1;
-                    }
+            if (category === "Development") {
+                totalDevelopmentTask = totalDevelopmentTask - 1;
+            } else if (category === "Business") {
+                totalBusinessTask = totalBusinessTask - 1;
+            } else {
+                totalMarketingTask = totalMarketingTask - 1;
+            }
+            totalNumberOfTask = totalNumberOfTask - 1;
+            status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
+            var updateDeleteCounter = db.collection("RawData").doc("AppDetails").update({
+                TotalDevelopmentTask: totalDevelopmentTask,
+                TotalBusinessTask: totalBusinessTask,
+                TotalMarketingTask: totalMarketingTask,
+                TotalNumberOfTask: totalNumberOfTask,
+                TotalCompletedTask: totalCompletedTask,
+                TotalUnCompletedTask: totalUnCompletedTask
+            });
+            return Promise.resolve(updateDeleteCounter);
+        });
+        const p3 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
+            totalNumberOfTask = doc.data().TotalNumberOfTask;
+            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+            totalBusinessTask = doc.data().TotalBusinessTask;
+            totalMarketingTask = doc.data().TotalMarketingTask;
+            totalCompletedTask = doc.data().TotalCompletedTask;
+            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
-                    totalUnCompletedTask = totalUnCompletedTask - 1;
-                    totalNumberOfTask = totalNumberOfTask - 1;
-
-                    var updateDeleteCounter = db.collection("Main").doc("RawData").update({
-                        TotalDevelopmentTask: totalDevelopmentTask,
-                        TotalBusinessTask: totalBusinessTask,
-                        TotalMarketingTask: totalMarketingTask,
-                        TotalNumberOfTask: totalNumberOfTask,
-                        TotalUnCompletedTask: totalUnCompletedTask
-                    });
-                    return Promise.resolve(updateDeleteCounter);
-                });
-            })
-            .then(function(updateDeleteCounter) {
-                return db.collection("Main").doc(fullSprintId).get().then(function(doc) {
-                    totalNumberOfTask = doc.data().TotalNumberOfTask;
-                    totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-                    totalBusinessTask = doc.data().TotalBusinessTask;
-                    totalMarketingTask = doc.data().TotalMarketingTask;
-                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
-
-                    if (category === "Development") {
-                        totalDevelopmentTask = totalDevelopmentTask - 1;
-                    } else if (category === "Business") {
-                        totalBusinessTask = totalBusinessTask - 1;
-                    } else {
-                        totalMarketingTask = totalMarketingTask - 1;
-                    }
-
-                    totalUnCompletedTask = totalUnCompletedTask - 1;
-                    totalNumberOfTask = totalNumberOfTask - 1;
-
-                    var updateDeleteTaskCounter = db.collection("Main").doc(fullSprintId).update({
-                        TotalDevelopmentTask: totalDevelopmentTask,
-                        TotalBusinessTask: totalBusinessTask,
-                        TotalMarketingTask: totalMarketingTask,
-                        TotalNumberOfTask: totalNumberOfTask,
-                        TotalUnCompletedTask: totalUnCompletedTask
-                    });
-                    return Promise.resolve(updateDeleteTaskCounter);
-                });
-            })
-            .then((updateDeleteTaskCounter) => {
+            if (category === "Development") {
+                totalDevelopmentTask = totalDevelopmentTask - 1;
+            } else if (category === "Business") {
+                totalBusinessTask = totalBusinessTask - 1;
+            } else {
+                totalMarketingTask = totalMarketingTask - 1;
+            }
+            totalNumberOfTask = totalNumberOfTask - 1;
+            status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
+            var updateDeleteTaskCounter = db.collection("Main").doc(fullSprintId).update({
+                TotalDevelopmentTask: totalDevelopmentTask,
+                TotalBusinessTask: totalBusinessTask,
+                TotalMarketingTask: totalMarketingTask,
+                TotalNumberOfTask: totalNumberOfTask,
+                TotalCompletedTask: totalCompletedTask,
+                TotalUnCompletedTask: totalUnCompletedTask
+            });
+            return Promise.resolve(updateDeleteTaskCounter);
+        });
+        const deleteTaskPromises = [p1, p2, p3];
+        Promise.all(deleteTaskPromises).then(() => {
                 result = { data: "OK" };
                 console.log("Document sucessfully deleted");
                 return response.status(200).send(result);
             })
-            .catch(function(error) {
+            .catch((error) => {
                 result = { data: error };
                 console.log("error", error);
                 return response.status(500).send(result)
