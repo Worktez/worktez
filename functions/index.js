@@ -339,7 +339,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var creationDate = request.body.data.CreationDate;
         var previousSprintId = createSprintId(previousId);
         var taskId = request.body.data.Id;
-        var editedSprintId = createSprintId(EditedsprintNumber);
+        var editedSprintId = createSprintId(editedSprintNumber);
         var totalDevelopmentTask;
         var totalBusinessTask;
         var totalMarketingTask;
@@ -420,6 +420,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                     }
 
                     totalNumberOfTask = totalNumberOfTask + 1;
+                    totalUnCompletedTask = totalUnCompletedTask + 1;
                     sprintEditPromise = db.collection("Main").doc(editedSprintId).set({
                         TotalBusinessTask: totalBusinessTask,
                         TotalDevelopmentTask: totalDevelopmentTask,
