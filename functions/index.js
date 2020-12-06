@@ -556,7 +556,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
 });
 
 function createSprintId(sprintNumber) {
-    if (sprintNumber === "-1") {
+    if (sprintNumber === -1) {
         return "Backlog";
     } else {
         return ("S" + sprintNumber);
