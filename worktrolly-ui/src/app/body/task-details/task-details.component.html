@@ -1,4 +1,4 @@
-<ng-container *ngIf="task">
+<ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
         <div class="container bg-dark text-white">
             <div class="my-5 mx-5" id="cardDescription">
