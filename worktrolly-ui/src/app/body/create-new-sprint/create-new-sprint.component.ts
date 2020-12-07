@@ -95,6 +95,7 @@ export class CreateNewSprintComponent implements OnInit {
 
       console.log("Successfully created the task");
       console.log(result);
+      this.router.navigate(['/']);
     } catch (error) {
       console.error("Error", error);
     }

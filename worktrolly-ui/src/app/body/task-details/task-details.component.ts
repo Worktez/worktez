@@ -66,7 +66,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('deleteTask');
 
     try {
-      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category }).toPromise();
+      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);
