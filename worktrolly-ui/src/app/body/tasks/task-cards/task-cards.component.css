@@ -1,0 +1,8 @@
+.taskCards{
+    background-color: #8120f0;
+}
+
+.taskCards .card-title{
+    border-radius:20px;
+    color: black;
+}

@@ -1,6 +1,6 @@
 <form (ngSubmit)="editPage()" #form="ngForm">
     <div class="container py-5" id="editPageTask">
-        <div class="bg-light px-5">
+        <div class="px-5">
             <div class="row pt-2">
                 <div class="col-md-11 col-10"></div>
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons">
@@ -12,14 +12,14 @@
                     <h3 class="pl-1 fontHeading">Edit Page</h3>
                     <hr class="w-75 ml-0">
                 </div>
-                <div class="alert alert-info form-inline col-md-5" role="alert">
+                <div class="alert alert-info form-inline col-md-5 non-Editable" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Id:</div>
                     <div>{{editTask.Id}}</div>
                 </div>
             </div>
             <div class="form-group row pt-2">
                 <label for="input" class="col-sm-2 col-form-label">Title</label>
-                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                <div class="alert alert-info form-inline col-sm-10 non-Editable" role="alert">
                     <div>{{editTask.Title}}</div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Creator</label>
-                    <div class="alert alert-info form-inline">
+                    <div class="alert alert-info form-inline non-Editable">
                         <div id="creatorEditPageTask">{{editTask.Creator}}</div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="pt-2 pb-5">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn" id="editTaskSubmitButton">Submit</button>
             </div>
         </div>
     </div>

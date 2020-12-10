@@ -1,0 +1,15 @@
+.btn{
+    border-radius:20px;
+}
+
+#login-btn{
+    background-color: #10be65;
+}
+
+.Buttons{
+    border:2px solid #10be65;
+}
+
+.Buttons:hover{
+    background-color: #10be65;
+}
