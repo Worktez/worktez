@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Work Trolly</title>
+
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-remote-config.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script src="scripts/config.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: black;">
+        <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
+            <img src="logo.png" width="30" height="30" alt="" loading="lazy"> Work Trolly
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon text-white"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ">
+                <li class="nav-item active pr-5 py-1 ">
+                    <button type="button" class="btn btn-outline-light" id="createNewTaskButton">Create New
+                        Task</button>
+                </li>
+                <li class="nav-item active pr-5 py-1 ">
+                    <button type="button" class="btn btn-outline-light" id="startNewSprintButton">Start New
+                        Sprint</button>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item py-1">
+                    <button class="btn btn-primary" type="button">Login</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- new sprint   ------------------------------------------------------->
+    <form class="needs-validation" novalidate id="startNewSprintForm">
+        <div class="container">
+            <div class="bg-light px-5 py-5" id="startNewSprint">
+                <div class="row pt-2">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
+                       close
+                    </span>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="pl-1 fontHeading">Create New Sprint</h3>
+                        <hr class="w-75 ml-0">
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <div class="alert alert-info form-inline col-sm-4" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Sprint:</div>
+                        <div id="SprintNo"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Development</label>
+                        <div class="alert bg-dark text-white form-inline" role="alert">
+                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                            <div id="totalDevelopmentTaskNewSprint" class="ml-auto"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Business</label>
+                        <div class="alert bg-dark text-white form-inline" role="alert">
+                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                            <div id="totalBusinessTaskNewSprint" class="ml-auto"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Marketing</label>
+                        <div class="alert bg-dark text-white form-inline" role="alert">
+                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
+                            <div id="totalMarketingTaskNewSprint" class="ml-auto"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Start Date</label>
+                        <input class="form-control" type="date" value="" id="startdateNewSprint" required>
+                        <div class="invalid-tooltip">
+                            Please Select Starting Date of Sprint
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="input">End Date</label>
+                        <input class="form-control" type="date" value="" id="enddateNewSprint" required>
+                        <div class="invalid-tooltip">
+                            Please Select End Date of Sprint
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Status</label>
+                        <select class="custom-select" id="statusNewSprint" required>
+                            <option selected disabled value="" >choose...</option>
+                            <option>Ready to Start</option>
+                            <option>Under Progress</option>
+                            <option>Completed</option>
+                    </select>
+                        <div class="invalid-tooltip">
+                            Please Select Status of New Sprint
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2 pb-5">
+                    <button type="submit" class="btn btn-primary" id="submitNewSprint">Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Dashboard---------------------------------------------------------------------------- -->
+    <section class="bg-light" id="dashboard">
+        <div class="container py-5">
+            <div class="row py-4">
+                <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
+                <div class="col-md-9"></div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary" id="currentSprintButton"
+                        style="font-size: 14px;">Current Sprint</button>
+                    <button type="submit" class="btn btn-primary" id="backlogButton"
+                        style="font-size: 14px;">Backlog</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-12" id="Business" type="button">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #1976d2;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 18px;">Business</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalBusinessTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12" id="Development" type="button">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color: #ef6c00;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 18px;">Development</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalDevelopmentTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12" id="Marketing" type="button">
+                    <div class="card text-white mb-3" style="max-width: 18rem; background-color:#00bfa5 ;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 18px;">Marketing</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalMarketingTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12" type="button" id="completedTask">
+                    <div class="card text-white mb-3 bg-dark" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="font-size: 18px;">Total Completed Task</h5>
+                            <div class="row card-text" style="font-size: 12px;">
+                                <div class="col-md-6">
+                                    No. of Task:
+                                </div>
+                                <div class="col-md-6" id="totalCompletedTask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-3">
+                <div class="card">
+                    <div class="card-body" style="font-weight: bold; background-color: #e3f2fd;">
+                        <div class="row">
+                            <div class="col-md-2 col-3">
+                                <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
+                            </div>
+                            <div class="col-md-6 col-2">
+                                <h5 id="sprintId"></h5>
+                            </div>
+                            <div class="col-md-4 col-7">
+                                <div class="dropdown">
+                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Filter
+                                    </button>
+                                    <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
+                                        <div class="row py-3">
+                                            <input class="col-md-8 col-8" style="font-size: 11px;" type="number"
+                                                id="filterSprintNumber" placeholder="enter sprint number">
+                                            <div class="col-md-4 col-4 pl-2">
+                                                <button class="btn btn-info" id="filterSprint"
+                                                    style="font-size: 14px;">Filter</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card-body" style="background-color: white;">
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">
+                                        Details: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintDetail" style="font-size: 12px;">
+                                    </h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">
+                                        Start Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;">
+                                    </h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End
+                                        Date: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;">
+                                    </h6>
+                                </div>
+                                <div class="row py-2">
+                                    <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">
+                                        Status: </h6>
+                                    <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;">
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- task cards------------------ -->
+
+    <div id="taskPage">
+        <div class="container pt-2 pb-5 pl-2">
+            <div class="row pt-5">
+                <h3 class="col-md-8 col-8 fontHeading">Tasks</h3>
+                <span type="button" class="col-md-4 col-1  material-icons" id="backToDashboard">
+                    close
+                </span>
+            </div>
+            <hr class="w-75 ml-0">
+            <div id="cardsList">
+                <!-- <div class="card text-white bg-dark" style="max-width: 32rem;">
+                <div class="card-header" id="cardDate"></div>
+                <div class="card-body py-3">
+                    <div class="row pb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Id: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="#">
+                            2020625A
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Title: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardTitle">
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Priority: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardPriority">
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Assignee: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardAssignee">
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-md-4 col-4">
+                            <h6 class="card-title text-center py-1" style="background-color: black;">Creator: </h6>
+                        </div>
+                        <div class="col-md-8 col-8 px-2" id="cardCreator">
+                        </div>
+                    </div>
+
+                </div>
+            </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- create new task   ------------------------------------------------------->
+    <form class="needs-validation" novalidate id="createNewTaskForm">
+        <div class="container py-5 " id="createNewTask">
+            <div class="bg-light px-5">
+                <div class="row pt-2">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMain">
+                    close
+                </span>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="pl-1 fontHeading">Create New Task</h3>
+                        <hr class="w-75 ml-0">
+                    </div>
+                    <div class="alert bg-light form-inline w-50 col-md-3 pb-5" style="font-size: 20px;" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Date:</div>
+                        <div id="creationDateCreateNewTask"></div>
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="titleCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Please provide a Title
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" class="form-control" id="desCreateNewTask" rows="1" required></textarea>
+                        <div class="invalid-feedback">
+                            Please Provide the Description
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Assignee</label>
+                        <input type="text" class="form-control" id="assigneeCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Enter Assignee Name
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Creator</label>
+                        <input type="text" class="form-control" id="creatorCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Enter Creator Name
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Estimated Time</label>
+                        <input type="number" min="0" class="form-control" id="estimatedTimeCreateNewTask" required>
+                        <div class="invalid-feedback">
+                            Enter Estimated Time
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Category</label>
+                        <select class="custom-select" id="categoryCreateNewTask" required> 
+                        <option selected disabled value="">choose...</option>
+                        <option>Business</option>
+                        <option>Development</option>
+                        <option>Marketing</option>
+                    </select>
+                        <div class="invalid-feedback">
+                            Select a Category
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Priority</label>
+                        <select class="custom-select" id="priorityCreateNewTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                        <div class="invalid-feedback">
+                            Select Priority of the Task
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Difficulty</label>
+                        <select class="custom-select" id="difficultyCreateNewTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                        <div class="invalid-feedback">
+                            Select Difficulty Level of the Task
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Status</label>
+                        <select class="custom-select" id="statusCreateNewTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
+                        <div class="invalid-feedback">
+                            Select Status of the work
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Sprint Number</label>
+                        <input type="number" min="-1" class="form-control" id="createNewTaskSprintNumber" required>
+                        <div class="invalid-feedback">
+                            Enter Sprint Number
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Story Point</label>
+                        <input type="number" min="0" class="form-control" id="storyPointNumber" required>
+                        <div class="invalid-feedback">
+                            Enter Story Point of Task
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2 pb-5">
+                    <button type="submit" class="btn btn-primary" id="submitCreateNewTask">Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- log work-------------------------------------------------------- -->
+
+    <!--py= padding in y axis, px= padding in x axis, pl= paddingLeft, pr= paddingRight, pt=paddingTop, pb= paddingBottom ,
+         Similarly for margin my, mx, ml, mr, mt, mb
+        and w=width  -->
+
+    <form class="needs-validation" novalidate id="logWorkTaskForm">
+        <div class="container py-5 px-0" id="logWorkTask">
+            <div class="bg-dark py-2 px-5">
+                <h3 class="pt-5 fontHeading text-white">Log Work</h3>
+                <div class="row pt-5 pb-2 ml-1">
+                    <div class="alert alert-info form-inline col-md-5" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Id:</div>
+                        <div id="logTaskId"> </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="alert alert-info form-inline col-md-5" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Sprint Number:</div>
+                        <div id="logSprintNumber"> </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info form-inline col-md-12" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Title: </div>
+                    <div id="logWorkTitle"></div>
+                </div>
+
+                <div class="alert bg-light form-inline w-50 pt-3" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
+                    <div id="logWorkET"> </div>
+                </div>
+
+                <div class="alert bg-light form-inline w-50" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
+                    <div id="logWorkTotalTime"> </div>
+                </div>
+                <div class="alert bg-light form-inline w-50" role="alert">
+                    <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
+                    <div id="logWorkRT"> </div>
+                </div>
+                <div class="row pt-3 text-white">
+                    <label for="inputState" class="col-sm-2 col-form-label">Status</label>
+                    <select class="custom-select col-sm-3 mx-sm-3" id="logWorkStatus" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Select Status of the work
+                    </div>
+                </div>
+                <div class="row pt-3 text-white">
+                    <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
+                    <input type="number" min="1" id="logWorkHour" class="col-sm-3 form-control mx-sm-3" required>
+                    <small id="LogWorkHour" class="col text-muted">
+                    hours
+                </small>
+                    <div class="invalid-feedback">
+                        Enter Worked Hours
+                    </div>
+                </div>
+                <div class="row py-2 text-white">
+                    <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
+                    <input type="number" min="1" max="100" id="logWorkDone" class="col-sm-3 form-control mx-sm-3" required>
+                    <small id="LogWorkHour" class="col text-muted">
+                    in percentage(%)
+                </small>
+                    <div class="invalid-feedback">
+                        Enter % of work done
+                    </div>
+                </div>
+                <div class="form-group row text-white">
+                    <label for="comment" class="col-md-2 col-form-label">Comment</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="logWorkComment" required>
+                        <div class="invalid-feedback">
+                            Enter a comment
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 pb-5">
+                    <button class="btn btn-primary" type="submit" id="logWorkSubmit">Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- card description-------------------------------------------------------- -->
+    <div class="container bg-dark text-white">
+        <div class="my-5 mx-5" id="cardDescription">
+            <div class="row mt-5">
+                <div class="col-md-9 col-7"></div>
+                <span type="button" class="material-icons mt-5 col-md-2 col-3" id="deleteTaskCard"> delete </span>
+                <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCardDescription">
+                    close
+                </span>
+            </div>
+            <div class="row">
+                <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
+                    <div style="font-weight: bold;" class="mr-3">Date:</div>
+                    <div id="creationDateTaskDescription"></div>
+                </div>
+                <div class="col-md-5 col-1"></div>
+                <div class="col-md-2 col-4">
+                    <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" id="logWorkPage">Log Work</button>
+                </div>
+                <div class="col-md-1 col-2">
+                    <button type="submit" class="btn btn-primary mt-2 mb-5" id="editPage">Edit</button>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="input" class="col-sm-2 col-form-label">ID</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="idTaskDescription"></div>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <label for="input" class="col-sm-2 col-form-label">Title</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="titleTaskDescription"></div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <div class="alert alert-info form-inline col-sm-10" role="alert">
+                    <div id="descriptionTaskDescription"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Assignee</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="assigneeTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Creator</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="creatorTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Estimated Time</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="estimatedTimeTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Sprint Number</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="sprintNumberTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Story Pointer</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="storyPointNumberTaskDescription"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="input">Category</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="categoryTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Priority</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="priorityTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="text">Difficulty</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="difficultyTaskDescription"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="statusTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Logged Hours</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="logHoursTaskDescription"></div>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Work Done</label>
+                    <div class="alert alert-info form-inline" role="alert">
+                        <div id="workDoneTaskDescription"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- edit page   ------------------------------------------------------->
+    <form class="needs-validation" novalidate id="editPageTaskForm">
+
+        <div class="container py-5" id="editPageTask">
+            <div class="bg-light px-5">
+                <div class="row pt-2">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromEditPageTask">
+                    close
+                </span>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 class="pl-1 fontHeading">Edit Page</h3>
+                        <hr class="w-75 ml-0">
+                    </div>
+                    <div class="alert alert-info form-inline col-md-5" role="alert">
+                        <div style="font-weight: bold;" class="pr-3">Id:</div>
+                        <div id="editPageTaskId"> </div>
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-2 col-form-label">Title</label>
+                    <div class="alert alert-info form-inline col-sm-10" role="alert">
+                        <div id="titleEditPageTask"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="descriptionEditPageTask" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Assignee</label>
+                        <input type="text" class="form-control" id="assigneeEditPageTask" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Creator</label>
+                        <div class="alert alert-info form-inline" role="alert" required>
+                            <div id="creatorEditPageTask"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Estimated Time</label>
+                        <input type="number" class="form-control" id="estimatedTimeEditPageTask" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="input">Category</label>
+                        <select class="custom-select" id="categoryEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>Business</option>
+                        <option>Development</option>
+                        <option>Marketing</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Priority</label>
+                        <select class="custom-select" id="priorityEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="text">Difficulty</label>
+                        <select class="custom-select" id="difficultyEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Status</label>
+                        <select class="custom-select" id="statusEditPageTask" required>
+                        <option selected disabled value="">choose...</option>
+                        <option>Ice Box</option>
+                        <option>Ready to start</option>
+                        <option>Under Progress</option>
+                        <option>Blocked</option>
+                        <option>Completed</option>
+                    </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Sprint Number</label>
+                        <input type="number" min="-1" class="form-control" id="sprintNumberEditPageTask" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Story Point</label>
+                        <input type="number" min="0" class="form-control" id="storyPointEditPageTask" required>
+                    </div>
+                </div>
+                <div class="pt-2 pb-5">
+                    <button type="submit" class="btn btn-primary" id="submitEditPageTask">Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/loaderUI.js"></script>
+    <script src="scripts/worktrollyUI.js"></script>
+    <script src="scripts/worktrollyClassData.js"></script>
+    <script src="scripts/frames.js"></script>
+</body>
+
+</html>
