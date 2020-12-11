@@ -2,6 +2,12 @@
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
         <div class="container px-0 py-5" id="logWorkPage">
             <div class="bg-dark py-2 px-5">
+                <div class="row pt-1">
+                    <div class="col-md-11 col-10"></div>
+                    <span type="button" class="col-md-1 col-2 pt-5 material-icons" style="color: white;" (click)="backToTaskDetails()">
+                        keyboard_backspace
+                    </span>
+                </div>
                 <h3 class="pt-5 fontHeading text-white">Log Work</h3>
                 <!-- <div class="row pt-5 pb-2 ml-1">
                     <div class="alert alert-info form-inline col-md-5" role="alert">
