@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-page',
@@ -17,7 +18,7 @@ export class EditPageComponent implements OnInit {
   editTask: Tasks
   previousSprintId: number
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
     this.editTask = this.task;
@@ -49,6 +50,10 @@ export class EditPageComponent implements OnInit {
 
   editTaskDone() {
     this.editTaskCompleted.emit({ completed: true });
+  }
+
+  backToTaskDetails(){
+    window.location.reload();
   }
 
 }
