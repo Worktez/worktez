@@ -107,7 +107,6 @@ export class DashboardComponent implements OnInit {
 
   currentSprint(){
     this.getCurrentSprint();
-    this.currentSprintName = "S" + this.currentSprintNumber;
   }
 
   showTasks(category: string) {
