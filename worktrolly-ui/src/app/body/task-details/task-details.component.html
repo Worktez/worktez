@@ -1,3 +1,17 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href ng-click="dashboard">Dashboard</a></li>
+      <li class="breadcrumb-item"><a href ng-click="cardsList">Task Cards</a></li>
+      <li class="breadcrumb-item"><a href ng-click="Business">Business</a></li>
+      <li class="breadcrumb-item"><a href ng-click="Development">Development</a></li>
+      <li class="breadcrumb-item"><a href ng-click="Marketing">Marketing</a></li>
+      <li class="breadcrumb-item"><a href ng-click="#">Others</li>
+      <li class="breadcrumb-item" aria-current="cardDescription"><a href ng-click="cardDescription">Task Details</a></li>
+      <li class="breadcrumb-item" aria-current="logWorkTaskForm"><a href ng-click="logWorkPage">Log Work</a></li>
+      <li class="breadcrumb-item" aria-current="editPageTaskForm"><a href ng-click="editPageTask">Edit Page</a></li>
+    </ol>
+  </nav>
+
 <ng-container *ngIf="task">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
         <div class="container bg-dark text-white">
