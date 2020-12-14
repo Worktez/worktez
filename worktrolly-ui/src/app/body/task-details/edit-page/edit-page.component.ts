@@ -49,8 +49,4 @@ export class EditPageComponent implements OnInit {
     this.editTaskCompleted.emit({ completed: true });
   }
 
-  backToTaskDetails(){
-    window.location.reload();
-  }
-
 }

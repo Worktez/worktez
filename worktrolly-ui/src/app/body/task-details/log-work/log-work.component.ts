@@ -44,8 +44,4 @@ workDone(){
   this.logWorkCompleted.emit({ completed: true });
 }
 
-backToTaskDetails(){
-  window.location.reload();
-}
-
 }
