@@ -38,7 +38,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   async getNewSprintId() {
-    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
     try {
       await this.rawDocument.ref.get().then(doc => {
         if (doc.exists) {
@@ -95,6 +95,7 @@ export class CreateNewSprintComponent implements OnInit {
 
       console.log("Successfully created the task");
       console.log(result);
+      this.router.navigate(['/']);
     } catch (error) {
       console.error("Error", error);
     }
