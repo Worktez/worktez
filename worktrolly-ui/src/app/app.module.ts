@@ -20,7 +20,6 @@ import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
 import { LogWorkComponent } from './body/task-details/log-work/log-work.component';
 import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +36,6 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     TaskDetailsComponent,
     LogWorkComponent,
     EditPageComponent,
-    BreadcrumbComponent,
   ],
   imports: [
     BrowserModule,
