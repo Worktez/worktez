@@ -1,4 +1,9 @@
-<app-breadcrumb></app-breadcrumb>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
+    <li class="breadcrumb-item active" aria-current="page">{{category}}</li>
+  </ol>
+</nav>
 
 <div id="taskPage">
     <div class="container pt-2 pb-5 pl-2">

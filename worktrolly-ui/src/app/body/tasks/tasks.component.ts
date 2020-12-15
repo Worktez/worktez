@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
@@ -19,7 +19,7 @@ export class TasksComponent implements OnInit {
   tasksCollection: AngularFirestoreCollection<Tasks>
   tasksData: Observable<TasksId[]>
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore) { }
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, private routes: Router) { }
 
   ngOnInit(): void {
     this.category = this.route.snapshot.params['category'];
@@ -44,5 +44,7 @@ export class TasksComponent implements OnInit {
       }))
     );
   }
-
+  backToDashboard(){
+    this.routes.navigate([''])
+  }
 }

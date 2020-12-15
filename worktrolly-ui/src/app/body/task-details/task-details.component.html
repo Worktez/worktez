@@ -1,5 +1,12 @@
 <ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
+              <li class="breadcrumb-item active" type="button" (click)="backToTasks(task.Category)">{{task.Category}}</li>
+              <li class="breadcrumb-item active" aria-current="page">Task Details</li>
+            </ol>
+          </nav>
         <div class="container bg-dark text-white">
             <div class="my-5 mx-5" id="cardDescription">
                 <div class="row mt-5">
@@ -16,8 +23,7 @@
                     </div>
                     <div class="col-md-5 col-1"></div>
                     <div class="col-md-2 col-4">
-                        <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log
-                            Work</button>
+                        <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">LogWork</button>
                     </div>
                     <div class="col-md-1 col-2">
                         <button type="submit" class="btn btn-primary mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>

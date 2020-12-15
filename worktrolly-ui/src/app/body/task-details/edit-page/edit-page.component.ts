@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 
 @Component({
@@ -16,8 +17,9 @@ export class EditPageComponent implements OnInit {
 
   editTask: Tasks
   previousSprintId: number
+  sprintName: string
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
     this.editTask = this.task;
@@ -49,6 +51,15 @@ export class EditPageComponent implements OnInit {
 
   editTaskDone() {
     this.editTaskCompleted.emit({ completed: true });
+  }
+  
+  backToTasks(category: string){
+    this.sprintName = "S" + this.task.SprintNumber;
+    this.router.navigate(['Tasks', this.task.Category, this.sprintName])
+  }
+  
+  backToDashboard(){
+    this.router.navigate(['']);
   }
 
 }

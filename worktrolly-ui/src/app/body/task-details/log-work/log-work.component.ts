@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-work',
@@ -20,8 +21,9 @@ logWorkDone: number
 logWorkStatus: number
 logHours: number
 logWorkComment: number
+sprintName: string
 
-constructor(private functions: AngularFireFunctions) { }
+constructor(private functions: AngularFireFunctions, private router: Router) { }
 
 ngOnInit(): void {}
 
@@ -43,4 +45,14 @@ async submitLogWorkPage() {
 workDone(){
   this.logWorkCompleted.emit({ completed: true });
 }
+
+backToTasks(category: string){
+  this.sprintName = "S" + this.task.SprintNumber;
+  this.router.navigate(['Tasks', this.task.Category, this.sprintName])
+}
+
+backToDashboard(){
+  this.router.navigate(['']);
+}
+
 }
