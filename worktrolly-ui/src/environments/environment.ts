@@ -12,7 +12,7 @@ export const environment = {
     storageBucket: "worktrolly.appspot.com",
     messagingSenderId: "358996208239",
     appId: "1:358996208239:web:73a1939b7267070d2dfb9a",
-    measurementId: "G-FEQ8PFLLCV"    
+    measurementId: "G-FEQ8PFLLCV"
   }
 };
 

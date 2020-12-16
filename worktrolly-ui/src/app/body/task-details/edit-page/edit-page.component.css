@@ -1,15 +1,14 @@
-#editPageTask{
-    background-color: #8120f0;
-    color:white;
+#editPageTask {
+    border: 1px solid #8120f0;
 }
 
-#editTaskSubmitButton{
-    color:black;
+#editTaskSubmitButton {
+    color: black;
     background-color: #10be65;
-    border-radius:20px;
+    border-radius: 20px;
 }
 
-.non-Editable{
+.non-Editable {
     background-color: #10be65;
     /* border-radius:20px; */
 }

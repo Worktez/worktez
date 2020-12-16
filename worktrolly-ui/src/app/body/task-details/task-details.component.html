@@ -1,115 +1,113 @@
 <ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
-        <div class="container text-white" id="taskInfo">
-            <div class="my-5 mx-5" id="cardDescription">
-                <div class="row mt-5">
-                    <div class="col-md-9 col-7"></div>
+        <div class="container p-5">
+            <div class="card text-dark mb-3" id="cardDescription">
+                <div class="card-header" style="text-align: end;">
                     <span type="button" class="material-icons mt-5 col-md-2 col-3" (click)="deleteTask()"> delete </span>
-                    <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCardDescription">
-                        close
-                    </span>
+                    <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCardDescription">close</span>
                 </div>
-                <div class="row">
-                    <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
-                        <div style="font-weight: bold;" class="mr-3">Date:</div>
-                        <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
-                    </div>
-                    <div class="col-md-5 col-1"></div>
-                    <div class="col-md-2 col-4">
-                        <button type="submit" class="btn mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log
-                            Work</button>
-                    </div>
-                    <div class="col-md-1 col-2">
-                        <button type="submit" class="btn mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>
-                    </div>
-                </div>
-                <div class="form-group row mt-2">
-                    <label for="input" class="col-sm-2 col-form-label">ID</label>
-                    <div class="alert alert-info form-inline col-sm-10" role="alert">
-                        <div id="idTaskDescription">{{task.Id}}</div>
-                    </div>
-                </div>
-                <div class="form-group row mt-2">
-                    <label for="input" class="col-sm-2 col-form-label">Title</label>
-                    <div class="alert alert-info form-inline col-sm-10" role="alert">
-                        <div id="titleTaskDescription">{{task.Title}}</div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="description" class="col-sm-2 col-form-label">Description</label>
-                    <div class="alert alert-info form-inline col-sm-10" role="alert">
-                        <div id="descriptionTaskDescription" class="card" style="background-color: #d1ecf1;border: #d1ecf1;">{{task.Description}}</div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Assignee</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="assigneeTaskDescription">{{task.Assignee}}</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
+                            <div style="font-weight: bold;" class="mr-3">Date:</div>
+                            <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
+                        </div>
+                        <div class="col-md-5 col-1"></div>
+                        <div class="col-md-2 col-4">
+                            <button type="submit" class="btn mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
+                        </div>
+                        <div class="col-md-1 col-2">
+                            <button type="submit" class="btn mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Creator</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="creatorTaskDescription">{{task.Creator}}</div>
+                    <div class="form-group row mt-2">
+                        <label for="input" class="col-sm-2 col-form-label">ID</label>
+                        <div class="alert alert-info form-inline col-sm-10" role="alert">
+                            <div id="idTaskDescription">{{task.Id}}</div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Estimated Time</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="estimatedTimeTaskDescription">{{task.EstimatedTime}}</div>
+                    <div class="form-group row mt-2">
+                        <label for="input" class="col-sm-2 col-form-label">Title</label>
+                        <div class="alert alert-info form-inline col-sm-10" role="alert">
+                            <div id="titleTaskDescription">{{task.Title}}</div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Sprint Number</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="sprintNumberTaskDescription">{{task.SprintNumber}}</div>
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="alert alert-info form-inline col-sm-10" role="alert">
+                            <div id="descriptionTaskDescription" class="card" style="background-color: #d1ecf1;border: #d1ecf1;">{{task.Description}}</div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Story Point</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="storyPointNumberTaskDescription">{{task.StoryPointNumber}}</div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="input">Assignee</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="assigneeTaskDescription">{{task.Assignee}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Creator</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="creatorTaskDescription">{{task.Creator}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Estimated Time</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="estimatedTimeTaskDescription">{{task.EstimatedTime}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Sprint Number</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="sprintNumberTaskDescription">{{task.SprintNumber}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Story Point</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="storyPointNumberTaskDescription">{{task.StoryPointNumber}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="input">Category</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="categoryTaskDescription">{{task.Category}}</div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="input">Category</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="categoryTaskDescription">{{task.Category}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Priority</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="priorityTaskDescription">{{task.Priority}}</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="text">Difficulty</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="difficultyTaskDescription">{{task.Difficulty}}</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Priority</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="priorityTaskDescription">{{task.Priority}}</div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Status</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="statusTaskDescription">{{task.Status}}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="text">Difficulty</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="difficultyTaskDescription">{{task.Difficulty}}</div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Logged Hours</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="logHoursTaskDescription">{{task.LogWorkTotalTime}}</div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Status</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="statusTaskDescription">{{task.Status}}</div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Logged Hours</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="logHoursTaskDescription">{{task.LogWorkTotalTime}}</div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">Work Done</label>
-                        <div class="alert alert-info form-inline" role="alert">
-                            <div id="workDoneTaskDescription">{{task.WorkDone}}</div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Work Done</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="workDoneTaskDescription">{{task.WorkDone}}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

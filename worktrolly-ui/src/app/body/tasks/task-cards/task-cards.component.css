@@ -1,8 +1,5 @@
-.taskCards{
-    background-color: #8120f0;
-}
-
-.taskCards .card-title{
-    border-radius:20px;
-    color: black;
+.taskCards {
+    border: 1px solid #8120f0;
+    font-size: 12px;
+    color: #000;
 }

@@ -1,44 +1,21 @@
-<div class="card text-white mb-3 taskCards" style="font-size: 14px" (click)="openTaskDetails(task.id)">
-    <div class="card-header" id="cardDate"></div>
-    <div class="card-body py-3">
+<div class="card text-dark mb-3 taskCards" (click)="openTaskDetails(task.id)">
+    <div class="card-header">
         <div class="row pb-2">
-            <div class="col-md-3 col-3">
-                <h6 class="card-title text-center py-1" style="background-color: #10be65;">Id: </h6>
+            <div class="col-md-1 col-2 px-2">
+                {{task.Status}}
             </div>
-            <div class="col-md-3 col-3 px-2" id="#">
+            <div class="col-md-1 col-2 px-2">
+                {{task.Priority}}
+            </div>
+            <div class="col-md-1 col-2 px-2">
                 {{task.id}}
             </div>
-        
-            <div class="col-md-3 col-3">
-                <h6 class="card-title text-center py-1" style="background-color: #10be65;">Title: </h6>
-            </div>
-            <div class="col-md-3 col-3 px-2" id="cardTitle">
+            <div class="col-md-7 col-4 px-2">
                 {{task.Title}}
             </div>
-        </div>
-        <div class="row pb-2">
-            <div class="col-md-3 col-6">
-                <h6 class="card-title text-center py-1" style="background-color: #10be65;">Creator: </h6>
-            </div>
-            <div class="col-md-3 col-3 px-2" id="cardCreator">
-                {{task.Creator}}
-            </div>
-        
-            <div class="col-md-3 col-3">
-                <h6 class="card-title text-center py-1" style="background-color: #10be65;">Assignee: </h6>
-            </div>
-            <div class="col-md-3 col-3 px-2" id="cardAssignee">
+            <div class="col-md-2 col-2 px-2">
                 {{task.Assignee}}
             </div>
         </div>
-        <div class="row pb-2">
-            <div class="col-md-3 col-3">
-                <h6 class="card-title text-center py-1" style="background-color: #10be65;">Priority: </h6>
-            </div>
-            <div class="col-md-3 col-3 px-2" id="cardPriority">
-                {{task.Priority}}
-            </div>
-        </div>
-
     </div>
 </div>
