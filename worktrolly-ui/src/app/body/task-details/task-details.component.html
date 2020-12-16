@@ -1,6 +1,6 @@
 <ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
-        <div class="container bg-dark text-white">
+        <div class="container text-white" id="taskInfo">
             <div class="my-5 mx-5" id="cardDescription">
                 <div class="row mt-5">
                     <div class="col-md-9 col-7"></div>
@@ -16,11 +16,11 @@
                     </div>
                     <div class="col-md-5 col-1"></div>
                     <div class="col-md-2 col-4">
-                        <button type="submit" class="btn btn-primary mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log
+                        <button type="submit" class="btn mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log
                             Work</button>
                     </div>
                     <div class="col-md-1 col-2">
-                        <button type="submit" class="btn btn-primary mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>
+                        <button type="submit" class="btn mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>
                     </div>
                 </div>
                 <div class="form-group row mt-2">
