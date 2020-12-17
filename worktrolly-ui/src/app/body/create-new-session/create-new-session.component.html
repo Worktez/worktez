@@ -47,12 +47,21 @@
                 <div class="form-group col-md-4">
                     <label for="input">Category</label>
                     <select class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+<<<<<<< dev/loader
                         <option selected>choose...</option>
                         <option>Business</option>
                         <option>Development</option>
                         <option>Marketing</option>
                         <option>Other</option>
                     </select>
+=======
+                  <option selected>choose...</option>
+                  <option>Business</option>
+                  <option>Development</option>
+                  <option>Marketing</option>
+                  <option>Other</option>
+              </select>
+>>>>>>> dev-angular
                 </div>
                 <div class="form-group col-md-4">
                     <label for="text">Priority</label>
@@ -95,9 +104,13 @@
                 </div>
             </div>
             <div class="pt-2 pb-5">
+<<<<<<< dev/loader
                 <button type="submit" class="btn submit">
                     <app-loader *ngIf="createTaskLoader" [showIn]="'button'"></app-loader>Submit
                 </button>
+=======
+                <button type="submit" class="btn submit">Submit</button>
+>>>>>>> dev-angular
             </div>
         </form>
     </div>
