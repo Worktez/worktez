@@ -1,0 +1,18 @@
+#dropdownMenuButton{
+    border-radius:20px;
+    background-color:#10be65;
+    color:black;
+}
+
+/* #filterMenu{
+    background-color: #10be65;
+} */
+
+.dropdown-menu{
+    background-color: #10be65;
+}
+
+.dropdown-menu #filterSprint{
+    color: white;
+    background-color: #8120f0;
+}

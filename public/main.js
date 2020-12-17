@@ -480,7 +480,7 @@ class CreateNewSprintComponent {
     }
     getNewSprintId() {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            this.rawDocument = this.db.doc('Main/RawData');
+            this.rawDocument = this.db.doc('RawData/AppDetails');
             try {
                 yield this.rawDocument.ref.get().then(doc => {
                     if (doc.exists) {
