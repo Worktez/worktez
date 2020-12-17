@@ -22,6 +22,7 @@ export class CreateNewSprintComponent implements OnInit {
   totalDevelopment: number
   totalBusiness: number
   totalMarketing: number
+  totalOther: number
 
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
@@ -38,7 +39,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   async getNewSprintId() {
-    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
     try {
       await this.rawDocument.ref.get().then(doc => {
         if (doc.exists) {
@@ -67,11 +68,13 @@ export class CreateNewSprintComponent implements OnInit {
           this.totalDevelopment = sprintData.TotalDevelopmentTask;
           this.totalBusiness = sprintData.TotalBusinessTask;
           this.totalMarketing = sprintData.TotalMarketingTask;
+          this.totalOther = sprintData.TotalOtherTask;
         }
         else{
           this.totalDevelopment = 0;
           this.totalBusiness = 0;
           this.totalMarketing = 0;
+          this.totalOther = 0;
         }
       });
       return "ok";
@@ -87,14 +90,16 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.totalDevelopment);
     console.log(this.totalBusiness);
     console.log(this.totalMarketing);
+    console.log(this.totalOther);
 
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, Status: status }).toPromise();
+      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing,TotalOther: this.totalOther, Status: status }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
+      this.router.navigate(['/']);
     } catch (error) {
       console.error("Error", error);
     }

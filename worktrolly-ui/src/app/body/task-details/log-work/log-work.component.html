@@ -24,16 +24,16 @@
                     <div style="font-weight: bold;" class="pr-3">Title: </div>
                     <div>{{task.Title}}</div>
                 </div> -->
-                <div class="alert bg-light form-inline w-50 pt-3" role="alert">
+                <div class="alert form-inline w-50 logDetail pt-3" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
                     <div id="logWorkET">{{task.EstimatedTime}}</div>
                 </div>
 
-                <div class="alert bg-light form-inline w-50" role="alert">
+                <div class="alert form-inline w-50 logDetail" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
                     <div id="logWorkTotalTime">{{task.LogWorkTotalTime}}</div>
                 </div>
-                <div class="alert bg-light form-inline w-50" role="alert">
+                <div class="alert form-inline w-50 logDetail" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
                     <div>{{task.EstimatedTime - task.LogWorkTotalTime}}</div>
                 </div>
@@ -51,14 +51,14 @@
                 <div class="row pt-3 text-white">
                     <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
                     <input type="number" min="1" class="col-sm-3 form-control mx-sm-3" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
-                    <small id="LogWorkHour" class="col text-muted">
+                    <small id="LogWorkHour" class="col">
                         hours
                     </small>
                 </div>
                 <div class="row py-2 text-white">
                     <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
                     <input type="number" min="1" max="100" class="col-sm-3 form-control mx-sm-3" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
-                    <small id="LogWorkHour" class="col text-muted">
+                    <small id="LogWorkHour" class="col">
                         in percentage(%)
                     </small>
                 </div>

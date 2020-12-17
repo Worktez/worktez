@@ -105,6 +105,10 @@ export class DashboardComponent implements OnInit {
     this.currentSprintName = "Backlog";
   }
 
+  currentSprint(){
+    this.getCurrentSprint();
+  }
+
   showTasks(category: string) {
     this.router.navigate(['/Tasks', category, this.currentSprintName])
   }
