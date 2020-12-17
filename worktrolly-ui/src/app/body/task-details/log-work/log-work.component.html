@@ -64,7 +64,7 @@
                 </div>
                 <div class="pt-3 pb-5">
                     <button class="btn btn-primary" type="submit" id="logWorkSubmit">
-                        <app-loader [data]="logWorkLoader" [showIn]="'button'"></app-loader>
+                        <app-loader *ngIf="logWorkLoader" [showIn]="'button'"></app-loader>
                         Submit
                     </button>
                 </div>

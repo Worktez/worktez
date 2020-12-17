@@ -84,7 +84,7 @@
                 </div>
                 <div class="pt-2 pb-5">
                     <button type="submit" class="btn" id="editTaskSubmitButton">
-                        <app-loader [data]="editTaskLoader" [showIn]="'button'"></app-loader>Submit
+                        <app-loader *ngIf="editTaskLoader" [showIn]="'button'"></app-loader>Submit
                     </button>
                 </div>
             </div>
