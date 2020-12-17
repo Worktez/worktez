@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="!enableLoader">
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
         <div class="container px-0 py-5" id="logWorkPage">
             <div class="bg-dark py-2 px-5">
@@ -64,7 +64,6 @@
                 </div>
                 <div class="pt-3 pb-5">
                     <button class="btn btn-primary" type="submit" id="logWorkSubmit">
-                        <app-loader *ngIf="logWorkLoader" [showIn]="'button'"></app-loader>
                         Submit
                     </button>
                 </div>
@@ -72,3 +71,4 @@
         </div>
     </form>
 </ng-container>
+<app-loader *ngIf="enableLoader"></app-loader>

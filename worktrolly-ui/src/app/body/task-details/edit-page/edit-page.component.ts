@@ -16,7 +16,7 @@ export class EditPageComponent implements OnInit {
 
   editTask: Tasks
   previousSprintId: number
-  editTaskLoader: boolean = false;
+  enableLoader: boolean = false;
   constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
@@ -25,7 +25,7 @@ export class EditPageComponent implements OnInit {
   }
 
   async editPage() {
-    this.editTaskLoader = true;
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('editPageTask');
 
     try {

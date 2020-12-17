@@ -25,7 +25,7 @@ export class CreateNewSessionComponent implements OnInit {
   sprintNumber: number
   storyPoint: number
 
-  createTaskLoader: boolean = false;
+  enableLoader: boolean = false;
   constructor(private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class CreateNewSessionComponent implements OnInit {
   }
 
   async createNewSession() {
-    this.createTaskLoader = true;
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {

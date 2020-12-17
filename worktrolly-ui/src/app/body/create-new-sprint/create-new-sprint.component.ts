@@ -32,7 +32,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  createSprintLoader: boolean = false;
+  enableLoader: boolean = false;
   constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
@@ -93,7 +93,7 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.totalMarketing);
     console.log(this.totalOther);
 
-    this.createSprintLoader = true;
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {

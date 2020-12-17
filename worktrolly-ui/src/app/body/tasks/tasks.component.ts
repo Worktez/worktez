@@ -25,7 +25,7 @@ export class TasksComponent implements OnInit {
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
 
-    if(this.currentSprintName == "Backlog") {
+    if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
@@ -35,7 +35,7 @@ export class TasksComponent implements OnInit {
   }
 
   readCurrentSprintData() {
-    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref=>ref.where('SprintNumber', '==', this.currentSprintNumber).where('Category', '==', this.category));
+    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref => ref.where('SprintNumber', '==', this.currentSprintNumber).where('Category', '==', this.category));
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;

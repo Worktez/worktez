@@ -20,14 +20,14 @@ export class LogWorkComponent implements OnInit {
   logWorkStatus: number
   logHours: number
   logWorkComment: number
-  logWorkLoader: boolean = false;
+  enableLoader: boolean = false;
 
   constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void { }
 
   async submitLogWorkPage() {
-    this.logWorkLoader = true;
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('logWork');
 
     try {

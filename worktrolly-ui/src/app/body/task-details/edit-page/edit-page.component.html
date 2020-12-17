@@ -1,4 +1,4 @@
-<form (ngSubmit)="editPage()" #form="ngForm">
+<form *ngIf="!enableLoader" (ngSubmit)="editPage()" #form="ngForm">
     <div class="container p-3">
         <div class="card text-dark mb-3" id="editPageTask">
             <div class="card-header">
@@ -50,20 +50,20 @@
                     <div class="form-group col-md-4">
                         <label for="text">Priority</label>
                         <select class="custom-select" [(ngModel)]="editTask.Priority" [ngModelOptions]="{standalone: true}">
-                            <option selected disabled value="">choose...</option>
-                            <option>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
-                        </select>
+                  <option selected disabled value="">choose...</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+              </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="text">Difficulty</label>
                         <select class="custom-select" [(ngModel)]="editTask.Difficulty" [ngModelOptions]="{standalone: true}">
-                            <option selected disabled value="">choose...</option>
-                            <option>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
-                        </select>
+                  <option selected disabled value="">choose...</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+              </select>
                     </div>
                 </div>
                 <div class="form-row">
@@ -84,10 +84,11 @@
                 </div>
                 <div class="pt-2 pb-5">
                     <button type="submit" class="btn" id="editTaskSubmitButton">
-                        <app-loader *ngIf="editTaskLoader" [showIn]="'button'"></app-loader>Submit
+                        Submit
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </form>
+<app-loader *ngIf="enableLoader"></app-loader>

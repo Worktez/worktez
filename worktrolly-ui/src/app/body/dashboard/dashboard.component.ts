@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
         // this.rawData = data;
         this.currentSprintNumber = data.CurrentSprintId;
         this.currentSprintName = "S" + this.currentSprintNumber;
-        return {...data}
+        return { ...data }
       })
     )
   }
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
     // )
   }
 
-  changeSprintName(data: {newSprintNumber: number}) {
+  changeSprintName(data: { newSprintNumber: number }) {
     this.currentSprintNumber = data.newSprintNumber;
     this.currentSprintName = "S" + this.currentSprintNumber;
   }
@@ -105,7 +105,7 @@ export class DashboardComponent implements OnInit {
     this.currentSprintName = "Backlog";
   }
 
-  currentSprint(){
+  currentSprint() {
     this.getCurrentSprint();
   }
 
