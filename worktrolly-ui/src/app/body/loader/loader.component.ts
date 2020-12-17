@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LoaderComponent implements OnInit {
   @Input("data") data: [];
+  @Input("showIn") showIn: string;
   constructor() { }
 
   ngOnInit(): void {

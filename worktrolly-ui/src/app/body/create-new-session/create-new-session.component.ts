@@ -25,7 +25,7 @@ export class CreateNewSessionComponent implements OnInit {
   sprintNumber: number
   storyPoint: number
 
-
+  createTaskLoader: boolean = false;
   constructor(private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
@@ -35,10 +35,11 @@ export class CreateNewSessionComponent implements OnInit {
     var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
 
-    this.todayDate = dd+"/"+mm+"/"+yyyy;
+    this.todayDate = dd + "/" + mm + "/" + yyyy;
   }
 
   async createNewSession() {
+    this.createTaskLoader = true;
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {

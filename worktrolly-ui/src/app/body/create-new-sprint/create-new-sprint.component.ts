@@ -31,6 +31,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
+  createSprintLoader: boolean = false;
   constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router) { }
 
   ngOnInit(): void {
@@ -58,7 +59,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   async readSprintData(newSprintId: string) {
-    var documentName = "Main/"+ newSprintId;
+    var documentName = "Main/" + newSprintId;
     this.sprintDocument = this.db.doc<RawDataType>(documentName);
     try {
       await this.sprintDocument.ref.get().then(doc => {
@@ -68,7 +69,7 @@ export class CreateNewSprintComponent implements OnInit {
           this.totalBusiness = sprintData.TotalBusinessTask;
           this.totalMarketing = sprintData.TotalMarketingTask;
         }
-        else{
+        else {
           this.totalDevelopment = 0;
           this.totalBusiness = 0;
           this.totalMarketing = 0;
@@ -87,7 +88,7 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.totalDevelopment);
     console.log(this.totalBusiness);
     console.log(this.totalMarketing);
-
+    this.createSprintLoader = true;
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
