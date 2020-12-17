@@ -4,7 +4,7 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
               <li class="breadcrumb-item active" type="button" (click)="backToTasks(task.Category)">{{task.Category}}</li>
-              <li class="breadcrumb-item active" type="button" (click)="editTaskDone()">Task Details</li>
+              <li class="breadcrumb-item active" type="button" (click)=" editTaskDone()">Task Details</li>
               <li class="breadcrumb-item active" aria-current="page">Edit Page</li>
             </ol>
           </nav> 
@@ -14,11 +14,6 @@
                 <span type="button" class="col-md-1 col-2 pt-5 material-icons">
                     close
                 </span>
-    <div class="container p-3">
-        <div class="card text-dark mb-3" id="editPageTask">
-            <div class="card-header">
-                EDIT PAGE
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons">close</span>
             </div>
             <div class="card-body">
                 <div class="row">
