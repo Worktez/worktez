@@ -1,20 +1,20 @@
 <form (ngSubmit)="editPage()" #form="ngForm">
-<<<<<<< HEAD
-    <div class="container py-5" style="display: block;" id="editPageTask">
-        <div class="bg-light px-5">
-            <div class="row pt-2">
-                <div class="col-md-11 col-10"></div>
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons" (click)="editTaskDone()">                  
-                    keyboard_backspace
-                </span>
-=======
     <div class="container p-3">
         <div class="card text-dark mb-3" id="editPageTask">
-            <div class="card-header">
-                EDIT PAGE
-                <span type="button" class="col-md-1 col-2 pt-5 material-icons">close</span>
->>>>>>> 1916a3e94410d3f2466393ee6e6e92734283e61e
-            </div>
+            <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Edit Page</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">                
+                            <span type="button" class="material-icons text-light" (click)="editTaskDone()">close</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
             <div class="card-body">
                 <div class="row">
                     <div class="alert alert-info form-inline col-md-5 non-Editable" role="alert">
