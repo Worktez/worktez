@@ -45,6 +45,7 @@ export class EditPageComponent implements OnInit {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
   }

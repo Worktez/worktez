@@ -37,6 +37,7 @@ export class LogWorkComponent implements OnInit {
       console.log(result);
       this.workDone();
     } catch (error) {
+      this.enableLoader = false;
       console.log("Error", error);
     }
   }

@@ -49,6 +49,7 @@ export class CreateNewSessionComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
   }

@@ -103,6 +103,7 @@ export class CreateNewSprintComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
 
