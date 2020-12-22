@@ -1,7 +1,7 @@
 <div class="container py-5">
     <div class="px-5" id="createNewTask">
-        <div class="row pt-2">
-            <div class="col-md-11 col-10"></div>
+        <div class="py-4">
+            <div class="col-md-1 col-12"></div>
             <span type="button" class="col-md-1 col-2 pt-5 material-icons">
               close
           </span>
@@ -94,8 +94,10 @@
                     <input type="number" min="0" class="form-control" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
-            <div class="pt-2 pb-5">
-                <button type="submit" class="btn submit">Submit</button>
+            <div class="row pt-2 pb-5">
+                <div class="col-md-10"></div>
+                <div class="col-md-2"><button type="submit" class="btn submit">Submit</button>
+                </div>
             </div>
         </form>
     </div>
