@@ -24,8 +24,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn col-md-2 col-2" id="sprintStatus" style="font-size: 14px;"
-                    (click)="completeSprint()">Completed</button>
+                <button class="btn col-md-2 col-2" id="sprintStatus" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
                 <div class="col-md-2 col-2" *ngIf="sprintCompleted">
                     <span class="material-icons">
                         check_circle
@@ -41,12 +40,15 @@
                         <h6 class="card-text col-md-10 col-8" id="sprintDetail" style="font-size: 12px;"></h6>
                     </div>
                     <div class="row py-2">
-                        <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date: </h6>
-                        <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;">{{StartDate}}</h6>
+                        <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date:
+                        </h6>
+                        <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;">
+                            {{StartDate}}</h6>
                     </div>
                     <div class="row py-2">
                         <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End Date: </h6>
-                        <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;">{{EndDate}}</h6>
+                        <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;">{{EndDate}}
+                        </h6>
                     </div>
                     <div class="row py-2">
                         <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Status: </h6>

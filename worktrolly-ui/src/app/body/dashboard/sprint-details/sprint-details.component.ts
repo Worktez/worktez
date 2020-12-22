@@ -17,7 +17,7 @@ export class SprintDetailsComponent implements OnInit {
   @Input('EndDate') EndDate: string;
   @Input('Status') Status: string;
 
-  @Output() changeSprint = new EventEmitter<{newSprintNumber: number}>();
+  @Output() changeSprint = new EventEmitter<{ newSprintNumber: number }>();
 
   filterSprintNumber: number;
   sprintCompleted: boolean = false;
@@ -28,18 +28,18 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   changeSprintNumber() {
-    this.changeSprint.emit({newSprintNumber: this.filterSprintNumber});
+    this.changeSprint.emit({ newSprintNumber: this.filterSprintNumber });
   }
 
-  async completeSprint(){
-    
+  async completeSprint() {
+
     const callable = this.functions.httpsCallable('updateSprintStatus');
 
     try {
       const result = await callable({ CurrentSprintName: this.currentSprintName, }).toPromise();
       console.log("Successfully updated Status");
-      this.sprintCompleted= true;
-      } catch (error) {
+      this.sprintCompleted = true;
+    } catch (error) {
       console.error("Error", error);
     }
   }
