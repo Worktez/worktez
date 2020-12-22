@@ -16,3 +16,9 @@
     color: white;
     background-color: #8120f0;
 }
+
+.btn{
+    background-color: #10be65;
+    color: black;
+    border-radius:20px;
+}
