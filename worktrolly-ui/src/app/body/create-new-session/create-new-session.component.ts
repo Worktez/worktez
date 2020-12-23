@@ -54,4 +54,8 @@ export class CreateNewSessionComponent implements OnInit {
     }
   }
 
+  backToDashboard(){
+    this.router.navigate(['/']);
+  }
+
 }

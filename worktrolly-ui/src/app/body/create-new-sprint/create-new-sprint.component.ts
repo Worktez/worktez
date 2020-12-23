@@ -109,4 +109,8 @@ export class CreateNewSprintComponent implements OnInit {
 
   }
 
+  backToDashboard(){
+    this.router.navigate(['/']);
+  }
+
 }
