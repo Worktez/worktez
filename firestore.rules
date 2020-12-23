@@ -14,7 +14,7 @@ service cloud.firestore {
       allow read, write: if false;
     }
     // Only Logged in users can modify data
-    match /users/{userId}{
+    match /Users/{userId}{
       allow read,write: if request.auth.uid=userId;
     }
   }
