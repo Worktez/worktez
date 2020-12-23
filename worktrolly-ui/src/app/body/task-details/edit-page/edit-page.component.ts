@@ -18,7 +18,7 @@ export class EditPageComponent implements OnInit {
   editTask: Tasks
   previousSprintId: number
 
-  constructor(private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.editTask = this.task;
