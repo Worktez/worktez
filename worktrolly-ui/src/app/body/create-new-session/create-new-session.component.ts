@@ -24,7 +24,7 @@ export class CreateNewSessionComponent implements OnInit {
   status: string
   sprintNumber: number
   storyPoint: number
-
+  enableLoader: boolean = false;
 
   constructor(private functions: AngularFireFunctions, private router: Router) { }
 
@@ -35,10 +35,11 @@ export class CreateNewSessionComponent implements OnInit {
     var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
 
-    this.todayDate = dd+"/"+mm+"/"+yyyy;
+    this.todayDate = dd + "/" + mm + "/" + yyyy;
   }
 
   async createNewSession() {
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {
@@ -48,8 +49,13 @@ export class CreateNewSessionComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
+  }
+
+  backToDashboard(){
+    this.router.navigate(['/']);
   }
 
 }

@@ -1,10 +1,21 @@
 <div id="taskPage">
-    <div class="container pt-2 pb-5 pl-2">
-        <div class="row pt-5">
-            <h3 class="col-md-8 col-8 fontHeading">Tasks</h3>
-            <span type="button" class="col-md-4 col-1  material-icons" id="backToDashboard">
-                <img src="../../../assets/close.png" alt="">
-        </span>
+    <div class="container pt-2 pb-4 pl-2">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-sm navbar-dark" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" style="font-weight:bolder; font-size: larger;" href="#">Tasks</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">                
+                            <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
         </div>
         <hr class="w-75 ml-0">
         <div id="cardsList">
@@ -14,3 +25,4 @@
         </div>
     </div>
 </div>
+<app-loader *ngIf="!(tasksData | async)"></app-loader>

@@ -22,6 +22,7 @@ import { LogWorkComponent } from './body/task-details/log-work/log-work.componen
 import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
+import { LoaderComponent } from './body/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.co
     EditPageComponent,
     StatusIconsComponent,
     PriorityIconsComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
