@@ -132,3 +132,4 @@
         <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
     </ng-container>
 </ng-container>
+<app-loader *ngIf="!(taskDataObservable | async)"></app-loader>

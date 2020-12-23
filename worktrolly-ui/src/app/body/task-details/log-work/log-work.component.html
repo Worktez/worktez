@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="!enableLoader">
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
         <div class="container p-3">
             <div class="card text-dark mb-3"  id="logWorkPage">
@@ -83,3 +83,4 @@
         </div>
     </form>
 </ng-container>
+<app-loader *ngIf="enableLoader"></app-loader>
