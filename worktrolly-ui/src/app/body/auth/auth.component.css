@@ -1,0 +1,37 @@
+#authContainer {
+    border: 1px solid #8120f0;
+    color: white;
+}
+
+#submitLogin {
+    background-color: #10be65;
+    border-radius: 20px;
+}
+
+#submitCreate {
+    background-color: #10be65;
+    border-radius: 20px;
+}
+
+#nav-login-tab {
+    border: 1px solid #8120f0;
+    color: black;
+}
+
+#nav-signup-tab {
+    border: 1px solid #8120f0;
+    color: black;
+}
+
+#submitGoogle {
+    background-color: #10be65;
+    border-radius: 20px;
+}
+
+#login {
+    border: 1px solid #8120f0;
+}
+
+#signup {
+    border: 1px solid #8120f0;
+}

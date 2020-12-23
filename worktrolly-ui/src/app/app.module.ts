@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
@@ -20,6 +20,7 @@ import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
 import { LogWorkComponent } from './body/task-details/log-work/log-work.component';
 import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
+import { AuthComponent } from './body/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +37,11 @@ import { EditPageComponent } from './body/task-details/edit-page/edit-page.compo
     TaskDetailsComponent,
     LogWorkComponent,
     EditPageComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireFunctionsModule,
