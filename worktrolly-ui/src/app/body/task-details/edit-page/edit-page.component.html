@@ -1,4 +1,4 @@
-<form (ngSubmit)="editPage()" #form="ngForm">
+<form *ngIf="!enableLoader" (ngSubmit)="editPage()" #form="ngForm">
     <div class="container p-3">
         <div class="card text-dark mb-3" id="editPageTask">
             <div class="card-header">
@@ -89,3 +89,4 @@
         </div>
     </div>
 </form>
+<app-loader *ngIf="enableLoader"></app-loader>

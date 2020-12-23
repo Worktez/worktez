@@ -1,4 +1,4 @@
-<div class="container py-5">
+<div *ngIf="!enableLoader" class="container py-5">
     <div class="px-5" id="createNewTask">
         <div class="row pt-2">
             <div class="col-md-11 col-10"></div>
@@ -100,3 +100,4 @@
         </form>
     </div>
 </div>
+<app-loader *ngIf="enableLoader"></app-loader>
