@@ -21,6 +21,7 @@ import { TaskDetailsComponent } from './body/task-details/task-details.component
 import { LogWorkComponent } from './body/task-details/log-work/log-work.component';
 import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
 import { AuthComponent } from './body/auth/auth.component';
+import { LoaderComponent } from './body/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AuthComponent } from './body/auth/auth.component';
     LogWorkComponent,
     EditPageComponent,
     AuthComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
