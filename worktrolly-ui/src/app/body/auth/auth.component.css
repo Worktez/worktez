@@ -3,12 +3,12 @@
     color: white;
 }
 
-#submitLogin {
+#submitLoginButton {
     background-color: #10be65;
     border-radius: 20px;
 }
 
-#submitCreate {
+#submitCreateButton {
     background-color: #10be65;
     border-radius: 20px;
 }
@@ -34,4 +34,8 @@
 
 #signup {
     border: 1px solid #8120f0;
+}
+
+#navbarAuth {
+    background-color: #8120f0;
 }
