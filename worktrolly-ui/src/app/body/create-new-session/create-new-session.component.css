@@ -1,9 +1,12 @@
 #createNewTask{
-    background-color: #8120f0;
-    color:white;
+    border: 1px solid #8120f0;
 }
 
 .submit{
     background-color: #10be65;
     border-radius: 20px;
+}
+
+#navbarMenu {
+    background-color: #8120f0;
 }
