@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from "../Interface/UserInterface";
 @Injectable({
   providedIn: 'root',
 })
@@ -33,18 +34,18 @@ export class AuthService {
 
   constructor(public afauth: AngularFireAuth, public afs: AngularFirestore) { }
 
-  private createUserData(user) {
+  private createUserData(user: User) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `Users/${user.uid}`
     );
 
-    const data = {
+    const userData = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
     };
-    return userRef.set(data, { merge: true });
+    return userRef.set(userData, { merge: true });
   }
 
   async googleSignIn() {
