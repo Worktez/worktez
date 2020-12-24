@@ -1,5 +1,12 @@
-<div *ngIf="!enableLoader" class="container">
-    <div class="mt-5" id="startNewSprint">
+
+<div class="container">
+    <div class="mt-5 px-5 py-5" id="startNewSprint">
+        <div class="row py-4">
+            <span type="button" class="col-md-1 col-2 pt-1 material-icons" id="backToMainFromNewSprint">
+                close
+            </span>
+        </div>
+
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -73,8 +80,11 @@
                             <option>Completed</option>
                         </select>
                 </div>
-                <div class="pt-2 pb-5">
-                    <button type="submit" class="btn btn-primary submit">Submit</button>
+                <div class="row pt-2 pb-5">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                         <button type="submit" class="btn submit">Submit</button>
+                    </div>
                 </div>
             </form>
         </div>
