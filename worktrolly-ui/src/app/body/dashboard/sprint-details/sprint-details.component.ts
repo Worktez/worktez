@@ -20,7 +20,7 @@ export class SprintDetailsComponent implements OnInit {
   @Output() changeSprint = new EventEmitter<{ newSprintNumber: number }>();
 
   filterSprintNumber: number;
-  sprintCompleted: boolean = false;
+  // sprintCompleted: boolean = false;
 
   constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute) { }
 
@@ -38,7 +38,7 @@ export class SprintDetailsComponent implements OnInit {
     try {
       const result = await callable({ CurrentSprintName: this.currentSprintName, }).toPromise();
       console.log("Successfully updated Status");
-      this.sprintCompleted = true;
+      // this.sprintCompleted = true;
     } catch (error) {
       console.error("Error", error);
     }
