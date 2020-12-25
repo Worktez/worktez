@@ -14,8 +14,8 @@ const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'CreateNewSession', component: CreateNewSessionComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'StartNewSprint', component: CreateNewSprintComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'CreateNewSession', component: CreateNewSessionComponent },
+  { path: 'StartNewSprint', component: CreateNewSprintComponent },
   { path: 'Tasks/:category/:currentSprintName', component: TasksComponent },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
