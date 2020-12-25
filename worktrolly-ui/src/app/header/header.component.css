@@ -1,15 +1,17 @@
-.btn{
-    border-radius:20px;
-}
-
-#login-btn{
+#login-btn {
     background-color: #10be65;
+    border: 1px solid #8120f0;
+    color: white;
 }
 
-.Buttons{
-    border:2px solid #10be65;
-}
-
-.Buttons:hover{
+#button {
     background-color: #10be65;
+    border: 1px solid #8120f0;
+    color: white;
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
 }

@@ -6,17 +6,17 @@
       <span class="navbar-toggler-icon text-white"></span>
   </button>
     <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav" *ngIf="authService.afauth.user | async">
             <li class="nav-item active pr-5 py-1 ">
-                <button type="button" class="btn btn-outline-light Buttons" (click)="startNewSession()">Create New Task</button>
+                <button type="button" class="btn" id="button" (click)="startNewSession()">Create New Task</button>
             </li>
             <li class="nav-item active pr-5 py-1 ">
-                <button type="button" class="btn btn-outline-light Buttons" (click)="startNewSprint()">Start New Sprint</button>
+                <button type="button" class="btn" id="button" (click)="startNewSprint()">Start New Sprint</button>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item py-1">
-                <button class="btn" id="login-btn" type="button">Login</button>
+                <app-login-handler></app-login-handler>
             </li>
         </ul>
     </div>

@@ -1,5 +1,10 @@
-#cardDescription {
+#loginContainer {
     border: 1px solid #8120f0;
+}
+
+#loginNavbar {
+    background-color: #8120f0;
+    color: white;
 }
 
 #button {
@@ -12,8 +17,4 @@
 #button:active {
     outline: none;
     box-shadow: none;
-}
-
-#navbarMenu {
-    background-color: #8120f0;
 }
