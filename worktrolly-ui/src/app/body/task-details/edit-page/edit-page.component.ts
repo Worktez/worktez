@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-page',
@@ -16,6 +17,7 @@ export class EditPageComponent implements OnInit {
 
   editTask: Tasks
   previousSprintId: number
+  enableLoader: boolean = false
 
   constructor(private functions: AngularFireFunctions) { }
 
@@ -25,6 +27,7 @@ export class EditPageComponent implements OnInit {
   }
 
   async editPage() {
+    this.enableLoader = true
     const callable = this.functions.httpsCallable('editPageTask');
 
     try {
@@ -43,6 +46,7 @@ export class EditPageComponent implements OnInit {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
   }
