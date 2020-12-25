@@ -1,17 +1,30 @@
-#startNewSprint{
+#startNewSprintContainer {
     border: 1px solid #8120f0;
 }
 
-.submit{
+#button {
     background-color: #10be65;
-    border-radius: 20px;
+    border: 2px solid #8120f0;
+    color: white;
 }
 
-.detail{
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+#detail {
     background-color: #10be65;
-    border-radius: 20px;
 }
 
 #navbarMenu {
     background-color: #8120f0;
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #8120f0;
 }

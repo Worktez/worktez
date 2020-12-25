@@ -1,15 +1,15 @@
 <div *ngIf="!enableLoader" class="container py-5">
-    <div id="createNewTask">
+    <div id="createNewTaskContainer">
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" style="font-weight:bolder; font-size: larger;" href="#">Create New Task</a>
+                            <h5 class="active nav-link" style="font-weight:bolder">Create New Task</h5>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">                
+                        <li class="nav-item">
                             <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
                         </li>
                     </ul>
@@ -101,8 +101,10 @@
                         <input type="number" min="0" class="form-control" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
-                <div class="pt-2 pb-5">
-                    <button type="submit" class="btn submit">Submit</button>
+                <div class="row pt-2 pb-5">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2"><button type="submit" class="btn" id="button">Submit</button>
+                    </div>
                 </div>
             </form>
         </div>

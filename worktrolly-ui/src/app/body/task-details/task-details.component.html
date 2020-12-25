@@ -5,14 +5,14 @@
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" style="font-weight:bolder; font-size: larger;" href="#">Task Details</a>
+                            <h5 class="active nav-link" style="font-weight:bolder">Task Details</h5>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">                
+                        <li class="nav-item" *ngIf="authService.afauth.user | async">
                             <span type="button" class="material-icons text-light mr-3" (click)="deleteTask()"> delete </span>
                         </li>
-                        <li class="nav-item">                
+                        <li class="nav-item">
                             <span type="button" class="material-icons text-light" (click)="backToTasks(task.Category)">close</span>
                         </li>
                     </ul>
@@ -25,10 +25,10 @@
                         </div>
                         <div class="col-md-5 col-1"></div>
                         <div class="col-md-2 col-4">
-                            <button type="submit" class="btn mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
+                            <button type="submit" class="btn mt-2 mb-5 mx-3" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
                         </div>
                         <div class="col-md-1 col-2">
-                            <button type="submit" class="btn mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>
+                            <button type="submit" class="btn mt-2 mb-5" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">Edit</button>
                         </div>
                     </div>
                     <div class="form-group row mt-2">

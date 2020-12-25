@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
@@ -23,6 +23,10 @@ import { EditPageComponent } from './body/task-details/edit-page/edit-page.compo
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { LoaderComponent } from './body/loader/loader.component';
+import { LoginComponent } from './body/login/login.component';
+import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
+import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -42,16 +46,20 @@ import { LoaderComponent } from './body/loader/loader.component';
     StatusIconsComponent,
     PriorityIconsComponent,
     LoaderComponent,
+    LoginComponent,
+    LoginHandlerComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireFunctionsModule,
     AngularFirestoreModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
