@@ -6,7 +6,7 @@ service cloud.firestore {
     match /{document=**} {
       allow read: if true;
     }
-    // Only Logged in users can modify data
+    // Only Logged in or Signed Up users can modify data
     match /Users/{userId}{
       allow read,write: if request.auth.uid==userId;
     }

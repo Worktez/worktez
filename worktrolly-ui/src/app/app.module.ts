@@ -20,8 +20,11 @@ import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
 import { LogWorkComponent } from './body/task-details/log-work/log-work.component';
 import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
-import { AuthComponent } from './body/auth/auth.component';
 import { LoaderComponent } from './body/loader/loader.component';
+import { LoginComponent } from './body/login/login.component';
+import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
+import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -38,8 +41,10 @@ import { LoaderComponent } from './body/loader/loader.component';
     TaskDetailsComponent,
     LogWorkComponent,
     EditPageComponent,
-    AuthComponent,
     LoaderComponent,
+    LoginComponent,
+    LoginHandlerComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,7 @@ import { LoaderComponent } from './body/loader/loader.component';
     AngularFirestoreModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

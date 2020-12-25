@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthComponent } from './body/auth/auth.component';
+import { LoginComponent } from './body/login/login.component';
 import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
 import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
 import { DashboardComponent } from './body/dashboard/dashboard.component';
@@ -14,12 +14,12 @@ const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: '', component: DashboardComponent },
   { path: 'CreateNewSession', component: CreateNewSessionComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'StartNewSprint', component: CreateNewSprintComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'Tasks/:category/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'Tasks/:category/:currentSprintName', component: TasksComponent },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: "login", component: AuthComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
+  { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
 ];
 
 @NgModule({

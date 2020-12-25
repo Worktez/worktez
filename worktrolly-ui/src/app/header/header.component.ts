@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router: Router, public auth: AuthService) { }
+  constructor(private router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -20,10 +20,5 @@ export class HeaderComponent implements OnInit {
 
   startNewSession() {
     this.router.navigate(['/CreateNewSession']);
-  }
-  onLogout() {
-    this.auth.logout().then(() => {
-      this.router.navigate(['/login']);
-    });
   }
 }

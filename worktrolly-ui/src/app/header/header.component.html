@@ -5,8 +5,8 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon text-white"></span>
   </button>
-    <div class="collapse navbar-collapse" id="navbarText" *ngIf="auth.afauth.user | async">
-        <ul class="navbar-nav ">
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav" *ngIf="authService.afauth.user | async">
             <li class="nav-item active pr-5 py-1 ">
                 <button type="button" class="btn btn-outline-light Buttons" (click)="startNewSession()">Create New Task</button>
             </li>
@@ -16,7 +16,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item py-1">
-                <button class="btn" id="login-btn" type="button" (click)="onLogout()">Logout</button>
+                <app-login-handler></app-login-handler>
             </li>
         </ul>
     </div>
