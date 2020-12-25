@@ -57,52 +57,52 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 
         db.collection("RawData").doc("AppDetails").get().then((doc) => {
 
-                totalNumberOfTask = doc.data().TotalNumberOfTask;
-                totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-                totalBusinessTask = doc.data().TotalBusinessTask;
-                totalMarketingTask = doc.data().TotalMarketingTask;
-                totalOtherTask = doc.data().TotalOtherTask;
-                totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+            totalNumberOfTask = doc.data().TotalNumberOfTask;
+            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+            totalBusinessTask = doc.data().TotalBusinessTask;
+            totalMarketingTask = doc.data().TotalMarketingTask;
+            totalOtherTask = doc.data().TotalOtherTask;
+            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
-                if (category === "Development") {
-                    totalDevelopmentTask = totalDevelopmentTask + 1;
-                    taskId = category[0] + totalDevelopmentTask;
-                } else if (category === "Business") {
-                    totalBusinessTask = totalBusinessTask + 1;
-                    taskId = category[0] + totalBusinessTask;
-                } else if (category === "Marketing") {
-                    totalMarketingTask = totalMarketingTask + 1;
-                    taskId = category[0] + totalMarketingTask;
-                } else {
-                    totalOtherTask = totalOtherTask + 1;
-                    taskId = category[0] + totalOtherTask;
-                }
+            if (category === "Development") {
+                totalDevelopmentTask = totalDevelopmentTask + 1;
+                taskId = category[0] + totalDevelopmentTask;
+            } else if (category === "Business") {
+                totalBusinessTask = totalBusinessTask + 1;
+                taskId = category[0] + totalBusinessTask;
+            } else if (category === "Marketing") {
+                totalMarketingTask = totalMarketingTask + 1;
+                taskId = category[0] + totalMarketingTask;
+            } else {
+                totalOtherTask = totalOtherTask + 1;
+                taskId = category[0] + totalOtherTask;
+            }
 
 
-                totalUnCompletedTask = totalUnCompletedTask + 1;
-                totalNumberOfTask = totalNumberOfTask + 1;
-                console.log(taskId);
+            totalUnCompletedTask = totalUnCompletedTask + 1;
+            totalNumberOfTask = totalNumberOfTask + 1;
+            console.log(taskId);
 
-                var setDataPromise = db.collection("Tasks").doc(taskId).set({
-                    Id: taskId,
-                    Title: title,
-                    Description: des,
-                    Priority: priority,
-                    Difficulty: difficulty,
-                    Creator: creator,
-                    Assignee: assignee,
-                    EstimatedTime: estimatedTime,
-                    Status: status,
-                    Category: category,
-                    LogWorkTotalTime: loggedWorkTotalTime,
-                    WorkDone: workDone,
-                    SprintNumber: sprintNumber,
-                    StoryPointNumber: storyPointNumber,
-                    CreationDate: creationDate
-                });
-                return Promise.resolve(setDataPromise);
-            })
-            .then(function(setDataPromise) {
+            var setDataPromise = db.collection("Tasks").doc(taskId).set({
+                Id: taskId,
+                Title: title,
+                Description: des,
+                Priority: priority,
+                Difficulty: difficulty,
+                Creator: creator,
+                Assignee: assignee,
+                EstimatedTime: estimatedTime,
+                Status: status,
+                Category: category,
+                LogWorkTotalTime: loggedWorkTotalTime,
+                WorkDone: workDone,
+                SprintNumber: sprintNumber,
+                StoryPointNumber: storyPointNumber,
+                CreationDate: creationDate
+            });
+            return Promise.resolve(setDataPromise);
+        })
+            .then(function (setDataPromise) {
                 var updateSetDataPromise = db.collection("RawData").doc("AppDetails").update({
                     TotalDevelopmentTask: totalDevelopmentTask,
                     TotalBusinessTask: totalBusinessTask,
@@ -115,75 +115,75 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             })
             .then((updateSetDataPromise) => {
                 return db.collection("Main").doc(fullSprintId).get().then((doc) => {
-                        if (doc.exists) {
-                            totalNumberOfTask = doc.data().TotalNumberOfTask;
-                            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-                            totalBusinessTask = doc.data().TotalBusinessTask;
-                            totalOtherTask = doc.data().TotalOtherTask;
-                            totalMarketingTask = doc.data().TotalMarketingTask;
-                            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+                    if (doc.exists) {
+                        totalNumberOfTask = doc.data().TotalNumberOfTask;
+                        totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+                        totalBusinessTask = doc.data().TotalBusinessTask;
+                        totalOtherTask = doc.data().TotalOtherTask;
+                        totalMarketingTask = doc.data().TotalMarketingTask;
+                        totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
-                            if (category === "Development") {
-                                totalDevelopmentTask = totalDevelopmentTask + 1;
-                            } else if (category === "Business") {
-                                totalBusinessTask = totalBusinessTask + 1;
-                            } else if (category === "Marketing") {
-                                totalMarketingTask = totalMarketingTask + 1;
-                            } else {
-                                totalOtherTask = totalOtherTask + 1;
-                            }
-
-                            totalNumberOfTask = totalNumberOfTask + 1;
-                            totalUnCompletedTask = totalUnCompletedTask + 1;
-
-
-                            sprintDataPromise = db.collection("Main").doc(fullSprintId).update({
-                                TotalBusinessTask: totalBusinessTask,
-                                TotalDevelopmentTask: totalDevelopmentTask,
-                                TotalMarketingTask: totalMarketingTask,
-                                TotalOtherTask: totalOtherTask,
-                                TotalUnCompletedTask: totalUnCompletedTask,
-                                TotalNumberOfTask: totalNumberOfTask
-                            });
+                        if (category === "Development") {
+                            totalDevelopmentTask = totalDevelopmentTask + 1;
+                        } else if (category === "Business") {
+                            totalBusinessTask = totalBusinessTask + 1;
+                        } else if (category === "Marketing") {
+                            totalMarketingTask = totalMarketingTask + 1;
                         } else {
-                            totalBusinessTask = 0;
-                            totalDevelopmentTask = 0;
-                            totalMarketingTask = 0;
-                            totalOtherTask = 0;
-                            totalUnCompletedTask = 0;
-                            totalCompletedTask = 0;
-                            totalNumberOfTask = 0;
-
-                            if (category === "Development") {
-                                totalDevelopmentTask = totalDevelopmentTask + 1;
-                            } else if (category === "Business") {
-                                totalBusinessTask = totalBusinessTask + 1;
-                            } else if (category === "Marketing") {
-                                totalMarketingTask = totalMarketingTask + 1;
-                            } else {
-                                totalOtherTask = totalOtherTask + 1;
-                            }
-
-
-                            totalNumberOfTask = totalNumberOfTask + 1;
-                            totalUnCompletedTask = totalUnCompletedTask + 1;
-
-                            sprintDataPromise = db.collection("Main").doc(fullSprintId).set({
-                                EndDate: "xx/xx/xxxx",
-                                StartDate: "xx/xx/xxxx",
-                                Status: "Not Started",
-                                TotalBusinessTask: totalBusinessTask,
-                                TotalDevelopmentTask: totalDevelopmentTask,
-                                TotalMarketingTask: totalMarketingTask,
-                                TotalOtherTask: totalOtherTask,
-                                TotalUnCompletedTask: totalUnCompletedTask,
-                                TotalCompletedTask: totalCompletedTask,
-                                TotalNumberOfTask: totalNumberOfTask
-                            });
-
+                            totalOtherTask = totalOtherTask + 1;
                         }
-                        return Promise.resolve(sprintDataPromise);
-                    })
+
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        totalUnCompletedTask = totalUnCompletedTask + 1;
+
+
+                        sprintDataPromise = db.collection("Main").doc(fullSprintId).update({
+                            TotalBusinessTask: totalBusinessTask,
+                            TotalDevelopmentTask: totalDevelopmentTask,
+                            TotalMarketingTask: totalMarketingTask,
+                            TotalOtherTask: totalOtherTask,
+                            TotalUnCompletedTask: totalUnCompletedTask,
+                            TotalNumberOfTask: totalNumberOfTask
+                        });
+                    } else {
+                        totalBusinessTask = 0;
+                        totalDevelopmentTask = 0;
+                        totalMarketingTask = 0;
+                        totalOtherTask = 0;
+                        totalUnCompletedTask = 0;
+                        totalCompletedTask = 0;
+                        totalNumberOfTask = 0;
+
+                        if (category === "Development") {
+                            totalDevelopmentTask = totalDevelopmentTask + 1;
+                        } else if (category === "Business") {
+                            totalBusinessTask = totalBusinessTask + 1;
+                        } else if (category === "Marketing") {
+                            totalMarketingTask = totalMarketingTask + 1;
+                        } else {
+                            totalOtherTask = totalOtherTask + 1;
+                        }
+
+
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        totalUnCompletedTask = totalUnCompletedTask + 1;
+
+                        sprintDataPromise = db.collection("Main").doc(fullSprintId).set({
+                            EndDate: "xx/xx/xxxx",
+                            StartDate: "xx/xx/xxxx",
+                            Status: "Not Started",
+                            TotalBusinessTask: totalBusinessTask,
+                            TotalDevelopmentTask: totalDevelopmentTask,
+                            TotalMarketingTask: totalMarketingTask,
+                            TotalOtherTask: totalOtherTask,
+                            TotalUnCompletedTask: totalUnCompletedTask,
+                            TotalCompletedTask: totalCompletedTask,
+                            TotalNumberOfTask: totalNumberOfTask
+                        });
+
+                    }
+                    return Promise.resolve(sprintDataPromise);
+                })
                     .then((sprintDataPromise) => {
                         result = { data: "OK" };
                         console.log("Document sucessfully written");
@@ -223,7 +223,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         console.log("Status from Backend: " + status);
 
         db.collection("RawData").doc("AppDetails").get()
-            .then(function(doc) {
+            .then(function (doc) {
                 newSprintId = parseInt(doc.data().CurrentSprintId) + 1;
                 var newSprintIdString = "S" + newSprintId.toString();
 
@@ -259,19 +259,19 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                     return Promise.resolve(createSprintPromise);
                 });
             })
-            .then(function(createSprintPromise) {
+            .then(function (createSprintPromise) {
                 var setNewSprintCounterPromise = db.collection("RawData").doc("AppDetails").update({
                     CurrentSprintId: newSprintId
                 });
                 return Promise.resolve(setNewSprintCounterPromise);
             })
-            .then(function(setNewSprintCounterPromise) {
+            .then(function (setNewSprintCounterPromise) {
                 console.log("Sprint started successfully");
                 result = { data: "OK" }
                 console.log("Document successfully written!");
                 return response.status(200).send(result);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 result = { data: error }
                 console.log("error", error);
                 return response.status(500).send(result);
@@ -330,10 +330,10 @@ exports.logWork = functions.https.onRequest((request, response) => {
         });
         const logWorkPromises = [promise1, promise2, promise3];
         Promise.all(logWorkPromises).then(() => {
-                result = { data: "OK" }
-                console.log("Document successfully written!");
-                return response.status(200).send(result);
-            })
+            result = { data: "OK" }
+            console.log("Document successfully written!");
+            return response.status(200).send(result);
+        })
             .catch((error) => {
                 var result = { data: error };
                 console.log("error", error);
@@ -466,10 +466,10 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             });
             var promises = [p1, p2];
             Promise.all(promises).then(() => {
-                    result = { data: "OK" };
-                    console.log("Document sucessfully written");
-                    return response.status(200).send(result);
-                })
+                result = { data: "OK" };
+                console.log("Document sucessfully written");
+                return response.status(200).send(result);
+            })
                 .catch((error) => {
                     result = { data: error };
                     console.log("error", error);
@@ -477,19 +477,19 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                 });
         }
         db.collection("Tasks").doc(taskId).update({
-                Description: description,
-                CreationDate: creationDate,
-                Priority: priority,
-                Difficulty: difficulty,
-                Assignee: assignee,
-                EstimatedTime: estimatedTime,
-                SprintNumber: editedSprintNumber,
-                StoryPointNumber: storyPointNumber
-            }).then(() => {
-                result = { data: "OK" };
-                console.log("Document sucessfully Updated");
-                return response.status(200).send(result);
-            })
+            Description: description,
+            CreationDate: creationDate,
+            Priority: priority,
+            Difficulty: difficulty,
+            Assignee: assignee,
+            EstimatedTime: estimatedTime,
+            SprintNumber: editedSprintNumber,
+            StoryPointNumber: storyPointNumber
+        }).then(() => {
+            result = { data: "OK" };
+            console.log("Document sucessfully Updated");
+            return response.status(200).send(result);
+        })
             .catch((error) => {
                 result = { data: error };
                 console.log("error", error);
@@ -581,10 +581,10 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         });
         const deleteTaskPromises = [p1, p2, p3];
         Promise.all(deleteTaskPromises).then(() => {
-                result = { data: "OK" };
-                console.log("Document sucessfully deleted");
-                return response.status(200).send(result);
-            })
+            result = { data: "OK" };
+            console.log("Document sucessfully deleted");
+            return response.status(200).send(result);
+        })
             .catch((error) => {
                 result = { data: error };
                 console.log("error", error);
