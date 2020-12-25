@@ -1,41 +1,20 @@
-#authContainer {
+#loginContainer {
+    border: 1px solid #8120f0;
+}
+
+#loginNavbar {
+    background-color: #8120f0;
+    color: white;
+}
+
+#button {
+    background-color: #10be65;
     border: 1px solid #8120f0;
     color: white;
 }
 
-#submitLoginButton {
-    background-color: #10be65;
-    border-radius: 20px;
-}
-
-#submitCreateButton {
-    background-color: #10be65;
-    border-radius: 20px;
-}
-
-#nav-login-tab {
-    border: 1px solid #8120f0;
-    color: black;
-}
-
-#nav-signup-tab {
-    border: 1px solid #8120f0;
-    color: black;
-}
-
-#submitGoogle {
-    background-color: #10be65;
-    border-radius: 20px;
-}
-
-#login {
-    border: 1px solid #8120f0;
-}
-
-#signup {
-    border: 1px solid #8120f0;
-}
-
-#navbarAuth {
-    background-color: #8120f0;
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
 }

@@ -1,0 +1,11 @@
+#button {
+    background-color: #10be65;
+    border: 1px solid #8120f0;
+    color: white;
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
