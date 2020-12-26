@@ -75,4 +75,8 @@ export class TaskDetailsComponent implements OnInit {
     this.sprintName = "S" + this.task.SprintNumber;
     this.router.navigate(['Tasks', category, this.sprintName])
   }
+
+  backToDashboard(){
+    this.router.navigate(['/']);
+  }
 }

@@ -1,14 +1,13 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
-    <li class="breadcrumb-item active" aria-current="page">{{category}}</li>
-  </ol>
-</nav>
-
 <div id="taskPage">
     <div class="container pt-2 pb-4 pl-2">
         <div class="row">
             <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" style="background-color: white;">
+                      <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
+                      <li class="breadcrumb-item active" aria-current="page">{{category}}</li>
+                    </ol>
+                  </nav>
                 <nav class="navbar navbar-expand-sm navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">

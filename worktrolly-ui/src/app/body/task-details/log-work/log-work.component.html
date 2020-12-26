@@ -2,14 +2,14 @@
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
         <div class="container px-0 py-5" id="logWorkPage">  
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb" style="background-color: white;">
                   <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
                   <li class="breadcrumb-item active" type="button" (click)="backToTasks(task.Category)">{{task.Category}}</li>
                   <li class="breadcrumb-item active" type="button" (click)="workDone()">Task Details</li>
                   <li class="breadcrumb-item active" aria-current="page">Log Work</li>
                 </ol>
-              </nav>     
-            <div class="bg-dark py-2 px-5">
+              </nav>    
+            <div class="bg-dark py-2 px-5"> 
                 <h3 class="pt-5 fontHeading text-white">Log Work</h3>
                 <!-- <div class="row pt-5 pb-2 ml-1">
                     <div class="alert alert-info form-inline col-md-5" role="alert">

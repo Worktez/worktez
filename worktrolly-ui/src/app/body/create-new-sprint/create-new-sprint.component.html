@@ -1,20 +1,13 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb"> 
-        <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
-      <li class="breadcrumb-item active" aria-current="page">Create New Sprint</li>
-    </ol>
-  </nav>
-  
 <div class="container">
     <div class="mt-5 px-5 py-5" id="startNewSprint">
-        <div class="row pt-2">
-            <div class="col-md-11 col-10"></div>
-            <span type="button" class="col-md-1 col-2 pt-5 material-icons" id="backToMainFromNewSprint">
-                close
-            </span>
-        </div>
         <div class="row">
             <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" style="background-color: white;"> 
+                        <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
+                      <li class="breadcrumb-item active" aria-current="page">Create New Sprint</li>
+                    </ol>
+                  </nav>
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">

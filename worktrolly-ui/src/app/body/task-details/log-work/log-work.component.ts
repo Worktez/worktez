@@ -21,9 +21,10 @@ export class LogWorkComponent implements OnInit {
   logWorkStatus: number
   logHours: number
   logWorkComment: number
+  sprintName: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions,private router: Router) { }
 
   ngOnInit(): void { }
 
@@ -46,4 +47,14 @@ export class LogWorkComponent implements OnInit {
   workDone() {
     this.logWorkCompleted.emit({ completed: true });
   }
+
+  backToTasks(category: string){
+    this.sprintName = "S" + this.task.SprintNumber;
+    this.router.navigate(['Tasks', category, this.sprintName])
+  }
+
+  backToDashboard(){
+    this.router.navigate(['']);
+  }
+
 }
