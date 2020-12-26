@@ -1,15 +1,25 @@
-#logWorkPage{
+#logWorkPage {
+    border: 1px solid #8120f0;
+}
+
+#logDetail {
+    background-color: #10be65;
+    color: white;
+}
+
+#logWorkSubmit {
+    background-color: #10be65;
+    border: 2px solid #8120f0;
+    color: white;
+}
+
+#navbarMenu {
     background-color: #8120f0;
 }
 
-.logDetail{
-    background-color: #10be65;
-    border-radius: 20px;
-    color: black;
-}
-
-#logWorkSubmit{
-    border-radius: 20px;
-    background-color: #10be65;
-    color: black;
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #8120f0;
 }

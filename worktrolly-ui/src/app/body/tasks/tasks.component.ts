@@ -19,7 +19,7 @@ export class TasksComponent implements OnInit {
   tasksCollection: AngularFirestoreCollection<Tasks>
   tasksData: Observable<TasksId[]>
 
-  constructor(private route: ActivatedRoute, private db: AngularFirestore, private routes: Router) { }
+  constructor(private route: ActivatedRoute,private router: Router, private db: AngularFirestore) { }
 
   ngOnInit(): void {
     this.category = this.route.snapshot.params['category'];
@@ -44,7 +44,9 @@ export class TasksComponent implements OnInit {
       }))
     );
   }
+
   backToDashboard(){
-    this.routes.navigate([''])
+    this.router.navigate(['/']);
   }
+
 }

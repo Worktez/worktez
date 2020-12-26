@@ -1,14 +1,31 @@
-#editPageTask {
+#editPageTaskContainer {
     border: 1px solid #8120f0;
 }
 
-#editTaskSubmitButton {
-    color: black;
+#button {
     background-color: #10be65;
-    border-radius: 20px;
+    border: 2px solid #8120f0;
+    color: white;
 }
 
-.non-Editable {
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+#non-editable {
     background-color: #10be65;
-    /* border-radius:20px; */
+    color: white;
+}
+
+#navbarMenu {
+    background-color: #8120f0;
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #8120f0;
 }

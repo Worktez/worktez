@@ -1,19 +1,22 @@
 <ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
-              <li class="breadcrumb-item active" type="button" (click)="backToTasks(task.Category)">{{task.Category}}</li>
-              <li class="breadcrumb-item active" aria-current="page">Task Details</li>
-            </ol>
-          </nav>
-        <div class="container bg-dark text-white">
-            <div class="my-5 mx-5" id="cardDescription">
-                <div class="row mt-5">
-                    <div class="col-md-9 col-7"></div>
-                    <span type="button" class="material-icons mt-5 col-md-2 col-3" (click)="deleteTask()"> delete </span>
-                    <span type="button" class="col-md-1 col-2 mt-5 material-icons" id="backToMainFromCardDescription">close</span>
-                </div>
+        <div class="container p-5">
+            <div class="card text-dark mb-3" id="cardDescription">
+                <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <h5 class="active nav-link" style="font-weight:bolder">Task Details</h5>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item" *ngIf="authService.afauth.user | async">
+                            <span type="button" class="material-icons text-light mr-3" (click)="deleteTask()"> delete </span>
+                        </li>
+                        <li class="nav-item">
+                            <span type="button" class="material-icons text-light" (click)="backToTasks(task.Category)">close</span>
+                        </li>
+                    </ul>
+                </nav>
                 <div class="card-body">
                     <div class="row">
                         <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
@@ -22,10 +25,10 @@
                         </div>
                         <div class="col-md-5 col-1"></div>
                         <div class="col-md-2 col-4">
-                            <button type="submit" class="btn mt-2 mb-5 mx-3" *ngIf="task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
+                            <button type="submit" class="btn mt-2 mb-5 mx-3" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
                         </div>
                         <div class="col-md-1 col-2">
-                            <button type="submit" class="btn mt-2 mb-5" *ngIf="task.Status!=='Completed'" (click)="editTask()">Edit</button>
+                            <button type="submit" class="btn mt-2 mb-5" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">Edit</button>
                         </div>
                     </div>
                     <div class="form-group row mt-2">
@@ -129,3 +132,4 @@
         <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
     </ng-container>
 </ng-container>
+<app-loader *ngIf="!(taskDataObservable | async)"></app-loader>

@@ -16,43 +16,34 @@ export class LogWorkComponent implements OnInit {
   @Input('task') task: Tasks
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
 
-Id: string
-logWorkDone: number
-logWorkStatus: number
-logHours: number
-logWorkComment: number
-sprintName: string
+  Id: string
+  logWorkDone: number
+  logWorkStatus: number
+  logHours: number
+  logWorkComment: number
+  enableLoader: boolean = false
 
-constructor(private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private functions: AngularFireFunctions) { }
 
-ngOnInit(): void {}
+  ngOnInit(): void { }
 
-async submitLogWorkPage() {
+  async submitLogWorkPage() {
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('logWork');
 
-  const callable = this.functions.httpsCallable('logWork');
+    try {
+      const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment }).toPromise();
 
-  try {
-    const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment }).toPromise();
-
-    console.log("Logged Work Successfully");
-    console.log(result);
-    this.workDone();
-  } catch (error) {
-    console.log("Error", error);
+      console.log("Logged Work Successfully");
+      console.log(result);
+      this.workDone();
+    } catch (error) {
+      this.enableLoader = false;
+      console.log("Error", error);
+    }
   }
-}
 
-workDone(){
-  this.logWorkCompleted.emit({ completed: true });
-}
-
-backToTasks(category: string){
-  this.sprintName = "S" + this.task.SprintNumber;
-  this.router.navigate(['Tasks', this.task.Category, this.sprintName])
-}
-
-backToDashboard(){
-  this.router.navigate(['']);
-}
-
+  workDone() {
+    this.logWorkCompleted.emit({ completed: true });
+  }
 }
