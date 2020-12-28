@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-page',
@@ -16,6 +17,7 @@ export class EditPageComponent implements OnInit {
 
   editTask: Tasks
   previousSprintId: number
+  enableLoader: boolean = false
 
   constructor(private functions: AngularFireFunctions) { }
 
@@ -25,6 +27,7 @@ export class EditPageComponent implements OnInit {
   }
 
   async editPage() {
+    this.enableLoader = true
     const callable = this.functions.httpsCallable('editPageTask');
 
     try {
@@ -33,13 +36,17 @@ export class EditPageComponent implements OnInit {
       console.log(this.editTask.Creator);
 
       console.log(this.editTask.SprintNumber);
-
-      const result = await callable({ Id: this.editTask.Id, Title: this.editTask.Title, Creator: this.editTask.Creator, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Status: this.editTask.Status, Category: this.editTask.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, LogWorkTotalTime: this.editTask.LogWorkTotalTime, LogWorkDone: this.editTask.WorkDone, CreationDate: this.editTask.CreationDate }).toPromise();
-
-      console.log("Successfully created the task");
-      console.log(result);
-      this.editTaskDone();
+      if (!(this.task.Status === "Completed")) {
+        const result = await callable({ Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Category: this.task.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate }).toPromise();
+        console.log("Successfully Updated the task");
+        console.log(result);
+        this.editTaskDone();
+      }
+      else {
+        console.log("Task is Completed , Cannot Update");
+      }
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
   }

@@ -3,9 +3,13 @@
         <ng-container *ngIf="item.id === currentSprintName">
             <div class="container p-2">
                 <div class="row py-4">
-                    <h3 class="fontHeading col-md-11 col-9" style="font-size: 24px;">Dashboard</h3>
-                    <div class="col-md-1 col-3">
-                        <button type="submit" class="btn btn-primary" id="backlogButton" style="font-size: 14px;" (click)="showBacklog()">Backlog</button>
+                    <h3 class="fontHeading col-md-3 col-9" style="font-size: 24px;">Dashboard</h3>
+                    <div class="offset-md-5 col-md-2">
+                        <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="currentSprint()">Current Sprint</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="showBacklog()">Backlog</button>
+
                     </div>
                 </div>
 
@@ -19,8 +23,8 @@
                     <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
                         <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
                     </div>
-                    <div class="col-md-3 col-12" type="button" (click)="showTasks('Others')">
-                        <app-feature-card [cardName]="'Others'" [tasks]="item.TotalCompletedTask"></app-feature-card>
+                    <div class="col-md-3 col-12" type="button" (click)="showTasks('Other')">
+                        <app-feature-card [cardName]="'Other'" [tasks]="item.TotalOtherTask"></app-feature-card>
                     </div>
                 </div>
 
@@ -29,3 +33,4 @@
         </ng-container>
     </ng-container>
 </ng-container>
+<app-loader *ngIf="!(mainData | async)"></app-loader>

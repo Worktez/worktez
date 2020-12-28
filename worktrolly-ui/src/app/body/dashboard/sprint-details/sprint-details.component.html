@@ -1,6 +1,6 @@
 <div class="pt-3">
     <div class="card">
-        <div class="card-body" style="font-weight: bold; background-color: #e3f2fd;">
+        <div class="card-body" style="font-weight: bold; background-color: #8120f0; color:white;">
             <div class="row">
                 <div class="col-md-2 col-3">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
@@ -10,12 +10,12 @@
                 </div>
                 <div class="col-md-4 col-7">
                     <div class="dropdown">
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                        <div class="dropdown-menu px-5 py-4" aria-labelledby="dropdownMenuButton">
+                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+                        <div class="dropdown-menu px-5 py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
                             <div class="row py-3">
-                                <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumber" placeholder="enter sprint number" [(ngModel)]="filterSprintNumber">
+                                <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" placeholder="enter sprint number" [(ngModel)]="filterSprintNumber">
                                 <div class="col-md-4 col-4 pl-2">
-                                    <button class="btn btn-info" id="filterSprint" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
+                                    <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
                                 </div>
                             </div>
                         </div>
