@@ -64,7 +64,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"firebase-functions":"firebase-functions"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"firebase-auth":"firebase-auth","firebase-functions":"firebase-functions"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

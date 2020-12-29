@@ -1,9 +1,27 @@
-#createNewTask{
-    background-color: #8120f0;
-    color:white;
+#createNewTaskContainer {
+    border: 1px solid #8120f0;
 }
 
-.submit{
+#button {
     background-color: #10be65;
-    border-radius: 20px;
+    border: 2px solid #8120f0;
+    color: white;
+}
+
+#button:focus,
+#button:active {
+    outline: 0 none;
+    box-shadow: none;
+}
+
+#navbarMenu {
+    background-color: #8120f0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #8120f0;
 }
