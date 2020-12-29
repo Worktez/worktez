@@ -1,24 +1,19 @@
 <div id="taskPage">
-    <div class="container pt-2 pb-4 pl-2">
-        <div class="row">
-            <div class="col">
-                <nav class="navbar navbar-expand-sm navbar-dark" id="navbarMenu">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <h5 class="active nav-link" style="font-weight:bolder">Tasks</h5>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
-                        </li>
-                    </ul>
-                </nav>
+    <div class="container">
+        <div class="row align-items-center p-2" id="navbarMenu">
+            <div class="col-12 col-md-4">
+                <h5 class="p-2" style="font-weight:bolder">Tasks</h5>
+            </div>
+            <div class="col-10 col-md-4">
+                <input type="text" class="form-control" [(ngModel)]="searchAssignee" [ngModelOptions]="{standalone: true}" placeholder="Search Task with Assignee Name" />
+            </div>
+            <div class="col-2 offset-md-3 col-md-1">
+                <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
             </div>
         </div>
-        <hr class="w-75 ml-0">
+        <hr>
         <div id="cardsList">
-            <ng-container *ngFor="let item of tasksData | async">
+            <ng-container *ngFor="let item of tasksData | async | filter:searchAssignee:'Assignee'">
                 <app-task-cards [task]="item"></app-task-cards>
             </ng-container>
         </div>
