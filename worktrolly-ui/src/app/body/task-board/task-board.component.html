@@ -1,0 +1,27 @@
+<div id="taskPage">
+    <div class="container pt-2 pb-4 pl-2">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-sm navbar-dark" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <h5 class="active nav-link" style="font-weight:bolder">{{displayName}}</h5>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <hr class="w-75 ml-0">
+        <div id="cardsList">
+            <ng-container *ngFor="let item of tasksData | async">
+                <app-task-cards [task]="item"></app-task-cards>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<app-loader *ngIf="!(tasksData | async)"></app-loader>

@@ -21,4 +21,8 @@ export class HeaderComponent implements OnInit {
   startNewSession() {
     this.router.navigate(['/CreateNewSession']);
   }
+
+  taskBoard(){
+    this.router.navigate(['/TaskBoard']);
+  }
 }

@@ -9,6 +9,7 @@ import { LogWorkComponent } from './body/task-details/log-work/log-work.componen
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
 import { TasksComponent } from './body/tasks/tasks.component';
 import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-guard';
+import { TaskBoardComponent } from './body/task-board/task-board.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'StartNewSprint', component: CreateNewSprintComponent },
   { path: 'Tasks/:category/:currentSprintName', component: TasksComponent },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent },
+  { path: 'TaskBoard', component: TaskBoardComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
 ];
 
