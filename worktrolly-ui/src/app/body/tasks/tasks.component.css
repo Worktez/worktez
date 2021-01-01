@@ -15,3 +15,7 @@ input:focus {
     outline: 0 none;
     border-color: #8120f0;
 }
+
+.toggleFilter {
+    color: #10be65;
+}
