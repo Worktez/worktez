@@ -24,25 +24,30 @@ export class TaskBoardComponent implements OnInit {
   
   
 
-  constructor(private route: ActivatedRoute,public router: Router, private db: AngularFirestore,public authService: AuthService) { }
+  constructor(public router: Router, private db: AngularFirestore,public authService: AuthService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
     
-      this.userObservable = this.authService.afauth.user.pipe(map(action => {
-      const data = action as User;
-      this.user = data
-      return { ...data }
-    }));
-
-    this.displayName = this.user.displayName.toLowerCase();
-    this.readTaskData();
-
+    this.readUser();
+    
     
   }
 
-  readTaskData() {
+  readUser(){
+    this.userObservable = this.authService.afauth.user.pipe(map(action => {
+      const data = action as User;
+      this.user = data;
+      this.displayName = data.displayName;
+      this.readTaskData(this.displayName);
+      return { ...data }
+    }));
     
-    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref=>ref.where('Assignee', '==', this.displayName));
+  }
+
+  readTaskData(displayName:string) {
+    
+    console.log(displayName)
+    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref=>ref.where('Assignee', '==', displayName));
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;
@@ -51,6 +56,7 @@ export class TaskBoardComponent implements OnInit {
       }))
     );
   }
+
 
   backToDashboard(){
     this.router.navigate(['/']);

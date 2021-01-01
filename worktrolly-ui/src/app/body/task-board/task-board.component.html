@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-sm navbar-dark" id="navbarMenu">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto" *ngIf="userObservable |async">
                         <li class="nav-item">
-                            <h5 class="active nav-link" style="font-weight:bolder">{{displayName}}</h5>
+                            <h5 class="active nav-link" style="font-weight:bolder">{{user.displayName}}</h5>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
