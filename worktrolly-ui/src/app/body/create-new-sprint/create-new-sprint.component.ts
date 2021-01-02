@@ -16,6 +16,7 @@ export class CreateNewSprintComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('newSprintId') newSprintId: string;
 
+  createSprint: string = "Create New Sprint"
   startDate: string
   endDate: string
   status: string

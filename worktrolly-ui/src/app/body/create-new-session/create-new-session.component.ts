@@ -12,6 +12,7 @@ export class CreateNewSessionComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
 
+  createNewTask: string = 'Create New Task'
   title: string
   todayDate: string
   description: string

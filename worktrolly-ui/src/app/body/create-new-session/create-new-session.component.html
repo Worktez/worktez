@@ -5,12 +5,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb" style="background-color: white;">
-                        <li class="breadcrumb-item" type="button" (click)="backToDashboard()">Dashboard</li>
-                      <li class="breadcrumb-item active" aria-current="page">Create New Task</li>
-                    </ol>
-                  </nav>
+               <app-navbar [navbarComponent] = "createNewTask"></app-navbar>
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
