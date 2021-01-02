@@ -25,7 +25,7 @@ import { LoginComponent } from './body/login/login.component';
 import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
-
+import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +45,7 @@ import { AuthService } from './services/auth.service';
     LoginComponent,
     LoginHandlerComponent,
     UserCardComponent,
+    FilterTaskComponent
   ],
   imports: [
     BrowserModule,

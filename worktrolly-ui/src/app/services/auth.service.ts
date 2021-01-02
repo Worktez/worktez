@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from "../Interface/UserInterface";
-import { Observable } from 'rxjs';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { map } from 'rxjs/operators';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthService {
 
   constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore) { }
