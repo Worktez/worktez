@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
@@ -21,7 +21,11 @@ import { TaskDetailsComponent } from './body/task-details/task-details.component
 import { LogWorkComponent } from './body/task-details/log-work/log-work.component';
 import { EditPageComponent } from './body/task-details/edit-page/edit-page.component';
 import { LoaderComponent } from './body/loader/loader.component';
-
+import { LoginComponent } from './body/login/login.component';
+import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
+import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
+import { AuthService } from './services/auth.service';
+import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,16 +42,21 @@ import { LoaderComponent } from './body/loader/loader.component';
     LogWorkComponent,
     EditPageComponent,
     LoaderComponent,
+    LoginComponent,
+    LoginHandlerComponent,
+    UserCardComponent,
+    FilterTaskComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireFunctionsModule,
     AngularFirestoreModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
