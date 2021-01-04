@@ -5,13 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyCksR9LrZKEvvrieqgpk9p7vDUJjiSO49o",
-  authDomain: "worktrolly-e87bc.firebaseapp.com",
-  projectId: "worktrolly-e87bc",
-  storageBucket: "worktrolly-e87bc.appspot.com",
-  messagingSenderId: "730072174881",
-  appId: "1:730072174881:web:37a86389b2ca68ad9f6e60",
-  measurementId: "G-0G9JTDB0S6"
+    apiKey: "AIzaSyAP-cLcP8gB3bsUHSK9oexPq0BDykBPzzE",
+    authDomain: "worktrolly.firebaseapp.com",
+    databaseURL: "https://worktrolly.firebaseio.com",
+    projectId: "worktrolly",
+    storageBucket: "worktrolly.appspot.com",
+    messagingSenderId: "358996208239",
+    appId: "1:358996208239:web:73a1939b7267070d2dfb9a",
+    measurementId: "G-FEQ8PFLLCV"
   }
 };
 
