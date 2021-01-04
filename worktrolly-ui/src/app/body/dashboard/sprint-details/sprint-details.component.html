@@ -1,8 +1,7 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div class="pt-3">
     <div class="card">
         <div class="card-body" style="font-weight: bold; background-color: #8120f0; color:white;">
-            <div class="row">
+            <div class="row  align-items-center">
                 <div class="col-md-2 col-3">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                 </div>
@@ -23,15 +22,12 @@
                         </div>
                     </div>
                 </div>
-                <div class=" col-md-2 col-2">
+                <div class=" col-md-2 col-2 ">
                     <button class="btn " id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
-                    <div class="col-md-2 col-2" *ngIf="sprintCompleted">
-                        <span class="material-icons">
+                    <span class="material-icons align-middle" *ngIf="Status === 'Completed' ">
                         check_circle
                     </span>
-                    </div>
                 </div>
-
             </div>
         </div>
         <div class="row">
