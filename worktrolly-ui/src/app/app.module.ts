@@ -27,6 +27,7 @@ import { UserCardComponent } from './header/login-handler/user-card/user-card.co
 import { AuthService } from './services/auth.service';
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
+import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { StatusIconsComponent } from './icons/status-icons/status-icons.componen
     UserCardComponent,
     PriorityIconsComponent,
     StatusIconsComponent,
+    FilterTaskComponent
   ],
   imports: [
     BrowserModule,
