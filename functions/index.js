@@ -646,3 +646,14 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
             });
     });
 });
+
+exports.updateSprintStatus = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        var sprintStatus = request.body.data.SprintStatus;
+        var currentSprintName = request.body.data.CurrentSprintName;
+        console.log(currentSprintName);
+        db.collection("Main").doc(currentSprintName).update({
+            Status: sprintStatus,
+        });
+    });
+})
