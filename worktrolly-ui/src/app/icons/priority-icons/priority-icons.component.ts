@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-priority-icons',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PriorityIconsComponent implements OnInit {
 
+  @Input('Priority') Priority : string
   constructor() { }
 
   ngOnInit(): void {
