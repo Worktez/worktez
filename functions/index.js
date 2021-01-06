@@ -516,39 +516,12 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         var totalCompletedTask;
         var totalUnCompletedTask;
 
-        const p1 = db.collection("Tasks").doc(taskId).delete();
-        const p2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
-            totalNumberOfTask = doc.data().TotalNumberOfTask;
-            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-            totalBusinessTask = doc.data().TotalBusinessTask;
-            totalMarketingTask = doc.data().TotalMarketingTask;
-            totalOtherTask = doc.data().TotalOtherTask;
-            totalCompletedTask = doc.data().TotalCompletedTask;
-            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
-
-            if (category === "Development") {
-                totalDevelopmentTask = totalDevelopmentTask - 1;
-            } else if (category === "Business") {
-                totalBusinessTask = totalBusinessTask - 1;
-            } else if (category === "Marketing") {
-                totalMarketingTask = totalMarketingTask - 1;
-            } else {
-                totalOtherTask = totalOtherTask - 1;
-            }
-            totalNumberOfTask = totalNumberOfTask - 1;
-            status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
-            var updateDeleteCounter = db.collection("RawData").doc("AppDetails").update({
-                TotalDevelopmentTask: totalDevelopmentTask,
-                TotalBusinessTask: totalBusinessTask,
-                TotalMarketingTask: totalMarketingTask,
-                TotalOtherTask: totalOtherTask,
-                TotalNumberOfTask: totalNumberOfTask,
-                TotalCompletedTask: totalCompletedTask,
-                TotalUnCompletedTask: totalUnCompletedTask
-            });
-            return Promise.resolve(updateDeleteCounter);
+        const p1 = db.collection("Tasks").doc(taskId).update({
+            Category: "Trash",
+            SprintNumber: -2
         });
-        const p3 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
+        
+        const p2 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
             totalNumberOfTask = doc.data().TotalNumberOfTask;
             totalDevelopmentTask = doc.data().TotalDevelopmentTask;
             totalBusinessTask = doc.data().TotalBusinessTask;
@@ -564,7 +537,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             } else if (category === "Marketing") {
                 totalMarketingTask = totalMarketingTask - 1;
             } else {
-                totalOtherTask = totalOtherTask - 1;
+                totalOtherTask = totalOtherTask -1;
             }
             totalNumberOfTask = totalNumberOfTask - 1;
             status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
@@ -579,7 +552,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             });
             return Promise.resolve(updateDeleteTaskCounter);
         });
-        const deleteTaskPromises = [p1, p2, p3];
+        const deleteTaskPromises = [p1, p2];
         Promise.all(deleteTaskPromises).then(() => {
                 result = { data: "OK" };
                 console.log("Document sucessfully deleted");
@@ -600,7 +573,6 @@ function createSprintId(sprintNumber) {
         return ("S" + sprintNumber);
     }
 }
-
 exports.createNewUser = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
@@ -646,3 +618,14 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
             });
     });
 });
+
+exports.updateSprintStatus = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        var sprintStatus = request.body.data.SprintStatus;
+        var currentSprintName = request.body.data.CurrentSprintName;
+        console.log(currentSprintName);
+        db.collection("Main").doc(currentSprintName).update({
+            Status: sprintStatus,
+        });
+    });
+})
