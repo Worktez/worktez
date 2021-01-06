@@ -78,7 +78,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             totalUnCompletedTask = totalUnCompletedTask + 1;
             totalNumberOfTask = totalNumberOfTask + 1;
             console.log(taskId);
-            var setDataPromise = db.collection("Tasks").doc(taskId).set({
+            const P1 = db.collection("Tasks").doc(taskId).set({
                 Id: taskId,
                 Title: title,
                 Description: des,
@@ -95,11 +95,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 StoryPointNumber: storyPointNumber,
                 CreationDate: creationDate
             });
-            return Promise.resolve(setDataPromise);
-        });
-
-        const promise2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
-            var updateSetDataPromise = db.collection("RawData").doc("AppDetails").update({
+            const P2 = db.collection("RawData").doc("AppDetails").update({
                 TotalDevelopmentTask: totalDevelopmentTask,
                 TotalBusinessTask: totalBusinessTask,
                 TotalMarketingTask: totalMarketingTask,
@@ -107,10 +103,11 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalUnCompletedTask: totalUnCompletedTask
             });
-            return Promise.resolve(updateSetDataPromise);
+            const Promises = [P1,P2];
+            return Promise.all(Promises);
         });
 
-        const promise3 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
+        const promise2 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
             if (doc.exists) {
                 totalNumberOfTask = doc.data().TotalNumberOfTask;
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
@@ -180,7 +177,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             }
             return Promise.resolve(sprintDataPromise);
         });
-        const newTaskPromises = [promise1, promise2, promise3];
+        const newTaskPromises = [promise1, promise2];
         Promise.all(newTaskPromises).then(() => {
                 result = { data: "OK!" }
                 console.log("Document successfully written!");
