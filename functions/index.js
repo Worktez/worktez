@@ -356,7 +356,9 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var totalUnCompletedTask;
         var totalCompletedTask;
         var sprintEditPromise;
-        if (!(editedSprintNumber === previousId)) {
+
+        var promises = [];
+        if (editedSprintNumber !== previousId) {
             const p1 = db.collection("Main").doc(previousSprintId).get().then((doc) => {
                 totalNumberOfTask = doc.data().TotalNumberOfTask;
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
@@ -388,6 +390,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
 
                 return Promise.resolve(editSprintDeleteCounter);
             });
+            promises.push(p1);
 
             const p2 = db.collection("Main").doc(editedSprintId).get().then((doc) => {
                 if (doc.exists) {
@@ -452,19 +455,9 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                 }
                 return Promise.resolve(sprintEditPromise)
             });
-            var promises = [p1, p2];
-            Promise.all(promises).then(() => {
-                    result = { data: "OK" };
-                    console.log("Document sucessfully written");
-                    return response.status(200).send(result);
-                })
-                .catch((error) => {
-                    result = { data: error };
-                    console.log("error", error);
-                    return response.status(500).send(result)
-                });
+            promises.push(p2);
         }
-        db.collection("Tasks").doc(taskId).update({
+        var p3 = db.collection("Tasks").doc(taskId).update({
                 Description: description,
                 CreationDate: creationDate,
                 Priority: priority,
@@ -473,16 +466,19 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                 EstimatedTime: estimatedTime,
                 SprintNumber: editedSprintNumber,
                 StoryPointNumber: storyPointNumber
-            }).then(() => {
-                result = { data: "OK" };
-                console.log("Document sucessfully Updated");
-                return response.status(200).send(result);
-            })
-            .catch((error) => {
-                result = { data: error };
-                console.log("error", error);
-                return response.status(500).send(result)
-            });
+        });
+        promises.push(p3);
+
+        Promise.all(promises).then(() => {
+            result = { data: "OK" };
+            console.log("Document sucessfully written");
+            return response.status(200).send(result);
+        })
+        .catch((error) => {
+            result = { data: error };
+            console.log("error", error);
+            return response.status(500).send(result)
+        });
     });
 });
 
