@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-task-details',
@@ -17,12 +18,12 @@ export class TaskDetailsComponent implements OnInit {
   Id: string
   logWorkEnabled: boolean = false
   editTaskEnabled: boolean = false
-
+  userLoggedIn: boolean = false
   task: Tasks
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.Id = this.route.snapshot.params['taskId'];
