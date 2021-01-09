@@ -25,7 +25,13 @@ import { LoginComponent } from './body/login/login.component';
 import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
+<<<<<<< HEAD
 import { NavbarComponent } from './navbar/navbar.component';
+=======
+import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
+import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
+import { FilterTaskComponent } from './body/filter-task/filter-task.component';
+>>>>>>> 302a9e3e6e1dc47526cb34431acf00a8c955dad8
 
 @NgModule({
   declarations: [
@@ -46,7 +52,13 @@ import { NavbarComponent } from './navbar/navbar.component';
     LoginComponent,
     LoginHandlerComponent,
     UserCardComponent,
+<<<<<<< HEAD
     NavbarComponent,
+=======
+    PriorityIconsComponent,
+    StatusIconsComponent,
+    FilterTaskComponent
+>>>>>>> 302a9e3e6e1dc47526cb34431acf00a8c955dad8
   ],
   imports: [
     BrowserModule,

@@ -7,14 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-@Input('navbarComponent') navbarComponent: string;
-
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  backToDashboard(){
-  this.router.navigate(['/']);
   }
 }
