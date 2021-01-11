@@ -75,8 +75,5 @@ export class TaskDetailsComponent implements OnInit {
   backToTasks(category: string){
     this.location.back()
   }
-  // backToTasks(category: string){
-  //   this.sprintName = "S" + this.task.SprintNumber;
-  //   this.router.navigate(['Tasks', category, this.sprintName])
-  // }
+ 
 }
