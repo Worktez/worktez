@@ -1,3 +1,12 @@
+#dropdownMenuButton {
+    border-radius: 20px;
+    background-color: #10be65;
+    color: black;
+}
+
+
+/* #filterMenu{*/
+
 #button {
     background-color: #10be65;
     border: 1px solid #8120f0;

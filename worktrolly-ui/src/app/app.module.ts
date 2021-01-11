@@ -26,6 +26,9 @@ import { LoginHandlerComponent } from './header/login-handler/login-handler.comp
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
 import { TaskBoardComponent } from './body/task-board/task-board.component';
+import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
+import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
+import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import { TaskBoardComponent } from './body/task-board/task-board.component';
     LoginHandlerComponent,
     UserCardComponent,
     TaskBoardComponent,
+    PriorityIconsComponent,
+    StatusIconsComponent,
+    FilterTaskComponent
   ],
   imports: [
     BrowserModule,
