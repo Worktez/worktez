@@ -1,6 +1,6 @@
 <ng-container *ngIf="!enableLoader">
+    <app-navbar [navbarComponent]="task.Category"  [navbarTask]="taskDetails" [navbarLog]="logWork"></app-navbar>
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
-        <app-navbar></app-navbar>
         <div class="container px-0 py-5" id="logWorkPage">             
             <div class="bg-dark py-2 px-5"> 
                 <h3 class="pt-5 fontHeading text-white">Log Work</h3>

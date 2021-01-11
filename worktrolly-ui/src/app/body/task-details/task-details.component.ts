@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class TaskDetailsComponent implements OnInit {
 
+  taskDetails: string= "/ Task Details"
   sprintName: string
   Id: string
   logWorkEnabled: boolean = false

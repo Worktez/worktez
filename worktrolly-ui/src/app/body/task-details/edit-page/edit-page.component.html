@@ -1,8 +1,8 @@
 <form (ngSubmit)="editPage()" #form="ngForm">
+    <app-navbar [navbarComponent]="task.Category"  [navbarTask]="taskDetails" [navbarLog]="editWork"></app-navbar>
     <div class="container py-5" id="editPageTask">
 <form *ngIf="!enableLoader" (ngSubmit)="editPage()" #form="ngForm">
     <div class="container p-3">
-        <app-navbar></app-navbar>
         <div class="card text-dark mb-3" id="editPageTaskContainer"> 
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                 <ul class="navbar-nav mr-auto">

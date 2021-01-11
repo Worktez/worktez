@@ -15,6 +15,8 @@ export class EditPageComponent implements OnInit {
   @Input('task') task: Tasks
   @Output() editTaskCompleted = new EventEmitter<{ completed: boolean }>();
 
+  editWork: string= "/ Edit Work"
+  taskDetails: string= "/ Task Details"
   editTask: Tasks
   previousSprintId: number
   sprintName: string

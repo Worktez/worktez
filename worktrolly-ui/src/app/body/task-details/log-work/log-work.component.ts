@@ -16,6 +16,8 @@ export class LogWorkComponent implements OnInit {
   @Input('task') task: Tasks
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
 
+  logWork: string= "/ Log Work"
+  taskDetails: string= "/ Task Details"
   Id: string
   logWorkDone: number
   logWorkStatus: number

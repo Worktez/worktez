@@ -7,6 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  @Input("navbarComponent") navbarComponent: string;
+  @Input("navbarTask") navbarTask: string;
+  @Input("navbarLog") navbarLog: string;
+
   constructor() { }
 
   ngOnInit(): void {

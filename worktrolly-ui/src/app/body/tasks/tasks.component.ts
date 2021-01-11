@@ -4,12 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
-<<<<<<< HEAD
-
-=======
-import { Router } from '@angular/router';
 import firebase from "firebase/app";
->>>>>>> 302a9e3e6e1dc47526cb34431acf00a8c955dad8
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',

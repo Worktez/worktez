@@ -1,7 +1,7 @@
 <ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
+        <app-navbar [navbarComponent]="task.Category"  [navbarTask]="taskDetails"></app-navbar>
         <div class="container p-5 taskDetail">
-            <app-navbar></app-navbar>
             <div class="card text-dark mb-3" id="cardDescription"> 
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
