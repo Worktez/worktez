@@ -4,7 +4,8 @@
         "indexes": "firestore.indexes.json"
     },
     "hosting": {
-        "public": "public",
+        "site": "worktrolly",
+        "public": "worktrolly-ui/dist/worktrolly-ui",
         "ignore": [
             "firebase.json",
             "**/.*",
@@ -15,6 +16,7 @@
             "destination": "/index.html"
         }]
     },
+
     "storage": {
         "rules": "storage.rules"
     },
