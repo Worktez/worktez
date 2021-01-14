@@ -42,18 +42,7 @@ export class LogWorkComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-workDone(){
-  this.logWorkCompleted.emit({ completed: true });
-}
-
-backToTaskDetails(){
-  window.location.reload();
-}
-
-=======
   workDone() {
     this.logWorkCompleted.emit({ completed: true });
   }
->>>>>>> f9da5381cd079ca58cf180fce7fafe28ffd21faf
 }
