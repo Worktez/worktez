@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/CreateNewSession']);
   }
 
-  taskBoard(){
-    this.router.navigate(['/TaskBoard']);
+  dashBoard(){
+    this.router.navigate(['/DashBoard']);
   }
 }

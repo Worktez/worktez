@@ -14,12 +14,12 @@ import { TaskBoardComponent } from './body/task-board/task-board.component';
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: 'DashBoard', component: DashboardComponent },
   { path: 'CreateNewSession', component: CreateNewSessionComponent },
   { path: 'StartNewSprint', component: CreateNewSprintComponent },
   { path: 'Tasks/:category/:currentSprintName', component: TasksComponent },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent },
-  { path: 'TaskBoard', component: TaskBoardComponent },
+  { path: '', component: TaskBoardComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
 ];
 
