@@ -72,7 +72,7 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  backToTasks(category: string){
+  backToTasks(){
     this.location.back()
   }
  
