@@ -22,6 +22,8 @@ export class TaskDetailsComponent implements OnInit {
   task: Tasks
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
+  showError: boolean = false;
+  error: string;
 
   constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService) { }
 
@@ -67,6 +69,8 @@ export class TaskDetailsComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.showError = true;
+      this.error = error;
       console.log("Error", error);
     }
   }

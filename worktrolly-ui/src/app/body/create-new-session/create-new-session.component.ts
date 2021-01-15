@@ -12,6 +12,7 @@ export class CreateNewSessionComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
 
+
   title: string
   todayDate: string
   description: string
@@ -25,6 +26,8 @@ export class CreateNewSessionComponent implements OnInit {
   sprintNumber: number
   storyPoint: number
   enableLoader: boolean = false;
+  showError: boolean = false;
+  error: string;
 
   constructor(private functions: AngularFireFunctions, private router: Router) { }
 
@@ -49,6 +52,8 @@ export class CreateNewSessionComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.showError = true;
+      this.error = error;
       this.enableLoader = false;
       console.error("Error", error);
     }

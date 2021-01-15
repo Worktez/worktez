@@ -21,6 +21,8 @@ export class LogWorkComponent implements OnInit {
   logHours: number
   logWorkComment: number
   enableLoader: boolean = false
+  showError: boolean = false;
+  error: string;
 
   constructor(private functions: AngularFireFunctions) { }
 
@@ -37,6 +39,8 @@ export class LogWorkComponent implements OnInit {
       console.log(result);
       this.workDone();
     } catch (error) {
+      this.showError = true;
+      this.error = error;
       this.enableLoader = false;
       console.log("Error", error);
     }

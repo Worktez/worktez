@@ -1,3 +1,4 @@
+<app-error *ngIf="showError" [error]="error"></app-error>
 <div class="pt-3">
     <div class="card">
         <div class="card-body" style="font-weight: bold; background-color: #8120f0; color:white;">
@@ -57,3 +58,5 @@
         </div>
     </div>
 </div>
+<app-error *ngIf="showError">
+</app-error>

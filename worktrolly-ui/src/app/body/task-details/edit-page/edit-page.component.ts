@@ -18,6 +18,8 @@ export class EditPageComponent implements OnInit {
   editTask: Tasks
   previousSprintId: number
   enableLoader: boolean = false
+  showError: boolean = false;
+  error: string;
 
   constructor(private functions: AngularFireFunctions) { }
 
@@ -46,6 +48,8 @@ export class EditPageComponent implements OnInit {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
+      this.showError = true;
+      this.error = error;
       this.enableLoader = false;
       console.error("Error", error);
     }

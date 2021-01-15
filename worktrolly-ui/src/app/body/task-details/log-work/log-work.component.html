@@ -1,3 +1,4 @@
+<app-error *ngIf="showError" [error]="error"></app-error>
 <ng-container *ngIf="!enableLoader">
     <form (ngSubmit)="submitLogWorkPage()" #form="ngForm">
         <div class="container p-3">

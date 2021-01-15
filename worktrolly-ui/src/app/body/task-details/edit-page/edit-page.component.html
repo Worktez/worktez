@@ -1,3 +1,4 @@
+<app-error *ngIf="showError" [error]="error"></app-error>
 <form *ngIf="!enableLoader" (ngSubmit)="editPage()" #form="ngForm">
     <div class="container p-3">
         <div class="card text-dark mb-3" id="editPageTaskContainer">

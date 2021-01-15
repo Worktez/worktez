@@ -1,3 +1,4 @@
+<app-error *ngIf="showError" [error]="error"></app-error>
 <div class="container mt-5" id="loginContainer" *ngIf="!(authService.afauth.user | async)">
     <div class="row" id="loginNavbar">
         <div class="col">

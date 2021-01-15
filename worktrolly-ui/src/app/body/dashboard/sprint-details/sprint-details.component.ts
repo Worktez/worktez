@@ -21,6 +21,7 @@ export class SprintDetailsComponent implements OnInit {
 
   filterSprintNumber: number;
   sprintStatus: string;
+  showError: boolean = false;
 
   constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute) { }
 
@@ -41,6 +42,7 @@ export class SprintDetailsComponent implements OnInit {
       console.log(this.sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
+      this.showError = true;
       console.error("Error", error);
     }
   }

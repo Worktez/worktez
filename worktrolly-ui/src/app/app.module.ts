@@ -28,6 +28,7 @@ import { AuthService } from './services/auth.service';
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { FilterTaskComponent } from './body/filter-task/filter-task.component';
     UserCardComponent,
     PriorityIconsComponent,
     StatusIconsComponent,
-    FilterTaskComponent
+    FilterTaskComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

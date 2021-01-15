@@ -1,3 +1,4 @@
+<app-error *ngIf="showError" [error]="error"></app-error>
 <ng-container *ngIf="taskDataObservable | async">
     <ng-container *ngIf="!logWorkEnabled && !editTaskEnabled">
         <div class="container p-5">

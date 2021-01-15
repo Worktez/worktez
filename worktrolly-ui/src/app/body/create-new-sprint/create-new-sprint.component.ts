@@ -24,6 +24,8 @@ export class CreateNewSprintComponent implements OnInit {
   totalMarketing: number
   totalOther: number
   enableLoader: boolean = false;
+  showError: boolean = false;
+  error: string;
 
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
@@ -54,6 +56,8 @@ export class CreateNewSprintComponent implements OnInit {
       });
       return "Success";
     } catch (error) {
+      this.showError = true;
+      this.error = error;
       return "Error";
     }
 
@@ -103,6 +107,8 @@ export class CreateNewSprintComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.showError = true;
+      this.error = error;
       this.enableLoader = false;
       console.error("Error", error);
     }
