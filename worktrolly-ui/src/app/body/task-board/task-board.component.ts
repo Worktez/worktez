@@ -56,9 +56,4 @@ export class TaskBoardComponent implements OnInit {
       }))
     );
   }
-
-
-  backToDashboard(){
-    this.router.navigate(['/']);
-  }
 }
