@@ -37,6 +37,9 @@ export class TaskBoardComponent implements OnInit {
     this.userObservable = this.authService.afauth.user.pipe(map(action => {
       const data = action as User;
       this.user = data;
+      if(data == null){
+        this.router.navigate(['/DashBoard']);
+      }
       this.displayName = data.displayName;
       this.readTaskData(this.displayName);
       return { ...data }
