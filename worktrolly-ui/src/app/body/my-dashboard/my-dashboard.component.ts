@@ -19,18 +19,11 @@ export class MyDashBoardComponent implements OnInit {
   tasksCollection: AngularFirestoreCollection<Tasks>
   tasksData: Observable<TasksId[]>
   userObservable: Observable<User>
-  // constructor(public authService: AuthService, public router: Router) { }
-
-  
-  
 
   constructor(public router: Router, private db: AngularFirestore,public authService: AuthService) { }
 
   ngOnInit(): void {   
-    
     this.readUser();
-    
-    
   }
 
   readUser(){
@@ -44,11 +37,9 @@ export class MyDashBoardComponent implements OnInit {
       this.readTaskData(this.displayName);
       return { ...data }
     }));
-    
   }
 
   readTaskData(displayName:string) {
-    
     console.log(displayName)
     this.tasksCollection = this.db.collection<Tasks>("Tasks", ref=>ref.where('Assignee', '==', displayName));
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
