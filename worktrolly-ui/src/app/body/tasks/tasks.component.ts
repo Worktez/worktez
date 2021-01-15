@@ -75,7 +75,7 @@ export class TasksComponent implements OnInit {
     );
   }
   backToDashboard() {
-    this.router.navigate(['/DashBoard']);
+    this.router.navigate(['/Board']);
   }
 
   showFilterOptions() {

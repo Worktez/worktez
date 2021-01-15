@@ -8,11 +8,11 @@ import { User } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-task-board',
-  templateUrl: './task-board.component.html',
-  styleUrls: ['./task-board.component.css']
+  selector: 'app-my-dashboard',
+  templateUrl: './my-dashboard.component.html',
+  styleUrls: ['./my-dashboard.component.css']
 })
-export class TaskBoardComponent implements OnInit {
+export class MyDashBoardComponent implements OnInit {
   user: User
   displayName: string
   
@@ -38,7 +38,7 @@ export class TaskBoardComponent implements OnInit {
       const data = action as User;
       this.user = data;
       if(data == null){
-        this.router.navigate(['/DashBoard']);
+        this.router.navigate(['/Board']);
       }
       this.displayName = data.displayName;
       this.readTaskData(this.displayName);

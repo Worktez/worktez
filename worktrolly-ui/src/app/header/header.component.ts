@@ -22,7 +22,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/CreateNewSession']);
   }
 
-  dashBoard(){
-    this.router.navigate(['/DashBoard']);
+  Board(){
+    this.router.navigate(['/Board']);
+  }
+
+  myDashBoard(){
+    this.router.navigate(["/"])
   }
 }

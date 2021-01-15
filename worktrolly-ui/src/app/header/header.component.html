@@ -13,8 +13,11 @@
             <li class="nav-item active pr-5 py-1 " *ngIf="authService.afauth.user | async">
                 <button type="button" class="btn" id="button" (click)="startNewSprint()">Start New Sprint</button>
             </li>
-            <li class="nav-item active pr-5 py-1 " *ngIf=" router.url != '/DashBoard' ">
-                <button type="button" class="btn" id="button" (click)="dashBoard()">Board</button>
+            <li class="nav-item active pr-5 py-1 " *ngIf=" router.url != '/Board' ">
+                <button type="button" class="btn" id="button" (click)="Board()">Board</button>
+            </li>
+            <li class="nav-item active pr-5 py-1 " *ngIf=" router.url != '/' && authService.afauth.user | async ">
+                <button type="button" class="btn" id="button" (click)="myDashBoard()">My DashBoard</button>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto ">

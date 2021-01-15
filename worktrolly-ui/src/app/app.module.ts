@@ -12,9 +12,9 @@ import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
 import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
 import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
-import { DashboardComponent } from './body/dashboard/dashboard.component';
-import { FeatureCardComponent } from './body/dashboard/feature-card/feature-card.component';
-import { SprintDetailsComponent } from './body/dashboard/sprint-details/sprint-details.component';
+import { BoardComponent } from './body/board/board.component';
+import { FeatureCardComponent } from './body/board/feature-card/feature-card.component';
+import { SprintDetailsComponent } from './body/board/sprint-details/sprint-details.component';
 import { TasksComponent } from './body/tasks/tasks.component';
 import { TaskCardsComponent } from './body/tasks/task-cards/task-cards.component';
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
@@ -25,7 +25,7 @@ import { LoginComponent } from './body/login/login.component';
 import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
-import { TaskBoardComponent } from './body/task-board/task-board.component';
+import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
@@ -37,7 +37,7 @@ import { FilterTaskComponent } from './body/filter-task/filter-task.component';
     BodyComponent,
     CreateNewSessionComponent,
     CreateNewSprintComponent,
-    DashboardComponent,
+    BoardComponent,
     FeatureCardComponent,
     SprintDetailsComponent,
     TasksComponent,
@@ -49,7 +49,7 @@ import { FilterTaskComponent } from './body/filter-task/filter-task.component';
     LoginComponent,
     LoginHandlerComponent,
     UserCardComponent,
-    TaskBoardComponent,
+    MyDashBoardComponent,
     PriorityIconsComponent,
     StatusIconsComponent,
     FilterTaskComponent
