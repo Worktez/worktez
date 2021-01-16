@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-create-new-session',
@@ -26,7 +27,7 @@ export class CreateNewSessionComponent implements OnInit {
   storyPoint: number
   enableLoader: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     var today = new Date();
@@ -55,7 +56,7 @@ export class CreateNewSessionComponent implements OnInit {
   }
 
   backToDashboard(){
-    this.router.navigate(['/']);
+    this.location.back()
   }
 
 }

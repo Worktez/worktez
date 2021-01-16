@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -33,7 +34,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.getNewSprintId();
@@ -110,7 +111,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   backToDashboard(){
-    this.router.navigate(['/']);
+    this.location.back();
   }
 
 }
