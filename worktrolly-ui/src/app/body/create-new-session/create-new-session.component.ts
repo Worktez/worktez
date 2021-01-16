@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-new-session',
@@ -28,8 +29,7 @@ export class CreateNewSessionComponent implements OnInit {
   enableLoader: boolean = false
   valid: boolean = true;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router) { }
-
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location) { }
   ngOnInit(): void {
     var today = new Date();
 
@@ -71,7 +71,7 @@ export class CreateNewSessionComponent implements OnInit {
   }
 
   backToDashboard(){
-    this.router.navigate(['/']);
+    this.location.back()
   }
 
 }

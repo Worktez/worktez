@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -34,7 +35,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location) { }
 
   ngOnInit(): void {
     this.getNewSprintId();
@@ -114,7 +115,7 @@ export class CreateNewSprintComponent implements OnInit {
     try {
       const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, TotalOther: this.totalOther, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
 
-      console.log("Successfully created the sprint");
+      console.log("Successfully created a new sprint");
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
@@ -125,7 +126,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   backToDashboard(){
-    this.router.navigate(['/']);
+    this.location.back();
   }
 
 }
