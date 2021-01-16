@@ -5,21 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    // apiKey: "AIzaSyAP-cLcP8gB3bsUHSK9oexPq0BDykBPzzE",
-    // authDomain: "worktrolly.firebaseapp.com",
-    // databaseURL: "https://worktrolly.firebaseio.com",
-    // projectId: "worktrolly",
-    // storageBucket: "worktrolly.appspot.com",
-    // messagingSenderId: "358996208239",
-    // appId: "1:358996208239:web:73a1939b7267070d2dfb9a",
-    // measurementId: "G-FEQ8PFLLCV"
-
-    apiKey: "AIzaSyB5eHr9LlPanKlSaA555oyvYWfaBKyHpdw",
-    authDomain: "test-39399.firebaseapp.com",
-    projectId: "test-39399",
-    storageBucket: "test-39399.appspot.com",
-    messagingSenderId: "819887394429",
-    appId: "1:819887394429:web:8208af6affda64a1e0ab14"
+    apiKey: "AIzaSyAP-cLcP8gB3bsUHSK9oexPq0BDykBPzzE",
+    authDomain: "worktrolly.firebaseapp.com",
+    databaseURL: "https://worktrolly.firebaseio.com",
+    projectId: "worktrolly",
+    storageBucket: "worktrolly.appspot.com",
+    messagingSenderId: "358996208239",
+    appId: "1:358996208239:web:73a1939b7267070d2dfb9a",
+    measurementId: "G-FEQ8PFLLCV"
   }
 };
 

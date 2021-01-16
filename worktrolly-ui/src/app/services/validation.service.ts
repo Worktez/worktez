@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from "../Interface/UserInterface";
 import { Tasks } from "../Interface/TasksInterface";
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Injectable({    
     providedIn: 'root',
@@ -11,7 +11,7 @@ export class ValidationService {
 
     constructor() { }    
 
-    async checkValidity(label:String, value:any){
+    validation(label:any, value:any){
         switch(label)
         {
             case 'title': { 
@@ -50,12 +50,44 @@ export class ValidationService {
             case 'storyPoint': { 
                 return(this.checkStoryPoint(value));
             } 
+            case 'startDate': { 
+                return(this.checkStartDate(value));
+            } 
+            case 'endDate': { 
+                return(this.checkEndDate(value));
+            }
+            case 'logHours': { 
+                return(this.checkLogHours(value));
+            } 
+            case 'workCompleted': { 
+                return(this.checkWorkCompleted(value));
+            } 
+            case 'comment': { 
+                return(this.checkComment(value));
+            } 
         }
     }
 
+    async checkValidity(labels: any[], values: any[]){
+        var valid = 0;
+        for(let i=0; i<labels.length; i++)
+        {
+            var condition = await this.validation(labels[i], values[i]).then(res => {
+                return res;});
+            if(condition)
+            {
+                valid+=1;
+            }
+        }
+        if (valid == labels.length)
+            return (true);
+        else
+            return(false);
+    }
 
     async checkTitle(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Title field is required");
@@ -64,7 +96,8 @@ export class ValidationService {
     }
 
     async checkStatus(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Status field is required");
@@ -73,7 +106,8 @@ export class ValidationService {
     }
 
     async checkPriority(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Priority field is required");
@@ -82,7 +116,8 @@ export class ValidationService {
     }
 
     async checkEstimatedTime(value: number){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Estimated-Time field is required");
@@ -91,16 +126,18 @@ export class ValidationService {
     }
 
     async checkDifficulty(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
-            console.log("Title field required");
+            console.log("Difficulty field is required");
             return(false);
         }
     }
 
     async checkDescription(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Description field is required");
@@ -109,7 +146,8 @@ export class ValidationService {
     }
 
     async checkCreator(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Creator field is required");
@@ -118,16 +156,18 @@ export class ValidationService {
     }
 
     async checkCategory(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
-            console.log("Categpry field is required");
+            console.log("Category field is required");
             return(false);
         }    
     }
 
     async checkAssignee(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Assignee field is required");
@@ -136,7 +176,8 @@ export class ValidationService {
     }
 
     async checkCreationDate(value: String){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Creation-Date field is required");
@@ -145,7 +186,8 @@ export class ValidationService {
     }
 
     async checkSprintNumber(value: number){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
             console.log("Sprint-Number field is required");
@@ -154,10 +196,61 @@ export class ValidationService {
     }
 
     async checkStoryPoint(value: number){
-        if (Validators.required ===null)
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
             return(true);
         else{
-            console.log("Storyu-Point field required");
+            console.log("Story-Point field is required");
+            return(false);
+        }  
+    }
+
+    async checkStartDate(value: String){
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return(true);
+        else{
+            console.log("Start-Date field is required");
+            return(false);
+        }  
+    }
+
+    async checkEndDate(value: String){
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return(true);
+        else{
+            console.log("End-Date field is required");
+            return(false);
+        }  
+    }
+
+    async checkLogHours(value: number){
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return(true);
+        else{
+            console.log("Log-Hours field is required");
+            return(false);
+        }  
+    }
+
+    async checkWorkCompleted(value: number){
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return(true);
+        else{
+            console.log("Work-Completed field is required");
+            return(false);
+        }  
+    }
+
+    async checkComment(value: String){
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return(true);
+        else{
+            console.log("Comment field is required");
             return(false);
         }  
     }

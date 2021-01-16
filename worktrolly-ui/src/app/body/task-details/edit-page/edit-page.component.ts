@@ -3,6 +3,8 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
+import { ValidationService } from '../../../services/validation.service';
+
 
 @Component({
   selector: 'app-edit-page',
@@ -19,11 +21,25 @@ export class EditPageComponent implements OnInit {
   previousSprintId: number
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService) { }
 
   ngOnInit(): void {
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
+  }
+
+  async validate(){
+    let labels = ['priority', 'estimatedTime', 'difficulty', 'description', 'assignee', 'sprintNumber', 'storyPoint'];
+    let values = [this.editTask.Priority, this.editTask.EstimatedTime, this.editTask.Difficulty, this.editTask.Description, this.editTask.Assignee, this.editTask.SprintNumber, this.editTask.StoryPointNumber];
+    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.editPage();
+    }
+    else
+    console.log("Page not edited due to validation error");
   }
 
   async editPage() {

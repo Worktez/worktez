@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
+import { ValidationService } from '../../services/validation.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -33,7 +34,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService) { }
 
   ngOnInit(): void {
     this.getNewSprintId();
@@ -84,6 +85,20 @@ export class CreateNewSprintComponent implements OnInit {
     }
   }
 
+  async validate(){
+    let labels = ['startDate', 'endDate', 'status'];
+    let values = [this.startDate, this.endDate, this.status];
+    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.createNewSprint();
+    }
+    else
+    console.log("Sprint not created! Validation error");
+  }
+
   async createNewSprint() {
     console.log(this.startDate);
     console.log(this.endDate);
@@ -97,9 +112,9 @@ export class CreateNewSprintComponent implements OnInit {
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, TotalOther: this.totalOther, Status: this.status }).toPromise();
+      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, TotalOther: this.totalOther, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
 
-      console.log("Successfully created the task");
+      console.log("Successfully created the sprint");
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {

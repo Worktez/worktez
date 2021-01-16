@@ -43,11 +43,15 @@ export class CreateNewSessionComponent implements OnInit {
   async validate(){
     let labels = ['title', 'status', 'priority', 'estimatedTime', 'difficulty', 'description', 'creator', 'category', 'assignee', 'creationDate', 'sprintNumber', 'storyPoint'];
     let values = [this.title, this.status, this.priority, this.estimatedTime, this.difficulty, this.description, this.creatorName, this.category, this.assigneeName, this.todayDate, this.sprintNumber, this.storyPoint];
-    labels.forEach(function(label, index){  
-    this.valid = this.valid && this.validationService.checkValidity(label, values[index]);
-    });
-    if(this.valid === true)
+    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
       this.createNewSession();
+    }
+    else
+    console.log("Task not created! Validation error");
   }
 
   async createNewSession() {
