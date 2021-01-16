@@ -17,9 +17,9 @@
                 </ul>
             </nav>
             <div class="card-body">
-                <div class="row">
-                    <div class="alert alert-info form-inline col-md-5" id="non-editable" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Id:</div>
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-2 col-form-label">Id:</label>
+                    <div class="alert alert-info form-inline col-sm-10" id="non-editable" role="alert">
                         <div>{{editTask.Id}}</div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="input">Category</label>
-                        <div class="alert alert-info form-inline">
+                        <div class="alert alert-info form-inline" id="non-editable">
                             <div id="creatorEditPageTask">{{editTask.Category}}</div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputState">Status</label>
-                        <div class="alert alert-info form-inline">
+                        <div class="alert alert-info form-inline" id="non-editable">
                             <div id="creatorEditPageTask">{{editTask.Status}}</div>
                         </div>
                     </div>
