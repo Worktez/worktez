@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators'
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-board',
+  templateUrl: './board.component.html',
+  styleUrls: ['./board.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class BoardComponent implements OnInit {
 
   // public rawData: RawDataType;
   public rawDataObservable: Observable<RawDataType>;

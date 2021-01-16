@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AuthService } from 'src/app/services/auth.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-task-details',
@@ -24,7 +25,7 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location) { }
 
   ngOnInit(): void {
     this.Id = this.route.snapshot.params['taskId'];
@@ -72,12 +73,15 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  backToTasks(category: string){
-    this.sprintName = "S" + this.task.SprintNumber;
-    this.router.navigate(['Tasks', category, this.sprintName])
+  backToTasks(){
+    this.location.back()
   }
+<<<<<<< HEAD
 
   backToDashboard(){
     this.router.navigate(['/']);
   }
+=======
+ 
+>>>>>>> 2ced1ad233138cb98f0a955092911794e6ed3035
 }
