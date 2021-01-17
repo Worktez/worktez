@@ -52,14 +52,4 @@ export class LogWorkComponent implements OnInit {
     this.navbarHolder.removeFromNavbar();
     this.logWorkCompleted.emit({ completed: true });
   }
-
-  backToTasks(category: string){
-    this.sprintName = "S" + this.task.SprintNumber;
-    this.router.navigate(['Tasks', category, this.sprintName])
-  }
-
-  backToDashboard(){
-    this.router.navigate(['']);
-  }
-
 }

@@ -18,7 +18,6 @@ export class CreateNewSprintComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('newSprintId') newSprintId: string;
 
- 
   startDate: string
   endDate: string
   status: string
@@ -113,7 +112,6 @@ export class CreateNewSprintComponent implements OnInit {
 
   }
   
-
   backToDashboard(){
     this.location.back();
   }

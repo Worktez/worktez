@@ -25,7 +25,6 @@ export class NavbarHolderService {
       this.currentNav = component;
       console.log(this.navbar);
     }
- 
   }
   
   removeFromNavbar(){
@@ -45,10 +44,7 @@ export class NavbarHolderService {
       } else {
         this.currentNav = "";
       }
-     
     }
-
   }
-
 }
 

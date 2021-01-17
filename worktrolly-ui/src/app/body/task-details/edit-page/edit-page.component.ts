@@ -59,14 +59,4 @@ export class EditPageComponent implements OnInit {
     this.navbarHolder.removeFromNavbar();
     this.editTaskCompleted.emit({ completed: true });
   }
-  
-  backToTasks(category: string){
-    this.sprintName = "S" + this.task.SprintNumber;
-    this.router.navigate(['Tasks', this.task.Category, this.sprintName])
-  }
-  
-  backToDashboard(){
-    this.router.navigate(['']);
-  }
-
 }
