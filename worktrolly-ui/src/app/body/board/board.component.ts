@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
   selector: 'app-board',
@@ -11,6 +12,8 @@ import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawD
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
+
+  componentName: string = "Board"
 
   // public rawData: RawDataType;
   public rawDataObservable: Observable<RawDataType>;
@@ -24,9 +27,10 @@ export class BoardComponent implements OnInit {
 
   filterSprintNumber: string;
 
-  constructor(private db: AngularFirestore, private router: Router, private route: ActivatedRoute) { }
+  constructor(private db: AngularFirestore, private router: Router, private route: ActivatedRoute, private navbarHolder: NavbarHolderService) { }
 
   ngOnInit(): void {
+    this.navbarHolder.addToNavbar(this.componentName);
     // Better way of use db.
     // this.rawCollection = this.db.collection<RawDataType>('RawData');
     // this.rawData = this.rawCollection.snapshotChanges().pipe(

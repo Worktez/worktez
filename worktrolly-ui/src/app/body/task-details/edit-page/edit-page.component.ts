@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
   selector: 'app-edit-page',
@@ -15,16 +16,16 @@ export class EditPageComponent implements OnInit {
   @Input('task') task: Tasks
   @Output() editTaskCompleted = new EventEmitter<{ completed: boolean }>();
 
-  editWork: string= "/ Edit Work"
-  taskDetails: string= "/ Task Details"
+  componentName: string = "Edit Task"
   editTask: Tasks
   previousSprintId: number
   sprintName: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, private navbarHolder: NavbarHolderService) { }
 
   ngOnInit(): void {
+    this.navbarHolder.addToNavbar(this.componentName);
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
   }
@@ -55,6 +56,7 @@ export class EditPageComponent implements OnInit {
   }
 
   editTaskDone() {
+    this.navbarHolder.removeFromNavbar();
     this.editTaskCompleted.emit({ completed: true });
   }
   

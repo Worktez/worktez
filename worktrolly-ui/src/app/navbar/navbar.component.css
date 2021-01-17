@@ -1,8 +1,0 @@
-.divider{
-    -breadcrumb-divider: '>';
-}
-
-.breadcrumb > .active{
-    margin-bottom: 0;
-    color:#10be65;
-}

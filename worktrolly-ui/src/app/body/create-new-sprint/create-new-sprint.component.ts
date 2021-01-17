@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
+import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -17,7 +18,7 @@ export class CreateNewSprintComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('newSprintId') newSprintId: string;
 
-  createSprint: string = "Create New Sprint"
+ 
   startDate: string
   endDate: string
   status: string
@@ -38,6 +39,7 @@ export class CreateNewSprintComponent implements OnInit {
   constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
+
     this.getNewSprintId();
   }
 

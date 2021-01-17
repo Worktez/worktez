@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Router } from '@angular/router';
+import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
   selector: 'app-log-work',
@@ -15,9 +16,8 @@ export class LogWorkComponent implements OnInit {
 
   @Input('task') task: Tasks
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
-
-  logWork: string= "/ Log Work"
-  taskDetails: string= "/ Task Details"
+  
+  componentName: string = "Log Work"
   Id: string
   logWorkDone: number
   logWorkStatus: number
@@ -26,9 +26,11 @@ export class LogWorkComponent implements OnInit {
   sprintName: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions,private router: Router) { }
+  constructor(private functions: AngularFireFunctions,private router: Router,private navbarHolder: NavbarHolderService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.navbarHolder.addToNavbar(this.componentName);
+   }
 
   async submitLogWorkPage() {
     this.enableLoader = true;
@@ -47,6 +49,7 @@ export class LogWorkComponent implements OnInit {
   }
 
   workDone() {
+    this.navbarHolder.removeFromNavbar();
     this.logWorkCompleted.emit({ completed: true });
   }
 

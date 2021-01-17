@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import {Location} from '@angular/common';
+import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
   selector: 'app-task-details',
@@ -15,7 +16,7 @@ import {Location} from '@angular/common';
 })
 export class TaskDetailsComponent implements OnInit {
 
-  taskDetails: string= "/ Task Details"
+  componentName: string
   sprintName: string
   Id: string
   logWorkEnabled: boolean = false
@@ -25,10 +26,13 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, private navbarHolder: NavbarHolderService) { }
 
   ngOnInit(): void {
     this.Id = this.route.snapshot.params['taskId'];
+
+    this.componentName = this.Id;
+    this.navbarHolder.addToNavbar(this.componentName);
     this.getTaskDetail();
   }
 
@@ -67,21 +71,14 @@ export class TaskDetailsComponent implements OnInit {
       const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
-      this.router.navigate(['/']);
+      this.backToTasks();
     } catch (error) {
       console.log("Error", error);
     }
   }
 
   backToTasks(){
+    this.navbarHolder.removeFromNavbar();
     this.location.back()
   }
-<<<<<<< HEAD
-
-  backToDashboard(){
-    this.router.navigate(['/']);
-  }
-=======
- 
->>>>>>> 2ced1ad233138cb98f0a955092911794e6ed3035
 }

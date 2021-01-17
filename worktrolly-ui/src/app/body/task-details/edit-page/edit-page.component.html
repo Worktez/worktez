@@ -1,5 +1,4 @@
 <form (ngSubmit)="editPage()" #form="ngForm">
-    <app-navbar [navbarComponent]="task.Category"  [navbarTask]="taskDetails" [navbarLog]="editWork"></app-navbar>
     <div class="container py-5" id="editPageTask">
 <form *ngIf="!enableLoader" (ngSubmit)="editPage()" #form="ngForm">
     <div class="container p-3">

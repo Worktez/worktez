@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import firebase from "firebase/app";
+import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
-
+  
+  componentName: string
   currentSprintName: string
   category: string
   currentSprintNumber: number
@@ -25,12 +27,16 @@ export class TasksComponent implements OnInit {
   filterStatus: string
   filterCategory: string
   showFilter: boolean = false
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore) { }
+  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, private navbarHolder: NavbarHolderService) { }
 
   ngOnInit(): void {
 
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
+
+    this.componentName = "Task-" + this.category;
+    this.navbarHolder.addToNavbar(this.componentName);
+
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
@@ -74,6 +80,7 @@ export class TasksComponent implements OnInit {
     );
   }
   backToDashboard() {
+    this.navbarHolder.removeFromNavbar();
     this.router.navigate(['/Board']);
   }
 

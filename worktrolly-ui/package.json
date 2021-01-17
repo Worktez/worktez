@@ -20,13 +20,14 @@
         "@angular/platform-browser": "~11.0.2",
         "@angular/platform-browser-dynamic": "~11.0.2",
         "@angular/router": "~11.0.2",
+        "angular-crumbs": "^3.0.1",
         "bootstrap": "^4.5.3",
+        "firebase": "^7.0.0 || ^8.0.0",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",
-        "zone.js": "~0.10.2",
-        "firebase": "^7.0.0 || ^8.0.0"
+        "zone.js": "~0.10.2"
     },
     "devDependencies": {
         "@angular-devkit/architect": ">= 0.900 < 0.1100",
