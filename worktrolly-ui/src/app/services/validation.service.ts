@@ -68,18 +68,18 @@ export class ValidationService {
         }
     }
 
-    async checkValidity(labels: any[], values: any[]){
+    async checkValidity(data: any[]){
         var valid = 0;
-        for(let i=0; i<labels.length; i++)
-        {
-            var condition = await this.validation(labels[i], values[i]).then(res => {
+        
+        for (const element of data) {
+            var condition = await this.validation(element.label, element.value).then(res => {
                 return res;});
             if(condition)
             {
                 valid+=1;
             }
         }
-        if (valid == labels.length)
+        if (valid == data.length)
             return (true);
         else
             return(false);

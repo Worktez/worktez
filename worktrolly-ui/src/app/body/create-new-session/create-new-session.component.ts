@@ -40,10 +40,20 @@ export class CreateNewSessionComponent implements OnInit {
     this.todayDate = dd + "/" + mm + "/" + yyyy;
   }
 
-  async validate(){
-    let labels = ['title', 'status', 'priority', 'estimatedTime', 'difficulty', 'description', 'creator', 'category', 'assignee', 'creationDate', 'sprintNumber', 'storyPoint'];
-    let values = [this.title, this.status, this.priority, this.estimatedTime, this.difficulty, this.description, this.creatorName, this.category, this.assigneeName, this.todayDate, this.sprintNumber, this.storyPoint];
-    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+  async submit(){
+    let data = [{label:"title",value:this.title},
+      {label:"status",value:this.status},
+      {label:"priority",value:this.priority},
+      {label:"estimatedTime",value:this.estimatedTime},
+      {label:"difficulty",value:this.difficulty},
+      {label:"description",value:this.description},
+      {label:"creator",value:this.creatorName},
+      {label:"category",value:this.category},
+      {label:"assignee",value:this.assigneeName},
+      {label:"creationDate",value:this.todayDate},
+      {label:"sprintNumber",value:this.sprintNumber},
+      {label:"storyPoint",value:this.storyPoint}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
       return res;});
     if(condition)
     {

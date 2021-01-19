@@ -27,10 +27,14 @@ export class LogWorkComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  async validate(){
+  async submit(){
     let labels = ['status', 'logHours', 'workCompleted', 'comment'];
     let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
-    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+    let data = [{label:"status",value:this.logWorkStatus},
+    {label:"logHours",value:this.logHours},
+    {label:"workCompleted",value:this.logWorkDone},
+    {label:"comment",value:this.logWorkComment}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
       return res;});
     if(condition)
     {

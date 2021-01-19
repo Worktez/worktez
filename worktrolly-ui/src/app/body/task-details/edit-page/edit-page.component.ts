@@ -28,10 +28,15 @@ export class EditPageComponent implements OnInit {
     this.previousSprintId = this.task.SprintNumber;
   }
 
-  async validate(){
-    let labels = ['priority', 'estimatedTime', 'difficulty', 'description', 'assignee', 'sprintNumber', 'storyPoint'];
-    let values = [this.editTask.Priority, this.editTask.EstimatedTime, this.editTask.Difficulty, this.editTask.Description, this.editTask.Assignee, this.editTask.SprintNumber, this.editTask.StoryPointNumber];
-    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+  async submit(){
+    let data = [{label:"priority",value:this.editTask.Priority},
+    {label:"estimatedTime",value:this.editTask.EstimatedTime},
+    {label:"difficulty",value:this.editTask.Difficulty},
+    {label:"description",value:this.editTask.Description},
+    {label:"assignee",value:this.editTask.Assignee},
+    {label:"sprintNumber",value:this.editTask.SprintNumber},
+    {label:"storyPoint",value:this.editTask.StoryPointNumber}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
       return res;});
     if(condition)
     {

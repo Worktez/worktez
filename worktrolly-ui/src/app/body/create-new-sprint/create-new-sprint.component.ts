@@ -86,10 +86,11 @@ export class CreateNewSprintComponent implements OnInit {
     }
   }
 
-  async validate(){
-    let labels = ['startDate', 'endDate', 'status'];
-    let values = [this.startDate, this.endDate, this.status];
-    var condition = await (this.validationService.checkValidity(labels,values)).then(res => {
+  async submit(){
+    let data = [{label:"startDate",value:this.startDate},
+      {label:"endDate",value:this.endDate},
+      {label:"status",value:this.status}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
       return res;});
     if(condition)
     {
