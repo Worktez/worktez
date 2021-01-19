@@ -16,10 +16,10 @@
                             <li class="nav-item active pr-5 py-1 justify-content-between">
                                 <button type="submit" class="btn" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
                             </li>
-                            <li class="nav-item active pr-5 py-1 justify-content-between">
-                                <button type="submit" class="btn" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">Edit</button>
+                            <li class="nav-item active pr-4 py-1 justify-content-between">
+                                <span type="button" class="material-icons text-light" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">edit</span>
                             </li>
-                            <li class="nav-item active py-1 justify-content-between" *ngIf="authService.afauth.user | async">
+                            <li class="nav-item active pr-2 py-1 justify-content-between" *ngIf="authService.afauth.user | async">
                                 <span type="button" class="material-icons text-light mr-3" (click)="deleteTask()"> delete </span>
                             </li>
                             <li class="nav-item active py-1 justify-content-between">
