@@ -12,7 +12,7 @@
                         <span class="navbar-toggler-icon text-white"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarTexts">
-                        <ul class="nav navbar-nav ml-auto justify-content-end">
+                        <ul class="nav navbar-nav ml-auto justify-content-end align-items-center">
                             <li class="nav-item active pr-5 py-1 justify-content-between">
                                 <button type="submit" class="btn" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
                             </li>
