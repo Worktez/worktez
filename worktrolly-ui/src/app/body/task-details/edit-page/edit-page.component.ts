@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
@@ -22,7 +21,7 @@ export class EditPageComponent implements OnInit {
   sprintName: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, private router: Router, private navbarHolder: NavbarHolderService) { }
+  constructor(private functions: AngularFireFunctions, private navbarHolder: NavbarHolderService) { }
 
   ngOnInit(): void {
     this.navbarHolder.addToNavbar(this.componentName);

@@ -3,7 +3,6 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
-import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
   selector: 'app-create-new-session',
@@ -31,7 +30,6 @@ export class CreateNewSessionComponent implements OnInit {
   constructor(private functions: AngularFireFunctions, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
-
     var today = new Date();
 
     var dd = String(today.getDate()).padStart(2, '0');

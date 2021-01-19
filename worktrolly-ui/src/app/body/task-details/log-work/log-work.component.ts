@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { Router } from '@angular/router';
 import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
 
 @Component({
@@ -26,7 +25,7 @@ export class LogWorkComponent implements OnInit {
   sprintName: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions,private router: Router,private navbarHolder: NavbarHolderService) { }
+  constructor(private functions: AngularFireFunctions,private navbarHolder: NavbarHolderService) { }
 
   ngOnInit(): void {
     this.navbarHolder.addToNavbar(this.componentName);

@@ -38,7 +38,6 @@ export class CreateNewSprintComponent implements OnInit {
   constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
-
     this.getNewSprintId();
   }
 
@@ -109,11 +108,9 @@ export class CreateNewSprintComponent implements OnInit {
       this.enableLoader = false;
       console.error("Error", error);
     }
-
   }
   
   backToDashboard(){
     this.location.back();
   }
-
 }
