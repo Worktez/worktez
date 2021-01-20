@@ -17,3 +17,17 @@
 #navbarMenu {
     background-color: #8120f0;
 }
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        float: left;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 392px) {
+    .navbar-nav {
+        float: left;
+        flex-direction: row;
+    }
+}

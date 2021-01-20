@@ -11,8 +11,8 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTexts" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon text-white"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarTexts">
-                        <ul class="nav navbar-nav ml-auto justify-content-end align-items-center">
+                    <div class="collapse navbar-collapse pl-lg-0" id="navbarTexts">
+                        <ul class="nav navbar-nav ml-auto align-items-center">
                             <li class="nav-item active pr-5 py-1 justify-content-between">
                                 <button type="submit" class="btn" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
                             </li>
