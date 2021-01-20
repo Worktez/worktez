@@ -5,16 +5,16 @@
                 <div class="col-md-2 col-3">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                 </div>
-                <div class="col-md-4 col-2">
+                <div class="col-md-5 col-2">
                     <h5 id="sprintId">{{currentSprintName}}</h5>
                 </div>
 
-                <div class="col-md-4 col-3">
+                <div class="col-md-3 col-3">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                        <div class="dropdown-menu px-5 py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-                            <div class="row py-3">
-                                <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" placeholder="enter sprint number" [(ngModel)]="filterSprintNumber">
+                        <div class="dropdown-menu px-4 py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                            <div class="row">
+                                <input class="col-md-6 col-8 pl-1" style="font-size: 11px;" type="number" id="filterSprintNumberInput" placeholder="enter sprint number" [(ngModel)]="filterSprintNumber">
                                 <div class="col-md-4 col-4 pl-2">
                                     <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
                                 </div>
@@ -22,8 +22,8 @@
                         </div>
                     </div>
                 </div>
-                <div class=" col-md-2 col-2 ">
-                    <button class="btn " id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
+                <div class=" col-md-2 col-3 ">
+                    <button class="btn" *ngIf="Status !== 'Completed'" id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
                     <span class="material-icons align-middle" *ngIf="Status === 'Completed' ">
                         check_circle
                     </span>
