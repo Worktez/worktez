@@ -5,11 +5,17 @@
                 <div class="col-md-2 col-3">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                 </div>
-                <div class="col-md-4 col-2">
+                <div class="col-md-4 col-3">
                     <h5 id="sprintId">{{currentSprintName}}</h5>
                 </div>
-
-                <div class="col-md-4 col-3">
+                <div class="col-md-1 col-0"></div>
+                <div class=" col-md-2 col-4 ">
+                    <button class="btn " id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
+                    <span class="material-icons align-middle" *ngIf="Status === 'Completed' ">
+                        check_circle
+                    </span>
+                </div>
+                <div class="col-md-3 col-2">
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
                         <div class="dropdown-menu px-5 py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
@@ -22,12 +28,7 @@
                         </div>
                     </div>
                 </div>
-                <div class=" col-md-2 col-2 ">
-                    <button class="btn " id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
-                    <span class="material-icons align-middle" *ngIf="Status === 'Completed' ">
-                        check_circle
-                    </span>
-                </div>
+
             </div>
         </div>
         <div class="row">
