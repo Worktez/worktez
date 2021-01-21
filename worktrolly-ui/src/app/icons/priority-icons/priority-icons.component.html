@@ -1,17 +1,17 @@
 <ng-container *ngIf="Priority == 'Low' ">
-    <span class="material-icons">
+    <span class="material-icons" style="color: yellow; padding: right 16px;" data-toggle="tooltip" data-placement="top" title="Low">
         keyboard_arrow_down
     </span>
 </ng-container>
 
 <ng-container *ngIf="Priority == 'Medium' ">
-    <span class="material-icons">
+    <span class="material-icons" style="color: violet; padding: right 16px;" data-toggle="tooltip" data-placement="top" title="Medium">
         sync_alt
     </span>
 </ng-container>
 
 <ng-container *ngIf="Priority == 'High' ">
-    <span class="material-icons">
+    <span class="material-icons" style="color: red; padding: right 16px;" data-toggle="tooltip" data-placement="top" title="High">
         keyboard_arrow_up
     </span>
 </ng-container>
