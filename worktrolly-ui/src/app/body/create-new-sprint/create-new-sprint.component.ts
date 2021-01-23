@@ -122,7 +122,7 @@ export class CreateNewSprintComponent implements OnInit {
       console.error("Error", error);
     }
   }
-  
+
   backToDashboard(){
     this.location.back();
   }

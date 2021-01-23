@@ -32,9 +32,11 @@ export class CreateNewSessionComponent implements OnInit {
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location) { }
   ngOnInit(): void {
     var today = new Date();
+
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
+    
     this.todayDate = dd + "/" + mm + "/" + yyyy;
   }
 
