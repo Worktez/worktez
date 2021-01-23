@@ -1,0 +1,20 @@
+<ng-container>
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-6">
+                    Performance Chart
+                </div>
+                <div class="col-6 text-right">
+                    <app-range-card (setRange)="onGetRange($event)"></app-range-card>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" *ngIf="data.length && !showLoader">
+            <app-chart [data]="data"></app-chart>
+        </div>
+        <div class="card-body" *ngIf="showLoader">
+            <app-loader></app-loader>
+        </div>
+    </div>
+</ng-container>

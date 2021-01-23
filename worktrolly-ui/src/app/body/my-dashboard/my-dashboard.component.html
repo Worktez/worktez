@@ -1,27 +1,10 @@
-<div id="taskPage">
-    <div class="container pt-2 pb-4 pl-2">
-        <div class="row">
-            <div class="col-9 col-md-10 m-2">
-                <h5 style="font-weight:bolder">My DashBoard</h5>
-            </div>
+<div class="container" *ngIf="(userObservable | async ) && (backendService.rawDataObservable | async)">
+    <div class="row pt-5">
+        <div class="col">
+            <app-performance-chart [username]="username" [currentSprint]="currentSprintNumber"></app-performance-chart>
         </div>
-        <div class="row">
-            <div class="col">
-                <nav class="navbar navbar-expand-sm navbar-dark" id="navbarMenu">
-                    <ul class="navbar-nav mr-auto" *ngIf="userObservable |async">
-                        <li class="nav-item">
-                            <h5 class="active nav-link" style="font-weight:bolder">{{user.displayName}}</h5>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <hr class="w-75 ml-0">
-        <div id="cardsList">
-            <ng-container *ngFor="let item of tasksData | async">
-                <app-task-cards [task]="item"></app-task-cards>
-            </ng-container>
+        <div class="col">
+            <app-my-tasks [username]="username" [currentSprint]="currentSprintNumber"></app-my-tasks>
         </div>
     </div>
 </div>
-<app-loader *ngIf="!(tasksData | async)"></app-loader>

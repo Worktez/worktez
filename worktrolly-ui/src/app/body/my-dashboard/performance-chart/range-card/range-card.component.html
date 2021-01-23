@@ -1,0 +1,28 @@
+<div class="dropdown">
+    <span class="material-icons" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+            perm_data_setting
+    </span>
+    <div class="dropdown-menu dropdown-menu-right" id="dropdownRangeCard">
+        <div class="row p-1 align-items-center">
+            <div class="col-6">
+                <label for="input">Start Range</label>
+            </div>
+            <div class="col">
+                <input type="number" min="1" class="form-control" [(ngModel)]="sprintRange1" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+        <div class="row p-1 align-items-center">
+            <div class="col-6">
+                <label for="input">End Range</label>
+            </div>
+            <div class="col">
+                <input type="number" min="2" class="form-control" [(ngModel)]="sprintRange2" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+        <div class="row p-1">
+            <div class="offset-5 offset-sm-6 offset-md-7 col">
+                <button type="submit" class="btn" id="button" (click)="onSetRange()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
