@@ -109,7 +109,6 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.totalBusiness);
     console.log(this.totalMarketing);
     console.log(this.totalOther);
-
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('startNewSprint');
 
