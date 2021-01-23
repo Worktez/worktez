@@ -5,8 +5,8 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
-import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
+import { ValidationService } from '../../services/validation.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -35,7 +35,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, private location: Location) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location) { }
 
   ngOnInit(): void {
     this.getNewSprintId();
@@ -84,6 +84,21 @@ export class CreateNewSprintComponent implements OnInit {
     } catch (error) {
       return "Error";
     }
+  }
+
+  async submit(){
+    let data = [{label:"startDate",value:this.startDate},
+      {label:"endDate",value:this.endDate},
+      {label:"status",value:this.status}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.createNewSprint();
+    }
+    else
+    console.log("Sprint not created! Validation error");
   }
 
   async createNewSprint() {

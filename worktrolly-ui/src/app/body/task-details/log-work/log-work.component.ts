@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
+import { ValidationService } from '../../../services/validation.service';
 
 @Component({
   selector: 'app-log-work',
@@ -24,12 +25,30 @@ export class LogWorkComponent implements OnInit {
   logWorkComment: number
   sprintName: string
   enableLoader: boolean = false
-
-  constructor(private functions: AngularFireFunctions,private navbarHolder: NavbarHolderService) { }
+  
+  constructor(private functions: AngularFireFunctions, private navbarHolder: NavbarHolderService, public validationService: ValidationService) { }
 
   ngOnInit(): void {
     this.navbarHolder.addToNavbar(this.componentName);
    }
+
+  async submit(){
+    let labels = ['status', 'logHours', 'workCompleted', 'comment'];
+    let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
+    let data = [{label:"status",value:this.logWorkStatus},
+    {label:"logHours",value:this.logHours},
+    {label:"workCompleted",value:this.logWorkDone},
+    {label:"comment",value:this.logWorkComment}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.submitLogWorkPage();
+    }
+    else
+    console.log("Log-Work failed due to validation error");
+  }
 
   async submitLogWorkPage() {
     this.enableLoader = true;

@@ -3,6 +3,9 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { NavbarHolderService } from 'src/app/services/navbar-holder.service';
+import { Router } from '@angular/router';
+import { ValidationService } from '../../../services/validation.service';
+
 
 @Component({
   selector: 'app-edit-page',
@@ -21,12 +24,31 @@ export class EditPageComponent implements OnInit {
   sprintName: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, private navbarHolder: NavbarHolderService) { }
+  constructor(private functions: AngularFireFunctions, private navbarHolder: NavbarHolderService, private router: Router, public validationService: ValidationService) { }
 
   ngOnInit(): void {
     this.navbarHolder.addToNavbar(this.componentName);
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
+  }
+
+  async submit(){
+    let data = [{label:"priority",value:this.editTask.Priority},
+    {label:"estimatedTime",value:this.editTask.EstimatedTime},
+    {label:"difficulty",value:this.editTask.Difficulty},
+    {label:"description",value:this.editTask.Description},
+    {label:"assignee",value:this.editTask.Assignee},
+    {label:"sprintNumber",value:this.editTask.SprintNumber},
+    {label:"storyPoint",value:this.editTask.StoryPointNumber}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.editPage();
+    }
+    else
+    console.log("Page not edited due to validation error");
   }
 
   async editPage() {
@@ -58,4 +80,9 @@ export class EditPageComponent implements OnInit {
     this.navbarHolder.removeFromNavbar();
     this.editTaskCompleted.emit({ completed: true });
   }
+
+  backToTaskDetails(){
+    window.location.reload();
+  }
+
 }
