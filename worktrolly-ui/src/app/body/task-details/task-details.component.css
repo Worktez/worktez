@@ -15,5 +15,16 @@
 }
 
 #navbarMenu {
+
     background-color: #5A20F0;
+
+    background-color: #8120f0;
+}
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        float: right;
+        flex-direction: row;
+    }
+
 }

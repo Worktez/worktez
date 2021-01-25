@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { ValidationService } from '../../../services/validation.service';
 
 @Component({
   selector: 'app-log-work',
@@ -22,9 +23,27 @@ export class LogWorkComponent implements OnInit {
   logWorkComment: number
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService) { }
 
   ngOnInit(): void { }
+
+  async submit(){
+    let labels = ['status', 'logHours', 'workCompleted', 'comment'];
+    let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
+    let data = [{label:"status",value:this.logWorkStatus},
+    {label:"logHours",value:this.logHours},
+    {label:"workCompleted",value:this.logWorkDone},
+    {label:"comment",value:this.logWorkComment}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.submitLogWorkPage();
+    }
+    else
+    console.log("Log-Work failed due to validation error");
+  }
 
   async submitLogWorkPage() {
     this.enableLoader = true;

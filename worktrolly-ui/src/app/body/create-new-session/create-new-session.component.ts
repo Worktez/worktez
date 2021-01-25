@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { ValidationService } from '../../services/validation.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-new-session',
@@ -25,10 +26,10 @@ export class CreateNewSessionComponent implements OnInit {
   status: string
   sprintNumber: number
   storyPoint: number
-  enableLoader: boolean = false;
+  enableLoader: boolean = false
+  valid: boolean = true;
 
-  constructor(private functions: AngularFireFunctions, private router: Router, private location: Location) { }
-
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location) { }
   ngOnInit(): void {
     var today = new Date();
 
@@ -37,6 +38,30 @@ export class CreateNewSessionComponent implements OnInit {
     var yyyy = today.getFullYear();
 
     this.todayDate = dd + "/" + mm + "/" + yyyy;
+  }
+
+  async submit(){
+    let data = [{label:"title",value:this.title},
+      {label:"status",value:this.status},
+      {label:"priority",value:this.priority},
+      {label:"estimatedTime",value:this.estimatedTime},
+      {label:"difficulty",value:this.difficulty},
+      {label:"description",value:this.description},
+      {label:"creator",value:this.creatorName},
+      {label:"category",value:this.category},
+      {label:"assignee",value:this.assigneeName},
+      {label:"creationDate",value:this.todayDate},
+      {label:"sprintNumber",value:this.sprintNumber},
+      {label:"storyPoint",value:this.storyPoint}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.createNewSession();
+    }
+    else
+    console.log("Task not created! Validation error");
   }
 
   async createNewSession() {
