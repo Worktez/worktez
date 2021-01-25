@@ -5,17 +5,26 @@
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <h5 class="active nav-link" style="font-weight:bolder">Task Details</h5>
+                            <h5 class="active nav-link navbar-text" style="font-weight:bolder">Task Details</h5>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item" *ngIf="authService.afauth.user | async">
-                            <span type="button" class="material-icons text-light mr-3" (click)="deleteTask()"> delete </span>
-                        </li>
-                        <li class="nav-item">
-                            <span type="button" class="material-icons text-light" (click)="backToTasks()">close</span>
-                        </li>
-                    </ul>
+                    <div class="pl-lg-0" id="navbarTexts">
+                        <ul class="nav navbar-nav ml-auto align-items-center">
+                            <li class=" active pr-3 py-1 justify-content-between">
+                                <span type="submit" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Log work" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">pending_actions</span>
+                            </li>
+                            <li class=" active pr-3 py-1 justify-content-between">
+                                <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">edit</span>
+                            </li>
+                            <li class=" active pr-1 py-1 justify-content-between" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" *ngIf="authService.afauth.user | async">
+                                <span type="button" class="material-icons text-light mr-3" (click)="deleteTask()">
+                                    delete </span>
+                            </li>
+                            <li class=" active py-1 justify-content-between">
+                                <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="backToTasks()">close</span>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
                 <div class="card-body">
                     <div class="row">
@@ -24,12 +33,6 @@
                             <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
                         </div>
                         <div class="col-md-5 col-1"></div>
-                        <div class="col-md-2 col-4">
-                            <button type="submit" class="btn mt-2 mb-5 mx-3" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
-                        </div>
-                        <div class="col-md-1 col-2">
-                            <button type="submit" class="btn mt-2 mb-5" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">Edit</button>
-                        </div>
                     </div>
                     <div class="form-group row mt-2">
                         <label for="input" class="col-sm-2 col-form-label">ID</label>
