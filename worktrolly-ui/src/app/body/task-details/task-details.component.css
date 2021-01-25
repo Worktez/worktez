@@ -20,14 +20,7 @@
 
 @media (max-width: 991px) {
     .navbar-nav {
-        float: left;
-        flex-direction: row;
-    }
-}
-
-@media (max-width: 392px) {
-    .navbar-nav {
-        float: left;
+        float: right;
         flex-direction: row;
     }
 }
