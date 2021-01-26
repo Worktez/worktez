@@ -21,12 +21,27 @@ export class TaskDetailsComponent implements OnInit {
   editTaskEnabled: boolean = false
   userLoggedIn: boolean = false
   task: Tasks
+  todayDate: string
+  time: string
+  
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
   constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location) { }
 
   ngOnInit(): void {
+    var today = new Date();
+
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    var hh = String(today.getHours()).padStart(2, '0');
+    var mn = String(today.getMinutes()).padStart(2, '0');
+    var ss= String(today.getSeconds()).padStart(2, '0');
+    this.todayDate = dd + "/" + mm + "/" + yyyy;
+    this.time = hh + ":" + mn + ":" + ss;
+
     this.Id = this.route.snapshot.params['taskId'];
     this.getTaskDetail();
   }
@@ -63,7 +78,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('deleteTask');
 
     try {
-      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status }).toPromise();
+      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);

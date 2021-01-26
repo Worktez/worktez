@@ -54,6 +54,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var result;
         var totalUnCompletedTask = 0;
         var sprintDataPromise;
+        var totalActions = 0;
+        var totalComments = 0;
 
         const promise1 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
             totalNumberOfTask = doc.data().TotalNumberOfTask;
@@ -103,7 +105,13 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalUnCompletedTask: totalUnCompletedTask
             });
-            const Promises = [P1,P2];
+            
+            const P3 = db.collection("Activity").doc(taskId).set({
+                TaskId: taskId,
+                TotalActions: totalActions,
+                TotalComments: totalComments
+            });
+            const Promises = [P1,P2,P3];
             return Promise.all(Promises);
         });
 
@@ -177,6 +185,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             }
             return Promise.resolve(sprintDataPromise);
         });
+
         const newTaskPromises = [promise1, promise2];
         Promise.all(newTaskPromises).then(() => {
                 result = { data: "OK!" }
@@ -267,9 +276,14 @@ exports.logWork = functions.https.onRequest((request, response) => {
         var logHours = parseInt(request.body.data.LogHours);
         var workDone = parseInt(request.body.data.LogWorkDone);
         var sprintNumber = parseInt(request.body.data.SprintNumber);
-        // var logWorkComment = request.body.data.LogWorkComment;
+        var logWorkComment = request.body.data.LogWorkComment;
+        var date = request.body.data.Date;
+        var time = request.body.data.Time;
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
+        var totalActions;
+        var totalComments;
+        var actionId;
 
         const promise1 = db.collection("Tasks").doc(taskId).get().then((doc) => {
             logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
@@ -309,7 +323,29 @@ exports.logWork = functions.https.onRequest((request, response) => {
             });
             return Promise.resolve(updateSprintstatus);
         });
-        const logWorkPromises = [promise1, promise2, promise3];
+        const promise4 = db.collection("Activity").doc(taskId).get().then((doc) => {
+            totalActions = parseInt(doc.data().TotalActions);
+            totalActions = parseInt(totalActions)+1;
+
+            totalComments = parseInt(doc.data().TotalComments);
+            totalComments = parseInt(totalComments)+1;
+
+            actionId = "A" + totalActions;
+
+            var p1 = db.collection("Activity").doc(taskId).update({
+                TotalActions: totalActions,
+                TotalComments: totalComments
+            });
+            var p2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
+                Type: "comment",
+                Comment: logWorkComment,
+                Date: date,
+                Time: time
+            });
+            const Promises = [p1,p2];
+            return Promise.all(Promises);
+        });
+        const logWorkPromises = [promise1, promise2, promise3,promise4];
         Promise.all(logWorkPromises).then(() => {
                 result = { data: "OK" }
                 console.log("Document successfully written!");
@@ -349,9 +385,17 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         var totalUnCompletedTask;
         var totalCompletedTask;
         var sprintEditPromise;
+        var date = request.body.data.Date;
+        var time = request.body.data.Time;
+        var totalActions;
+        var actionId;
+        var type = "edit";
+        var comment = "edited task details";
 
         var promises = [];
         if (editedSprintNumber !== previousId) {
+            type="moved";
+            comment="moved to sprint " + editedSprintId;
             const p1 = db.collection("Main").doc(previousSprintId).get().then((doc) => {
                 totalNumberOfTask = doc.data().TotalNumberOfTask;
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
@@ -450,7 +494,28 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             });
             promises.push(p2);
         }
-        var p3 = db.collection("Tasks").doc(taskId).update({
+
+        var p3 = db.collection("Activity").doc(taskId).get().then((doc) => {
+            totalActions = parseInt(doc.data().TotalActions);
+            totalActions = parseInt(totalActions)+1;
+
+            actionId = "A" + totalActions;
+
+            var prom1 = db.collection("Activity").doc(taskId).update({
+                TotalActions: totalActions,
+            });
+            var prom2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
+                Type: type,
+                Comment: comment,
+                Date: date,
+                Time: time
+            });
+            const proms = [prom1,prom2];
+            return Promise.all(proms);
+        });
+        promises.push(p3);
+
+        var p4 = db.collection("Tasks").doc(taskId).update({
                 Description: description,
                 CreationDate: creationDate,
                 Priority: priority,
@@ -460,7 +525,9 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                 SprintNumber: editedSprintNumber,
                 StoryPointNumber: storyPointNumber
         });
-        promises.push(p3);
+        promises.push(p4);
+
+
 
         Promise.all(promises).then(() => {
             result = { data: "OK" };
@@ -492,6 +559,10 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         var result;
         var totalCompletedTask;
         var totalUnCompletedTask;
+        var date = request.body.data.Date;
+        var time = request.body.data.Time;
+        var totalActions;
+        var actionId;
 
         const p1 = db.collection("Tasks").doc(taskId).update({
             Category: "Trash",
@@ -529,7 +600,26 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             });
             return Promise.resolve(updateDeleteTaskCounter);
         });
-        const deleteTaskPromises = [p1, p2];
+
+        const p3 = db.collection("Activity").doc(taskId).get().then((doc) => {
+            totalActions = parseInt(doc.data().TotalActions);
+            totalActions = parseInt(totalActions)+1;
+
+            actionId = "A" + totalActions;
+
+            var prom1 = db.collection("Activity").doc(taskId).update({
+                TotalActions: totalActions,
+            });
+            var prom2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
+                Type: "delete",
+                Comment: "deleted task " + taskId,
+                Date: date,
+                Time: time
+            });
+            const proms = [prom1,prom2];
+            return Promise.all(proms);
+        });
+        const deleteTaskPromises = [p1, p2, p3];
         Promise.all(deleteTaskPromises).then(() => {
                 result = { data: "OK" };
                 console.log("Document sucessfully deleted");
