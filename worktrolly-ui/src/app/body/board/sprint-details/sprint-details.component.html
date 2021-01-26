@@ -2,33 +2,27 @@
     <div class="card">
         <div class="card-body" style="font-weight: bold; background-color: #8120f0; color:white;">
             <div class="row  align-items-center">
-                <div class="col-md-2 col-3">
+                <div class="col-md-2 col-4">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                 </div>
-                <div class="col-md-4 col-3">
+                <div class="col-md-3 col-1">
                     <h5 id="sprintId">{{currentSprintName}}</h5>
                 </div>
-                <div class="col-md-1 col-0"></div>
-                <div class=" col-md-2 col-4 ">
-                    <button class="btn " id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
-                    <span class="material-icons align-middle" *ngIf="Status === 'Completed' ">
-                        check_circle
-                    </span>
-                </div>
-                <div class="col-md-3 col-2">
+                <div class="d-flex col-md-7 text-right col-7">
+                    <button class="btn ml-auto mr-2" id="button" type="button" *ngIf="Status !== 'Completed' " style="font-size: 14px;" (click)="completeSprint()">Completed</button>
+                    <span class="material-icons align-middle ml-auto mr-2" *ngIf="Status === 'Completed' ">check_circle</span>
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                        <div class="dropdown-menu px-5 py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-menu dropdown-menu-right px-4 py-3" id="filterMenu" aria-labelledby="dropdownMenuButton">
                             <div class="row py-3">
-                                <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" placeholder="enter sprint number" [(ngModel)]="filterSprintNumber">
-                                <div class="col-md-4 col-4 pl-2">
+                                <input class="col-6" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                                <div class="col-6 pl-2">
                                     <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="row">

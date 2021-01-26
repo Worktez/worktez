@@ -97,14 +97,13 @@ export class BoardComponent implements OnInit {
   }
 
   changeSprintName(data: {newSprintNumber: number}) {
-    this.currentSprintNumber = data.newSprintNumber;
+    this.currentSprintName = "S" + data.newSprintNumber;
     if (this.currentSprintName != "S" + this.currentSprintNumber) {
       this.currentSprintEnable = true;
     }
     else {
       this.currentSprintEnable = false;
     }
-    this.currentSprintName = "S" + this.currentSprintNumber;
   }
 
   showBacklog() {
