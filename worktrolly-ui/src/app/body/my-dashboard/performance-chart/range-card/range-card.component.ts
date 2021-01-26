@@ -17,8 +17,19 @@ export class RangeCardComponent implements OnInit {
   ngOnInit(): void {
   }
   onSetRange() {
+    if (this.sprintRange1 > this.sprintRange2) {
+      let temp = this.sprintRange2
+      this.sprintRange2 = this.sprintRange1
+      this.sprintRange1 = temp
+    }
+    if (this.sprintRange1 <= 0) {
+      this.sprintRange1 = 1
+    }
+    if (this.sprintRange2 <= 1) {
+      this.sprintRange2 = 2
+    }
     this.setRange.emit({ sprintRange1: this.sprintRange1, sprintRange2: this.sprintRange2 });
-    this.sprintRange1 = 1
-    this.sprintRange2 = 2
+    this.sprintRange1 = 0
+    this.sprintRange2 = 0
   }
 }

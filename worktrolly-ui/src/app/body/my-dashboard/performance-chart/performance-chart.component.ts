@@ -28,9 +28,6 @@ export class PerformanceChartComponent implements OnInit {
     });
   }
   async createData() {
-    if (this.sprintRange2 <= 0) {
-      this.sprintRange2 = this.currentSprintNumber
-    }
     let tempData = []
     for (let index = this.sprintRange1; index <= this.sprintRange2; index++) {
       let storyPoint: number = 0
@@ -63,6 +60,9 @@ export class PerformanceChartComponent implements OnInit {
     this.showLoader = true
     this.sprintRange1 = rangeData.sprintRange1
     this.sprintRange2 = rangeData.sprintRange2
+    if (this.sprintRange2 > this.currentSprintNumber) {
+      this.sprintRange2 = this.currentSprintNumber
+    }
     this.createData().then(data => {
       this.data = data
       this.showLoader = false
