@@ -13,7 +13,7 @@ export class ChartComponent implements OnInit {
   myChartType: string = "LineChart"
   chartColumns = ["Sprint Number", "StoryPoint"]
   myOptions = {
-    colors: ['#8120f0'],
+    colors: ['#5A20F0'],
     is3D: true,
     curveType: 'function'
   };
