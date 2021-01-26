@@ -1,6 +1,11 @@
 .taskCards {
+<<<<<<< HEAD
     border: 1px solid #8120f0;
     font-size: 15px;
+=======
+    border: 1px solid #5A20F0;
+    font-size: 12px;
+>>>>>>> fe1c7bac036e9b6f1042e4a14b8dfc03e2d86c21
     color: #000;
 }
 .app-status-icons {
