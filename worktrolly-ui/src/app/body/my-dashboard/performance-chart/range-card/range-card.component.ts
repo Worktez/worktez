@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-range-card',
@@ -11,23 +12,22 @@ export class RangeCardComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
 
-
-  constructor() { }
+  constructor(public validationService: ValidationService) { }
 
   ngOnInit(): void {
   }
+  async validateRange() {
+    var condition = await (this.validationService.checkSprintRange(this.sprintRange1, this.sprintRange2)).then(res => {
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.onSetRange();
+    }
+    else
+      console.log("Validation error");
+  }
   onSetRange() {
-    if (this.sprintRange1 > this.sprintRange2) {
-      let temp = this.sprintRange2
-      this.sprintRange2 = this.sprintRange1
-      this.sprintRange1 = temp
-    }
-    if (this.sprintRange1 <= 0) {
-      this.sprintRange1 = 1
-    }
-    if (this.sprintRange2 <= 1) {
-      this.sprintRange2 = 2
-    }
     this.setRange.emit({ sprintRange1: this.sprintRange1, sprintRange2: this.sprintRange2 });
     this.sprintRange1 = 0
     this.sprintRange2 = 0
