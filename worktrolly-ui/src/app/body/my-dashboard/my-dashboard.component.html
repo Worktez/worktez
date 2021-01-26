@@ -1,4 +1,4 @@
-<div class="container" *ngIf="(userObservable | async ) && (backendService.rawDataObservable | async)">
+<div class="container-fluid" *ngIf="(userObservable | async ) && (backendService.rawDataObservable | async)">
     <div class="row pt-5">
         <div class="col">
             <app-performance-chart [username]="username" [currentSprint]="currentSprintNumber"></app-performance-chart>
