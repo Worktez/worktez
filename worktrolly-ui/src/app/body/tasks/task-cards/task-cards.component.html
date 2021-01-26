@@ -1,17 +1,17 @@
 <div class="card text-dark mb-3 taskCards" (click)="openTaskDetails(task.id)">
     <div class="card-header">
         <div class="row pb-2">
-            <div class="col-md-1 col-1 px-2">
+            <div class="col-md-1 col-1 px-2 pt-3">
                 <app-status-icons [Status]="task.Status"></app-status-icons>
                 <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
             </div>
-            <div class="col-md-1 col-1 px-2">
-                <span style="font-weight: bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{task.id}}</span>
+            <div class="col-md-1 col-1 px-2 pt-3">
+                <span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{task.id}}</span>
             </div>
-            <div class="col-md-7 col-4 px-2">
+            <div class="col-md-7 col-4 px-2 pt-2">
                 <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Title">Title</span> {{task.Title}}
             </div>
-            <div class="col-md-2 col-2 px-2">
+            <div class="col-md-2 col-2 px-2 pt-3">
                 <span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{task.Assignee}}
             </div>
         </div>
