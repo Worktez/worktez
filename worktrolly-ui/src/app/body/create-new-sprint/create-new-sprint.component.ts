@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -22,6 +23,8 @@ export class CreateNewSprintComponent implements OnInit {
   totalDevelopment: number
   totalBusiness: number
   totalMarketing: number
+  totalOther: number
+  enableLoader: boolean = false;
 
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
@@ -31,14 +34,14 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.getNewSprintId();
   }
 
   async getNewSprintId() {
-    this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
+    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
     try {
       await this.rawDocument.ref.get().then(doc => {
         if (doc.exists) {
@@ -58,7 +61,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   async readSprintData(newSprintId: string) {
-    var documentName = "Main/"+ newSprintId;
+    var documentName = "Main/" + newSprintId;
     this.sprintDocument = this.db.doc<RawDataType>(documentName);
     try {
       await this.sprintDocument.ref.get().then(doc => {
@@ -67,11 +70,13 @@ export class CreateNewSprintComponent implements OnInit {
           this.totalDevelopment = sprintData.TotalDevelopmentTask;
           this.totalBusiness = sprintData.TotalBusinessTask;
           this.totalMarketing = sprintData.TotalMarketingTask;
+          this.totalOther = sprintData.TotalOtherTask;
         }
-        else{
+        else {
           this.totalDevelopment = 0;
           this.totalBusiness = 0;
           this.totalMarketing = 0;
+          this.totalOther = 0;
         }
       });
       return "ok";
@@ -87,18 +92,26 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.totalDevelopment);
     console.log(this.totalBusiness);
     console.log(this.totalMarketing);
+    console.log(this.totalOther);
 
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, Status: status }).toPromise();
+      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, TotalOther: this.totalOther, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
 
-      console.log("Successfully created the task");
+      console.log("Successfully created a new sprint");
       console.log(result);
+      this.router.navigate(['/']);
     } catch (error) {
+      this.enableLoader = false;
       console.error("Error", error);
     }
 
+  }
+
+  backToDashboard(){
+    this.location.back();
   }
 
 }

@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "worktrolly"
+  },
+  "targets": {
+    "worktrolly": {
+      "hosting": {
+        "worktrolly": [
+          "worktrolly.web.app"
+        ]
+      }
+    }
   }
 }
