@@ -13,7 +13,7 @@
                             <span type="button" class="material-icons text-light mr-3" (click)="deleteTask()"> delete </span>
                         </li>
                         <li class="nav-item">
-                            <span type="button" class="material-icons text-light" (click)="backToTasks(task.Category)">close</span>
+                            <span type="button" class="material-icons text-light" (click)="backToTasks()">close</span>
                         </li>
                     </ul>
                 </nav>
@@ -80,6 +80,12 @@
                                 <div id="storyPointNumberTaskDescription">{{task.StoryPointNumber}}</div>
                             </div>
                         </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Work Done</label>
+                            <div class="alert alert-info form-inline" role="alert">
+                                <div id="workDoneTaskDescription">{{task.WorkDone}}</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
@@ -114,11 +120,13 @@
                                 <div id="logHoursTaskDescription">{{task.LogWorkTotalTime}}</div>
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputState">Work Done</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="workDoneTaskDescription">{{task.WorkDone}}</div>
+                        <div class="form-group col-md-4" *ngIf="task.Status == 'Completed'">
+                            <label for="inputState">Completed</label>
+                            <!-- <div class="alert alert-info form-inline" role="alert"> -->
+                            <div id="workDoneTaskDescription">
+                                <h3>{{task.CompletionDate}}</h3>
                             </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
