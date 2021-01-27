@@ -54,6 +54,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var result;
         var totalUnCompletedTask = 0;
         var sprintDataPromise;
+        var completionDate = "Not yet Completed";
 
         const promise1 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
             totalNumberOfTask = doc.data().TotalNumberOfTask;
@@ -93,7 +94,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 WorkDone: workDone,
                 SprintNumber: sprintNumber,
                 StoryPointNumber: storyPointNumber,
-                CreationDate: creationDate
+                CreationDate: creationDate,
+                CompletionDate: completionDate
             });
             const P2 = db.collection("RawData").doc("AppDetails").update({
                 TotalDevelopmentTask: totalDevelopmentTask,
@@ -103,7 +105,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalUnCompletedTask: totalUnCompletedTask
             });
-            const Promises = [P1,P2];
+            const Promises = [P1, P2];
             return Promise.all(Promises);
         });
 
@@ -183,11 +185,11 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 console.log("Document successfully written!");
                 return response.status(200).send(result);
             })
-        .catch((error) => {
-            result = { data: error };
-            console.error("Error writing document: ", error);
-            return response.status(500).send(result);
-        });
+            .catch((error) => {
+                result = { data: error };
+                console.error("Error writing document: ", error);
+                return response.status(500).send(result);
+            });
     });
 });
 
@@ -245,18 +247,18 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         const p2 = db.collection("RawData").doc("AppDetails").update({
             CurrentSprintId: newSprintId
         });
-        const Promises = [p1,p2];
+        const Promises = [p1, p2];
         return Promise.all(Promises).then(() => {
-            console.log("Sprint started successfully");
-            result = { data: "OK" }
-            console.log("Document successfully written!");
-            return response.status(200).send(result);
-        })
-        .catch((error) => {
-            result = { data: error }
-            console.log("error", error);
-            return response.status(500).send(result);
-        });
+                console.log("Sprint started successfully");
+                result = { data: "OK" }
+                console.log("Document successfully written!");
+                return response.status(200).send(result);
+            })
+            .catch((error) => {
+                result = { data: error }
+                console.log("error", error);
+                return response.status(500).send(result);
+            });
     });
 });
 
@@ -270,15 +272,29 @@ exports.logWork = functions.https.onRequest((request, response) => {
         // var logWorkComment = request.body.data.LogWorkComment;
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
+        var completionDate;
+        var today = new Date();
 
         const promise1 = db.collection("Tasks").doc(taskId).get().then((doc) => {
             logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
             logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
 
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+
+            var todayDate = dd + "/" + mm + "/" + yyyy;
+
+            if (status === 'Completed') {
+                completionDate = todayDate;
+            } else {
+                completionDate = "Not yet Completed";
+            }
             var updatePromise = db.collection("Tasks").doc(taskId).update({
                 LogWorkTotalTime: logWorkTotalTime,
                 WorkDone: workDone,
-                Status: status
+                Status: status,
+                CompletionDate: completionDate
             });
             return Promise.resolve(updatePromise);
         });
@@ -451,27 +467,27 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             promises.push(p2);
         }
         var p3 = db.collection("Tasks").doc(taskId).update({
-                Description: description,
-                CreationDate: creationDate,
-                Priority: priority,
-                Difficulty: difficulty,
-                Assignee: assignee,
-                EstimatedTime: estimatedTime,
-                SprintNumber: editedSprintNumber,
-                StoryPointNumber: storyPointNumber
+            Description: description,
+            CreationDate: creationDate,
+            Priority: priority,
+            Difficulty: difficulty,
+            Assignee: assignee,
+            EstimatedTime: estimatedTime,
+            SprintNumber: editedSprintNumber,
+            StoryPointNumber: storyPointNumber
         });
         promises.push(p3);
 
         Promise.all(promises).then(() => {
-            result = { data: "OK" };
-            console.log("Document sucessfully written");
-            return response.status(200).send(result);
-        })
-        .catch((error) => {
-            result = { data: error };
-            console.log("error", error);
-            return response.status(500).send(result)
-        });
+                result = { data: "OK" };
+                console.log("Document sucessfully written");
+                return response.status(200).send(result);
+            })
+            .catch((error) => {
+                result = { data: error };
+                console.log("error", error);
+                return response.status(500).send(result)
+            });
     });
 });
 
@@ -497,7 +513,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             Category: "Trash",
             SprintNumber: -2
         });
-        
+
         const p2 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
             totalNumberOfTask = doc.data().TotalNumberOfTask;
             totalDevelopmentTask = doc.data().TotalDevelopmentTask;
@@ -514,7 +530,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             } else if (category === "Marketing") {
                 totalMarketingTask = totalMarketingTask - 1;
             } else {
-                totalOtherTask = totalOtherTask -1;
+                totalOtherTask = totalOtherTask - 1;
             }
             totalNumberOfTask = totalNumberOfTask - 1;
             status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
@@ -603,6 +619,34 @@ exports.updateSprintStatus = functions.https.onRequest((request, response) => {
         console.log(currentSprintName);
         db.collection("Main").doc(currentSprintName).update({
             Status: sprintStatus,
+        });
+    });
+})
+
+exports.addCompletionDatePatch = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        console.log(request);
+        var completionDate = request.body.data.CompletionDate;
+        var id;
+        var result;
+        var p1 = db.collection("Tasks").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                id = doc.data().Id;
+                console.log(id);
+                db.collection("Tasks").doc(id).update({
+                        CompletionDate: completionDate
+                    }).then(() => {
+                        result = { data: "It has worked!" }
+                        console.log("Document successfully written!");
+                        return response.status(200).send(result);
+                    })
+                    .catch(function(error) {
+                        result = { data: error };
+                        console.error("Error writing document: ", error);
+                        return response.status(500).send(result)
+                    });
+            });
+            return Promise.resolve(p1);
         });
     });
 })
