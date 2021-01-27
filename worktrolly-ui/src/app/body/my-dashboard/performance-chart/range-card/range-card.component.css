@@ -17,3 +17,12 @@ textarea:focus {
     outline: 0 none;
     border-color: #5A20F0;
 }
+
+#header {
+    background-color: #5A20F0;
+    border-top: 1px solid black;
+}
+
+#dropdownRangeCard {
+    border-color: #5A20F0;
+}
