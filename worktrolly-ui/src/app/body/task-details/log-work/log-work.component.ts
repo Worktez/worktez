@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ValidationService } from '../../../services/validation.service';
+import { ToolsService } from '../../../services/tools.service';
 
 @Component({
   selector: 'app-log-work',
@@ -25,20 +26,11 @@ export class LogWorkComponent implements OnInit {
   todayDate: string
   time: string
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService) { }
 
   ngOnInit(): void { 
-    var today = new Date();
-
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-
-    var hh = String(today.getHours()).padStart(2, '0');
-    var mn = String(today.getMinutes()).padStart(2, '0');
-    var ss= String(today.getSeconds()).padStart(2, '0');
-    this.todayDate = dd + "/" + mm + "/" + yyyy;
-    this.time = hh + ":" + mn + ":" + ss;
+    this.todayDate = this.toolsService.date();
+    this.time = this.toolsService.time();
   }
 
   async submit(){
