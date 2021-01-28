@@ -1,9 +1,5 @@
-#createNewTaskContainer {
-    border: 1px solid #5A20F0;
-}
-
 #button {
-    background-color: #16C85A;
+    background-color: #10be65;
     border: 2px solid #5A20F0;
     color: white;
 }
@@ -14,14 +10,19 @@
     box-shadow: none;
 }
 
-#navbarMenu {
-    background-color: #5A20F0;
-}
-
 input:focus,
 select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
+    border-color: #5A20F0;
+}
+
+#header {
+    background-color: #5A20F0;
+    border-top: 1px solid black;
+}
+
+#dropdownRangeCard {
     border-color: #5A20F0;
 }

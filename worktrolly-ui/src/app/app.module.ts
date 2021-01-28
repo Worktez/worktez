@@ -5,8 +5,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
-
 import { AppRoutingModule } from './app-routing.module';
+import { GoogleChartsModule } from 'angular-google-charts';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
@@ -30,6 +31,10 @@ import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.co
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
+import { ChartComponent } from './body/common-tools/chart/chart.component';
+import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
+import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
+import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component"
 
 @NgModule({
   declarations: [
@@ -54,7 +59,11 @@ import { NavbarComponent } from './body/navbar/navbar.component';
     PriorityIconsComponent,
     StatusIconsComponent,
     FilterTaskComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChartComponent,
+    MyTasksComponent,
+    PerformanceChartComponent,
+    RangeCardComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +72,8 @@ import { NavbarComponent } from './body/navbar/navbar.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireFunctionsModule,
     AngularFirestoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GoogleChartsModule.forRoot({ version: 'current' })
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
