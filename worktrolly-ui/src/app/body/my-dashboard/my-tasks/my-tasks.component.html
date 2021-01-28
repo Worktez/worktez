@@ -1,0 +1,13 @@
+<div class="card mb-3" style="width: 100%;">
+    <div class="card-header">
+        <h6 class="m-0">My Tasks</h6>
+    </div>
+    <div class="card-body" *ngIf="tasksData | async">
+        <ng-container *ngFor="let item of tasksData | async">
+            <app-task-cards [task]="item"></app-task-cards>
+        </ng-container>
+    </div>
+    <div class="card-body" *ngIf="!(tasksData | async)">
+        <app-loader></app-loader>
+    </div>
+</div>
