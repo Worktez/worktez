@@ -8,6 +8,7 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
 import {Location} from '@angular/common';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
   selector: 'app-task-details',
@@ -15,6 +16,8 @@ import {Location} from '@angular/common';
   styleUrls: ['./task-details.component.css']
 })
 export class TaskDetailsComponent implements OnInit {
+
+  componentName: string = ""
 
   sprintName: string
   Id: string
@@ -28,13 +31,17 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
     this.Id = this.route.snapshot.params['taskId'];
+
+    this.componentName = this.Id;
+    this.navbarHandler.addToNavbar(this.componentName);
+
     this.getTaskDetail();
   }
 
@@ -80,7 +87,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   backToTasks(){
+    this.navbarHandler.removeFromNavbar();
     this.location.back()
   }
- 
+
 }

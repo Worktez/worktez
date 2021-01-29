@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
   selector: 'app-board',
@@ -11,6 +12,8 @@ import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawD
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
+
+  componentName = "Board";
 
   // public rawData: RawDataType;
   public rawDataObservable: Observable<RawDataType>;
@@ -24,7 +27,7 @@ export class BoardComponent implements OnInit {
 
   filterSprintNumber: string;
 
-  constructor(private db: AngularFirestore, private router: Router, private route: ActivatedRoute) { }
+  constructor(private db: AngularFirestore, private router: Router, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
     // Better way of use db.
@@ -38,6 +41,8 @@ export class BoardComponent implements OnInit {
     //     return { id, ...data };
     //   }))
     // );
+
+    this.navbarHandler.addToNavbar(this.componentName);
 
     // Efficient for now
     this.getCurrentSprint();
