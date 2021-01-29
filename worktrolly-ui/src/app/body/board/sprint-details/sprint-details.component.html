@@ -22,17 +22,14 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="btn-group" type="button" *ngIf="Status !== 'Completed' ">
-                            <button type="button" class="btn btn-primary dropdown-toggle" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-item" type="button" (click)="updateSprintStatus()">Under progress</div>
-                                <div class="dropdown-item" type="button" (click)="completeSprint()">Completed</div>
-
-                            </div>
+                    <div class="btn-group" type="button" *ngIf="Status !== 'Completed' ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item" type="button" (click)="updateSprintStatus()">Under progress</div>
+                            <div class="dropdown-item" type="button" (click)="completeSprint()">Completed</div>
                         </div>
-                        <span class="material-icons align-middle ml-auto m-2" *ngIf="Status === 'Completed' " style="vertical-align:baseline;">check_circle</span>
                     </div>
+                    <span class="material-icons align-middle ml-auto m-2" *ngIf="Status === 'Completed' " style="vertical-align:baseline;">check_circle</span>
                 </div>
             </div>
         </div>
