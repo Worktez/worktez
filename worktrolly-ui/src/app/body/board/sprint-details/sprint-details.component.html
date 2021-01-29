@@ -26,7 +26,6 @@
                         <div class="btn-group" type="button" *ngIf="Status !== 'Completed' ">
                             <button type="button" class="btn btn-primary dropdown-toggle" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                             <div class="dropdown-menu">
-                                <hr id="line" />
                                 <div class="dropdown-item" type="button" (click)="updateSprintStatus()">Under progress</div>
                                 <div class="dropdown-item" type="button" (click)="completeSprint()">Completed</div>
 
