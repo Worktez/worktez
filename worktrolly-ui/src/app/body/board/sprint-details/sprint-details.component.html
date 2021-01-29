@@ -3,24 +3,36 @@
         <div class="card-body" style="font-weight: bold; background-color: #8120f0; color:white;">
             <div class="row  align-items-center">
                 <div class="col-md-2 col-4">
-                    <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
+                    <h5 style="font-size: 18px;">Sprint No:</h5>
                 </div>
-                <div class="col-md-3 col-1">
+                <div class="col-md-7 col-5">
                     <h5 id="sprintId">{{currentSprintName}}</h5>
                 </div>
-                <div class="d-flex col-md-7 text-right col-7">
-                    <button class="btn ml-auto mr-2" id="button" type="button" *ngIf="Status !== 'Completed' " style="font-size: 14px;" (click)="completeSprint()">Completed</button>
-                    <span class="material-icons align-middle ml-auto mr-2" *ngIf="Status === 'Completed' ">check_circle</span>
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                        <div class="dropdown-menu dropdown-menu-right px-4 py-3" id="filterMenu" aria-labelledby="dropdownMenuButton">
-                            <div class="row py-3">
-                                <input class="col-6" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
-                                <div class="col-6 pl-2">
-                                    <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
+                <div class="row col-md-3 col-8 text-right">
+                    <div class="mr-1">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+                            <div class="dropdown-menu dropdown-menu-right px-4 py-3" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                                <div class="row py-3">
+                                    <input class="col-6" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                                    <div class="col-6 pl-2">
+                                        <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <div class="btn-group" type="button" *ngIf="Status !== 'Completed' ">
+                            <button type="button" class="btn btn-primary dropdown-toggle" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                            <div class="dropdown-menu">
+                                <hr id="line" />
+                                <div class="dropdown-item" type="button" (click)="updateSprintStatus()">Under progress</div>
+                                <div class="dropdown-item" type="button" (click)="completeSprint()">Completed</div>
+
+                            </div>
+                        </div>
+                        <span class="material-icons align-middle ml-auto m-2" *ngIf="Status === 'Completed' " style="vertical-align:baseline;">check_circle</span>
                     </div>
                 </div>
             </div>

@@ -19,6 +19,7 @@ export class SprintDetailsComponent implements OnInit {
 
   @Output() changeSprint = new EventEmitter<{ newSprintNumber: number }>();
 
+  enableLoader: boolean = false;
   filterSprintNumber: number;
   sprintStatus: string;
 
@@ -34,6 +35,7 @@ export class SprintDetailsComponent implements OnInit {
   async completeSprint() {
     
     this.sprintStatus = "Completed";
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('updateSprintStatus');
 
     try {
@@ -41,7 +43,24 @@ export class SprintDetailsComponent implements OnInit {
       console.log(this.sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
-      console.error("Error", error);
+    this.enableLoader = false;
+    console.error("Error", error);
+    }
+  }
+
+  async updateSprintStatus() {
+    
+    this.sprintStatus = "Under progress";
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('updateSprintStatus');
+
+    try {
+      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus }).toPromise();
+      console.log(this.sprintStatus);
+      console.log("Successfully updated Status");
+    } catch (error) {
+    this.enableLoader = false;
+    console.error("Error", error);
     }
   }
 }
