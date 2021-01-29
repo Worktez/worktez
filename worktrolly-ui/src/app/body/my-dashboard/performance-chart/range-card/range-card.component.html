@@ -1,0 +1,33 @@
+<div class="dropdown">
+    <span class="material-icons" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+            perm_data_setting
+    </span>
+    <div class="dropdown-menu dropdown-menu-right p-0" id="dropdownRangeCard">
+        <div class="row m-0 align-items-center" id="header">
+            <div class="col p-2 text-white">
+                <h6>Custom Sprint Range</h6>
+            </div>
+        </div>
+        <div class="row p-1 align-items-center">
+            <div class="col-6">
+                <label for="input">Start Range</label>
+            </div>
+            <div class="col">
+                <input type="number" min="1" class="form-control" [(ngModel)]="sprintRange1" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+        <div class="row p-1 align-items-center">
+            <div class="col-6">
+                <label for="input">End Range</label>
+            </div>
+            <div class="col">
+                <input type="number" min="2" class="form-control" [(ngModel)]="sprintRange2" [ngModelOptions]="{standalone: true}">
+            </div>
+        </div>
+        <div class="row p-1">
+            <div class="offset-5 offset-sm-6 offset-md-7 offset-lg-8 col">
+                <button type="submit" class="btn" id="button" (click)="validateRange()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

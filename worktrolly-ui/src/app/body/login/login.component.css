@@ -1,15 +1,15 @@
 #loginContainer {
-    border: 1px solid #8120f0;
+    border: 1px solid #5A20F0;
 }
 
 #loginNavbar {
-    background-color: #8120f0;
+    background-color: #5A20F0;
     color: white;
 }
 
 #button {
-    background-color: #10be65;
-    border: 1px solid #8120f0;
+    background-color: #16C85A;
+    border: 1px solid #5A20F0;
     color: white;
 }
 
