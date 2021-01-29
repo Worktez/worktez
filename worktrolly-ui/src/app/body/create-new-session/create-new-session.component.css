@@ -1,10 +1,10 @@
 #createNewTaskContainer {
-    border: 1px solid #8120f0;
+    border: 1px solid #5A20F0;
 }
 
 #button {
-    background-color: #10be65;
-    border: 2px solid #8120f0;
+    background-color: #16C85A;
+    border: 2px solid #5A20F0;
     color: white;
 }
 
@@ -15,7 +15,7 @@
 }
 
 #navbarMenu {
-    background-color: #8120f0;
+    background-color: #5A20F0;
 }
 
 input:focus,
@@ -23,5 +23,5 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #8120f0;
+    border-color: #5A20F0;
 }
