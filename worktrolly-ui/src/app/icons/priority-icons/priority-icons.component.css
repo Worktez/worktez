@@ -1,0 +1,12 @@
+.low {
+    color: #ffff00; 
+    padding: right 16px;
+}
+.medium {
+    color: #ee82ee; 
+    padding: right 16px;
+}
+.high {
+    color: #ff0000;
+    padding: right 16px;
+}
