@@ -18,17 +18,29 @@
                     </ul>
                 </nav>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row" *ngIf="task.Status !== 'Completed'">
                         <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
                             <div style="font-weight: bold;" class="mr-3">Date:</div>
                             <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
                         </div>
                         <div class="col-md-5 col-1"></div>
-                        <div class="col-md-2 col-4">
-                            <button type="submit" class="btn mt-2 mb-5 mx-3" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
+                        <div class="col-md-2 col-4 ml-auto" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                            <button type="submit" class="btn mt-2 mb-5 mx-3" id="button" (click)="logWorkPage()">Log Work</button>
                         </div>
-                        <div class="col-md-1 col-2">
-                            <button type="submit" class="btn mt-2 mb-5" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">Edit</button>
+                        <div class="col-md-1 col-2 ml-auto" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                            <button type="submit" class="btn mt-2 mb-5" id="button" (click)="editTask()">Edit</button>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="task.Status == 'Completed'">
+                        <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
+                            <div style="font-weight: bold;" class="mr-3">Date:</div>
+                            <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
+                        </div>
+                        <div class="col-md-5 ml-auto" *ngIf="task.Status == 'Completed'">
+                            <div class="alert form-inline" style="font-size: 20px;" role="alert">
+                                <div style="font-weight: bold;" class="mr-3">Completed:</div>
+                                <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row mt-2">
@@ -122,11 +134,9 @@
                         </div>
                         <div class="form-group col-md-4" *ngIf="task.Status == 'Completed'">
                             <label for="inputState">Completed</label>
-                            <!-- <div class="alert alert-info form-inline" role="alert"> -->
                             <div id="workDoneTaskDescription">
                                 <h3>{{task.CompletionDate}}</h3>
                             </div>
-                            <!-- </div> -->
                         </div>
                     </div>
                 </div>

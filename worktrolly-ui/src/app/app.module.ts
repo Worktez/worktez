@@ -29,6 +29,7 @@ import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
+import { CompletionPatchComponent } from './completion-patch/completion-patch.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { FilterTaskComponent } from './body/filter-task/filter-task.component';
     MyDashBoardComponent,
     PriorityIconsComponent,
     StatusIconsComponent,
-    FilterTaskComponent
+    FilterTaskComponent,
+    CompletionPatchComponent
   ],
   imports: [
     BrowserModule,
