@@ -30,15 +30,12 @@ import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
-<<<<<<< HEAD
 import { CompletionPatchComponent } from './completion-patch/completion-patch.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
-import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component"
-=======
->>>>>>> parent of a4fb8be... Made changes
+import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 
 @NgModule({
   declarations: [
@@ -62,17 +59,16 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     MyDashBoardComponent,
     PriorityIconsComponent,
     StatusIconsComponent,
-<<<<<<< HEAD
+    FilterTaskComponent,
+    CompletionPatchComponent,
     FilterTaskComponent,
     CompletionPatchComponent,
     NavbarComponent,
     ChartComponent,
     MyTasksComponent,
     PerformanceChartComponent,
-    RangeCardComponent
-=======
-    FilterTaskComponent
->>>>>>> parent of a4fb8be... Made changes
+    RangeCardComponent,
+    FilterTaskComponent,
   ],
   imports: [
     BrowserModule,
