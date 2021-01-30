@@ -32,12 +32,10 @@
                             <div style="font-weight: bold;" class="mr-3">Date:</div>
                             <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
                         </div>
-                        <div class="col-md-5 col-1"></div>
-                        <div class="col-md-2 col-4">
-                            <button type="submit" class="btn mt-2 mb-5 mx-3" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">Log Work</button>
-                        </div>
-                        <div class="col-md-1 col-2">
-                            <button type="submit" class="btn mt-2 mb-5" id="button" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">Edit</button>
+                        <div class="col-md-4 col-1"></div>
+                        <div class="alert form-inline col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert" *ngIf="task.Status == 'Completed'">
+                            <div style="font-weight: bold;" class="mr-3" style="color:#10be65">Completion Date <span style="color:white;">:</span></div>
+                            <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
                         </div>
                     </div>
                     <div class="form-group row mt-2">

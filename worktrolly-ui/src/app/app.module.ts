@@ -30,7 +30,6 @@ import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component
 import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
 import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
-import { CompletionPatchComponent } from './completion-patch/completion-patch.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
@@ -60,9 +59,7 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     PriorityIconsComponent,
     StatusIconsComponent,
     FilterTaskComponent,
-    CompletionPatchComponent,
     FilterTaskComponent,
-    CompletionPatchComponent,
     NavbarComponent,
     ChartComponent,
     MyTasksComponent,
