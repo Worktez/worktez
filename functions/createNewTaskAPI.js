@@ -20,6 +20,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var storyPointNumber = parseInt(request.body.data.StoryPointNumber);
         var sprintNumber = parseInt(request.body.data.SprintNumber);
         var creationDate = request.body.data.CreationDate;
+        var time = request.body.data.Time;
         var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -83,6 +84,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalUnCompletedTask: totalUnCompletedTask
             });
+            updateActivity("CREATED", "Created task " + taskId, taskId, creationDate, time);
             const Promises = [P1, P2];
             return Promise.all(Promises);
         });
@@ -157,6 +159,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             }
             return Promise.resolve(sprintDataPromise);
         });
+
         const newTaskPromises = [promise1, promise2];
         Promise.all(newTaskPromises).then(() => {
                 result = { data: "OK!" }

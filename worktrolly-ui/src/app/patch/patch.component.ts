@@ -18,7 +18,7 @@ export class PatchComponent implements OnInit {
 
     try {
       const result = await callable({CompletionDate:completionDate}).toPromise();
-      console.log("Successfully created the task");
+      console.log("Success!");
       console.log(result);
     } catch (error) {
       console.error("Error", error);

@@ -12,9 +12,15 @@ exports.logWork = functions.https.onRequest((request, response) => {
         var logHours = parseInt(request.body.data.LogHours);
         var workDone = parseInt(request.body.data.LogWorkDone);
         var sprintNumber = parseInt(request.body.data.SprintNumber);
-        // var logWorkComment = request.body.data.LogWorkComment;
+        var logWorkComment = request.body.data.LogWorkComment;
+        var date = request.body.data.Date;
+        var time = request.body.data.Time;
+        var logWorkComment = request.body.data.LogWorkComment;
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
+        var totalActions;
+        var totalComments;
+        var actionId;
         var completionDate;
         var today = new Date();
 
