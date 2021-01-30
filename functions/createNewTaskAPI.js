@@ -20,7 +20,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var storyPointNumber = parseInt(request.body.data.StoryPointNumber);
         var sprintNumber = parseInt(request.body.data.SprintNumber);
         var creationDate = request.body.data.CreationDate;
-        var time = request.body.data.Time;
         var fullSprintId = createSprintId(sprintNumber);
         var loggedWorkTotalTime = 0;
         var workDone = 0;
@@ -33,6 +32,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         var result;
         var totalUnCompletedTask = 0;
         var sprintDataPromise;
+        var completionDate = "Not yet Completed";
 
         const promise1 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
             totalNumberOfTask = doc.data().TotalNumberOfTask;
@@ -72,7 +72,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 WorkDone: workDone,
                 SprintNumber: sprintNumber,
                 StoryPointNumber: storyPointNumber,
-                CreationDate: creationDate
+                CreationDate: creationDate,
+                CompletionDate: completionDate
             });
             const P2 = db.collection("RawData").doc("AppDetails").update({
                 TotalDevelopmentTask: totalDevelopmentTask,
@@ -82,8 +83,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalUnCompletedTask: totalUnCompletedTask
             });
-            updateActivity("CREATED", "Created task "+taskId, taskId, creationDate, time);
-            const Promises = [P1,P2];
+            const Promises = [P1, P2];
             return Promise.all(Promises);
         });
 
@@ -157,18 +157,17 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
             }
             return Promise.resolve(sprintDataPromise);
         });
-
         const newTaskPromises = [promise1, promise2];
         Promise.all(newTaskPromises).then(() => {
                 result = { data: "OK!" }
                 console.log("Document successfully written!");
                 return response.status(200).send(result);
             })
-        .catch((error) => {
-            result = { data: error };
-            console.error("Error writing document: ", error);
-            return response.status(500).send(result);
-        });
+            .catch((error) => {
+                result = { data: error };
+                console.error("Error writing document: ", error);
+                return response.status(500).send(result);
+            });
     });
 });
 
@@ -180,9 +179,9 @@ function createSprintId(sprintNumber) {
     }
 }
 
-async function updateActivity(type, comment, taskId, date, time){
+async function updateActivity(type, comment, taskId, date, time) {
     var actionId = "";
-    if(type === "CREATED") {
+    if (type === "CREATED") {
         actionId = "A0";
         db.collection("Activity").doc(taskId).set({
             TaskId: taskId,
@@ -195,16 +194,15 @@ async function updateActivity(type, comment, taskId, date, time){
             Date: date,
             Time: time
         });
-    }
-    else if (type === "COMMENT") {
+    } else if (type === "COMMENT") {
         actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
             totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
+            totalActions = totalActions + 1;
             totalComments = doc.data().TotalComments;
-            totalComments = totalComments+1;
+            totalComments = totalComments + 1;
             return ("A" + totalActions);
         });
-        if (actionId !== ""){
+        if (actionId !== "") {
             db.collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
                 TotalComments: totalComments,
@@ -216,16 +214,15 @@ async function updateActivity(type, comment, taskId, date, time){
                 Time: time
             });
         }
-    }
-    else{
+    } else {
         actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
             totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
+            totalActions = totalActions + 1;
 
             return ("A" + totalActions);
 
         });
-        if (actionId !== ""){
+        if (actionId !== "") {
             db.collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
             });

@@ -12,23 +12,32 @@ exports.logWork = functions.https.onRequest((request, response) => {
         var logHours = parseInt(request.body.data.LogHours);
         var workDone = parseInt(request.body.data.LogWorkDone);
         var sprintNumber = parseInt(request.body.data.SprintNumber);
-        var logWorkComment = request.body.data.LogWorkComment;
-        var date = request.body.data.Date;
-        var time = request.body.data.Time;
+        // var logWorkComment = request.body.data.LogWorkComment;
         var fullSprintId = createSprintId(sprintNumber);
         var logWorkTotalTime;
-        var totalActions;
-        var totalComments;
-        var actionId;
+        var completionDate;
+        var today = new Date();
 
         const promise1 = db.collection("Tasks").doc(taskId).get().then((doc) => {
             logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
             logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
 
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+
+            var todayDate = dd + "/" + mm + "/" + yyyy;
+
+            if (status === 'Completed') {
+                completionDate = todayDate;
+            } else {
+                completionDate = "Not yet Completed";
+            }
             var updatePromise = db.collection("Tasks").doc(taskId).update({
                 LogWorkTotalTime: logWorkTotalTime,
                 WorkDone: workDone,
-                Status: status
+                Status: status,
+                CompletionDate: completionDate
             });
             return Promise.resolve(updatePromise);
         });
@@ -60,7 +69,7 @@ exports.logWork = functions.https.onRequest((request, response) => {
             return Promise.resolve(updateSprintstatus);
         });
         updateActivity("COMMENT", logWorkComment, taskId, date, time);
-        
+
         const logWorkPromises = [promise1, promise2, promise3];
         Promise.all(logWorkPromises).then(() => {
                 result = { data: "OK" }
@@ -83,9 +92,9 @@ function createSprintId(sprintNumber) {
     }
 }
 
-async function updateActivity(type, comment, taskId, date, time){
+async function updateActivity(type, comment, taskId, date, time) {
     var actionId = "";
-    if(type === "CREATED") {
+    if (type === "CREATED") {
         actionId = "A0";
         db.collection("Activity").doc(taskId).set({
             TaskId: taskId,
@@ -98,16 +107,15 @@ async function updateActivity(type, comment, taskId, date, time){
             Date: date,
             Time: time
         });
-    }
-    else if (type === "COMMENT") {
+    } else if (type === "COMMENT") {
         actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
             totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
+            totalActions = totalActions + 1;
             totalComments = doc.data().TotalComments;
-            totalComments = totalComments+1;
+            totalComments = totalComments + 1;
             return ("A" + totalActions);
         });
-        if (actionId !== ""){
+        if (actionId !== "") {
             db.collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
                 TotalComments: totalComments,
@@ -119,16 +127,15 @@ async function updateActivity(type, comment, taskId, date, time){
                 Time: time
             });
         }
-    }
-    else{
+    } else {
         actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
             totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
+            totalActions = totalActions + 1;
 
             return ("A" + totalActions);
 
         });
-        if (actionId !== ""){
+        if (actionId !== "") {
             db.collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
             });
