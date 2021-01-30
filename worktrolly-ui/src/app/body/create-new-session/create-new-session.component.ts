@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
+import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -26,18 +27,14 @@ export class CreateNewSessionComponent implements OnInit {
   status: string
   sprintNumber: number
   storyPoint: number
+  time: string
   enableLoader: boolean = false
   valid: boolean = true;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService) { }
   ngOnInit(): void {
-    var today = new Date();
-
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-
-    this.todayDate = dd + "/" + mm + "/" + yyyy;
+    this.todayDate = this.toolsService.date();
+    this.time = this.toolsService.time();
   }
 
   async submit(){
@@ -69,7 +66,7 @@ export class CreateNewSessionComponent implements OnInit {
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {
-      const result = await callable({ Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Category: this.category, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate }).toPromise();
+      const result = await callable({ Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Category: this.category, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

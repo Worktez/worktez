@@ -1,10 +1,14 @@
 const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
-
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-const db = admin.firestore();
+const createNewTaskAPI = require('./createNewTaskAPI');
+const startNewSprintAPI = require('./startNewSprintAPI');
+const logWorkAPI = require('./logWorkAPI');
+const editPageTaskAPI = require('./editPageTaskAPI');
+const deleteTaskAPI = require('./deleteTaskAPI');
+const createNewUserAPI = require('./createNewUserAPI');
+const updateSprintStatusAPI = require('./updateSprintStatusAPI');
 
 // class Task {
 //     constructor(id, title, status, priority, estimatedTime, difficulty, description, creator, category, assignee, logWorkTotalTime, workDone, creationDate, sprintNumber, storyPointNumber) {
@@ -650,3 +654,10 @@ exports.addCompletionDatePatch = functions.https.onRequest((request, response) =
         });
     });
 })
+exports.createNewTask = createNewTaskAPI.createNewTask;
+exports.startNewSprint = startNewSprintAPI.startNewSprint;
+exports.logWork = logWorkAPI.logWork;
+exports.editPageTask = editPageTaskAPI.editPageTask;
+exports.deleteTask = deleteTaskAPI.deleteTask;
+exports.createNewUser = createNewUserAPI.createNewUser;
+exports.updateSprintStatus = updateSprintStatusAPI.updateSprintStatus;
