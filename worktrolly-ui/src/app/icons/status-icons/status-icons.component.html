@@ -1,29 +1,29 @@
 <ng-container *ngIf="Status == 'Completed' ">
-    <span class="material-icons">
-        check_circle_outline
+    <span class="material-icons completed" data-toggle="tooltip" data-placement="top" title="completed">
+    check_circle_outline
     </span>
 </ng-container>
 
 <ng-container *ngIf="Status == 'Ready to start' ">
-    <span class="material-icons">
+    <span class="material-icons Ready" data-toggle="tooltip" data-placement="top" title="Ready to start">
         not_started
     </span>
 </ng-container>
 
 <ng-container *ngIf="Status == 'Blocked' ">
-    <span class="material-icons">
+    <span class="material-icons blocked" data-toggle="tooltip" data-placement="top" title="Blocked">
         block
     </span>
 </ng-container>
 
 <ng-container *ngIf="Status == 'Under Progress' ">
-    <span class="material-icons">
+    <span class="material-icons Under" data-toggle="tooltip" data-placement="top" title="Under Progress">
         arrow_circle_up
     </span>
 </ng-container>
 
 <ng-container *ngIf="Status == 'Ice Box' ">
-    <span class="material-icons">
+    <span class="material-icons Ice" data-toggle="tooltip" data-placement="top" title="Ice Box">
         inventory_2
     </span>
 </ng-container>

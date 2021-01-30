@@ -1,5 +1,5 @@
 <div *ngIf="!enableLoader" class="container py-5">
-    <div id="createNewTaskContainer">
+    <div id="createNewTaskContainer" style="background-color:#202124;">
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -16,14 +16,14 @@
                 </nav>
             </div>
         </div>
-        <div class="px-5">
+        <div class="px-5 text-light">
             <div class="row">
                 <div class="alert form-inline w-50 col-md-3 pb-3" style="font-size: 20px;" role="alert">
                     <div style="font-weight: bold;" class="pr-3">Date:</div>
                     <div>{{ todayDate }}</div>
                 </div>
             </div>
-            <form (ngSubmit)="createNewSession()" #form="ngForm">
+            <form (ngSubmit)="submit()" #form="ngForm">
                 <div class="form-group row pt-2">
                     <label for="input" class="col-sm-2 col-form-label">Title</label>
                     <div class="col-sm-10">

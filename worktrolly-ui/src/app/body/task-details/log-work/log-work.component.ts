@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { ValidationService } from '../../../services/validation.service';
+import { ToolsService } from '../../../services/tools.service';
 
 @Component({
   selector: 'app-log-work',
@@ -20,18 +22,41 @@ export class LogWorkComponent implements OnInit {
   logWorkStatus: number
   logHours: number
   logWorkComment: number
+  todayDate: string
+  time: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.todayDate = this.toolsService.date();
+    this.time = this.toolsService.time();
+  }
+
+  async submit(){
+    let labels = ['status', 'logHours', 'workCompleted', 'comment'];
+    let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
+    let data = [{label:"status",value:this.logWorkStatus},
+    {label:"logHours",value:this.logHours},
+    {label:"workCompleted",value:this.logWorkDone},
+    {label:"comment",value:this.logWorkComment}];
+    var condition = await (this.validationService.checkValidity(data)).then(res => {
+      return res;});
+    if(condition)
+    {
+      console.log("Inputs are valid");
+      this.submitLogWorkPage();
+    }
+    else
+    console.log("Log-Work failed due to validation error");
+  }
 
   async submitLogWorkPage() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('logWork');
 
     try {
-      const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment }).toPromise();
+      const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time}).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);
