@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ValidationService } from '../../../services/validation.service';
+import { ToolsService } from '../../../services/tools.service';
 
 @Component({
   selector: 'app-log-work',
@@ -21,11 +22,16 @@ export class LogWorkComponent implements OnInit {
   logWorkStatus: number
   logHours: number
   logWorkComment: number
+  todayDate: string
+  time: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.todayDate = this.toolsService.date();
+    this.time = this.toolsService.time();
+  }
 
   async submit(){
     let labels = ['status', 'logHours', 'workCompleted', 'comment'];
@@ -50,7 +56,7 @@ export class LogWorkComponent implements OnInit {
     const callable = this.functions.httpsCallable('logWork');
 
     try {
-      const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment }).toPromise();
+      const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time}).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);
