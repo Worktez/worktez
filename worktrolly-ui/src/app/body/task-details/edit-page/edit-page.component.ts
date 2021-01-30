@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../../services/validation.service';
+import { ToolsService } from '../../../services/tools.service';
 
 
 @Component({
@@ -20,12 +21,22 @@ export class EditPageComponent implements OnInit {
   editTask: Tasks
   previousSprintId: number
   enableLoader: boolean = false
+  todayDate: string
+  time: string
+  changedData: string = ""
+  prevVal =[]
+  newVal =[]
 
-  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
+
+    this.todayDate = this.toolsService.date();
+    this.time = this.toolsService.time();
+
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
+    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber];
   }
 
   async submit(){
@@ -40,11 +51,33 @@ export class EditPageComponent implements OnInit {
       return res;});
     if(condition)
     {
+      this.newVal = [this.editTask.Description, this.editTask.Assignee, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber];
+      this.generateChanges();
       console.log("Inputs are valid");
       this.editPage();
     }
     else
     console.log("Page not edited due to validation error");
+  }
+
+async generateChanges() {
+  console.log(this.editTask, this.task);
+    if(this.prevVal[0] != this.newVal[0])
+      this.changedData = this.changedData + " description,";
+    if(this.prevVal[1] != this.newVal[1])
+      this.changedData = this.changedData + " assignee," ;
+    if(this.prevVal[2] != this.newVal[2])
+      this.changedData = this.changedData + " estimated-time," ;
+    if(this.prevVal[3] != this.newVal[3])
+      this.changedData = this.changedData + " priority," ;
+    if(this.prevVal[4] != this.newVal[4])
+      this.changedData = this.changedData + " difficulty," ;
+    if(this.prevVal[5] != this.newVal[5])
+      this.changedData = this.changedData + " story-point,";
+    if(this.changedData != "")
+      this.changedData = "Edited-" + this.changedData;
+      this.changedData = this.changedData.substring(0,this.changedData.length-1) + "."
+    console.log(this.changedData);
   }
 
   async editPage() {
@@ -58,7 +91,7 @@ export class EditPageComponent implements OnInit {
 
       console.log(this.editTask.SprintNumber);
       if (!(this.task.Status === "Completed")) {
-        const result = await callable({ Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Category: this.task.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate }).toPromise();
+        const result = await callable({ Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Category: this.task.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
         this.editTaskDone();
