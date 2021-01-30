@@ -287,6 +287,8 @@ exports.logWork = functions.https.onRequest((request, response) => {
 
             if (status === 'Completed') {
                 completionDate = todayDate;
+            } else {
+                completionDate = "Not yet Completed";
             }
             var updatePromise = db.collection("Tasks").doc(taskId).update({
                 LogWorkTotalTime: logWorkTotalTime,
