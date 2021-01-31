@@ -12,16 +12,29 @@ export class PatchComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  async patch(){
+  async patch() {
     const completionDate = "XX/XX/XXXX"
     const callable = this.functions.httpsCallable('addCompletionDatePatch');
 
     try {
-      const result = await callable({CompletionDate:completionDate}).toPromise();
+      const result = await callable({ CompletionDate: completionDate }).toPromise();
       console.log("Success!");
       console.log(result);
     } catch (error) {
       console.error("Error", error);
     }
-}
+  }
+
+  async activityCollectionpatch() {
+    
+    const callable = this.functions.httpsCallable('activityCollectionPatch');
+
+    try {
+      const result = await callable({ }).toPromise();
+      console.log("Success!");
+      console.log(result);
+    } catch (error) {
+      console.error("Error", error);
+    }
+  }
 }
