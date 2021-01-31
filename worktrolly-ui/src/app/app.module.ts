@@ -8,6 +8,10 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
 
+import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
+import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
+import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
@@ -75,7 +79,12 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     AppRoutingModule,
     GoogleChartsModule.forRoot({ version: 'current' })
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7002] : undefined },
+    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7001] : undefined }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

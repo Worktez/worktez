@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Tasks } from 'src/app/Interface/TasksInterface';
 
 @Component({
   selector: 'app-performance-chart',
@@ -49,8 +50,9 @@ export class PerformanceChartComponent implements OnInit {
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach((doc) => {
-            const sp = doc.data().StoryPointNumber;
-            storyPoint = storyPoint + parseInt(sp);
+            const data = doc.data() as Tasks;
+            const sp = data.StoryPointNumber;
+            storyPoint = storyPoint + sp;
           });
         })
     } catch (error) { }
