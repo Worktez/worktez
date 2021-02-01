@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 var cors = require('cors')({ origin: true });
+var Activity = require("./addActivity");
 
 const admin = require('firebase-admin');
 
@@ -7,7 +8,7 @@ const db = admin.firestore();
 
 exports.createNewTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-        console.log(request);
+        console.log(request.body.data);
         var title = request.body.data.Title;
         var des = request.body.data.Description;
         var priority = request.body.data.Priority;
@@ -82,8 +83,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalUnCompletedTask: totalUnCompletedTask
             });
-            updateActivity("CREATED", "Created task "+taskId, taskId, creationDate, time);
-            const Promises = [P1,P2];
+            Activity.addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time);
+            const Promises = [P1, P2];
             return Promise.all(Promises);
         });
 
@@ -161,14 +162,14 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         const newTaskPromises = [promise1, promise2];
         Promise.all(newTaskPromises).then(() => {
                 result = { data: "OK!" }
-                console.log("Document successfully written!");
+                console.log("Task Created Successfully");
                 return response.status(200).send(result);
             })
-        .catch((error) => {
-            result = { data: error };
-            console.error("Error writing document: ", error);
-            return response.status(500).send(result);
-        });
+            .catch((error) => {
+                result = { data: error };
+                console.error("Error Creating Task: ", error);
+                return response.status(500).send(result);
+            });
     });
 });
 
@@ -177,64 +178,5 @@ function createSprintId(sprintNumber) {
         return "Backlog";
     } else {
         return ("S" + sprintNumber);
-    }
-}
-
-async function updateActivity(type, comment, taskId, date, time){
-    var actionId = "";
-    if(type === "CREATED") {
-        actionId = "A0";
-        db.collection("Activity").doc(taskId).set({
-            TaskId: taskId,
-            TotalActions: 0,
-            TotalComments: 0
-        });
-        db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-            Type: type,
-            Comment: comment,
-            Date: date,
-            Time: time
-        });
-    }
-    else if (type === "COMMENT") {
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
-            totalComments = doc.data().TotalComments;
-            totalComments = totalComments+1;
-            return ("A" + totalActions);
-        });
-        if (actionId !== ""){
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-                TotalComments: totalComments,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
-    }
-    else{
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
-
-            return ("A" + totalActions);
-
-        });
-        if (actionId !== ""){
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
     }
 }

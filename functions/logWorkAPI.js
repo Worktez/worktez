@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 var cors = require('cors')({ origin: true });
+var Activity = require("./addActivity");
 
 const admin = require('firebase-admin');
 
@@ -7,6 +8,8 @@ const db = admin.firestore();
 
 exports.logWork = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
+        console.log(request.body.data);
+
         var status = request.body.data.LogWorkStatus;
         var taskId = request.body.data.LogTaskId;
         var logHours = parseInt(request.body.data.LogHours);
@@ -59,18 +62,17 @@ exports.logWork = functions.https.onRequest((request, response) => {
             });
             return Promise.resolve(updateSprintstatus);
         });
-        updateActivity("COMMENT", logWorkComment, taskId, date, time);
-        
+        Activity.addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time);
         const logWorkPromises = [promise1, promise2, promise3];
         Promise.all(logWorkPromises).then(() => {
-                result = { data: "OK" }
-                console.log("Document successfully written!");
+                result = { data: "Logged Work successfully!" }
+                console.log("Logged Work successfully!");
                 return response.status(200).send(result);
             })
             .catch((error) => {
                 var result = { data: error };
-                console.log("error", error);
-                return response.status(500).send(result)
+                console.error("Error Logging Work", error);
+                return response.status(500).send(result);
             });
     });
 });
@@ -80,64 +82,5 @@ function createSprintId(sprintNumber) {
         return "Backlog";
     } else {
         return ("S" + sprintNumber);
-    }
-}
-
-async function updateActivity(type, comment, taskId, date, time){
-    var actionId = "";
-    if(type === "CREATED") {
-        actionId = "A0";
-        db.collection("Activity").doc(taskId).set({
-            TaskId: taskId,
-            TotalActions: 0,
-            TotalComments: 0
-        });
-        db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-            Type: type,
-            Comment: comment,
-            Date: date,
-            Time: time
-        });
-    }
-    else if (type === "COMMENT") {
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
-            totalComments = doc.data().TotalComments;
-            totalComments = totalComments+1;
-            return ("A" + totalActions);
-        });
-        if (actionId !== ""){
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-                TotalComments: totalComments,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
-    }
-    else{
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
-
-            return ("A" + totalActions);
-
-        });
-        if (actionId !== ""){
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
     }
 }
