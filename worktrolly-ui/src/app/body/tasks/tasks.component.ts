@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
-import { Router } from '@angular/router';
 import firebase from "firebase/app";
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -29,7 +29,7 @@ export class TasksComponent implements OnInit {
   filterStatus: string
   filterCategory: string
   showFilter: boolean = false
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService) { }
+  constructor(private route: ActivatedRoute, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public location: Location) { }
 
   ngOnInit(): void {
 
@@ -37,7 +37,7 @@ export class TasksComponent implements OnInit {
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
 
     this.componentName = this.category;
-    this.navbarHandler.addToNavbar(this.componentName);
+    this.navbarHandler.getUrl();
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
@@ -81,8 +81,7 @@ export class TasksComponent implements OnInit {
     );
   }
   backToDashboard() {
-    this.navbarHandler.removeFromNavbar();
-    this.router.navigate(['/Board']);
+    this.location.back();
   }
 
   showFilterOptions() {

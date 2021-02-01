@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class TaskDetailsComponent implements OnInit {
     this.Id = this.route.snapshot.params['taskId'];
 
     this.componentName = this.Id;
-    this.navbarHandler.addToNavbar(this.componentName);
+    this.navbarHandler.getUrl();
 
     this.getTaskDetail();
   }
@@ -86,9 +86,8 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  backToTasks(){
-    this.navbarHandler.removeFromNavbar();
-    this.location.back()
+  backToTasks() {
+    this.location.back();
   }
 
 }

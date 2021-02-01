@@ -10,14 +10,14 @@ import { TasksId } from 'src/app/Interface/TasksInterface';
 export class TaskCardsComponent implements OnInit {
 
   @Input('task') task: TasksId
-
+  @Input('sprintName') currentSprintName: string
   constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   openTaskDetails(id: string) {
-    this.router.navigate(['/TaskDetails', id]);
+    this.router.navigate(['/Board/Tasks', this.task.Category, this.currentSprintName, id]);
   }
 
 }
