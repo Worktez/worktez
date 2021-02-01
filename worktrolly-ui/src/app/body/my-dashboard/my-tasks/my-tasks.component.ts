@@ -1,0 +1,36 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
+
+@Component({
+  selector: 'app-my-tasks',
+  templateUrl: './my-tasks.component.html',
+  styleUrls: ['./my-tasks.component.css']
+})
+export class MyTasksComponent implements OnInit {
+
+  @Input("username") username: string
+  @Input("currentSprint") currentSprintNumber: number
+
+  tasksCollection: AngularFirestoreCollection<Tasks>
+  tasksData: Observable<TasksId[]>
+
+  constructor(public db: AngularFirestore) { }
+
+  ngOnInit(): void {
+    this.readTaskData();
+  }
+
+  readTaskData() {
+    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref => ref.where('Assignee', '==', this.username).where("SprintNumber", "==", this.currentSprintNumber));
+    this.tasksData = this.tasksCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Tasks;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+}
