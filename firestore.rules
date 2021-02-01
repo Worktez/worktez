@@ -4,11 +4,11 @@ service cloud.firestore {
   
     //Anyone can Read Data
     match /{document=**} {
-      allow read: if true;
+      allow read, write: if true;
     }
     // Only Logged in or Signed Up users can modify data
-    match /Users/{userId}{
-      allow read,write: if request.auth.uid==userId;
-    }
+    //match /Users/{userId}{
+    //  allow read,write: if request.auth.uid==userId;
+    //}
   }
 }

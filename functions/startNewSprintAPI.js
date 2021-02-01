@@ -7,7 +7,7 @@ const db = admin.firestore();
 
 exports.startNewSprint = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-        console.log(request);
+        console.log(request.body.data);
 
         var status = request.body.data.Status;
         var startDate = request.body.data.StartDate;
@@ -59,18 +59,16 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         const p2 = db.collection("RawData").doc("AppDetails").update({
             CurrentSprintId: newSprintId
         });
-        const Promises = [p1,p2];
+        const Promises = [p1, p2];
         return Promise.all(Promises).then(() => {
-            console.log("Sprint started successfully");
-            result = { data: "OK" }
-            console.log("Document successfully written!");
-            return response.status(200).send(result);
-        })
-        .catch((error) => {
-            result = { data: error }
-            console.log("error", error);
-            return response.status(500).send(result);
-        });
+                console.log("Sprint started successfully");
+                result = { data: "OK" }
+                return response.status(200).send(result);
+            })
+            .catch((error) => {
+                result = { data: error }
+                console.error("Error Starting Sprint", error);
+                return response.status(500).send(result);
+            });
     });
 });
-
