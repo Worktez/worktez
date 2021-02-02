@@ -1,4 +1,8 @@
-const admin = require('firebase-admin');
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
@@ -19,7 +23,6 @@ exports.addActivity = function(type, comment, taskId, date, time) {
                 TotalActions: totalActions,
                 TotalComments: totalComments,
             });
-
         } else {
             totalActions = 1;
             totalComments = 1;
@@ -28,31 +31,32 @@ exports.addActivity = function(type, comment, taskId, date, time) {
             activityPromise = db.collection("Activity").doc(taskId).set({
                 TaskId: taskId,
                 TotalActions: totalActions,
-                TotalComments: totalComments
+                TotalComments: totalComments,
             });
         }
-        activityPromise2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
+        const activityPromise2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
             Type: type,
             Comment: comment,
             Date: date,
-            Time: time
+            Time: time,
         });
         const Promises = [activityPromise, activityPromise2];
         return Promise.resolve(Promises);
     });
     return Promise.resolve(promise1).then(() => {
-            result = { data: "OK!" }
             console.log("Activity Tracked successfully!");
             return 0;
         })
         .catch((error) => {
-            result = { data: error };
             console.error("Error Tracking Activity: ", error);
         });
-}
+};
 
-
-
+/**
+ * Adds two numbers together.
+ * @param {int} actionId The first number.
+ * @return {string} The sum of the two numbers.
+ */
 function createActivityId(actionId) {
     return ("A" + actionId);
 }

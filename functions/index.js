@@ -1,14 +1,21 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+/* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable require-jsdoc */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+
+const admin = require("firebase-admin");
 admin.initializeApp();
 
-const createNewTaskAPI = require('./createNewTaskAPI');
-const startNewSprintAPI = require('./startNewSprintAPI');
-const logWorkAPI = require('./logWorkAPI');
-const editPageTaskAPI = require('./editPageTaskAPI');
-const deleteTaskAPI = require('./deleteTaskAPI');
-const createNewUserAPI = require('./createNewUserAPI');
-const updateSprintStatusAPI = require('./updateSprintStatusAPI');
+const createNewTaskAPI = require("./createNewTaskAPI");
+const startNewSprintAPI = require("./startNewSprintAPI");
+const logWorkAPI = require("./logWorkAPI");
+const editPageTaskAPI = require("./editPageTaskAPI");
+const deleteTaskAPI = require("./deleteTaskAPI");
+const createNewUserAPI = require("./createNewUserAPI");
+const updateSprintStatusAPI = require("./updateSprintStatusAPI");
 
 // class Task {
 //     constructor(id, title, status, priority, estimatedTime, difficulty, description, creator, category, assignee, logWorkTotalTime, workDone, creationDate, sprintNumber, storyPointNumber) {

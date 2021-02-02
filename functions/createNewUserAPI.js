@@ -1,7 +1,14 @@
-const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-undef */
+/* eslint-disable require-jsdoc */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+const functions = require("firebase-functions");
+const cors = require("cors")({ origin: true });
 
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
@@ -24,7 +31,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     displayName: DisplayName,
                     email: Email,
                     phoneNumber: PhoneNumber,
-                    providerId: ProviderId
+                    providerId: ProviderId,
                 });
                 return Promise.resolve(userData);
             } else {
@@ -34,7 +41,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     displayName: DisplayName,
                     email: Email,
                     phoneNumber: PhoneNumber,
-                    providerId: ProviderId
+                    providerId: ProviderId,
                 });
                 return Promise.resolve(userData);
             }
@@ -51,7 +58,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     TotalOtherTask: 0,
                     TotalNumberOfTask: 0,
                     TotalCompletedTask: 0,
-                    TotalUnCompletedTask: 0
+                    TotalUnCompletedTask: 0,
                 });
                 return Promise.resolve(P1);
             }
@@ -65,7 +72,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
             .catch((error) => {
                 result = { data: error };
                 console.error("Error LogIn/SignUp User", error);
-                return response.status(500).send(result)
+                return response.status(500).send(result);
             });
     });
 });
