@@ -47,7 +47,6 @@ dist/
 
 # Dependency directories
 node_modules/
-src/environments/
 
 # Optional npm cache directory
 .npm
