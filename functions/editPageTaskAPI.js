@@ -1,8 +1,16 @@
-const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
-var Activity = require("./addActivity");
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-undef */
+/* eslint-disable require-jsdoc */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
 
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const cors = require("cors")({ origin: true });
+const Activity = require("./addActivity");
+
+const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
@@ -10,35 +18,34 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request.body.data);
 
-        var description = request.body.data.Description;
-        var priority = request.body.data.Priority;
-        var difficulty = request.body.data.Difficulty;
-        var assignee = request.body.data.Assignee;
-        var estimatedTime = request.body.data.EstimatedTime;
-        var category = request.body.data.Category;
-        var storyPointNumber = request.body.data.StoryPointNumber;
-        var editedSprintNumber = request.body.data.SprintNumber;
-        var previousId = request.body.data.PreviousId;
-        var creationDate = request.body.data.CreationDate;
-        var changedData = request.body.data.ChangedData;
-        var previousSprintId = createSprintId(previousId);
-        var taskId = request.body.data.Id;
-        var editedSprintId = createSprintId(editedSprintNumber);
-        var totalDevelopmentTask;
-        var totalBusinessTask;
-        var totalMarketingTask;
-        var totalOtherTask;
-        var totalNumberOfTask;
-        var result;
-        var totalUnCompletedTask;
-        var totalCompletedTask;
-        var sprintEditPromise;
-        var date = request.body.data.Date;
-        var time = request.body.data.Time;
-        var type = "EDITED";
-        var comment = "Edited task details: ";
+        const description = request.body.data.Description;
+        const priority = request.body.data.Priority;
+        const difficulty = request.body.data.Difficulty;
+        const assignee = request.body.data.Assignee;
+        const estimatedTime = request.body.data.EstimatedTime;
+        const category = request.body.data.Category;
+        const storyPointNumber = request.body.data.StoryPointNumber;
+        const editedSprintNumber = request.body.data.SprintNumber;
+        const previousId = request.body.data.PreviousId;
+        const creationDate = request.body.data.CreationDate;
+        const changedData = request.body.data.ChangedData;
+        const previousSprintId = createSprintId(previousId);
+        const taskId = request.body.data.Id;
+        const editedSprintId = createSprintId(editedSprintNumber);
+        let totalDevelopmentTask;
+        let totalBusinessTask;
+        let totalMarketingTask;
+        let totalOtherTask;
+        let totalNumberOfTask;
+        let result;
+        let totalUnCompletedTask;
+        let totalCompletedTask;
+        let sprintEditPromise;
+        const date = request.body.data.Date;
+        const time = request.body.data.Time;
+        let comment = "Edited task details: ";
 
-        var promises = [];
+        const promises = [];
         if (editedSprintNumber !== previousId) {
             comment += "Moved to sprint " + editedSprintId + ". ";
             const p1 = db.collection("Main").doc(previousSprintId).get().then((doc) => {
@@ -61,13 +68,13 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
 
                 totalNumberOfTask = totalNumberOfTask - 1;
                 totalUnCompletedTask = totalUnCompletedTask - 1;
-                var editSprintDeleteCounter = db.collection("Main").doc(previousSprintId).update({
+                const editSprintDeleteCounter = db.collection("Main").doc(previousSprintId).update({
                     TotalDevelopmentTask: totalDevelopmentTask,
                     TotalBusinessTask: totalBusinessTask,
                     TotalMarketingTask: totalMarketingTask,
                     TotalOtherTask: totalOtherTask,
                     TotalNumberOfTask: totalNumberOfTask,
-                    TotalUnCompletedTask: totalUnCompletedTask
+                    TotalUnCompletedTask: totalUnCompletedTask,
                 });
 
                 return Promise.resolve(editSprintDeleteCounter);
@@ -102,7 +109,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                         TotalMarketingTask: totalMarketingTask,
                         TotalOtherTask: totalOtherTask,
                         TotalUnCompletedTask: totalUnCompletedTask,
-                        TotalNumberOfTask: totalNumberOfTask
+                        TotalNumberOfTask: totalNumberOfTask,
                     });
                 } else {
                     totalBusinessTask = 0;
@@ -132,15 +139,15 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                         TotalOtherTask: totalOtherTask,
                         TotalUnCompletedTask: totalUnCompletedTask,
                         TotalCompletedTask: totalCompletedTask,
-                        TotalNumberOfTask: totalNumberOfTask
+                        TotalNumberOfTask: totalNumberOfTask,
                     });
                 }
-                return Promise.resolve(sprintEditPromise)
+                return Promise.resolve(sprintEditPromise);
             });
             promises.push(p2);
         }
 
-        var p3 = db.collection("Tasks").doc(taskId).update({
+        const p3 = db.collection("Tasks").doc(taskId).update({
             Description: description,
             CreationDate: creationDate,
             Priority: priority,
@@ -148,7 +155,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             Assignee: assignee,
             EstimatedTime: estimatedTime,
             SprintNumber: editedSprintNumber,
-            StoryPointNumber: storyPointNumber
+            StoryPointNumber: storyPointNumber,
         });
         promises.push(p3);
         comment = comment + changedData;
@@ -162,7 +169,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             .catch((error) => {
                 result = { data: error };
                 console.error("Error Editing Task", error);
-                return response.status(500).send(result)
+                return response.status(500).send(result);
             });
     });
 });
