@@ -18,7 +18,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 })
 export class TaskDetailsComponent implements OnInit {
 
-  componentName: string = "TASKDETAILS"
+  componentName: string = "TASK-DETAILS"
 
   sprintName: string
   Id: string

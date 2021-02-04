@@ -63,4 +63,13 @@
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
    </SubComponent>
+
+   <SubComponent name="TASK-DETAILS" code="08">
+      <InternalError code="00">
+        <Error code="02" description="SERVER_ERROR"></Error>
+        </InternalError>
+      <ExternalError code="01">
+        <Error code="01" description="VALIDATION_ERROR"></Error>
+      </ExternalError>
+   </SubComponent>
 </Component>
