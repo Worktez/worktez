@@ -17,6 +17,10 @@ export class RangeCardComponent implements OnInit {
   ngOnInit(): void {
   }
   async validateRange() {
+    let data = [
+      { label: "sprintRange1", value: this.sprintRange1 },
+      { label: "sprintRange2", value: this.sprintRange2 }
+    ]
     var condition = await (this.validationService.checkSprintRange(this.sprintRange1, this.sprintRange2)).then(res => {
       return res;
     });

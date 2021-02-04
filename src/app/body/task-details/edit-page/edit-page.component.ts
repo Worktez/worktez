@@ -4,7 +4,9 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../../services/validation.service';
-import { ToolsService } from '../../../services/tools.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service'
+import { errorMonitor } from 'events';
+import { ToolsService } from 'src/app/services/tools.service';
 
 
 @Component({
@@ -13,6 +15,8 @@ import { ToolsService } from '../../../services/tools.service';
   styleUrls: ['./edit-page.component.css']
 })
 export class EditPageComponent implements OnInit {
+
+  componentName: string = "EDIT-TASK";
 
   @ViewChild('form') form: NgForm;
   @Input('task') task: Tasks
@@ -27,7 +31,7 @@ export class EditPageComponent implements OnInit {
   prevVal =[]
   newVal =[]
 
-  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
 
@@ -47,7 +51,7 @@ export class EditPageComponent implements OnInit {
     {label:"assignee",value:this.editTask.Assignee},
     {label:"sprintNumber",value:this.editTask.SprintNumber},
     {label:"storyPoint",value:this.editTask.StoryPointNumber}];
-    var condition = await (this.validationService.checkValidity(data)).then(res => {
+    var condition = await (this.validationService.checkValidity(this.componentName,data)).then(res => {
       return res;});
     if(condition)
     {
@@ -100,8 +104,8 @@ async generateChanges() {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
+      this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
       this.enableLoader = false;
-      console.error("Error", error);
     }
   }
 

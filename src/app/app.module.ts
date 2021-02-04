@@ -7,6 +7,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
@@ -38,7 +39,8 @@ import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
-import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component"
+import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
+import { ErrorComponent } from './body/error/error.component'
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     ChartComponent,
     MyTasksComponent,
     PerformanceChartComponent,
-    RangeCardComponent
+    RangeCardComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -77,13 +80,14 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     AngularFireFunctionsModule,
     AngularFirestoreModule,
     AppRoutingModule,
-    GoogleChartsModule.forRoot({ version: 'current' })
+    GoogleChartsModule.forRoot({ version: 'current' }),
+    HttpClientModule,
   ],
   providers: [
     AuthService,
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
-    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7002] : undefined },
-    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7001] : undefined }
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7102] : undefined },
+    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7101] : undefined }
   ],
   bootstrap: [AppComponent]
 })
