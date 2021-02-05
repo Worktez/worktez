@@ -1,0 +1,64 @@
+<div class="container">
+    <div id="createNewOrgContainer">
+        <div class="row" id="orgRow">
+            <div class="col-12 col-md-6">
+                <div id="leftContainer" class="pl-md-5 pl-4">
+                    <form id="form" class="text-center">
+                        <ng-container *ngIf="step===1">
+                            <header class="pb-3">Create new Organization</header>
+                            <div class="form-group row align-items-center justify-content-center pb-2">
+                                <input class="col input" type="text" placeholder="Organization Name" [(ngModel)]="orgName" [ngModelOptions]="{standalone: true}" required>
+                            </div>
+                            <div class="form-group row align-items-center justify-content-center pb-2">
+                                <input class="col input" placeholder="Organization Email" type="text" [(ngModel)]="orgEmail" [ngModelOptions]="{standalone: true}" required />
+                            </div>
+                            <div class="form-group row align-items-center justify-content-center">
+                                <button type="button" id="button" (click)="nextStep()">NEXT</button>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="step===2">
+                            <header class="pb-3">Add Categories</header>
+                            <div class="form-group row pb-2 align-items-center">
+                                <input class="col input" type="text" [(ngModel)]="orgName" [ngModelOptions]="{standalone: true}" required>
+                                <span class="pl-2 material-icons" id="addIcon">add_circle</span>
+                            </div>
+                            <div class="form-group row align-items-center justify-content-center">
+                                <div class="col-6">
+                                    <button type="button" id="button" (click)="prevStep()">BACK</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" id="button" (click)="nextStep()">NEXT</button>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="step===3">
+                            <header class="pb-3">Add Team Members</header>
+                            <div class="form-group row pb-2 align-items-center">
+                                <input class="col input" type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" required>
+                                <span class="pl-2 material-icons" id="addIcon">add_circle</span>
+                            </div>
+                            <div class="form-group row align-items-center justify-content-center">
+                                <div class="col-6">
+                                    <button type="button" id="button" (click)="prevStep()">BACK</button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" id="button" (click)="onSubmit()">SUBMIT</button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div id="rightContainer">
+                    <div id="uploadButton">
+                        <label>
+                            <input type="file" required/>
+                            <span id="uploadButtonLabel">Upload Logo</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

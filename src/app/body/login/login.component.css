@@ -1,5 +1,5 @@
-#loginContainer {
-    border: 1px solid #5A20F0;
+#containerBorder {
+    border: 1px solid#5A20F0;
 }
 
 #loginNavbar {
@@ -17,4 +17,40 @@
 #button:active {
     outline: none;
     box-shadow: none;
+}
+
+#nav-login-tab,
+#nav-signup-tab {
+    background-color: black;
+    border: 2px solid #5A20F0;
+    color: white;
+}
+
+#nav-login-tab:active,
+#nav-login-tab:focus,
+#nav-signup-tab:active,
+#nav-signup-tab:focus {
+    background-color: #16C85A;
+    border: 2px solid #5A20F0;
+    color: black;
+}
+
+#emailForm {
+    color: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #5A20F0;
+}
+
+#topBorder {
+    border-top: 1px solid #5A20F0;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #5A20F0;
 }

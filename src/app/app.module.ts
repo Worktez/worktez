@@ -38,7 +38,8 @@ import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
-import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component"
+import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
+import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component'
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     ChartComponent,
     MyTasksComponent,
     PerformanceChartComponent,
-    RangeCardComponent
+    RangeCardComponent,
+    CreateNewOrganizationComponent
   ],
   imports: [
     BrowserModule,

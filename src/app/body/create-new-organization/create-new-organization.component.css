@@ -1,0 +1,113 @@
+.container {
+    position: absolute;
+    max-width: 800px;
+    height: 500px;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#createNewOrgContainer {
+    position: relative;
+    background: #fff;
+    height: 100%;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 40px -10px rgba(0, 0, 0, 0.7);
+}
+
+#orgRow {
+    height: 100%;
+}
+
+#leftContainer {
+    position: relative;
+    background: #fff;
+    border-radius: 25px;
+    height: 100%;
+    padding: 25px;
+}
+
+header {
+    color: #5A20F0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#rightContainer {
+    position: relative;
+    background-image: linear-gradient(45deg, #5A20F0, #5A20F0);
+    border-radius: 25px;
+    height: 100%;
+    padding: 25px;
+    color: rgb(192, 192, 192);
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input,
+.input:focus {
+    width: 230px;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 50px;
+    border: none;
+    -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    outline: none;
+}
+
+#form {
+    position: relative;
+    margin-top: 50px;
+}
+
+#button {
+    background: linear-gradient(45deg, #5A20F0, #5A20F0);
+    color: #fff;
+    border: none;
+    width: 120px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+}
+
+#button:hover,
+#button:focus {
+    background: linear-gradient(45deg, #5A20F0, #b726ff);
+    outline: none;
+}
+
+#uploadButtonLabel {
+    background: transparent;
+    color: #fff;
+    width: 120px;
+    border: 2px solid#fff;
+    padding: 10px;
+    -webkit-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 49px -14px rgba(0, 0, 0, 0.7);
+}
+
+#uploadButtonLabel:hover {
+    cursor: pointer;
+}
+
+#uploadButton {
+    display: inline-block;
+}
+
+input[type=file] {
+    display: none;
+}
+
+#addIcon {
+    color: #5A20F0;
+}

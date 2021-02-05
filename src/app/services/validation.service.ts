@@ -268,4 +268,31 @@ export class ValidationService {
         }
         return (true)
     }
+    async checkEmail(value: String) {
+        const control = new FormControl(value, [Validators.required, Validators.email]);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Email is badly formatted");
+            return (false);
+        }
+    }
+    async checkUsername(value: String) {
+        const control = new FormControl(value, [Validators.required, Validators.minLength(3)]);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Username should be greater than 2 characters");
+            return (false);
+        }
+    }
+    async checkPassword(value: string) {
+        const control = new FormControl(value, [Validators.required, Validators.minLength(6)]);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Password should be greater than 5 characters");
+            return (false);
+        }
+    }
 }  
