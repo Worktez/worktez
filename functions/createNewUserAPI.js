@@ -1,13 +1,19 @@
-const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-undef */
+/* eslint-disable require-jsdoc */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+const functions = require("firebase-functions");
+const cors = require("cors")({ origin: true });
 
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
 exports.createNewUser = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-        console.log(request);
         const user = request.body.data;
         const Uid = user.uid;
         const PhotoURL = user.photoURL;
@@ -16,37 +22,57 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
         const PhoneNumber = user.phoneNumber;
         const ProviderId = user.providerId;
 
-        db.collection("Users").doc(Uid).get().then((doc) => {
-                if (doc.exists) {
-                    const userData = db.collection("Users").doc(Uid).update({
-                        uid: Uid,
-                        photoURL: PhotoURL,
-                        displayName: DisplayName,
-                        email: Email,
-                        phoneNumber: PhoneNumber,
-                        providerId: ProviderId
-                    });
-                    return Promise.resolve(userData);
-                } else {
-                    const userData = db.collection("Users").doc(Uid).set({
-                        uid: Uid,
-                        photoURL: PhotoURL,
-                        displayName: DisplayName,
-                        email: Email,
-                        phoneNumber: PhoneNumber,
-                        providerId: ProviderId
-                    });
-                    return Promise.resolve(userData);
-                }
-            }).then(() => {
+        console.log(user);
+        const promise1 = db.collection("Users").doc(Uid).get().then((doc) => {
+            if (doc.exists) {
+                const userData = db.collection("Users").doc(Uid).update({
+                    uid: Uid,
+                    photoURL: PhotoURL,
+                    displayName: DisplayName,
+                    email: Email,
+                    phoneNumber: PhoneNumber,
+                    providerId: ProviderId,
+                });
+                return Promise.resolve(userData);
+            } else {
+                const userData = db.collection("Users").doc(Uid).set({
+                    uid: Uid,
+                    photoURL: PhotoURL,
+                    displayName: DisplayName,
+                    email: Email,
+                    phoneNumber: PhoneNumber,
+                    providerId: ProviderId,
+                });
+                return Promise.resolve(userData);
+            }
+        });
+        const promise2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
+            if (doc.exists) {
+                return 0;
+            } else {
+                const P1 = db.collection("RawData").doc("AppDetails").set({
+                    CurrentSprintId: 0,
+                    TotalDevelopmentTask: 0,
+                    TotalBusinessTask: 0,
+                    TotalMarketingTask: 0,
+                    TotalOtherTask: 0,
+                    TotalNumberOfTask: 0,
+                    TotalCompletedTask: 0,
+                    TotalUnCompletedTask: 0,
+                });
+                return Promise.resolve(P1);
+            }
+        });
+        const Promises = [promise1, promise2];
+        return Promise.all(Promises).then(() => {
                 result = { data: "User Logged In Successfully" };
-                console.log("Document successfully written");
+                console.log("User Logged In Successfully");
                 return response.status(200).send(result);
             })
             .catch((error) => {
                 result = { data: error };
-                console.log("error", error);
-                return response.status(500).send(result)
+                console.error("Error LogIn/SignUp User", error);
+                return response.status(500).send(result);
             });
     });
 });

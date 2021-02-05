@@ -1,49 +1,42 @@
-const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-undef */
+/* eslint-disable require-jsdoc */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
 
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const cors = require("cors")({ origin: true });
+const Activity = require("./addActivity");
+
+const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
 exports.logWork = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-        var status = request.body.data.LogWorkStatus;
-        var taskId = request.body.data.LogTaskId;
-        var logHours = parseInt(request.body.data.LogHours);
-        var workDone = parseInt(request.body.data.LogWorkDone);
-        var sprintNumber = parseInt(request.body.data.SprintNumber);
-        var logWorkComment = request.body.data.LogWorkComment;
-        var date = request.body.data.Date;
-        var time = request.body.data.Time;
-        var logWorkComment = request.body.data.LogWorkComment;
-        var fullSprintId = createSprintId(sprintNumber);
-        var logWorkTotalTime;
-        var totalActions;
-        var totalComments;
-        var actionId;
-        var completionDate;
-        var today = new Date();
+        console.log(request.body.data);
+
+        const status = request.body.data.LogWorkStatus;
+        const taskId = request.body.data.LogTaskId;
+        const logHours = parseInt(request.body.data.LogHours);
+        const workDone = parseInt(request.body.data.LogWorkDone);
+        const sprintNumber = parseInt(request.body.data.SprintNumber);
+        const logWorkComment = request.body.data.LogWorkComment;
+        const date = request.body.data.Date;
+        const time = request.body.data.Time;
+        const fullSprintId = createSprintId(sprintNumber);
+        let logWorkTotalTime;
 
         const promise1 = db.collection("Tasks").doc(taskId).get().then((doc) => {
             logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
             logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
 
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0');
-            var yyyy = today.getFullYear();
-
-            var todayDate = dd + "/" + mm + "/" + yyyy;
-
-            if (status === 'Completed') {
-                completionDate = todayDate;
-            } else {
-                completionDate = "Not yet Completed";
-            }
-            var updatePromise = db.collection("Tasks").doc(taskId).update({
+            const updatePromise = db.collection("Tasks").doc(taskId).update({
                 LogWorkTotalTime: logWorkTotalTime,
                 WorkDone: workDone,
                 Status: status,
-                CompletionDate: completionDate
             });
             return Promise.resolve(updatePromise);
         });
@@ -54,9 +47,9 @@ exports.logWork = functions.https.onRequest((request, response) => {
                 totalCompletedTask = totalCompletedTask + 1;
                 totalUnCompletedTask = totalUnCompletedTask - 1;
             }
-            var updateStatus = db.collection("RawData").doc("AppDetails").update({
+            const updateStatus = db.collection("RawData").doc("AppDetails").update({
                 TotalCompletedTask: totalCompletedTask,
-                TotalUnCompletedTask: totalUnCompletedTask
+                TotalUnCompletedTask: totalUnCompletedTask,
             });
             return Promise.resolve(updateStatus);
         });
@@ -68,24 +61,23 @@ exports.logWork = functions.https.onRequest((request, response) => {
                 totalCompletedTask = totalCompletedTask + 1;
                 totalUnCompletedTask = totalUnCompletedTask - 1;
             }
-            var updateSprintstatus = db.collection("Main").doc(fullSprintId).update({
+            const updateSprintstatus = db.collection("Main").doc(fullSprintId).update({
                 TotalCompletedTask: totalCompletedTask,
-                TotalUnCompletedTask: totalUnCompletedTask
+                TotalUnCompletedTask: totalUnCompletedTask,
             });
             return Promise.resolve(updateSprintstatus);
         });
-        updateActivity("COMMENT", logWorkComment, taskId, date, time);
-
+        Activity.addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time);
         const logWorkPromises = [promise1, promise2, promise3];
         Promise.all(logWorkPromises).then(() => {
-                result = { data: "OK" }
-                console.log("Document successfully written!");
+                result = { data: "Logged Work successfully!" };
+                console.log("Logged Work successfully!");
                 return response.status(200).send(result);
             })
             .catch((error) => {
-                var result = { data: error };
-                console.log("error", error);
-                return response.status(500).send(result)
+                const result = { data: error };
+                console.error("Error Logging Work", error);
+                return response.status(500).send(result);
             });
     });
 });
@@ -95,62 +87,5 @@ function createSprintId(sprintNumber) {
         return "Backlog";
     } else {
         return ("S" + sprintNumber);
-    }
-}
-
-async function updateActivity(type, comment, taskId, date, time) {
-    var actionId = "";
-    if (type === "CREATED") {
-        actionId = "A0";
-        db.collection("Activity").doc(taskId).set({
-            TaskId: taskId,
-            TotalActions: 0,
-            TotalComments: 0
-        });
-        db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-            Type: type,
-            Comment: comment,
-            Date: date,
-            Time: time
-        });
-    } else if (type === "COMMENT") {
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions + 1;
-            totalComments = doc.data().TotalComments;
-            totalComments = totalComments + 1;
-            return ("A" + totalActions);
-        });
-        if (actionId !== "") {
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-                TotalComments: totalComments,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
-    } else {
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions + 1;
-
-            return ("A" + totalActions);
-
-        });
-        if (actionId !== "") {
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
     }
 }

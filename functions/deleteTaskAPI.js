@@ -1,43 +1,50 @@
-const functions = require('firebase-functions');
-var cors = require('cors')({ origin: true });
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-undef */
+/* eslint-disable require-jsdoc */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
 
-const admin = require('firebase-admin');
+const functions = require("firebase-functions");
+const cors = require("cors")({ origin: true });
+const Activity = require("./addActivity");
+
+const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
 exports.deleteTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
-        console.log(request);
+        console.log(request.body.data);
 
-        var sprintNumber = request.body.data.SprintNumber;
-        var taskId = request.body.data.Id;
-        var fullSprintId = createSprintId(sprintNumber);
-        var category = request.body.data.Category;
-        var status = request.body.data.Status;
-        var totalDevelopmentTask;
-        var totalBusinessTask;
-        var totalMarketingTask;
-        var totalOtherTask;
-        var totalNumberOfTask;
-        var result;
-        var totalCompletedTask;
-        var totalUnCompletedTask;
-        var date = request.body.data.Date;
-        var time = request.body.data.Time;
-        var totalActions;
-        var actionId;
+        const sprintNumber = request.body.data.SprintNumber;
+        const taskId = request.body.data.Id;
+        const fullSprintId = createSprintId(sprintNumber);
+        const category = request.body.data.Category;
+        const status = request.body.data.Status;
+        let totalDevelopmentTask;
+        let totalBusinessTask;
+        let totalMarketingTask;
+        let totalOtherTask;
+        let totalNumberOfTask;
+        let result;
+        let totalCompletedTask;
+        let totalUnCompletedTask;
+        const date = request.body.data.Date;
+        const time = request.body.data.Time;
 
         const p1 = db.collection("Tasks").doc(taskId).update({
             Category: "Trash",
-            SprintNumber: -2
+            SprintNumber: -2,
         });
-        
+
         const p2 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
             totalNumberOfTask = doc.data().TotalNumberOfTask;
             totalDevelopmentTask = doc.data().TotalDevelopmentTask;
             totalBusinessTask = doc.data().TotalBusinessTask;
             totalMarketingTask = doc.data().TotalMarketingTask;
-            totalOtherTask = doc.data().TotalOtherTask
+            totalOtherTask = doc.data().TotalOtherTask;
             totalCompletedTask = doc.data().TotalCompletedTask;
             totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
@@ -48,33 +55,33 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             } else if (category === "Marketing") {
                 totalMarketingTask = totalMarketingTask - 1;
             } else {
-                totalOtherTask = totalOtherTask -1;
+                totalOtherTask = totalOtherTask - 1;
             }
             totalNumberOfTask = totalNumberOfTask - 1;
             status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
-            var updateDeleteTaskCounter = db.collection("Main").doc(fullSprintId).update({
+            const updateDeleteTaskCounter = db.collection("Main").doc(fullSprintId).update({
                 TotalDevelopmentTask: totalDevelopmentTask,
                 TotalBusinessTask: totalBusinessTask,
                 TotalMarketingTask: totalMarketingTask,
                 TotalOtherTask: totalOtherTask,
                 TotalNumberOfTask: totalNumberOfTask,
                 TotalCompletedTask: totalCompletedTask,
-                TotalUnCompletedTask: totalUnCompletedTask
+                TotalUnCompletedTask: totalUnCompletedTask,
             });
             return Promise.resolve(updateDeleteTaskCounter);
         });
-        updateActivity("DELETED", "Deleted task "+taskId, taskId, date, time);
+        Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time);
 
         const deleteTaskPromises = [p1, p2];
         Promise.all(deleteTaskPromises).then(() => {
                 result = { data: "OK" };
-                console.log("Document sucessfully deleted");
+                console.log("Deleted Task Sucessfully");
                 return response.status(200).send(result);
             })
             .catch((error) => {
                 result = { data: error };
-                console.log("error", error);
-                return response.status(500).send(result)
+                console.error("Error Deleting Task", error);
+                return response.status(500).send(result);
             });
     });
 });
@@ -84,64 +91,5 @@ function createSprintId(sprintNumber) {
         return "Backlog";
     } else {
         return ("S" + sprintNumber);
-    }
-}
-
-async function updateActivity(type, comment, taskId, date, time){
-    var actionId = "";
-    if(type === "CREATED") {
-        actionId = "A0";
-        db.collection("Activity").doc(taskId).set({
-            TaskId: taskId,
-            TotalActions: 0,
-            TotalComments: 0
-        });
-        db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-            Type: type,
-            Comment: comment,
-            Date: date,
-            Time: time
-        });
-    }
-    else if (type === "COMMENT") {
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
-            totalComments = doc.data().TotalComments;
-            totalComments = totalComments+1;
-            return ("A" + totalActions);
-        });
-        if (actionId !== ""){
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-                TotalComments: totalComments,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
-    }
-    else{
-        actionId = await db.collection("Activity").doc(taskId).get().then((doc) => {
-            totalActions = doc.data().TotalActions;
-            totalActions = totalActions+1;
-
-            return ("A" + totalActions);
-
-        });
-        if (actionId !== ""){
-            db.collection("Activity").doc(taskId).update({
-                TotalActions: totalActions,
-            });
-            db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-                Type: type,
-                Comment: comment,
-                Date: date,
-                Time: time
-            });
-        }
     }
 }
