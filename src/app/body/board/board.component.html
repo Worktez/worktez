@@ -5,7 +5,7 @@
                 <div class="row py-4">
                     <h3 class="fontHeading col-md-8 col-6" style="font-size: 24px;">Board</h3>
                     <div class="col-md-2 col-3 px-3">
-                        <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="currentSprint()">Current Sprint</button>
+                        <button type="submit" class="btn" id="button" *ngIf="currentSprintEnable" style="font-size: 14px;" (click)="currentSprint()">Current Sprint</button>
                     </div>
                     <div class="col-md-2 col-2">
                         <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="showBacklog()">Backlog</button>
@@ -17,7 +17,8 @@
                         <app-feature-card [cardName]="'Business'" [tasks]="item.TotalBusinessTask"></app-feature-card>
                     </div>
                     <div class="col-md-3 col-12" type="button" (click)="showTasks('Development')">
-                        <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask"></app-feature-card>
+                        <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask">
+                        </app-feature-card>
                     </div>
                     <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
                         <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
@@ -27,7 +28,8 @@
                     </div>
                 </div>
 
-                <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)"></app-sprint-details>
+                <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)">
+                </app-sprint-details>
             </div>
         </ng-container>
     </ng-container>

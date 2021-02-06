@@ -22,6 +22,10 @@
     background-color: #5A20F0;
 }
 
+.dropdown-item:hover {
+    background-color: #5A20F0;
+}
+
 #button:focus,
 #button:active,
 #dropdownButton:focus,
