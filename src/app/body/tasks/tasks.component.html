@@ -18,7 +18,7 @@
             <div class="col">
                 <div id="cardsList">
                     <ng-container *ngFor="let item of tasksData | async">
-                        <app-task-cards [task]="item"></app-task-cards>
+                        <app-task-cards [task]="item" [sprintName]="currentSprintName"></app-task-cards>
                     </ng-container>
                     <app-loader *ngIf="showFilter && !(tasksData | async)"></app-loader>
                 </div>

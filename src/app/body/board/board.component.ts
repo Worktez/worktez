@@ -13,7 +13,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class BoardComponent implements OnInit {
 
-  componentName = "Board";
+  componentName: string = "Board";
 
   // public rawData: RawDataType;
   public rawDataObservable: Observable<RawDataType>;
@@ -27,7 +27,7 @@ export class BoardComponent implements OnInit {
 
   filterSprintNumber: string;
 
-  constructor(private db: AngularFirestore, private router: Router, public navbarHandler: NavbarHandlerService) { }
+  constructor(private db: AngularFirestore, private router: Router, public navbarHandlerService: NavbarHandlerService) { }
 
   ngOnInit(): void {
     // Better way of use db.
@@ -42,7 +42,7 @@ export class BoardComponent implements OnInit {
     //   }))
     // );
 
-    this.navbarHandler.addToNavbar(this.componentName);
+    this.navbarHandlerService.setNavbar(this.componentName);
 
     // Efficient for now
     this.getCurrentSprint();
@@ -80,7 +80,7 @@ export class BoardComponent implements OnInit {
         // this.rawData = data;
         this.currentSprintNumber = data.CurrentSprintId;
         this.currentSprintName = "S" + this.currentSprintNumber;
-        return {...data}
+        return { ...data }
       })
     )
   }
@@ -100,7 +100,7 @@ export class BoardComponent implements OnInit {
     // )
   }
 
-  changeSprintName(data: {newSprintNumber: number}) {
+  changeSprintName(data: { newSprintNumber: number }) {
     this.currentSprintNumber = data.newSprintNumber;
     this.currentSprintName = "S" + this.currentSprintNumber;
   }
@@ -110,7 +110,7 @@ export class BoardComponent implements OnInit {
     this.currentSprintName = "Backlog";
   }
 
-  currentSprint(){
+  currentSprint() {
     this.getCurrentSprint();
   }
 

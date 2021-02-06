@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
 import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
   selector: 'app-create-new-session',
@@ -12,6 +13,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-new-session.component.css']
 })
 export class CreateNewSessionComponent implements OnInit {
+
+  componentName: string = "Create New Task"
 
   @ViewChild('form') form: NgForm;
 
@@ -31,34 +34,36 @@ export class CreateNewSessionComponent implements OnInit {
   enableLoader: boolean = false
   valid: boolean = true;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandlerService: NavbarHandlerService) { }
+
   ngOnInit(): void {
+    this.navbarHandlerService.setNavbar(this.componentName);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
   }
 
-  async submit(){
-    let data = [{label:"title",value:this.title},
-      {label:"status",value:this.status},
-      {label:"priority",value:this.priority},
-      {label:"estimatedTime",value:this.estimatedTime},
-      {label:"difficulty",value:this.difficulty},
-      {label:"description",value:this.description},
-      {label:"creator",value:this.creatorName},
-      {label:"category",value:this.category},
-      {label:"assignee",value:this.assigneeName},
-      {label:"creationDate",value:this.todayDate},
-      {label:"sprintNumber",value:this.sprintNumber},
-      {label:"storyPoint",value:this.storyPoint}];
+  async submit() {
+    let data = [{ label: "title", value: this.title },
+    { label: "status", value: this.status },
+    { label: "priority", value: this.priority },
+    { label: "estimatedTime", value: this.estimatedTime },
+    { label: "difficulty", value: this.difficulty },
+    { label: "description", value: this.description },
+    { label: "creator", value: this.creatorName },
+    { label: "category", value: this.category },
+    { label: "assignee", value: this.assigneeName },
+    { label: "creationDate", value: this.todayDate },
+    { label: "sprintNumber", value: this.sprintNumber },
+    { label: "storyPoint", value: this.storyPoint }];
     var condition = await (this.validationService.checkValidity(data)).then(res => {
-      return res;});
-    if(condition)
-    {
+      return res;
+    });
+    if (condition) {
       console.log("Inputs are valid");
       this.createNewSession();
     }
     else
-    console.log("Task not created! Validation error");
+      console.log("Task not created! Validation error");
   }
 
   async createNewSession() {
@@ -77,7 +82,7 @@ export class CreateNewSessionComponent implements OnInit {
     }
   }
 
-  backToDashboard(){
+  backToDashboard() {
     this.location.back()
   }
 

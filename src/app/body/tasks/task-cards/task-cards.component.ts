@@ -10,6 +10,7 @@ import { TasksId } from 'src/app/Interface/TasksInterface';
 export class TaskCardsComponent implements OnInit {
 
   @Input('task') task: TasksId
+  @Input("sprintName") sprintName: string
 
   constructor(private router: Router) { }
 
@@ -17,7 +18,7 @@ export class TaskCardsComponent implements OnInit {
   }
 
   openTaskDetails(id: string) {
-    this.router.navigate(['/TaskDetails', id]);
+    this.router.navigate(['/Tasks', this.task.Category, this.sprintName, id]);
   }
 
 }
