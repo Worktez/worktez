@@ -17,8 +17,7 @@
                         <app-feature-card [cardName]="'Business'" [tasks]="item.TotalBusinessTask"></app-feature-card>
                     </div>
                     <div class="col-md-3 col-12" type="button" (click)="showTasks('Development')">
-                        <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask">
-                        </app-feature-card>
+                        <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask"></app-feature-card>
                     </div>
                     <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
                         <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
@@ -28,8 +27,7 @@
                     </div>
                 </div>
 
-                <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)">
-                </app-sprint-details>
+                <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)"></app-sprint-details>
             </div>
         </ng-container>
     </ng-container>
