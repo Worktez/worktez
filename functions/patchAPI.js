@@ -8,11 +8,11 @@ const db = admin.firestore();
 exports.addCompletionDatePatch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request);
-        var completionDate = request.body.data.CompletionDate;
-        var id;
-        var result;
-        var p1 = db.collection("Tasks").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
+        const completionDate = request.body.data.CompletionDate;
+        let id;
+        let result;
+        let p1 = db.collection("Tasks").get().then((task) => {
+            task.forEach((doc) => {
                 id = doc.data().Id;
                 console.log(id);
                 db.collection("Tasks").doc(id).update({
