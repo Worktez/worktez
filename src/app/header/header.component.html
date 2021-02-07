@@ -19,6 +19,15 @@
             <li class="nav-item active pr-5 py-1 " *ngIf=" router.url != '/' && authService.afauth.user | async ">
                 <button type="button" class="btn" id="button" (click)="myDashBoard()">My DashBoard</button>
             </li>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" id="button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" (click)="startNewSession()">Create New Task</a>
+                    <a class="dropdown-item" (click)="startNewSprint()">Start New Sprint</a>
+                </div>
+            </div>
         </ul>
         <ul class="navbar-nav ml-auto ">
             <li class="nav-item py-1 ">
