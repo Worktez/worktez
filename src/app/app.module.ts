@@ -64,7 +64,6 @@ import { PatchComponent } from './patch/patch.component';
     PriorityIconsComponent,
     StatusIconsComponent,
     FilterTaskComponent,
-    FilterTaskComponent,
     NavbarComponent,
     ChartComponent,
     MyTasksComponent,
