@@ -33,7 +33,6 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   async updateSprintStatus(updateStatus: string ) {
-    this.sprintStatus = updateStatus;
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('updateSprintStatus');
 
