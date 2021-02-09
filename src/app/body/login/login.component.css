@@ -1,3 +1,7 @@
+.container {
+    background-color: #202124;
+}
+
 #containerBorder {
     border: 1px solid#5A20F0;
 }
@@ -21,18 +25,8 @@
 
 #nav-login-tab,
 #nav-signup-tab {
-    background-color: black;
     border: 2px solid #5A20F0;
     color: white;
-}
-
-#nav-login-tab:active,
-#nav-login-tab:focus,
-#nav-signup-tab:active,
-#nav-signup-tab:focus {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: black;
 }
 
 #emailForm {
@@ -53,4 +47,9 @@ textarea:focus {
 
 .nav-tabs {
     border-bottom: 1px solid #5A20F0;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    background-color: black;
 }

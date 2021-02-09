@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 
 @Component({
   selector: 'app-create-new-organization',
@@ -8,26 +9,79 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateNewOrganizationComponent implements OnInit {
 
-  orgName: string
-  orgEmail: string
+  profilePic: File = null;
 
+  orgLabels: {} = {
+    Name: "",
+    Domain: "",
+    Email: "",
+    Description: "",
+  }
+  name: string
+  id: string
+  description: string
+  managerEmail: string
+  members: string
+
+  statusLabels: {} = {
+    IceBox: false,
+    ReadyToStart: false,
+    UnderProgess: false,
+    Blocked: false,
+    Completed: false
+  }
+  priorityLabels: {} = {
+    Low: false,
+    Medium: false,
+    High: false
+  }
+  difficultyLabels: {} = {
+    Low: false,
+    Medium: false,
+    High: false
+  }
   step: number = 1
-  email: string
+  enableLoader: false
 
-  constructor(public location: Location) { }
+
+  constructor(public location: Location, public appSettings: ApplicationSettingsService) {
+
+  }
 
   ngOnInit(): void {
   }
+
   backToDashboard() {
     this.location.back()
   }
-  nextStep() {
+
+  nextStep(step: number) {
+
+    if (step === 1) {
+      console.log(this.orgLabels)
+    }
+    if (step === 2) {
+
+    }
+    if (step === 3) {
+
+    }
     this.step += 1
   }
+
   prevStep() {
     this.step -= 1
   }
+
   onSubmit() {
+    console.log(this.statusLabels);
+    console.log(this.priorityLabels);
+    console.log(this.difficultyLabels);
 
   }
+  handleFileInput(files: FileList) {
+    this.profilePic = files.item(0);
+    console.log(this.profilePic);
+  }
 }
+
