@@ -40,7 +40,7 @@ import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
-import { ErrorComponent } from './body/error/error.component'
+import { ErrorComponent } from './body/error/error.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +81,7 @@ import { ErrorComponent } from './body/error/error.component'
     AngularFirestoreModule,
     AppRoutingModule,
     GoogleChartsModule.forRoot({ version: 'current' }),
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,

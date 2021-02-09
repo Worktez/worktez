@@ -1,75 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Component name="BODY" code="00">
-   <SubComponent name="CREATE-NEW-TASK" code="01">
+  <SubComponent name="CREATE-NEW-TASK" code="01">
+    <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+    </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="CREATE-NEW-SPRINT" code="02">
+  <SubComponent name="CREATE-NEW-SPRINT" code="02">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+    </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="LOG-WORK" code="03">
+  <SubComponent name="LOG-WORK" code="03">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+    </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="EDIT-TASK" code="04">
+  <SubComponent name="EDIT-TASK" code="04">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+    </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="SPRINT-DETAILS" code="05">
+  <SubComponent name="SPRINT-DETAILS" code="05">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+      </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="LOGIN" code="06">
+  <SubComponent name="LOGIN" code="06">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+      </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="RANGE-CARD" code="07">
+  <SubComponent name="RANGE-CARD" code="07">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+    </SubSystem>
+  </SubComponent>
 
-   <SubComponent name="TASK-DETAILS" code="08">
+  <SubComponent name="TASK-DETAILS" code="08">
+   <SubSystem code="0000">
       <InternalError code="00">
         <Error code="02" description="SERVER_ERROR"></Error>
         </InternalError>
       <ExternalError code="01">
         <Error code="01" description="VALIDATION_ERROR"></Error>
       </ExternalError>
-   </SubComponent>
+      </SubSystem>
+  </SubComponent>
 </Component>

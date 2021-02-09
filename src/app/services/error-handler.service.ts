@@ -67,13 +67,14 @@ export class ErrorHandlerService {
     let error:string="00";
     this.xmlItems.map(item => {
       if (item["$"].name === componentName) {
-        error += item["$"].code+ '-';
-        error+=item[errorType][0]["$"].code;
-        error+=item[errorType][0]["Error"][0]["$"].code;
+        error += item["$"].code + '-';
+        error += item["SubSystem"][0]["$"].code + '-';
+        error+=item["SubSystem"][0][errorType][0]["$"].code;
+        error+=item["SubSystem"][0][errorType][0]["Error"][0]["$"].code;
         if(errorType=="InternalError"){
           this.errorDescription=""
         }
-        this.errorType = item[errorType][0]["Error"][0]["$"].description;
+        this.errorType = item["SubSystem"][0][errorType][0]["Error"][0]["$"].description;
       }
     })
     this.errorCode=error;
