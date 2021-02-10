@@ -41,6 +41,7 @@ import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.componen
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 import { ErrorComponent } from './body/error/error.component';
+import { PatchComponent } from './patch/patch.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,9 @@ import { ErrorComponent } from './body/error/error.component';
     MyTasksComponent,
     PerformanceChartComponent,
     RangeCardComponent,
-    ErrorComponent
+    ErrorComponent,
+    FilterTaskComponent,
+    PatchComponent,
   ],
   imports: [
     BrowserModule,
