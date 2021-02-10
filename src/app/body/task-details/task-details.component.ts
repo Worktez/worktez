@@ -32,7 +32,7 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandlerService: NavbarHandlerService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -40,7 +40,9 @@ export class TaskDetailsComponent implements OnInit {
 
     this.Id = this.route.snapshot.params['taskId'];
     this.category = this.route.snapshot.params['category'];
-    this.componentName = this.Id;
+
+    this.navbarHandler.addToNavbar(this.Id);
+    this.componentName = "Task Details"
     this.getTaskDetail();
   }
 
