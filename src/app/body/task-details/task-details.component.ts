@@ -17,7 +17,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class TaskDetailsComponent implements OnInit {
 
-  componentName: string = ""
+  componentName: string = "Task Details"
 
   sprintName: string
   Id: string
@@ -42,7 +42,6 @@ export class TaskDetailsComponent implements OnInit {
     this.category = this.route.snapshot.params['category'];
 
     this.navbarHandler.addToNavbar(this.Id);
-    this.componentName = "Task Details"
     this.getTaskDetail();
   }
 

@@ -29,14 +29,14 @@ export class TasksComponent implements OnInit {
   filterStatus: string
   filterCategory: string
   showFilter: boolean = false
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandlerService: NavbarHandlerService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
 
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
 
-    this.navbarHandlerService.addToNavbar(this.category);
+    this.navbarHandler.addToNavbar(this.category);
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
