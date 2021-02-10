@@ -27,7 +27,6 @@ export class TaskDetailsComponent implements OnInit {
   task: Tasks
   todayDate: string
   time: string
-  category: string
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
@@ -39,7 +38,6 @@ export class TaskDetailsComponent implements OnInit {
     this.time = this.toolsService.time();
 
     this.Id = this.route.snapshot.params['taskId'];
-    this.category = this.route.snapshot.params['category'];
 
     this.navbarHandler.addToNavbar(this.Id);
     this.getTaskDetail();
