@@ -5,6 +5,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { User } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
   selector: 'app-my-dashboard',
@@ -12,6 +13,9 @@ import { BackendService } from 'src/app/services/backend.service';
   styleUrls: ['./my-dashboard.component.css']
 })
 export class MyDashBoardComponent implements OnInit {
+
+  componentName: string = "My Dashboard"
+
   user: User
   username: string
 
@@ -20,9 +24,11 @@ export class MyDashBoardComponent implements OnInit {
   currentSprintNumber: number;
   currentSprintName: string;
 
-  constructor(public router: Router, public authService: AuthService, public backendService: BackendService) { }
+  constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
+    this.navbarHandler.resetNavbar();
+    this.navbarHandler.addToNavbar(this.componentName);
     this.backendService.getCurrentSprint().subscribe(data => {
       this.currentSprintNumber = data.CurrentSprintId;
       this.currentSprintName = "S" + this.currentSprintNumber;

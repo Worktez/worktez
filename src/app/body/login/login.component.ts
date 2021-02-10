@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,10 +11,10 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent implements OnInit {
 
 
-  constructor(public authService: AuthService, public router: Router) { }
+  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
-
+    this.navbarHandler.resetNavbar();
   }
   onSignInWithGoogle() {
     this.authService.googleSignIn().then(() => {
