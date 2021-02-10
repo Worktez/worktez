@@ -18,7 +18,6 @@ export class MyDashBoardComponent implements OnInit {
 
   user: User
   username: string
-
   userObservable: Observable<User>
 
   currentSprintNumber: number;

@@ -14,7 +14,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class TasksComponent implements OnInit {
 
-  componentName: string = ""
+  componentName: string = "Tasks"
 
   currentSprintName: string
   category: string
@@ -29,15 +29,14 @@ export class TasksComponent implements OnInit {
   filterStatus: string
   filterCategory: string
   showFilter: boolean = false
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandlerService: NavbarHandlerService) { }
 
   ngOnInit(): void {
 
     this.category = this.route.snapshot.params['category'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
 
-    this.componentName = this.category;
-    this.navbarHandler.addToNavbar(this.componentName);
+    this.navbarHandlerService.addToNavbar(this.category);
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
@@ -81,7 +80,6 @@ export class TasksComponent implements OnInit {
     );
   }
   backToDashboard() {
-    this.navbarHandler.removeFromNavbar();
     this.router.navigate(['/Board']);
   }
 

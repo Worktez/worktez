@@ -5,11 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class NavbarHandlerService {
 
-  navbarList: string[] = []
   navbarString: string = ""
   currentTab: string = ""
-
-
+  navbarList: string[] = []
   constructor() { }
 
   addToNavbar(componentName: string) {
