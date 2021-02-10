@@ -1,5 +1,5 @@
 #createNewOrgContainer {
-    background-color: #202124;
+    background-color: #11171B;
     border-radius: 25px;
     border: 1px solid #5A20F0;
 }
@@ -7,6 +7,8 @@
 #navbarMenu {
     background-color: #5A20F0;
     border-radius: 25px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     width: 100%;
 }
 
@@ -32,7 +34,7 @@
 #uploadButton {
     color: #fff;
     border: 2px solid #fff;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #button:hover,
@@ -56,4 +58,9 @@ input[type=file] {
 
 #form {
     color: white;
+}
+
+.material-icons:hover {
+    cursor: pointer;
+    color: #5A20F0;
 }

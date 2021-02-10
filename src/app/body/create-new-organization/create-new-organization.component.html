@@ -10,90 +10,91 @@
         </div>
         <form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
             <ng-container *ngIf="step===1">
-                <div class="form-group row pt-2">
-                    <label id="uploadButton" class="col-sm-12 col-form-label">
-                            Upload Logo
-                        <input type="file" accept="image/*" required id="file" (change)="handleFileInput($event.target.files)"/>
-                    </label>
-                </div>
-                <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-4 col-form-label">Organization Name<span id="important" class="pl-1">*</span></label>
-                    <div class="col-sm-8">
-                        <input type="text" class="input" [(ngModel)]="orgLabels['Name']" [ngModelOptions]="{standalone: true}">
+                <div class="form-group row">
+                    <div class="col-md-8">
+                        <div class="form-group row pt-2">
+                            <label for="input" class="col-sm-3 col-form-label">Organization Name<span id="important" class="pl-1">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="input" [(ngModel)]="orgLabels['Name']" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                        <div class="form-group row pt-2">
+                            <label for="input" class="col-sm-3 col-form-label">Organization Domain<span id="important" class="pl-1">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="input" [(ngModel)]="orgLabels['Domain']" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                        <div class="form-group row pt-2">
+                            <label for="input" class="col-sm-3 col-form-label">Organization Email<span id="important" class="pl-1">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="input" [(ngModel)]="orgLabels['Email']" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-                <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-4 col-form-label">Organization Domain<span id="important" class="pl-1">*</span></label>
-                    <div class="col-sm-8">
-                        <input type="text" class="input" [(ngModel)]="orgLabels['Domain']" [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-4 col-form-label">Organization Email<span id="important" class="pl-1">*</span></label>
-                    <div class="col-sm-8">
-                        <input type="text" class="input" [(ngModel)]="orgLabels['Email']" [ngModelOptions]="{standalone: true}">
+                    <div class="col-12 col-md-3">
+                        <div class="form-group row pt-2 align-items-center" id="uploadButtonContainer">
+                            <label id="uploadButton" class="col-12 col-form-label p-5">
+                                Upload Logo
+                                <input type="file" accept="image/*" required id="file" (change)="handleFileInput($event.target.files)"/>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Description</label>
-                    <div class="col-sm-8">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
                         <textarea type="text" class="input" rows="3" [(ngModel)]="orgLabels['Description']" [ngModelOptions]="{standalone: true}"></textarea>
                     </div>
                 </div>
                 <div class="form-group row align-items-center justify-content-center">
-                    <button type="button" id="button" (click)="nextStep(step)">
-                            <span class="material-icons" >arrow_forward_ios</span>
-                        </button>
+                    <span class="offset-6 col material-icons text-right" (click)="nextStep(step)" data-toggle="tooltip" data-placement="top" title="Next">arrow_forward_ios</span>
                 </div>
             </ng-container>
             <div *ngIf="step===2">
                 <h5 class="font-weight-bold">Add Project/Product/Team</h5>
                 <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-4 col-form-label">Name<span id="important" class="pl-1">*</span></label>
+                    <label for="input" class="col-sm-3 col-form-label">Name<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <input type="text" class="input" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="form-group row pt-2">
-                    <label for="input" class="col-sm-4 col-form-label">ID<span id="important" class="pl-1">*</span></label>
+                    <label for="input" class="col-sm-3 col-form-label">ID<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <input type="text" class="input" [(ngModel)]="id" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Description<span id="important" class="pl-1">*</span></label>
+                    <label for="description" class="col-sm-3 col-form-label">Description<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <textarea type="text" class="input" rows="2" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Manager Email<span id="important" class="pl-1">*</span></label>
+                    <label for="description" class="col-sm-3 col-form-label">Manager Email<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <input type="text" class="input" [(ngModel)]="managerEmail" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Members <span class="font-italic">(upto 10 Email's)</span><span id="important" class="pl-1">*</span></label>
+                    <label for="description" class="col-sm-3 col-form-label">Members <span class="font-italic">(upto 10 Email's)</span><span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <textarea type="text" class="input" rows="3" [(ngModel)]="members" [ngModelOptions]="{standalone: true}"></textarea>
                     </div>
                 </div>
                 <div class="form-group row align-items-center justify-content-center">
                     <div class="col-6">
-                        <button type="button" id="button" (click)="prevStep()">
-                                <span class="material-icons">arrow_back_ios</span>
-                            </button>
+                        <span class="material-icons" (click)="prevStep()" data-toggle="tooltip" data-placement="top" title="Back">arrow_back_ios</span>
                     </div>
                     <div class="col-6 text-right">
-                        <button type="button" id="button" (click)="nextStep()">
-                                <span class="material-icons" >arrow_forward_ios</span>
-                            </button>
+                        <span class="material-icons" (click)="nextStep()" data-toggle="tooltip" data-placement="top" title="Next">arrow_forward_ios</span>
                     </div>
                 </div>
             </div>
             <ng-container *ngIf="step===3">
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Setup Status Labels<span id="important" class="pl-1">*</span></label>
+                    <label for="description" class="col-sm-3 col-form-label">Setup Status Labels<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="Status1" [(ngModel)]="statusLabels['IceBox']" [ngModelOptions]="{standalone: true}" />
@@ -118,7 +119,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Setup Priority Labels<span id="important" class="pl-1">*</span></label>
+                    <label for="description" class="col-sm-3 col-form-label">Setup Priority Labels<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="Priority1" [(ngModel)]="priorityLabels['High']" [ngModelOptions]="{standalone: true}" />
@@ -135,7 +136,7 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="description" class="col-sm-4 col-form-label">Setup Difficulty Labels<span id="important" class="pl-1">*</span></label>
+                    <label for="description" class="col-sm-3 col-form-label">Setup Difficulty Labels<span id="important" class="pl-1">*</span></label>
                     <div class="col-sm-8">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="Difficulty1" [(ngModel)]="difficultyLabels['High']" [ngModelOptions]="{standalone: true}" />
@@ -153,14 +154,10 @@
                 </div>
                 <div class="form-group row align-items-center justify-content-center">
                     <div class="col-6">
-                        <button type="button" id="button" (click)="prevStep()">
-                            <span class="material-icons">arrow_back_ios</span>
-                        </button>
+                        <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Back" (click)="prevStep()">arrow_back_ios</span>
                     </div>
                     <div class="col-6 text-right">
-                        <button type="button" id="button" (click)="onSubmit()">
-                            <span class="material-icons">done</span>
-                        </button>
+                        <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Submit" (click)="onSubmit()">done</span>
                     </div>
                 </div>
             </ng-container>
