@@ -29,12 +29,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
-                            <div style="font-weight: bold;" class="mr-3">Date:</div>
+                            <div style="font-weight: bold;" class="mr-3">Date :</div>
                             <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
                         </div>
                         <div class="col-md-4 col-1"></div>
-                        <div class="alert form-inline col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert" *ngIf="task.Status == 'Completed'">
-                            <div style="font-weight: bold;" class="mr-3" style="color:#10be65">Completion Date <span style="color:white;">:</span></div>
+                        <div class="alert form-inline col-md-4 col-5 mb-5" style="font-size: 20px; background-color: #10be65;color:black" role="alert" *ngIf="task.Status == 'Completed'">
+                            <div style="font-weight: 500;" class="mr-3">Completion Date :</div>
                             <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
                         </div>
                     </div>
