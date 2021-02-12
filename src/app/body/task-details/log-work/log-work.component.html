@@ -1,7 +1,7 @@
 <ng-container *ngIf="!enableLoader">
     <form (ngSubmit)="submit()" #form="ngForm">
-        <div class="container p-3">
-            <div class="card text-light mb-3" id="logWorkPage" style="background-color:#202124;">
+        <div class="container p-3 align-items-center ml-5">
+            <div class="card text-light mb-3" class="logWorkPage" style="background-color:#202124;">
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
@@ -14,38 +14,11 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- <div class="row pt-5 pb-2 ml-1">
-                    <div class="alert alert-info form-inline col-md-5" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Id:</div>
-                        <div id="logTaskId">{{Id}}</div>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="alert alert-info form-inline col-md-5" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Sprint Number:</div>
-                        <div id="logSprintNumber">{{SprintName}}</div>
-                    </div>
-                </div>
-                <div class="alert alert-info form-inline col-md-12" role="alert">
-                    <div style="font-weight: bold;" class="pr-3">Title: </div>
-                    <div>{{task.Title}}</div>
-                </div> -->
-                <div class="card-body pt-4">
-                    <div class="alert form-inline w-50 pt-3" id="logDetail" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Estimated Time:</div>
-                        <div id="logWorkET">{{task.EstimatedTime}}</div>
-                    </div>
-
-                    <div class="alert form-inline w-50" id="logDetail" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Total Logged Time:</div>
-                        <div id="logWorkTotalTime">{{task.LogWorkTotalTime}}</div>
-                    </div>
-                    <div class="alert form-inline w-50" id="logDetail" role="alert">
-                        <div style="font-weight: bold;" class="pr-3">Remaining Time:</div>
-                        <div>{{task.EstimatedTime - task.LogWorkTotalTime}}</div>
-                    </div>
-                    <div class="row pt-3 ">
-                        <label for="inputState" class="col-sm-2 col-form-label">Status</label>
-                        <select class="custom-select col-sm-3 mx-sm-3" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
+                <div class="content text-light">
+                    <div class="form-row pt-3 px-4 py-4">
+                        <div class="col-sm-4 pt-2">
+                            <label for="inputState" class="form-label">Status</label>
+                            <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
                             <option selected disabled value="">choose...</option>
                             <option>Ice Box</option>
                             <option>Ready to start</option>
@@ -53,28 +26,27 @@
                             <option>Blocked</option>
                             <option>Completed</option>
                         </select>
-                    </div>
-                    <div class="row pt-3 ">
-                        <label for="inputHours" class="col-sm-2 col-form-label">Log Hours</label>
-                        <input type="number" min="1" class="col-sm-3 form-control mx-sm-3" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
-                        <small id="LogWorkHour" class="col">
+                        </div>
+                        <div class="col-sm-4 pt-2">
+                            <label for="inputHours" class="form-label">Log Hours</label>
+                            <input type="number" min="1" class="form-control" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
+                            <small id="LogWorkHour" class="col">
                             hours
                         </small>
-                    </div>
-                    <div class="row py-2 ">
-                        <label for="inputHours" class="col-sm-2 col-form-label">Work Completed</label>
-                        <input type="number" min="1" max="100" class="col-sm-3 form-control mx-sm-3" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
-                        <small id="LogWorkHour" class="col">
+                        </div>
+                        <div class="col-sm-4 pt-2">
+                            <label for="inputHours" class="form-label">Work Completed</label>
+                            <input type="number" min="1" max="100" class="form-control" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
+                            <small id="LogWorkHour" class="col">
                             in percentage(%)
                         </small>
-                    </div>
-                    <div class="form-group row ">
-                        <label for="comment" class="col-md-2 col-form-label">Comment</label>
-                        <div class="col-md-10">
-                            <input type="text" class="form-control" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}">
                         </div>
                     </div>
-                    <div class="row pt-3 pb-5">
+                    <div class="form-group row-md-5 pt-3 px-4 py-4">
+                        <label for="comment" class="form-label">Comment</label>
+                        <input type="text" class="form-control" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="row pb-4">
                         <div class="col-md-10"></div>
                         <div class="col-md-2"><button class="btn" type="submit" id="logWorkSubmit">Submit</button>
                         </div>

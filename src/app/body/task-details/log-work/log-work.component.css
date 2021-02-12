@@ -1,5 +1,16 @@
-#logWorkPage {
+.logWorkPage {
     border: 1px solid #5A20F0;
+    margin: 0 auto;
+    top: 55%;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    z-index: 1;
+    width: 60%;
+    height: 80%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 #logDetail {
@@ -22,4 +33,11 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: #5A20F0;
+}
+
+@media only screen and (max-width: 600px) {
+    .logWorkPage {
+        width: 70%;
+        /*height: 100%;*/
+    }
 }
