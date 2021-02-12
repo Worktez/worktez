@@ -64,6 +64,15 @@ export class ValidationService {
             case 'comment': {
                 return (this.checkComment(value));
             }
+            case 'organizationName': {
+                return (this.checkOrgName(value));
+            }
+            case 'organizationDomain': {
+                return (this.checkOrgDomain(value));
+            }
+            case 'organizationEmail': {
+                return (this.checkOrgEmail(value));
+            }
         }
     }
 
@@ -292,6 +301,33 @@ export class ValidationService {
             return (true);
         else {
             console.log("Password should be greater than 5 characters");
+            return (false);
+        }
+    }
+    async checkOrgName(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Organization Name field is required");
+            return (false);
+        }
+    }
+    async checkOrgDomain(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Organization Domain field is required");
+            return (false);
+        }
+    }
+    async checkOrgEmail(value: string) {
+        const control = new FormControl(value, [Validators.required, Validators.email]);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Organization Email field is required");
             return (false);
         }
     }

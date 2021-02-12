@@ -59,11 +59,13 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     TotalNumberOfTask: 0,
                     TotalCompletedTask: 0,
                     TotalUnCompletedTask: 0,
+                    TotalNumberOfOrganizations: 0,
                 });
                 return Promise.resolve(P1);
             }
         });
         const Promises = [promise1, promise2];
+        let result;
         return Promise.all(Promises).then(() => {
                 result = { data: "User Logged In Successfully" };
                 console.log("User Logged In Successfully");
