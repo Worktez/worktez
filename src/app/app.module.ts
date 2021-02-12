@@ -40,6 +40,7 @@ import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.componen
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 import { PatchComponent } from './patch/patch.component';
+import { FocusNavComponent } from './body/focus-nav/focus-nav.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { PatchComponent } from './patch/patch.component';
     RangeCardComponent,
     FilterTaskComponent,
     PatchComponent,
+    FocusNavComponent,
   ],
   imports: [
     BrowserModule,

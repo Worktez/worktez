@@ -28,3 +28,15 @@
     background-color: grey;
     cursor: pointer;
 }
+
+#navbarDropdownBoards,
+#navbarDropdownTeam,
+#navbarDropdownCreate {
+    color: white;
+}
+
+#navbarDropdownBoards:hover,
+#navbarDropdownTeam:hover,
+#navbarDropdownCreate:hover {
+    color: gray;
+}
