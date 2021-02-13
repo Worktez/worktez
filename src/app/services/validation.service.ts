@@ -73,6 +73,21 @@ export class ValidationService {
             case 'organizationEmail': {
                 return (this.checkOrgEmail(value));
             }
+            case 'teamName': {
+                return (this.checkTeamName(value));
+            }
+            case 'teamId': {
+                return (this.checkTeamId(value));
+            }
+            case 'teamDescription': {
+                return (this.checkTeamDescription(value));
+            }
+            case 'teamManagerEmail': {
+                return (this.checkTeamManagerEmail(value));
+            }
+            case 'teamMemberEmails': {
+                return (this.checkTeamMemberEmails(value));
+            }
         }
     }
 
@@ -330,5 +345,64 @@ export class ValidationService {
             console.log("Organization Email field is required");
             return (false);
         }
+    }
+    async checkTeamName(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Team Name field is required");
+            return (false);
+        }
+    }
+    async checkTeamId(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Team Id field is required");
+            return (false);
+        }
+    }
+    async checkTeamDescription(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Team Description field is required");
+            return (false);
+        }
+    }
+    async checkTeamManagerEmail(value: string) {
+        const control = new FormControl(value, [Validators.required, Validators.email]);
+        if (control.errors === null)
+            return (true);
+        else {
+            console.log("Team Manager field is required");
+            return (false);
+        }
+    }
+    async checkTeamMemberEmails(value: string) {
+        const memberEmails = value.split(",").map(member => member.trim());
+        let hasNoError;
+        console.log(memberEmails);
+        if (memberEmails.filter((e, i, a) => a.indexOf(e) !== i).length > 0) {
+            console.log("Matching Team Member Emails are not Allowed");
+            return (false);
+        }
+        if (memberEmails.length >= 10) {
+            console.log("Only 10 Team Member's Email is required");
+            return (false);
+        }
+        memberEmails.map((member, index) => {
+            const control = new FormControl(member, [Validators.required, Validators.email]);
+            if (control.errors === null)
+                hasNoError = true
+            else {
+                console.log(`Team Member ${index + 1} Email is required`);
+                hasNoError = false
+            }
+        });
+        return hasNoError;
     }
 }  

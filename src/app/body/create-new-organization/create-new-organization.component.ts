@@ -88,17 +88,18 @@ export class CreateNewOrganizationComponent implements OnInit {
       }
     }
     if (this.step === 2) {
-      // let data = [
-      //   { label: "teamName", value: this.team.Name },
-      //   { label: "teamId", value: this.team.Id },
-      //   { label: "teamDescription", value: this.team.Description },
-      //   { label: "teamManagerEmail", value: this.team.ManagerEmail },
-      //   { label: "teamMembers", value: this.team.Members }
-      // ];
-      // var condition = await (this.validationService.checkValidity(data)).then(res => {
-      //   return res;
-      // });
-      if (true) {
+      let data = [
+        { label: "teamName", value: this.team.Name },
+        { label: "teamId", value: this.team.Id },
+        { label: "teamDescription", value: this.team.Description },
+        { label: "teamManagerEmail", value: this.team.ManagerEmail },
+        { label: "teamMemberEmails", value: this.team.Members }
+      ];
+
+      var condition = await (this.validationService.checkValidity(data)).then(res => {
+        return res;
+      });
+      if (condition) {
         console.log("Inputs are valid");
         this.createNewTeam();
       }
@@ -148,10 +149,15 @@ export class CreateNewOrganizationComponent implements OnInit {
   }
   async createNewTeam() {
     this.enableLoader = true;
+    let teamMemberEmailArray = []
+    this.team.Members.split(",").map(member => {
+      teamMemberEmailArray.push(member.trim());
+    })
+
     const callable = this.functions.httpsCallable('createNewTeam');
 
     try {
-      const result = await callable({ Team: this.team, OrganizationEmail: this.orgLabels.Email }).toPromise();
+      const result = await callable({ Team: this.team, TeamMemberEmails: teamMemberEmailArray, OrganizationEmail: this.orgLabels.Email }).toPromise();
       console.log("Successfully created the Team");
       console.log(result);
       this.step += 1

@@ -52,12 +52,19 @@ exports.createNewTeam = functions.https.onRequest((request, response) => {
         const data = request.body.data;
         console.log(data);
         const team = data.Team;
+        const teamMemberEmails = data.TeamMemberEmails;
         const promise1 = db.collection("Organizations").doc(data.OrganizationEmail).collection("Teams").doc(team.Name).get().then((doc) => {
             if (doc.exists) {
-                const teamData = db.collection("Organizations").doc(data.OrganizationEmail).collection("Teams").doc(team.Name).update(team);
+                const teamData = db.collection("Organizations").doc(data.OrganizationEmail).collection("Teams").doc(team.Name).update({
+                    Team: team,
+                    TeamMemberEmails: teamMemberEmails,
+                });
                 return Promise.resolve(teamData);
             } else {
-                const teamData = db.collection("Organizations").doc(data.OrganizationEmail).collection("Teams").doc(team.Name).set(team);
+                const teamData = db.collection("Organizations").doc(data.OrganizationEmail).collection("Teams").doc(team.Name).set({
+                    Team: team,
+                    TeamMemberEmails: teamMemberEmails,
+                });
                 return Promise.resolve(teamData);
             }
         });
