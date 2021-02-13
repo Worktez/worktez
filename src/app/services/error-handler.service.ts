@@ -9,7 +9,7 @@ export class ErrorHandlerService {
 
   showError: boolean = false
   errorType: string
-  errorDescription:string=" : "
+  errorDescription: string = " : "
   errorCode: string
   errorComponentarray: string[]
   errorComponentName: string
@@ -17,12 +17,12 @@ export class ErrorHandlerService {
 
   constructor(public http: HttpClient) { }
 
-  addError(errorId: string,error:string) {
+  addError(errorId: string, error: string) {
     this.errorComponentarray = errorId.split("_");
     this.errorComponentName = this.errorComponentarray[0];
     this.showError = true
-    this.getErrorCode(this.errorComponentName,"ExternalError")
-    this.errorDescription+=error
+    this.getErrorCode(this.errorComponentName, "ExternalError")
+    this.errorDescription += error
   }
 
   loadXML() {
@@ -37,8 +37,6 @@ export class ErrorHandlerService {
       .subscribe((data) => {
         this.parseXML(data).then((data) => {
           this.xmlItems = data;
-          console.log(data);
-          
         });
       });
   }
@@ -63,21 +61,21 @@ export class ErrorHandlerService {
     });
   }
 
-  getErrorCode(componentName: string,errorType:string) {
-    let error:string="00";
+  getErrorCode(componentName: string, errorType: string) {
+    let error: string = "00";
     this.xmlItems.map(item => {
       if (item["$"].name === componentName) {
         error += item["$"].code + '-';
         error += item["SubSystem"][0]["$"].code + '-';
-        error+=item["SubSystem"][0][errorType][0]["$"].code;
-        error+=item["SubSystem"][0][errorType][0]["Error"][0]["$"].code;
-        if(errorType=="InternalError"){
-          this.errorDescription=""
+        error += item["SubSystem"][0][errorType][0]["$"].code;
+        error += item["SubSystem"][0][errorType][0]["Error"][0]["$"].code;
+        if (errorType == "InternalError") {
+          this.errorDescription = ""
         }
         this.errorType = item["SubSystem"][0][errorType][0]["Error"][0]["$"].description;
       }
     })
-    this.errorCode=error;
+    this.errorCode = error;
   }
 
 }

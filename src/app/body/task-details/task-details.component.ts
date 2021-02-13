@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
@@ -41,7 +41,6 @@ export class TaskDetailsComponent implements OnInit {
     this.Id = this.route.snapshot.params['taskId'];
 
     this.navbarHandler.addToNavbar(this.Id);
-
     this.getTaskDetail();
   }
 
@@ -82,13 +81,12 @@ export class TaskDetailsComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       console.log("Error", error);
     }
   }
 
-  backToTasks(){
-    this.navbarHandler.removeFromNavbar();
+  backToTasks() {
     this.location.back()
   }
 

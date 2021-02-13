@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -10,13 +11,15 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  componentName:string= "LOGIN"
+  componentName: string = "LOGIN"
 
-  constructor(public authService: AuthService, public router: Router,public errorHandlerService: ErrorHandlerService) { }
+  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
+
 
   ngOnInit(): void {
-
+    this.navbarHandler.resetNavbar();
   }
+
   onSignInWithGoogle() {
     this.authService.googleSignIn().then(() => {
       this.router.navigate(['']);
@@ -25,6 +28,7 @@ export class LoginComponent implements OnInit {
       console.log(err);
     });
   }
+
   onLogOut() {
     this.authService.logout().then(() => {
       this.router.navigate(['']);
