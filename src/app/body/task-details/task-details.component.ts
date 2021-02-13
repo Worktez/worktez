@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
 import {Location} from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-task-details',
@@ -17,7 +18,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class TaskDetailsComponent implements OnInit {
 
-  componentName: string = ""
+  componentName: string = "TASK-DETAILS"
 
   sprintName: string
   Id: string
@@ -31,7 +32,7 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -39,8 +40,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.Id = this.route.snapshot.params['taskId'];
 
-    this.componentName = this.Id;
-    this.navbarHandler.addToNavbar(this.componentName);
+    this.navbarHandler.addToNavbar(this.Id);
 
     this.getTaskDetail();
   }
@@ -82,6 +82,7 @@ export class TaskDetailsComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
       console.log("Error", error);
     }
   }

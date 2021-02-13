@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,8 +10,9 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  componentName:string= "LOGIN"
 
-  constructor(public authService: AuthService, public router: Router) { }
+  constructor(public authService: AuthService, public router: Router,public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
 
@@ -19,6 +21,7 @@ export class LoginComponent implements OnInit {
     this.authService.googleSignIn().then(() => {
       this.router.navigate(['']);
     }).catch((err) => {
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       console.log(err);
     });
   }

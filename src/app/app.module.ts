@@ -7,6 +7,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
@@ -39,6 +40,7 @@ import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
+import { ErrorComponent } from './body/error/error.component';
 import { PatchComponent } from './patch/patch.component';
 
 @NgModule({
@@ -69,6 +71,7 @@ import { PatchComponent } from './patch/patch.component';
     MyTasksComponent,
     PerformanceChartComponent,
     RangeCardComponent,
+    ErrorComponent,
     FilterTaskComponent,
     PatchComponent,
   ],
@@ -80,7 +83,8 @@ import { PatchComponent } from './patch/patch.component';
     AngularFireFunctionsModule,
     AngularFirestoreModule,
     AppRoutingModule,
-    GoogleChartsModule.forRoot({ version: 'current' })
+    GoogleChartsModule.forRoot({ version: 'current' }),
+    HttpClientModule
   ],
   providers: [
     AuthService,
