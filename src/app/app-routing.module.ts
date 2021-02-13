@@ -10,6 +10,7 @@ import { TaskDetailsComponent } from './body/task-details/task-details.component
 import { TasksComponent } from './body/tasks/tasks.component';
 import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
+import { PatchComponent } from './patch/patch.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'Tasks/:category/:currentSprintName', component: TasksComponent },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent },
   { path: '', component: MyDashBoardComponent },
+  { path: 'patch', component: PatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
 ];
 
