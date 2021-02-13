@@ -13,7 +13,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class BoardComponent implements OnInit {
 
-  componentName: string = "Board";
+  componentName: string = "BOARD";
 
   // public rawData: RawDataType;
   public rawDataObservable: Observable<RawDataType>;
