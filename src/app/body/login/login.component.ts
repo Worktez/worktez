@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,15 +15,19 @@ export class LoginComponent implements OnInit {
   password: string
   username: string
   showPassword: boolean = false
+  componentName: string = "LOGIN"
 
-  constructor(public authService: AuthService, public router: Router) { }
+  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.navbarHandler.resetNavbar();
+  }
 
   onSignInWithGoogle() {
     this.authService.googleSignIn().then(() => {
       this.navigateToDashboard();
     }).catch((err) => {
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       console.log(err);
     });
   }

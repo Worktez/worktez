@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-performance-chart',
@@ -12,11 +13,12 @@ export class PerformanceChartComponent implements OnInit {
   @Input("username") username: string
   @Input("currentSprint") currentSprintNumber: number
 
+  componentName: string="PERFORMANCE-CHART"
   showLoader: boolean = true
   sprintRange1: number
   sprintRange2: number
   data = [];
-  constructor(public db: AngularFirestore) { }
+  constructor(public db: AngularFirestore,public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.sprintRange2 = this.currentSprintNumber
@@ -25,7 +27,7 @@ export class PerformanceChartComponent implements OnInit {
       this.data = data
       this.showLoader = false
     }).catch(error => {
-      console.log(error);
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     });
   }
   async createData() {
@@ -38,7 +40,7 @@ export class PerformanceChartComponent implements OnInit {
           tempData.push(["S" + index, storyPoint]);
         })
         .catch(err => {
-          console.log(err);
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
         })
     }
     return tempData;
@@ -69,7 +71,7 @@ export class PerformanceChartComponent implements OnInit {
       this.data = data
       this.showLoader = false
     }).catch(error => {
-      console.log(error);
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     });
   }
 }

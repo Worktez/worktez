@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { User } from "../Interface/UserInterface";
-import { Tasks } from "../Interface/TasksInterface";
 import { FormControl, Validators } from '@angular/forms';
+import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class ValidationService {
+    componentName: string = "";
 
-    constructor() { }
+    constructor(public errorHandlerService: ErrorHandlerService) { }
 
     validation(label: any, value: any) {
         switch (label) {
@@ -64,6 +64,15 @@ export class ValidationService {
             case 'comment': {
                 return (this.checkComment(value));
             }
+            case 'userEmail': {
+                return (this.checkUserEmail(value));
+            }
+            case 'userName': {
+                return (this.checkUserName(value));
+            }
+            case 'userPassword': {
+                return (this.checkUserPassword(value));
+            }
             case 'organizationName': {
                 return (this.checkOrgName(value));
             }
@@ -91,15 +100,18 @@ export class ValidationService {
         }
     }
 
-    async checkValidity(data: any[]) {
+    async checkValidity(componentName: string, data: any[]) {
         var valid = 0;
-
+        this.componentName = componentName;
         for (const element of data) {
             var condition = await this.validation(element.label, element.value).then(res => {
                 return res;
             });
             if (condition) {
                 valid += 1;
+            }
+            else {
+                break;
             }
         }
         if (valid == data.length)
@@ -113,7 +125,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Title field is required");
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "Title field is required")
             return (false);
         }
     }
@@ -123,7 +136,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Status field is required");
+            let errorType = this.componentName + "_VALIDATION_STATUS";
+            this.errorHandlerService.addError(errorType, "Status field is required")
             return (false);
         }
     }
@@ -133,7 +147,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Priority field is required");
+            let errorType = this.componentName + "_VALIDATION_PRIORITY";
+            this.errorHandlerService.addError(errorType, "Priority field is required")
             return (false);
         }
     }
@@ -143,7 +158,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Estimated-Time field is required");
+            let errorType = this.componentName + "_VALIDATION_ESTIMATEDTIME";
+            this.errorHandlerService.addError(errorType, "Estimated-Time field is required")
             return (false);
         }
     }
@@ -153,7 +169,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Difficulty field is required");
+            let errorType = this.componentName + "_VALIDATION_DIFFICULTY";
+            this.errorHandlerService.addError(errorType, "Difficulty field is required")
             return (false);
         }
     }
@@ -163,7 +180,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Description field is required");
+            let errorType = this.componentName + "_VALIDATION_DESCRIPTION";
+            this.errorHandlerService.addError(errorType, "Description field is required")
             return (false);
         }
     }
@@ -173,7 +191,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Creator field is required");
+            let errorType = this.componentName + "_VALIDATION_CREATOR";
+            this.errorHandlerService.addError(errorType, "Creator field is required")
             return (false);
         }
     }
@@ -183,7 +202,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Category field is required");
+            let errorType = this.componentName + "_VALIDATION_CATEGORY";
+            this.errorHandlerService.addError(errorType, "Category field is required")
             return (false);
         }
     }
@@ -193,7 +213,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Assignee field is required");
+            let errorType = this.componentName + "_VALIDATION_ASSIGNEE";
+            this.errorHandlerService.addError("VALIDATION_ASSIGNEE", "Assignee field is required")
             return (false);
         }
     }
@@ -203,7 +224,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Creation-Date field is required");
+            let errorType = this.componentName + "_VALIDATION_CREATIONDATE";
+            this.errorHandlerService.addError(errorType, "Creation-Date field is required")
             return (false);
         }
     }
@@ -213,7 +235,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Sprint-Number field is required");
+            let errorType = this.componentName + "_VALIDATION_SPRINTNUMBER";
+            this.errorHandlerService.addError(errorType, "Sprint-Number field is required")
             return (false);
         }
     }
@@ -223,7 +246,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Story-Point field is required");
+            let errorType = this.componentName + "_VALIDATION_STORYPOINT";
+            this.errorHandlerService.addError(errorType, "Story-Point field is required")
             return (false);
         }
     }
@@ -233,7 +257,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Start-Date field is required");
+            let errorType = this.componentName + "_VALIDATION_STARTDATE";
+            this.errorHandlerService.addError(errorType, "Start-Date field is required")
             return (false);
         }
     }
@@ -243,7 +268,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("End-Date field is required");
+            let errorType = this.componentName + "_VALIDATION_ENDDATE";
+            this.errorHandlerService.addError(errorType, "End-Date field is required")
             return (false);
         }
     }
@@ -253,7 +279,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Log-Hours field is required");
+            let errorType = this.componentName + "_VALIDATION_LOGHOURS";
+            this.errorHandlerService.addError(errorType, "Log-Hours field is required")
             return (false);
         }
     }
@@ -263,7 +290,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Work-Completed field is required");
+            let errorType = this.componentName + "_VALIDATION_WORKCOMPLETED";
+            this.errorHandlerService.addError(errorType, "Work-Completed field is required")
             return (false);
         }
     }
@@ -273,26 +301,37 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Comment field is required");
+            let errorType = this.componentName + "_VALIDATION_COMMENT";
+            this.errorHandlerService.addError(errorType, "Comment field is required")
             return (false);
         }
     }
     async checkSprintRange(value1: number, value2: number) {
+        let errorType = "RANGE-CARD" + "_VALIDATION_RANGE";
+        if (value1 == null) {
+            this.errorHandlerService.addError(errorType, "Start Range should not be Empty")
+            return (false)
+        }
+        if (value2 == null) {
+            this.errorHandlerService.addError(errorType, "End Range should not be Empty")
+            return (false)
+        }
         if (value1 >= value2) {
-            console.log("Start Range should not be greater or equal to End Range");
+            this.errorHandlerService.addError(errorType, "Start Range should not be greater or equal to End Range")
             return (false)
         }
         if (value1 <= 0) {
-            console.log("Start Range should not be less than 1");
+            this.errorHandlerService.addError(errorType, "Start Range should not be less than 1")
             return (false)
         }
         if (value2 <= 0) {
-            console.log("End Range should not be less than 1");
+            this.errorHandlerService.addError(errorType, "End Range should not be less than 1")
             return (false)
         }
+
         return (true)
     }
-    async checkEmail(value: String) {
+    async checkUserEmail(value: String) {
         const control = new FormControl(value, [Validators.required, Validators.email]);
         if (control.errors === null)
             return (true);
@@ -301,7 +340,7 @@ export class ValidationService {
             return (false);
         }
     }
-    async checkUsername(value: String) {
+    async checkUserName(value: String) {
         const control = new FormControl(value, [Validators.required, Validators.minLength(3)]);
         if (control.errors === null)
             return (true);
@@ -310,7 +349,7 @@ export class ValidationService {
             return (false);
         }
     }
-    async checkPassword(value: string) {
+    async checkUserPassword(value: string) {
         const control = new FormControl(value, [Validators.required, Validators.minLength(6)]);
         if (control.errors === null)
             return (true);

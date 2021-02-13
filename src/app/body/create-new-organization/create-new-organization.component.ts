@@ -11,6 +11,8 @@ import { ValidationService } from 'src/app/services/validation.service';
 })
 export class CreateNewOrganizationComponent implements OnInit {
 
+  componentName: string = "CREATE-NEW-ORGANIZATION"
+
   profilePic: File = null;
   showCustomLabel: boolean = false
 
@@ -76,7 +78,7 @@ export class CreateNewOrganizationComponent implements OnInit {
       let data = [{ label: "organizationName", value: this.orgLabels.Name },
       { label: "organizationDomain", value: this.orgLabels.Domain },
       { label: "organizationEmail", value: this.orgLabels.Email }];
-      var condition = await (this.validationService.checkValidity(data)).then(res => {
+      var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
         return res;
       });
       if (condition) {
@@ -96,7 +98,7 @@ export class CreateNewOrganizationComponent implements OnInit {
         { label: "teamMemberEmails", value: this.team.Members }
       ];
 
-      var condition = await (this.validationService.checkValidity(data)).then(res => {
+      var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
         return res;
       });
       if (condition) {
