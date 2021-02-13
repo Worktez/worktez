@@ -43,6 +43,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         let totalCompletedTask = 0;
         let sprintDataPromise;
         let currentSprintId = 0;
+        let completiondate = "Not yet Completed";
 
         // eslint-disable-next-line prefer-const
         let promises = [];
@@ -88,6 +89,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber,
                     CreationDate: creationDate,
+                    CompletionDate: completiondate,
                 });
 
                 const p2 = db.collection("RawData").doc("AppDetails").update({
@@ -142,6 +144,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     SprintNumber: sprintNumber,
                     StoryPointNumber: storyPointNumber,
                     CreationDate: creationDate,
+                    CompletionDate: completiondate,
                 });
 
                 const p2 = db.collection("RawData").doc("AppDetails").set({

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -16,11 +17,10 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class CreateNewSprintComponent implements OnInit {
 
-  componentName: string = "Start New Sprint"
-
   @ViewChild('form') form: NgForm;
   @Input('newSprintId') newSprintId: string;
 
+  componentName: string = "CREATE-NEW-SPRINT";
   startDate: string
   endDate: string
   status: string
@@ -38,7 +38,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -96,7 +96,7 @@ export class CreateNewSprintComponent implements OnInit {
     let data = [{ label: "startDate", value: this.startDate },
     { label: "endDate", value: this.endDate },
     { label: "status", value: this.status }];
-    var condition = await (this.validationService.checkValidity(data)).then(res => {
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
     if (condition) {
@@ -126,8 +126,8 @@ export class CreateNewSprintComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
-      console.error("Error", error);
     }
 
   }

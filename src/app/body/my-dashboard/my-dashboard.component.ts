@@ -14,7 +14,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class MyDashBoardComponent implements OnInit {
 
-  componentName: string = "My Dashboard"
+  componentName: string = "MY-DASHBOARD"
 
   user: User
   username: string

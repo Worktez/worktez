@@ -14,7 +14,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class TasksComponent implements OnInit {
 
-  componentName: string = "Tasks"
+  componentName: string = "TASKS"
 
   currentSprintName: string
   category: string

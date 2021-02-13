@@ -10,7 +10,14 @@ export class NavbarHandlerService {
   currentTab: string = ""
   constructor() { }
 
-  addToNavbar(componentName: string) {
+  addToNavbar(capitalComponentName: string) {
+    let componentName = "";
+
+    capitalComponentName.split("-").map(word => {
+      componentName += word.charAt(0).toUpperCase() + word.toLowerCase().slice(1) + " ";
+    });
+    componentName = componentName.trim();
+
     if (this.navbarList.indexOf("Board") === -1) {
       this.resetNavbar();
     }

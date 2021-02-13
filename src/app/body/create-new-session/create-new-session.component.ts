@@ -6,6 +6,7 @@ import { ValidationService } from '../../services/validation.service';
 import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-create-new-session',
@@ -14,9 +15,9 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class CreateNewSessionComponent implements OnInit {
 
-  componentName: string = "Create New Task"
-
   @ViewChild('form') form: NgForm;
+
+  componentName: string = "CREATE-NEW-TASK";
 
   title: string
   todayDate: string
@@ -34,7 +35,7 @@ export class CreateNewSessionComponent implements OnInit {
   enableLoader: boolean = false
   valid: boolean = true;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
@@ -56,7 +57,7 @@ export class CreateNewSessionComponent implements OnInit {
     { label: "creationDate", value: this.todayDate },
     { label: "sprintNumber", value: this.sprintNumber },
     { label: "storyPoint", value: this.storyPoint }];
-    var condition = await (this.validationService.checkValidity(data)).then(res => {
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
     if (condition) {
@@ -78,8 +79,8 @@ export class CreateNewSessionComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
-      console.error("Error", error);
     }
   }
 
