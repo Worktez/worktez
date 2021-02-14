@@ -29,113 +29,123 @@
                     </div>
                 </nav>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="alert form-inline w-50 col-md-4 col-5 mb-5" style="font-size: 20px;" role="alert">
-                            <div style="font-weight: bold;" class="mr-3">Date:</div>
+                    <div class="row mx px-3">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-0 form-inline">
+                            <div style="font-size: 20px;" id="sprint">
+                                <div class="col-md-2 pl-0 form-inline" id="idTaskDescription">{{task.Id}}</div>
+                            </div>
+                            <div class="col-md-10 form-inline" style="font-size: 20px;">
+                                <div style="font-weight: bold;" id="titleTaskDescription">{{task.Title}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 blank"></div>
+                        <div class="col-md-4 form-inline" style="font-size: 20px;">
+                            <div style="font-weight: bold;" class="mr-3">Creation Date:</div>
                             <div id="creationDateTaskDescription">{{task.CreationDate}}</div>
                         </div>
-                        <div class="col-md-6 blank"></div>
-                        <div class="alert form-inline w-50 col-md-2 pl-5 mb-5" style="font-size: 20px;" role="alert">
-                            <div style="font-weight: bold;" class="mr-3">ID:</div>
-                            <div id="idTaskDescription">{{task.Id}}</div>
-                        </div>
                     </div>
-
-                    <div class="row pt-2">
-                        <div class="form-group col-md">
-                            <label for="input" class="row-form-label">Title</label>
-                            <div class="alert alert-info form-inline col-md" role="alert">
-                                <div id="titleTaskDescription">{{task.Title}}</div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Sprint Number:</span>
+                                </div>
+                                <div class="col" id="sprintNumberTaskDescription">{{task.SprintNumber}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Story Point:</span>
+                                </div>
+                                <div class="col" id="storyPointNumberTaskDescription">{{task.StoryPointNumber}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Work Done:</span>
+                                </div>
+                                <div class="col" id="workDoneTaskDescription">{{task.WorkDone}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Estimated Time:</span>
+                                </div>
+                                <div class="col" id="estimatedTimeTaskDescription">{{task.EstimatedTime}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Priority:</span>
+                                </div>
+                                <div class="col" id="priorityTaskDescription">{{task.Priority}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Difficulty:</span>
+                                </div>
+                                <div class="col" id="difficultyTaskDescription">{{task.Difficulty}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Status:</span>
+                                </div>
+                                <div class="col" id="statusTaskDescription">{{task.Status}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Assignee:</span>
+                                </div>
+                                <div class="col" id="assigneeTaskDescription">{{task.Assignee}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Creator:</span>
+                                </div>
+                                <div class="col" id="creatorTaskDescription">{{task.Creator}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Remaining Time</span>
+                                </div>
+                                <div class="col">{{task.EstimatedTime - task.LogWorkTotalTime}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">Logged Time:</span>
+                                </div>
+                                <div class="col" id="logHoursTaskDescription">{{task.LogWorkTotalTime}}</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="header">EstimatedTime</span>
+                                </div>
+                                <div class="col" id="estimatedTimeTaskDescription">{{task.EstimatedTime}}</div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="form-row">
-
-                        <div class="form-group col-md">
-                            <label for="description" class="row-form-label">Description</label>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-10">
+                            <label for="description" class="row-form-label header">Description:</label>
                             <div class="alert alert-info form-inline col-md px" role="alert">
                                 <div id="descriptionTaskDescription" class="card" style="background-color: #d1ecf1;border: #d1ecf1;">{{task.Description}}</div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="input">Assignee</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="assigneeTaskDescription">{{task.Assignee}}</div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="text">Creator</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="creatorTaskDescription">{{task.Creator}}</div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="input">Category</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="categoryTaskDescription">{{task.Category}}</div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="text">Priority</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="priorityTaskDescription">{{task.Priority}}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="text">Difficulty</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="difficultyTaskDescription">{{task.Difficulty}}</div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputState">Status</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="statusTaskDescription">{{task.Status}}</div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="inputState">Story Point</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="storyPointNumberTaskDescription">{{task.StoryPointNumber}}</div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="text">Estimated Time</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="estimatedTimeTaskDescription">{{task.EstimatedTime}}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="inputState">Work Done</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="workDoneTaskDescription">{{task.WorkDone}}</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label for="text">Sprint Number</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="sprintNumberTaskDescription">{{task.SprintNumber}}</div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <label for="inputState">Logged Hours</label>
-                            <div class="alert alert-info form-inline" role="alert">
-                                <div id="logHoursTaskDescription">{{task.LogWorkTotalTime}}</div>
-                            </div>
-                        </div>
-
+                        <div class="col-md"></div>
                     </div>
                 </div>
             </div>
@@ -145,13 +155,4 @@
         <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
     </ng-container>
 </ng-container>
-<script>
-    function on() {
-        document.getElementById("overlay").style.display = "block";
-    }
-
-    function off() {
-        document.getElementById("overlay").style.display = "none";
-    }
-</script>
 <app-loader *ngIf="!(taskDataObservable | async)"></app-loader>

@@ -1,6 +1,6 @@
 <ng-container *ngIf="!enableLoader">
     <form (ngSubmit)="submit()" #form="ngForm">
-        <div class="container p-3 align-items-center ml-5">
+        <div class="container p-3 align-items-center ml-5 px">
             <div class="card text-light mb-3" class="logWorkPage" style="background-color:#202124;">
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
@@ -14,44 +14,67 @@
                         </li>
                     </ul>
                 </nav>
-                <div class="content text-light">
-                    <div class="form-row pt-3 px-4 py-4">
-                        <div class="col-sm-4 pt-2">
-                            <label for="inputState" class="form-label">Status</label>
-                            <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
-                            <option selected disabled value="">choose...</option>
-                            <option>Ice Box</option>
-                            <option>Ready to start</option>
-                            <option>Under Progress</option>
-                            <option>Blocked</option>
-                            <option>Completed</option>
-                        </select>
+                <div class="text-light px">
+                    <div class="col-md-10">
+                        <div class="row px pt-2">
+                            <div class="col-md"></div>
+                            <div class="col-md-5 pl-4 pr-0">
+                                <span id="logHead">Status:</span>
+                            </div>
+                            <div class="col-md-5 pl">
+                                <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
+                                        <option selected disabled value="">choose...</option>
+                                        <option>Ice Box</option>
+                                        <option>Ready to start</option>
+                                        <option>Under Progress</option>
+                                        <option>Blocked</option>
+                                        <option>Completed</option>
+                                    </select>
+                            </div>
+                            <div class="col-md"></div>
                         </div>
-                        <div class="col-sm-4 pt-2">
-                            <label for="inputHours" class="form-label">Log Hours</label>
-                            <input type="number" min="1" class="form-control" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
-                            <small id="LogWorkHour" class="col">
-                            hours
-                        </small>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md"></div>
+                            <div class="col-md-5 pl-2">
+                                <span id="logHead" class="form-inline">Log Hours:</span>
+                            </div>
+                            <div class="col-md-4 pl-0">
+                                <input type="number" min="1" class="form-control" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="col-md-1" id="LogWorkHour" class="pl-0"><small>hrs</small></div>
+                            <div class="col-md-1"></div>
                         </div>
-                        <div class="col-sm-4 pt-2">
-                            <label for="inputHours" class="form-label">Work Completed</label>
-                            <input type="number" min="1" max="100" class="form-control" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
-                            <small id="LogWorkHour" class="col">
-                            in percentage(%)
-                        </small>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md"></div>
+                            <div class="col-md-5 pl-0">
+                                <span id="logHead">Work Completed:</span>
+                            </div>
+                            <div class="col-md-4 pl-0">
+                                <input type="number" min="1" max="100" class="form-control" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="col-md-1" id="LogWorkHour" class="pl-0">%</div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md"></div>
+                            <div class="col-md-11 px mx">
+                                <label for="comment" class="form-label" id="logHead">Comment:</label>
+                                <input type="text" class="form-control md" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row-md-5 pt-3 px-4 py-4">
-                        <label for="comment" class="form-label">Comment</label>
-                        <input type="text" class="form-control" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="row pb-4">
-                        <div class="col-md-10"></div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-9"></div>
                         <div class="col-md-2"><button class="btn" type="submit" id="logWorkSubmit">Submit</button>
                         </div>
+                        <div class="col-md-1"></div>
                     </div>
                 </div>
+                <div class="col-md-2"></div>
             </div>
         </div>
     </form>

@@ -18,6 +18,10 @@
     background-color: #5A20F0;
 }
 
+#sprint {
+    color: #5A20F0;
+}
+
 @media (max-width: 991px) {
     .navbar-nav {
         float: right;
@@ -47,4 +51,8 @@
 
 .task-position {
     position: relative;
+}
+
+.header {
+    font-weight: bold;
 }
