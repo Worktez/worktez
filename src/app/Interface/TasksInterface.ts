@@ -14,6 +14,7 @@ export interface Tasks {
   CreationDate: string;
   SprintNumber: number;
   StoryPointNumber: number;
+  CompletionDate: string;
 }
 
 export interface TasksId extends Tasks {id: string;}

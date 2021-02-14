@@ -28,15 +28,31 @@ exports.logWork = functions.https.onRequest((request, response) => {
         const time = request.body.data.Time;
         const fullSprintId = createSprintId(sprintNumber);
         let logWorkTotalTime;
+        let completiondate = "Not yet Completed";
+        let today = new Date();
 
         const promise1 = db.collection("Tasks").doc(taskId).get().then((doc) => {
             logWorkTotalTime = parseInt(doc.data().LogWorkTotalTime);
             logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
 
+            if (status === "Completed") {
+
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0');
+                var yyyy = today.getFullYear();
+
+                var todayDate = dd + "/" + mm + "/" + yyyy;
+
+                completiondate = todayDate;
+            }
+
+
+
             const updatePromise = db.collection("Tasks").doc(taskId).update({
                 LogWorkTotalTime: logWorkTotalTime,
                 WorkDone: workDone,
                 Status: status,
+                CompletionDate: completiondate,
             });
             return Promise.resolve(updatePromise);
         });
