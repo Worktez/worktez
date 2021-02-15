@@ -1,5 +1,15 @@
 #editPageTaskContainer {
     border: 1px solid #5A20F0;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    right: 0%;
+    bottom: 0%;
+    width: 70%;
+    height: 90%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
 }
 
 #button {
@@ -15,8 +25,7 @@
 }
 
 #non-editable {
-    background-color: #16C85A;
-    color: white;
+    color: #16C85A;
 }
 
 #navbarMenu {
@@ -28,4 +37,8 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: #5A20F0;
+}
+
+.header {
+    font-weight: bold;
 }
