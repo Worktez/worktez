@@ -80,7 +80,7 @@ export class BoardComponent implements OnInit {
         // this.rawData = data;
         this.currentSprintNumber = data.CurrentSprintId;
         this.currentSprintName = "S" + this.currentSprintNumber;
-        return {...data}
+        return { ...data }
       })
     )
   }
@@ -100,7 +100,7 @@ export class BoardComponent implements OnInit {
     // )
   }
 
-  changeSprintName(data: {newSprintNumber: number}) {
+  changeSprintName(data: { newSprintNumber: number }) {
     this.currentSprintNumber = data.newSprintNumber;
     this.currentSprintName = "S" + this.currentSprintNumber;
   }
@@ -110,11 +110,23 @@ export class BoardComponent implements OnInit {
     this.currentSprintName = "Backlog";
   }
 
-  currentSprint(){
+  currentSprint() {
     this.getCurrentSprint();
   }
 
   showTasks(category: string) {
     this.router.navigate(['/Tasks', category, this.currentSprintName])
+  }
+
+  changeCurrentSprint(currentSprintNumber: number) {
+    console.log(currentSprintNumber);
+    this.currentSprintNumber = currentSprintNumber;
+    if (currentSprintNumber == -1) {
+      this.currentSprintName = "Backlog";
+    } else if(currentSprintNumber == 0){
+      this.getCurrentSprint();
+    } else {
+      this.currentSprintName = "S" + currentSprintNumber;
+    }
   }
 }

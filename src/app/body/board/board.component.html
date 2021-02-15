@@ -1,35 +1,42 @@
-<ng-container *ngIf="rawDataObservable |async">
-    <ng-container *ngFor="let item of mainData | async">
-        <ng-container *ngIf="item.id === currentSprintName">
-            <div class="container p-2">
-                <div class="row py-4">
-                    <h3 class="fontHeading col-md-8 col-6" style="font-size: 24px;">Board</h3>
-                    <div class="col-md-2 col-3 px-3">
-                        <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="currentSprint()">Current Sprint</button>
-                    </div>
-                    <div class="col-md-2 col-2">
-                        <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="showBacklog()">Backlog</button>
-                    </div>
-                </div>
+<div class="row">
+    <div class="col-md-2">
+        <app-focus-nav [currentSprintNumber]="currentSprintNumber" (currentSprint)="changeCurrentSprint($event)"></app-focus-nav>
+    </div>
+    <div class="col-md-10">
+        <ng-container *ngIf="rawDataObservable |async">
+            <ng-container *ngFor="let item of mainData | async">
+                <ng-container *ngIf="item.id === currentSprintName">
+                    <div class="container p-2">
+                        <div class="row py-4">
+                            <h3 class="fontHeading col-md-8 col-6" style="font-size: 24px;">Board</h3>
+                            <div class="col-md-2 col-3 px-3">
+                                <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="currentSprint()">Current Sprint</button>
+                            </div>
+                            <div class="col-md-2 col-2">
+                                <button type="submit" class="btn" id="button" style="font-size: 14px;" (click)="showBacklog()">Backlog</button>
+                            </div>
+                        </div>
 
-                <div class="row">
-                    <div class="col-md-3 col-12" type="button" (click)="showTasks('Business')">
-                        <app-feature-card [cardName]="'Business'" [tasks]="item.TotalBusinessTask"></app-feature-card>
-                    </div>
-                    <div class="col-md-3 col-12" type="button" (click)="showTasks('Development')">
-                        <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask"></app-feature-card>
-                    </div>
-                    <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
-                        <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
-                    </div>
-                    <div class="col-md-3 col-12" type="button" (click)="showTasks('Other')">
-                        <app-feature-card [cardName]="'Other'" [tasks]="item.TotalOtherTask"></app-feature-card>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Business')">
+                                <app-feature-card [cardName]="'Business'" [tasks]="item.TotalBusinessTask"></app-feature-card>
+                            </div>
+                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Development')">
+                                <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask"></app-feature-card>
+                            </div>
+                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
+                                <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
+                            </div>
+                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Other')">
+                                <app-feature-card [cardName]="'Other'" [tasks]="item.TotalOtherTask"></app-feature-card>
+                            </div>
+                        </div>
 
-                <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)"></app-sprint-details>
-            </div>
+                        <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)"></app-sprint-details>
+                    </div>
+                </ng-container>
+            </ng-container>
         </ng-container>
-    </ng-container>
-</ng-container>
-<app-loader *ngIf="!(mainData | async)"></app-loader>
+        <app-loader *ngIf="!(mainData | async)"></app-loader>
+    </div>
+</div>

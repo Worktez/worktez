@@ -1,0 +1,16 @@
+.menu-option {
+    color: white;
+    background-color: #20282E;
+    border: 1px solid #5A20F0;
+    width: 112%;
+}
+
+.menu-option:hover {
+    background-color: #5A70F0;
+    cursor: pointer;
+}
+
+
+/* .row {
+    width: 100%;
+} */
