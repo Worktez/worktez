@@ -43,7 +43,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         let totalCompletedTask = 0;
         let sprintDataPromise;
         let currentSprintId = 0;
-        let completiondate = "Not yet Completed";
+        const completiondate = "Not yet Completed";
 
         // eslint-disable-next-line prefer-const
         let promises = [];

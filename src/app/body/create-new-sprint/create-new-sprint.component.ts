@@ -7,6 +7,8 @@ import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
 import { Location } from '@angular/common';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -18,6 +20,7 @@ export class CreateNewSprintComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('newSprintId') newSprintId: string;
 
+  componentName: string = "CREATE-NEW-SPRINT";
   startDate: string
   endDate: string
   status: string
@@ -35,9 +38,12 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
+    this.navbarHandler.resetNavbar();
+    this.navbarHandler.addToNavbar(this.componentName);
+
     this.getNewSprintId();
   }
 
@@ -86,19 +92,19 @@ export class CreateNewSprintComponent implements OnInit {
     }
   }
 
-  async submit(){
-    let data = [{label:"startDate",value:this.startDate},
-      {label:"endDate",value:this.endDate},
-      {label:"status",value:this.status}];
-    var condition = await (this.validationService.checkValidity(data)).then(res => {
-      return res;});
-    if(condition)
-    {
+  async submit() {
+    let data = [{ label: "startDate", value: this.startDate },
+    { label: "endDate", value: this.endDate },
+    { label: "status", value: this.status }];
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      return res;
+    });
+    if (condition) {
       console.log("Inputs are valid");
       this.createNewSprint();
     }
     else
-    console.log("Sprint not created! Validation error");
+      console.log("Sprint not created! Validation error");
   }
 
   async createNewSprint() {
@@ -120,13 +126,13 @@ export class CreateNewSprintComponent implements OnInit {
       console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
-      console.error("Error", error);
     }
 
   }
 
-  backToDashboard(){
+  backToDashboard() {
     this.location.back();
   }
 
