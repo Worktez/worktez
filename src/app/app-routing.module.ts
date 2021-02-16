@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'Tasks/:category/:currentSprintName', component: TasksComponent },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent },
   { path: '', component: MyDashBoardComponent },
-  { path: 'CreateOrganization', component: CreateNewOrganizationComponent },
+  { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent },
   { path: 'patch', component: PatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
 ];
