@@ -21,7 +21,7 @@ export class BoardComponent implements OnInit {
 
   currentSprintNumber: number;
   currentSprintName: string;
-  currentSprintEnable: boolean = false;
+  currentSprintButton: boolean = false;
 
   public mainData: Observable<MainDataId[]>;
   public mainCollection: AngularFirestoreCollection<Main>;
@@ -104,24 +104,24 @@ export class BoardComponent implements OnInit {
   changeSprintName(data: {newSprintNumber: number}) {
     this.currentSprintName = "S" + data.newSprintNumber;
     if (this.currentSprintName != "S" + this.currentSprintNumber) {
-      this.currentSprintEnable = true;
+      this.currentSprintButton = true;
     }
     else {
-      this.currentSprintEnable = false;
+      this.currentSprintButton = false;
     }
   }
 
   showBacklog() {
     this.currentSprintNumber = -1;
     this.currentSprintName = "Backlog";
-    if (this.currentSprintName = "Backlog") {
-      this.currentSprintEnable = true;
+    if (this.currentSprintName === "Backlog") {
+      this.currentSprintButton = true;
     }
   }
 
   currentSprint(){
     this.getCurrentSprint();
-    this.currentSprintEnable = false;
+    this.currentSprintButton = false;
   }
 
   showTasks(category: string) {
