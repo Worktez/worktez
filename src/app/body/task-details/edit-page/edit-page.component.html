@@ -25,10 +25,10 @@
                                 <div style="font-weight: bold;" id="non-editable">{{task.Title}}</div>
                             </div>
                         </div>
-                        <div class="col-md-2 blank"></div>
-                        <div class="col-md-4 form-inline" style="font-size: 20px;">
-                            <div style="font-weight: bold;" id="non-editable" class="mr-3">Creation Date:</div>
-                            <div id="non-editable">{{task.CreationDate}}</div>
+                        <div class="col-md blank"></div>
+                        <div class="col-md-5 form-inline" id="non-editable" style="font-size: 20px;">
+                            <div style="font-weight: bold;" class="mr-3">Completion Date:</div>
+                            <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
                         </div>
                     </div>
                     <hr/>
@@ -92,6 +92,13 @@
                         </div>
                         <div class="col-md-3"></div>
                         <div class="col-md-4">
+                            <div class="row">
+                                <div class="col form-inline">
+                                    <span class="header" id="non-editable">Creation Date:</span>
+                                </div>
+                                <div class="col" id="non-editable">{{task.CreationDate}}</div>
+                            </div>
+                            <hr>
                             <div class="row">
                                 <div class="col">
                                     <span class="header">Assignee:</span>

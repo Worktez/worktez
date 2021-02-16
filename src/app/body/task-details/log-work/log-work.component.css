@@ -1,4 +1,4 @@
-.logWorkPage {
+#logWorkPage {
     border: 1px solid #5A20F0;
     margin: 0 auto;
     top: 50%;
@@ -44,7 +44,7 @@ input:focus {
 }
 
 @media only screen and (max-width: 600px) {
-    .logWorkPage {
+    #logWorkPage {
         width: 70%;
         height: 100%;
     }
