@@ -3,7 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ValidationService } from '../../../services/validation.service';
-import { ToolsService } from '../../../services/tools.service';
+import { ToolsService } from '../../../services/tools.service'
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-log-work',
@@ -17,6 +18,8 @@ export class LogWorkComponent implements OnInit {
   @Input('task') task: Tasks
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
 
+  componentName: string = "LOG-WORK";
+
   Id: string
   logWorkDone: number
   logWorkStatus: number
@@ -26,9 +29,9 @@ export class LogWorkComponent implements OnInit {
   time: string
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
   }
@@ -40,7 +43,7 @@ export class LogWorkComponent implements OnInit {
     {label:"logHours",value:this.logHours},
     {label:"workCompleted",value:this.logWorkDone},
     {label:"comment",value:this.logWorkComment}];
-    var condition = await (this.validationService.checkValidity(data)).then(res => {
+    var condition = await (this.validationService.checkValidity(this.componentName,data)).then(res => {
       return res;});
     if(condition)
     {
@@ -62,6 +65,7 @@ export class LogWorkComponent implements OnInit {
       console.log(result);
       this.workDone();
     } catch (error) {
+      this.errorHandlerService.getErrorCode("LOGWORK","InternalError");
       this.enableLoader = false;
       console.log("Error", error);
     }
