@@ -14,7 +14,7 @@ export class PatchComponent implements OnInit {
   }
   async patch(){
     const completionDate = "XX/XX/XXXX"
-    const callable = this.functions.httpsCallable('addCompletionDatePatch');
+    const callable = this.functions.httpsCallable('patch');
 
     try {
       const result = await callable({CompletionDate:completionDate}).toPromise();
