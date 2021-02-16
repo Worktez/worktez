@@ -1,66 +1,9 @@
 #createNewOrgContainer {
     background-color: #11171B;
-    border-radius: 25px;
     border: 1px solid #5A20F0;
 }
 
 #navbarMenu {
     background-color: #5A20F0;
-    border-radius: 25px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
     width: 100%;
-}
-
-.input,
-.input:focus {
-    border-radius: 10px;
-    padding: 10px;
-    border: none;
-    outline: none;
-    width: 100%;
-}
-
-#button {
-    background: linear-gradient(45deg, #5A20F0, #5A20F0);
-    justify-content: center;
-    color: #fff;
-    border-radius: 30px;
-    border: none;
-    width: 50px;
-    padding: 10px;
-}
-
-#uploadButton {
-    color: #fff;
-    border: 2px solid #fff;
-    border-radius: 10px;
-}
-
-#button:hover,
-#button:focus,
-#uploadButton:hover {
-    background: linear-gradient(45deg, #5A20F0, #8121f0);
-    outline: none;
-}
-
-input[type=file] {
-    display: none;
-}
-
-#addIcon {
-    color: #5A20F0;
-}
-
-#important {
-    color: red;
-}
-
-#form {
-    color: white;
-}
-
-.material-icons:hover {
-    cursor: pointer;
-    color: #5A20F0;
 }

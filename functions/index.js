@@ -46,5 +46,4 @@ exports.deleteTask = deleteTaskAPI.deleteTask;
 exports.createNewUser = createNewUserAPI.createNewUser;
 exports.updateSprintStatus = updateSprintStatusAPI.updateSprintStatus;
 exports.createNewOrganization = createNewOrgAPI.createNewOrganization;
-exports.createNewTeam = createNewOrgAPI.createNewTeam;
-exports.createOrganizationLabels = createNewOrgAPI.createOrganizationLabels;
+exports.createNewTeamWithLabels = createNewOrgAPI.createNewTeamWithLabels;

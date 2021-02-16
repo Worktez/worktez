@@ -88,4 +88,24 @@
       </ExternalError>
       </SubSystem>
   </SubComponent>
+   <SubComponent name="ORGANIZATION-DETAILS" code="09">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+  </SubComponent>
+    <SubComponent name="TEAM-DETAILS" code="10">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+  </SubComponent>
 </Component>

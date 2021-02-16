@@ -82,6 +82,9 @@ export class ValidationService {
             case 'organizationEmail': {
                 return (this.checkOrgEmail(value));
             }
+            case "organizationLogo": {
+                return (this.checkOrgLogo(value));
+            }
             case 'teamName': {
                 return (this.checkTeamName(value));
             }
@@ -336,7 +339,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Email is badly formatted");
+            let errorType = this.componentName + "_VALIDATION_USER_EMAIL";
+            this.errorHandlerService.addError(errorType, "Email is badly formatted")
             return (false);
         }
     }
@@ -345,7 +349,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Username should be greater than 2 characters");
+            let errorType = this.componentName + "_VALIDATION_USER_NAME";
+            this.errorHandlerService.addError(errorType, "Username should be greater than 2 characters")
             return (false);
         }
     }
@@ -354,7 +359,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Password should be greater than 5 characters");
+            let errorType = this.componentName + "_VALIDATION_USER_PASSWORD";
+            this.errorHandlerService.addError(errorType, "Password should be greater than 5 characters")
             return (false);
         }
     }
@@ -363,7 +369,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Organization Name field is required");
+            let errorType = this.componentName + "_VALIDATION_ORG_NAME";
+            this.errorHandlerService.addError(errorType, "Organization Name field is required")
             return (false);
         }
     }
@@ -372,7 +379,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Organization Domain field is required");
+            let errorType = this.componentName + "_VALIDATION_ORG_DOMAIN";
+            this.errorHandlerService.addError(errorType, "Organization Domain field is required")
             return (false);
         }
     }
@@ -381,7 +389,18 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Organization Email field is required");
+            let errorType = this.componentName + "_VALIDATION_ORG_EMAIL";
+            this.errorHandlerService.addError(errorType, "Organization Email field is required")
+            return (false);
+        }
+    }
+    async checkOrgLogo(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_ORG_LOGO";
+            this.errorHandlerService.addError(errorType, "Organization Logo field is required")
             return (false);
         }
     }
@@ -390,7 +409,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Team Name field is required");
+            let errorType = this.componentName + "_VALIDATION_TEAM_NAME";
+            this.errorHandlerService.addError(errorType, "Team Name field is required")
             return (false);
         }
     }
@@ -399,7 +419,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Team Id field is required");
+            let errorType = this.componentName + "_VALIDATION_TEAM_ID";
+            this.errorHandlerService.addError(errorType, "Team Id field is required")
             return (false);
         }
     }
@@ -408,7 +429,8 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Team Description field is required");
+            let errorType = this.componentName + "_VALIDATION_TEAM_DESCRIPTION";
+            this.errorHandlerService.addError(errorType, "Team Description field is required")
             return (false);
         }
     }
@@ -417,20 +439,22 @@ export class ValidationService {
         if (control.errors === null)
             return (true);
         else {
-            console.log("Team Manager field is required");
+            let errorType = this.componentName + "_VALIDATION_TEAM_MANAGER_EMAIL";
+            this.errorHandlerService.addError(errorType, "Team Manager field is required")
             return (false);
         }
     }
     async checkTeamMemberEmails(value: string) {
         const memberEmails = value.split(",").map(member => member.trim());
         let hasNoError;
-        console.log(memberEmails);
+        let errorType = this.componentName + "_VALIDATION_TEAM_MEMBER_EMAILS";
+
         if (memberEmails.filter((e, i, a) => a.indexOf(e) !== i).length > 0) {
-            console.log("Matching Team Member Emails are not Allowed");
+            this.errorHandlerService.addError(errorType, "Matching Team Member Emails are not Allowed");
             return (false);
         }
         if (memberEmails.length >= 10) {
-            console.log("Only 10 Team Member's Email is required");
+            this.errorHandlerService.addError(errorType, "Only 10 Team Member's Email is required");
             return (false);
         }
         memberEmails.map((member, index) => {
@@ -438,7 +462,7 @@ export class ValidationService {
             if (control.errors === null)
                 hasNoError = true
             else {
-                console.log(`Team Member ${index + 1} Email is required`);
+                this.errorHandlerService.addError(errorType, `Team Member ${index + 1} Email is required`);
                 hasNoError = false
             }
         });

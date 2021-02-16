@@ -1,0 +1,55 @@
+.input,
+.input:focus {
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+#uploadButton {
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
+input[type=file] {
+    display: none;
+}
+
+#important {
+    color: red;
+}
+
+#form {
+    color: white;
+}
+
+#button {
+    background-color: #16C85A;
+    border: 2px solid #5A20F0;
+    color: white;
+}
+
+#button:focus,
+#button:active,
+#submitButton:focus,
+#submitButton:active {
+    outline: 0 none;
+    box-shadow: none;
+}
+
+#submitButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+#submitButton:hover {
+    cursor: pointer;
+    color: #5A20F0;
+}
+
+#submitButton:disabled {
+    color: gray;
+}
