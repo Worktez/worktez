@@ -42,6 +42,8 @@ import { PerformanceChartComponent } from './body/my-dashboard/performance-chart
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 import { ErrorComponent } from './body/error/error.component';
 import { PatchComponent } from './patch/patch.component';
+import { PieChartComponent } from './body/tasks/pie-chart/pie-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -74,6 +76,7 @@ import { PatchComponent } from './patch/patch.component';
     ErrorComponent,
     FilterTaskComponent,
     PatchComponent,
+    PieChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,8 @@ import { PatchComponent } from './patch/patch.component';
     AngularFirestoreModule,
     AppRoutingModule,
     GoogleChartsModule.forRoot({ version: 'current' }),
-    HttpClientModule
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [
     AuthService,

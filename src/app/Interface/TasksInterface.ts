@@ -17,4 +17,5 @@ export interface Tasks {
   CompletionDate: string;
 }
 
-export interface TasksId extends Tasks {id: string;}
+export interface TasksId extends Tasks { id: string; }
+export interface workDone extends Tasks { WorkDone: number; }
