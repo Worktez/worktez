@@ -46,6 +46,7 @@ import { ErrorComponent } from './body/error/error.component';
 import { PatchComponent } from './patch/patch.component';
 import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
+import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { TeamDetailsComponent } from './body/create-new-organization/team-detail
     PatchComponent,
     OrganizationDetailsComponent,
     TeamDetailsComponent,
+    FocusNavComponent,
   ],
   imports: [
     BrowserModule,
