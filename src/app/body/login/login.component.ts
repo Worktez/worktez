@@ -63,6 +63,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSignUpWithOrg() {
-    this.router.navigate(['/CreateOrganization']);
+    this.router.navigate(['/CreateNewOrganization']);
   }
 }
