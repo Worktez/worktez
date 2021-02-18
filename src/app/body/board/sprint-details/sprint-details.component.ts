@@ -23,6 +23,7 @@ export class SprintDetailsComponent implements OnInit {
   componentName :string="SPRINT-DETAILS"
   filterSprintNumber: number;
   sprintStatus: string;
+  enableLoader: boolean = false;
 
   constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute,public errorHandlerService: ErrorHandlerService) { }
 
@@ -33,13 +34,12 @@ export class SprintDetailsComponent implements OnInit {
     this.changeSprint.emit({ newSprintNumber: this.filterSprintNumber });
   }
 
-  async completeSprint() {
-    
-    this.sprintStatus = "Completed";
+  async updateSprintStatus(updateStatus: string ) {
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable('updateSprintStatus');
 
     try {
-      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus }).toPromise();
+      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: updateStatus }).toPromise();
       console.log(this.sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
