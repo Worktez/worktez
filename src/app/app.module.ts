@@ -44,6 +44,7 @@ import { ErrorComponent } from './body/error/error.component';
 import { PatchComponent } from './patch/patch.component';
 import { PieChartComponent } from './body/tasks/pie-chart/pie-chart.component';
 import { ChartsModule } from 'ng2-charts';
+import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ChartsModule } from 'ng2-charts';
     FilterTaskComponent,
     PatchComponent,
     PieChartComponent,
+    FocusNavComponent,
   ],
   imports: [
     BrowserModule,

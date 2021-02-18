@@ -10,7 +10,6 @@ import { workDone } from 'src/app/Interface/TasksInterface';
 })
 export class PieChartComponent implements OnInit {
   @Input('workDone') workDone: number
-
   
   public pieChartOptions: ChartOptions = {
     responsive: true,

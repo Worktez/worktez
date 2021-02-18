@@ -105,16 +105,19 @@ export class BoardComponent implements OnInit {
     this.currentSprintName = "S" + this.currentSprintNumber;
   }
 
-  showBacklog() {
-    this.currentSprintNumber = -1;
-    this.currentSprintName = "Backlog";
-  }
-
-  currentSprint() {
-    this.getCurrentSprint();
-  }
-
   showTasks(category: string) {
     this.router.navigate(['/Tasks', category, this.currentSprintName])
+  }
+
+  changeCurrentSprint(currentSprintNumber: number) {
+    console.log(currentSprintNumber);
+    this.currentSprintNumber = currentSprintNumber;
+    if (currentSprintNumber == -1) {
+      this.currentSprintName = "Backlog";
+    } else if(currentSprintNumber == 0){
+      this.getCurrentSprint();
+    } else {
+      this.currentSprintName = "S" + currentSprintNumber;
+    }
   }
 }
