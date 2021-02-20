@@ -23,7 +23,6 @@ export class FocusNavComponent implements OnInit {
   }
 
   showBacklog(){
-    // this.backendService.currentSprintNumber = -1;
     this.currentSprint.emit(-1);
   }
 }
