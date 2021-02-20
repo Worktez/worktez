@@ -18,7 +18,7 @@ export class SprintDetailsComponent implements OnInit {
   @Input('EndDate') EndDate: string;
   @Input('Status') Status: string;
 
-  @Output() changeSprint = new EventEmitter<{ newSprintNumber: number }>();
+  @Output() changeSprint = new EventEmitter<number>();
 
   componentName :string="SPRINT-DETAILS"
   filterSprintNumber: number;
@@ -30,7 +30,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   changeSprintNumber() {
-    this.changeSprint.emit({ newSprintNumber: this.filterSprintNumber });
+    this.changeSprint.emit(this.filterSprintNumber);
   }
 
   async completeSprint() {

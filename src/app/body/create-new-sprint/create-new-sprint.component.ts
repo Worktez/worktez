@@ -9,6 +9,7 @@ import { ValidationService } from '../../services/validation.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -38,7 +39,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -124,6 +125,7 @@ export class CreateNewSprintComponent implements OnInit {
 
       console.log("Successfully created a new sprint");
       console.log(result);
+      this.backendService.currentSprintNumber = 0;
       this.router.navigate(['/']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");

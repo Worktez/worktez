@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-focus-nav',
@@ -13,17 +14,16 @@ export class FocusNavComponent implements OnInit {
 
   currentSprintName: string;
   
-  constructor() { }
+  constructor(public backendService: BackendService) { }
 
   ngOnInit(): void {  }
 
   ActiveSprint(){
-    this.currentSprintNumber = 0;
-    this.currentSprint.emit(this.currentSprintNumber);
+    this.currentSprint.emit(0);
   }
 
   showBacklog(){
-    this.currentSprintNumber = -1;
-    this.currentSprint.emit(this.currentSprintNumber);
+    // this.backendService.currentSprintNumber = -1;
+    this.currentSprint.emit(-1);
   }
 }
