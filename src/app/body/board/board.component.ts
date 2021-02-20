@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
@@ -16,18 +17,10 @@ export class BoardComponent implements OnInit {
   componentName: string = "BOARD";
 
   // public rawData: RawDataType;
-  public rawDataObservable: Observable<RawDataType>;
-  public rawDocument: AngularFirestoreDocument<RawDataType>;
-
-  currentSprintNumber: number;
-  currentSprintName: string;
-
-  public mainData: Observable<MainDataId[]>;
-  public mainCollection: AngularFirestoreCollection<Main>;
 
   filterSprintNumber: string;
 
-  constructor(private db: AngularFirestore, private router: Router, public navbarHandler: NavbarHandlerService) { }
+  constructor(private db: AngularFirestore, private router: Router, public navbarHandler: NavbarHandlerService, public backendService: BackendService) { }
 
   ngOnInit(): void {
     // Better way of use db.
@@ -73,48 +66,22 @@ export class BoardComponent implements OnInit {
   // Reading synchronous snapshot of data
 
   getCurrentSprint() {
-    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
-    this.rawDataObservable = this.rawDocument.snapshotChanges().pipe(
-      map(actions => {
-        const data = actions.payload.data() as RawDataType;
-        // this.rawData = data;
-        this.currentSprintNumber = data.CurrentSprintId;
-        this.currentSprintName = "S" + this.currentSprintNumber;
-        return { ...data }
-      })
-    )
+    this.backendService.getCurrentSprint();
+
   }
 
   readCurrentSprintData() {
-    this.mainCollection = this.db.collection<Main>('Main');
-    this.mainData = this.mainCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Main;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
-
+    this.backendService.readCurrentSprintData();
     // this.mainData = this.mainCollection.snapshotChanges().pipe(
     //   map()
     // )
   }
 
-  changeSprintName(data: { newSprintNumber: number }) {
-    this.currentSprintNumber = data.newSprintNumber;
-    this.currentSprintName = "S" + this.currentSprintNumber;
-  }
-
-  showBacklog() {
-    this.currentSprintNumber = -1;
-    this.currentSprintName = "Backlog";
-  }
-
-  currentSprint() {
-    this.getCurrentSprint();
-  }
-
   showTasks(category: string) {
-    this.router.navigate(['/Tasks', category, this.currentSprintName])
+    this.router.navigate(['/Tasks', category, this.backendService.currentSprintName])
+  }
+
+  changeCurrentSprint(currentSprintNumber: number) {
+    this.backendService.setCurrentSprint(currentSprintNumber);
   }
 }
