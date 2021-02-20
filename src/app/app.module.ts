@@ -7,6 +7,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { HttpClientModule } from '@angular/common/http';
 
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
@@ -38,7 +39,10 @@ import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
-import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component"
+import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
+import { ErrorComponent } from './body/error/error.component';
+import { PatchComponent } from './patch/patch.component';
+import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +71,11 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     ChartComponent,
     MyTasksComponent,
     PerformanceChartComponent,
-    RangeCardComponent
+    RangeCardComponent,
+    ErrorComponent,
+    FilterTaskComponent,
+    PatchComponent,
+    FocusNavComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +85,8 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
     AngularFireFunctionsModule,
     AngularFirestoreModule,
     AppRoutingModule,
-    GoogleChartsModule.forRoot({ version: 'current' })
+    GoogleChartsModule.forRoot({ version: 'current' }),
+    HttpClientModule
   ],
   providers: [
     AuthService,

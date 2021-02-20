@@ -13,7 +13,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class BoardComponent implements OnInit {
 
-  componentName = "Board";
+  componentName: string = "BOARD";
 
   // public rawData: RawDataType;
   public rawDataObservable: Observable<RawDataType>;
@@ -41,7 +41,7 @@ export class BoardComponent implements OnInit {
     //     return { id, ...data };
     //   }))
     // );
-
+    this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     // Efficient for now
@@ -80,7 +80,7 @@ export class BoardComponent implements OnInit {
         // this.rawData = data;
         this.currentSprintNumber = data.CurrentSprintId;
         this.currentSprintName = "S" + this.currentSprintNumber;
-        return {...data}
+        return { ...data }
       })
     )
   }
@@ -100,21 +100,24 @@ export class BoardComponent implements OnInit {
     // )
   }
 
-  changeSprintName(data: {newSprintNumber: number}) {
+  changeSprintName(data: { newSprintNumber: number }) {
     this.currentSprintNumber = data.newSprintNumber;
     this.currentSprintName = "S" + this.currentSprintNumber;
   }
 
-  showBacklog() {
-    this.currentSprintNumber = -1;
-    this.currentSprintName = "Backlog";
-  }
-
-  currentSprint(){
-    this.getCurrentSprint();
-  }
-
   showTasks(category: string) {
     this.router.navigate(['/Tasks', category, this.currentSprintName])
+  }
+
+  changeCurrentSprint(currentSprintNumber: number) {
+    console.log(currentSprintNumber);
+    this.currentSprintNumber = currentSprintNumber;
+    if (currentSprintNumber == -1) {
+      this.currentSprintName = "Backlog";
+    } else if(currentSprintNumber == 0){
+      this.getCurrentSprint();
+    } else {
+      this.currentSprintName = "S" + currentSprintNumber;
+    }
   }
 }

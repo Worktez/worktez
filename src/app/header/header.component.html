@@ -1,23 +1,38 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: #5A20F0;">
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: #20282E; height:40px;">
     <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
-        <img src="../../assets/logo.png" width="30" height="30" alt="" loading="lazy"> Work Trolly
+        <img src="../../assets/logo.png" width="25" height="25" alt="" loading="lazy"> Work Trolly
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon text-white"></span>
-  </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav">
-            <li class="nav-item active pr-5 py-1 " *ngIf="authService.afauth.user | async">
-                <button type="button" class="btn" id="button" (click)="startNewSession()">Create New Task</button>
+
+            <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Create
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                    <a class="dropdown-item" (click)="startNewSession()">Create New Task</a>
+                    <a class="dropdown-item" (click)="startNewSprint()">Start New Sprint</a>
+                </div>
             </li>
-            <li class="nav-item active pr-5 py-1 " *ngIf="authService.afauth.user | async">
-                <button type="button" class="btn" id="button" (click)="startNewSprint()">Start New Sprint</button>
+
+            <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">
+                <a class=" nav-link dropdown-toggle" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Boards
+                </a>
+                <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards">
+                    <a class="dropdown-item " (click)="Board() ">Board</a>
+                    <a class="dropdown-item " (click)="myDashBoard() ">My Dashboard</a>
+                </div>
             </li>
-            <li class="nav-item active pr-5 py-1 " *ngIf=" router.url != '/Board' ">
-                <button type="button" class="btn" id="button" (click)="Board()">Board</button>
-            </li>
-            <li class="nav-item active pr-5 py-1 " *ngIf=" router.url != '/' && authService.afauth.user | async ">
-                <button type="button" class="btn" id="button" (click)="myDashBoard()">My DashBoard</button>
+
+            <li class="nav-item dropdown " *ngIf="authService.afauth.user | async ">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownTeam" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Team
+                </a>
+                <div class="dropdown-menu " aria-labelledby="navbarDropdownTeam">
+                    <a class="dropdown-item ">Create Team</a>
+                    <a class="dropdown-item ">Add Members</a>
+                </div>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto ">

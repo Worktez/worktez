@@ -22,3 +22,27 @@
   color: var(--background);
   border: none;
 }
+.dropdown-menu {
+    background-color: #1d252a;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+#navbarDropdownBoards,
+#navbarDropdownTeam,
+#navbarDropdownCreate {
+    color: white;
+}
+
+#navbarDropdownBoards:hover,
+#navbarDropdownTeam:hover,
+#navbarDropdownCreate:hover {
+    color: gray;
+}
