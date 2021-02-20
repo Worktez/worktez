@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "cloud-functions-20441"
+    "default": "worktrolly"
   },
   "targets": {
     "worktrolly": {

@@ -1,7 +1,8 @@
 #currentTab {
     color: #10be65;
+    font-weight: bolder;
 }
 
 #navbarString {
-    color: white;
+    color: var(--text);
 }

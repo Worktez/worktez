@@ -19,7 +19,7 @@
         <div class="px-5">
             <form (ngSubmit)="submit()" #form="ngForm">
                 <div class="form-group row pt-2">
-                    <div class="alert alert-info form-inline col-sm-4" role="alert">
+                    <div class="alert form-inline w-50 col-md-3 pb-3" style="font-size: 20px;" role="alert">
                         <div style="font-weight: bold;" class="pr-3">Sprint:</div>
                         <div> {{ newSprintId }} </div>
                     </div>
@@ -27,28 +27,28 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="input">Development</label>
-                        <div class="alert text-white form-inline" id="detail" role="alert">
+                        <div class="alert form-inline" id="detail" role="alert">
                             <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
                             <div class="ml-auto"> {{ totalDevelopment }} </div>
                         </div>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="text">Business</label>
-                        <div class="alert text-white form-inline" id="detail" role="alert">
+                        <div class="alert form-inline" id="detail" role="alert">
                             <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
                             <div class="ml-auto"> {{ totalBusiness }} </div>
                         </div>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="text">Marketing</label>
-                        <div class="alert text-white form-inline" id="detail" role="alert">
+                        <div class="alert form-inline" id="detail" role="alert">
                             <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
                             <div class="ml-auto"> {{ totalMarketing }} </div>
                         </div>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="text">Other</label>
-                        <div class="alert  text-white form-inline" id="detail" role="alert">
+                        <div class="alert  form-inline" id="detail" role="alert">
                             <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
                             <div class="ml-auto"> {{ totalOther }} </div>
                         </div>

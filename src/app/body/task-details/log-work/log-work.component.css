@@ -1,27 +1,27 @@
 #logWorkPage {
-    background-color: var(--card-bg);
-    border: 1px solid #5A20F0;
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
     color: var(--text);
 }
 
 #logDetail {
-    background-color: #16C85A;
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--button-text);
 }
 
 #logWorkSubmit {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #navbarMenu {
-    background-color: #5A20F0;
+    background-color: var(--primary-color);
 }
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: var(--primary-color);
 }

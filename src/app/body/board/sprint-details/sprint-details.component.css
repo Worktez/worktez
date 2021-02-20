@@ -1,30 +1,26 @@
+.card-header {
+    font-weight: bold; 
+    background-color: var(--primary-color); 
+    color: var(--button-text);
+}
+
 .card-body{
-    background-color: var(--card-bg);
+    background-color: var(--secondary-bg);
     color: var(--text);
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
 }
 
-#dropdownMenuButton {
-    border-radius: 20px;
-    background-color: #16C85A;
-    color: black;
+#button, #dropdownButton {
+    background-color: var(--primary-color);
+    color: var(--button-text);
 }
 
-
-/* #filterMenu{*/
-
-#button {
-    background-color: #5A20F0;
-    color: white;
+#button:hover, #dropdownButton:hover {
+    background-color: var(--hover);
 }
 
 #filterMenu {
-    background-color: #16C85A;
-}
-
-#dropdownButton {
-    color: white;
-    background-color: #5A20F0;
+    background-color: var(--secondary-color);
 }
 
 #button:focus,

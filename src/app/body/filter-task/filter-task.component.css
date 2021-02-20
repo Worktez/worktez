@@ -2,9 +2,9 @@
     color: var(--text);
 }
 #button {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #button:focus,
@@ -22,5 +22,5 @@ select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: var(--primary-color);
 }

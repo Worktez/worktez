@@ -91,8 +91,8 @@ import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
   providers: [
     AuthService,
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
-    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7012] : undefined },
-    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7011] : undefined }
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7002] : undefined },
+    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7001] : undefined }
   ],
   bootstrap: [AppComponent]
 })

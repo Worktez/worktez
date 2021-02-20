@@ -1,48 +1,36 @@
-#login-btn {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
-}
-
-#button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
-}
-
-#button:focus,
-#button:active {
-    outline: none;
-    box-shadow: none;
+.header {
+    background-color:var(--header-bg); 
+    color: var(--text);
+    height:40px;
 }
 
 #theme-button {
   padding-top: 6px;
-  background-color: #5A20F0;
-  color: var(--background);
+  background-color: var(--header-bg);
+  color: var(--button-text);
   border: none;
 }
 .dropdown-menu {
-    background-color: #1d252a;
+    background-color: var(--secondary-bg);
 }
 
 .dropdown-item {
-    color: white;
+    color: var(--text);
 }
 
 .dropdown-item:hover {
-    background-color: grey;
+    background-color: var(--hover);
     cursor: pointer;
 }
 
 #navbarDropdownBoards,
 #navbarDropdownTeam,
 #navbarDropdownCreate {
-    color: white;
+    color: var(--button-text);
 }
 
 #navbarDropdownBoards:hover,
 #navbarDropdownTeam:hover,
 #navbarDropdownCreate:hover {
-    color: gray;
+    background-color: var(--hover);
 }
