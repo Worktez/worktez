@@ -1,0 +1,20 @@
+.app-theme {
+  min-height: 100vh;
+  background-color:var(--background);
+}
+.theme-light {
+  --background: #fff;
+  --card-bg: #fff;
+  --text: #000;
+  --button-bg: #16C85A;
+  --button-border: 1px solid  #5A20F0;
+  --button-text: #fff;
+}
+.theme-dark {
+  --background: #11171B;
+  --card-bg: #20282E;
+  --text: #fff;
+  --button-bg: #16C85A;
+  --button-border: 1px solid  #5A20F0;
+  --button-text: #fff;
+}

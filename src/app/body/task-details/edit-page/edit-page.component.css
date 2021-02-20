@@ -1,5 +1,7 @@
 #editPageTaskContainer {
     border: 1px solid #5A20F0;
+    background-color:var(--card-bg);
+    color: var(--text);
 }
 
 #button {

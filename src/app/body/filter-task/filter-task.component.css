@@ -1,3 +1,6 @@
+.row{
+    color: var(--text);
+}
 #button {
     background-color: #16C85A;
     border: 2px solid #5A20F0;

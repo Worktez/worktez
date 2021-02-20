@@ -1,3 +1,9 @@
+.card-body{
+    background-color: var(--card-bg);
+    color: var(--text);
+    border: 1px solid #5A20F0;
+}
+
 #dropdownMenuButton {
     border-radius: 20px;
     background-color: #16C85A;
@@ -8,8 +14,7 @@
 /* #filterMenu{*/
 
 #button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
+    background-color: #5A20F0;
     color: white;
 }
 

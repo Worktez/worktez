@@ -1,5 +1,7 @@
 #logWorkPage {
+    background-color: var(--card-bg);
     border: 1px solid #5A20F0;
+    color: var(--text);
 }
 
 #logDetail {

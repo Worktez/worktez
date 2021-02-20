@@ -26,17 +26,17 @@
             "port": 9099
         },
         "functions": {
-            "port": 7001
+            "port": 7011
         },
         "firestore": {
-            "port": 7002
+            "port": 7012
         },
         "hosting": {
-            "port": 7004
+            "port": 7014
         },
         "ui": {
             "enabled": true,
-            "port": 7000
+            "port": 7010
         }
     }
 }
