@@ -5,12 +5,7 @@
 export const environment = {
   production: false,
   firebase: {
-      apiKey: "AIzaSyAyx45s-e3UFqFkNpwHF3oxC3k70lF-wIg",
-      authDomain: "cloud-functions-20441.firebaseapp.com",
-      projectId: "cloud-functions-20441",
-      storageBucket: "cloud-functions-20441.appspot.com",
-      messagingSenderId: "832475843891",
-      appId: "1:832475843891:web:15beaa5414881624dac246"
+    
   },
   useEmulators: true
 };
