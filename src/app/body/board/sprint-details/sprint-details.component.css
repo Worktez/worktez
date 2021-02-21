@@ -17,9 +17,14 @@
     background-color: #16C85A;
 }
 
+#filter-btn {
+    font-size: 14px;
+}
+
 #dropdownButton {
     color: white;
     background-color: #5A20F0;
+    font-size: 14px;
 }
 
 #button:focus,
@@ -32,4 +37,39 @@
 
 #filterSprintNumberInput {
     outline: none;
+    font-size: 11px;
+}
+
+
+/* card-menu */
+
+.card {
+    border: none;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.card-header {
+    font-weight: bold;
+    background-color: #5A20F0;
+    color: white;
+}
+
+.card-text {
+    font-size: 12px;
+}
+
+.card-body {
+    background-color: #202124;
+}
+
+.SprintNo {
+    font-size: 18px;
+}
+
+.material-icons {
+    vertical-align: baseline;
 }

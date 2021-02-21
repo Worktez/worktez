@@ -42,8 +42,10 @@ export class SprintDetailsComponent implements OnInit {
       const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: updateStatus }).toPromise();
       console.log(this.sprintStatus);
       console.log("Successfully updated Status");
+      this.enableLoader = false;
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+      this.enableLoader = false;
     }
   }
 }

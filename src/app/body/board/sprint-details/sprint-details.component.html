@@ -1,55 +1,55 @@
 <div class="pt-3 text-white">
-    <div class="card" style="border: none;">
-        <div class="card-header" style="font-weight: bold; background-color: #5A20F0; color:white;">
+    <div class="card">
+        <div class="card-header">
             <div class="row  align-items-center">
                 <div class="col-md-2 col-4">
-                    <h5 style="font-size: 18px;">Sprint No:</h5>
+                    <h5 class="SprintNo">Sprint No:</h5>
                 </div>
                 <div class="col-md-7 col-5">
                     <h5 id="sprintId">{{currentSprintName}}</h5>
                 </div>
-
-                <div class="row col-md-3 col-8 text-right">
-                    <div class="mr-1">
+                <div class="row">
+                    <div class="col-md-3 col-8 text-right mr-1">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
                             <div class="dropdown-menu dropdown-menu-right px-4 py-3" id="filterMenu" aria-labelledby="dropdownMenuButton">
                                 <div class="row py-3">
-                                    <input class="col-6" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                                    <input class="col-6" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
                                     <div class="col-6 pl-2">
-                                        <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
+                                        <button class="btn" id="dropdownButton" (click)="changeSprintNumber()">Filter</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="btn-group" type="button" *ngIf="Status !== 'Completed' ">
-                        <button type="button" class="btn btn-primary dropdown-toggle" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-item" type="button" (click)="updateSprintStatus('Under progress')">Under progress</div>
-                            <div class="dropdown-item" type="button" (click)="updateSprintStatus('Completed')">Completed</div>
+                        <div class="btn-group" type="button" *ngIf="Status !== 'Completed' ">
+                            <button type="button" class="btn btn-primary dropdown-toggle" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item" type="button" (click)="updateSprintStatus('Under progress')">Under progress</div>
+                                <div class="dropdown-item" type="button" (click)="updateSprintStatus('Completed')">Completed</div>
+                            </div>
                         </div>
+                        <span class="material-icons align-middle m-2" *ngIf="Status === 'Completed' ">check_circle</span>
                     </div>
-                    <span class="material-icons align-middle m-2" *ngIf="Status === 'Completed' " style="vertical-align:baseline;">check_circle</span>
                 </div>
             </div>
         </div>
-        <div class="card-body" style="background-color:#202124;">
+        <div class="card-body">
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date:
+                <h6 class="card-title col-md-2 col-4">Start Date:
                 </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;">
+                <h6 class="card-text col-md-10 col-8" id="sprintStartDate">
                     {{StartDate}}</h6>
             </div>
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End Date: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;">{{EndDate}}
+                <h6 class="card-title col-md-2 col-4">End Date: </h6>
+                <h6 class="card-text col-md-10 col-8" id="sprintEndDate">{{EndDate}}
                 </h6>
             </div>
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Status: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;">{{Status}}</h6>
+                <h6 class="card-title col-md-2 col-4">Status: </h6>
+                <h6 class="card-text col-md-10 col-8" id="sprintStatus">{{Status}}</h6>
             </div>
         </div>
     </div>
 </div>
+<app-loader *ngIf='enableLoader'></app-loader>
