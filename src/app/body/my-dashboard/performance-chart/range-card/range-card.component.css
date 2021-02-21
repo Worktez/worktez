@@ -1,7 +1,7 @@
 #button {
-    background-color: #10be65;
-    border: 2px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #button:focus,
@@ -15,14 +15,15 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: var(--primary-color);
 }
 
 #header {
-    background-color: #5A20F0;
-    border-top: 1px solid black;
+    background-color: var(--primary-color);
 }
 
 #dropdownRangeCard {
-    border-color: #5A20F0;
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border-color: var(--primary-color);
 }

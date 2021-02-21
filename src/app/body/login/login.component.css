@@ -1,16 +1,17 @@
 #loginContainer {
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
 }
 
 #loginNavbar {
-    background-color: #5A20F0;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--button-text);
 }
 
 #button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #button:focus,
