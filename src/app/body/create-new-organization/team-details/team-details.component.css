@@ -1,17 +1,17 @@
 .input,
 .input:focus {
-  border-radius: 10px;
-  padding: 10px;
-  border: var(--primary-border);
-  outline: none;
-  width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    border: var(--primary-border);
+    outline: none;
+    width: 100%;
 }
 
 #important {
-  color: red;
+    color: red;
 }
 
 .material-icons:hover {
-  cursor: pointer;
-  color: var(--primary-color);
+    cursor: pointer;
+    color: var(--primary-color);
 }
