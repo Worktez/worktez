@@ -23,11 +23,11 @@
 #nav-login-tab,
 #nav-signup-tab {
   border: 2px solid #5a20f0;
-  color: white;
+  color: var(--text);
 }
 
 #emailForm {
-  color: white;
+  color: var(--text);
 }
 
 input:focus,
@@ -39,14 +39,14 @@ textarea:focus {
 }
 
 #topBorder {
-  border-top: 1px solid #5a20f0;
+  border-top: var(--primary-border);
 }
 
 .nav-tabs {
-  border-bottom: 1px solid #5a20f0;
+  border-bottom: var(--primary-border);
 }
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  background-color: #202124;
+  background-color: var(--primary-bg);
 }

@@ -1,9 +1,9 @@
 #createNewOrgContainer {
-    background-color: #11171B;
-    border: 1px solid #5A20F0;
+  border: var(--primary-border);
+  background-color: var(--secondary-bg);
+  color: var(--text);
 }
 
 #navbarMenu {
-    background-color: #5A20F0;
-    width: 100%;
+  background-color: var(--primary-color);
 }
