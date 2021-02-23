@@ -64,6 +64,42 @@ export class ValidationService {
             case 'comment': {
                 return (this.checkComment(value));
             }
+            case 'userEmail': {
+                return (this.checkUserEmail(value));
+            }
+            case 'userName': {
+                return (this.checkUserName(value));
+            }
+            case 'userPassword': {
+                return (this.checkUserPassword(value));
+            }
+            case 'organizationName': {
+                return (this.checkOrgName(value));
+            }
+            case 'organizationDomain': {
+                return (this.checkOrgDomain(value));
+            }
+            case 'organizationEmail': {
+                return (this.checkOrgEmail(value));
+            }
+            case "organizationLogo": {
+                return (this.checkOrgLogo(value));
+            }
+            case 'teamName': {
+                return (this.checkTeamName(value));
+            }
+            case 'teamId': {
+                return (this.checkTeamId(value));
+            }
+            case 'teamDescription': {
+                return (this.checkTeamDescription(value));
+            }
+            case 'teamManagerEmail': {
+                return (this.checkTeamManagerEmail(value));
+            }
+            case 'teamMemberEmails': {
+                return (this.checkTeamMemberEmails(value));
+            }
         }
     }
 
@@ -275,7 +311,7 @@ export class ValidationService {
     }
     async checkSprintRange(value1: number, value2: number) {
         let errorType = "RANGE-CARD" + "_VALIDATION_RANGE";
-        if (value1 == null ) {
+        if (value1 == null) {
             this.errorHandlerService.addError(errorType, "Start Range should not be Empty")
             return (false)
         }
@@ -295,7 +331,141 @@ export class ValidationService {
             this.errorHandlerService.addError(errorType, "End Range should not be less than 1")
             return (false)
         }
-        
+
         return (true)
+    }
+    async checkUserEmail(value: String) {
+        const control = new FormControl(value, [Validators.required, Validators.email]);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_USER_EMAIL";
+            this.errorHandlerService.addError(errorType, "Email is badly formatted")
+            return (false);
+        }
+    }
+    async checkUserName(value: String) {
+        const control = new FormControl(value, [Validators.required, Validators.minLength(3)]);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_USER_NAME";
+            this.errorHandlerService.addError(errorType, "Username should be greater than 2 characters")
+            return (false);
+        }
+    }
+    async checkUserPassword(value: string) {
+        const control = new FormControl(value, [Validators.required, Validators.minLength(6)]);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_USER_PASSWORD";
+            this.errorHandlerService.addError(errorType, "Password should be greater than 5 characters")
+            return (false);
+        }
+    }
+    async checkOrgName(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_ORG_NAME";
+            this.errorHandlerService.addError(errorType, "Organization Name field is required")
+            return (false);
+        }
+    }
+    async checkOrgDomain(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_ORG_DOMAIN";
+            this.errorHandlerService.addError(errorType, "Organization Domain field is required")
+            return (false);
+        }
+    }
+    async checkOrgEmail(value: string) {
+        const control = new FormControl(value, [Validators.required, Validators.email]);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_ORG_EMAIL";
+            this.errorHandlerService.addError(errorType, "Organization Email field is required")
+            return (false);
+        }
+    }
+    async checkOrgLogo(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_ORG_LOGO";
+            this.errorHandlerService.addError(errorType, "Organization Logo field is required")
+            return (false);
+        }
+    }
+    async checkTeamName(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TEAM_NAME";
+            this.errorHandlerService.addError(errorType, "Team Name field is required")
+            return (false);
+        }
+    }
+    async checkTeamId(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TEAM_ID";
+            this.errorHandlerService.addError(errorType, "Team Id field is required")
+            return (false);
+        }
+    }
+    async checkTeamDescription(value: string) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TEAM_DESCRIPTION";
+            this.errorHandlerService.addError(errorType, "Team Description field is required")
+            return (false);
+        }
+    }
+    async checkTeamManagerEmail(value: string) {
+        const control = new FormControl(value, [Validators.required, Validators.email]);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TEAM_MANAGER_EMAIL";
+            this.errorHandlerService.addError(errorType, "Team Manager field is required")
+            return (false);
+        }
+    }
+    async checkTeamMemberEmails(value: string) {
+        const memberEmails = value.split(",").map(member => member.trim());
+        let hasNoError;
+        let errorType = this.componentName + "_VALIDATION_TEAM_MEMBER_EMAILS";
+
+        if (memberEmails.filter((e, i, a) => a.indexOf(e) !== i).length > 0) {
+            this.errorHandlerService.addError(errorType, "Matching Team Member Emails are not Allowed");
+            return (false);
+        }
+        if (memberEmails.length >= 10) {
+            this.errorHandlerService.addError(errorType, "Only 10 Team Member's Email is required");
+            return (false);
+        }
+        memberEmails.map((member, index) => {
+            const control = new FormControl(member, [Validators.required, Validators.email]);
+            if (control.errors === null)
+                hasNoError = true
+            else {
+                this.errorHandlerService.addError(errorType, `Team Member ${index + 1} Email is required`);
+                hasNoError = false
+            }
+        });
+        return hasNoError;
     }
 }  

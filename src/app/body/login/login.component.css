@@ -19,3 +19,34 @@
     outline: none;
     box-shadow: none;
 }
+
+#nav-login-tab,
+#nav-signup-tab {
+    border: 2px solid #5a20f0;
+    color: var(--text);
+}
+
+#emailForm {
+    color: var(--text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #5a20f0;
+}
+
+#topBorder {
+    border-top: var(--primary-border);
+}
+
+.nav-tabs {
+    border-bottom: var(--primary-border);
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    background-color: var(--primary-bg);
+}
