@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-2">
-        <app-focus-nav [currentSprintNumber]="currentSprintNumber" (currentSprint)="changeCurrentSprint($event)"></app-focus-nav>
+        <app-focus-nav [currentSprintNumber]="backendService.currentSprintNumber" (currentSprint)="changeCurrentSprint($event)"></app-focus-nav>
     </div>
     <div class="col-md-10">
-        <ng-container *ngIf="rawDataObservable |async">
-            <ng-container *ngFor="let item of mainData | async">
-                <ng-container *ngIf="item.id === currentSprintName">
+        <ng-container *ngIf="backendService.rawDataObservable |async">
+            <ng-container *ngFor="let item of backendService.mainData | async">
+                <ng-container *ngIf="item.id === backendService.currentSprintName">
                     <div class="container p-2">
 
                         <div class="row">
@@ -23,11 +23,11 @@
                             </div>
                         </div>
 
-                        <app-sprint-details [currentSprintName]="currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeSprintName($event)"></app-sprint-details>
+                        <app-sprint-details [currentSprintName]="backendService.currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeCurrentSprint($event)"></app-sprint-details>
                     </div>
                 </ng-container>
             </ng-container>
         </ng-container>
-        <app-loader *ngIf="!(mainData | async)"></app-loader>
+        <app-loader *ngIf="!(backendService.mainData | async)"></app-loader>
     </div>
 </div>

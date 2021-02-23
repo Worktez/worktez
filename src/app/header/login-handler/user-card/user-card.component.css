@@ -1,17 +1,22 @@
 #dropdownUserCard {
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
+    color: var(--text);
 }
 
 .dropdown-item:hover {
-    background-color: #5A20F0;
+    background-color: var(--hover);
 }
 
 #username {
-    background-color: #5A20F0;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--button-text);
     font-weight: bolder;
 }
 
 #line {
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
 }

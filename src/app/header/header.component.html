@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-dark" style="background-color: #20282E; height:40px;">
+<nav class="navbar navbar-expand-lg sticky-top header" >
     <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
         <img src="../../assets/logo.png" width="25" height="25" alt="" loading="lazy"> Work Trolly
     </a>
@@ -36,7 +36,19 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto ">
-            <li class="nav-item ">
+            <li class= "nav-item py-1 pr-2">
+              <div class="theme-switch">
+                <button id="theme-button" *ngIf="(themeService.presentTheme$ | async) == 'theme-light'; else moonTemplate"(click)="themeService.changeTheme('theme-dark')">
+                  <span class="material-icons">light_mode</span>
+                </button>
+                <ng-template #moonTemplate>
+                  <button id="theme-button" (click)="themeService.changeTheme('theme-light')">
+                    <span class="material-icons">dark_mode</span>
+                  </button>
+                </ng-template>
+              </div>
+            </li>
+            <li class="nav-item py-1 ">
                 <app-login-handler></app-login-handler>
             </li>
         </ul>

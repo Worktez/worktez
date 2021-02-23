@@ -1,51 +1,52 @@
-#containerBorder {
-    border: 1px solid #5A20F0;
+#loginContainer {
+  border: var(--primary-border);
+  background-color: var(--secondary-bg);
 }
 
 #loginNavbar {
-    background-color: #5A20F0;
-    color: white;
+  background-color: var(--primary-color);
+  color: var(--button-text);
 }
 
 #button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
+  background-color: var(--secondary-color);
+  border: var(--primary-border);
+  color: var(--button-text);
 }
 
 #button:focus,
 #button:active {
-    outline: none;
-    box-shadow: none;
+  outline: none;
+  box-shadow: none;
 }
 
 #nav-login-tab,
 #nav-signup-tab {
-    border: 2px solid #5A20F0;
-    color: white;
+  border: 2px solid #5a20f0;
+  color: white;
 }
 
 #emailForm {
-    color: white;
+  color: white;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-    box-shadow: none;
-    outline: 0 none;
-    border-color: #5A20F0;
+  box-shadow: none;
+  outline: 0 none;
+  border-color: #5a20f0;
 }
 
 #topBorder {
-    border-top: 1px solid #5A20F0;
+  border-top: 1px solid #5a20f0;
 }
 
 .nav-tabs {
-    border-bottom: 1px solid #5A20F0;
+  border-bottom: 1px solid #5a20f0;
 }
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-    background-color: #202124;
+  background-color: #202124;
 }
