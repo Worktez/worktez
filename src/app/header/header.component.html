@@ -2,7 +2,10 @@
     <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
         <img src="../../assets/logo.png" width="25" height="25" alt="" loading="lazy"> Work Trolly
     </a>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="height:fit-content; padding: 0 10px; margin-top: -16px;">
+        <span class="navbar-toggler-icon text-white"></span>
+    </button>
+    <div class="collapse navbar-collapse pl-3" id="navbarText" style="background-color: #20282E;">
         <ul class="navbar-nav">
 
             <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">

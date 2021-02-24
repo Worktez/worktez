@@ -24,7 +24,6 @@ export class BackendService {
     this.rawDataObservable = this.rawDocument.snapshotChanges().pipe(
       map(actions => {
         const data = actions.payload.data() as RawDataType;
-        console.log(this.currentSprintNumber);
         if (this.currentSprintNumber == 0) {
           this.currentSprintNumber = data.CurrentSprintId;
           this.currentSprintName = "S" + this.currentSprintNumber;
@@ -37,7 +36,6 @@ export class BackendService {
   }
 
   setCurrentSprint(sprintNumber: number) {
-    console.log(sprintNumber);
     this.currentSprintNumber = sprintNumber;
     if(this.currentSprintNumber == -1){
       this.currentSprintName = "Backlog";
