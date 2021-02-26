@@ -1,11 +1,16 @@
 #cardDescription {
     border: 1px solid #5A20F0;
+    background-color: #20282E;
 }
 
 #button {
     background-color: #16C85A;
     border: 1px solid #5A20F0;
     color: white;
+}
+
+#head {
+    font-weight: bolder;
 }
 
 #button:focus,
@@ -18,8 +23,21 @@
     background-color: #5A20F0;
 }
 
-#sprint {
+.card {
+    background-color: #d1ecf1;
+    border: #d1ecf1;
+}
+
+.sprint {
     color: #5A20F0;
+}
+
+#header {
+    font-weight: bold;
+}
+
+#font {
+    font-size: 20px;
 }
 
 @media (max-width: 991px) {
@@ -27,32 +45,4 @@
         float: right;
         flex-direction: row;
     }
-}
-
-.overlay {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 1);
-    transition: opacity 500ms;
-    visibility: hidden;
-    z-index: 2;
-}
-
-.overlay:target {
-    visibility: visible;
-    opacity: 0.7;
-}
-
-.task-position {
-    position: relative;
-}
-
-.header {
-    font-weight: bold;
 }

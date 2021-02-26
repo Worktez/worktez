@@ -1,169 +1,167 @@
 <ng-container *ngIf="taskDataObservable | async" class="task-position">
-    <ng-container *ngIf="logWorkEnabled" id="popup" class="overlay">
-        <app-log-work [task]="task" (logWorkCompleted)="logWorkCompleted($event)"></app-log-work>
-    </ng-container>
-    <ng-container *ngIf="editTaskEnabled" id="popup1" class="overlay">
-        <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
-    </ng-container>
-    <ng-container>
-        <div class="container p-5">
-            <div class="card text-light mb-3" id="cardDescription" style="background-color:#20282E;">
-                <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <h5 class="active nav-link navbar-text" style="font-weight:bolder">Task Details</h5>
+    <div class="container p-5">
+        <div class="card text-light mb-3" id="cardDescription">
+            <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link navbar-text" id="head">Task Details</h5>
+                    </li>
+                </ul>
+                <div class="pl-lg-0" id="navbarTexts">
+                    <ul class="nav navbar-nav ml-auto align-items-center">
+                        <li class=" active pr-3 py-1 justify-content-between">
+                            <span type="submit" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModal" title="Log work" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()">pending_actions</span>
+                        </li>
+                        <li class=" active pr-3 py-1 justify-content-between">
+                            <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter" title="Edit" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()">edit</span>
+                        </li>
+                        <li class=" active pr-1 py-1 justify-content-between">
+                            <span type="button" class="material-icons text-light mr-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" *ngIf="authService.afauth.user | async" (click)="deleteTask()">delete </span>
+                        </li>
+                        <li class=" active py-1 justify-content-between">
+                            <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="backToTasks()">close</span>
                         </li>
                     </ul>
-                    <div class="pl-lg-0" id="navbarTexts">
-                        <ul class="nav navbar-nav ml-auto align-items-center">
-                            <li class=" active pr-3 py-1 justify-content-between">
-                                <span type="submit" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Log work" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="logWorkPage()" href="#popup">pending_actions</span>
-                            </li>
-                            <li class=" active pr-3 py-1 justify-content-between">
-                                <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" (click)="editTask()" href="#popup1">edit</span>
-                            </li>
-                            <li class=" active pr-1 py-1 justify-content-between">
-                                <span type="button" class="material-icons text-light mr-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" *ngIf="authService.afauth.user | async" (click)="deleteTask()">delete </span>
-                            </li>
-                            <li class=" active py-1 justify-content-between">
-                                <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="backToTasks()">close</span>
-                            </li>
-                        </ul>
+                </div>
+            </nav>
+            <div class="card-body">
+                <div class="col">
+                    <div class="row mx px-3">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-0 form-inline">
+                            <div class="sprint" id="font">
+                                <div class="col-md-2 pl-0 form-inline" id="idTaskDescription">{{task.Id}}</div>
+                            </div>
+                            <div class="col-md-10 form-inline" id="font">
+                                <div id="header">{{task.Title}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md blank"></div>
+                        <div class="col-md-5 form-inline" id="font">
+                            <div id="header" class="mr-3">Completion Date:</div>
+                            <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
+                        </div>
                     </div>
-                </nav>
-                <div class="card-body">
-                    <div class="col">
-                        <div class="row mx px-3">
-                            <div class="col-md"></div>
-                            <div class="col-md-5 pl-0 form-inline">
-                                <div style="font-size: 20px;" id="sprint">
-                                    <div class="col-md-2 pl-0 form-inline" id="idTaskDescription">{{task.Id}}</div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-md "></div>
+                        <div class="col-md-4 ">
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Sprint Number:</span>
                                 </div>
-                                <div class="col-md-10 form-inline" style="font-size: 20px;">
-                                    <div style="font-weight: bold;">{{task.Title}}</div>
-                                </div>
+                                <div class="col " id="sprintNumberTaskDescription ">{{task.SprintNumber}}</div>
                             </div>
-                            <div class="col-md blank"></div>
-                            <div class="col-md-5 form-inline" style="font-size: 20px;">
-                                <div style="font-weight: bold;" class="mr-3">Completion Date:</div>
-                                <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Story Point:</span>
+                                </div>
+                                <div class="col " id="storyPointNumberTaskDescription ">{{task.StoryPointNumber}}</div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col-md "></div>
-                            <div class="col-md-4 ">
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Sprint Number:</span>
-                                    </div>
-                                    <div class="col " id="sprintNumberTaskDescription ">{{task.SprintNumber}}</div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Work Done:</span>
                                 </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Story Point:</span>
-                                    </div>
-                                    <div class="col " id="storyPointNumberTaskDescription ">{{task.StoryPointNumber}}</div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Work Done:</span>
-                                    </div>
-                                    <div class="col " id="workDoneTaskDescription ">{{task.WorkDone}}</div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Estimated Time:</span>
-                                    </div>
-                                    <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Priority:</span>
-                                    </div>
-                                    <div class="col " id="priorityTaskDescription ">{{task.Priority}}</div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Difficulty:</span>
-                                    </div>
-                                    <div class="col " id="difficultyTaskDescription ">{{task.Difficulty}}</div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Status:</span>
-                                    </div>
-                                    <div class="col " id="statusTaskDescription ">{{task.Status}}</div>
-                                </div>
+                                <div class="col " id="workDoneTaskDescription ">{{task.WorkDone}}</div>
                             </div>
-                            <div class="col-md-3 "></div>
-                            <div class="col-md-4 ">
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Creation Date:</span>
-                                    </div>
-                                    <div class="col ">
-                                        <div id="creationDateTaskDescription ">{{task.CreationDate}}</div>
-                                    </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Estimated Time:</span>
                                 </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Assignee:</span>
-                                    </div>
-                                    <div class="col " id="assigneeTaskDescription ">{{task.Assignee}}</div>
+                                <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Priority:</span>
                                 </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Creator:</span>
-                                    </div>
-                                    <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
+                                <div class="col " id="priorityTaskDescription ">{{task.Priority}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Difficulty:</span>
                                 </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Remaining Time:</span>
-                                    </div>
-                                    <div class="col ">{{task.EstimatedTime - task.LogWorkTotalTime}}</div>
+                                <div class="col " id="difficultyTaskDescription ">{{task.Difficulty}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Status:</span>
                                 </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">Logged Time:</span>
-                                    </div>
-                                    <div class="col " id="logHoursTaskDescription ">{{task.LogWorkTotalTime}}</div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="header ">EstimatedTime:</span>
-                                    </div>
-                                    <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
-                                </div>
+                                <div class="col " id="statusTaskDescription ">{{task.Status}}</div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col-md "></div>
-                            <div class="col-md-10 ">
-                                <label for="description " class="row-form-label header ">Description:</label>
-                                <div class="alert alert-info form-inline col-md px " role="alert ">
-                                    <div id="descriptionTaskDescription " class="card " style="background-color: #d1ecf1;border: #d1ecf1; ">{{task.Description}}</div>
+                        <div class="col-md-3 "></div>
+                        <div class="col-md-4 ">
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Creation Date:</span>
+                                </div>
+                                <div class="col ">
+                                    <div id="creationDateTaskDescription ">{{task.CreationDate}}</div>
                                 </div>
                             </div>
-                            <div class="col-md "></div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Assignee:</span>
+                                </div>
+                                <div class="col " id="assigneeTaskDescription ">{{task.Assignee}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Creator:</span>
+                                </div>
+                                <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Remaining Time:</span>
+                                </div>
+                                <div class="col ">{{task.EstimatedTime - task.LogWorkTotalTime}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">Logged Time:</span>
+                                </div>
+                                <div class="col " id="logHoursTaskDescription ">{{task.LogWorkTotalTime}}</div>
+                            </div>
+                            <hr>
+                            <div class="row ">
+                                <div class="col ">
+                                    <span id="header ">EstimatedTime:</span>
+                                </div>
+                                <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
+                            </div>
                         </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-md "></div>
+                        <div class="col-md-10 ">
+                            <label for="description " class="row-form-label" id="header">Description:</label>
+                            <div class="alert alert-info form-inline col-md px " role="alert ">
+                                <div id="descriptionTaskDescription " class="card ">{{task.Description}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md "></div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <ng-container *ngIf="logWorkEnabled" id="exampleModalLabel">
+        <app-log-work [task]="task" (logWorkCompleted)="logWorkCompleted($event)"></app-log-work>
+    </ng-container>
+    <ng-container *ngIf="editTaskEnabled" id="exampleModalCenterLabel">
+        <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
     </ng-container>
 </ng-container>
 <app-loader *ngIf="!(taskDataObservable | async) "></app-loader>

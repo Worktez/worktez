@@ -1,11 +1,11 @@
 <div *ngIf="!enableLoader" class="container py-5 ">
-    <div id="createNewTaskContainer" style="background-color:#202124;">
+    <div id="createNewTaskContainer">
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <h5 class="active nav-link" style="font-weight:bolder">Create New Task</h5>
+                            <h5 class="active nav-link" id="head">Create New Task</h5>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -16,13 +16,13 @@
                 </nav>
             </div>
         </div>
-     <div class="px-5 text-light">
-      <form (ngSubmit)="submit()" #form="ngForm">
+        <div class="px-5 text-light">
+            <form (ngSubmit)="submit()" #form="ngForm">
                 <div class="form-row pt-2">
-                    <div class="form-group col-md-3 pl-0">
+                    <div class="form-group col-md-3">
                         <div class="col-md-4">
-                            <div class="alert form-inline pb-3 px" style="font-size: 20px;" role="alert">
-                                <div style="font-weight: bold;" class="pr-3">Date:</div>
+                            <div class="alert form-inline pb-3 px" id="font" role="alert">
+                                <div id="weigh" class="pr-3">Date:</div>
                                 <div>{{ todayDate }}</div>
                             </div>
                         </div>
@@ -35,14 +35,14 @@
                         <label for="inputState">Sprint Number</label>
                         <input type="number" class="form-control" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}">
                     </div>
-            </div>
-
-            <div class="form-row pt-0">
-                <div class="form-group col">
-                    <label for="description" class="form-label">Description</label>
-                        <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
                 </div>
-            </div>
+
+                <div class="form-row pt-0">
+                    <div class="form-group col">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
+                    </div>
+                </div>
 
                 <div class="form-row">
                     <div class="form-group col-sm-3">
@@ -62,7 +62,7 @@
                     <option>Marketing</option>
                     <option>Other</option>
                       </select>
-                 </div>
+                    </div>
                     <div class="form-group col-sm-3">
                         <label for="text">Priority</label>
                         <select class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
@@ -101,18 +101,18 @@
                     <div class="form-group col-md-3">
                         <label for="inputState">Story Point</label>
                         <input type="number" min="0" class="form-control" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}">
-                    </div> 
+                    </div>
                 </div>
                 <div class="form-row">
-                <div class="form-group col-sm-10 blank"></div>
-                <div class="form-group col-sm-2 pt-4">
-                    <span class="align-bottom" class="justify-content-end">
+                    <div class="form-group col-sm-10 blank"></div>
+                    <div class="form-group col-sm-2 pt-4">
+                        <span class="align-bottom" class="justify-content-end">
                     <div class="col-md-2"><button type="submit" class="btn" id="button">Submit</button></div>
                 </span>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>>
-  </div>
+            </form>
+        </div>>
+    </div>
 </div>
 <app-loader *ngIf="enableLoader"></app-loader>

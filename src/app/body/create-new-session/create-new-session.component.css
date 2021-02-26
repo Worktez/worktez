@@ -1,5 +1,6 @@
 #createNewTaskContainer {
     border: 1px solid #5A20F0;
+    background-color: #202124;
 }
 
 #button {
@@ -16,6 +17,18 @@
 
 #navbarMenu {
     background-color: #5A20F0;
+}
+
+#font {
+    font-size: 20px;
+}
+
+#weigh {
+    font-weight: bold;
+}
+
+#head {
+    font-weight: bolder;
 }
 
 input:focus,

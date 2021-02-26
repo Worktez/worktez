@@ -1,24 +1,16 @@
-#logWorkPage {
+#logWorkPage,
+.modal-content {
     border: 1px solid #5A20F0;
-    margin: 0 auto;
-    top: 50%;
-    left: 50%;
-    right: 50%;
-    bottom: 50%;
-    position: absolute;
-    z-index: 1;
-    width: 500px;
-    height: 500px;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+    background-color: #20282E;
 }
 
-#logHead {
-    font-weight: bold;
-}
-
+#logHead,
 #logWorkHour {
     font-weight: bold;
+}
+
+.head {
+    font-weight: bolder;
 }
 
 #logDetail {
@@ -32,8 +24,14 @@
     color: white;
 }
 
-#navbarMenu {
+#navbarMenu,
+.modal-header {
     background-color: #5A20F0;
+    border: #20282E;
+}
+
+.clr {
+    background-color: white;
 }
 
 select:focus,

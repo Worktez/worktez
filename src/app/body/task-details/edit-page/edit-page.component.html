@@ -1,142 +1,146 @@
-<form *ngIf="!enableLoader" (ngSubmit)="submit()" #form="ngForm">
-    <div class="container p-3">
-        <div class="card text-light mb-3" id="editPageTaskContainer" style="background-color:#20282E;">
-            <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl p-0" role="document">
+        <div class="modal-content">
+            <nav class="modal-header navbar navbar-expand-xl navbar-dark" id="navbarMenu">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <h5 class="active nav-link" style="font-weight:bolder">Edit Page</h5>
+                        <h5 class="active nav-link head" id="exampleModalCenterLabel">Edit Page</h5>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item">
-                        <span type="button" class="material-icons text-light" (click)="editTaskDone()">close</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="material-icons text-light"(click)="editTaskDone()">close</span>
+                        </button>
                     </li>
                 </ul>
             </nav>
-            <div class="card-body">
-                <div class="col">
-                    <div class="row mx px-3">
-                        <div class="col-md"></div>
-                        <div class="col-md-5 pl-0 form-inline">
-                            <div style="font-size: 20px;" id="non-editable">
-                                <div class="col-md-2 pl-0 form-inline" id="idTaskDescription">{{task.Id}}</div>
+            <div class="container modal-body text-light" id="editPageTaskContainer">
+                <form *ngIf="!enableLoader" (ngSubmit)="submit()" #form="ngForm">
+                    <div class="col">
+                        <div class="row mx px-3">
+                            <div class="col-md"></div>
+                            <div class="col-md-5 pl-0 form-inline">
+                                <div id="non-editable font">
+                                    <div class="col-md-2 pl-0 form-inline" id="idTaskDescription">{{task.Id}}</div>
+                                </div>
+                                <div class="col-md-10 form-inline" id="font">
+                                    <div class="header" id="non-editable">{{task.Title}}</div>
+                                </div>
                             </div>
-                            <div class="col-md-10 form-inline" style="font-size: 20px;">
-                                <div style="font-weight: bold;" id="non-editable">{{task.Title}}</div>
+                            <div class="col-md-2 blank"></div>
+                            <div class="col-md-4 form-inline" id="non-editable font">
+                                <span class="header" id="non-editable">Creation Date:</span>
+                                <div class="col" id="non-editable">{{task.CreationDate}}</div>
                             </div>
                         </div>
-                        <div class="col-md-2 blank"></div>
-                        <div class="col-md-4 form-inline" id="non-editable" style="font-size: 20px;">
-                            <span class="header" id="non-editable">Creation Date:</span>
-                            <div class="col" id="non-editable">{{task.CreationDate}}</div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md"></div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Sprint Number:</span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" min="-1" class="form-control" [(ngModel)]="editTask.SprintNumber" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Story Point:</span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" min="0" class="form-control" [(ngModel)]="editTask.StoryPointNumber" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Estimated Time:</span>
+                                    </div>
+                                    <div class="col" id="estimatedTimeTaskDescription">
+                                        <input type="number" min="1" class="form-control" [(ngModel)]="editTask.EstimatedTime" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Priority:</span>
+                                    </div>
+                                    <div class="col">
+                                        <select class="custom-select" [(ngModel)]="editTask.Priority" [ngModelOptions]="{standalone: true}">
+                                                    <option selected disabled value="">choose...</option>
+                                                    <option>High</option>
+                                                    <option>Medium</option>
+                                                    <option>Low</option>
+                                                </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Difficulty:</span>
+                                    </div>
+                                    <div class="col">
+                                        <select class="custom-select" [(ngModel)]="editTask.Difficulty" [ngModelOptions]="{standalone: true}">
+                                                    <option selected disabled value="">choose...</option>
+                                                    <option>High</option>
+                                                    <option>Medium</option>
+                                                    <option>Low</option>
+                                                </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Assignee:</span>
+                                    </div>
+                                    <div class="col"><input type="text" class="form-control" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></div>
+                                </div>
+                                <hr>
+                                <div class="row" id="non-editable">
+                                    <div class="col">
+                                        <span class="header">Creator:</span>
+                                    </div>
+                                    <div class="col">{{task.Creator}}</div>
+                                </div>
+                                <hr>
+                                <div class="row" id="non-editable">
+                                    <div class="col">
+                                        <span class="header">Status:</span>
+                                    </div>
+                                    <div class="col">
+                                        <div id="creatorEditPageTask">{{editTask.Status}}</div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row" id="non-editable">
+                                    <div class="col">
+                                        <span class="header">Category:</span>
+                                    </div>
+                                    <div class="col" id="creatorEditPageTask">{{editTask.Category}}</div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md pl-5 pr-5">
+                                <label for="description" class="row-form-label header">Description:</label>
+                                <textarea class="form-control clr" rows="2" [(ngModel)]="editTask.Description" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md"></div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col">
-                                    <span class="header">Sprint Number:</span>
-                                </div>
-                                <div class="col">
-                                    <input type="number" min="-1" class="form-control" [(ngModel)]="editTask.SprintNumber" [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <span class="header">Story Point:</span>
-                                </div>
-                                <div class="col">
-                                    <input type="number" min="0" class="form-control" [(ngModel)]="editTask.StoryPointNumber" [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <span class="header">Estimated Time:</span>
-                                </div>
-                                <div class="col" id="estimatedTimeTaskDescription">
-                                    <input type="number" min="1" class="form-control" [(ngModel)]="editTask.EstimatedTime" [ngModelOptions]="{standalone: true}">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <span class="header">Priority:</span>
-                                </div>
-                                <div class="col">
-                                    <select class="custom-select" [(ngModel)]="editTask.Priority" [ngModelOptions]="{standalone: true}">
-                                    <option selected disabled value="">choose...</option>
-                                    <option>High</option>
-                                    <option>Medium</option>
-                                    <option>Low</option>
-                                </select>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <span class="header">Difficulty:</span>
-                                </div>
-                                <div class="col">
-                                    <select class="custom-select" [(ngModel)]="editTask.Difficulty" [ngModelOptions]="{standalone: true}">
-                                    <option selected disabled value="">choose...</option>
-                                    <option>High</option>
-                                    <option>Medium</option>
-                                    <option>Low</option>
-                                </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col">
-                                    <span class="header">Assignee:</span>
-                                </div>
-                                <div class="col"><input type="text" class="form-control" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></div>
-                            </div>
-                            <hr>
-                            <div class="row" id="non-editable">
-                                <div class="col">
-                                    <span class="header">Creator:</span>
-                                </div>
-                                <div class="col">{{task.Creator}}</div>
-                            </div>
-                            <hr>
-                            <div class="row" id="non-editable">
-                                <div class="col">
-                                    <span class="header">Status:</span>
-                                </div>
-                                <div class="col">
-                                    <div id="creatorEditPageTask">{{editTask.Status}}</div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row" id="non-editable">
-                                <div class="col">
-                                    <span class="header">Category:</span>
-                                </div>
-                                <div class="col" id="creatorEditPageTask">{{editTask.Category}}</div>
-                            </div>
-                            <hr>
-                        </div>
+                    <div class="row py-3">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2"><button type="submit" class="btn" id="button" data-dismiss="modal">Submit</button></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md pl-5 pr-5">
-                            <label for="description" class="row-form-label header">Description:</label>
-                            <textarea class="form-control" rows="2" [(ngModel)]="editTask.Description" [ngModelOptions]="{standalone: true}" style="background-color: white;"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pb-5 pt-3">
-                    <div class="col-md-10"></div>
-                    <div class="col-md-2"><button type="submit" class="btn" id="button">Submit</button></div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</form>
+</div>
 <app-loader *ngIf="enableLoader"></app-loader>
