@@ -1,9 +1,3 @@
-#logWorkPage,
-.modal-content {
-    border: 1px solid #5A20F0;
-    background-color: #20282E;
-}
-
 #logHead,
 #logWorkHour {
     font-weight: bold;
@@ -11,27 +5,31 @@
 
 .head {
     font-weight: bolder;
+
+#logWorkPage,
+.modal-content {
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+    color: var(--text);
 }
 
 #logDetail {
-    background-color: #16C85A;
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--button-text);
 }
 
 #logWorkSubmit {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: white;
-}
-
-#navbarMenu,
-.modal-header {
-    background-color: #5A20F0;
-    border: #20282E;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 .clr {
     background-color: white;
+  }
+#navbarMenu,
+.modal-header{
+    background-color: var(--primary-color);
 }
 
 select:focus,
@@ -45,5 +43,5 @@ input:focus {
     #logWorkPage {
         width: 70%;
         height: 100%;
-    }
+    border-color: var(--primary-color);
 }

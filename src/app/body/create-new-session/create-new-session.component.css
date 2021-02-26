@@ -1,12 +1,13 @@
 #createNewTaskContainer {
-    border: 1px solid #5A20F0;
-    background-color: #202124;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 #button {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #button:focus,
@@ -16,7 +17,7 @@
 }
 
 #navbarMenu {
-    background-color: #5A20F0;
+    background-color: var(--primary-color);
 }
 
 #font {
@@ -36,5 +37,5 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border: var(--primary-border);
 }

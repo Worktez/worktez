@@ -1,17 +1,36 @@
-#login-btn {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
+.header {
+    background-color:var(--header-bg); 
+    color: var(--text);
+    height:40px;
 }
 
-#button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
+#theme-button {
+  padding-top: 6px;
+  background-color: var(--header-bg);
+  color: var(--button-text);
+  border: none;
+}
+.dropdown-menu {
+    background-color: var(--secondary-bg);
 }
 
-#button:focus,
-#button:active {
-    outline: none;
-    box-shadow: none;
+.dropdown-item {
+    color: var(--text);
+}
+
+.dropdown-item:hover {
+    background-color: var(--hover);
+    cursor: pointer;
+}
+
+#navbarDropdownBoards,
+#navbarDropdownTeam,
+#navbarDropdownCreate {
+    color: var(--button-text);
+}
+
+#navbarDropdownBoards:hover,
+#navbarDropdownTeam:hover,
+#navbarDropdownCreate:hover {
+    background-color: var(--hover);
 }

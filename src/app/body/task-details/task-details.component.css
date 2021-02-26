@@ -1,12 +1,13 @@
 #cardDescription {
-    border: 1px solid #5A20F0;
-    background-color: #20282E;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 #button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #head {
@@ -20,7 +21,7 @@
 }
 
 #navbarMenu {
-    background-color: #5A20F0;
+    background-color: var(--primary-color);
 }
 
 .card {

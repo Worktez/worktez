@@ -1,0 +1,22 @@
+<div class="container-fluid" *ngIf="errorHandlerService.showError">
+    <div class="row align-items-center errorCard">
+        <div class="offset-1 col-10 offset-1 offset-md-3 col-md-6 offset-md-3">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <div class="row">
+                        <div class="col">Error</div>
+                        <div class="col text-right">
+                            <span type="button" class="material-icons text-light" (click)="hideError()">close</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Error-code</h5>
+                    <p class="card-text">{{errorHandlerService.errorCode}}</p>
+                    <h5 class="card-title">Error-description</h5>
+                    <p class="card-text">{{errorHandlerService.errorType}} {{errorHandlerService.errorDescription}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

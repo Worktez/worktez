@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-sprint-details',
@@ -17,18 +18,19 @@ export class SprintDetailsComponent implements OnInit {
   @Input('EndDate') EndDate: string;
   @Input('Status') Status: string;
 
-  @Output() changeSprint = new EventEmitter<{ newSprintNumber: number }>();
+  @Output() changeSprint = new EventEmitter<number>();
 
+  componentName :string="SPRINT-DETAILS"
   filterSprintNumber: number;
   sprintStatus: string;
 
-  constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute) { }
+  constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute,public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
   }
 
   changeSprintNumber() {
-    this.changeSprint.emit({ newSprintNumber: this.filterSprintNumber });
+    this.changeSprint.emit(this.filterSprintNumber);
   }
 
   async completeSprint() {
@@ -41,7 +43,7 @@ export class SprintDetailsComponent implements OnInit {
       console.log(this.sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
-      console.error("Error", error);
+      this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
     }
   }
 }
