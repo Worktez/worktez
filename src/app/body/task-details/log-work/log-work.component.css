@@ -1,20 +1,35 @@
-#logWorkPage {
-    border: 1px solid #5A20F0;
+#logHead,
+#logWorkHour {
+    font-weight: bold;
+}
+
+.head {
+    font-weight: bolder;
+
+#logWorkPage,
+.modal-content {
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+    color: var(--text);
 }
 
 #logDetail {
-    background-color: #16C85A;
-    color: white;
+    background-color: var(--secondary-color);
+    color: var(--button-text);
 }
 
 #logWorkSubmit {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
-#navbarMenu {
-    background-color: #5A20F0;
+.clr {
+    background-color: white;
+  }
+#navbarMenu,
+.modal-header{
+    background-color: var(--primary-color);
 }
 
 select:focus,
@@ -22,4 +37,11 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: #5A20F0;
+}
+
+@media only screen and (max-width: 600px) {
+    #logWorkPage {
+        width: 70%;
+        height: 100%;
+    border-color: var(--primary-color);
 }

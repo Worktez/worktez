@@ -1,11 +1,17 @@
 #cardDescription {
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 #button {
-    background-color: #16C85A;
-    border: 1px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#head {
+    font-weight: bolder;
 }
 
 #button:focus,
@@ -15,7 +21,24 @@
 }
 
 #navbarMenu {
-    background-color: #5A20F0;
+    background-color: var(--primary-color);
+}
+
+.card {
+    background-color: #d1ecf1;
+    border: #d1ecf1;
+}
+
+.sprint {
+    color: #5A20F0;
+}
+
+#header {
+    font-weight: bold;
+}
+
+#font {
+    font-size: 20px;
 }
 
 @media (max-width: 991px) {

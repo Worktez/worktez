@@ -16,6 +16,7 @@ const editPageTaskAPI = require("./editPageTaskAPI");
 const deleteTaskAPI = require("./deleteTaskAPI");
 const createNewUserAPI = require("./createNewUserAPI");
 const updateSprintStatusAPI = require("./updateSprintStatusAPI");
+const createNewOrgAPI = require("./createNewOrgAPI");
 const patch = require("./patchAPI");
 
 // class Task {
@@ -45,4 +46,6 @@ exports.editPageTask = editPageTaskAPI.editPageTask;
 exports.deleteTask = deleteTaskAPI.deleteTask;
 exports.createNewUser = createNewUserAPI.createNewUser;
 exports.updateSprintStatus = updateSprintStatusAPI.updateSprintStatus;
+exports.createNewOrganization = createNewOrgAPI.createNewOrganization;
+exports.createNewTeamWithLabels = createNewOrgAPI.createNewTeamWithLabels;
 exports.patch = patch.patch;

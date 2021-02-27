@@ -1,11 +1,16 @@
 .menu-option {
-    color: white;
-    background-color: #20282E;
-    border: 1px solid #5A20F0;
-    width: 112%;
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
 }
 
 .menu-option:hover {
-    background-color: #5A70F0;
+    background-color: var(--hover);
     cursor: pointer;
+}
+
+.focusNav {
+    background-color: var(--secondary-bg); 
+    height:100%;
+    border: var(--primary-border);
 }

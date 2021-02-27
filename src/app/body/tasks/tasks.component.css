@@ -1,21 +1,21 @@
 #navbarMenu {
-    background-color: #5A20F0;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--button-text);
 }
 
 .container {
     margin-top: 20px;
     margin-bottom: 10px;
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
 }
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: var(--primary-color);
 }
 
 .toggleFilter {
-    color: #16C85A;
+    color: var(--secondary-color);
 }

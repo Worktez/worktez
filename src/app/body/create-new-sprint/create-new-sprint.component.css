@@ -1,11 +1,13 @@
 #startNewSprintContainer {
-    border: 1px solid #5A20F0;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 #button {
-    background-color: #16C85A;
-    border: 2px solid #5A20F0;
-    color: white;
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
 }
 
 #button:focus,
@@ -14,17 +16,18 @@
     box-shadow: none;
 }
 
-#detail {
-    background-color: #16C85A;
+.alert {
+    background-color: var(--hover);
+    color: var(--text);
 }
 
 #navbarMenu {
-    background-color: #5A20F0;
+    background-color: var(--primary-color);
 }
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: var(--primary-color);
 }

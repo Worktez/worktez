@@ -4,7 +4,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore } from '@angular/fire/firestore';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -12,6 +11,22 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class AuthService {
 
   constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore) { }
+
+  async createUser(email: string, password: string, username: string) {
+    await this.afauth.createUserWithEmailAndPassword(email, password);
+    const user = firebase.auth().currentUser;
+    user.updateProfile({
+      displayName: username
+    }).then(() => {
+      this.createUserData(user);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  async loginUser(email: string, password: string) {
+    await this.afauth.signInWithEmailAndPassword(email, password);
+  }
 
   async createUserData(user: User) {
     const callable = this.functions.httpsCallable('createNewUser');

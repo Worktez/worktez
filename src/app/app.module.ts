@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
-import { AngularFirestoreModule } from '@angular/fire/firestore'
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
@@ -40,8 +41,11 @@ import { ChartComponent } from './body/common-tools/chart/chart.component';
 import { MyTasksComponent } from './body/my-dashboard/my-tasks/my-tasks.component';
 import { PerformanceChartComponent } from './body/my-dashboard/performance-chart/performance-chart.component';
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
+import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component'
 import { ErrorComponent } from './body/error/error.component';
 import { PatchComponent } from './patch/patch.component';
+import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
+import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 
 @NgModule({
@@ -72,9 +76,12 @@ import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
     MyTasksComponent,
     PerformanceChartComponent,
     RangeCardComponent,
+    CreateNewOrganizationComponent,
     ErrorComponent,
     FilterTaskComponent,
     PatchComponent,
+    OrganizationDetailsComponent,
+    TeamDetailsComponent,
     FocusNavComponent,
   ],
   imports: [
@@ -84,6 +91,7 @@ import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireFunctionsModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     AppRoutingModule,
     GoogleChartsModule.forRoot({ version: 'current' }),
     HttpClientModule
