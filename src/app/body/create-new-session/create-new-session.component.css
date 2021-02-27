@@ -20,6 +20,18 @@
     background-color: var(--primary-color);
 }
 
+#font {
+    font-size: 20px;
+}
+
+#weigh {
+    font-weight: bold;
+}
+
+#head {
+    font-weight: bolder;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
