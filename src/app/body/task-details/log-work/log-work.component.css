@@ -5,6 +5,7 @@
 
 .head {
     font-weight: bolder;
+}
 
 #logWorkPage,
 .modal-content {
@@ -26,9 +27,10 @@
 
 .clr {
     background-color: white;
-  }
+}
+
 #navbarMenu,
-.modal-header{
+.modal-header {
     background-color: var(--primary-color);
 }
 
@@ -43,5 +45,6 @@ input:focus {
     #logWorkPage {
         width: 70%;
         height: 100%;
-    border-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
 }

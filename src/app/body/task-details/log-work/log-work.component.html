@@ -70,10 +70,22 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4"><button class="btn" type="submit" data-dismiss="modal" id="logWorkSubmit">Submit</button>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn" type="submit" id="logWorkSubmit">Submit</button>
                         </div>
                     </div>
                 </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row">
+                        <div class="col">Successfully Updated!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="workDone()">Close</button>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>

@@ -29,6 +29,7 @@ export class EditPageComponent implements OnInit {
   changedData: string = ""
   prevVal =[]
   newVal =[]
+  showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
 
@@ -97,7 +98,8 @@ async generateChanges() {
         const result = await callable({ Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Category: this.task.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
-        this.editTaskDone();
+        this.showClose = true;
+        // this.editTaskDone();
       }
       else {
         console.log("Task is Completed , Cannot Update");
