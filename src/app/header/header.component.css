@@ -1,15 +1,20 @@
 .header {
-    background-color:var(--header-bg); 
+    background-color: var(--header-bg);
     color: var(--text);
-    height:40px;
+    height: inherit;
+}
+
+.collapse {
+    background-color: var(--header-bg);
 }
 
 #theme-button {
-  padding-top: 6px;
-  background-color: var(--header-bg);
-  color: var(--button-text);
-  border: none;
+    padding-top: 6px;
+    background-color: var(--header-bg);
+    color: var(--button-text);
+    border: none;
 }
+
 .dropdown-menu {
     background-color: var(--secondary-bg);
 }

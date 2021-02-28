@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg sticky-top header" >
+<nav class="navbar navbar-expand-lg sticky-top header">
     <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
         <img src="../../assets/logo.png" width="25" height="25" alt="" loading="lazy"> Work Trolly
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="height:fit-content; padding: 0 10px; margin-top: -16px;">
-        <span class="navbar-toggler-icon text-white"></span>
+        <span class="navbar-toggler-icon text-white material-icons">menu</span>
     </button>
-    <div class="collapse navbar-collapse pl-3" id="navbarText" style="background-color: #20282E;">
+    <div class="collapse navbar-collapse pl-3" id="navbarText">
         <ul class="navbar-nav">
 
             <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">
@@ -39,17 +39,17 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto ">
-            <li class= "nav-item py-1 pr-2">
-              <div class="theme-switch">
-                <button id="theme-button" *ngIf="(themeService.presentTheme$ | async) == 'theme-light'; else moonTemplate"(click)="themeService.changeTheme('theme-dark')">
+            <li class="nav-item py-1 pr-2">
+                <div class="theme-switch">
+                    <button id="theme-button" *ngIf="(themeService.presentTheme$ | async) == 'theme-light'; else moonTemplate" (click)="themeService.changeTheme('theme-dark')">
                   <span class="material-icons">light_mode</span>
                 </button>
-                <ng-template #moonTemplate>
-                  <button id="theme-button" (click)="themeService.changeTheme('theme-light')">
+                    <ng-template #moonTemplate>
+                        <button id="theme-button" (click)="themeService.changeTheme('theme-light')">
                     <span class="material-icons">dark_mode</span>
                   </button>
-                </ng-template>
-              </div>
+                    </ng-template>
+                </div>
             </li>
             <li class="nav-item py-1 ">
                 <app-login-handler></app-login-handler>

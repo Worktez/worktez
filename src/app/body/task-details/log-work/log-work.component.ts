@@ -28,6 +28,7 @@ export class LogWorkComponent implements OnInit {
   todayDate: string
   time: string
   enableLoader: boolean = false
+  showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService) { }
 
@@ -63,7 +64,9 @@ export class LogWorkComponent implements OnInit {
 
       console.log("Logged Work Successfully");
       console.log(result);
-      this.workDone();
+      this.showClose = true;
+      // this.workDone();
+      return ;
     } catch (error) {
       this.errorHandlerService.getErrorCode("LOGWORK","InternalError");
       this.enableLoader = false;
