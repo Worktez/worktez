@@ -1,7 +1,7 @@
 #editPageTaskContainer,
 .modal-content {
     border: var(--primary-border);
-    background-color:var(--secondary-bg);
+    background-color: var(--secondary-bg);
     color: var(--text);
 }
 
@@ -40,9 +40,9 @@
     background-color: var(--primary-color);
 }
 
-#non-editable {
-    color: #16C85A;
-}
+
+/* #non-editable {
+} */
 
 select:focus,
 input:focus {
