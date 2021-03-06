@@ -1,0 +1,93 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <nav class="modal-header navbar navbar-expand navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link head" id="exampleModalLabel">Log Work</h5>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons text-light"(click)="workDone()">close</span>
+                            </button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="container modal-body align-items-center px-4" id="logWorkPage">
+                <form *ngIf="!enableLoader" (ngSubmit)="submit()" #form="ngForm">
+                    <div class="row px pt-2">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-2">
+                            <span id="logHead">Status:</span>
+                        </div>
+                        <div class="col-md-5">
+                            <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
+                                            <option selected disabled value="">choose...</option>
+                                            <option>Ice Box</option>
+                                            <option>Ready to start</option>
+                                            <option>Under Progress</option>
+                                            <option>Blocked</option>
+                                            <option>Completed</option>
+                                        </select>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-2">
+                            <span id="logHead" class="form-inline">Log Hours:</span>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" min="1" class="form-control" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-1" id="LogWorkHour"><small>hrs</small></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-2">
+                            <span id="logHead">Work Completed:</span>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="number" min="1" max="100" class="form-control" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-1" id="LogWorkHour">%</div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-10 px mx">
+                            <label for="comment" class="form-label" id="logHead">Comment:</label>
+                            <textarea class="form-control md clr" rows="2" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn" type="submit" id="logWorkSubmit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row">
+                        <div class="col">Successfully Updated!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="workDone()">Close</button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<app-loader *ngIf="enableLoader"></app-loader>

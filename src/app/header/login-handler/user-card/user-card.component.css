@@ -1,0 +1,22 @@
+#dropdownUserCard {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
+    color: var(--text);
+}
+
+.dropdown-item:hover {
+    background-color: var(--hover);
+}
+
+#username {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    font-weight: bolder;
+}
+
+#line {
+    border: var(--primary-border);
+}

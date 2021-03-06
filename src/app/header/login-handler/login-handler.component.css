@@ -1,0 +1,13 @@
+#button {
+    background-color: #16C85A;
+    border: 1px solid #5A20F0;
+    color: white;
+    height: 30px;
+    font-size: 12px;
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}

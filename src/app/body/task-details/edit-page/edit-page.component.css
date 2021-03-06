@@ -1,0 +1,52 @@
+#editPageTaskContainer,
+.modal-content {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+.clr {
+    background-color: white;
+}
+
+.header {
+    font-weight: bold;
+}
+
+.head {
+    font-weight: bolder;
+}
+
+#font {
+    font-size: 20px;
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+}
+
+#navbarMenu,
+.modal-header {
+    background-color: var(--primary-color);
+}
+
+
+/* #non-editable {
+} */
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}

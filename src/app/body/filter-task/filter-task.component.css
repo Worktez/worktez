@@ -1,0 +1,26 @@
+.row{
+    color: var(--text);
+}
+#button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+
+/* option {
+    background-color: #5A20F0;
+} */
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}

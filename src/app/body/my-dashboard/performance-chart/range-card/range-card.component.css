@@ -1,0 +1,29 @@
+#button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#button:focus,
+#button:active {
+    outline: 0 none;
+    box-shadow: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+#header {
+    background-color: var(--primary-color);
+}
+
+#dropdownRangeCard {
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border-color: var(--primary-color);
+}

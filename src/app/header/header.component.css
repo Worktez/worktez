@@ -1,0 +1,41 @@
+.header {
+    background-color: var(--header-bg);
+    color: var(--text);
+    height: inherit;
+}
+
+.collapse {
+    background-color: var(--header-bg);
+}
+
+#theme-button {
+    padding-top: 6px;
+    background-color: var(--header-bg);
+    color: var(--button-text);
+    border: none;
+}
+
+.dropdown-menu {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
+    color: var(--text);
+}
+
+.dropdown-item:hover {
+    background-color: var(--hover);
+    cursor: pointer;
+}
+
+#navbarDropdownBoards,
+#navbarDropdownTeam,
+#navbarDropdownCreate {
+    color: var(--button-text);
+}
+
+#navbarDropdownBoards:hover,
+#navbarDropdownTeam:hover,
+#navbarDropdownCreate:hover {
+    background-color: var(--hover);
+}

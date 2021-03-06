@@ -1,0 +1,6 @@
+.taskCards  {
+  background-color:var(--secondary-bg);
+  color:var(--text);
+  border:1px solid #8120f0;
+  font-size:10px;
+}

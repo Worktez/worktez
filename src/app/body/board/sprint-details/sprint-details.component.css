@@ -1,0 +1,36 @@
+.card-header {
+    font-weight: bold; 
+    background-color: var(--primary-color); 
+    color: var(--button-text);
+}
+
+.card-body{
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border: var(--primary-border);
+}
+
+#button, #dropdownButton {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+#button:hover, #dropdownButton:hover {
+    background-color: var(--hover);
+}
+
+#filterMenu {
+    background-color: var(--secondary-color);
+}
+
+#button:focus,
+#button:active,
+#dropdownButton:focus,
+#dropdownButton :active {
+    outline: none;
+    box-shadow: none;
+}
+
+#filterSprintNumberInput {
+    outline: none;
+}

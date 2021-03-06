@@ -1,0 +1,26 @@
+.app-theme {
+  min-height: 100vh;
+  background-color:var(--primary-bg);
+}
+.theme-light {
+  --primary-color: #5A20F0;
+  --secondary-color: #16C85A;
+  --header-bg: #5A20F0;
+  --text: #000;
+  --button-text: #fff;
+  --primary-bg: #d5d9e6;
+  --secondary-bg: #f2f0f5;
+  --primary-border: 1px solid #5A20F0;
+  --hover: #a4acff85; 
+}
+.theme-dark {
+  --primary-color: #5A20F0;
+  --secondary-color: #16C85A;
+  --header-bg: #20282E;
+  --text: #fff;
+  --button-text: #fff;
+  --primary-bg: #11171B;
+  --secondary-bg: #20282E;
+  --primary-border: 1px solid #5A20F0;
+  --hover: #636feb;  
+}
