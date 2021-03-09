@@ -99,7 +99,9 @@
                                     <div class="col">
                                         <span class="header">Assignee:</span>
                                     </div>
-                                    <div class="col"><input type="text" class="form-control" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" [(ngModel)]="editTask.Assignee" [ngModelOptions]="{standalone: true}">
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row" id="non-editable">
