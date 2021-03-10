@@ -7,6 +7,7 @@ const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
 
 const admin = require("firebase-admin");
+const sendEmail = require("./sendEmailAPI.js");
 
 const db = admin.firestore();
 
@@ -123,6 +124,9 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 return Promise.resolve(teamData);
             }
         });
+
+        sendEmail.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, teamMembers);
+
         let result;
         return Promise.resolve(promise1).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
