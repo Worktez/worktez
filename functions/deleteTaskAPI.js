@@ -35,7 +35,6 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         const time = request.body.data.Time;
 
         const p1 = db.collection("Tasks").doc(taskId).update({
-            Category: "Trash",
             SprintNumber: -2,
         });
 
@@ -72,7 +71,76 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         });
         Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time);
 
-        const deleteTaskPromises = [p1, p2];
+        const p3 = db.collection("Main").doc("Deleted").get().then((doc) => {
+            if (doc.exists) {
+                totalNumberOfTask = doc.data().TotalNumberOfTask;
+                totalDevelopmentTask = doc.data().TotalDevelopmentTask;
+                totalBusinessTask = doc.data().TotalBusinessTask;
+                totalMarketingTask = doc.data().TotalMarketingTask;
+                totalOtherTask = doc.data().TotalOtherTask;
+                totalCompletedTask = doc.data().TotalCompletedTask;
+                totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+
+                if (category === "Development") {
+                    totalDevelopmentTask = totalDevelopmentTask + 1;
+                } else if (category === "Business") {
+                    totalBusinessTask = totalBusinessTask + 1;
+                } else if (category === "Marketing") {
+                    totalMarketingTask = totalMarketingTask + 1;
+                } else {
+                    totalOtherTask = totalOtherTask + 1;
+                }
+                totalNumberOfTask = totalNumberOfTask + 1;
+                const updateDeleteTaskCounter2 = db.collection("Main").doc("Deleted").update({
+                    TotalDevelopmentTask: totalDevelopmentTask,
+                    TotalBusinessTask: totalBusinessTask,
+                    TotalMarketingTask: totalMarketingTask,
+                    TotalOtherTask: totalOtherTask,
+                    TotalNumberOfTask: totalNumberOfTask,
+                    TotalCompletedTask: totalCompletedTask,
+                    TotalUnCompletedTask: totalUnCompletedTask,
+                });
+                return Promise.resolve(updateDeleteTaskCounter2);
+            } else {
+                totalBusinessTask = 0;
+                totalDevelopmentTask = 0;
+                totalMarketingTask = 0;
+                totalOtherTask = 0;
+                totalUnCompletedTask = 0;
+                totalCompletedTask = 0;
+                totalNumberOfTask = 0;
+
+                if (category === "Development") {
+                    totalDevelopmentTask = totalDevelopmentTask + 1;
+                } else if (category === "Business") {
+                    totalBusinessTask = totalBusinessTask + 1;
+                } else if (category === "Marketing") {
+                    totalMarketingTask = totalMarketingTask + 1;
+                } else {
+                    totalOtherTask = totalOtherTask + 1;
+                }
+
+
+                totalNumberOfTask = totalNumberOfTask + 1;
+                totalUnCompletedTask = totalUnCompletedTask + 1;
+
+                sprintDataPromise = db.collection("Main").doc("Deleted").set({
+                    EndDate: "xx/xx/xxxx",
+                    StartDate: "xx/xx/xxxx",
+                    Status: "Not Started",
+                    TotalBusinessTask: totalBusinessTask,
+                    TotalDevelopmentTask: totalDevelopmentTask,
+                    TotalMarketingTask: totalMarketingTask,
+                    TotalOtherTask: totalOtherTask,
+                    TotalUnCompletedTask: totalUnCompletedTask,
+                    TotalCompletedTask: totalCompletedTask,
+                    TotalNumberOfTask: totalNumberOfTask,
+                });
+                return Promise.resolve(sprintDataPromise);
+            }
+        });
+
+        const deleteTaskPromises = [p1, p2, p3];
         Promise.all(deleteTaskPromises).then(() => {
                 result = { data: "OK" };
                 console.log("Deleted Task Sucessfully");

@@ -37,16 +37,21 @@ export class BackendService {
 
   setCurrentSprint(sprintNumber: number) {
     this.currentSprintNumber = sprintNumber;
-    if(this.currentSprintNumber == -1){
+    if (this.currentSprintNumber == -1) {
       this.currentSprintName = "Backlog";
-    } else if(sprintNumber == 0){
+    }
+    else if (this.currentSprintNumber == -2) {
+      this.currentSprintName = "Deleted";
+    }
+    else if (sprintNumber == 0) {
       this.getCurrentSprint();
-    } else{
+    } else {
       this.currentSprintName = "S" + this.currentSprintNumber;
     }
+    console.log(this.currentSprintName);
   }
 
-  readCurrentSprintData(){
+  readCurrentSprintData() {
     this.mainCollection = this.db.collection<Main>('Main');
     this.mainData = this.mainCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
