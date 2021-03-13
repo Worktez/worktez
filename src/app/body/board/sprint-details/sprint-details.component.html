@@ -5,25 +5,30 @@
                 <div class="col-md-2 col-3">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No:</h5>
                 </div>
-                <div class="col-md-4 col-2">
+                <div class="col-md-6 col-4">
                     <h5 id="sprintId">{{currentSprintName}}</h5>
                 </div>
-
-                <div class="col-md-4 col-3">
-                    <div class="dropdown">
+                <div class="col-md-2 col-2">
+                    <div class="dropdown float-right">
                         <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                        <div class="dropdown-menu px-5 py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
                             <div class="row py-3">
-                                <input class="col-md-8 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" placeholder="enter sprint number" [(ngModel)]="filterSprintNumber">
-                                <div class="col-md-4 col-4 pl-2">
-                                    <button class="btn" id="dropdownButton" style="font-size: 14px;" (click)="changeSprintNumber()">Filter</button>
-                                </div>
+                                <input class="col-md-9 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput"  [(ngModel)]="filterSprintNumber">
+                                 <div class="col-md-3 col-3 pl-2"> 
+                                    <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
+                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class=" col-md-2 col-2 ">
-                    <button class="btn " id="button" type="button" style="font-size: 14px;" (click)="completeSprint()">Completed</button>
+                <div class="col-md-2 col-3">
+                    <div class="btn-group" *ngIf="Status != 'Completed' ">
+                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                        <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                            <button class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
+                            <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
+                        </div>
+                    </div>
                     <span class="material-icons align-middle" *ngIf="Status === 'Completed' ">
                         check_circle
                     </span>
@@ -31,10 +36,6 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Details: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintDetail" style="font-size: 12px;"></h6>
-            </div>
             <div class="row py-2">
                 <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date:
                 </h6>
