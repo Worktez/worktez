@@ -90,6 +90,21 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
+  async reopenTask() {
+    const callable = this.functions.httpsCallable('logWork');
+
+    try {
+      const result = await callable({SprintNumber: this.task.SprintNumber,LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start",LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time}).toPromise();
+      console.log(result);
+      return;
+    }
+
+    catch (error) {
+      this.errorHandlerService.getErrorCode("LOGWORK", "InternalError");
+      console.log("Error", error);
+    }
+  }
+
   backToTasks() {
     this.location.back()
   }
