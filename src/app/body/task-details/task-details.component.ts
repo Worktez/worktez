@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { CloneTaskService } from 'src/app/services/clone-task.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
@@ -32,7 +33,7 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, public cloneTask: CloneTaskService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -56,6 +57,9 @@ export class TaskDetailsComponent implements OnInit {
       }));
   }
 
+  CloneTaskPage(){
+    this.cloneTask.getCloneTask(this.task);
+  }
   logWorkPage() {
     this.logWorkEnabled = true;
   }
