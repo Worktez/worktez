@@ -40,7 +40,7 @@ export class TasksComponent implements OnInit {
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
-    } else if (this.currentSprintName == "Deleted") {
+    } else if (this.currentSprintName == "Trash") {
       this.currentSprintNumber = -2;
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));

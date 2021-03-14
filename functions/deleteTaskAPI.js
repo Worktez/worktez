@@ -71,7 +71,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         });
         Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time);
 
-        const p3 = db.collection("Main").doc("Deleted").get().then((doc) => {
+        const p3 = db.collection("Main").doc("Trash").get().then((doc) => {
             if (doc.exists) {
                 totalNumberOfTask = doc.data().TotalNumberOfTask;
                 totalDevelopmentTask = doc.data().TotalDevelopmentTask;
@@ -91,7 +91,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                     totalOtherTask = totalOtherTask + 1;
                 }
                 totalNumberOfTask = totalNumberOfTask + 1;
-                const updateDeleteTaskCounter2 = db.collection("Main").doc("Deleted").update({
+                const updateDeleteTaskCounter2 = db.collection("Main").doc("Trash").update({
                     TotalDevelopmentTask: totalDevelopmentTask,
                     TotalBusinessTask: totalBusinessTask,
                     TotalMarketingTask: totalMarketingTask,
@@ -120,14 +120,13 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                     totalOtherTask = totalOtherTask + 1;
                 }
 
-
                 totalNumberOfTask = totalNumberOfTask + 1;
                 totalUnCompletedTask = totalUnCompletedTask + 1;
 
-                sprintDataPromise = db.collection("Main").doc("Deleted").set({
-                    EndDate: "xx/xx/xxxx",
-                    StartDate: "xx/xx/xxxx",
-                    Status: "Not Started",
+                sprintDataPromise = db.collection("Main").doc("Trash").set({
+                    EndDate: "---",
+                    StartDate: "---",
+                    Status: "---",
                     TotalBusinessTask: totalBusinessTask,
                     TotalDevelopmentTask: totalDevelopmentTask,
                     TotalMarketingTask: totalMarketingTask,
@@ -158,7 +157,7 @@ function createSprintId(sprintNumber) {
     if (sprintNumber === -1) {
         return "Backlog";
     } else if (sprintNumber === -2) {
-        return "Deleted";
+        return "Trash";
     } else {
         return ("S" + sprintNumber);
     }

@@ -41,7 +41,7 @@ export class BackendService {
       this.currentSprintName = "Backlog";
     }
     else if (this.currentSprintNumber == -2) {
-      this.currentSprintName = "Deleted";
+      this.currentSprintName = "Trash";
     }
     else if (sprintNumber == 0) {
       this.getCurrentSprint();

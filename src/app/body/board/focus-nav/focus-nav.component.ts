@@ -26,7 +26,7 @@ export class FocusNavComponent implements OnInit {
     this.currentSprint.emit(-1);
   }
   
-  showDeleted(){
+  showTrash(){
     this.currentSprint.emit(-2);
   }
 }
