@@ -125,7 +125,9 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
             }
         });
 
-        sendEmail.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, teamMembers);
+        teamMembers.forEach((element) => {
+            sendEmail.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, organizationDomain);
+        });
 
         let result;
         return Promise.resolve(promise1).then(() => {
