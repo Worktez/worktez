@@ -13,6 +13,7 @@ import { PatchComponent } from './patch/patch.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
+const redirectLoggedInToVerifyUser = () => redirectLoggedInTo(['verifyUser/orgDomain/teamName/userEmail']);
 
 const routes: Routes = [
   { path: 'Board', component: BoardComponent },
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent },
   { path: 'patch', component: PatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
-  { path: 'verifyUser/:organizationDomain/:teamName/:userEmail', component: UserVerificationComponent },
+  { path: 'verifyUser/:organizationDomain/:teamName/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } }
 ];
 
 @NgModule({
