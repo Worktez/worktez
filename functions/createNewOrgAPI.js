@@ -10,15 +10,15 @@ const admin = require("firebase-admin");
 
 const db = admin.firestore();
 
-function generateBase64String(string) {
-    return Buffer.from(string).toString("base64");
+function generateBase64String(temp) {
+    return Buffer.from(temp).toString("base64");
 }
 
 exports.createNewOrganization = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const data = request.body.data;
         const date = new Date();
-        const organizationId = generateBase64String(date);
+        const organizationId = generateBase64String(date.toString());
         const appKey = generateBase64String(date.getMilliseconds() + organizationId);
 
         const organizationName = data.OrganizationName;
@@ -106,6 +106,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                     StatusLabels: statusLabels,
                     PriorityLabels: priorityLabels,
                     DifficultyLabels: difficultyLabels,
+                    TotalTeamTasks: 0,                   
                 });
                 return Promise.resolve(teamData);
             } else {
@@ -119,6 +120,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                     StatusLabels: statusLabels,
                     PriorityLabels: priorityLabels,
                     DifficultyLabels: difficultyLabels,
+                    TotalTeamTasks: 0,  
                 });
                 return Promise.resolve(teamData);
             }

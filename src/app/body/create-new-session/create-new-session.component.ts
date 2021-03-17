@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/Interface/UserInterface';
 import { ValidationService } from '../../services/validation.service';
 import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
@@ -73,7 +74,7 @@ export class CreateNewSessionComponent implements OnInit {
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {
-      const result = await callable({ Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Category: this.category, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({AppKey: "", Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: "Development", SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
