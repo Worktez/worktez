@@ -1,9 +1,4 @@
 export interface Counters {
-  TotalBusinessTask: number;
-  TotalCompletedTask: number;
-  TotalDevelopmentTask: number;
-  TotalMarketingTask: number;
-  TotalOtherTask: number;
   TotalNumberOfTask: number;
   TotalUnCompletedTask: number;
 }
