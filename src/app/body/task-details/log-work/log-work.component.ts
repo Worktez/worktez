@@ -5,11 +5,6 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { ValidationService } from '../../../services/validation.service';
 import { ToolsService } from '../../../services/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import{ User } from "src/app/Interface/UserInterface";
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-log-work',
@@ -23,8 +18,6 @@ export class LogWorkComponent implements OnInit {
   @Input('task') task: Tasks
 
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
-  user: User
-  userObservable: Observable<User>
   
   componentName: string = "LOG-WORK";
   Id: string
@@ -37,7 +30,7 @@ export class LogWorkComponent implements OnInit {
   enableLoader: boolean = false
   showClose: boolean = false;
   
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService,public authService: AuthService, public router: Router,public backendService: BackendService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService) { }
  
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
