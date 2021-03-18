@@ -22,6 +22,7 @@ exports.addActivity = function(type, comment, taskId, date, time) {
             activityPromise = db.collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
                 TotalComments: totalComments,
+                Comment: comment
             });
         } else {
             totalActions = 1;
@@ -32,6 +33,7 @@ exports.addActivity = function(type, comment, taskId, date, time) {
                 TaskId: taskId,
                 TotalActions: totalActions,
                 TotalComments: totalComments,
+                Comment: comment
             });
         }
         const activityPromise2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({

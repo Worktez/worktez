@@ -3,40 +3,49 @@ import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ValidationService } from '../../../services/validation.service';
-import { ToolsService } from '../../../services/tools.service'
+import { ToolsService } from '../../../services/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import{ User } from "src/app/Interface/UserInterface";
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-log-work',
   templateUrl: './log-work.component.html',
   styleUrls: ['./log-work.component.css']
 })
+
 export class LogWorkComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
-
   @Input('task') task: Tasks
+
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
-
+  user: User
+  userObservable: Observable<User>
+  
   componentName: string = "LOG-WORK";
-
   Id: string
   logWorkDone: number
   logWorkStatus: number
   logHours: number
-  logWorkComment: number
+  logWorkComment: string
   todayDate: string
   time: string
   enableLoader: boolean = false
   showClose: boolean = false;
-
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService) { }
-
+  
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService,public authService: AuthService, public router: Router,public backendService: BackendService) { }
+ 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-  }
-
+    this.logWorkComment=this.todayDate+" | "+this.time+" | ";
+    console.log("this.logWorkComment");
+   }
+  
   async submit(){
     let labels = ['status', 'logHours', 'workCompleted', 'comment'];
     let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
@@ -61,7 +70,6 @@ export class LogWorkComponent implements OnInit {
 
     try {
       const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time}).toPromise();
-
       console.log("Logged Work Successfully");
       console.log(result);
       this.showClose = true;
