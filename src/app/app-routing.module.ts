@@ -10,8 +10,10 @@ import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-gua
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
 import { PatchComponent } from './patch/patch.component';
+import { UserVerificationComponent } from './user-verification/user-verification.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
+const redirectLoggedInToVerifyUser = () => redirectLoggedInTo(['verifyUser/orgDomain/teamName/userEmail']);
 
 const routes: Routes = [
   { path: 'Board', component: BoardComponent },
@@ -22,7 +24,8 @@ const routes: Routes = [
   { path: '', component: MyDashBoardComponent },
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent },
   { path: 'patch', component: PatchComponent },
-  { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } }
+  { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
+  { path: 'verifyUser/:organizationDomain/:teamName/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } }
 ];
 
 @NgModule({

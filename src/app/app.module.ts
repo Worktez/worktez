@@ -47,6 +47,7 @@ import { PatchComponent } from './patch/patch.component';
 import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
+import { UserVerificationComponent } from './user-verification/user-verification.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
     OrganizationDetailsComponent,
     TeamDetailsComponent,
     FocusNavComponent,
+    UserVerificationComponent,
   ],
   imports: [
     BrowserModule,
