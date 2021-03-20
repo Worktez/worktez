@@ -22,7 +22,6 @@ export class SprintDetailsComponent implements OnInit {
 
   componentName :string="SPRINT-DETAILS"
   filterSprintNumber: number;
-  sprintStatus: string;
 
   constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute,public errorHandlerService: ErrorHandlerService) { }
 
@@ -33,14 +32,13 @@ export class SprintDetailsComponent implements OnInit {
     this.changeSprint.emit(this.filterSprintNumber);
   }
 
-  async completeSprint() {
-    
-    this.sprintStatus = "Completed";
+  async changeSprintStatus(sprintStatus: string) {
+      
     const callable = this.functions.httpsCallable('updateSprintStatus');
 
     try {
-      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus }).toPromise();
-      console.log(this.sprintStatus);
+      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus }).toPromise();
+      console.log(sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
