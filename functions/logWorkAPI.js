@@ -81,7 +81,7 @@ exports.logWork = functions.https.onRequest((request, response) => {
             });
             return Promise.resolve(updateSprintstatus);
         });
-        Activity.addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time);
+        Activity.addActivity("LOGWORK", logWorkComment, taskId, date, time);
         const logWorkPromises = [promise1, promise2, promise3];
         Promise.all(logWorkPromises).then(() => {
                 result = { data: "Logged Work successfully!" };

@@ -35,7 +35,7 @@ export class LogWorkComponent implements OnInit {
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-    this.logWorkComment=this.todayDate+" | "+this.time+" | ";
+    // this.logWorkComment=this.todayDate+" | "+this.time+" | ";
     console.log("this.logWorkComment");
    }
   

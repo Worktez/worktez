@@ -21,8 +21,7 @@ exports.addActivity = function(type, comment, taskId, date, time) {
             actionId = createActivityId(totalActions);
             activityPromise = db.collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
-                TotalComments: totalComments,
-                Comment: comment
+                TotalComments: totalComments
             });
         } else {
             totalActions = 1;
@@ -32,8 +31,7 @@ exports.addActivity = function(type, comment, taskId, date, time) {
             activityPromise = db.collection("Activity").doc(taskId).set({
                 TaskId: taskId,
                 TotalActions: totalActions,
-                TotalComments: totalComments,
-                Comment: comment
+                TotalComments: totalComments
             });
         }
         const activityPromise2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
