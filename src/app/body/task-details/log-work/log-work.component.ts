@@ -11,12 +11,10 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
   templateUrl: './log-work.component.html',
   styleUrls: ['./log-work.component.css']
 })
-
 export class LogWorkComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input('task') task: Tasks
-
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
   
   componentName: string = "LOG-WORK";
@@ -35,8 +33,6 @@ export class LogWorkComponent implements OnInit {
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-    // this.logWorkComment=this.todayDate+" | "+this.time+" | ";
-    console.log("this.logWorkComment");
    }
   
   async submit(){
@@ -63,10 +59,10 @@ export class LogWorkComponent implements OnInit {
 
     try {
       const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time}).toPromise();
+      
       console.log("Logged Work Successfully");
       console.log(result);
       this.showClose = true;
-      // this.workDone();
       return ;
     } catch (error) {
       this.errorHandlerService.getErrorCode("LOGWORK","InternalError");
