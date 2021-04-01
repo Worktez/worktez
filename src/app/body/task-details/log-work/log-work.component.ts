@@ -30,29 +30,29 @@ export class LogWorkComponent implements OnInit {
   enableLoader: boolean = false
   showClose: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService , public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
   }
 
-  async submit(){
+  async submit() {
     let labels = ['status', 'logHours', 'workCompleted', 'comment'];
     let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
-    let data = [{label:"status",value:this.logWorkStatus},
-    {label:"logHours",value:this.logHours},
-    {label:"workCompleted",value:this.logWorkDone},
-    {label:"comment",value:this.logWorkComment}];
-    var condition = await (this.validationService.checkValidity(this.componentName,data)).then(res => {
-      return res;});
-    if(condition)
-    {
+    let data = [{ label: "status", value: this.logWorkStatus },
+    { label: "logHours", value: this.logHours },
+    { label: "workCompleted", value: this.logWorkDone },
+    { label: "comment", value: this.logWorkComment }];
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      return res;
+    });
+    if (condition) {
       console.log("Inputs are valid");
       this.submitLogWorkPage();
     }
     else
-    console.log("Log-Work failed due to validation error");
+      console.log("Log-Work failed due to validation error");
   }
 
   async submitLogWorkPage() {
@@ -60,15 +60,15 @@ export class LogWorkComponent implements OnInit {
     const callable = this.functions.httpsCallable('logWork');
 
     try {
-      const result = await callable({ SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time}).toPromise();
+      const result = await callable({ AppKey: "", SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time }).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);
       this.showClose = true;
       // this.workDone();
-      return ;
+      return;
     } catch (error) {
-      this.errorHandlerService.getErrorCode("LOGWORK","InternalError");
+      this.errorHandlerService.getErrorCode("LOGWORK", "InternalError");
       this.enableLoader = false;
       console.log("Error", error);
     }

@@ -18,6 +18,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         console.log(request.body.data);
 
+        const appKey = request.body.data.AppKey;
         const sprintNumber = request.body.data.SprintNumber;
         const taskId = request.body.data.Id;
         const fullSprintId = createSprintId(sprintNumber);
@@ -34,61 +35,55 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         const date = request.body.data.Date;
         const time = request.body.data.Time;
 
-        const p1 = db.collection("Tasks").doc(taskId).update({
-            Category: "Trash",
-            SprintNumber: -2,
-        });
-
-        const p2 = db.collection("Main").doc(fullSprintId).get().then((doc) => {
-            totalNumberOfTask = doc.data().TotalNumberOfTask;
-            totalDevelopmentTask = doc.data().TotalDevelopmentTask;
-            totalBusinessTask = doc.data().TotalBusinessTask;
-            totalMarketingTask = doc.data().TotalMarketingTask;
-            totalOtherTask = doc.data().TotalOtherTask;
-            totalCompletedTask = doc.data().TotalCompletedTask;
-            totalUnCompletedTask = doc.data().TotalUnCompletedTask;
-
-            if (category === "Development") {
-                totalDevelopmentTask = totalDevelopmentTask - 1;
-            } else if (category === "Business") {
-                totalBusinessTask = totalBusinessTask - 1;
-            } else if (category === "Marketing") {
-                totalMarketingTask = totalMarketingTask - 1;
-            } else {
-                totalOtherTask = totalOtherTask - 1;
-            }
-            totalNumberOfTask = totalNumberOfTask - 1;
-            status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
-            const updateDeleteTaskCounter = db.collection("Main").doc(fullSprintId).update({
-                TotalDevelopmentTask: totalDevelopmentTask,
-                TotalBusinessTask: totalBusinessTask,
-                TotalMarketingTask: totalMarketingTask,
-                TotalOtherTask: totalOtherTask,
-                TotalNumberOfTask: totalNumberOfTask,
-                TotalCompletedTask: totalCompletedTask,
-                TotalUnCompletedTask: totalUnCompletedTask,
+        const deleteTaskPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((org) => {
+            org.forEach((doc) => {
+                documentID = doc.data().OrganizationDomain;
             });
-            return Promise.resolve(updateDeleteTaskCounter);
-        });
-        Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time);
 
-        const deleteTaskPromises = [p1, p2];
-        Promise.all(deleteTaskPromises).then(() => {
-                result = { data: "OK" };
-                console.log("Deleted Task Sucessfully");
-                return response.status(200).send(result);
-            })
-            .catch((error) => {
-                result = { data: error };
-                console.error("Error Deleting Task", error);
-                return response.status(500).send(result);
+            console.log("DocumentID = " + documentID);
+
+
+            const p1 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).update({
+                SprintNumber: -2,
             });
+
+            const p2 = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).get().then((doc) => {
+                totalNumberOfTask = doc.data().TotalNumberOfTask;
+                totalCompletedTask = doc.data().TotalCompletedTask;
+                totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+
+                totalNumberOfTask = totalNumberOfTask - 1;
+                status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
+                const updateDeleteTaskCounter = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).update({
+                    TotalNumberOfTask: totalNumberOfTask,
+                    TotalCompletedTask: totalCompletedTask,
+                    TotalUnCompletedTask: totalUnCompletedTask,
+                });
+                return Promise.resolve(updateDeleteTaskCounter);
+            });
+            Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time);
+
+            const deleteTaskPromises = [p1, p2];
+            Promise.all(deleteTaskPromises).then(() => {
+                    result = { data: "OK" };
+                    console.log("Deleted Task Sucessfully");
+                    return response.status(200).send(result);
+                })
+                .catch((error) => {
+                    result = { data: error };
+                    console.error("Error Deleting Task", error);
+                    return response.status(500).send(result);
+                });
+        });
+        return Promise.resolve(deleteTaskPromise);
     });
 });
 
 function createSprintId(sprintNumber) {
     if (sprintNumber === -1) {
         return "Backlog";
+    } else if ((sprintNumber === -2)) {
+        return "Deleted";
     } else {
         return ("S" + sprintNumber);
     }
