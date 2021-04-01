@@ -7,6 +7,7 @@ const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
 
 const admin = require("firebase-admin");
+const addUserEmailAPI = require("./addUserEmailAPI.js");
 
 const db = admin.firestore();
 
@@ -106,7 +107,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                     StatusLabels: statusLabels,
                     PriorityLabels: priorityLabels,
                     DifficultyLabels: difficultyLabels,
-                    TotalTeamTasks: 0,                   
+                    TotalTeamTasks: 0,
                 });
                 return Promise.resolve(teamData);
             } else {
@@ -120,11 +121,16 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                     StatusLabels: statusLabels,
                     PriorityLabels: priorityLabels,
                     DifficultyLabels: difficultyLabels,
-                    TotalTeamTasks: 0,  
+                    TotalTeamTasks: 0,
                 });
                 return Promise.resolve(teamData);
             }
         });
+
+        teamMembers.forEach((element) => {
+            addUserEmailAPI.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, organizationDomain);
+        });
+
         let result;
         return Promise.resolve(promise1).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
