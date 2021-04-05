@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User } from "../Interface/UserInterface";
+import { User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { BackendService } from './backend.service';
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
 
-  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore) { }
+  public userAppSettingObservable: Observable<UserAppSetting>;
+  public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
+
+  user: User;
+  userAppSetting: UserAppSetting;
+
+  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore, private backendService: BackendService) { }
 
   async createUser(email: string, password: string, username: string) {
     await this.afauth.createUserWithEmailAndPassword(email, password);
@@ -41,10 +50,43 @@ export class AuthService {
   async googleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afauth.signInWithPopup(provider);
+    this.user = credential.user;
+    this.getUserSettings().then;
     return this.createUserData(credential.user);
   }
 
   async logout() {
     await this.afauth.signOut();
   }
+
+  getLoggedInUser() {
+    return this.user.uid;
+  }
+
+  async getUserSettings() {
+    const uid = this.getLoggedInUser();
+    this.userAppSettingDocument = this.db.doc<UserAppSetting>('Users/'+uid);
+    try {
+      await this.userAppSettingDocument.ref.get().then(async doc=> {
+        if(doc.exists){
+          this.userAppSetting = doc.data();
+          await this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+        } else {
+          console.error("Document does not exists!")
+        }
+      });
+      return this.userAppSetting;
+    } catch (error) {
+      return "Error";
+    }
+  }
+
+  getAppKey() {
+      return this.userAppSetting.AppKey;
+  }
+
+  getTeamId() {
+      return this.userAppSetting.TeamId;
+  }
+  
 }

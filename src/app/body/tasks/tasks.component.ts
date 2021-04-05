@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
@@ -17,10 +17,10 @@ export class TasksComponent implements OnInit {
   componentName: string = "TASKS"
 
   currentSprintName: string
-  category: string
+  teamId: string
   currentSprintNumber: number
   searchAssignee: string = ""
-  tasksCollection: AngularFirestoreCollection<Tasks>
+  tasksCollection: AngularFirestoreCollectionGroup<Tasks>
   tasksData: Observable<TasksId[]>
 
   filterAssignee: string
@@ -32,11 +32,10 @@ export class TasksComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
-
-    this.category = this.route.snapshot.params['category'];
+    this.teamId = this.route.snapshot.params['teamId'];
     this.currentSprintName = this.route.snapshot.params['currentSprintName'];
 
-    this.navbarHandler.addToNavbar(this.category);
+    this.navbarHandler.addToNavbar(this.teamId);
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
@@ -47,14 +46,14 @@ export class TasksComponent implements OnInit {
   }
 
   readData() {
-    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref => {
-      let queryRef: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
+    this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
+      let queryRef = ref;
       queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
       if (this.filterCategory) {
-        queryRef = queryRef.where("Category", "==", this.filterCategory);
+        queryRef = queryRef.where("TeamId", "==", this.filterCategory);
       }
       else {
-        queryRef = queryRef.where("Category", "==", this.category);
+        queryRef = queryRef.where("TeamId", "==", this.teamId);
       }
 
       if (this.filterAssignee) {

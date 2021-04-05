@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-login-handler',
@@ -20,8 +21,8 @@ export class LoginHandlerComponent implements OnInit {
       const data = action as User;
       this.user = data
       return { ...data }
-    }));
+    })
+    );
   }
-
 
 }

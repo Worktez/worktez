@@ -15,6 +15,7 @@ const db = admin.firestore();
 exports.verifyUser = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const organizationDomain = request.body.data.OrganizationDomain;
+        const teamId = request.body.data.TeamId;
         const teamName = request.body.data.TeamName;
         const userEmail = request.body.data.UserEmail;
 
@@ -32,6 +33,7 @@ exports.verifyUser = functions.https.onRequest((request, response) => {
                             userID = doc.data().uid;
                             const p111 = db.collection("Users").doc(userID).update({
                                 OrganizationId: organizationId,
+                                TeamId: teamId,
                             });
                             return Promise.resolve(p111);
                         });
