@@ -39,7 +39,7 @@ export class BackendService {
         }
         return { ...data }
       })
-    )
+    );
     return this.rawDataObservable;
   }
 

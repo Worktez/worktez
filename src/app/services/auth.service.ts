@@ -5,7 +5,6 @@ import { User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { BackendService } from './backend.service';
 @Injectable({
   providedIn: 'root',
@@ -51,7 +50,7 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afauth.signInWithPopup(provider);
     this.user = credential.user;
-    this.getUserSettings().then;
+    await this.getUserSettings();
     return this.createUserData(credential.user);
   }
 

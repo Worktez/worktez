@@ -51,6 +51,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     orgId = doc.data().OrganizationId;
                 });
                 console.log("orgDocument = " + orgDocument);
+                console.log("Project = " + project);
 
                 const promise1 = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).get().then((doc) => {
                     const totalTeamTasks = doc.data().TotalTeamTasks + 1;
