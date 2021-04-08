@@ -10,6 +10,7 @@ import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-task-details',
@@ -28,15 +29,18 @@ export class TaskDetailsComponent implements OnInit {
   task: Tasks
   todayDate: string
   time: string
+  orgDomain: string
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+
+    this.orgDomain =  this.backendService.getOrganizationDomain();
 
     this.Id = this.route.snapshot.params['taskId'];
 
@@ -45,7 +49,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getTaskDetail() {
-    var documentName = 'Tasks/' + this.Id;
+    var documentName = 'Organizations/'+this.orgDomain+'/Tasks/' + this.Id;
     this.taskDocument = this.db.doc<Tasks>(documentName);
     this.taskDataObservable = this.taskDocument.snapshotChanges().pipe(
       map(actions => {

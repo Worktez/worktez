@@ -34,6 +34,7 @@ export class MyDashBoardComponent implements OnInit {
     });
     this.readUser();
   }
+  
   readUser() {
     this.userObservable = this.authService.afauth.user.pipe(map(action => {
       const data = action as User;

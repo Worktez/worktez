@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
@@ -14,7 +14,7 @@ export class MyTasksComponent implements OnInit {
   @Input("username") username: string
   @Input("currentSprint") currentSprintNumber: number
 
-  tasksCollection: AngularFirestoreCollection<Tasks>
+  tasksCollection: AngularFirestoreCollectionGroup<Tasks>
   tasksData: Observable<TasksId[]>
 
   constructor(public db: AngularFirestore) { }
@@ -24,11 +24,18 @@ export class MyTasksComponent implements OnInit {
   }
 
   readTaskData() {
-    this.tasksCollection = this.db.collection<Tasks>("Tasks", ref => ref.where('Assignee', '==', this.username).where("SprintNumber", "==", this.currentSprintNumber));
+    this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
+      let queryRef = ref;
+      queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
+      queryRef = queryRef.where('Assignee', '==', this.username);
+      return queryRef;
+    });
+
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;
         const id = a.payload.doc.id;
+        console.log(data);
         return { id, ...data };
       }))
     );

@@ -18,7 +18,7 @@ export class PerformanceChartComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
   data = [];
-  constructor(public db: AngularFirestore,public errorHandlerService: ErrorHandlerService) { }
+  constructor(public db: AngularFirestore, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.sprintRange2 = this.currentSprintNumber

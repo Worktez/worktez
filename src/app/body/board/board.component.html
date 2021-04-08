@@ -3,26 +3,17 @@
         <app-focus-nav [currentSprintNumber]="backendService.currentSprintNumber" (currentSprint)="changeCurrentSprint($event)"></app-focus-nav>
     </div>
     <div class="col-md-10">
-        <ng-container *ngIf="backendService.rawDataObservable |async">
+        <ng-container *ngIf="backendService.rawDataObservable | async">
             <ng-container *ngFor="let item of backendService.mainData | async">
                 <ng-container *ngIf="item.id === backendService.currentSprintName">
                     <div class="container p-2">
-
                         <div class="row">
-                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Business')">
-                                <app-feature-card [cardName]="'Business'" [tasks]="item.TotalBusinessTask"></app-feature-card>
-                            </div>
-                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Development')">
-                                <app-feature-card [cardName]="'Development'" [tasks]="item.TotalDevelopmentTask"></app-feature-card>
-                            </div>
-                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Marketing')">
-                                <app-feature-card [cardName]="'Marketing'" [tasks]="item.TotalMarketingTask"></app-feature-card>
-                            </div>
-                            <div class="col-md-3 col-12" type="button" (click)="showTasks('Other')">
-                                <app-feature-card [cardName]="'Other'" [tasks]="item.TotalOtherTask"></app-feature-card>
-                            </div>
+                            <ng-container *ngFor="let item of applicationSettingsService.teamData | async">
+                                <div class="col-md-3 col-12" type="button" (click)="showTasks(item.TeamId)">
+                                    <app-feature-card [cardName]="item.TeamName" [tasks]="item.TotalTeamTasks"></app-feature-card>
+                                </div>
+                            </ng-container>
                         </div>
-
                         <app-sprint-details [currentSprintName]="backendService.currentSprintName" [StartDate]="item.StartDate" [EndDate]="item.EndDate" [Status]="item.Status" (changeSprint)="changeCurrentSprint($event)"></app-sprint-details>
                     </div>
                 </ng-container>
