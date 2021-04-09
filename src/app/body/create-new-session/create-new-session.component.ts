@@ -9,6 +9,9 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/clone-task.service';
+import { PeopleSuggestionService } from 'src/app/services/people-suggestion.service';
+import { User } from 'src/app/Interface/UserInterface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-create-new-session',
@@ -37,14 +40,16 @@ export class CreateNewSessionComponent implements OnInit {
   enableLoader: boolean = false
   valid: boolean = true;
   task: Tasks;
+  userName: Observable<User[]>;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, public cloneTask: CloneTaskService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, public cloneTask: CloneTaskService,public peopleSuggestion: PeopleSuggestionService) { }
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+    this.userName = this.peopleSuggestion.getData();
     this.task= this.cloneTask.getCloneData();
     
     this.title=this.task.Title;

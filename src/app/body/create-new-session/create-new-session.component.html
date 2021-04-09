@@ -47,7 +47,12 @@
                 <div class="form-row">
                     <div class="form-group col-sm-3">
                         <label for="input">Assignee</label>
-                        <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}">
+                        <select class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}">
+                            <option selected>choose...</option>
+                            <ng-container *ngFor='let user of userName | async'>
+                            <option>{{user.displayName}}</option>
+                            </ng-container>
+                        </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="text">Creator</label>
@@ -112,7 +117,7 @@
                     </div>
                 </div>
             </form>
-        </div>>
+        </div>
     </div>
 </div>
 <app-loader *ngIf="enableLoader"></app-loader>
