@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ValidationService } from '../../../services/validation.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service'
 import { ToolsService } from 'src/app/services/tools.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class EditPageComponent implements OnInit {
   newVal =[]
   showClose: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
 
@@ -89,13 +90,14 @@ async generateChanges() {
     const callable = this.functions.httpsCallable('editPageTask');
 
     try {
+      const appKey = this.backendService.getOrganizationAppKey();
       console.log(this.editTask.Id);
       console.log(this.editTask.Title);
       console.log(this.editTask.Creator);
 
       console.log(this.editTask.SprintNumber);
       if (!(this.task.Status === "Completed")) {
-        const result = await callable({AppKey: "",Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Category: this.task.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData}).toPromise();
+        const result = await callable({AppKey: appKey,Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Category: this.task.Category, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
         this.showClose = true;
