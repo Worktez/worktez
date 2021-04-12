@@ -119,7 +119,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
         });
 
         teamMembers.forEach((element) => {
-            addUserEmailAPI.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, organizationDomain);
+            addUserEmailAPI.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, organizationDomain, teamId);
         });
 
         let result;

@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { BackendService } from 'src/app/services/backend.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -37,7 +38,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -103,10 +104,12 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.endDate);
     console.log(this.status);
     this.enableLoader = true;
+    const appKey = this.backendService.getOrganizationAppKey();
+    const teamId = this.authService.getTeamId();
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({AppKey: "", StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
+      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
 
       console.log("Successfully created a new sprint");
       console.log(result);

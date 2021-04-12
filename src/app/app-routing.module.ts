@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent },
   { path: 'patch', component: PatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
-  { path: 'verifyUser/:organizationDomain/:teamName/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } }
+  { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } }
 ];
 
 @NgModule({

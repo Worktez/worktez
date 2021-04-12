@@ -21,6 +21,8 @@
 
 #filterMenu {
     background-color: var(--secondary-color);
+    padding-right: 45px;
+    padding-left: 25px;
 }
 
 #button:focus,

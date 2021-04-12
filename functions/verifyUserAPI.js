@@ -18,7 +18,7 @@ exports.verifyUser = functions.https.onRequest((request, response) => {
         const teamId = request.body.data.TeamId;
         const teamName = request.body.data.TeamName;
         const userEmail = request.body.data.UserEmail;
-
+        let appKey = "";
         let organizationId = "";
         let userID = "";
 
@@ -28,12 +28,14 @@ exports.verifyUser = functions.https.onRequest((request, response) => {
             if (teamMembers.indexOf(userEmail) != -1) {
                 db.collection("Organizations").doc(organizationDomain).get().then((doc) => {
                     organizationId = doc.data().OrganizationId;
+                    appKey = doc.data().appKey;
                     const p11 = db.collection("Users").where("email", "==", userEmail).get().then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
                             userID = doc.data().uid;
                             const p111 = db.collection("Users").doc(userID).update({
                                 OrganizationId: organizationId,
                                 TeamId: teamId,
+                                AppKey: appKey,
                             });
                             return Promise.resolve(p111);
                         });
