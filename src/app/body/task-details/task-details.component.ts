@@ -11,6 +11,7 @@ import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-task-details',
@@ -29,15 +30,18 @@ export class TaskDetailsComponent implements OnInit {
   task: Tasks
   todayDate: string
   time: string
+  orgDomain: string
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, public cloneTask: CloneTaskService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+
+    this.orgDomain =  this.backendService.getOrganizationDomain();
 
     this.Id = this.route.snapshot.params['taskId'];
 
@@ -46,7 +50,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getTaskDetail() {
-    var documentName = 'Tasks/' + this.Id;
+    var documentName = 'Organizations/'+this.orgDomain+'/Tasks/' + this.Id;
     this.taskDocument = this.db.doc<Tasks>(documentName);
     this.taskDataObservable = this.taskDocument.snapshotChanges().pipe(
       map(actions => {
@@ -78,9 +82,9 @@ export class TaskDetailsComponent implements OnInit {
 
   async deleteTask() {
     const callable = this.functions.httpsCallable('deleteTask');
-
+    const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);
@@ -92,9 +96,10 @@ export class TaskDetailsComponent implements OnInit {
 
   async reopenTask() {
     const callable = this.functions.httpsCallable('logWork');
+    const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({SprintNumber: this.task.SprintNumber,LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start",LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time}).toPromise();
+      const result = await callable({ AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time }).toPromise();
       console.log(result);
       return;
     }

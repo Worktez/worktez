@@ -6,3 +6,8 @@ export interface User {
     phoneNumber: string;
     providerId: string;
 }
+
+export interface UserAppSetting extends User {
+    AppKey: string;
+    TeamId: string;
+}

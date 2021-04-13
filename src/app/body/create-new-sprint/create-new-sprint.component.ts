@@ -4,12 +4,14 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { User } from 'src/app/Interface/UserInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { BackendService } from 'src/app/services/backend.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -25,11 +27,8 @@ export class CreateNewSprintComponent implements OnInit {
   startDate: string
   endDate: string
   status: string
-  totalDevelopment: number
-  totalBusiness: number
-  totalMarketing: number
-  totalOther: number
   enableLoader: boolean = false;
+  user: User;
 
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
@@ -39,7 +38,7 @@ export class CreateNewSprintComponent implements OnInit {
 
   currentSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -75,16 +74,8 @@ export class CreateNewSprintComponent implements OnInit {
       await this.sprintDocument.ref.get().then(doc => {
         if (doc.exists) {
           var sprintData = doc.data();
-          this.totalDevelopment = sprintData.TotalDevelopmentTask;
-          this.totalBusiness = sprintData.TotalBusinessTask;
-          this.totalMarketing = sprintData.TotalMarketingTask;
-          this.totalOther = sprintData.TotalOtherTask;
         }
         else {
-          this.totalDevelopment = 0;
-          this.totalBusiness = 0;
-          this.totalMarketing = 0;
-          this.totalOther = 0;
         }
       });
       return "ok";
@@ -112,16 +103,13 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.startDate);
     console.log(this.endDate);
     console.log(this.status);
-    console.log(this.totalDevelopment);
-    console.log(this.totalBusiness);
-    console.log(this.totalMarketing);
-    console.log(this.totalOther);
-
     this.enableLoader = true;
+    const appKey = this.backendService.getOrganizationAppKey();
+    const teamId = this.authService.getTeamId();
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({ StartDate: this.startDate, EndDate: this.endDate, TotalDevelopment: this.totalDevelopment, TotalBusiness: this.totalBusiness, TotalMarketing: this.totalMarketing, TotalOther: this.totalOther, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
+      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
 
       console.log("Successfully created a new sprint");
       console.log(result);

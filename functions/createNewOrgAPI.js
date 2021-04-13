@@ -7,18 +7,19 @@ const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
 
 const admin = require("firebase-admin");
+const addUserEmailAPI = require("./addUserEmailAPI.js");
 
 const db = admin.firestore();
 
-function generateBase64String(string) {
-    return Buffer.from(string).toString("base64");
+function generateBase64String(temp) {
+    return Buffer.from(temp).toString("base64");
 }
 
 exports.createNewOrganization = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const data = request.body.data;
         const date = new Date();
-        const organizationId = generateBase64String(date);
+        const organizationId = generateBase64String(date.toString());
         const appKey = generateBase64String(date.getMilliseconds() + organizationId);
 
         const organizationName = data.OrganizationName;
@@ -95,34 +96,32 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
         const statusLabels = data.StatusLabels;
         const priorityLabels = data.PriorityLabels;
         const difficultyLabels = data.DifficultyLabels;
+        let orgId;
 
-        const promise1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
-            if (doc.exists) {
-                const teamData = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
-                    TeamDescription: teamDescription,
-                    TeamManagerEmail: teamManagerEmail,
-                    TeamMembers: teamMembers,
-                    TaskLabels: taskLabels,
-                    StatusLabels: statusLabels,
-                    PriorityLabels: priorityLabels,
-                    DifficultyLabels: difficultyLabels,
-                });
-                return Promise.resolve(teamData);
-            } else {
-                const teamData = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
-                    TeamName: teamName,
-                    TeamId: teamId,
-                    TeamDescription: teamDescription,
-                    TeamManagerEmail: teamManagerEmail,
-                    TeamMembers: teamMembers,
-                    TaskLabels: taskLabels,
-                    StatusLabels: statusLabels,
-                    PriorityLabels: priorityLabels,
-                    DifficultyLabels: difficultyLabels,
-                });
-                return Promise.resolve(teamData);
-            }
+        const promise1 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                orgId = doc.data().OrganizationId;
+            });
+            const teamData = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
+                TeamName: teamName,
+                TeamDescription: teamDescription,
+                TeamManagerEmail: teamManagerEmail,
+                TeamMembers: teamMembers,
+                TaskLabels: taskLabels,
+                StatusLabels: statusLabels,
+                PriorityLabels: priorityLabels,
+                DifficultyLabels: difficultyLabels,
+                TotalTeamTasks: 0,
+                OrganizationId: orgId,
+                TeamId: teamId,
+            });
+            return Promise.resolve(teamData);
         });
+
+        teamMembers.forEach((element) => {
+            addUserEmailAPI.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, organizationDomain, teamId);
+        });
+
         let result;
         return Promise.resolve(promise1).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
