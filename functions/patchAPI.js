@@ -17,7 +17,9 @@ exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         let a = 1;
         /*const moveTasksPromise = */
-        db.collection("Tasks") /*.where("SprintNumber", "==", "12")*/ .get().then((task) => {
+        let setSprintNumber = parseInt(request.body.data.SetSprintNumber);
+        db.collection("Tasks").where("SprintNumber", "==", setSprintNumber).get().then((task) => {
+            console.log("im running");
 
             let taskID = parseInt(request.body.data.TaskID);
             let completedTask = parseInt(request.body.data.CompletedTask);
@@ -26,7 +28,8 @@ exports.patch = functions.https.onRequest((request, response) => {
             let totalBusinessTasks = parseInt(request.body.data.BusinessTask);
             let totalMarketingTasks = parseInt(request.body.data.MarketingTask);
             let totalOtherTasks = parseInt(request.body.data.OtherTask);
-            let orgId = parseInt(request.body.data.OrgID);
+            let orgId = request.body.data.OrgID;
+            let orgDomain = request.body.data.OrgDomain;
 
             console.log(task);
 
@@ -51,7 +54,7 @@ exports.patch = functions.https.onRequest((request, response) => {
                 let title = document.data().Title;
                 let workDone = document.data().WorkDone;
 
-                if (sprintNumber === 12 || sprintNumber === -1) {
+                if (sprintNumber === setSprintNumber) {
                     // let fullSprintName = createSprintId(sprintNumber);
 
                     // changed details
@@ -85,7 +88,7 @@ exports.patch = functions.https.onRequest((request, response) => {
                     console.log(newTaskId);
 
 
-                    db.collection("Organizations").doc("ad6.com").collection("Tasks").doc(newTaskId).set({
+                    db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(newTaskId).set({
                         Id: newTaskId,
                         Assignee: assignee,
                         Project: project,

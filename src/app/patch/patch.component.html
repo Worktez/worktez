@@ -2,6 +2,11 @@
     <form>
         <div class="row">
             <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">SprintNumber</label>
+                <input type="text" class="form-control" id="setSprintNumber" aria-describedby="emailHelp" placeholder="Enter SprintNumber" [(ngModel)]="setSprintNumber" [ngModelOptions]="{standalone: true}">
+            </div>
+
+            <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Taskid</label>
                 <input type="text" class="form-control" id="taskId" aria-describedby="emailHelp" placeholder="Enter TaskID" [(ngModel)]="taskID" [ngModelOptions]="{standalone: true}">
             </div>
@@ -39,6 +44,11 @@
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">OrgId</label>
                 <input type="text" class="form-control" id="OrgID" aria-describedby="emailHelp" placeholder="Enter OrgId" [(ngModel)]="orgId" [ngModelOptions]="{standalone: true}">
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">OrgDomain</label>
+                <input type="text" class="form-control" id="OrgDomain" aria-describedby="emailHelp" placeholder="Enter OrgDomain" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
             </div>
 
             <button class="btn btn-primary" (click)="patch()">Click Me!</button>

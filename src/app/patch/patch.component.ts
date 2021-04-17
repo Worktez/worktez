@@ -8,15 +8,16 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 })
 export class PatchComponent implements OnInit {
 
+  setSprintNumber: number;
   taskID: number;
   completedTask: number;
   unCompletedTask: number;
-  totalDevelopmentTask: number
-  totalMarketingTask: number
-  totalBusinessTask: number
-  totalOtherTask: number
-  orgId: string
-  obj: { TaskID: number; CompletedTask: number; UnCompletedTask: number; DevTask: number; BusinessTask: number; MarketingTask: number; OtherTask: number; OrgID: string; };
+  totalDevelopmentTask: number;
+  totalMarketingTask: number;
+  totalBusinessTask: number;
+  totalOtherTask: number;
+  orgId: string;
+  orgDomain: string;
 
   constructor(private functions: AngularFireFunctions) { }
 
@@ -24,12 +25,9 @@ export class PatchComponent implements OnInit {
   }
   async patch() {
     const callable = this.functions.httpsCallable('patch');
-    this.obj = { TaskID: this.taskID, CompletedTask: this.completedTask, UnCompletedTask: this.unCompletedTask, DevTask: this.totalDevelopmentTask, BusinessTask: this.totalBusinessTask, MarketingTask: this.totalMarketingTask, OtherTask: this.totalOtherTask, OrgID: this.orgId }
-
-    console.log(this.obj);
 
     try {
-      const result = await callable({TaskID: this.taskID, CompletedTask: this.completedTask, UnCompletedTask: this.unCompletedTask, DevTask: this.totalDevelopmentTask, BusinessTask: this.totalBusinessTask, MarketingTask: this.totalMarketingTask, OtherTask: this.totalOtherTask, OrgID: this.orgId }).toPromise();
+      const result = await callable({ SetSprintNumber: this.setSprintNumber, TaskID: this.taskID, CompletedTask: this.completedTask, UnCompletedTask: this.unCompletedTask, DevTask: this.totalDevelopmentTask, BusinessTask: this.totalBusinessTask, MarketingTask: this.totalMarketingTask, OtherTask: this.totalOtherTask, OrgID: this.orgId, OrgDomain: this.orgDomain }).toPromise();
       console.log("Success!");
       console.log(result);
       this.taskID = result.numberOfTasks;
