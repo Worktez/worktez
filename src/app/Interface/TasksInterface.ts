@@ -15,6 +15,8 @@ export interface Tasks {
   SprintNumber: number;
   StoryPointNumber: number;
   CompletionDate: string;
+  OrganizationId: string;
+  TeamId: string;
 }
 
 export interface TasksId extends Tasks {id: string;}

@@ -2,11 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/Interface/UserInterface';
 import { ValidationService } from '../../services/validation.service';
 import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { BackendService } from 'src/app/services/backend.service';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/clone-task.service';
 
@@ -38,7 +42,7 @@ export class CreateNewSessionComponent implements OnInit {
   valid: boolean = true;
   task: Tasks;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, public cloneTask: CloneTaskService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public cloneTask: CloneTaskService) { }
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
@@ -83,10 +87,12 @@ export class CreateNewSessionComponent implements OnInit {
 
   async createNewSession() {
     this.enableLoader = true;
+    const appKey = this.backendService.getOrganizationAppKey();
+    const teamId = this.authService.getTeamId();
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {
-      const result = await callable({ Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Category: this.category, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: "Development", SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

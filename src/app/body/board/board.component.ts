@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { TeamDataId } from 'src/app/Interface/TeamInterface';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
@@ -20,7 +22,7 @@ export class BoardComponent implements OnInit {
 
   filterSprintNumber: string;
 
-  constructor(private db: AngularFirestore, private router: Router, public navbarHandler: NavbarHandlerService, public backendService: BackendService) { }
+  constructor(private router: Router, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     // Better way of use db.
@@ -77,8 +79,8 @@ export class BoardComponent implements OnInit {
     // )
   }
 
-  showTasks(category: string) {
-    this.router.navigate(['/Tasks', category, this.backendService.currentSprintName])
+  showTasks(teamId: string) {
+    this.router.navigate(['/Tasks', teamId, this.backendService.currentSprintName])
   }
 
   changeCurrentSprint(currentSprintNumber: number) {
