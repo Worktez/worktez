@@ -1,3 +1,6 @@
 <app-navbar></app-navbar>
 <app-error></app-error>
-<router-outlet></router-outlet>
+<router-outlet *ngIf="applicationSettingsService.teamData | async; else loader "></router-outlet>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
