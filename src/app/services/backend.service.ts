@@ -53,6 +53,7 @@ export class BackendService {
       if(!data.empty) {
         data.forEach(async element => {
           this.organizationDetails = element.data();
+          console.log(this.organizationDetails);
           this.applicationSettingsService.getTeamDetails(this.getOrganizationId()).toPromise();
         });
       }

@@ -14,6 +14,7 @@ export class UserVerificationComponent implements OnInit {
   teamName: string
   organizationDomain: string
   userEmail: string
+  teamId: string
 
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -21,7 +22,7 @@ export class UserVerificationComponent implements OnInit {
     this.organizationDomain = this.route.snapshot.params['organizationDomain'];
     this.teamName = this.route.snapshot.params['teamName'];
     this.userEmail = this.route.snapshot.params['userEmail'];
-
+    this.teamId = this.route.snapshot.params['teamId'];
     console.log(this.teamName);
 
   }
@@ -30,7 +31,7 @@ export class UserVerificationComponent implements OnInit {
 
     const callable = this.functions.httpsCallable('verifyUser');
     try{
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail }).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
 
       console.log("Successfully verified User");
       console.log(result);

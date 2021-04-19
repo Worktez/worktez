@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { CloneTaskService } from 'src/app/services/clone-task.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tools.service';
 import { Location } from '@angular/common';
@@ -34,7 +35,7 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -60,6 +61,9 @@ export class TaskDetailsComponent implements OnInit {
       }));
   }
 
+  CloneTaskPage(){
+    this.cloneTask.getCloneTask(this.task);
+  }
   logWorkPage() {
     this.logWorkEnabled = true;
   }
@@ -78,9 +82,9 @@ export class TaskDetailsComponent implements OnInit {
 
   async deleteTask() {
     const callable = this.functions.httpsCallable('deleteTask');
-
+    const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);
@@ -92,9 +96,10 @@ export class TaskDetailsComponent implements OnInit {
 
   async reopenTask() {
     const callable = this.functions.httpsCallable('logWork');
+    const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({SprintNumber: this.task.SprintNumber,LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start",LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time}).toPromise();
+      const result = await callable({ AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time }).toPromise();
       console.log(result);
       return;
     }
