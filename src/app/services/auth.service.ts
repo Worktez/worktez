@@ -50,7 +50,6 @@ export class AuthService {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afauth.signInWithPopup(provider);
     this.user = credential.user;
-    await this.getUserSettings();
     return this.createUserData(credential.user);
   }
 
@@ -64,12 +63,14 @@ export class AuthService {
 
   async getUserSettings() {
     const uid = this.getLoggedInUser();
-    this.userAppSettingDocument = this.db.doc<UserAppSetting>('Users/'+uid);
+    this.userAppSettingDocument = this.db.doc<UserAppSetting>('Users/' + uid);
     try {
-      await this.userAppSettingDocument.ref.get().then(async doc=> {
-        if(doc.exists){
+      await this.userAppSettingDocument.ref.get().then(async doc => {
+        if (doc.exists) {
           this.userAppSetting = doc.data();
-          await this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+          if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
+            await this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+          }
         } else {
           console.error("Document does not exists!")
         }
@@ -81,11 +82,11 @@ export class AuthService {
   }
 
   getAppKey() {
-      return this.userAppSetting.AppKey;
+    return this.userAppSetting.AppKey;
   }
 
   getTeamId() {
-      return this.userAppSetting.TeamId;
+    return this.userAppSetting.TeamId;
   }
-  
+
 }
