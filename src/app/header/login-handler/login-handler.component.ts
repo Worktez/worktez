@@ -20,6 +20,8 @@ export class LoginHandlerComponent implements OnInit {
     this.userObservable = this.authService.afauth.user.pipe(map(action => {
       const data = action as User;
       this.user = data
+      this.authService.user = data;
+      this.authService.getUserSettings();
       return { ...data }
     })
     );

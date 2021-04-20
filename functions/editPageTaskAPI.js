@@ -24,7 +24,6 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         const difficulty = request.body.data.Difficulty;
         const assignee = request.body.data.Assignee;
         const estimatedTime = request.body.data.EstimatedTime;
-        const project = request.body.data.Project;
         const storyPointNumber = request.body.data.StoryPointNumber;
         const editedSprintNumber = request.body.data.SprintNumber;
         const previousId = request.body.data.PreviousId;
