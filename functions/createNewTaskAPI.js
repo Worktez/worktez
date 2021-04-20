@@ -80,6 +80,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         OrganizationId: orgId,
                         TeamId: teamId,
                     });
+
+                    Activity.addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDocument);
+
                     const promises1 = [p1, p2];
                     return Promise.all(promises1);
                 });
@@ -98,8 +101,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         return Promise.resolve(p1);
                     }
                 });
-
-                Activity.addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDocument);
 
                 const promise3 = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).get().then((doc) => {
                     if (doc.exists) {

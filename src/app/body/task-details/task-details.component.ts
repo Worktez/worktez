@@ -36,7 +36,6 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<ActivityId[]>
-
   tasksCollection: AngularFirestoreCollection<Activity>
 
   constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService) { }
