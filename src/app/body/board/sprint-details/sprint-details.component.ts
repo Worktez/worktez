@@ -5,7 +5,6 @@ import { Observable, pipe } from 'rxjs';
 import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-sprint-details',
@@ -24,7 +23,7 @@ export class SprintDetailsComponent implements OnInit {
   componentName :string="SPRINT-DETAILS"
   filterSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute,public errorHandlerService: ErrorHandlerService, public backendService: BackendService) { }
+  constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute,public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -36,10 +35,9 @@ export class SprintDetailsComponent implements OnInit {
   async changeSprintStatus(sprintStatus: string) {
       
     const callable = this.functions.httpsCallable('updateSprintStatus');
-    const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ AppKey: appKey,CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus }).toPromise();
+      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus }).toPromise();
       console.log(sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
