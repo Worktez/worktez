@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApplicationSettingsService } from '../services/application-settings.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-body',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BodyComponent implements OnInit {
 
-  constructor() { }
+  loader: boolean = true;
+
+  constructor(public applicationSettingsService: ApplicationSettingsService,public authService: AuthService ) { }
 
   ngOnInit(): void {
   }

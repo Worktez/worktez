@@ -22,12 +22,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         const sprintNumber = request.body.data.SprintNumber;
         const taskId = request.body.data.Id;
         const fullSprintId = createSprintId(sprintNumber);
-        const category = request.body.data.Category;
         const status = request.body.data.Status;
-        let totalDevelopmentTask;
-        let totalBusinessTask;
-        let totalMarketingTask;
-        let totalOtherTask;
         let totalNumberOfTask;
         let result;
         let totalCompletedTask;
