@@ -16,8 +16,8 @@ const db = admin.firestore();
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         let a = 1;
-        /*const moveTasksPromise = */
-        let setSprintNumber = parseInt(request.body.data.SetSprintNumber);
+        /* const moveTasksPromise = */
+        const setSprintNumber = parseInt(request.body.data.SetSprintNumber);
         db.collection("Tasks").where("SprintNumber", "==", setSprintNumber).get().then((task) => {
             console.log("im running");
 
@@ -28,8 +28,8 @@ exports.patch = functions.https.onRequest((request, response) => {
             let totalBusinessTasks = parseInt(request.body.data.BusinessTask);
             let totalMarketingTasks = parseInt(request.body.data.MarketingTask);
             let totalOtherTasks = parseInt(request.body.data.OtherTask);
-            let orgId = request.body.data.OrgID;
-            let orgDomain = request.body.data.OrgDomain;
+            const orgId = request.body.data.OrgID;
+            const orgDomain = request.body.data.OrgDomain;
 
             console.log(task);
 
@@ -37,30 +37,30 @@ exports.patch = functions.https.onRequest((request, response) => {
                 a += 1;
                 console.log(a);
                 // Old details
-                let id = document.data().Id;
-                let assignee = document.data().Assignee;
-                let category = document.data().Category;
-                let completionDate = document.data().CompletionDate;
-                let creationDate = document.data().CreationDate;
-                let creator = document.data().Creator;
-                let description = document.data().Description;
-                let difficulty = document.data().Difficulty;
-                let estimatedTime = document.data().EstimatedTime;
-                let logWorkTotalTime = document.data().LogWorkTotalTime;
-                let priority = document.data().Priority;
-                let sprintNumber = document.data().SprintNumber;
-                let status = document.data().Status;
-                let storyPointNumber = document.data().StoryPointNumber;
-                let title = document.data().Title;
-                let workDone = document.data().WorkDone;
+                const id = document.data().Id;
+                const assignee = document.data().Assignee;
+                const category = document.data().Category;
+                const completionDate = document.data().CompletionDate;
+                const creationDate = document.data().CreationDate;
+                const creator = document.data().Creator;
+                const description = document.data().Description;
+                const difficulty = document.data().Difficulty;
+                const estimatedTime = document.data().EstimatedTime;
+                const logWorkTotalTime = document.data().LogWorkTotalTime;
+                const priority = document.data().Priority;
+                const sprintNumber = document.data().SprintNumber;
+                const status = document.data().Status;
+                const storyPointNumber = document.data().StoryPointNumber;
+                const title = document.data().Title;
+                const workDone = document.data().WorkDone;
 
                 if (sprintNumber === setSprintNumber) {
                     // let fullSprintName = createSprintId(sprintNumber);
 
                     // changed details
-                    let project = category;
-                    let projectId = project.slice(0, 3);
-                    taskID = taskID + 1
+                    const project = category;
+                    const projectId = project.slice(0, 3);
+                    taskID = taskID + 1;
                     let newTaskId = "";
 
                     if (project == "Development") {
@@ -111,15 +111,15 @@ exports.patch = functions.https.onRequest((request, response) => {
                 }
             });
             result = {
-                    totalBusinessTasks: totalBusinessTasks,
-                    totalDevelopmentTasks: totalDevelopmentTasks,
-                    totalMarketingTasks: totalMarketingTasks,
-                    totalOtherTasks: totalOtherTasks,
-                    numberOfTasks: taskID,
-                    numberOfCompleted: completedTask,
-                    numberOfUncompleted: unCompletedTask,
-                }
-                // response.status(200).send(result);
+                totalBusinessTasks: totalBusinessTasks,
+                totalDevelopmentTasks: totalDevelopmentTasks,
+                totalMarketingTasks: totalMarketingTasks,
+                totalOtherTasks: totalOtherTasks,
+                numberOfTasks: taskID,
+                numberOfCompleted: completedTask,
+                numberOfUncompleted: unCompletedTask,
+            };
+            // response.status(200).send(result);
             return response.send({
                 status: 200,
                 data: result,
@@ -129,8 +129,6 @@ exports.patch = functions.https.onRequest((request, response) => {
             console.error("Patch error in getting tasks: ", error);
             return response.status(500).send(result);
         });
-
-
     });
 });
 
