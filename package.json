@@ -27,6 +27,7 @@
         "firebase-functions": "^3.13.1",
         "jquery": "^3.5.1",
         "latest": "^0.2.0",
+        "node": "^16.0.0",
         "popper.js": "^1.16.1",
         "rxjs": "~6.6.0",
         "stream": "0.0.2",
