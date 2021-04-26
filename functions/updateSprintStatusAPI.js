@@ -17,8 +17,14 @@ exports.updateSprintStatus = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const sprintStatus = request.body.data.SprintStatus;
         const currentSprintName = request.body.data.CurrentSprintName;
+        const appKey = request.body.data.AppKey;
+        let documentID;
         console.log(currentSprintName);
-        db.collection("Main").doc(currentSprintName).update({
+        db.collection("Organizations").where("AppKey", "==", appKey).get().then((org) => {
+            org.forEach((doc) => {
+                documentID = doc.data().OrganizationDomain;
+            });
+            db.collection("Organizations").doc(documentID).collection("Sprints").doc(currentSprintName).update({
                 Status: sprintStatus,
             }).then(() => {
                 console.log("Sprint updated successfully");
@@ -30,5 +36,6 @@ exports.updateSprintStatus = functions.https.onRequest((request, response) => {
                 console.error("Error updating Sprint", error);
                 return response.status(500).send(result);
             });
+        });
     });
 });
