@@ -7,7 +7,7 @@
 
 const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
-// const Activity = require("./addActivity");
+const Activity = require("./addActivity");
 
 const admin = require("firebase-admin");
 
@@ -30,7 +30,7 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         const sprintNumber = parseInt(request.body.data.SprintNumber);
         const creationDate = request.body.data.CreationDate;
         const teamId = request.body.data.TeamId;
-        // const time = request.body.data.Time;
+        const time = request.body.data.Time;
         const fullSprintId = createSprintId(sprintNumber);
         const loggedWorkTotalTime = 0;
         const workDone = 0;
@@ -80,6 +80,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         OrganizationId: orgId,
                         TeamId: teamId,
                     });
+
+                    Activity.addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDocument);
+
                     const promises1 = [p1, p2];
                     return Promise.all(promises1);
                 });
@@ -97,7 +100,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         });
                         return Promise.resolve(p1);
                     }
-                    // Activity.addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time);
                 });
 
                 const promise3 = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).get().then((doc) => {

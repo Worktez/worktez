@@ -4,6 +4,10 @@
     color: var(--text);
 }
 
+.activityHeading{
+    color: var(--text);
+}
+
 #button {
     background-color: var(--secondary-color);
     border: var(--primary-border);
