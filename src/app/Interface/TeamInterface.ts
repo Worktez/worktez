@@ -13,3 +13,13 @@ export interface Team {
 }
 
 export interface TeamDataId extends Team {id: string;}
+
+export interface Sprint {
+    OrganizationId: string;
+    TeamId: string;
+    TotalNumberOfTask: number;
+    TotalCompletedTask: number;
+    TotalUnCompletedTeamTask: number;
+}
+
+export interface SprintDataId extends Sprint{id: string;}

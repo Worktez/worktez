@@ -27,9 +27,9 @@ export class BackendService {
   currentSprintName: string;
 
   constructor(private db: AngularFirestore, private applicationSettingsService: ApplicationSettingsService) { }
-  
+
   getCurrentSprint() {
-    this.rawDocument = this.db.doc<RawDataType>('Organizations/'+this.organizationDetails.OrganizationDomain+'/RawData/AppDetails');
+    this.rawDocument = this.db.doc<RawDataType>('Organizations/' + this.organizationDetails.OrganizationDomain + '/RawData/AppDetails');
     this.rawDataObservable = this.rawDocument.snapshotChanges().pipe(
       map(actions => {
         const data = actions.payload.data() as RawDataType;
@@ -50,7 +50,7 @@ export class BackendService {
       return queryRef;
     });
     await this.organizationsCollection.get().toPromise().then(data => {
-      if(!data.empty) {
+      if (!data.empty) {
         data.forEach(async element => {
           this.organizationDetails = element.data();
           this.applicationSettingsService.getTeamDetails(this.getOrganizationId()).toPromise();
@@ -62,16 +62,18 @@ export class BackendService {
 
   setCurrentSprint(sprintNumber: number) {
     this.currentSprintNumber = sprintNumber;
-    if(this.currentSprintNumber == -1){
+    if (this.currentSprintNumber == -1) {
       this.currentSprintName = "Backlog";
-    } else if(sprintNumber == 0){
+    } else if (sprintNumber == 0) {
       this.getCurrentSprint();
-    } else{
+    } else if (sprintNumber == -2) {
+      this.currentSprintName = "Deleted";
+    } else {
       this.currentSprintName = "S" + this.currentSprintNumber;
     }
   }
 
-  readCurrentSprintData(){
+  readCurrentSprintData() {
     this.mainCollection = this.db.collectionGroup<Main>('Sprints', ref => ref.where('OrganizationId', '==', this.organizationDetails.OrganizationId));
     this.mainData = this.mainCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
@@ -83,7 +85,7 @@ export class BackendService {
   }
 
   getOrganizationDomain() {
-      return this.organizationDetails.OrganizationDomain;
+    return this.organizationDetails.OrganizationDomain;
   }
 
   getOrganizationAppKey() {

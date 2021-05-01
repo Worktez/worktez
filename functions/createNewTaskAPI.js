@@ -135,7 +135,32 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     return Promise.resolve(sprintDataPromise);
                 });
 
-                const newTaskPromises = [promise1, promise2, promise3];
+                const promise4 = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).get().then((teamSprint) => {
+                    if (teamSprint.exists) {
+                        let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                        let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
+
+                        totalUnCompletedTask = totalUnCompletedTask + 1;
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        const createTeamSprint = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).update({
+                            TotalNumberOfTask: totalNumberOfTask,
+                            TotalUnCompletedTask: totalUnCompletedTask,
+                        });
+                        return Promise.resolve(createTeamSprint);
+                    } else {
+                        const createTeamSprint = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).set({
+                            OrganizationId: orgId,
+                            TeamId: teamId,
+                            SprintNumber: sprintNumber,
+                            TotalCompletedTask: 0,
+                            TotalNumberOfTask: 1,
+                            TotalUnCompletedTask: 1,
+                        });
+                        return Promise.resolve(createTeamSprint);
+                    }
+                });
+
+                const newTaskPromises = [promise1, promise2, promise3, promise4];
                 Promise.all(newTaskPromises).then(() => {
                         result = { data: "OK!" };
                         console.log("Task Created Successfully");
