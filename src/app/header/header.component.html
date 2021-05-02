@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand-lg sticky-top header">
     <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
-        <img src="../../assets/logo.png" width="25" height="25" alt="" loading="lazy"> Work Trolly
+        <img src="../../assets/logo.png" width="50" height="40" alt="" loading="lazy">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="height:fit-content; padding: 0 10px; margin-top: -16px;">
-        <span class="navbar-toggler-icon text-white material-icons">menu</span>
+        <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
     </button>
     <div class="collapse navbar-collapse pl-3" id="navbarText">
         <ul class="navbar-nav">
 
             <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Create
+                  <span style="color: var(--text);">Create</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                     <a class="dropdown-item" (click)="startNewSession()">Create New Task</a>
@@ -20,7 +20,7 @@
 
             <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">
                 <a class=" nav-link dropdown-toggle" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Boards
+                    <span style="color: var(--text);">Boards</span>
                 </a>
                 <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards">
                     <a class="dropdown-item " (click)="Board() ">Board</a>
@@ -30,7 +30,7 @@
 
             <li class="nav-item dropdown " *ngIf="authService.afauth.user | async ">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownTeam" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Team
+                    <span style="color: var(--text);">Team</span>
                 </a>
                 <div class="dropdown-menu " aria-labelledby="navbarDropdownTeam">
                     <a class="dropdown-item ">Create Team</a>

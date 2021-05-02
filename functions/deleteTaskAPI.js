@@ -56,7 +56,7 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
                 });
                 return Promise.resolve(updateDeleteTaskCounter);
             });
-            Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time);
+            Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time, documentID);
 
             const deleteTaskPromises = [p1, p2];
             Promise.all(deleteTaskPromises).then(() => {

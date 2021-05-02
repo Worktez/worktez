@@ -109,7 +109,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             promises.push(p3);
 
             comment = comment + changedData;
-            Activity.addActivity("EDITED", comment, taskId, date, time);
+            Activity.addActivity("EDITED", comment, taskId, date, time, documentID);
 
             Promise.all(promises).then(() => {
                     result = { data: "OK" };

@@ -1,4 +1,4 @@
-<ng-container *ngIf="taskDataObservable | async" class="task-position">
+<ng-container *ngIf="(taskDataObservable | async) && (activityData | async)" class="task-position">
     <div class="container p-5">
         <div class="card mb-3" id="cardDescription">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -162,6 +162,24 @@
                 </div>
             </div>
         </div>
+        <h5 class="py-3 activityHeading">Activity</h5>
+        <ng-container *ngFor="let item of activityData | async">
+            <div class="card my-2" id="cardDescription">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h6>{{item.Date}} | {{item.Time}}</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <span>{{item.Comment}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <span> {{item.Type}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
     </div>
     <ng-container *ngIf="logWorkEnabled" id="exampleModalLabel">
         <app-log-work [task]="task" (logWorkCompleted)="logWorkCompleted($event)"></app-log-work>

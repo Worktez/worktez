@@ -25,7 +25,7 @@
                     <div class="btn-group" *ngIf="Status != 'Completed' ">
                         <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                         <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                            <button class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
+                            <button *ngIf = "Status !== 'Under Progress'" class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
                             <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
                         </div>
                     </div>
