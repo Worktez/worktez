@@ -37,7 +37,7 @@ exports.patch = functions.https.onRequest((request, response) => {
                 a += 1;
                 console.log(a);
                 // Old details
-                const id = document.data().Id;
+                // const id = document.data().Id;
                 const assignee = document.data().Assignee;
                 const category = document.data().Category;
                 const completionDate = document.data().CompletionDate;
@@ -132,13 +132,13 @@ exports.patch = functions.https.onRequest((request, response) => {
     });
 });
 
-function createSprintId(sprintNumber) {
-    if (sprintNumber === -1) {
-        return "Backlog";
-    } else if (sprintNumber === -2) {
-        return "Trash";
-    } else {
-        return ("S" + sprintNumber);
-    }
-}
+// function createSprintId(sprintNumber) {
+//     if (sprintNumber === -1) {
+//         return "Backlog";
+//     } else if (sprintNumber === -2) {
+//         return "Trash";
+//     } else {
+//         return ("S" + sprintNumber);
+//     }
+// }
 // return Promise.resolve(moveTasksPromise)
