@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators'
@@ -22,7 +22,10 @@ export class BoardComponent implements OnInit {
 
   filterSprintNumber: string;
 
-  constructor(private router: Router, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  // public teamSprintCollection: AngularFirestoreCollectionGroup<RawDataType>;
+  // public teamSprintData: Observable<RawDataId[]>;
+
+  constructor(private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     // Better way of use db.
@@ -72,8 +75,24 @@ export class BoardComponent implements OnInit {
 
   }
 
+  // getSprintDetails(orgId: string, teamName: string) {
+  //   this.teamSprintCollection = this.db.collectionGroup<RawDataType>('Teams/' + teamName + '/Sprints/' + this.backendService.currentSprintName, ref => ref.where('OrganizationId', '==', orgId));
+  //   this.teamSprintData = this.teamSprintCollection.snapshotChanges().pipe(
+  //     map(actions => actions.map(a => {
+  //       const data = a.payload.doc.data() as RawDataType;
+  //       const id = a.payload.doc.id;
+  //       return { id, ...data };
+  //     }))
+  //   );
+  //   return this.teamSprintData;
+  // }
+
   readCurrentSprintData() {
-    this.backendService.readCurrentSprintData();
+    // this.backendService.readCurrentSprintData();
+    const orgId = this.backendService.organizationDetails.OrganizationId;
+    const teamId = this.applicationSettingsService.teamDetails.TeamId;
+    const currentSprintNumber = this.backendService.currentSprintNumber;
+    this.applicationSettingsService.getSprintsDetails(orgId, teamId, currentSprintNumber);
     // this.mainData = this.mainCollection.snapshotChanges().pipe(
     //   map()
     // )

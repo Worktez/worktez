@@ -11,7 +11,7 @@
 #theme-button {
     padding-top: 6px;
     background-color: var(--header-bg);
-    color: var(--button-text);
+    color: var(--text);
     border: none;
 }
 

@@ -12,14 +12,14 @@ let actionId;
 let totalActions;
 let totalComments;
 
-exports.addActivity = function(type, comment, taskId, date, time) {
-    const promise1 = db.collection("Activity").doc(taskId).get().then((doc) => {
+exports.addActivity = function(type, comment, taskId, date, time, documentID) {
+    const promise1 = db.collection("Organizations").doc(documentID).collection("Activity").doc(taskId).get().then((doc) => {
         if (doc.exists) {
             totalActions = doc.data().TotalActions + 1;
             totalComments = doc.data().TotalComments + 1;
 
             actionId = createActivityId(totalActions);
-            activityPromise = db.collection("Activity").doc(taskId).update({
+            activityPromise = db.collection("Organizations").doc(documentID).collection("Activity").doc(taskId).update({
                 TotalActions: totalActions,
                 TotalComments: totalComments,
             });
@@ -28,13 +28,13 @@ exports.addActivity = function(type, comment, taskId, date, time) {
             totalComments = 1;
             actionId = createActivityId(totalActions);
 
-            activityPromise = db.collection("Activity").doc(taskId).set({
+            activityPromise = db.collection("Organizations").doc(documentID).collection("Activity").doc(taskId).set({
                 TaskId: taskId,
                 TotalActions: totalActions,
                 TotalComments: totalComments,
             });
         }
-        const activityPromise2 = db.collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
+        const activityPromise2 = db.collection("Organizations").doc(documentID).collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
             Type: type,
             Comment: comment,
             Date: date,

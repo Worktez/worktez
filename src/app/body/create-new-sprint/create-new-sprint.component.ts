@@ -12,6 +12,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Organizations } from 'src/app/Interface/OrganizationInterface';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -29,6 +30,8 @@ export class CreateNewSprintComponent implements OnInit {
   status: string
   enableLoader: boolean = false;
   user: User;
+  
+  organizationDetails: Organizations
 
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
@@ -48,7 +51,8 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   async getNewSprintId() {
-    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
+    // this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
+    this.rawDocument = this.db.doc<RawDataType>('Organizations/'+this.backendService.organizationDetails.OrganizationDomain+'/RawData/AppDetails');
     try {
       await this.rawDocument.ref.get().then(doc => {
         if (doc.exists) {

@@ -63,10 +63,30 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                     }
                     return Promise.resolve(createSprintPromise);
                 });
-                const p2 = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").update({
+
+                const p2 = db.collection("Organizations").doc(orgDomain).collection("Teams").get().then((teamCol) => {
+                    teamCol.forEach((teamDoc) => {
+                        const teamSprintPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamDoc.id).collection("Sprints").doc(newSprintIdString).get().then((teamSprint) => {
+                            if (!teamSprint.exists) {
+                                const createTeamSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamDoc.id).collection("Sprints").doc(newSprintIdString).set({
+                                    OrganizationId: orgId,
+                                    TeamId: teamId,
+                                    SprintNumber: newSprintId,
+                                    TotalCompletedTask: 0,
+                                    TotalNumberOfTask: 0,
+                                    TotalUnCompletedTask: 0,
+                                });
+                                return Promise.resolve(createTeamSprint);
+                            }
+                        });
+                        return Promise.resolve(teamSprintPromise);
+                    });
+                });
+
+                const p3 = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").update({
                     CurrentSprintId: newSprintId,
                 });
-                const Promises = [p1, p2];
+                const Promises = [p1, p2, p3];
                 return Promise.all(Promises).then(() => {
                         console.log("Sprint started successfully");
                         result = { data: "OK" };
