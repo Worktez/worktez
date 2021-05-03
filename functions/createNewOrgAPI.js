@@ -112,6 +112,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 PriorityLabels: priorityLabels,
                 DifficultyLabels: difficultyLabels,
                 TotalTeamTasks: 0,
+                CurrentSprintId: 0,
                 OrganizationId: orgId,
                 TeamId: teamId,
             });

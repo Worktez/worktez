@@ -1,11 +1,14 @@
-<div class="card text-white mb-3">
-    <div class="card-body">
-        <h5 class="card-title" style="font-size: 18px;">{{ cardName }}</h5>
-        <div class="row card-text" style="font-size: 12px;">
-            <div class="col-md-6">
-                No. of Task: {{tasks}}
+<ng-container *ngIf="applicationSettingsService.teamData|async">
+    <div class="col" type="button">
+        <div class="card text-white mb-3">
+            <div class="card-body">
+                <h5 class="card-title" style="font-size: 18px;">{{ cardName }}</h5>
+                <div class="row card-text" style="font-size: 12px;">
+                    <!-- <div class="col">
+                        No. of Task: {{sprintData.TotalNumberOfTask}}
+                    </div> -->
+                </div>
             </div>
-            <div class="col-md-6" id="totalBusinessTask"></div>
         </div>
     </div>
-</div>
+</ng-container>
