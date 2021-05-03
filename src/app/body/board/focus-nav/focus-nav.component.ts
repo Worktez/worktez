@@ -25,4 +25,8 @@ export class FocusNavComponent implements OnInit {
   showBacklog(){
     this.currentSprint.emit(-1);
   }
+  
+  showDeleted(){
+    this.currentSprint.emit(-2);
+  }
 }
