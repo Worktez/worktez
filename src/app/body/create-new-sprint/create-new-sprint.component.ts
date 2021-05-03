@@ -12,6 +12,9 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Organizations } from 'src/app/Interface/OrganizationInterface';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -30,58 +33,59 @@ export class CreateNewSprintComponent implements OnInit {
   enableLoader: boolean = false;
   user: User;
 
+  selectedTeamId: string = "Dev";
+  teamCurrentSprintNumber: number;
+
+  teamData: TeamDataId[] = [];
+  
+  organizationDetails: Organizations
+
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
 
-  public sprintData: Observable<RawDataId[]>;
-  public sprintDocument: AngularFirestoreDocument<RawDataType>;
+  sprintData: Sprint;
 
-  currentSprintNumber: number;
+  nextSprintId: number;
+  showContent: boolean;
 
-  constructor(private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService, private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
-    this.getNewSprintId();
+    this.readApplicationData();
   }
 
-  async getNewSprintId() {
-    this.rawDocument = this.db.doc<RawDataType>('RawData/AppDetails');
-    try {
-      await this.rawDocument.ref.get().then(doc => {
-        if (doc.exists) {
-          var rawData = doc.data();
-          this.currentSprintNumber = rawData.CurrentSprintId + 1;
-          this.newSprintId = "S" + this.currentSprintNumber;
-          this.readSprintData(this.newSprintId);
-        } else {
-          console.error("Document does not exists!")
+  readApplicationData() {
+    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+      this.teamData = teams;
+      teams.forEach(element => {
+        if(element.TeamId == this.selectedTeamId) {
+          this.teamCurrentSprintNumber = element.CurrentSprintId;
+          this.nextSprintId = element.CurrentSprintId+1;
         }
       });
-      return "Success";
-    } catch (error) {
-      return "Error";
-    }
+      this.readSprintData();
+    });
+  }
+  
+  readSprintData() {
+    this.showContent = false;
+    this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.nextSprintId).subscribe(sprints => {
+      this.sprintData = sprints[0];
 
+      this.showContent = true;
+    });
   }
 
-  async readSprintData(newSprintId: string) {
-    var documentName = "Main/" + newSprintId;
-    this.sprintDocument = this.db.doc<RawDataType>(documentName);
-    try {
-      await this.sprintDocument.ref.get().then(doc => {
-        if (doc.exists) {
-          var sprintData = doc.data();
-        }
-        else {
-        }
-      });
-      return "ok";
-    } catch (error) {
-      return "Error";
-    }
+  loadSprintData() {
+    this.teamData.forEach(element => {
+      if(element.TeamId == this.selectedTeamId) {
+        this.nextSprintId = element.CurrentSprintId+1;
+      }
+    });
+    this.readSprintData();
   }
 
   async submit() {
@@ -105,15 +109,13 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.status);
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
-    const teamId = this.authService.getTeamId();
     const callable = this.functions.httpsCallable('startNewSprint');
 
     try {
-      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.currentSprintNumber }).toPromise();
+      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
 
       console.log("Successfully created a new sprint");
       console.log(result);
-      this.backendService.currentSprintNumber = 0;
       this.router.navigate(['/']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
@@ -125,5 +127,7 @@ export class CreateNewSprintComponent implements OnInit {
   backToDashboard() {
     this.location.back();
   }
+
+  
 
 }

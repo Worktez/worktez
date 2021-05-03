@@ -38,8 +38,6 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         let totalNumberOfTask;
         let result;
         let totalUnCompletedTask = 0;
-        let totalCompletedTask = 0;
-        let sprintDataPromise;
         // const currentSprintId = 0;
         const completiondate = "Not yet Completed";
         let orgDocument;
@@ -102,37 +100,65 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     }
                 });
 
-                const promise3 = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).get().then((doc) => {
-                    if (doc.exists) {
-                        totalNumberOfTask = doc.data().TotalNumberOfTask;
-                        totalUnCompletedTask = doc.data().TotalUnCompletedTask;
-                        totalNumberOfTask = totalNumberOfTask + 1;
-                        totalUnCompletedTask = totalUnCompletedTask + 1;
+                // const promise3 = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).get().then((doc) => {
+                //     if (doc.exists) {
+                //         totalNumberOfTask = doc.data().TotalNumberOfTask;
+                //         totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+                //         totalNumberOfTask = totalNumberOfTask + 1;
+                //         totalUnCompletedTask = totalUnCompletedTask + 1;
 
-                        sprintDataPromise = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).update({
-                            TotalUnCompletedTask: totalUnCompletedTask,
+                //         sprintDataPromise = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).update({
+                //             TotalUnCompletedTask: totalUnCompletedTask,
+                //             TotalNumberOfTask: totalNumberOfTask,
+                //             OrganizationId: orgId,
+                //         });
+                //     } else {
+                //         totalUnCompletedTask = 0;
+                //         totalCompletedTask = 0;
+                //         totalNumberOfTask = 0;
+
+                //         totalNumberOfTask = totalNumberOfTask + 1;
+                //         totalUnCompletedTask = totalUnCompletedTask + 1;
+
+                //         sprintDataPromise = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).set({
+                //             EndDate: "xx/xx/xxxx",
+                //             StartDate: "xx/xx/xxxx",
+                //             Status: "Not Started",
+                //             TotalUnCompletedTask: totalUnCompletedTask,
+                //             TotalCompletedTask: totalCompletedTask,
+                //             TotalNumberOfTask: totalNumberOfTask,
+                //             OrganizationId: orgId,
+                //         });
+                //     }
+                //     return Promise.resolve(sprintDataPromise);
+                // });
+
+                const promise3 = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).get().then((teamSprint) => {
+                    if (teamSprint.exists) {
+                        let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                        let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
+
+                        totalUnCompletedTask = totalUnCompletedTask + 1;
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        const createTeamSprint = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).update({
                             TotalNumberOfTask: totalNumberOfTask,
-                            OrganizationId: orgId,
+                            TotalUnCompletedTask: totalUnCompletedTask,
                         });
+                        return Promise.resolve(createTeamSprint);
                     } else {
-                        totalUnCompletedTask = 0;
-                        totalCompletedTask = 0;
-                        totalNumberOfTask = 0;
-
-                        totalNumberOfTask = totalNumberOfTask + 1;
-                        totalUnCompletedTask = totalUnCompletedTask + 1;
-
-                        sprintDataPromise = db.collection("Organizations").doc(orgDocument).collection("Sprints").doc(fullSprintId).set({
+                        const createTeamSprint = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).set({
                             EndDate: "xx/xx/xxxx",
                             StartDate: "xx/xx/xxxx",
                             Status: "Not Started",
-                            TotalUnCompletedTask: totalUnCompletedTask,
-                            TotalCompletedTask: totalCompletedTask,
-                            TotalNumberOfTask: totalNumberOfTask,
                             OrganizationId: orgId,
+                            TeamId: teamId,
+                            SprintNumber: sprintNumber,
+                            TotalCompletedTask: 0,
+                            TotalNumberOfTask: 1,
+                            TotalUnCompletedTask: 1,
                         });
+                        return Promise.resolve(createTeamSprint);
                     }
-                    return Promise.resolve(sprintDataPromise);
                 });
 
                 const newTaskPromises = [promise1, promise2, promise3];

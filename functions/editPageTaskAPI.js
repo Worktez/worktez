@@ -94,9 +94,59 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                     return Promise.resolve(sprintEditPromise);
                 });
                 promises.push(p2);
+
+                const p3 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((taskDoc) => {
+                    const project = taskDoc.data().Project;
+                    const taskPrevSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(previousSprintId).get().then((teamSprint) => {
+                        if (teamSprint.exists) {
+                            let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                            let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
+
+                            totalUnCompletedTask = totalUnCompletedTask - 1;
+                            totalNumberOfTask = totalNumberOfTask - 1;
+                            const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(previousSprintId).update({
+                                TotalNumberOfTask: totalNumberOfTask,
+                                TotalUnCompletedTask: totalUnCompletedTask,
+                            });
+                            return Promise.resolve(createTeamSprint);
+                        }
+                    });
+                    return Promise.resolve(taskPrevSprintPromise);
+                });
+                promises.push(p3);
+
+                const p4 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((teamDoc) => {
+                    const project = teamDoc.data().Project;
+                    const taskNewSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).get().then((teamSprint) => {
+                        if (teamSprint.exists) {
+                            let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                            let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
+
+                            totalUnCompletedTask = totalUnCompletedTask + 1;
+                            totalNumberOfTask = totalNumberOfTask + 1;
+                            const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).update({
+                                TotalNumberOfTask: totalNumberOfTask,
+                                TotalUnCompletedTask: totalUnCompletedTask,
+                            });
+                            return Promise.resolve(createTeamSprint);
+                        } else {
+                            const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).set({
+                                OrganizationId: orgId,
+                                TeamId: teamId,
+                                SprintNumber: editedSprintNumber,
+                                TotalCompletedTask: 0,
+                                TotalNumberOfTask: 1,
+                                TotalUnCompletedTask: 1,
+                            });
+                            return Promise.resolve(createTeamSprint);
+                        }
+                    });
+                    return Promise.resolve(taskNewSprintPromise);
+                });
+                promises.push(p4);
             }
 
-            const p3 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).update({
+            const p5 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).update({
                 Description: description,
                 CreationDate: creationDate,
                 Priority: priority,
@@ -106,7 +156,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                 SprintNumber: editedSprintNumber,
                 StoryPointNumber: storyPointNumber,
             });
-            promises.push(p3);
+            promises.push(p5);
 
             comment = comment + changedData;
             Activity.addActivity("EDITED", comment, taskId, date, time, documentID);

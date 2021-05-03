@@ -65,11 +65,11 @@ export class AuthService {
     const uid = this.getLoggedInUser();
     this.userAppSettingDocument = this.db.doc<UserAppSetting>('Users/' + uid);
     try {
-      await this.userAppSettingDocument.ref.get().then(async doc => {
+      await this.userAppSettingDocument.ref.get().then(doc => {
         if (doc.exists) {
           this.userAppSetting = doc.data();
           if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
-            await this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+            this.backendService.getOrgDetails(this.userAppSetting.AppKey);
           }
         } else {
           console.error("Document does not exists!")

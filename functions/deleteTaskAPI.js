@@ -30,9 +30,11 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
         const date = request.body.data.Date;
         const time = request.body.data.Time;
 
+        console.log(fullSprintId);
         const deleteTaskPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((org) => {
             org.forEach((doc) => {
                 documentID = doc.data().OrganizationDomain;
+                orgId = doc.data().OrganizationId;
             });
 
             console.log("DocumentID = " + documentID);
@@ -43,22 +45,100 @@ exports.deleteTask = functions.https.onRequest((request, response) => {
             });
 
             const p2 = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).get().then((doc) => {
-                totalNumberOfTask = doc.data().TotalNumberOfTask;
-                totalCompletedTask = doc.data().TotalCompletedTask;
-                totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+                console.log(fullSprintId);
+                if (doc.exists) {
+                    console.log("I exist!");
+                    totalNumberOfTask = doc.data().TotalNumberOfTask;
+                    totalCompletedTask = doc.data().TotalCompletedTask;
+                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
 
-                totalNumberOfTask = totalNumberOfTask - 1;
-                status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
-                const updateDeleteTaskCounter = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).update({
-                    TotalNumberOfTask: totalNumberOfTask,
-                    TotalCompletedTask: totalCompletedTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
-                });
-                return Promise.resolve(updateDeleteTaskCounter);
+                    totalNumberOfTask = totalNumberOfTask - 1;
+                    status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
+                    const updateDeleteTaskCounter = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).update({
+                        TotalNumberOfTask: totalNumberOfTask,
+                        TotalCompletedTask: totalCompletedTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                    });
+                    return Promise.resolve(updateDeleteTaskCounter);
+                }
             });
+
+            const p3 = db.collection("Organizations").doc(documentID).collection("Sprints").doc("Deleted").get().then((doc) => {
+                console.log(fullSprintId);
+                if (doc.exists) {
+                    console.log("I exist!");
+                    totalNumberOfTask = doc.data().TotalNumberOfTask;
+
+                    totalNumberOfTask = totalNumberOfTask - 1;
+                    const updateDeleteTaskCounter = db.collection("Organizations").doc(documentID).collection("Sprints").doc("Deleted").update({
+                        TotalNumberOfTask: totalNumberOfTask,
+                    });
+                    return Promise.resolve(updateDeleteTaskCounter);
+                } else {
+                    const updateDeleteTaskCounter = db.collection("Organizations").doc(documentID).collection("Sprints").doc("Deleted").set({
+                        EndDate: "xx/xx/xxxx",
+                        StartDate: "xx/xx/xxxx",
+                        Status: "Not Started",
+                        TotalNumberOfTask: 1,
+                        OrganizationId: orgId,
+                    });
+                    return Promise.resolve(updateDeleteTaskCounter);
+                }
+            });
+
+            const p4 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((taskDoc) => {
+                const project = taskDoc.data().Project;
+                const taskSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).get().then((teamSprint) => {
+                    if (teamSprint.exists) {
+                        let totalCompletedTask = teamSprint.data().TotalCompletedTask;
+                        let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                        let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
+                        console.log(totalUnCompletedTask);
+
+                        totalNumberOfTask = totalNumberOfTask - 1;
+                        // status === "Completed" ? totalCompletedTask = totalCompletedTask - 1 : totalUnCompletedTask = totalUnCompletedTask - 1;
+                        if (status === "Completed") {
+                            totalCompletedTask = totalCompletedTask - 1;
+                        } else {
+                            totalUnCompletedTask = totalUnCompletedTask - 1;
+                        }
+                        console.log(totalUnCompletedTask);
+                        const editTeamSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).update({
+                            TotalCompletedTask: totalCompletedTask,
+                            TotalNumberOfTask: totalNumberOfTask,
+                            TotalUnCompletedTask: totalUnCompletedTask,
+                        });
+                        return Promise.resolve(editTeamSprintPromise);
+                    }
+                });
+                return Promise.resolve(taskSprintPromise);
+            });
+
+            const p5 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((taskDoc) => {
+                const project = taskDoc.data().Project;
+                const taskNewSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc("Deleted").get().then((teamSprint) => {
+                    if (teamSprint.exists) {
+                        let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
+
+                        totalNumberOfTask = totalNumberOfTask + 1;
+                        const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc("Deleted").update({
+                            TotalNumberOfTask: totalNumberOfTask,
+                        });
+                        return Promise.resolve(createTeamSprint);
+                    } else {
+                        const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc("Deleted").set({
+                            SprintNumber: -2,
+                            TotalNumberOfTask: 1,
+                        });
+                        return Promise.resolve(createTeamSprint);
+                    }
+                });
+                return Promise.resolve(taskNewSprintPromise);
+            });
+
             Activity.addActivity("DELETED", "Deleted task " + taskId, taskId, date, time, documentID);
 
-            const deleteTaskPromises = [p1, p2];
+            const deleteTaskPromises = [p1, p2, p3, p4, p5];
             Promise.all(deleteTaskPromises).then(() => {
                     result = { data: "OK" };
                     console.log("Deleted Task Sucessfully");
