@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Router } from '@angular/router';
+import { Team } from 'src/app/Interface/TeamInterface';
+import { OrgTeamService } from 'src/app/services/org-team.service';
 import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
@@ -17,13 +19,27 @@ export class TeamDetailsComponent implements OnInit {
 
   childStep: number = 1
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public orgTeamService: OrgTeamService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+      try{
+        this.orgTeamService.getTeamDetails().subscribe(
+        data =>{
+          this.teamName = data.TeamName;
+          this.teamId = data.TeamId;
+          this.teamDescription = data.TeamDescription;
+          this.teamManagerEmail = data.TeamManagerEmail;
+          this.teamMembers = data.TeamMembers.join(',');
+      }, error=>{
+          throw error;
+        }
+    );}catch(error){
+      console.log("Team does not exist");
+    }
+  }
 
-
-
-  teamName: string
+  teamDetails: Team
+  teamName: string;
   teamId: string
   teamDescription: string = ""
   teamManagerEmail: string

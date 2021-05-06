@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { OrgTeamService } from '../services/org-team.service';
 import { ThemeService } from '../services/theme.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ThemeService } from '../services/theme.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public router: Router, public authService: AuthService, public themeService: ThemeService) { }
+  constructor(public router: Router, public authService: AuthService, public themeService: ThemeService, public orgTeamService: OrgTeamService) { }
 
   ngOnInit(): void {
   }
@@ -29,5 +30,9 @@ export class HeaderComponent implements OnInit {
 
   myDashBoard(){
     this.router.navigate(["/"])
+  }
+
+  callTeamPage(){
+    this.orgTeamService.getTeam(this.authService.getTeamId());
   }
 }
