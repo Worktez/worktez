@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Router } from '@angular/router';
 import { Team } from 'src/app/Interface/TeamInterface';
+import { BackendService } from 'src/app/services/backend.service';
 import { OrgTeamService } from 'src/app/services/org-team.service';
 import { ValidationService } from 'src/app/services/validation.service';
 
@@ -19,7 +20,7 @@ export class TeamDetailsComponent implements OnInit {
 
   childStep: number = 1
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public orgTeamService: OrgTeamService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public orgTeamService: OrgTeamService, public backendService: BackendService) { }
 
   ngOnInit(): void {
       try{
@@ -122,9 +123,10 @@ export class TeamDetailsComponent implements OnInit {
   async createNewTeamWithLabels() {
     this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('createNewTeamWithLabels');
+    const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMemberEmailArray, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({ OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMemberEmailArray, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, AppKey: appKey }).toPromise();
       console.log(result);
       this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['login']);

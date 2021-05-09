@@ -26,7 +26,6 @@ export class OrgTeamService {
       map(actions => {
         const data = actions.payload.data() as Team;
         this.teamDetails = data;
-
         return { ...data }
       }));
     return this.teamDataObservable;

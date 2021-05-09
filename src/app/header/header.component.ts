@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(["/"])
   }
 
-  callTeamPage(){
+  createTeam(){
     this.orgTeamService.getTeam(this.authService.getTeamId());
   }
 }
