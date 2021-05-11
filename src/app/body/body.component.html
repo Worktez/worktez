@@ -10,11 +10,15 @@
 
         <app-create-new-organization></app-create-new-organization>
     </ng-container>
-    <ng-template #showComponents>
-        <router-outlet *ngIf="applicationSettingsService.teamData | async; else loader "></router-outlet>
-    </ng-template>
+
+    <ng-container *ngIf="backendService.organizationsData | async; else loader">
+        <ng-container *ngFor="let item of backendService.organizationsData | async">
+            <router-outlet></router-outlet>
+        </ng-container>
+    </ng-container>
+
     <ng-template #loader>
-        <app-loader *ngIf="authService.afauth.user | async; else showLoader"></app-loader>
+        <app-loader *ngIf="authService.afauth.user | async; else showLogin"></app-loader>
     </ng-template>
 </ng-container>
 <ng-template #showLogin>

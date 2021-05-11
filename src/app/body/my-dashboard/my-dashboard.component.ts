@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
+import { Team, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { User } from 'src/app/Interface/UserInterface';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
@@ -19,20 +21,35 @@ export class MyDashBoardComponent implements OnInit {
   user: User
   username: string
   userObservable: Observable<User>
+  showContent: boolean = false;
+  teamData: TeamDataId[] = [];
 
-  currentSprintNumber: number;
   currentSprintName: string;
 
-  constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService) { }
+  selectedTeamId: string = "Dev";
+  teamCurrentSprintNumber: number;
+
+  constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-    this.backendService.getCurrentSprint().subscribe(data => {
-      this.currentSprintNumber = data.CurrentSprintId;
-      this.currentSprintName = "S" + this.currentSprintNumber;
-    });
+
     this.readUser();
+    this.readApplicationData();
+    
+  }
+
+  readApplicationData() {
+    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+      this.teamData = teams;
+      teams.forEach(element => {
+        if(element.TeamId == this.selectedTeamId) {
+          this.teamCurrentSprintNumber = element.CurrentSprintId;
+          this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+        }
+      });
+    });
   }
   
   readUser() {

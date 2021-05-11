@@ -105,7 +105,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 orgId = doc.data().OrganizationId;
             });
             if(appKey === ""){
-                const teamData = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
+                const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
                     TeamName: teamName,
                     TeamDescription: teamDescription,
                     TeamManagerEmail: teamManagerEmail,
@@ -118,7 +118,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                     OrganizationId: orgId,
                     TeamId: teamId
                 });
-                return Promise.resolve(teamData);
+                return Promise.resolve(p1);
             } else{
             db.collection("Organizations").where("AppKey", "==", appKey).get().then((org)=>{
                 org.forEach((doc)=>{
@@ -126,7 +126,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 });
                 db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).get().then((doc)=>{
                     if(doc.exists){
-                        const teamData = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).update({
+                        const p1 = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).update({
                             TeamDescription: teamDescription,
                             TeamManagerEmail: teamManagerEmail,
                             TeamMembers: teamMembers,
@@ -135,9 +135,9 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                             PriorityLabels: priorityLabels,
                             DifficultyLabels: difficultyLabels
                         });
-                        return Promise.resolve(teamData);
+                        return Promise.resolve(p1);
                     } else{
-                        const teamData = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).set({
+                        const p1 = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).set({
                             TeamName: teamName,
                             TeamDescription: teamDescription,
                             TeamManagerEmail: teamManagerEmail,
@@ -150,11 +150,39 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                             OrganizationId: orgId,
                             TeamId: teamId,
                         });
-                        return Promise.resolve(teamData);
+                        return Promise.resolve(p1);
                     }
                 });
             });
             }
+        });
+
+        const promise2 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                orgId = doc.data().OrganizationId;
+            });
+            const p2 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).collection("Sprints").doc("Backlog").set({
+                OrganizationId: orgId,
+                TeamId: teamId,
+                SprintNumber: -1,
+                TotalCompletedTask: 0,
+                TotalNumberOfTask: 0,
+                TotalUnCompletedTask: 0,
+            });
+            return Promise.resolve(p2);
+        });
+
+        const promise3 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                orgId = doc.data().OrganizationId;
+            });
+            const p3 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).collection("Sprints").doc("Deleted").set({
+                OrganizationId: orgId,
+                TeamId: teamId,
+                SprintNumber: -2,
+                TotalNumberOfTask: 0,
+            });
+            return Promise.resolve(p3);
         });
 
         teamMembers.forEach((element) => {
@@ -162,7 +190,8 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
         });
 
         let result;
-        return Promise.resolve(promise1).then(() => {
+        const TeamPromises = [promise1, promise2, promise3];
+        return Promise.resolve(TeamPromises).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
                 console.log("Created Team with Labels Successfully");
                 return response.status(200).send(result);

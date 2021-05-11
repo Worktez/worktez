@@ -23,7 +23,7 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
         const endDate = request.body.data.EndDate;
         const newSprintId = parseInt(request.body.data.NewSprintId);
         const newSprintIdString = "S" + newSprintId.toString();
-        let createSprintPromise;
+        const teamId = request.body.data.TeamId;
         let result;
         let orgDomain;
         let orgId;
@@ -38,36 +38,42 @@ exports.startNewSprint = functions.https.onRequest((request, response) => {
                     orgDomain = doc.data().OrganizationDomain;
                     orgId = doc.data().OrganizationId;
                 });
-                const p1 = db.collection("Organizations").doc(orgDomain).collection("Sprints").doc(newSprintIdString).get().then((doc) => {
-                    if (doc.exists) {
-                        createSprintPromise = db.collection("Organizations").doc(orgDomain).collection("Sprints").doc(newSprintIdString).update({
-                            EndDate: endDate,
-                            StartDate: startDate,
-                            Status: status,
-                            OrganizationId: orgId,
-                        });
-                    } else {
-                        const totalUnCompletedTask = 0;
-                        const totalCompletedTask = 0;
-                        const totalNumberOfTask = 0;
 
-                        createSprintPromise = db.collection("Organizations").doc(orgDomain).collection("Sprints").doc(newSprintIdString).set({
-                            EndDate: endDate,
-                            StartDate: startDate,
-                            Status: status,
-                            TotalUnCompletedTask: totalUnCompletedTask,
-                            TotalCompletedTask: totalCompletedTask,
-                            TotalNumberOfTask: totalNumberOfTask,
-                            OrganizationId: orgId,
+                const teamSprintPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").where("TeamId", "==", teamId).get().then((teamCol) => {
+                    teamCol.forEach((teamDoc) => {
+                        const p1 = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamDoc.id).collection("Sprints").doc(newSprintIdString).get().then((teamSprint) => {
+                            if (teamSprint.exists) {
+                                const createTeamSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamDoc.id).collection("Sprints").doc(newSprintIdString).update({
+                                    EndDate: endDate,
+                                    StartDate: startDate,
+                                    Status: status,
+                                    OrganizationId: orgId,
+                                });
+                                return Promise.resolve(createTeamSprint);
+                            } else {
+                                const createTeamSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamDoc.id).collection("Sprints").doc(newSprintIdString).set({
+                                    OrganizationId: orgId,
+                                    TeamId: teamId,
+                                    SprintNumber: newSprintId,
+                                    TotalCompletedTask: 0,
+                                    TotalNumberOfTask: 0,
+                                    TotalUnCompletedTask: 0,
+                                    StartDate: "xxxx-xx-xx",
+                                    EndDate: "xxxx-xx-xx",
+                                    Status: status,
+                                });
+                                return Promise.resolve(createTeamSprint);
+                            }
                         });
-                    }
-                    return Promise.resolve(createSprintPromise);
+                        const p2 = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamDoc.id).update({
+                            CurrentSprintId: newSprintId,
+                        });
+
+                        const promises = [p1, p2];
+                        return Promise.all(promises);
+                    });
                 });
-                const p2 = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").update({
-                    CurrentSprintId: newSprintId,
-                });
-                const Promises = [p1, p2];
-                return Promise.all(Promises).then(() => {
+                return Promise.resolve(teamSprintPromise).then(() => {
                         console.log("Sprint started successfully");
                         result = { data: "OK" };
                         return response.status(200).send(result);

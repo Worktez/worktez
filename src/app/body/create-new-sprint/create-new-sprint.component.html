@@ -21,55 +21,48 @@
                 <div class="form-group row pt-2">
                     <div class="alert form-inline w-50 col-md-3 pb-3" style="font-size: 20px;" role="alert">
                         <div style="font-weight: bold;" class="pr-3">Sprint:</div>
-                        <div> {{ newSprintId }} </div>
+                        <div> {{ nextSprintId }} </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="input">Development</label>
+                        <label for="input">{{selectedTeamId}}</label>
                         <div class="alert form-inline" id="detail" role="alert">
                             <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                            <div class="ml-auto"> {{ totalDevelopment }} </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="text">Business</label>
-                        <div class="alert form-inline" id="detail" role="alert">
-                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                            <div class="ml-auto"> {{ totalBusiness }} </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="text">Marketing</label>
-                        <div class="alert form-inline" id="detail" role="alert">
-                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                            <div class="ml-auto"> {{ totalMarketing }} </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="text">Other</label>
-                        <div class="alert  form-inline" id="detail" role="alert">
-                            <div style="font-weight: bold;" class="pr-3"> No. of Task:</div>
-                            <div class="ml-auto"> {{ totalOther }} </div>
+                            <div class="ml-auto">
+                                <ng-container *ngIf="sprintData != undefined; else showZero">
+                                    {{ sprintData.TotalNumberOfTask }}
+                                </ng-container>
+                                <ng-template #showZero>0</ng-template>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="input">Start Date</label>
                         <input class="form-control" type="date" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}">
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="input">End Date</label>
                         <input class="form-control" type="date" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}">
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="inputState">Status</label>
                         <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                             <option selected>choose...</option>
                             <option>Ready to Start</option>
                             <option>Under Progress</option>
                             <option>Completed</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputState">TeamId</label>
+                        <select class="form-control" [(ngModel)]="selectedTeamId" [ngModelOptions]="{standalone: true}" (ngModelChange)="loadSprintData()">
+                            <option>Dev</option>
+                            <option>Bus</option>
+                            <option>Mar</option>
+                            <option>Oth</option>
                         </select>
                     </div>
                 </div>
