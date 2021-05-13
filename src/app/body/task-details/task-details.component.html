@@ -147,6 +147,11 @@
                                 </div>
                                 <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
                             </div>
+                            <div class="row ">
+                                <div class="col" id="TimeChart">
+                                    <app-time-chart [data]="taskTimeData"></app-time-chart>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr>
