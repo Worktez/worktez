@@ -3,6 +3,10 @@
     color: var(--button-text);
 }
 
+#cardsList p {
+    color: var(--text);
+}
+
 .container {
     margin-top: 20px;
     margin-bottom: 10px;
