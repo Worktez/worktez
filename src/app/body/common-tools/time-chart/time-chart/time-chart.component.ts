@@ -7,20 +7,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TimeChartComponent implements OnInit {
 
-  @Input("data") data = []
+  @Input("loggedTime") loggedTime:number
+  @Input("estimatedTime") estimatedTime:number
+  
+  loggedTimePercentage:number=0
+  remainingTimePercentage:number=0
+
   constructor() { }
 
   ngOnInit(): void {
+    this.loggedTimePercentage=parseFloat(((this.loggedTime*100)/this.estimatedTime).toFixed(2))
+    this.remainingTimePercentage=parseFloat((100-this.loggedTimePercentage).toFixed(2))
   }
-  myChartType: string='BarChart';
-  chartColumns = ["Time","Log-Time","Remaining-Time"];
-  myOptions={
-    colors:['#0000FF','red'],
-    is3D: true,
-    isStacked: true,
-    width:300,
-    height:100,
-    bar: {groupWidth: "40%"}
-  };
- dynamicResizable:boolean = true;
+  
 }

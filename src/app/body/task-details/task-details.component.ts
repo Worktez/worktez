@@ -32,7 +32,6 @@ export class TaskDetailsComponent implements OnInit {
   todayDate: string
   time: string
   orgDomain: string
-  taskTimeData:any[]
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
@@ -61,7 +60,6 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => {
         const data = actions.payload.data() as Tasks;
         this.task = data;
-        this.getTaskTimeData(this.task);
         return { ...data }
       }));
   }
@@ -76,13 +74,6 @@ export class TaskDetailsComponent implements OnInit {
         return { id, ...data };
       }))
     );
-  }
-
-  getTaskTimeData(logtask: Tasks){
-    let tempData = []
-    console.log(logtask);
-    tempData.push(["Time Logged",logtask.LogWorkTotalTime,logtask.EstimatedTime-logtask.LogWorkTotalTime]);
-    this.taskTimeData=tempData
   }
 
   CloneTaskPage(){
