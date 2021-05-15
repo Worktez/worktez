@@ -102,7 +102,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
             querySnapshot.forEach((doc) => {
                 orgId = doc.data().OrganizationId;
             });
-            const teamData = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
+            const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
                 TeamName: teamName,
                 TeamDescription: teamDescription,
                 TeamManagerEmail: teamManagerEmail,
@@ -112,10 +112,39 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 PriorityLabels: priorityLabels,
                 DifficultyLabels: difficultyLabels,
                 TotalTeamTasks: 0,
+                CurrentSprintId: 0,
                 OrganizationId: orgId,
                 TeamId: teamId,
             });
-            return Promise.resolve(teamData);
+            return Promise.resolve(p1);
+        });
+
+        const promise2 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                orgId = doc.data().OrganizationId;
+            });
+            const p2 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).collection("Sprints").doc("Backlog").set({
+                OrganizationId: orgId,
+                TeamId: teamId,
+                SprintNumber: -1,
+                TotalCompletedTask: 0,
+                TotalNumberOfTask: 0,
+                TotalUnCompletedTask: 0,
+            });
+            return Promise.resolve(p2);
+        });
+
+        const promise3 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                orgId = doc.data().OrganizationId;
+            });
+            const p3 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).collection("Sprints").doc("Deleted").set({
+                OrganizationId: orgId,
+                TeamId: teamId,
+                SprintNumber: -2,
+                TotalNumberOfTask: 0,
+            });
+            return Promise.resolve(p3);
         });
 
         teamMembers.forEach((element) => {
@@ -123,7 +152,8 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
         });
 
         let result;
-        return Promise.resolve(promise1).then(() => {
+        const TeamPromises = [promise1, promise2, promise3];
+        return Promise.resolve(TeamPromises).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
                 console.log("Created Team with Labels Successfully");
                 return response.status(200).send(result);
