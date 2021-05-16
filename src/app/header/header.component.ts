@@ -30,4 +30,12 @@ export class HeaderComponent implements OnInit {
   myDashBoard(){
     this.router.navigate(["/"])
   }
+
+  createTeam(){
+    this.router.navigate(['/CreateTeam']);
+  }
+
+  updateTeam(){
+    this.router.navigate(['/UpdateTeam', this.authService.getTeamId()]);
+  }
 }
