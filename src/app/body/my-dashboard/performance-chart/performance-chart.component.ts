@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
