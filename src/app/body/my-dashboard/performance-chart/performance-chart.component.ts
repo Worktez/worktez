@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Tasks } from 'src/app/Interface/TasksInterface';
+import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
+import { BackendService } from 'src/app/services/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
@@ -18,7 +21,10 @@ export class PerformanceChartComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
   data = [];
-  constructor(public db: AngularFirestore, public errorHandlerService: ErrorHandlerService) { }
+  tasksCollection: AngularFirestoreCollectionGroup<Tasks>
+  tasksData: Observable <TasksId[]>
+
+  constructor(public db: AngularFirestore, public errorHandlerService: ErrorHandlerService,private backendService: BackendService) { }
 
   ngOnInit(): void {
     this.sprintRange2 = this.currentSprintNumber
@@ -47,8 +53,9 @@ export class PerformanceChartComponent implements OnInit {
   }
   async readData(sprintNumber: number) {
     var storyPoint: number = 0;
+    let orgDomain= this.backendService.getOrganizationDomain();
     try {
-      await this.db.collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.username)
+      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.username)
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach((doc) => {
