@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
@@ -20,9 +21,7 @@ export class PerformanceChartComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
   data = [];
-  tasksCollection: AngularFirestoreCollectionGroup<Tasks>
-  tasksData: Observable <TasksId[]>
-
+  
   constructor(public db: AngularFirestore, public errorHandlerService: ErrorHandlerService,private backendService: BackendService) { }
 
   ngOnInit(): void {
