@@ -32,11 +32,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         const previousSprintId = createSprintId(previousId);
         const taskId = request.body.data.Id;
         const editedSprintId = createSprintId(editedSprintNumber);
-        let totalNumberOfTask;
         let result;
-        let totalUnCompletedTask;
-        let totalCompletedTask;
-        let sprintEditPromise;
         const date = request.body.data.Date;
         const time = request.body.data.Time;
         let comment = "Edited task details: ";
@@ -52,46 +48,53 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
 
             if (editedSprintNumber !== previousId) {
                 comment += "Moved to sprint " + editedSprintId + ". ";
-                const p1 = db.collection("Organizations").doc(documentID).collection("Sprints").doc(previousSprintId).get().then((doc) => {
-                    totalNumberOfTask = doc.data().TotalNumberOfTask;
-                    totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+                const p1 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((taskDoc) => {
+                    const project = taskDoc.data().Project;
+                    const taskPrevSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(previousSprintId).get().then((teamSprint) => {
+                        if (teamSprint.exists) {
+                            let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                            let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
 
-                    totalNumberOfTask = totalNumberOfTask - 1;
-                    totalUnCompletedTask = totalUnCompletedTask - 1;
-                    const editSprintDeleteCounter = db.collection("Organizations").doc(documentID).collection("Sprints").doc(previousSprintId).update({
-                        TotalNumberOfTask: totalNumberOfTask,
-                        TotalUnCompletedTask: totalUnCompletedTask,
+                            totalUnCompletedTask = totalUnCompletedTask - 1;
+                            totalNumberOfTask = totalNumberOfTask - 1;
+                            const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(previousSprintId).update({
+                                TotalNumberOfTask: totalNumberOfTask,
+                                TotalUnCompletedTask: totalUnCompletedTask,
+                            });
+                            return Promise.resolve(createTeamSprint);
+                        }
                     });
-                    return Promise.resolve(editSprintDeleteCounter);
+                    return Promise.resolve(taskPrevSprintPromise);
                 });
                 promises.push(p1);
 
-                const p2 = db.collection("Organizations").doc(documentID).collection("Sprints").doc(editedSprintId).get().then((doc) => {
-                    if (doc.exists) {
-                        totalNumberOfTask = doc.data().TotalNumberOfTask;
-                        totalUnCompletedTask = doc.data().TotalUnCompletedTask;
+                const p2 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((teamDoc) => {
+                    const project = teamDoc.data().Project;
+                    const taskNewSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).get().then((teamSprint) => {
+                        if (teamSprint.exists) {
+                            let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
+                            let totalNumberOfTask = teamSprint.data().TotalNumberOfTask;
 
-                        totalNumberOfTask = totalNumberOfTask + 1;
-                        totalUnCompletedTask = totalUnCompletedTask + 1;
-
-                        sprintEditPromise = db.collection("Organizations").doc(documentID).collection("Sprints").doc(editedSprintId).update({
-                            TotalUnCompletedTask: totalUnCompletedTask,
-                            TotalNumberOfTask: totalNumberOfTask,
-                        });
-                    } else {
-                        totalUnCompletedTask = 0;
-                        totalCompletedTask = 0;
-                        totalNumberOfTask = 0;
-
-                        totalNumberOfTask = totalNumberOfTask + 1;
-                        totalUnCompletedTask = totalUnCompletedTask + 1;
-                        sprintEditPromise = db.collection("Organizations").doc(documentID).collection("Sprints").doc(editedSprintId).set({
-                            TotalUnCompletedTask: totalUnCompletedTask,
-                            TotalCompletedTask: totalCompletedTask,
-                            TotalNumberOfTask: totalNumberOfTask,
-                        });
-                    }
-                    return Promise.resolve(sprintEditPromise);
+                            totalUnCompletedTask = totalUnCompletedTask + 1;
+                            totalNumberOfTask = totalNumberOfTask + 1;
+                            const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).update({
+                                TotalNumberOfTask: totalNumberOfTask,
+                                TotalUnCompletedTask: totalUnCompletedTask,
+                            });
+                            return Promise.resolve(createTeamSprint);
+                        } else {
+                            const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).set({
+                                OrganizationId: orgId,
+                                TeamId: teamId,
+                                SprintNumber: editedSprintNumber,
+                                TotalCompletedTask: 0,
+                                TotalNumberOfTask: 1,
+                                TotalUnCompletedTask: 1,
+                            });
+                            return Promise.resolve(createTeamSprint);
+                        }
+                    });
+                    return Promise.resolve(taskNewSprintPromise);
                 });
                 promises.push(p2);
             }
@@ -109,7 +112,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
             promises.push(p3);
 
             comment = comment + changedData;
-            Activity.addActivity("EDITED", comment, taskId, date, time);
+            Activity.addActivity("EDITED", comment, taskId, date, time, documentID);
 
             Promise.all(promises).then(() => {
                     result = { data: "OK" };

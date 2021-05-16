@@ -1,10 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
-import { Observable, pipe } from 'rxjs';
-import { map } from 'rxjs/operators'
-import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
-import { TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
@@ -18,72 +13,54 @@ export class BoardComponent implements OnInit {
 
   componentName: string = "BOARD";
 
-  // public rawData: RawDataType;
+  showContent: boolean = false;
+  teamData: TeamDataId[] = [];
+  selectedTeamId: string = "Dev";
+  teamCurrentSprintNumber: number;
+  sprintData: Sprint;
+  currentSprintName: string;
 
-  filterSprintNumber: string;
-
-  constructor(private router: Router, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
-    // Better way of use db.
-    // this.rawCollection = this.db.collection<RawDataType>('RawData');
-    // this.rawData = this.rawCollection.snapshotChanges().pipe(
-    //   map(actions => actions.map(a => {
-    //     const data = a.payload.doc.data() as RawDataType;
-    //     this.currentSprintNumber = data.CurrentSprintId;
-    //     this.currentSprintName = "S"+this.currentSprintNumber;
-    //     const id = a.payload.doc.id;
-    //     return { id, ...data };
-    //   }))
-    // );
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     // Efficient for now
-    this.getCurrentSprint();
-    this.readCurrentSprintData();
+    this.readApplicationData();
   }
 
-  // Reading data as get() method
-
-  // async getCurrentSprint() {
-  //   this.rawDocument = this.db.doc<RawDataType>('Main/RawData');
-  //   try {
-  //     await this.rawDocument.ref.get().then(doc=> {
-  //       if(doc.exists){
-  //         var rawData = doc.data();
-  //         this.currentSprintNumber = rawData.CurrentSprintId;
-  //         this.currentSprintName = "S" + this.currentSprintNumber;
-  //       } else {
-  //         console.error("Document does not exists!")
-  //       }
-  //     });
-  //     return "Success";
-  //   } catch (error) {
-  //     return "Error";
-  //   }
-
-  // }
-
-  // Reading synchronous snapshot of data
-
-  getCurrentSprint() {
-    this.backendService.getCurrentSprint();
-
+  readApplicationData() {
+      this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+        this.teamData = teams;
+        teams.forEach(element => {
+          if(element.TeamId == this.selectedTeamId) {
+            this.teamCurrentSprintNumber = element.CurrentSprintId;
+          }
+        });
+        this.readSprintData();
+      });
   }
 
-  readCurrentSprintData() {
-    this.backendService.readCurrentSprintData();
-    // this.mainData = this.mainCollection.snapshotChanges().pipe(
-    //   map()
-    // )
+  setSprintDetails(teamId: string, currentSprintId: number) {
+    this.selectedTeamId = teamId;
+    this.teamCurrentSprintNumber = currentSprintId;
+    this.readSprintData();
   }
 
-  showTasks(teamId: string) {
-    this.router.navigate(['/Tasks', teamId, this.backendService.currentSprintName])
+  readSprintData() {
+    this.showContent = false;
+    this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
+      this.sprintData = sprints[0];
+      this.currentSprintName = "S"+this.sprintData.SprintNumber;
+      this.showContent = true;
+    });
   }
 
-  changeCurrentSprint(currentSprintNumber: number) {
-    this.backendService.setCurrentSprint(currentSprintNumber);
+  changeSprintNumber(filterSprintNumber: any){
+    console.log(filterSprintNumber);
+    this.teamCurrentSprintNumber = filterSprintNumber;
+    this.currentSprintName = "S"+this.teamCurrentSprintNumber;
+    this.readSprintData();
   }
 }

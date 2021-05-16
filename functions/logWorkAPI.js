@@ -31,6 +31,7 @@ exports.logWork = functions.https.onRequest((request, response) => {
         let logWorkTotalTime;
         let completiondate = "Not yet Completed";
         const today = new Date();
+        const promises = [];
 
         const logTaskPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((org) => {
             org.forEach((doc) => {
@@ -61,39 +62,46 @@ exports.logWork = functions.https.onRequest((request, response) => {
                 });
                 return Promise.resolve(updatePromise);
             });
+            promises.push(promise1);
 
-
-            const promise2 = db.collection("Organizations").doc(documentID).collection("RawData").doc("AppDetails").get().then((doc) => {
-                totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
-                totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
-                if (status === "Completed") {
+            if (status === "Completed") {
+                const promise2 = db.collection("Organizations").doc(documentID).collection("RawData").doc("AppDetails").get().then((doc) => {
+                    totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
+                    totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
+                    // if (status === "Completed") {
                     totalCompletedTask = totalCompletedTask + 1;
                     totalUnCompletedTask = totalUnCompletedTask - 1;
-                }
-                const updateStatus = db.collection("Organizations").doc(documentID).collection("RawData").doc("AppDetails").update({
-                    TotalCompletedTask: totalCompletedTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
+                    // }
+                    const updateStatus = db.collection("Organizations").doc(documentID).collection("RawData").doc("AppDetails").update({
+                        TotalCompletedTask: totalCompletedTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                    });
+                    return Promise.resolve(updateStatus);
                 });
-                return Promise.resolve(updateStatus);
-            });
+                promises.push(promise2);
 
-            const promise3 = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).get().then((doc) => {
-                totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
-                totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
+                const promise3 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((taskDoc) => {
+                    const project = taskDoc.data().Project;
 
-                if (status === "Completed") {
-                    totalCompletedTask = totalCompletedTask + 1;
-                    totalUnCompletedTask = totalUnCompletedTask - 1;
-                }
-                const updateSprintstatus = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).update({
-                    TotalCompletedTask: totalCompletedTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
+                    const teamSprintCounterUpdate = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).get().then((teamSprintDoc) => {
+                        let totalUnCompletedTask = teamSprintDoc.data().TotalUnCompletedTask;
+                        let totalCompletedTask = teamSprintDoc.data().TotalCompletedTask;
+
+                        totalUnCompletedTask = totalUnCompletedTask - 1;
+                        totalCompletedTask = totalCompletedTask + 1;
+
+                        db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).update({
+                            TotalCompletedTask: totalCompletedTask,
+                            TotalUnCompletedTask: totalUnCompletedTask,
+                        });
+                    });
+                    return Promise.resolve(teamSprintCounterUpdate);
                 });
-                return Promise.resolve(updateSprintstatus);
-            });
+                promises.push(promise3);
+            }
 
-            Activity.addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time);
-            const logWorkPromises = [promise1, promise2, promise3];
+            Activity.addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time, documentID);
+            const logWorkPromises = promises;
             Promise.all(logWorkPromises).then(() => {
                     result = { data: "Logged Work successfully!" };
                     console.log("Logged Work successfully!");

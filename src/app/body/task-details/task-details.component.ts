@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { BackendService } from 'src/app/services/backend.service';
+import { Activity, ActivityId } from 'src/app/Interface/ActivityInterface';
 
 @Component({
   selector: 'app-task-details',
@@ -34,6 +35,8 @@ export class TaskDetailsComponent implements OnInit {
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
+  activityData: Observable<ActivityId[]>
+  tasksCollection: AngularFirestoreCollection<Activity>
 
   constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService) { }
 
@@ -47,6 +50,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar(this.Id);
     this.getTaskDetail();
+    this.getActivityData();
   }
 
   getTaskDetail() {
@@ -56,9 +60,20 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => {
         const data = actions.payload.data() as Tasks;
         this.task = data;
-
         return { ...data }
       }));
+  }
+
+  getActivityData() {
+    var documentName = 'Organizations/'+this.orgDomain+'/Activity/' + this.Id + '/Action';
+    this.tasksCollection = this.db.collection<Activity>(documentName);
+    this.activityData = this.tasksCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Activity;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
 
   CloneTaskPage(){
@@ -84,7 +99,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('deleteTask');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);

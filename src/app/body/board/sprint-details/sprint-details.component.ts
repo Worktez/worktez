@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, pipe } from 'rxjs';
-import { Main, MainDataId, RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { BackendService } from 'src/app/services/backend.service';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { Sprint } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-sprint-details',
@@ -14,34 +14,35 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 export class SprintDetailsComponent implements OnInit {
 
   @Input('currentSprintName') currentSprintName: string;
-  @Input('StartDate') StartDate: string;
-  @Input('EndDate') EndDate: string;
-  @Input('Status') Status: string;
+  @Input('sprintData') sprintData: Sprint;
 
-  @Output() changeSprint = new EventEmitter<number>();
+  @Output() currentSprint = new EventEmitter<number>();
 
   componentName :string="SPRINT-DETAILS"
   filterSprintNumber: number;
 
-  constructor(private db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, private route: ActivatedRoute,public errorHandlerService: ErrorHandlerService) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  changeSprintNumber() {
-    this.changeSprint.emit(this.filterSprintNumber);
-  }
-
   async changeSprintStatus(sprintStatus: string) {
-      
     const callable = this.functions.httpsCallable('updateSprintStatus');
-
+    const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus }).toPromise();
+      const result = await callable({ AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus }).toPromise();
       console.log(sprintStatus);
       console.log("Successfully updated Status");
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName,"InternalError");
     }
+  }
+
+  changeSprintNumber() {
+    this.currentSprint.emit(this.filterSprintNumber);
+  }
+
+  showTasks() {
+    this.router.navigate(['/Tasks', this.sprintData.TeamId, this.currentSprintName])
   }
 }

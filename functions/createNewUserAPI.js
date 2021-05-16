@@ -36,6 +36,8 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                 return Promise.resolve(userData);
             } else {
                 const userData = db.collection("Users").doc(Uid).set({
+                    AppKey: "",
+                    TeamId: "",
                     uid: Uid,
                     photoURL: PhotoURL,
                     displayName: DisplayName,
