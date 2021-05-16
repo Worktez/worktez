@@ -11,13 +11,13 @@
         </ng-container>
 
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="Category" [(ngModel)]="isCategoryChecked" />
-            <label class="form-check-label" for="Category">Category</label>
+            <input type="checkbox" class="form-check-input" id="Project" [(ngModel)]="isProjectChecked" />
+            <label class="form-check-label" for="Project">Project</label>
         </div>
-        <ng-container *ngIf="isCategoryChecked">
+        <ng-container *ngIf="isProjectChecked">
             <div class="p-2">
-                <select data-style="btn-default" class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
-                    <ng-container  *ngFor="let item of appSettings.category ; let i=index">
+                <select data-style="btn-default" class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}">
+                    <ng-container  *ngFor="let item of appSettings.project ; let i=index">
                         <option>{{item}}</option>
                     </ng-container>
                 </select>

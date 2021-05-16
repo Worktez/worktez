@@ -66,7 +66,7 @@ export class ApplicationSettingsService {
     "Low"
   ]
   
-  category: string[] = [
+  project: string[] = [
     "Business",
     "Development",
     "Marketing",
