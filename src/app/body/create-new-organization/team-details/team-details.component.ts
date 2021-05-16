@@ -126,7 +126,7 @@ export class TeamDetailsComponent implements OnInit {
   async createNewTeamWithLabels() {
     this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('createNewTeamWithLabels');
-    if(this.selectedTeamId != undefined){
+    if(this.organizationDomain == undefined){
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
