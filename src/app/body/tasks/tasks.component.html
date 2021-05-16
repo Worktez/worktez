@@ -33,14 +33,14 @@
                         <div class="col-md-2 col-2 px-2 pt-3">
                             <p>Assignee</p>
                         </div>
-
-                        <ng-container *ngFor="let item of tasksData | async">
-                            <app-task-cards [task]="item"></app-task-cards>
-                        </ng-container>
-                        <app-loader *ngIf="showFilter && !(tasksData | async)"></app-loader>
                     </div>
+                    <ng-container *ngFor="let item of tasksData | async">
+                        <app-task-cards [task]="item"></app-task-cards>
+                    </ng-container>
+                    <app-loader *ngIf="showFilter && !(tasksData | async)"></app-loader>
                 </div>
             </div>
         </div>
     </div>
-    <app-loader *ngIf="!showFilter && !(tasksData | async)"></app-loader>
+</div>
+<app-loader *ngIf="!showFilter && !(tasksData | async)"></app-loader>
