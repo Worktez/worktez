@@ -10,4 +10,5 @@ export interface User {
 export interface UserAppSetting extends User {
     AppKey: string;
     TeamId: string;
+    Bio: string;
 }

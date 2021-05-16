@@ -88,5 +88,9 @@ export class AuthService {
   getTeamId() {
     return this.userAppSetting.TeamId;
   }
+  
+  getBio() {
+    return this.userAppSetting.Bio;
+  }
 
 }

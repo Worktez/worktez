@@ -44,6 +44,8 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     email: Email,
                     phoneNumber: PhoneNumber,
                     providerId: ProviderId,
+                    Bio: "",
+
                 });
                 return Promise.resolve(userData);
             }
