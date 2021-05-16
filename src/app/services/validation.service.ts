@@ -34,8 +34,8 @@ export class ValidationService {
             case 'creator': {
                 return (this.checkCreator(value));
             }
-            case 'category': {
-                return (this.checkCategory(value));
+            case 'project': {
+                return (this.checkProject(value));
             }
             case 'assignee': {
                 return (this.checkAssignee(value));
@@ -200,13 +200,13 @@ export class ValidationService {
         }
     }
 
-    async checkCategory(value: String) {
+    async checkProject(value: String) {
         const control = new FormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
-            let errorType = this.componentName + "_VALIDATION_CATEGORY";
-            this.errorHandlerService.addError(errorType, "Category field is required")
+            let errorType = this.componentName + "_VALIDATION_PROJECT";
+            this.errorHandlerService.addError(errorType, "Project field is required")
             return (false);
         }
     }

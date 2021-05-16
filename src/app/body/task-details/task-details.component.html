@@ -127,25 +127,25 @@
                                 <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
                             </div>
                             <hr>
-                            <div class="row ">
-                                <div class="col ">
-                                    <span id="header ">Remaining Time:</span>
+                            <div class="row border-0 p-2" id="timeBox">
+                                <div class="col">
+                                    <div class="row ">
+                                        <div class="col ">
+                                            <span class="font-weight-bold" id="headerTime " >RT: {{task.EstimatedTime - task.LogWorkTotalTime}}</span>
+                                        </div>
+                                        <div class="col ">
+                                            <span class="font-weight-bold" id="headerTime ">LT: {{task.LogWorkTotalTime}}</span>
+                                        </div>
+                                        <div class="col ">
+                                            <span class="font-weight-bold" id="headerTime ">ET: {{task.EstimatedTime}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col" id="TimeChart">
+                                            <app-time-chart [loggedTime]="task.LogWorkTotalTime" [estimatedTime]="task.EstimatedTime"></app-time-chart>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col ">{{task.EstimatedTime - task.LogWorkTotalTime}}</div>
-                            </div>
-                            <hr>
-                            <div class="row ">
-                                <div class="col ">
-                                    <span id="header ">Logged Time:</span>
-                                </div>
-                                <div class="col " id="logHoursTaskDescription ">{{task.LogWorkTotalTime}}</div>
-                            </div>
-                            <hr>
-                            <div class="row ">
-                                <div class="col ">
-                                    <span id="header ">EstimatedTime:</span>
-                                </div>
-                                <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
                             </div>
                         </div>
                     </div>
