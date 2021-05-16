@@ -60,7 +60,6 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => {
         const data = actions.payload.data() as Tasks;
         this.task = data;
-
         return { ...data }
       }));
   }
