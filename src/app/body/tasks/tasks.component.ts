@@ -27,7 +27,7 @@ export class TasksComponent implements OnInit {
   filterPriority: string
   filterDifficulty: string
   filterStatus: string
-  filterCategory: string
+  filterProject: string
   showFilter: boolean = false
   constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService) { }
 
@@ -51,8 +51,8 @@ export class TasksComponent implements OnInit {
     this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
       let queryRef = ref;
       queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
-      if (this.filterCategory) {
-        queryRef = queryRef.where("TeamId", "==", this.filterCategory);
+      if (this.filterProject) {
+        queryRef = queryRef.where("TeamId", "==", this.filterProject);
       }
       else {
         queryRef = queryRef.where("TeamId", "==", this.teamId);
@@ -88,12 +88,12 @@ export class TasksComponent implements OnInit {
     this.showFilter = !this.showFilter
   }
 
-  applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Category: string }) {
+  applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string }) {
     this.filterAssignee = data.Assignee
     this.filterPriority = data.Priority
     this.filterDifficulty = data.Difficulty
     this.filterStatus = data.Status
-    this.filterCategory = data.Category
+    this.filterProject = data.Project
     this.readData();
   }
 }
