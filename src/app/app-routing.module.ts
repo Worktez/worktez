@@ -12,6 +12,7 @@ import { CreateNewOrganizationComponent } from './body/create-new-organization/c
 import { PatchComponent } from './patch/patch.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
+import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
 const redirectLoggedInToVerifyUser = () => redirectLoggedInTo(['verifyUser/orgDomain/teamName/userEmail']);
@@ -28,6 +29,8 @@ const routes: Routes = [
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } },
   { path: 'profile', component: ProfileComponent },
+  { path: 'CreateTeam', component: TeamDetailsComponent },
+  { path: 'UpdateTeam/:teamId', component: TeamDetailsComponent}
 ];
 
 @NgModule({

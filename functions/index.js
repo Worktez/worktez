@@ -21,7 +21,7 @@ const patch = require("./patchAPI");
 const verifyUserAPI = require("./verifyUserAPI");
 
 // class Task {
-//     constructor(id, title, status, priority, estimatedTime, difficulty, description, creator, category, assignee, logWorkTotalTime, workDone, creationDate, sprintNumber, storyPointNumber) {
+//     constructor(id, title, status, priority, estimatedTime, difficulty, description, creator, project , assignee, logWorkTotalTime, workDone, creationDate, sprintNumber, storyPointNumber) {
 //         this.Id = id;
 //         this.Title = title;
 //         this.Status = status;
@@ -30,7 +30,7 @@ const verifyUserAPI = require("./verifyUserAPI");
 //         this.Difficulty = difficulty;
 //         this.Description = description;
 //         this.Creator = creator;
-//         this.Category = category;
+//         this.Project = project;
 //         this.Assignee = assignee;
 //         this.LogWorkTotalTime = logWorkTotalTime;
 //         this.WorkDone = workDone;

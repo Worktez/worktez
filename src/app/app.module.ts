@@ -50,6 +50,7 @@ import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
 import { EditProfileComponent } from './body/profile/edit-profile/edit-profile.component';
+import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { EditProfileComponent } from './body/profile/edit-profile/edit-profile.c
     UserVerificationComponent,
     ProfileComponent,
     EditProfileComponent,
+    TimeChartComponent,
   ],
   imports: [
     BrowserModule,

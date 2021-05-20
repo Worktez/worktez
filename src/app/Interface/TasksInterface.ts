@@ -7,7 +7,7 @@ export interface Tasks {
   Difficulty: string;
   Description: string;
   Creator: string;
-  Category: string;
+  Project: string;
   Assignee: string;
   LogWorkTotalTime: number;
   WorkDone: number;
