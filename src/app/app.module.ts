@@ -51,6 +51,7 @@ import { UserVerificationComponent } from './user-verification/user-verification
 import { ProfileComponent } from './body/profile/profile.component';
 import { EditProfileComponent } from './body/profile/edit-profile/edit-profile.component';
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
+import { ThemeComponent } from './body/common-tools/theme/theme.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/ti
     ProfileComponent,
     EditProfileComponent,
     TimeChartComponent,
+    ThemeComponent,
   ],
   imports: [
     BrowserModule,

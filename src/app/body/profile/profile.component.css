@@ -1,0 +1,9 @@
+#profileTheme {
+    color: var(--text);
+}
+
+button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}

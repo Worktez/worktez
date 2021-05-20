@@ -1,18 +1,26 @@
-<div class="container py-5">
-    <div class="row col-md-4">
-        <div class="card pt-5" style="border: none; background: none;">
-            <img class="mx-4" src="{{photoURL}}" alt="Card image cap" width="150" style=" border-radius: 5%;">
-            <div class="card-body">
-                <h3 class="card-title pt-2">{{displayName}}</h3>
-                <h6 class="card-title">{{email}}</h6>
-                <p class="card-text py-3">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@mdo" (click)="editProfile()">Edit</button>
+<div class="container py-5" id="profileTheme">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card pt-5" style="border: none; background: none;">
+                <img class="mx-4" src="{{photoURL}}" alt="Card image cap" width="150" style=" border-radius: 5%;">
+                <div class="card-body">
+                    <h3 class="card-title pt-2">{{displayName}}</h3>
+                    <h6 class="card-title">{{email}}</h6>
+                    <p class="card-text py-3">{{bio}}</p>
+                    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo" (click)="editProfile()">Edit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <ul class="navbar-nav ml-auto ">
+                    <app-theme></app-theme>
+                </ul>
             </div>
         </div>
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
-    <app-edit-profile [bio]="bio" [displayName]="displayName" [uid]="uid"></app-edit-profile>
+    <app-edit-profile [bio]="bio" [displayName]="displayName" [uid]="uid" (editProfileCompleted)="editProfileCompleted($event)"></app-edit-profile>
 </ng-container>

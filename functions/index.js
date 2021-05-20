@@ -19,6 +19,7 @@ const updateSprintStatusAPI = require("./updateSprintStatusAPI");
 const createNewOrgAPI = require("./createNewOrgAPI");
 const patch = require("./patchAPI");
 const verifyUserAPI = require("./verifyUserAPI");
+const updateUserProfileAPI = require("./updateUserProfileAPI");
 
 // class Task {
 //     constructor(id, title, status, priority, estimatedTime, difficulty, description, creator, project , assignee, logWorkTotalTime, workDone, creationDate, sprintNumber, storyPointNumber) {
@@ -51,3 +52,4 @@ exports.createNewOrganization = createNewOrgAPI.createNewOrganization;
 exports.createNewTeamWithLabels = createNewOrgAPI.createNewTeamWithLabels;
 exports.patch = patch.patch;
 exports.verifyUser = verifyUserAPI.verifyUser;
+exports.updateUserProfile = updateUserProfileAPI.updateUserProfile;
