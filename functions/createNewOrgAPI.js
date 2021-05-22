@@ -102,33 +102,33 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
             querySnapshot.forEach((doc) => {
                 orgId = doc.data().OrganizationId;
             });
-            db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc)=>{
-                if(doc.exists){
+            db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
+                if (doc.exists) {
                     const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).update({
-                                TeamDescription: teamDescription,
-                                TeamManagerEmail: teamManagerEmail,
-                                TeamMembers: teamMembers,
-                                TaskLabels: taskLabels,
-                                StatusLabels: statusLabels,
-                                PriorityLabels: priorityLabels,
-                                DifficultyLabels: difficultyLabels
-                            });
-                        return Promise.resolve(p1);
-                } else{
+                        TeamDescription: teamDescription,
+                        TeamManagerEmail: teamManagerEmail,
+                        TeamMembers: teamMembers,
+                        TaskLabels: taskLabels,
+                        StatusLabels: statusLabels,
+                        PriorityLabels: priorityLabels,
+                        DifficultyLabels: difficultyLabels,
+                    });
+                    return Promise.resolve(p1);
+                } else {
                     const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
-                                TeamName: teamName,
-                                TeamDescription: teamDescription,
-                                TeamManagerEmail: teamManagerEmail,
-                                TeamMembers: teamMembers,
-                                TaskLabels: taskLabels,
-                                StatusLabels: statusLabels,
-                                PriorityLabels: priorityLabels,
-                                DifficultyLabels: difficultyLabels,
-                                TotalTeamTasks: 0,
-                                OrganizationId: orgId,
-                                TeamId: teamId,
-                            });
-                        return Promise.resolve(p1);
+                        TeamName: teamName,
+                        TeamDescription: teamDescription,
+                        TeamManagerEmail: teamManagerEmail,
+                        TeamMembers: teamMembers,
+                        TaskLabels: taskLabels,
+                        StatusLabels: statusLabels,
+                        PriorityLabels: priorityLabels,
+                        DifficultyLabels: difficultyLabels,
+                        TotalTeamTasks: 0,
+                        OrganizationId: orgId,
+                        TeamId: teamId,
+                    });
+                    return Promise.resolve(p1);
                 }
             });
         });
