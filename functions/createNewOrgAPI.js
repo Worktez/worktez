@@ -70,7 +70,8 @@ exports.createNewOrganization = functions.https.onRequest((request, response) =>
         let result;
         const promises = [promise1, promise2];
         return Promise.all(promises).then(() => {
-                result = { data: "Created Organization Successfully" };
+                const arr = ["Created Organization Successfully", appKey];
+                result = { data: arr };
                 console.log("Created Organization Successfully");
                 return response.status(200).send(result);
             })
@@ -102,33 +103,34 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
             querySnapshot.forEach((doc) => {
                 orgId = doc.data().OrganizationId;
             });
-            db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc)=>{
-                if(doc.exists){
+            db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
+                if (doc.exists) {
                     const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).update({
-                                TeamDescription: teamDescription,
-                                TeamManagerEmail: teamManagerEmail,
-                                TeamMembers: teamMembers,
-                                TaskLabels: taskLabels,
-                                StatusLabels: statusLabels,
-                                PriorityLabels: priorityLabels,
-                                DifficultyLabels: difficultyLabels
-                            });
-                        return Promise.resolve(p1);
-                } else{
+                        TeamDescription: teamDescription,
+                        TeamManagerEmail: teamManagerEmail,
+                        TeamMembers: teamMembers,
+                        TaskLabels: taskLabels,
+                        StatusLabels: statusLabels,
+                        PriorityLabels: priorityLabels,
+                        DifficultyLabels: difficultyLabels,
+                    });
+                    return Promise.resolve(p1);
+                } else {
                     const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).set({
-                                TeamName: teamName,
-                                TeamDescription: teamDescription,
-                                TeamManagerEmail: teamManagerEmail,
-                                TeamMembers: teamMembers,
-                                TaskLabels: taskLabels,
-                                StatusLabels: statusLabels,
-                                PriorityLabels: priorityLabels,
-                                DifficultyLabels: difficultyLabels,
-                                TotalTeamTasks: 0,
-                                OrganizationId: orgId,
-                                TeamId: teamId,
-                            });
-                        return Promise.resolve(p1);
+                        TeamName: teamName,
+                        TeamDescription: teamDescription,
+                        TeamManagerEmail: teamManagerEmail,
+                        TeamMembers: teamMembers,
+                        TaskLabels: taskLabels,
+                        StatusLabels: statusLabels,
+                        PriorityLabels: priorityLabels,
+                        DifficultyLabels: difficultyLabels,
+                        TotalTeamTasks: 0,
+                        OrganizationId: orgId,
+                        TeamId: teamId,
+                        CurrentSprintId: 0,
+                    });
+                    return Promise.resolve(p1);
                 }
             });
         });

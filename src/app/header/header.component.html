@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg sticky-top header">
-    <a class="navbar-brand text-white px-2" style="font-weight: bold;" href="index.html">
+    <a class="navbar-brand text-white px-2" style="font-weight: bold;" (click)="myDashBoard()">
         <img src="../../assets/logo.png" width="50" height="40" alt="" loading="lazy">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="height:fit-content; padding: 0 10px; margin-top: -16px;">
@@ -10,7 +10,7 @@
 
             <li class="nav-item dropdown" *ngIf="authService.afauth.user | async">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span style="color: var(--text);">Create</span>
+                    <span style="color: var(--text);">Create</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                     <a class="dropdown-item" (click)="startNewSession()">Create New Task</a>
@@ -33,8 +33,8 @@
                     <span style="color: var(--text);">Team</span>
                 </a>
                 <div class="dropdown-menu " aria-labelledby="navbarDropdownTeam">
-                    <a class="dropdown-item " (click) = "createTeam()">Create Team</a>
-                    <a class="dropdown-item " (click) = "updateTeam()">Update Team</a>
+                    <a class="dropdown-item " (click)="createTeam()">Create Team</a>
+                    <a class="dropdown-item " (click)="updateTeam()">Update Team</a>
                     <a class="dropdown-item ">Add Members</a>
                 </div>
             </li>
