@@ -9,7 +9,7 @@
                 <span type="button" class="material-icons text-light pl-2" (click)="backToDashboard()">close</span>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row mt-1">
             <ng-container *ngIf="showFilter">
                 <div class="col-md-4">
                     <app-filter-task (filterProperty)="applyFilters($event)" [defaultProject]="project"></app-filter-task>
@@ -43,17 +43,40 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Status</th>
-                        <th scope="col">Priority</th>
-                        <th scope="col">Task Id</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Assignee</th>
+                        <th colspan="1">Status</th>
+                        <th colspan="1">Priority</th>
+                        <th colspan="1">Task Id</th>
+                        <th colspan="3">Title</th>
+                        <th colspan="2">Assignee</th>
                     </tr>
                 </thead>
-                <ng-container *ngFor="let item of tasksData | async">
-                    <app-task-cards [task]="item"></app-task-cards>
-                </ng-container>
-                <app-loader *ngIf="showFilter && !(tasksData | async)"></app-loader>
+
+                <!-- <tr>
+                    <th colspan="1">Status</th>
+                    <th colspan="1">Priority</th>
+                    <th colspan="1">Task Id</th>
+                    <th colspan="3">Title</th>
+                    <th colspan="2">Assignee</th>
+                </tr> -->
+
+                <!-- </table> -->
+                <tbody>
+                    <ng-container *ngFor="let item of tasksData | async">
+                        <tr (click)="openTaskDetails(item.id)">
+                            <td colspan="1">
+                                <app-status-icons [Status]="item.Status"></app-status-icons>
+                            </td>
+                            <td colspan="1">
+                                <app-priority-icons [Priority]="item.Priority"></app-priority-icons>
+                            </td>
+                            <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.id}}</span></td>
+                            <td colspan="3">{{item.Title}}</td>
+                            <td colspan="2"><span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{item.Assignee}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+
+
             </table>
         </div>
     </div>

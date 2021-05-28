@@ -3,7 +3,11 @@
     color: var(--button-text);
 }
 
-#cardsList p {
+.table th {
+    color: var(--text);
+}
+
+.table td {
     color: var(--text);
 }
 
