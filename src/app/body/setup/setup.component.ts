@@ -115,7 +115,7 @@ export class SetupComponent implements OnInit {
     const callable = this.functions.httpsCallable('createNewTask');
 
     try {
-      const result = await callable({ TeamId: teamId, AppKey: this.appKey, Title: "Title2", Description: "Delete description", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
+      const result = await callable({ TeamId: teamId, AppKey: this.appKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
