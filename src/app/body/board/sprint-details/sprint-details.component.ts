@@ -45,4 +45,16 @@ export class SprintDetailsComponent implements OnInit {
   showTasks() {
     this.router.navigate(['/Tasks', this.sprintData.TeamId, this.currentSprintName])
   }
+  
+  ActiveSprint(){
+    this.currentSprint.emit(0);
+  }
+
+  showBacklog(){
+    this.currentSprint.emit(-1);
+  }
+  
+  showDeleted(){
+    this.currentSprint.emit(-2);
+  }
 }

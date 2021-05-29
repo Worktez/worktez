@@ -31,15 +31,15 @@ export class BoardComponent implements OnInit {
   }
 
   readApplicationData() {
-      this.applicationSettingsService.getTeamDetails().subscribe(teams => {
-        this.teamData = teams;
-        teams.forEach(element => {
-          if(element.TeamId == this.selectedTeamId) {
-            this.teamCurrentSprintNumber = element.CurrentSprintId;
-          }
-        });
-        this.readSprintData();
+    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+      this.teamData = teams;
+      teams.forEach(element => {
+        if (element.TeamId == this.selectedTeamId) {
+          this.teamCurrentSprintNumber = element.CurrentSprintId;
+        }
       });
+      this.readSprintData();
+    });
   }
 
   setSprintDetails(teamId: string, currentSprintId: number) {
@@ -52,15 +52,26 @@ export class BoardComponent implements OnInit {
     this.showContent = false;
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
       this.sprintData = sprints[0];
-      this.currentSprintName = "S"+this.sprintData.SprintNumber;
+      this.currentSprintName = "S" + this.sprintData.SprintNumber;
       this.showContent = true;
     });
   }
 
-  changeSprintNumber(filterSprintNumber: any){
+  changeSprintNumber(filterSprintNumber: any) {
+    if (filterSprintNumber == 0) {
+      this.readApplicationData();
+      filterSprintNumber = this.teamCurrentSprintNumber;
+    } else {
+      this.teamCurrentSprintNumber = filterSprintNumber;
+      if (this.teamCurrentSprintNumber == -1) {
+        this.currentSprintName = "Backlog";
+      } else if (this.teamCurrentSprintNumber == -2) {
+        this.currentSprintName = "Deleted";
+      } else {
+        this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+      }
+      this.readSprintData();
+    }
     console.log(filterSprintNumber);
-    this.teamCurrentSprintNumber = filterSprintNumber;
-    this.currentSprintName = "S"+this.teamCurrentSprintNumber;
-    this.readSprintData();
   }
 }
