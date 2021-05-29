@@ -70,7 +70,8 @@ exports.createNewOrganization = functions.https.onRequest((request, response) =>
         let result;
         const promises = [promise1, promise2];
         return Promise.all(promises).then(() => {
-                result = { data: "Created Organization Successfully" };
+                const arr = ["Created Organization Successfully", appKey];
+                result = { data: arr };
                 console.log("Created Organization Successfully");
                 return response.status(200).send(result);
             })
@@ -127,6 +128,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                         TotalTeamTasks: 0,
                         OrganizationId: orgId,
                         TeamId: teamId,
+                        CurrentSprintId: 0,
                     });
                     return Promise.resolve(p1);
                 }

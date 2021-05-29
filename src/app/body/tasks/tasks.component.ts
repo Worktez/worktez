@@ -96,4 +96,8 @@ export class TasksComponent implements OnInit {
     this.filterProject = data.Project
     this.readData();
   }
+  
+  openTaskDetails(id: string) {
+    this.router.navigate(['/TaskDetails', id]);
+  }
 }

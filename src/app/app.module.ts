@@ -49,6 +49,7 @@ import { TeamDetailsComponent } from './body/create-new-organization/team-detail
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
+import { SetupComponent } from './body/setup/setup.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/ti
     FocusNavComponent,
     UserVerificationComponent,
     TimeChartComponent,
+    SetupComponent,
   ],
   imports: [
     BrowserModule,
