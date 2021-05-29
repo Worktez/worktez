@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit {
     this.applicationSettingsService.getTeamDetails().subscribe(teams => {
       this.teamData = teams;
       teams.forEach(element => {
-        if (element.TeamId == this.selectedTeamId) {
+        if(element.TeamId == this.selectedTeamId) {
           this.teamCurrentSprintNumber = element.CurrentSprintId;
         }
       });
@@ -58,20 +58,9 @@ export class BoardComponent implements OnInit {
   }
 
   changeSprintNumber(filterSprintNumber: any) {
-    if (filterSprintNumber == 0) {
-      this.readApplicationData();
-      filterSprintNumber = this.teamCurrentSprintNumber;
-    } else {
-      this.teamCurrentSprintNumber = filterSprintNumber;
-      if (this.teamCurrentSprintNumber == -1) {
-        this.currentSprintName = "Backlog";
-      } else if (this.teamCurrentSprintNumber == -2) {
-        this.currentSprintName = "Deleted";
-      } else {
-        this.currentSprintName = "S" + this.teamCurrentSprintNumber;
-      }
-      this.readSprintData();
-    }
     console.log(filterSprintNumber);
-  }
+    this.teamCurrentSprintNumber = filterSprintNumber;
+    this.currentSprintName = "S"+this.teamCurrentSprintNumber;
+    this.readSprintData();
+       
 }
