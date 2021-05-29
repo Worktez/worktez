@@ -183,6 +183,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 function createSprintId(sprintNumber) {
     if (sprintNumber === -1) {
         return "Backlog";
+    } else if (sprintNumber === -2) {
+        return "Deleted";
     } else {
         return ("S" + sprintNumber);
     }

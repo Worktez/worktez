@@ -67,7 +67,7 @@ export class OrganizationDetailsComponent implements OnInit {
     try {
       const result = await callable({ OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise();
       console.log("Successfully created the Organization");
-      console.log(result);
+      console.log(result[0]);
       this.enableLoader = false;
       this.stepAndOrgDomain.emit({ step: 2, organizationDomain: this.orgDomain })
     } catch (error) {
