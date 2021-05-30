@@ -62,5 +62,5 @@ export class BoardComponent implements OnInit {
     this.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S"+this.teamCurrentSprintNumber;
     this.readSprintData();
-       
+  }
 }

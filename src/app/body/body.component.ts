@@ -11,12 +11,20 @@ import { environment } from '../../environments/environment';
 })
 export class BodyComponent implements OnInit {
 
-  loader: boolean = true;
   public useEmulator = environment.useEmulators;
+  showLoader: boolean = true;
+  showlogin: boolean = false;
 
   constructor(public applicationSettingsService: ApplicationSettingsService,public authService: AuthService, public backendService: BackendService) { }
 
   ngOnInit(): void {
+    this.authService.afauth.user.subscribe(data => {
+      this.showLoader = false;
+      this.showlogin = false;
+      if(data == null || data == undefined) {
+        this.showlogin = true;
+      }
+    });
   }
 
 }
