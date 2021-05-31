@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 })
 export class BodyComponent implements OnInit {
 
-  public useEmulator = environment.useEmulators;
+ 
   showLoader: boolean = true;
   showlogin: boolean = false;
 
