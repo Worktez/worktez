@@ -50,6 +50,7 @@ import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
 import { SetupComponent } from './body/setup/setup.component';
+import { HomeComponent } from './body/home/home.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { SetupComponent } from './body/setup/setup.component';
     UserVerificationComponent,
     TimeChartComponent,
     SetupComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

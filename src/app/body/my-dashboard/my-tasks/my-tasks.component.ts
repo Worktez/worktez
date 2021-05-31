@@ -30,8 +30,6 @@ export class MyTasksComponent implements OnInit {
       queryRef = queryRef.where('Assignee', '==', this.username);
       return queryRef;
     });
-    console.log(this.username);
-    console.log(this.currentSprintNumber);
     this.tasksData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;

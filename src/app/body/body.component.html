@@ -2,27 +2,16 @@
 <app-error></app-error>
 <!-- <router-outlet></router-outlet> -->
 
-<ng-container *ngIf="!showLoader; else loader">
-    <ng-container *ngIf="!showlogin; else login">
-        <ng-container *ngIf="authService.userAppSetting.AppKey == ''">
-            <div class="container-fluid mt-0 mb-4 py-2" style="background-color: rgba(255, 0, 0, 0.414);">
-                <h5>Organization Key not found, Please create new organization</h5>
-            </div>
-            <ng-container *ngIf="useEmulator">
-                <app-setup></app-setup>
-            </ng-container>
-            <app-create-new-organization></app-create-new-organization>
-        </ng-container>
-        <ng-container *ngIf="backendService.organizationsData | async; else loader">
-            <ng-container *ngFor="let item of backendService.organizationsData | async">
-                <router-outlet></router-outlet>
-            </ng-container>
-        </ng-container>
-    </ng-container>
-    <ng-template #login>
+<!-- <ng-container *ngIf="!showLoader; else loader">
+    <ng-container *ngIf="!showlogin"> -->
+<!-- <ng-container *ngIf="authService.userAppSettingObservable | async; else loader"> -->
+<router-outlet></router-outlet>
+<!-- </ng-container>
+    </ng-container> -->
+<!-- <ng-template #login>
         <app-login></app-login>
-    </ng-template>
-</ng-container>
+    </ng-template> -->
+<!-- </ng-container> -->
 
 <ng-template #loader>
     <app-loader></app-loader>

@@ -6,6 +6,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend.service';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -61,24 +62,20 @@ export class AuthService {
     return this.user.uid;
   }
 
-  async getUserSettings() {
+  getUserSettings() {
     const uid = this.getLoggedInUser();
-    this.userAppSettingDocument = this.db.doc<UserAppSetting>('Users/' + uid);
-    try {
-      await this.userAppSettingDocument.ref.get().then(doc => {
-        if (doc.exists) {
-          this.userAppSetting = doc.data();
-          if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
-            this.backendService.getOrgDetails(this.userAppSetting.AppKey);
-          }
-        } else {
-          console.error("Document does not exists!")
+    console.log(uid);
+    var documentName = 'Users/'+uid;
+    this.userAppSettingDocument = this.db.doc<UserAppSetting>(documentName);
+    this.userAppSettingObservable = this.userAppSettingDocument.snapshotChanges().pipe(
+      map(actions => {
+        const data = actions.payload.data() as UserAppSetting;
+        this.userAppSetting = data;
+        if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
+          this.backendService.getOrgDetails(this.userAppSetting.AppKey);
         }
-      });
-      return this.userAppSetting;
-    } catch (error) {
-      return "Error";
-    }
+        return { ...data }
+      }));
   }
 
   getAppKey() {

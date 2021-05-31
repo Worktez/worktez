@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
@@ -19,15 +20,28 @@ export class BoardComponent implements OnInit {
   teamCurrentSprintNumber: number;
   sprintData: Sprint;
   currentSprintName: string;
+  accessLevel: number;
 
-  constructor(public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     // Efficient for now
-    this.readApplicationData();
+    this.accessLevel = 0;
+    this.authService.afauth.user.subscribe(data =>{
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if(data.AppKey) {
+          this.accessLevel = 1;
+          this.backendService.organizationsData.subscribe(data => {
+            if(data.length)
+            this.readApplicationData();
+          });
+        }
+      });
+    })
+    
   }
 
   readApplicationData() {

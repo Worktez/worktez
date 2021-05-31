@@ -19,11 +19,7 @@ export class BodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
-      this.showLoader = false;
-      this.showlogin = false;
-      if(data == null || data == undefined) {
-        this.showlogin = true;
-      }
+      console.log("Logged In Successfully");
     });
   }
 
