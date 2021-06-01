@@ -34,3 +34,23 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
         });
     });
 });
+
+exports.updateTheme = functions.https.onRequest((request, response) => {
+    cors(request, response, () => {
+        const uid = request.body.data.Uid;
+        const appTheme = request.body.data.appTheme;
+        let result;
+
+        db.collection("Users").doc(uid).update({
+            appTheme: appTheme,
+        }).then(() => {
+            result = { data: "User theme updated successfully" };
+            console.log("Successful");
+            return response.status(200).send(result);
+        }).catch((error) => {
+            result = { data: error };
+            console.error("Error", error);
+            return response.status(500).send(result);
+        });
+    });
+});

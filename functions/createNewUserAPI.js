@@ -35,6 +35,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     phoneNumber: PhoneNumber,
                     providerId: ProviderId,
                     aboutMe: "",
+                    appTheme: "theme-light",
                 });
                 return Promise.resolve(userData);
             } else {

@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   displayName: string
   email: string
   aboutMe: string
+  appTheme: string
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore) { }
 
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
     this.displayName = this.authService.getUserData().displayName
     this.email = this.authService.getUserData().email
     this.aboutMe = this.authService.getUserData().aboutMe
+    this.appTheme = this.authService.getUserData().appTheme
 
   }
 
