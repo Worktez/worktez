@@ -24,17 +24,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
 
         console.log(user);
         const promise1 = db.collection("Users").doc(Uid).get().then((doc) => {
-            if (doc.exists) {
-                const userData = db.collection("Users").doc(Uid).update({
-                    uid: Uid,
-                    photoURL: PhotoURL,
-                    displayName: DisplayName,
-                    email: Email,
-                    phoneNumber: PhoneNumber,
-                    providerId: ProviderId,
-                });
-                return Promise.resolve(userData);
-            } else {
+            if (!doc.exists) {
                 const userData = db.collection("Users").doc(Uid).set({
                     AppKey: "",
                     TeamId: "",
@@ -44,10 +34,11 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     email: Email,
                     phoneNumber: PhoneNumber,
                     providerId: ProviderId,
-                    Bio: "",
-
+                    aboutMe: "",
                 });
                 return Promise.resolve(userData);
+            } else {
+               return;
             }
         });
         const promise2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {

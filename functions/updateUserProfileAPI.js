@@ -15,12 +15,14 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const uid = request.body.data.Uid;
         const displayName = request.body.data.DisplayName;
-        const bio = request.body.data.Bio;
+        const aboutMe = request.body.data.AboutMe;
+        const photoURL = request.body.data.PhotoURL;
         let result;
 
         db.collection("Users").doc(uid).update({
             displayName: displayName,
-            Bio: bio,
+            aboutMe: aboutMe,
+            photoURL: photoURL,
         }).then(() => {
             result = { data: "User Profile updated successfully" };
             console.log("Successful");

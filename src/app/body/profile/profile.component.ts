@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-profile',
@@ -15,27 +16,28 @@ export class ProfileComponent implements OnInit {
   photoURL: string
   displayName: string
   email: string
-  bio: string
+  aboutMe: string
 
-  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService) { }
+  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore) { }
 
   ngOnInit(): void {
     this.navbarHandler.addToNavbar(this.componentName);
-    this.bio = this.authService.getBio();
 
-      this.authService.afauth.user.subscribe(
-      data =>{
-        this.photoURL = data.photoURL;
-        this.displayName = data.displayName;
-        this.email = data.email;
-        this.uid = data.uid;
-      }
-      );
+    this.uid = this.authService.getUserData().uid
+    this.photoURL = this.authService.getUserData().photoURL
+    this.displayName = this.authService.getUserData().displayName
+    this.email = this.authService.getUserData().email
+    this.aboutMe = this.authService.getUserData().aboutMe
 
   }
 
   editProfile(){
     this.editProfileEnabled = true;
+  }
+
+  editProfileCompleted(data: { completed: boolean }) {
+    this.editProfileEnabled = false;
+    this.authService.getUserSettings();
   }
 
 }
