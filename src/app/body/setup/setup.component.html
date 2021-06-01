@@ -1,0 +1,4 @@
+<button class="btn btn-primary" [disabled]="showLoader" (click)="start()">Auto Setup</button>
+<ng-container *ngIf="showLoader">
+    <app-loader></app-loader>
+</ng-container>

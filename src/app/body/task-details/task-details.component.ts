@@ -44,13 +44,15 @@ export class TaskDetailsComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
-    this.orgDomain =  this.backendService.getOrganizationDomain();
-
     this.Id = this.route.snapshot.params['taskId'];
 
     this.navbarHandler.addToNavbar(this.Id);
-    this.getTaskDetail();
+
+    this.backendService.organizationsData.subscribe(data => {
+      this.orgDomain =  this.backendService.getOrganizationDomain();
+      this.getTaskDetail();
     this.getActivityData();
+    });
   }
 
   getTaskDetail() {

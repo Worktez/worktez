@@ -52,6 +52,8 @@ import { ProfileComponent } from './body/profile/profile.component';
 import { EditProfileComponent } from './body/profile/edit-profile/edit-profile.component';
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
 import { ThemeComponent } from './body/common-tools/theme/theme.component';
+import { SetupComponent } from './body/setup/setup.component';
+import { HomeComponent } from './body/home/home.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,8 @@ import { ThemeComponent } from './body/common-tools/theme/theme.component';
     EditProfileComponent,
     TimeChartComponent,
     ThemeComponent,
+    SetupComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

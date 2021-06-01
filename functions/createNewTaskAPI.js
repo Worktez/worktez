@@ -29,7 +29,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
         const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
         const sprintNumber = parseInt(request.body.data.SprintNumber);
         const creationDate = request.body.data.CreationDate;
-        const teamId = request.body.data.TeamId;
+        let teamId = "";
+        // const time = request.body.data.Time;
+        // const teamId = request.body.data.TeamId;
         const time = request.body.data.Time;
         const fullSprintId = createSprintId(sprintNumber);
         const loggedWorkTotalTime = 0;
@@ -48,11 +50,9 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                     orgDocument = doc.data().OrganizationDomain;
                     orgId = doc.data().OrganizationId;
                 });
-                console.log("orgDocument = " + orgDocument);
-                console.log("Project = " + project);
-
                 const promise1 = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).get().then((doc) => {
                     const totalTeamTasks = doc.data().TotalTeamTasks + 1;
+                    teamId = doc.data().TeamId;
                     taskId = teamId.toString() + totalTeamTasks.toString();
 
                     const p1 = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).update({
@@ -183,6 +183,8 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
 function createSprintId(sprintNumber) {
     if (sprintNumber === -1) {
         return "Backlog";
+    } else if (sprintNumber === -2) {
+        return "Deleted";
     } else {
         return ("S" + sprintNumber);
     }

@@ -36,8 +36,10 @@ export class MyDashBoardComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.readUser();
-    this.readApplicationData();
-    
+
+    this.backendService.organizationsData.subscribe(data => {
+      this.readApplicationData();
+    });
   }
 
   readApplicationData() {
