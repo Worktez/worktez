@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
 
   editProfileCompleted(data: { completed: boolean }) {
     this.editProfileEnabled = false;
+    this.authService.getUserSettings();
   }
 
 }

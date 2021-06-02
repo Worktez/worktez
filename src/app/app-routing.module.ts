@@ -30,10 +30,7 @@ const routes: Routes = [
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'patch', component: PatchComponent, canActivate: [AngularFireAuthGuard] },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
-  { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } },
   { path: 'profile', component: ProfileComponent },
-  { path: 'CreateTeam', component: TeamDetailsComponent },
-  { path: 'UpdateTeam/:teamId', component: TeamDetailsComponent}
   { path: 'CreateTeam', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]}
