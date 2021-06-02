@@ -23,5 +23,5 @@
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
-    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [photoURL]="photoURL" (editProfileCompleted)="editProfileCompleted($event)"></app-edit-profile>
+    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" (editProfileCompleted)="editProfileCompleted($event)"></app-edit-profile>
 </ng-container>

@@ -74,7 +74,7 @@ export class AuthService {
         this.userAppSetting = data;
         if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
           this.backendService.getOrgDetails(this.userAppSetting.AppKey);
-          this.themeService.changeTheme(data.appTheme);
+          this.themeService.changeTheme(data.AppTheme);
         }
         return { ...data }
       }));

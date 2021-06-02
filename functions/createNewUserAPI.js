@@ -34,8 +34,8 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     email: Email,
                     phoneNumber: PhoneNumber,
                     providerId: ProviderId,
-                    aboutMe: "",
-                    appTheme: "theme-light",
+                    AboutMe: "",
+                    AppTheme: "theme-light",
                 });
                 return Promise.resolve(userData);
             } else {

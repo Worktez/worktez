@@ -28,8 +28,8 @@ export class ProfileComponent implements OnInit {
     this.photoURL = this.authService.getUserData().photoURL
     this.displayName = this.authService.getUserData().displayName
     this.email = this.authService.getUserData().email
-    this.aboutMe = this.authService.getUserData().aboutMe
-    this.appTheme = this.authService.getUserData().appTheme
+    this.aboutMe = this.authService.getUserData().AboutMe
+    this.appTheme = this.authService.getUserData().AppTheme
 
   }
 
@@ -39,7 +39,6 @@ export class ProfileComponent implements OnInit {
 
   editProfileCompleted(data: { completed: boolean }) {
     this.editProfileEnabled = false;
-    this.authService.getUserSettings();
   }
 
 }

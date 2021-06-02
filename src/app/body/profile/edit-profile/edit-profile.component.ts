@@ -11,7 +11,6 @@ export class EditProfileComponent implements OnInit {
   @Input('uid') uid: string
   @Input('aboutMe') aboutMe: string
   @Input('displayName') displayName: string
-  @Input('photoURL') photoURL: string
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
 
@@ -27,7 +26,7 @@ export class EditProfileComponent implements OnInit {
     this.enableLoader = true 
       const callable = this.functions.httpsCallable('updateUserProfile');
       try {
-        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName, PhotoURL: this.photoURL}).toPromise();
+        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName}).toPromise();
         console.log("Successful");
         this.showClose = true
       } catch (error) {

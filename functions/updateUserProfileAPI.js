@@ -16,13 +16,11 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
         const uid = request.body.data.Uid;
         const displayName = request.body.data.DisplayName;
         const aboutMe = request.body.data.AboutMe;
-        const photoURL = request.body.data.PhotoURL;
         let result;
 
         db.collection("Users").doc(uid).update({
             displayName: displayName,
-            aboutMe: aboutMe,
-            photoURL: photoURL,
+            AboutMe: aboutMe,
         }).then(() => {
             result = { data: "User Profile updated successfully" };
             console.log("Successful");
@@ -38,11 +36,11 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
 exports.updateTheme = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const uid = request.body.data.Uid;
-        const appTheme = request.body.data.appTheme;
+        const appTheme = request.body.data.AppTheme;
         let result;
 
         db.collection("Users").doc(uid).update({
-            appTheme: appTheme,
+            AppTheme: appTheme,
         }).then(() => {
             result = { data: "User theme updated successfully" };
             console.log("Successful");
