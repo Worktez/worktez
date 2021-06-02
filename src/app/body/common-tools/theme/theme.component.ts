@@ -15,6 +15,11 @@ export class ThemeComponent implements OnInit {
   constructor(public themeService: ThemeService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
+    if(this.appTheme == 'theme-dark'){
+      this.enableDarkTheme = true;
+    }else{
+      this.enableDarkTheme = false;
+    }
   }
 
   changeThemeSwitch(){
