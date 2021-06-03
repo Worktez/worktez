@@ -87,9 +87,5 @@ export class AuthService {
   getTeamId() {
     return this.userAppSetting.TeamId;
   }
-  
-  getUserData() {
-    return this.userAppSetting;
-  }
 
 }

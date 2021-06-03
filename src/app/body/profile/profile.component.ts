@@ -24,13 +24,16 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.addToNavbar(this.componentName);
 
-    this.uid = this.authService.getUserData().uid
-    this.photoURL = this.authService.getUserData().photoURL
-    this.displayName = this.authService.getUserData().displayName
-    this.email = this.authService.getUserData().email
-    this.aboutMe = this.authService.getUserData().AboutMe
-    this.appTheme = this.authService.getUserData().AppTheme
-
+    this.authService.userAppSettingObservable.subscribe(
+      data =>{
+        this.photoURL = data.photoURL;
+        this.displayName = data.displayName;
+        this.email = data.email;
+        this.uid = data.uid;
+        this.aboutMe = data.AboutMe;
+        this.appTheme = data.AppTheme;
+      }
+      );    
   }
 
   editProfile(){
@@ -39,7 +42,6 @@ export class ProfileComponent implements OnInit {
 
   editProfileCompleted(data: { completed: boolean }) {
     this.editProfileEnabled = false;
-    this.authService.getUserSettings();
   }
 
 }
