@@ -54,8 +54,8 @@
                         <input type="text" class="form-control" [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="input">Category</label>
-                        <select class="form-control" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+                        <label for="input">Project</label>
+                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}">
                     <option selected>choose...</option>
                     <option>Business</option>
                     <option>Development</option>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </form>
-        </div>>
+        </div>
     </div>
 </div>
 <app-loader *ngIf="enableLoader"></app-loader>

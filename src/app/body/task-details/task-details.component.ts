@@ -44,13 +44,15 @@ export class TaskDetailsComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
-    this.orgDomain =  this.backendService.getOrganizationDomain();
-
     this.Id = this.route.snapshot.params['taskId'];
 
     this.navbarHandler.addToNavbar(this.Id);
-    this.getTaskDetail();
+
+    this.backendService.organizationsData.subscribe(data => {
+      this.orgDomain =  this.backendService.getOrganizationDomain();
+      this.getTaskDetail();
     this.getActivityData();
+    });
   }
 
   getTaskDetail() {
@@ -60,7 +62,6 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => {
         const data = actions.payload.data() as Tasks;
         this.task = data;
-
         return { ...data }
       }));
   }
@@ -100,7 +101,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('deleteTask');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Category: this.task.Category, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);

@@ -2,23 +2,22 @@
     <div class="card m-3" style="border: none;">
         <div class="card-header">
             <div class="row align-items-center">
-                <div class="col-md-3 col-3">
+                <div class="col-md-2 col-3">
                     <h5 class="pl-2" style="font-size: 18px;">Sprint No: {{currentSprintName}}</h5>
                     <p class="pl-2" style="font-size: 18px;">TeamId: {{sprintData.TeamId}}</p>
                 </div>
-                <div class="col"></div>
-                <div class="col-md-4 col-4">
-                    <div class="dropdown float-right">
-                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                        <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-                            <div class="row py-3">
-                                <input class="col-md-9 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
-                                <div class="col-md-3 col-3 pl-2">
-                                    <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
-                                </div>
-                            </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
+                        <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                            <button class="dropdown-item" type="button" (click)="ActiveSprint()">Active Sprint</button>
+                            <button class="dropdown-item" type="button" (click)="showBacklog()">Backlog</button>
+                            <button class="dropdown-item" type="button" (click)="showDeleted()">Deleted</button>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-1">
                     <div class="btn-group" *ngIf="sprintData.Status != 'Completed' ">
                         <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
                         <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
@@ -27,9 +26,24 @@
                         </div>
                     </div>
                     <span class="material-icons align-middle" *ngIf="sprintData.Status === 'Completed' ">
-                            check_circle
+                                check_circle
                     </span>
+                </div>
+                <div class="col-md-2">
                     <button class="btn btn-primary" (click)="showTasks()">Show All Tasks</button>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <div class="dropdown float-right">
+                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+                        <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                            <div class="row py-3">
+                                <input class="col-md-9 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                                <div class="col-md-3 col-3">
+                                    <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

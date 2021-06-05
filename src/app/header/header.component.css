@@ -1,7 +1,12 @@
 .header {
     background-color: var(--header-bg);
     color: var(--text);
+    /* border-bottom: var(--primary-border); */
     height: inherit;
+}
+
+.headerBox {
+    box-shadow: var(--box-shadow-bottom);
 }
 
 .collapse {

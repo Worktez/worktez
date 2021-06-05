@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
@@ -19,27 +20,40 @@ export class BoardComponent implements OnInit {
   teamCurrentSprintNumber: number;
   sprintData: Sprint;
   currentSprintName: string;
+  accessLevel: number;
 
-  constructor(public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     // Efficient for now
-    this.readApplicationData();
+    this.accessLevel = 0;
+    this.authService.afauth.user.subscribe(data =>{
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if(data.AppKey) {
+          this.accessLevel = 1;
+          this.backendService.organizationsData.subscribe(data => {
+            if(data.length)
+            this.readApplicationData();
+          });
+        }
+      });
+    })
+    
   }
 
   readApplicationData() {
-      this.applicationSettingsService.getTeamDetails().subscribe(teams => {
-        this.teamData = teams;
-        teams.forEach(element => {
-          if(element.TeamId == this.selectedTeamId) {
-            this.teamCurrentSprintNumber = element.CurrentSprintId;
-          }
-        });
-        this.readSprintData();
+    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+      this.teamData = teams;
+      teams.forEach(element => {
+        if(element.TeamId == this.selectedTeamId) {
+          this.teamCurrentSprintNumber = element.CurrentSprintId;
+        }
       });
+      this.readSprintData();
+    });
   }
 
   setSprintDetails(teamId: string, currentSprintId: number) {
@@ -52,13 +66,14 @@ export class BoardComponent implements OnInit {
     this.showContent = false;
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
       this.sprintData = sprints[0];
-      this.currentSprintName = "S"+this.sprintData.SprintNumber;
+      this.currentSprintName = "S" + this.sprintData.SprintNumber;
       this.showContent = true;
     });
   }
 
-  changeSprintNumber(data: any){
-    this.teamCurrentSprintNumber = data.filterSprintNumber;
+  changeSprintNumber(filterSprintNumber: any) {
+    console.log(filterSprintNumber);
+    this.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S"+this.teamCurrentSprintNumber;
     this.readSprintData();
   }

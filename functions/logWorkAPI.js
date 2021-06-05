@@ -100,22 +100,6 @@ exports.logWork = functions.https.onRequest((request, response) => {
                 promises.push(promise3);
             }
 
-            const promise4 = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).get().then((doc) => {
-                totalCompletedTask = parseInt(doc.data().TotalCompletedTask);
-                totalUnCompletedTask = parseInt(doc.data().TotalUnCompletedTask);
-
-                if (status === "Completed") {
-                    totalCompletedTask = totalCompletedTask + 1;
-                    totalUnCompletedTask = totalUnCompletedTask - 1;
-                }
-                const updateSprintstatus = db.collection("Organizations").doc(documentID).collection("Sprints").doc(fullSprintId).update({
-                    TotalCompletedTask: totalCompletedTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
-                });
-                return Promise.resolve(updateSprintstatus);
-            });
-            promises.push(promise4);
-
             Activity.addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time, documentID);
             const logWorkPromises = promises;
             Promise.all(logWorkPromises).then(() => {

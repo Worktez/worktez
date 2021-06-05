@@ -8,16 +8,16 @@ import { ApplicationSettingsService } from 'src/app/services/application-setting
 })
 export class FilterTaskComponent implements OnInit {
 
-  @Output() filterProperty = new EventEmitter<{ Assignee: string, Priority: string, Difficulty: string, Status: string, Category: string }>();
-  @Input("defaultCategory") defaultCategory: string
+  @Output() filterProperty = new EventEmitter<{ Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string }>();
+  @Input("defaultProject") defaultProject: string
   isAssigneeChecked: boolean
   isDifficultyChecked: boolean
   isPriorityChecked: boolean
   isStatusChecked: boolean
-  isCategoryChecked: boolean
+  isProjectChecked: boolean
 
   assignee: string
-  category: string
+  project: string
   priority: string
   status: string
   difficulty: string
@@ -25,16 +25,16 @@ export class FilterTaskComponent implements OnInit {
   constructor(public appSettings: ApplicationSettingsService) { }
 
   ngOnInit(): void {
-    this.category = this.defaultCategory
-    this.isCategoryChecked = true
+    this.project = this.defaultProject
+    this.isProjectChecked = true
   }
 
   filterByProperties() {
     if (!this.isAssigneeChecked) {
       this.assignee = ""
     }
-    if (!this.isCategoryChecked) {
-      this.category = ""
+    if (!this.isProjectChecked) {
+      this.project = ""
     }
     if (!this.isPriorityChecked) {
       this.priority = ""
@@ -45,6 +45,6 @@ export class FilterTaskComponent implements OnInit {
     if (!this.isDifficultyChecked) {
       this.difficulty = ""
     }
-    this.filterProperty.emit({ Assignee: this.assignee, Priority: this.priority, Difficulty: this.difficulty, Status: this.status, Category: this.category });
+    this.filterProperty.emit({ Assignee: this.assignee, Priority: this.priority, Difficulty: this.difficulty, Status: this.status, Project: this.project });
   }
 }
