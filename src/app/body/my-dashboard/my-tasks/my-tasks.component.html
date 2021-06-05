@@ -3,8 +3,8 @@
         <h6 class="m-0">My Tasks</h6>
     </div>
     <div class="card-body" *ngIf="tasksData | async">
-        <ng-container *ngFor="let item of tasksData | async">
-            <app-task-cards [task]="item"></app-task-cards>
+        <ng-container *ngIf="tasksData|async">
+            <app-task-cards [tasks]="tasksData"></app-task-cards>
         </ng-container>
     </div>
     <div class="card-body" *ngIf="!(tasksData | async)">

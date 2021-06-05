@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { AuthService } from '../../services/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   showPassword: boolean = false
   componentName: string = "LOGIN"
 
-  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -25,7 +26,12 @@ export class LoginComponent implements OnInit {
 
   onSignInWithGoogle() {
     this.authService.googleSignIn().then(() => {
-      this.navigateToDashboard();
+      const path = this.location.path();
+      if (path.startsWith('/verifyUser')) {
+        this.navigateToVerification(path);
+      } else {
+        this.navigateToDashboard();
+      }
     }).catch((err) => {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       console.log(err);
@@ -52,7 +58,12 @@ export class LoginComponent implements OnInit {
 
   onLoginWithEmail() {
     this.authService.loginUser(this.email, this.password).then(() => {
-      this.navigateToDashboard();
+      const path = this.location.path();
+      if (path.startsWith('/verifyUser')) {
+        this.navigateToVerification(path);
+      } else {
+        this.navigateToDashboard();
+      }
     }).catch((err) => {
       console.log(err.message);
     });;
@@ -64,5 +75,9 @@ export class LoginComponent implements OnInit {
 
   onSignUpWithOrg() {
     this.router.navigate(['/CreateNewOrganization']);
+  }
+
+  navigateToVerification(path) {
+    this.router.navigate([path]);
   }
 }

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
-import firebase from "firebase/app";
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 @Component({
   selector: 'app-tasks',

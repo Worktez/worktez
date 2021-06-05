@@ -1,32 +1,36 @@
-<!-- <table class="table"> -->
-
-<!-- <div class="table" (click)="openTaskDetails(task.id)"> -->
-<!-- <tr (click)="openTaskDetails(task.id)" style="width: 100%"></tr> -->
-<!-- <div class="card-header">
-        <div class="row pb-2">
-            <div class="col-md-1 col-1 px-2 pt-3">
-
-                <app-status-icons [Status]="task.Status"></app-status-icons>
-            </div>
-            <div class="col-md-1 col-1 px-2 pt-3">
-                <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
-            </div>
-
-            <div class="col-md-1 col-1 px-2 pt-3">
-                <span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{task.id}}</span>
-            </div>
-            <div class="col-md-6 col-4 px-2 pt-2">
-                <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Title">Title</span> {{task.Title}}
-            </div>
-            <div class="col-md-2 col-2 px-2 pt-3">
-                <span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{task.Assignee}}
-            </div>
-        </div>
-    </div> -->
-
-<!-- <tr> -->
-
-<!-- </tr> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- </table> -->
+<ng-container *ngIf="tasks | async; else loader">
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="1">Status</th>
+                <th colspan="1">Priority</th>
+                <th colspan="1">Task Id</th>
+                <th colspan="3">Title</th>
+                <th colspan="2">Assignee</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="(tasks|async).length==0">
+                <tr>
+                    <td colspan="9" class="text-center">No tasks available</td>
+                </tr>
+            </ng-container>
+            <ng-container *ngFor="let item of tasks|async">
+                <tr (click)="openTaskDetails(item.id)">
+                    <td colspan="1">
+                        <app-status-icons [Status]="item.Status"></app-status-icons>
+                    </td>
+                    <td colspan="1">
+                        <app-priority-icons [Priority]="item.Priority"></app-priority-icons>
+                    </td>
+                    <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.id}}</span></td>
+                    <td colspan="3">{{item.Title}}</td>
+                    <td colspan="2"><span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{item.Assignee}}</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</ng-container>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

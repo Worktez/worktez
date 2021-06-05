@@ -3,14 +3,6 @@
     color: var(--button-text);
 }
 
-.table th {
-    color: var(--text);
-}
-
-.table td {
-    color: var(--text);
-}
-
 .container {
     margin-top: 20px;
     margin-bottom: 10px;

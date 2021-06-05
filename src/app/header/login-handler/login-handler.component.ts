@@ -14,7 +14,9 @@ import { BackendService } from 'src/app/services/backend.service';
 export class LoginHandlerComponent implements OnInit {
   user: User
   public userObservable: Observable<User>
-  constructor(public authService: AuthService, public router: Router) { }
+
+  organizationAvailable: boolean = false;
+  constructor(public authService: AuthService, public router: Router, public backendService: BackendService) { }
 
   ngOnInit(): void {
     this.userObservable = this.authService.afauth.user.pipe(map(action => {
