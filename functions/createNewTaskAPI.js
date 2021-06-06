@@ -146,6 +146,10 @@ exports.createNewTask = functions.https.onRequest((request, response) => {
                         });
                         return Promise.resolve(createTeamSprint);
                     } else {
+                        db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).get().then(doc => {
+                            teamId = doc.data().TeamId;
+                            console.log(teamId);
+                        }); 
                         const createTeamSprint = db.collection("Organizations").doc(orgDocument).collection("Teams").doc(project).collection("Sprints").doc(fullSprintId).set({
                             EndDate: "xx/xx/xxxx",
                             StartDate: "xx/xx/xxxx",
