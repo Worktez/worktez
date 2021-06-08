@@ -51,6 +51,8 @@ import { UserVerificationComponent } from './user-verification/user-verification
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
+import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
+import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { HomeComponent } from './body/home/home.component';
     TimeChartComponent,
     SetupComponent,
     HomeComponent,
+    PieChartComponent,
+    WorkCompletionComponent,
   ],
   imports: [
     BrowserModule,

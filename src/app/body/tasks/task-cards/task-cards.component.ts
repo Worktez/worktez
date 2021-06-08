@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TasksId } from 'src/app/Interface/TasksInterface';
+import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 
 @Component({
   selector: 'app-task-cards',
@@ -8,14 +8,17 @@ import { TasksId } from 'src/app/Interface/TasksInterface';
   styleUrls: ['./task-cards.component.css']
 })
 export class TaskCardsComponent implements OnInit {
-
+ 
   @Input('tasks') tasks: TasksId[]
+  
+ 
 
   constructor(private router: Router) { }
-
+  
   ngOnInit(): void {
+    
   }
-
+  
   openTaskDetails(id: string) {
     this.router.navigate(['/TaskDetails', id]);
   }
