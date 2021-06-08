@@ -48,7 +48,10 @@ import { OrganizationDetailsComponent } from './body/create-new-organization/org
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
+import { ProfileComponent } from './body/profile/profile.component';
+import { EditProfileComponent } from './body/profile/edit-profile/edit-profile.component';
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
+import { ThemeComponent } from './body/common-tools/theme/theme.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
 import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
@@ -90,7 +93,10 @@ import { WorkCompletionComponent } from './body/tasks/work-completion/work-compl
     TeamDetailsComponent,
     FocusNavComponent,
     UserVerificationComponent,
+    ProfileComponent,
+    EditProfileComponent,
     TimeChartComponent,
+    ThemeComponent,
     SetupComponent,
     HomeComponent,
     PieChartComponent,

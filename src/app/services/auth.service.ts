@@ -6,6 +6,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend.service';
+import { ThemeService } from './theme.service';
 import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AuthService {
   user: User;
   userAppSetting: UserAppSetting;
 
-  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore, private backendService: BackendService) { }
+  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore, private backendService: BackendService, private themeService: ThemeService) { }
 
   async createUser(email: string, password: string, username: string) {
     await this.afauth.createUserWithEmailAndPassword(email, password);
@@ -73,6 +74,7 @@ export class AuthService {
         this.userAppSetting = data;
         if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
           this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+          this.themeService.changeTheme(data.AppTheme);
         }
         return { ...data }
       }));

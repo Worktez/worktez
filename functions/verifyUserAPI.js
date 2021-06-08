@@ -28,7 +28,7 @@ exports.verifyUser = functions.https.onRequest((request, response) => {
             if (teamMembers.indexOf(userEmail) != -1) {
                 db.collection("Organizations").doc(organizationDomain).get().then((doc) => {
                     organizationId = doc.data().OrganizationId;
-                    appKey = doc.data().appKey;
+                    appKey = doc.data().AppKey;
                     const p11 = db.collection("Users").where("email", "==", userEmail).get().then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
                             userID = doc.data().uid;
