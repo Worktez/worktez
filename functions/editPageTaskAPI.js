@@ -42,9 +42,10 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
         const editTaskPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((org) => {
             org.forEach((doc) => {
                 documentID = doc.data().OrganizationDomain;
+                orgId = doc.data().OrganizationId;
             });
 
-            console.log("DocumentID = " + documentID);
+            console.log("DocumentID = " + documentID + " OrgID = " + orgId);
 
             if (editedSprintNumber !== previousId) {
                 comment += "Moved to sprint " + editedSprintId + ". ";
@@ -70,6 +71,7 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
 
                 const p2 = db.collection("Organizations").doc(documentID).collection("Tasks").doc(taskId).get().then((teamDoc) => {
                     const project = teamDoc.data().Project;
+                    const teamId = teamDoc.data().TeamId;
                     const taskNewSprintPromise = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).get().then((teamSprint) => {
                         if (teamSprint.exists) {
                             let totalUnCompletedTask = teamSprint.data().TotalUnCompletedTask;
@@ -84,6 +86,9 @@ exports.editPageTask = functions.https.onRequest((request, response) => {
                             return Promise.resolve(createTeamSprint);
                         } else {
                             const createTeamSprint = db.collection("Organizations").doc(documentID).collection("Teams").doc(project).collection("Sprints").doc(editedSprintId).set({
+                                EndDate: "xx/xx/xxxx",
+                                StartDate: "xx/xx/xxxx",
+                                Status: "Not Started",
                                 OrganizationId: orgId,
                                 TeamId: teamId,
                                 SprintNumber: editedSprintNumber,
