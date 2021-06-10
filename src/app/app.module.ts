@@ -54,6 +54,8 @@ import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/ti
 import { ThemeComponent } from './body/common-tools/theme/theme.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
+import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
+import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import { HomeComponent } from './body/home/home.component';
     ThemeComponent,
     SetupComponent,
     HomeComponent,
+    PieChartComponent,
+    WorkCompletionComponent,
   ],
   imports: [
     BrowserModule,
