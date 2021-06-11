@@ -8,10 +8,15 @@
                     <th colspan="1">Task Id</th>
                     <th colspan="3">Title</th>
                     <th colspan="2">Assignee</th>
-                    <th colspan="1">Work Completed</th>
+                    <th colspan="1">Progress</th>
                 </tr>
             </thead>
             <tbody>
+                <ng-container *ngIf="(tasks|async).length==0">
+                    <tr>
+                        <td colspan="9" class="text-center">No tasks available</td>
+                    </tr>
+                </ng-container>
                 <ng-container *ngFor="let item of tasks|async">
                     <tr (click)="openTaskDetails(item.id)">
                         <td colspan="1">

@@ -1,24 +1,24 @@
 <ng-container *ngIf="accessLevel; else unauthorizedAccess">
     <div class="row" *ngFor="let item of backendService.organizationsData|async">
-        <ng-container *ngIf="applicationSettingsService.teamData | async; else loader">
-            <!-- <div class="col-md-2">
+        <!-- <ng-container *ngIf="applicationSettingsService.teamData | async; else loader"> -->
+        <!-- <div class="col-md-2">
             <app-focus-nav [currentSprintNumber]="teamCurrentSprintNumber" (currentSprint)="changeSprintNumber($event)"></app-focus-nav>
         </div> -->
-            <div class="col">
-                <div class="container">
-                    <div class="row">
-                        <ng-container *ngFor="let item of teamData">
-                            <div class="col" type="button" (click)="setSprintDetails(item.TeamId, item.CurrentSprintId)">
-                                <app-feature-card [cardName]="item.TeamName"></app-feature-card>
-                            </div>
-                        </ng-container>
-                    </div>
-                    <ng-container *ngIf="showContent; else loader">
-                        <app-sprint-details [currentSprintName]="currentSprintName" [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+        <div class="col">
+            <div class="container">
+                <div class="row">
+                    <ng-container *ngFor="let item of teams">
+                        <div class="col" type="button" (click)="getSprintDetails(item)">
+                            <app-feature-card [cardName]="item"></app-feature-card>
+                        </div>
                     </ng-container>
                 </div>
+                <ng-container *ngIf="showContent; else loader">
+                    <app-sprint-details [currentSprintName]="currentSprintName" [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                </ng-container>
             </div>
-        </ng-container>
+        </div>
+        <!-- </ng-container> -->
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>

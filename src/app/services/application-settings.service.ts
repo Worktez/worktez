@@ -18,9 +18,9 @@ export class ApplicationSettingsService {
 
   constructor(private db: AngularFirestore, private backendService: BackendService) { }
 
-  getTeamDetails() {
+  getTeamDetails(teamId: string) {
     const orgId = this.backendService.organizationDetails.OrganizationId;
-    this.teamCollection = this.db.collectionGroup<Team>('Teams', ref => ref.where('OrganizationId', '==', orgId));
+    this.teamCollection = this.db.collectionGroup<Team>('Teams', ref => ref.where('OrganizationId', '==', orgId).where('TeamId', '==', teamId));
     this.teamData = this.teamCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Team;

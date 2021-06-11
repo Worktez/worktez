@@ -16,11 +16,13 @@ export class BoardComponent implements OnInit {
 
   showContent: boolean = false;
   teamData: TeamDataId[] = [];
-  selectedTeamId: string = "Dev";
-  teamCurrentSprintNumber: number;
+  selectedTeamId: string;
+  teamCurrentSprintNumber: number = -100;
   sprintData: Sprint;
   currentSprintName: string;
   accessLevel: number;
+  showTeams: boolean = false;
+  teams: [];
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -34,18 +36,21 @@ export class BoardComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if(data.AppKey) {
           this.accessLevel = 1;
+          this.selectedTeamId = data.TeamId;
           this.backendService.organizationsData.subscribe(data => {
-            if(data.length)
-            this.readApplicationData();
+            if(data.length) {
+              this.teams = data[0].TeamsId;
+              this.showTeams = true;
+              this.readApplicationData();
+            }
           });
         }
       });
-    })
-    
+    });
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
       teams.forEach(element => {
         if(element.TeamId == this.selectedTeamId) {
@@ -56,10 +61,11 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  setSprintDetails(teamId: string, currentSprintId: number) {
+  getSprintDetails(teamId: string) {
+    this.showContent = false;
     this.selectedTeamId = teamId;
-    this.teamCurrentSprintNumber = currentSprintId;
-    this.readSprintData();
+    this.readApplicationData();
+    // this.readSprintData();
   }
 
   readSprintData() {

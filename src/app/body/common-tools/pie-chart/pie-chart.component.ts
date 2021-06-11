@@ -1,5 +1,4 @@
 import { Component, OnInit,Input } from '@angular/core';
-import {NoEncryption} from '@material-ui/icons'
 
 @Component({
   selector: 'app-pie-chart',
