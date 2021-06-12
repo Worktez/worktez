@@ -105,8 +105,8 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 orgId = doc.data().OrganizationId;
             });
 
-            const p1 = db.collection("Organizations").doc(organizationDomain).set({
-                TeamsId: db.FieldValue.arrayUnion(teamId),
+            const p1 = db.collection("Organizations").doc(organizationDomain).update({
+                TeamsId: admin.firestore.FieldValue.arrayUnion(teamId),
             });
 
             const p2 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
