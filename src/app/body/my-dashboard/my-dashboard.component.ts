@@ -36,21 +36,12 @@ export class MyDashBoardComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.readUser();
-
-    this.backendService.organizationsData.subscribe(data => {
-      this.readApplicationData();
-    });
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
-      this.teamData = teams;
-      teams.forEach(element => {
-        if(element.TeamId == this.selectedTeamId) {
-          this.teamCurrentSprintNumber = element.CurrentSprintId;
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
+          this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
           this.currentSprintName = "S" + this.teamCurrentSprintNumber;
-        }
-      });
     });
   }
   
@@ -60,7 +51,17 @@ export class MyDashBoardComponent implements OnInit {
       this.user = data;
       if (data == null) {
         this.router.navigate(['/Board']);
-      }
+      } else {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if(data.AppKey) {
+          this.selectedTeamId = data.TeamId;
+          this.backendService.organizationsData.subscribe(data => {
+            if(data.length)
+            this.readApplicationData();
+          });
+        }
+      });
+    }
       this.username = data.displayName;
       return { ...data }
     }));
