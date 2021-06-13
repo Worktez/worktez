@@ -42,6 +42,7 @@ exports.createNewOrganization = functions.https.onRequest((request, response) =>
                     OrganizationEmail: organizationEmail,
                     OrganizationDescription: organizationDescription,
                     OrganizationLogoURL: organizationLogoURL,
+                    TeamsId: [],
                 });
                 return Promise.resolve(orgData);
             }
@@ -103,7 +104,12 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
             querySnapshot.forEach((doc) => {
                 orgId = doc.data().OrganizationId;
             });
-            db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
+
+            const p1 = db.collection("Organizations").doc(organizationDomain).update({
+                TeamsId: admin.firestore.FieldValue.arrayUnion(teamId),
+            });
+
+            const p2 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
                 if (doc.exists) {
                     const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).update({
                         TeamDescription: teamDescription,
@@ -133,6 +139,8 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                     return Promise.resolve(p1);
                 }
             });
+            const promises = [p1, p2];
+            return Promise.all(promises);
         });
 
         const promise2 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
@@ -169,7 +177,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
 
         let result;
         const TeamPromises = [promise1, promise2, promise3];
-        return Promise.resolve(TeamPromises).then(() => {
+        return Promise.all(TeamPromises).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
                 console.log("Created Team with Labels Successfully");
                 return response.status(200).send(result);

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ThemeService } from 'src/app/services/theme.service';
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -7,15 +8,20 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ChartComponent implements OnInit {
   @Input("data") data: []
 
-  constructor() { }
+  constructor(private themeService: ThemeService) { }
   ngOnInit(): void { }
 
-  myChartType: string = "LineChart"
+  myChartType: string = "AreaChart"
   chartColumns = ["Sprint Number", "StoryPoint"]
   myOptions = {
-    colors: ['#5A20F0'],
+    colors: ['#16C85A'],
     is3D: true,
-    curveType: 'function'
+    curveType: 'function',
+    backgroundColor: "none",
+    legend: "none",
+    chartArea:{ left:20, top:20, width:'100%', height:'80%' },
+    hAxis: {textStyle: {color: this.themeService.fontColor}, gridlines: {color: this.themeService.chartGridlinesColor}},
+    vAxis: {textStyle: {color: this.themeService.fontColor}, gridlines: {color: this.themeService.chartGridlinesColor}, minorGridlines: {count: 0}}
   };
   dynamicResizable: boolean = true
 }
