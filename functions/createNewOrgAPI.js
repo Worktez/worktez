@@ -146,6 +146,9 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 TotalCompletedTask: 0,
                 TotalNumberOfTask: 0,
                 TotalUnCompletedTask: 0,
+                StartDate: "xxxx-xx-xx",
+                EndDate: "xxxx-xx-xx",
+                Status: "-",
             });
             return Promise.resolve(p2);
         });
@@ -159,6 +162,11 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 TeamId: teamId,
                 SprintNumber: -2,
                 TotalNumberOfTask: 0,
+                TotalCompletedTask: 0,
+                TotalUnCompletedTask: 0,
+                StartDate: "xxxx-xx-xx",
+                EndDate: "xxxx-xx-xx",
+                Status: "-",
             });
             return Promise.resolve(p3);
         });
