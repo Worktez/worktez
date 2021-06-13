@@ -47,7 +47,16 @@
                 <div class="form-row">
                     <div class="form-group col-sm-3">
                         <label for="input">Assignee</label>
-                        <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion">
+                        <!-- <select class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}"> -->
+                            <!-- <option selected>choose...</option> -->
+                            <datalist id="assigneeSuggestion">
+                                <ng-container *ngFor='let member of teamMembers'>
+                                    <option>{{ member }}</option>
+                                </ng-container>
+                            </datalist>
+                            <!-- <option><input type="number" class="form-control" value="enter Other"></option>
+                        </select> -->
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="text">Creator</label>
@@ -55,12 +64,17 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="input">Project</label>
-                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}">
-                    <option selected>choose...</option>
-                    <option>Business</option>
+                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (click)="readTeamMembers(project)">
+                    <!-- <option selected>choose...</option> -->
+                    <!-- <option>Business</option>
                     <option>Development</option>
                     <option>Marketing</option>
-                    <option>Other</option>
+                    <option>Other</option> -->
+                    <ng-container *ngFor='let id of teamIds'>
+                        <!-- <div *ngIf="i==0; then first else normal"></div>
+                        <ng-template #first><option selected>{{ id }}</ng-template> -->
+                        <option>{{ id }}</option>
+                    </ng-container>
                       </select>
                     </div>
                     <div class="form-group col-sm-3">
