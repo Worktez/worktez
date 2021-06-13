@@ -1,9 +1,5 @@
 <ng-container *ngIf="accessLevel; else unauthorizedAccess">
-    <div class="row" *ngFor="let item of backendService.organizationsData|async">
-        <!-- <ng-container *ngIf="applicationSettingsService.teamData | async; else loader"> -->
-        <!-- <div class="col-md-2">
-            <app-focus-nav [currentSprintNumber]="teamCurrentSprintNumber" (currentSprint)="changeSprintNumber($event)"></app-focus-nav>
-        </div> -->
+    <div class="row" *ngIf="showTeams">
         <div class="col">
             <div class="container">
                 <div class="row">
@@ -16,12 +12,11 @@
                 <ng-container *ngIf="showContent; else loader">
                     <app-sprint-details [currentSprintName]="currentSprintName" [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
                 </ng-container>
+                <ng-template #loader>
+                    <app-loader></app-loader>
+                </ng-template>
             </div>
         </div>
-        <!-- </ng-container> -->
-        <ng-template #loader>
-            <app-loader></app-loader>
-        </ng-template>
     </div>
 </ng-container>
 <ng-template #unauthorizedAccess>
