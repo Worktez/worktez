@@ -44,7 +44,12 @@
                 </ng-container>
             </ng-container>
             <ul class="navbar-nav ml-auto ">
-                <li class="nav-item py-1 ">
+                <ng-container *ngIf="!(authService.organizationAvailable) && authService.afauth.user | async">
+                    <li class="nav-item px-1">
+                        <button class="btn" id="button" (click)="createNewOrganization()">Create New Organization</button>
+                    </li>
+                </ng-container>
+                <li class="nav-item">
                     <app-login-handler></app-login-handler>
                 </li>
             </ul>
