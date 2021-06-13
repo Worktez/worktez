@@ -60,7 +60,6 @@ export class CreateNewSessionComponent implements OnInit {
     this.description=this.task.Description;
     this.creatorName=this.task.Creator;
     this.estimatedTime=this.task.EstimatedTime;
-    //this.project=this.task.Project;
     this.priority=this.task.Priority;
     this.difficulty=this.task.Difficulty;
     this.storyPoint=this.task.StoryPointNumber;
