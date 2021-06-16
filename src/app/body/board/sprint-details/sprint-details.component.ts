@@ -4,7 +4,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
-import { Sprint } from 'src/app/Interface/TeamInterface';
+import { Sprint,SprintDataId,TeamDataId } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-sprint-details',
@@ -14,6 +14,7 @@ import { Sprint } from 'src/app/Interface/TeamInterface';
 export class SprintDetailsComponent implements OnInit {
 
   @Input('currentSprintName') currentSprintName: string;
+  @Input('currentSprintNumber') currentSprintNumber:number
   @Input('sprintData') sprintData: Sprint;
 
   @Output() currentSprint = new EventEmitter<number>();
@@ -47,7 +48,7 @@ export class SprintDetailsComponent implements OnInit {
   }
   
   ActiveSprint(){
-    this.currentSprint.emit(0);
+    this.currentSprint.emit(this.currentSprintNumber);
   }
 
   showBacklog(){

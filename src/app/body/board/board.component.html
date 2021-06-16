@@ -10,7 +10,7 @@
                     </ng-container>
                 </div>
                 <ng-container *ngIf="showContent; else loader">
-                    <app-sprint-details [currentSprintName]="currentSprintName" [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                    <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="teamCurrentSprintNumber"  [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
                 </ng-container>
                 <ng-template #loader>
                     <app-loader></app-loader>
