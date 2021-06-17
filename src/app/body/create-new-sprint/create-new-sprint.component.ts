@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { Router } from '@angular/router';
-import { ValidationService } from '../../services/validation.service';
+import { ValidationService } from '../../services/general/validation.service';
 import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backEnd/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
 
 @Component({

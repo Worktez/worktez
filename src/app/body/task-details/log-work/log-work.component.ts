@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ValidationService } from '../../../services/validation.service';
-import { ToolsService } from '../../../services/tools.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
+import { ValidationService } from '../../../services/general/validation.service';
+import { ToolsService } from '../../../services/general/tools.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backEnd/backend.service';
 
 @Component({
   selector: 'app-log-work',

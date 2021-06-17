@@ -5,7 +5,7 @@ import { User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { BackendService } from './backend.service';
+import { BackendService } from './backEnd/backend.service';
 @Injectable({
   providedIn: 'root',
 })
