@@ -9,21 +9,20 @@
                 <span type="button" class="material-icons text-light pl-2" (click)="backToDashboard()">close</span>
             </div>
         </div>
-        <div class="row mt-3">
+        <div class="row pt-1">
             <ng-container *ngIf="showFilter">
                 <div class="col-md-4">
                     <app-filter-task (filterProperty)="applyFilters($event)" [defaultProject]="project"></app-filter-task>
                 </div>
             </ng-container>
-            <div class="col">
-                <div id="cardsList">
-                    <ng-container *ngFor="let item of tasksData | async">
-                        <app-task-cards [task]="item"></app-task-cards>
-                    </ng-container>
-                    <app-loader *ngIf="showFilter && !(tasksData | async)"></app-loader>
+            <ng-container *ngIf="tasksData | async">
+                <div class="col">
+                    <app-task-cards [tasks]="tasksData"></app-task-cards>
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
 </div>
-<app-loader *ngIf="!showFilter && !(tasksData | async)"></app-loader>
+<ng-container *ngIf="!showFilter && !(tasksData | async)">
+    <app-loader></app-loader>
+</ng-container>

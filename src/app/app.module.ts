@@ -43,12 +43,19 @@ import { PerformanceChartComponent } from './body/my-dashboard/performance-chart
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component'
 import { ErrorComponent } from './body/error/error.component';
-import { PatchComponent } from './patch/patch.component';
+import { Patch1Component } from './patches/patch1/patch1.component';
 import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
+import { ProfileComponent } from './body/profile/profile.component';
+import { EditProfileComponent } from './body/profile/edit-profile/edit-profile.component';
 import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/time-chart.component';
+import { ThemeComponent } from './body/common-tools/theme/theme.component';
+import { SetupComponent } from './body/setup/setup.component';
+import { HomeComponent } from './body/home/home.component';
+import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
+import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
 
 @NgModule({
   declarations: [
@@ -81,12 +88,19 @@ import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/ti
     CreateNewOrganizationComponent,
     ErrorComponent,
     FilterTaskComponent,
-    PatchComponent,
+    Patch1Component,
     OrganizationDetailsComponent,
     TeamDetailsComponent,
     FocusNavComponent,
     UserVerificationComponent,
+    ProfileComponent,
+    EditProfileComponent,
     TimeChartComponent,
+    ThemeComponent,
+    SetupComponent,
+    HomeComponent,
+    PieChartComponent,
+    WorkCompletionComponent,
   ],
   imports: [
     BrowserModule,

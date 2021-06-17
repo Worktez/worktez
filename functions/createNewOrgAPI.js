@@ -42,6 +42,7 @@ exports.createNewOrganization = functions.https.onRequest((request, response) =>
                     OrganizationEmail: organizationEmail,
                     OrganizationDescription: organizationDescription,
                     OrganizationLogoURL: organizationLogoURL,
+                    TeamsId: [],
                 });
                 return Promise.resolve(orgData);
             }
@@ -70,7 +71,8 @@ exports.createNewOrganization = functions.https.onRequest((request, response) =>
         let result;
         const promises = [promise1, promise2];
         return Promise.all(promises).then(() => {
-                result = { data: "Created Organization Successfully" };
+                const arr = ["Created Organization Successfully", appKey];
+                result = { data: arr };
                 console.log("Created Organization Successfully");
                 return response.status(200).send(result);
             })
@@ -102,7 +104,12 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
             querySnapshot.forEach((doc) => {
                 orgId = doc.data().OrganizationId;
             });
-            db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
+
+            const p1 = db.collection("Organizations").doc(organizationDomain).update({
+                TeamsId: admin.firestore.FieldValue.arrayUnion(teamId),
+            });
+
+            const p2 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
                 if (doc.exists) {
                     const p1 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).update({
                         TeamDescription: teamDescription,
@@ -127,10 +134,13 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                         TotalTeamTasks: 0,
                         OrganizationId: orgId,
                         TeamId: teamId,
+                        CurrentSprintId: 0,
                     });
                     return Promise.resolve(p1);
                 }
             });
+            const promises = [p1, p2];
+            return Promise.all(promises);
         });
 
         const promise2 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
@@ -144,6 +154,9 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 TotalCompletedTask: 0,
                 TotalNumberOfTask: 0,
                 TotalUnCompletedTask: 0,
+                StartDate: "xxxx-xx-xx",
+                EndDate: "xxxx-xx-xx",
+                Status: "-",
             });
             return Promise.resolve(p2);
         });
@@ -157,6 +170,11 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 TeamId: teamId,
                 SprintNumber: -2,
                 TotalNumberOfTask: 0,
+                TotalCompletedTask: 0,
+                TotalUnCompletedTask: 0,
+                StartDate: "xxxx-xx-xx",
+                EndDate: "xxxx-xx-xx",
+                Status: "-",
             });
             return Promise.resolve(p3);
         });
@@ -167,7 +185,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
 
         let result;
         const TeamPromises = [promise1, promise2, promise3];
-        return Promise.resolve(TeamPromises).then(() => {
+        return Promise.all(TeamPromises).then(() => {
                 result = { data: "Created Team with Labels Successfully" };
                 console.log("Created Team with Labels Successfully");
                 return response.status(200).send(result);

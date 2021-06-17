@@ -5,7 +5,13 @@ import { User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+<<<<<<< HEAD
 import { BackendService } from './backEnd/backend.service';
+=======
+import { BackendService } from './backend.service';
+import { ThemeService } from './theme.service';
+import { map } from 'rxjs/operators';
+>>>>>>> 8e527f38f34408fb0a7dac1ace93c6502e5a26b8
 @Injectable({
   providedIn: 'root',
 })
@@ -15,10 +21,12 @@ export class AuthService {
   public userAppSettingObservable: Observable<UserAppSetting>;
   public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
 
+  public organizationAvailable: boolean = true;
+
   user: User;
   userAppSetting: UserAppSetting;
 
-  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore, private backendService: BackendService) { }
+  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore, private backendService: BackendService, private themeService: ThemeService) { }
 
   async createUser(email: string, password: string, username: string) {
     await this.afauth.createUserWithEmailAndPassword(email, password);
@@ -61,24 +69,22 @@ export class AuthService {
     return this.user.uid;
   }
 
-  async getUserSettings() {
-    const uid = this.getLoggedInUser();
-    this.userAppSettingDocument = this.db.doc<UserAppSetting>('Users/' + uid);
-    try {
-      await this.userAppSettingDocument.ref.get().then(doc => {
-        if (doc.exists) {
-          this.userAppSetting = doc.data();
-          if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
-            this.backendService.getOrgDetails(this.userAppSetting.AppKey);
-          }
+  getUserSettings() {
+    const uid = this.getLoggedInUser(); 
+    var documentName = 'Users/'+uid;
+    this.userAppSettingDocument = this.db.doc<UserAppSetting>(documentName);
+    this.userAppSettingObservable = this.userAppSettingDocument.snapshotChanges().pipe(
+      map(actions => {
+        const data = actions.payload.data() as UserAppSetting;
+        this.userAppSetting = data;
+        if (this.userAppSetting.AppKey != "") {
+          this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+          this.themeService.changeTheme(data.AppTheme);
         } else {
-          console.error("Document does not exists!")
+          this.organizationAvailable = false;
         }
-      });
-      return this.userAppSetting;
-    } catch (error) {
-      return "Error";
-    }
+        return { ...data }
+      }));
   }
 
   getAppKey() {

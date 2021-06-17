@@ -9,11 +9,12 @@ import { TasksId } from 'src/app/Interface/TasksInterface';
 })
 export class TaskCardsComponent implements OnInit {
 
-  @Input('task') task: TasksId
+  @Input('tasks') tasks: TasksId[]
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.tasks.length);
   }
 
   openTaskDetails(id: string) {

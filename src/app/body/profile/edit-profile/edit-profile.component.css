@@ -1,0 +1,11 @@
+.profileEditTheme {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}

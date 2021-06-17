@@ -28,17 +28,12 @@ export class TeamDetailsComponent implements OnInit {
     this.selectedTeamId = this.route.snapshot.params['teamId'];
     console.log(this.selectedTeamId);
     if(this.selectedTeamId != undefined){
-      this.applicationSettings.getTeamDetails().subscribe(teams => {
-        this.teamData = teams;
-        teams.forEach(element => {
-          if(element.TeamId == this.selectedTeamId) {
-            this.teamName = element.TeamName;
-            this.teamId = element.TeamId;
-            this.teamDescription = element.TeamDescription;
-            this.teamManagerEmail = element.TeamManagerEmail;
-            this.teamMembers = element.TeamMembers.join(",");
-          }
-        });
+      this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(teams => {
+        this.teamName = teams[0].TeamName;
+        this.teamId = teams[0].TeamId;
+        this.teamDescription = teams[0].TeamDescription;
+        this.teamManagerEmail = teams[0].TeamManagerEmail;
+        this.teamMembers = teams[0].TeamMembers.join(",");
       });
     }
   }

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserCardComponent implements OnInit {
   @Input('user') user: User
   showCard: boolean = false
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -20,5 +20,8 @@ export class UserCardComponent implements OnInit {
   }
   onLogout() {
     this.authService.logout();
+  }
+  profile(){
+    this.router.navigate(['/profile']);
   }
 }

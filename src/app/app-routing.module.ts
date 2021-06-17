@@ -9,26 +9,31 @@ import { TasksComponent } from './body/tasks/tasks.component';
 import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
-import { PatchComponent } from './patch/patch.component';
+import { Patch1Component } from './patches/patch1/patch1.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
+import { ProfileComponent } from './body/profile/profile.component';
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
+import { SetupComponent } from './body/setup/setup.component';
+import { HomeComponent } from './body/home/home.component';
 
-const redirectLoggedInToDashboard = () => redirectLoggedInTo(['']);
-const redirectLoggedInToVerifyUser = () => redirectLoggedInTo(['verifyUser/orgDomain/teamName/userEmail']);
+const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
-  { path: 'Board', component: BoardComponent },
-  { path: 'CreateNewSession', component: CreateNewSessionComponent },
-  { path: 'StartNewSprint', component: CreateNewSprintComponent },
-  { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent },
-  { path: 'TaskDetails/:taskId', component: TaskDetailsComponent },
-  { path: '', component: MyDashBoardComponent },
-  { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent },
-  { path: 'patch', component: PatchComponent },
+  { path: '', component: HomeComponent},
+  { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
+  { path: 'Board', component: BoardComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'CreateNewSession', component: CreateNewSessionComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'StartNewSprint', component: CreateNewSprintComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'Patch1', component: Patch1Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
-  { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToVerifyUser } },
-  { path: 'CreateTeam', component: TeamDetailsComponent },
-  { path: 'UpdateTeam/:teamId', component: TeamDetailsComponent}
+  { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'CreateTeam', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'UpdateTeam/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]}
 ];
 
 @NgModule({

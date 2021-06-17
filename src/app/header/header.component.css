@@ -1,7 +1,12 @@
 .header {
     background-color: var(--header-bg);
     color: var(--text);
+    /* border-bottom: var(--primary-border); */
     height: inherit;
+}
+
+.headerBox {
+    box-shadow: var(--box-shadow-bottom);
 }
 
 .collapse {
@@ -38,4 +43,16 @@
 #navbarDropdownTeam:hover,
 #navbarDropdownCreate:hover {
     background-color: var(--hover);
+}
+
+#button {
+    background-color: #16C85A;
+    color: white;
+    height: 30px;
+    font-size: 12px;
+}
+
+#button:hover,
+#button:active {
+    background-color: #5A20F0;
 }

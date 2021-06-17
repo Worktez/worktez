@@ -24,11 +24,9 @@ export class UserVerificationComponent implements OnInit {
     this.userEmail = this.route.snapshot.params['userEmail'];
     this.teamId = this.route.snapshot.params['teamId'];
     console.log(this.teamName);
-
   }
 
   async verifyUser(){
-
     const callable = this.functions.httpsCallable('verifyUser');
     try{
       const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
