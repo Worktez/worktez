@@ -14,6 +14,7 @@ import { Sprint ,SprintDataId,TeamDataId} from 'src/app/Interface/TeamInterface'
 export class SprintDetailsComponent implements OnInit {
 
   @Input('currentSprintName') currentSprintName: string;
+  @Input('currentSprintNumber') currentSprintNumber:number
   @Input('sprintData') sprintData: Sprint;
   @Input('currentSprintNumber') currentSprintNumber:number
   @Output() currentSprint = new EventEmitter<number>();
