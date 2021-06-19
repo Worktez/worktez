@@ -105,8 +105,8 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 orgId = doc.data().OrganizationId;
             });
 
-            const p1 = db.collection("Organizations").doc(organizationDomain).set({
-                TeamsId: db.FieldValue.arrayUnion(teamId),
+            const p1 = db.collection("Organizations").doc(organizationDomain).update({
+                TeamsId: admin.firestore.FieldValue.arrayUnion(teamId),
             });
 
             const p2 = db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
@@ -154,6 +154,9 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 TotalCompletedTask: 0,
                 TotalNumberOfTask: 0,
                 TotalUnCompletedTask: 0,
+                StartDate: "xxxx-xx-xx",
+                EndDate: "xxxx-xx-xx",
+                Status: "-",
             });
             return Promise.resolve(p2);
         });
@@ -167,6 +170,11 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
                 TeamId: teamId,
                 SprintNumber: -2,
                 TotalNumberOfTask: 0,
+                TotalCompletedTask: 0,
+                TotalUnCompletedTask: 0,
+                StartDate: "xxxx-xx-xx",
+                EndDate: "xxxx-xx-xx",
+                Status: "-",
             });
             return Promise.resolve(p3);
         });
