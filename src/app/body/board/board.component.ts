@@ -16,7 +16,7 @@ export class BoardComponent implements OnInit {
   @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
   componentName: string = "BOARD";
-
+  currentSprintNumber:number
   showContent: boolean = false;
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
@@ -58,6 +58,7 @@ export class BoardComponent implements OnInit {
       teams.forEach(element => {
         if(element.TeamId == this.selectedTeamId) {
           this.teamCurrentSprintNumber = element.CurrentSprintId;
+          this.currentSprintNumber=element.CurrentSprintId;
         }
       });
       this.readSprintData();
