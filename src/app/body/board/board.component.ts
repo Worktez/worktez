@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { FeatureCardComponent } from './feature-card/feature-card.component';
 
 @Component({
   selector: 'app-board',
@@ -11,6 +12,8 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
+
+  @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
   componentName: string = "BOARD";
 
@@ -70,6 +73,9 @@ export class BoardComponent implements OnInit {
 
   readSprintData() {
     this.showContent = false;
+    this.child.forEach(child=>{
+      child.highlightSelectedTeam(this.selectedTeamId);
+    })
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
       this.sprintData = sprints[0];
       this.currentSprintName = "S" + this.sprintData.SprintNumber;

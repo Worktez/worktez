@@ -1,7 +1,5 @@
-<div class="col" type="button">
-    <div class="card text-white mb-3">
-        <div class="card-body">
-            <h5 class="card-title" style="font-size: 18px;">{{ cardName }}</h5>
-        </div>
+<div [ngClass]="{'card text-white mb-3 rounded': true, 'bg-success': selected}">
+    <div class="card-body">
+        <h5 class="card-title" style="font-size: 18px;">{{ cardName }}</h5>
     </div>
 </div>
