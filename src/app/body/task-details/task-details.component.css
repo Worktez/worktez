@@ -34,7 +34,7 @@
 }
 
 .sprint {
-    color: #10BE65;
+    color: var(--secondary-color);
 }
 
 #header {
