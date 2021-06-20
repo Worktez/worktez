@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { BackendService } from 'src/app/services/backEnd/backend.service';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-=======
 import { Component, OnInit } from '@angular/core';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { BackendService } from 'src/app/services/backend.service';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
->>>>>>> 8e527f38f34408fb0a7dac1ace93c6502e5a26b8
+import { BackendService } from 'src/app/services/backEnd/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 
 @Component({
   selector: 'app-board',
