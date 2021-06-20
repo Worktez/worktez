@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
-<<<<<<< HEAD
 import { BackendService } from '../services/backEnd/backend.service';
-=======
-import { BackendService } from '../services/backend.service';
 import { environment } from '../../environments/environment';
 >>>>>>> 8e527f38f34408fb0a7dac1ace93c6502e5a26b8
 
