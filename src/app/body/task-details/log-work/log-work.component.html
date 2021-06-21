@@ -16,7 +16,7 @@
                 </ul>
             </nav>
             <div class="container modal-body align-items-center px-4" id="logWorkPage">
-                <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
+                <form *ngIf="!enableLoader" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row px pt-2">
                         <div class="col-md"></div>
                         <div class="col-md-5 pl-2">
@@ -74,10 +74,9 @@
                     <div class="row">
                         <div class="col-md-9"></div>
                         <div class="col-md-3 pb-2 px-4">
-                            <button class="btn" type="submit" id="logWorkSubmit" [disabled]="enableLoader">Submit</button>
+                            <button class="btn" type="submit" id="logWorkSubmit">Submit</button>
                         </div>
                     </div>
-                    <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="showClose">
                     <div class="row">
@@ -94,3 +93,4 @@
         </div>
     </div>
 </div>
+<app-loader *ngIf="enableLoader"></app-loader>

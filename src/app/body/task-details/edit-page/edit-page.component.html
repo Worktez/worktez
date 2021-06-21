@@ -16,7 +16,7 @@
                 </ul>
             </nav>
             <div class="container modal-body" id="editPageTaskContainer">
-                <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
+                <form *ngIf="!enableLoader" (ngSubmit)="submit()" #form="ngForm">
                     <div class="col">
                         <div class="row mx px-3">
                             <div class="col-md"></div>
@@ -138,12 +138,11 @@
                     </div>
                     <div class="row py-3">
                         <div class="col-md-10"></div>
-                        <div class="col-md-2"><button type="submit" class="btn" id="button" [disabled]="enableLoader">Submit</button></div>
+                        <div class="col-md-2"><button type="submit" class="btn" id="button">Submit</button></div>
                     </div>
-                    <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="showClose">
-                    <div class="row" >
+                    <div class="row">
                         <div class="col">Successfully Updated!</div>
                     </div>
                     <div class="row">
@@ -157,3 +156,4 @@
         </div>
     </div>
 </div>
+<app-loader *ngIf="enableLoader"></app-loader>
