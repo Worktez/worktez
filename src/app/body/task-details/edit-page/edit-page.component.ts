@@ -24,7 +24,7 @@ export class EditPageComponent implements OnInit {
 
   editTask: Tasks
   previousSprintId: number
-  enableLoader: boolean = false
+  enableLoader: boolean = false;
   todayDate: string
   time: string
   changedData: string = ""
@@ -100,6 +100,7 @@ async generateChanges() {
         const result = await callable({AppKey: appKey,Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
+        this.enableLoader = false;
         this.showClose = true;
         // this.editTaskDone();
       }
