@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TeamDataId, Team, Sprint, SprintDataId } from '../Interface/TeamInterface';
-import { BackendService } from '../backEnd/backend.service';
+import { BackendService } from '../backend/backend.service';
 
 @Injectable({
   providedIn: 'root'

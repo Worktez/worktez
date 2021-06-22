@@ -7,11 +7,11 @@ import { map } from 'rxjs/operators'
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { ToolsService } from '../../services/general/tools.service';
+import { ToolsService } from '../../services/tool/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { BackendService } from 'src/app/services/backEnd/backend.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 import { Activity, ActivityId } from 'src/app/Interface/ActivityInterface';
 
 @Component({

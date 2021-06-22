@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ThemeService } from '../../../services/general/theme.service';
+import { ThemeService } from '../../../services/theme/theme.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
