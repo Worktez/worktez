@@ -11,8 +11,19 @@ export class FeatureCardComponent implements OnInit {
 
   @Input('cardName') cardName: string;
 
+  selected: boolean = false;
+  hovering: boolean = false;
+
   constructor(public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
 
   ngOnInit(): void {
+  }
+
+  highlightSelectedTeam(selectedTeamId: string) {
+    if(this.cardName == selectedTeamId) {
+      this.selected = true;
+    } else {
+      this.selected = false;
+    }
   }
 }

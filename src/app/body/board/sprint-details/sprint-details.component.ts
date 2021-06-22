@@ -14,8 +14,8 @@ import { Sprint } from 'src/app/Interface/TeamInterface';
 export class SprintDetailsComponent implements OnInit {
 
   @Input('currentSprintName') currentSprintName: string;
+  @Input('currentSprintNumber') currentSprintNumber:number
   @Input('sprintData') sprintData: Sprint;
-
   @Output() currentSprint = new EventEmitter<number>();
 
   componentName :string="SPRINT-DETAILS"
@@ -43,11 +43,11 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   showTasks() {
-    this.router.navigate(['/Tasks', this.sprintData.TeamId, this.currentSprintName])
+    this.router.navigate(['/Tasks', this.sprintData.TeamId, this.currentSprintName])  
   }
   
   ActiveSprint(){
-    this.currentSprint.emit(0);
+    this.currentSprint.emit(this.currentSprintNumber);
   }
 
   showBacklog(){
