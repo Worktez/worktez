@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
-import { ValidationService } from 'src/app/services/validation.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-create-new-organization',

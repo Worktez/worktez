@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',

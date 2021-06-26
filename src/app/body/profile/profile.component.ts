@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
