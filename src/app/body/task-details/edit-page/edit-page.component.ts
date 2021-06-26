@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service'
 import { ToolsService } from 'src/app/services/tool/tools.service';
-import { BackendService } from 'src/app/services/backEnd/backend.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 
 @Component({

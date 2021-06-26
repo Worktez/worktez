@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ValidationService } from 'src/app/services/validation.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-range-card',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ErrorHandlerService } from './error-handler.service';
+import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({
     providedIn: 'root',
