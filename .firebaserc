@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "my-first-project-d8086"
+    "default": "worktrolly"
   },
   "targets": {
     "worktrolly": {
