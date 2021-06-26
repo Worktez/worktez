@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TeamDataId, Team, Sprint, SprintDataId } from '../Interface/TeamInterface';
-import { BackendService } from './backend.service';
+import { BackendService } from '../backend/backend.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,10 @@ export class ApplicationSettingsService {
 
   constructor(private db: AngularFirestore, private backendService: BackendService) { }
 
-  getTeamDetails(teamId: string) {
+  getTeamDetails() {
     const orgId = this.backendService.organizationDetails.OrganizationId;
-    this.teamCollection = this.db.collectionGroup<Team>('Teams', ref => ref.where('OrganizationId', '==', orgId).where('TeamId', '==', teamId));
+    console.log("here")
+    this.teamCollection = this.db.collectionGroup<Team>('Teams', ref => ref.where('OrganizationId', '==', orgId));
     this.teamData = this.teamCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Team;

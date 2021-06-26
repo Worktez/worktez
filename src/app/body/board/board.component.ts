@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { BackendService } from 'src/app/services/backend.service';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 
 @Component({
   selector: 'app-board',
@@ -12,8 +12,10 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class BoardComponent implements OnInit {
 
-  componentName: string = "BOARD";
+  @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
+  componentName: string = "BOARD";
+  currentSprintNumber:number
   showContent: boolean = false;
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
@@ -55,6 +57,7 @@ export class BoardComponent implements OnInit {
       teams.forEach(element => {
         if(element.TeamId == this.selectedTeamId) {
           this.teamCurrentSprintNumber = element.CurrentSprintId;
+          this.currentSprintNumber=element.CurrentSprintId;
         }
       });
       this.readSprintData();
@@ -70,6 +73,9 @@ export class BoardComponent implements OnInit {
 
   readSprintData() {
     this.showContent = false;
+    this.child.forEach(child=>{
+      child.highlightSelectedTeam(this.selectedTeamId);
+    })
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
       this.sprintData = sprints[0];
       this.currentSprintName = "S" + this.sprintData.SprintNumber;
