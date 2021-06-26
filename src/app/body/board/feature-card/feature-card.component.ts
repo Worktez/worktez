@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { BackendService } from 'src/app/services/backend/backend.service';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-feature-card',

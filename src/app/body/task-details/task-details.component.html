@@ -35,7 +35,7 @@
                 <div class="col">
                     <div class="row mx px-3">
                         <div class="col-md"></div>
-                        <div class="col-md-10 pl-0 form-inline">
+                        <div class="col-md-5 pl-0 form-inline">
                             <div class="sprint" id="font">
                                 <div class="col-md-2 pl-0 form-inline" id="idTaskDescription">{{task.Id}}</div>
                             </div>
@@ -44,6 +44,10 @@
                             </div>
                         </div>
                         <div class="col-md blank"></div>
+                        <div class="col-md-5 form-inline" id="font">
+                            <div id="header" class="mr-3">Completion Date:</div>
+                            <div id="creationDateTaskDescription">{{task.CompletionDate}}</div>
+                        </div>
                     </div>
                     <hr>
                     <div class="row ">

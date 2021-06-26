@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ToolsService } from '../../services/tool/tools.service';
+import { ToolsService } from '../../services/tools.service';
 
 @Component({
   selector: 'app-patch1',

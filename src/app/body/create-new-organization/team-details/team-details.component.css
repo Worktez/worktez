@@ -15,7 +15,3 @@
     cursor: pointer;
     color: var(--primary-color);
 }
-
-#form {
-    color: var(--text);
-}

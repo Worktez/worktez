@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { ValidationService } from 'src/app/services/validation/validation.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { ValidationService } from 'src/app/services/validation.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 @Component({
   selector: 'app-organization-details',

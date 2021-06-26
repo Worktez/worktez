@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
 
 @Component({
   selector: 'app-filter-task',

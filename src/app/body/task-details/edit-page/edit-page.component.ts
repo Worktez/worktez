@@ -3,10 +3,10 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
-import { ValidationService } from '../../../services/validation/validation.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service'
-import { ToolsService } from 'src/app/services/tool/tools.service';
-import { BackendService } from 'src/app/services/backEnd/backend.service';
+import { ValidationService } from '../../../services/validation.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service'
+import { ToolsService } from 'src/app/services/tools.service';
+import { BackendService } from 'src/app/services/backend.service';
 
 
 @Component({

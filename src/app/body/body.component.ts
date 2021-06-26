@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
+import { ApplicationSettingsService } from '../services/application-settings.service';
 import { AuthService } from '../services/auth.service';
-import { BackendService } from '../services/backend/backend.service';
+import { BackendService } from '../services/backend.service';
 import { environment } from '../../environments/environment';
 
 @Component({

@@ -1,9 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { ValidationService } from 'src/app/services/validation/validation.service';
-import { Router } from '@angular/router';
+import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-create-new-organization',
@@ -18,13 +17,9 @@ export class CreateNewOrganizationComponent implements OnInit {
   step: number = 1
   orgDomain: string
 
-  constructor(public location: Location, public appSettings: ApplicationSettingsService, public validationService: ValidationService, private functions: AngularFireFunctions, private router: Router) { }
+  constructor(public location: Location, public appSettings: ApplicationSettingsService, public validationService: ValidationService, private functions: AngularFireFunctions) { }
 
-  ngOnInit(): void {
-    if(this.router.url === '/CreateTeam' || this.router.url.startsWith('/UpdateTeam')) {
-      this.step = 2;
-    }
-  }
+  ngOnInit(): void { }
 
   changeStepAndGetOrg(data: { step: number, organizationDomain: string }) {
     this.step = data.step

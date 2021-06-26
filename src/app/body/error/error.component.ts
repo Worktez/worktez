@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { ValidationService } from 'src/app/services/validation/validation.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'app-error',
