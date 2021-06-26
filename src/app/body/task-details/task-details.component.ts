@@ -48,10 +48,16 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar(this.Id);
 
-    this.backendService.organizationsData.subscribe(data => {
-      this.orgDomain =  this.backendService.getOrganizationDomain();
-      this.getTaskDetail();
-    this.getActivityData();
+    this.authService.afauth.user.subscribe(data =>{
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if(data.AppKey) {
+          this.backendService.organizationsData.subscribe(data => {
+            this.orgDomain =  this.backendService.getOrganizationDomain();
+            this.getTaskDetail();
+            this.getActivityData();
+          });
+        }
+      });
     });
   }
 
