@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 
 @Component({
   selector: 'app-navbar',

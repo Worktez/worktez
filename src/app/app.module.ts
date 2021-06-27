@@ -43,7 +43,7 @@ import { PerformanceChartComponent } from './body/my-dashboard/performance-chart
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component'
 import { ErrorComponent } from './body/error/error.component';
-import { PatchComponent } from './patch/patch.component';
+import { Patch1Component } from './patches/patch1/patch1.component';
 import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
@@ -88,7 +88,7 @@ import { WorkCompletionComponent } from './body/tasks/work-completion/work-compl
     CreateNewOrganizationComponent,
     ErrorComponent,
     FilterTaskComponent,
-    PatchComponent,
+    Patch1Component,
     OrganizationDetailsComponent,
     TeamDetailsComponent,
     FocusNavComponent,
