@@ -28,7 +28,7 @@ export class TeamDetailsComponent implements OnInit {
     this.selectedTeamId = this.route.snapshot.params['teamId'];
     console.log(this.selectedTeamId);
     if(this.selectedTeamId != undefined){
-      this.applicationSettings.getTeamDetails().subscribe(teams => {
+      this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(teams => {
         this.teamName = teams[0].TeamName;
         this.teamId = teams[0].TeamId;
         this.teamDescription = teams[0].TeamDescription;
