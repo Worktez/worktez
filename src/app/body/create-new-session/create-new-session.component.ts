@@ -69,6 +69,7 @@ export class CreateNewSessionComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
+          console.log(this.teamName);
     }); 
   }
   async submit() {
