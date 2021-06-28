@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TeamDataId, Team, Sprint, SprintDataId } from '../../Interface/TeamInterface';
+import { TeamDataId, Team, Sprint, SprintDataId } from '../Interface/TeamInterface';
 import { BackendService } from '../backend/backend.service';
 
 @Injectable({

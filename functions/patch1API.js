@@ -1,4 +1,3 @@
-/* eslint-disable no-var */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-undef */
 /* eslint-disable require-jsdoc */
@@ -16,6 +15,7 @@ const db = admin.firestore();
 
 exports.patch1 = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
+        const orgId = request.body.data.OrgId;
         const orgDomain = request.body.data.OrgDomain;
         const teamId = request.body.data.TeamId;
 
@@ -30,12 +30,12 @@ exports.patch1 = functions.https.onRequest((request, response) => {
                 teamName = doc.data().TeamName;
             });
             console.log("Executing Promise1 of Patch1");
-            for (i = -2; i<=totalSprints; i++) {
-                if (i!=0) {
+            for(i = -2; i<=totalSprints;i++)
+                if(i!=0)
+                {
                     fullSprintId = createSprintId(i);
-                    sprintCounters(i, orgDomain, teamId, teamName, fullSprintId);
+                    sprintCounters(i,orgDomain,teamId,teamName,fullSprintId);                                       
                 }
-            }
         });
 
         const promise2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((team) => {
@@ -46,7 +46,7 @@ exports.patch1 = functions.https.onRequest((request, response) => {
             const p2 = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).update({
                 TotalTeamTasks: totalTeamTask,
             });
-            return Promise.resolve(p2);
+            return Promise.resolve(p2);   
         });
 
         const Promises = [promise1, promise2];
@@ -60,26 +60,31 @@ exports.patch1 = functions.https.onRequest((request, response) => {
             return response.status(500).send(result);
         });
     });
-});
+})
 
-function sprintCounters(i, orgDomain, teamId, teamName, fullSprintId) {
-    var a = [0, 0, 0];
+
+function sprintCounters(i,orgDomain,teamId,teamName,fullSprintId)
+{
+    var a = [0,0,0]
     db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((tasks) => {
         tasks.forEach((doc) => {
-            if (doc.data().SprintNumber == i) {
+            if(doc.data().SprintNumber == i)
+            {
                 a[0] +=1;
-                if (doc.data().Status == "Completed") {
+                if(doc.data().Status == "Completed")
                     a[1] += 1;
-                } else a[2] += 1;
+                else a[2] += 1; 
+
             }
-        });
+        }); 
         const p1 = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintId).update({
             TotalNumberOfTask: a[0],
             TotalCompletedTask: a[1],
             TotalUnCompletedTask: a[2],
-        });
-        return Promise.resolve(p1);
+        });     
+        return Promise.resolve(p1);       
     });
+
 }
 
 function createSprintId(sprintNumber) {

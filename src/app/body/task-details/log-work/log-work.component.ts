@@ -5,7 +5,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { ToolsService } from '../../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { BackendService } from 'src/app/services/backend/backend.service';
+import { BackendService } from 'src/app/services/backEnd/backend.service';
 
 @Component({
   selector: 'app-log-work',

@@ -39,7 +39,7 @@ export class MyDashBoardComponent implements OnInit {
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
           this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
           this.currentSprintName = "S" + this.teamCurrentSprintNumber;
     });

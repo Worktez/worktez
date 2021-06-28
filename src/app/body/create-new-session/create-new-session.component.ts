@@ -66,7 +66,7 @@ export class CreateNewSessionComponent implements OnInit {
   }
 
   readTeamMembers(teamId :string){
-    this.applicationSetting.getTeamDetails().subscribe(teams => {
+    this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
     }); 
