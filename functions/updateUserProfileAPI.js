@@ -16,11 +16,14 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
         const uid = request.body.data.Uid;
         const displayName = request.body.data.DisplayName;
         const aboutMe = request.body.data.AboutMe;
+        const phoneNumber = request.body.data.PhoneNumber;
+        console.log(phoneNumber)
         let result;
 
         db.collection("Users").doc(uid).update({
             displayName: displayName,
             AboutMe: aboutMe,
+            phoneNumber: phoneNumber
         }).then(() => {
             result = { data: "User Profile updated successfully" };
             console.log("Successful");

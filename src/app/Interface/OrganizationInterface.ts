@@ -2,6 +2,7 @@ export interface Organizations {
     AppKey: string;
     OrganizationId: string;
     OrganizationDomain: string;
+    OrganizationName: string;
     TeamsId: [];
   }
 

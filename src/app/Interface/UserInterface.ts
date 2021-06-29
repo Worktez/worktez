@@ -11,5 +11,7 @@ export interface UserAppSetting extends User {
     AppKey: string;
     TeamId: string;
     AboutMe: string;
-    AppTheme: string
+    AppTheme: string;
+    GithubProfile: string;
+    LinkedInProfile: string;
 }

@@ -32,10 +32,12 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     photoURL: PhotoURL,
                     displayName: DisplayName,
                     email: Email,
-                    phoneNumber: PhoneNumber,
+                    phoneNumber: "",
                     providerId: ProviderId,
                     AboutMe: "",
                     AppTheme: "theme-light",
+                    GithubProfile: "",
+                    LinkedInProfile: ""
                 });
                 return Promise.resolve(userData);
             } else {
