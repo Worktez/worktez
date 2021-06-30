@@ -33,10 +33,10 @@ export class ThemeComponent implements OnInit {
   }
 
   async updateTheme(appTheme: string){
-    const callable = this.functions.httpsCallable('updateTheme');
+    const callable = this.functions.httpsCallable('users');
 
     try {
-      const result = await callable({Uid: this.uid, AppTheme: appTheme}).toPromise();
+      const result = await callable({mode: "update-theme",Uid: this.uid, AppTheme: appTheme}).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

@@ -5,7 +5,9 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { functions, cors } = require("../application/lib");
-const { createNewUser } = require("../users/createNewUser");
+const { createNewUser } = require("./createNewUser");
+const { updateUser } = require("./updateUser");
+const { updateTheme } = require("../../updateUserProfileAPI");
 
 exports.users = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -13,6 +15,10 @@ exports.users = functions.https.onRequest((request, response) => {
 
         if (mode == "create") {
             return createNewUser(request, response);
+        } else if (mode == "update") {
+            return updateUser(request, response);
+        } else if (mode == "update-theme") {
+            return updateTheme(request, response);
         }
     });
 });

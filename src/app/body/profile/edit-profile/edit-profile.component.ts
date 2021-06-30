@@ -24,9 +24,9 @@ export class EditProfileComponent implements OnInit {
 
   async editProfile(){
     this.enableLoader = true 
-      const callable = this.functions.httpsCallable('updateUserProfile');
+      const callable = this.functions.httpsCallable('users');
       try {
-        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName}).toPromise();
+        await callable({mode: "update", Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName}).toPromise();
         console.log("Successful");
         this.showClose = true
       } catch (error) {
