@@ -53,7 +53,7 @@ export class BoardComponent implements OnInit {
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
       teams.forEach(element => {
         if(element.TeamId == this.selectedTeamId) {
