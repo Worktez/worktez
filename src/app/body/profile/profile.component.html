@@ -16,7 +16,7 @@
         <div class="col-md-6">
             <div class="row">
                 <ul class="navbar-nav ml-auto">
-                    <app-theme [appTheme]="appTheme" [uid]="uid"></app-theme>
+                    <app-theme [appTheme]="appTheme" [uid]="uid" *ngIf="appTheme"></app-theme>
                 </ul>
             </div>
         </div>
