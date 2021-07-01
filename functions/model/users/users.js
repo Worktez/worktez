@@ -8,6 +8,7 @@ const { functions, cors } = require("../application/lib");
 const { createNewUser } = require("./createNewUser");
 const { updateUser } = require("./updateUser");
 const { updateTheme } = require("../../updateUserProfileAPI");
+const { verifyUser } = require("./verifyUser");
 
 exports.users = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -19,6 +20,8 @@ exports.users = functions.https.onRequest((request, response) => {
             return updateUser(request, response);
         } else if (mode == "update-theme") {
             return updateTheme(request, response);
+        } else if (mode == "verify") {
+            return verifyUser(request, response);
         }
     });
 });
