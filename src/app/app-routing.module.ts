@@ -13,7 +13,6 @@ import { Patch1Component } from './patches/patch1/patch1.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
-import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
 
@@ -33,8 +32,8 @@ const routes: Routes = [
   { path: 'Patch3', component: Patch3Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'CreateTeam', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'UpdateTeam/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'CreateTeam', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'UpdateTeam/:teamId', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]}
 ];
 
