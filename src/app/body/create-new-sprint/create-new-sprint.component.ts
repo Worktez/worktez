@@ -126,7 +126,7 @@ export class CreateNewSprintComponent implements OnInit {
 
       console.log("Successfully created a new sprint");
       console.log(result);
-      this.router.navigate(['/']);
+      this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
@@ -135,7 +135,8 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   backToDashboard() {
-    this.location.back();
+    this.router.navigate(['MyDashboard']);
+    //this.location.back();
   }
 
   
