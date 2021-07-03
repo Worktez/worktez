@@ -56,6 +56,7 @@ import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
 import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
 import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
+import { Patch2Component } from './patches/patch2/patch2.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { WorkCompletionComponent } from './body/tasks/work-completion/work-compl
     HomeComponent,
     PieChartComponent,
     WorkCompletionComponent,
+    Patch2Component,
   ],
   imports: [
     BrowserModule,

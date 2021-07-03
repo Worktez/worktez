@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable require-jsdoc */
@@ -18,6 +19,7 @@ const createNewUserAPI = require("./createNewUserAPI");
 const updateSprintStatusAPI = require("./updateSprintStatusAPI");
 const createNewOrgAPI = require("./createNewOrgAPI");
 const patch1API = require("./patch1API");
+const patch2API= require("./patch2API");
 const verifyUserAPI = require("./verifyUserAPI");
 const updateUserProfileAPI = require("./updateUserProfileAPI");
 const updateThemeAPI = require("./updateUserProfileAPI");
@@ -53,6 +55,7 @@ exports.updateSprintStatus = updateSprintStatusAPI.updateSprintStatus;
 exports.createNewOrganization = createNewOrgAPI.createNewOrganization;
 exports.createNewTeamWithLabels = createNewOrgAPI.createNewTeamWithLabels;
 exports.patch1 = patch1API.patch1;
+exports.patch2 = patch2API.patch2;
 exports.verifyUser = verifyUserAPI.verifyUser;
 exports.updateUserProfile = updateUserProfileAPI.updateUserProfile;
 exports.updateTheme = updateThemeAPI.updateTheme;
