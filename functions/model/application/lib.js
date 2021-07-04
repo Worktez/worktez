@@ -26,3 +26,14 @@ exports.setApplication = function() {
     });
     return Promise.resolve(P1);
 };
+
+exports.getApplicationData = function() {
+    const promise = firestore.collection("RawData").doc("AppDetails").get().then((doc) => {
+        if (doc.exists) {
+            return doc.data();
+        } else {
+            return;
+        }
+    });
+    return Promise.resolve(promise);
+};

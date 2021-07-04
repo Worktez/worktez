@@ -5,8 +5,9 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { setApplication, db } = require("../application/lib");
-const { setUser } = require("./lib");
+const { Console } = require("console");
+const { setApplication, getApplicationData } = require("../application/lib");
+const { setUser, getUser } = require("./lib");
 
 exports.createNewUser = function(request, response) {
     const user = request.body.data;
@@ -17,30 +18,38 @@ exports.createNewUser = function(request, response) {
     const PhoneNumber = user.phoneNumber;
     const ProviderId = user.providerId;
 
-    const promise1 = db.collection("Users").doc(Uid).get().then((doc) => {
-        if (!doc.exists) {
-            return setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId);
-        } else {
-            return;
+    let status = 200;
+
+    const promise1 = getUser(Uid).then((data) => {
+        Console.log("Getting User Data");
+        if (data == undefined) {
+            setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId);
         }
+    }).catch((err) => {
+        status = 500;
+        console.error("Error : " + err);
     });
-    const promise2 = db.collection("RawData").doc("AppDetails").get().then((doc) => {
-        if (doc.exists) {
-            return 0;
-        } else {
-            return setApplication();
+
+    const promise2 = getApplicationData().then((data) => {
+        console.log("Getting Application Data");
+        if (data == undefined) {
+            setApplication();
         }
+    }).catch((err) => {
+        status = 500;
+        console.error("Error : " + err);
     });
+
     const Promises = [promise1, promise2];
     let result;
     return Promise.all(Promises).then(() => {
             result = { data: "User Logged In Successfully" };
             console.log("User Logged In Successfully");
-            return response.status(200).send(result);
+            return response.status(status).send(result);
         })
         .catch((error) => {
             result = { data: error };
             console.error("Error LogIn/SignUp User", error);
-            return response.status(500).send(result);
+            return response.status(status).send(result);
         });
 };

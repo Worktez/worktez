@@ -22,3 +22,16 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     });
     return Promise.resolve(userData);
 };
+
+exports.getUser = function(Uid) {
+    console.log("Uid : " + Uid);
+    const promise = db.collection("Users").doc(Uid).get().then((doc) => {
+        if (doc.exists) {
+            return (doc.data());
+        } else {
+            return;
+        }
+    });
+
+    return Promise.resolve(promise);
+};
