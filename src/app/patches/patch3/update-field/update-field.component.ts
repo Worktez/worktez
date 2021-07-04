@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFirestore} from '@angular/fire/firestore';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
