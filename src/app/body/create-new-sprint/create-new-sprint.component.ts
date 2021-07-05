@@ -135,8 +135,7 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   backToDashboard() {
-    this.router.navigate(['MyDashboard']);
-    //this.location.back();
+    this.location.back();
   }
 
   
