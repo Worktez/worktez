@@ -117,8 +117,7 @@ export class CreateNewSessionComponent implements OnInit {
   }
 
   backToDashboard() {
-    this.router.navigate(['MyDashboard']);
-    //this.location.back()
+    this.location.back()
   }
 
 }
