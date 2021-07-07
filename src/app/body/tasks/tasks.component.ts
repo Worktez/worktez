@@ -6,6 +6,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -28,7 +29,7 @@ export class TasksComponent implements OnInit {
   filterStatus: string
   filterProject: string
   showFilter: boolean = false
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -43,7 +44,14 @@ export class TasksComponent implements OnInit {
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
     }
-    this.readData();
+    
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.readData();
+        }
+      });
+    });
   }
 
   readData() {
