@@ -17,7 +17,6 @@ const db = admin.firestore();
 exports.patch2=functions.https.onRequest((request, response)=>{
     cors(request, response, ()=>{
         const orgDomain = request.body.data.OrgDomain;
-        const TaskId = request.body.data.TaskId;
         let taskId;
         const newfield=request.body.data.newField;
         const newFieldValue=request.body.data.NewFieldValue;
@@ -27,15 +26,8 @@ exports.patch2=functions.https.onRequest((request, response)=>{
                 console.log("Executing Promise1 of Patch2");
                 desiredField={};
                 desiredField[newfield]=newFieldValue;
-                defaultField={};
-                defaultField[newfield]="xx-xxx-xx";
-                if (taskId===TaskId) {
                 const p2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(desiredField);
                  return Promise.resolve(p2);
-} else {
-                    const p2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(defaultField);
-                    return Promise.resolve(p2);
-                }
             });
             const Promises = [promise1];
         Promise.all(Promises).then(() => {
