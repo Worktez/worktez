@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { BackendService } from 'src/app/services/backend.service';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { FeatureCardComponent } from './feature-card/feature-card.component';
 
 @Component({
   selector: 'app-board',
@@ -12,15 +13,19 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
 })
 export class BoardComponent implements OnInit {
 
-  componentName: string = "BOARD";
+  @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
+  componentName: string = "BOARD";
+  currentSprintNumber:number
   showContent: boolean = false;
   teamData: TeamDataId[] = [];
-  selectedTeamId: string = "Dev";
-  teamCurrentSprintNumber: number;
+  selectedTeamId: string;
+  teamCurrentSprintNumber: number = -100;
   sprintData: Sprint;
   currentSprintName: string;
   accessLevel: number;
+  showTeams: boolean = false;
+  teams: [];
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -34,36 +39,44 @@ export class BoardComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if(data.AppKey) {
           this.accessLevel = 1;
+          this.selectedTeamId = data.TeamId;
           this.backendService.organizationsData.subscribe(data => {
-            if(data.length)
-            this.readApplicationData();
+            if(data.length) {
+              this.teams = data[0].TeamsId;
+              this.showTeams = true;
+              this.readApplicationData();
+            }
           });
         }
       });
-    })
-    
+    });
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
       teams.forEach(element => {
         if(element.TeamId == this.selectedTeamId) {
           this.teamCurrentSprintNumber = element.CurrentSprintId;
+          this.currentSprintNumber=element.CurrentSprintId;
         }
       });
       this.readSprintData();
     });
   }
 
-  setSprintDetails(teamId: string, currentSprintId: number) {
+  getSprintDetails(teamId: string) {
+    this.showContent = false;
     this.selectedTeamId = teamId;
-    this.teamCurrentSprintNumber = currentSprintId;
-    this.readSprintData();
+    this.readApplicationData();
+    // this.readSprintData();
   }
 
   readSprintData() {
     this.showContent = false;
+    this.child.forEach(child=>{
+      child.highlightSelectedTeam(this.selectedTeamId);
+    })
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
       this.sprintData = sprints[0];
       this.currentSprintName = "S" + this.sprintData.SprintNumber;

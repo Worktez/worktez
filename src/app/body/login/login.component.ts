@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
 

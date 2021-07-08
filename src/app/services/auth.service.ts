@@ -5,9 +5,10 @@ import { User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { BackendService } from './backend.service';
-import { ThemeService } from './theme.service';
+import { BackendService } from './backend/backend.service';
+import { ThemeService } from './theme/theme.service';
 import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +17,8 @@ export class AuthService {
 
   public userAppSettingObservable: Observable<UserAppSetting>;
   public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
+
+  public organizationAvailable: boolean = true;
 
   user: User;
   userAppSetting: UserAppSetting;
@@ -64,17 +67,18 @@ export class AuthService {
   }
 
   getUserSettings() {
-    const uid = this.getLoggedInUser();
-    console.log(uid);
+    const uid = this.getLoggedInUser(); 
     var documentName = 'Users/'+uid;
     this.userAppSettingDocument = this.db.doc<UserAppSetting>(documentName);
     this.userAppSettingObservable = this.userAppSettingDocument.snapshotChanges().pipe(
       map(actions => {
         const data = actions.payload.data() as UserAppSetting;
         this.userAppSetting = data;
-        if (this.userAppSetting.AppKey != "" || this.userAppSetting.AppKey != undefined) {
+        if (this.userAppSetting.AppKey != "") {
           this.backendService.getOrgDetails(this.userAppSetting.AppKey);
           this.themeService.changeTheme(data.AppTheme);
+        } else {
+          this.organizationAvailable = false;
         }
         return { ...data }
       }));

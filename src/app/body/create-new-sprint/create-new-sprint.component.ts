@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { Router } from '@angular/router';
-import { ValidationService } from '../../services/validation.service';
+import { ValidationService } from '../../services/validation/validation.service';
 import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
 
 @Component({
@@ -33,7 +33,7 @@ export class CreateNewSprintComponent implements OnInit {
   enableLoader: boolean = false;
   user: User;
 
-  selectedTeamId: string = "Dev";
+  selectedTeamId: string;
   teamCurrentSprintNumber: number;
 
   teamData: TeamDataId[] = [];
@@ -44,6 +44,8 @@ export class CreateNewSprintComponent implements OnInit {
   public rawDocument: AngularFirestoreDocument<RawDataType>;
 
   sprintData: Sprint;
+  teams: [];
+  showTeams: boolean = false;
 
   nextSprintId: number;
   showContent: boolean;
@@ -54,18 +56,26 @@ export class CreateNewSprintComponent implements OnInit {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
-    this.readApplicationData();
+    this.authService.afauth.user.subscribe(data =>{
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if(data.AppKey) {
+          this.selectedTeamId = data.TeamId;
+          this.backendService.organizationsData.subscribe(data => {
+            if(data.length) {
+              this.teams = data[0].TeamsId;
+              this.showTeams = true;
+              this.readApplicationData();
+            }
+          });
+        }
+      });
+    });
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
-      this.teamData = teams;
-      teams.forEach(element => {
-        if(element.TeamId == this.selectedTeamId) {
-          this.teamCurrentSprintNumber = element.CurrentSprintId;
-          this.nextSprintId = element.CurrentSprintId+1;
-        }
-      });
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
+      this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
+      this.nextSprintId = teams[0].CurrentSprintId+1;
       this.readSprintData();
     });
   }
