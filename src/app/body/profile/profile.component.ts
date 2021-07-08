@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   role: string
   githubProfile: string;
   linkedInProfile: string;
+  managerEmail: string;
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -33,33 +34,26 @@ export class ProfileComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(
-        data =>{
-          if(data.AppKey) {
-          this.photoURL = data.photoURL;
-          this.displayName = data.displayName;
-          this.email = data.email;
-          this.uid = data.uid;
-          this.aboutMe = data.AboutMe;
-          this.appTheme = data.AppTheme;
-          this.phoneNumber = data.phoneNumber;
-          this.linkedInProfile = data.LinkedInProfile;
-          this.githubProfile = data.GithubProfile;
-          }
-        }
-        );
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.readUser();
 
-        this.organizationName = this.backendService.getOrganizationName();
-        this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
+          this.organizationName = this.backendService.getOrganizationName();
+          this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
           this.teamName = teams[0].TeamName;
+          this.managerEmail = teams[0].TeamManagerEmail;
           if(teams[0].TeamManagerEmail == this.email) {
             this.role = "Manager";
           } else {
             this.role = "Member";
           }
-        });
+          });
+        }
+      });
     });
-  }
+    }    
+  
+
 
   editProfile(){
     this.editProfileEnabled = true;
@@ -69,4 +63,16 @@ export class ProfileComponent implements OnInit {
     this.editProfileEnabled = false;
   }
 
+  readUser() {
+    this.displayName = this.authService.userAppSetting.displayName;
+    this.email = this.authService.userAppSetting.email;
+    this.uid = this.authService.userAppSetting.uid;
+    this.aboutMe = this.authService.userAppSetting.AboutMe;
+    this.appTheme = this.authService.userAppSetting.AppTheme;
+    this.photoURL = this.authService.userAppSetting.photoURL;
+    this.phoneNumber = this.authService.userAppSetting.phoneNumber;
+    this.linkedInProfile = this.authService.userAppSetting.LinkedInProfile;
+    this.githubProfile = this.authService.userAppSetting.GithubProfile;
+  }
+  
 }

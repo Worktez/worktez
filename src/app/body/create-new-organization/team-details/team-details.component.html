@@ -33,9 +33,10 @@
         </div>
         <div class="form-group row align-items-center justify-content-center">
             <div class="offset-6 col-6 text-right">
-                <span class="material-icons" (click)="nextChildStep()" data-toggle="tooltip" data-placement="top" title="Next">arrow_forward_ios</span>
+                <span class="material-icons" (click)="nextChildStep()" data-toggle="tooltip" data-placement="top" title="Next" [disabled]="enableLoader">arrow_forward_ios</span>
             </div>
         </div>
+        <app-loader *ngIf="enableLoader"></app-loader>
     </ng-container>
     <ng-container *ngIf="childStep===2">
         <div class="form-group row">
@@ -119,8 +120,9 @@
                 <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Back" (click)="prevChildStep()">arrow_back_ios</span>
             </div>
             <div class="col-6 text-right">
-                <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Submit" (click)="submit()">done</span>
+                <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Submit" (click)="submit()" [disabled]="enableLoader">done</span>
             </div>
         </div>
+        <app-loader *ngIf="enableLoader"></app-loader>
     </ng-container>
 </form>

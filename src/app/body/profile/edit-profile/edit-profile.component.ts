@@ -29,7 +29,7 @@ export class EditProfileComponent implements OnInit {
     this.enableLoader = true 
       const callable = this.functions.httpsCallable('updateUserProfile');
       try {
-        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber}).toPromise();
+        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile}).toPromise();
         console.log("Successful");
         this.showClose = true
       } catch (error) {

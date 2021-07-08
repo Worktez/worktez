@@ -26,7 +26,7 @@ export class LogWorkComponent implements OnInit {
   logWorkComment: string
   todayDate: string
   time: string
-  enableLoader: boolean = false
+  enableLoader: boolean = false;
   showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService) { }
@@ -64,6 +64,7 @@ export class LogWorkComponent implements OnInit {
 
       console.log("Logged Work Successfully");
       console.log(result);
+      this.enableLoader = false;
       this.showClose = true;
       // this.workDone();
       return;

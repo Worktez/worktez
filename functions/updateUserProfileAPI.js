@@ -17,13 +17,16 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
         const displayName = request.body.data.DisplayName;
         const aboutMe = request.body.data.AboutMe;
         const phoneNumber = request.body.data.PhoneNumber;
-        console.log(phoneNumber)
+        const linkedInProfile = request.body.data.LinkedInProfile;
+        const githubProfile = request.body.data.GithubProfile;
         let result;
 
         db.collection("Users").doc(uid).update({
             displayName: displayName,
             AboutMe: aboutMe,
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            LinkedInProfile: linkedInProfile,
+            GithubProfile: githubProfile
         }).then(() => {
             result = { data: "User Profile updated successfully" };
             console.log("Successful");
