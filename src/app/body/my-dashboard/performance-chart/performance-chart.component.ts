@@ -11,7 +11,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 })
 export class PerformanceChartComponent implements OnInit {
 
-  @Input("username") username: string
+  @Input("userEmail") userEmail: string
   @Input("currentSprint") currentSprintNumber: number
 
   componentName: string="PERFORMANCE-CHART"
@@ -51,7 +51,7 @@ export class PerformanceChartComponent implements OnInit {
     var storyPoint: number = 0;
     let orgDomain= this.backendService.getOrganizationDomain();
     try {
-      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.username)
+      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.userEmail)
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach((doc) => {
