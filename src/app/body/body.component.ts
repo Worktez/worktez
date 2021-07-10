@@ -19,6 +19,7 @@ export class BodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
+      if(data)
       console.log("Logged In Successfully");
     });
   }

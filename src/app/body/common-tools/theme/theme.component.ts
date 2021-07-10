@@ -10,6 +10,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 export class ThemeComponent implements OnInit {
   @Input('appTheme') appTheme: string
   @Input('uid') uid: string
+  showloader: boolean = false;
 
   enableDarkTheme: boolean
   constructor(public themeService: ThemeService, private functions: AngularFireFunctions) { }
@@ -33,14 +34,15 @@ export class ThemeComponent implements OnInit {
   }
 
   async updateTheme(appTheme: string){
+    this.showloader = true;
+    this.themeService.changeTheme(appTheme);
     const callable = this.functions.httpsCallable('updateTheme');
 
     try {
       const result = await callable({Uid: this.uid, AppTheme: appTheme}).toPromise();
-
+      this.showloader = false;
       console.log("Successfully created the task");
       console.log(result);
-      this.themeService.changeTheme(appTheme);
     } catch (error) {
     }
   }

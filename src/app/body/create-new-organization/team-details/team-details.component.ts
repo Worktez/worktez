@@ -44,6 +44,7 @@ export class TeamDetailsComponent implements OnInit {
   teamManagerEmail: string
   teamMembers: string
   teamMemberEmailArray: string[] = []
+  enableLoader: boolean = false;
 
   handleIdInput() {
     this.teamId = this.teamName.slice(0, 3);
@@ -119,6 +120,7 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   async createNewTeamWithLabels() {
+    this.enableLoader = true;
     this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('createNewTeamWithLabels');
     if(this.organizationDomain == undefined){
@@ -128,9 +130,12 @@ export class TeamDetailsComponent implements OnInit {
     try {
       const result = await callable({ OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMemberEmailArray, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       console.log(result);
+      this.enableLoader = false;
       this.teamFormSubmitted.emit({ submitted: false });
-      this.router.navigate(['login']);
+      this.router.navigate(['MyDashboard']);
     } catch (error) {
+
+      this.enableLoader = false;
       console.error("Error", error);
     }
   }
