@@ -58,3 +58,25 @@ exports.updateTheme = functions.https.onRequest((request, response) => {
         });
     });
 });
+
+exports.updateDateOfJoining = function(memberEmail, date) {
+    const promise = db.collection('Users').where("email", "==", memberEmail).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            uid = doc.data().uid;
+            previousDateOfJoining = doc.data().DateOfJoining;
+        });
+
+        if(!previousDateOfJoining) {
+            const p1 = db.collection('Users').doc(uid).update({
+                DateOfJoining: date
+            });
+            return Promise.resolve(p1);
+        }
+    });
+    return Promise.resolve(promise).then(() => {
+        console.log('Updated Date of Joining successfully !');
+        return 0;
+    }).catch(error => {
+        console.log('Error occured in updating date of Joining', error);
+    })
+}

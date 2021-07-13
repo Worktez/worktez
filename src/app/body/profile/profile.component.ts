@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
   githubProfile: string;
   linkedInProfile: string;
   managerEmail: string;
+  dateOfJoining: string;
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -73,6 +74,7 @@ export class ProfileComponent implements OnInit {
     this.phoneNumber = this.authService.userAppSetting.phoneNumber;
     this.linkedInProfile = this.authService.userAppSetting.LinkedInProfile;
     this.githubProfile = this.authService.userAppSetting.GithubProfile;
+    this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
   }
   
 }

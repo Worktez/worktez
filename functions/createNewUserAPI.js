@@ -37,7 +37,8 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     AboutMe: "",
                     AppTheme: "theme-light",
                     GithubProfile: "",
-                    LinkedInProfile: ""
+                    LinkedInProfile: "",
+                    DateOfJoining: ""
                 });
                 return Promise.resolve(userData);
             } else {
