@@ -24,9 +24,9 @@ exports.patch2=functions.https.onRequest((request, response)=>{
             task.forEach((doc)=>{
                 taskId = doc.data().Id;
                 console.log("Executing Promise1 of Patch2");
-                desiredField={};
-                desiredField[newfield]=newFieldValue;
-                const p2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(desiredField);
+                data={};
+                data[newfield]=newFieldValue;
+                const p2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(data);
                  return Promise.resolve(p2);
             });
             const Promises = [promise1];

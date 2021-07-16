@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
@@ -24,16 +24,13 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.addToNavbar(this.componentName);
 
-    this.authService.userAppSettingObservable.subscribe(
-      data =>{
-        this.photoURL = data.photoURL;
-        this.displayName = data.displayName;
-        this.email = data.email;
-        this.uid = data.uid;
-        this.aboutMe = data.AboutMe;
-        this.appTheme = data.AppTheme;
-      }
-      );    
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.readUser();
+        }
+      });
+    });    
   }
 
   editProfile(){
@@ -44,4 +41,13 @@ export class ProfileComponent implements OnInit {
     this.editProfileEnabled = false;
   }
 
+  readUser() {
+    this.displayName = this.authService.userAppSetting.displayName;
+    this.email = this.authService.userAppSetting.email;
+    this.uid = this.authService.userAppSetting.uid;
+    this.aboutMe = this.authService.userAppSetting.AboutMe;
+    this.appTheme = this.authService.userAppSetting.AppTheme;
+    this.photoURL = this.authService.userAppSetting.photoURL;
+  }
+  
 }

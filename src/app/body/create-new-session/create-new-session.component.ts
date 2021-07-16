@@ -3,16 +3,16 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Interface/UserInterface';
-import { ValidationService } from '../../services/validation.service';
-import { ToolsService } from '../../services/tools.service';
+import { ValidationService } from '../../services/validation/validation.service';
+import { ToolsService } from '../../services/tool/tools.service';
 import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { CloneTaskService } from 'src/app/services/clone-task.service';
+import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
 
 @Component({
   selector: 'app-create-new-session',
@@ -69,6 +69,7 @@ export class CreateNewSessionComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
+          console.log(this.teamName);
     }); 
   }
   async submit() {
@@ -108,7 +109,7 @@ export class CreateNewSessionComponent implements OnInit {
       console.log("Successfully created the task");
       console.log(result);
       this.cloneTask.resetTask();
-      this.router.navigate(['/']);
+      this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
