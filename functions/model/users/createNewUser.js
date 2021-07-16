@@ -5,7 +5,6 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { Console } = require("console");
 const { setApplication, getApplicationData } = require("../application/lib");
 const { setUser, getUser } = require("./lib");
 
@@ -21,7 +20,7 @@ exports.createNewUser = function(request, response) {
     let status = 200;
 
     const promise1 = getUser(Uid).then((data) => {
-        Console.log("Getting User Data");
+        console.log("Getting User Data");
         if (data == undefined) {
             setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId);
         }

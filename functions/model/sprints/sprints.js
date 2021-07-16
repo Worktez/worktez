@@ -5,16 +5,13 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { functions, cors } = require("../application/lib");
-const { createTeam } = require("./createTeam");
-const { updateTeam } = require("./updateTeam");
+const { createNewSprint } = require("./createNewSprint");
 
-exports.teams = functions.https.onRequest((request, response) => {
+exports.sprints = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const mode = request.body.data.mode;
         if (mode == "create") {
-            return createTeam(request, response);
-        } else if (mode == "update") {
-            return updateTeam(request, response);
+            return createNewSprint(request, response);
         }
     });
 });

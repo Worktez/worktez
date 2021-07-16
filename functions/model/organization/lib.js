@@ -23,13 +23,25 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
 };
 
 exports.updateOrg = function(orgDomain, inputJson) {
-    const updateTeam =db.collection("Organizations").doc(orgDomain).update(inputJson);
+    const updateTeam = db.collection("Organizations").doc(orgDomain).update(inputJson);
     return Promise.resolve(updateTeam);
 };
 
 exports.getOrg = function(orgDomain) {
     const getOrgPromise = db.collection("Organizations").doc(orgDomain).get().then((doc) => {
-        return doc;
+        if (doc.exists) return doc.data();
+        else return;
+    });
+    return Promise.resolve(getOrgPromise);
+};
+
+exports.getOrgUseAppKey = function(appKey) {
+    const getOrgPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((doc) => {
+        let data;
+        doc.forEach((org) => {
+            data = org.data();
+        });
+        return data;
     });
     return Promise.resolve(getOrgPromise);
 };

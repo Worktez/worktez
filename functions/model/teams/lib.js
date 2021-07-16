@@ -27,18 +27,26 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamManagerEmai
     return Promise.resolve(setTeam);
 };
 
-exports.updateTeamDetails = function(inputJson) {
-    const updateTeam = db.collection("Organizations").doc("orgDom").collection("Teams").doc("teamName").update(inputJson);
+exports.updateTeamDetails = function(inputJson, orgDomain, teamName) {
+    const updateTeam = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).update(inputJson);
     return Promise.resolve(updateTeam);
 };
 
 exports.getTeam = function(orgDomain, teamName) {
     const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).get().then((doc) => {
-        if (doc.exists) {
-            return doc.data();
-        } else {
-            return;
-        }
+        if (doc.exists) return doc.data();
+        else return;
+    });
+    return Promise.resolve(getTeamPromise);
+};
+
+exports.getTeamUseTeamId = function(orgDomain, teamId) {
+    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").where("TeamId", "==", teamId).get().then((doc) => {
+        let data;
+        doc.forEach((team) => {
+            data = team.data();
+        });
+        return data;
     });
     return Promise.resolve(getTeamPromise);
 };
