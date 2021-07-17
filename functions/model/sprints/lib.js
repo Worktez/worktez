@@ -9,14 +9,14 @@
 
 const { db } = require("../application/lib");
 
-exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId, newSprintId, status, startDate = "xxxx-xx-xx", endDate = "xxxx-xx-xx") {
+exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId, newSprintId, status, totalNumberOfTask = 0, totalUnCompletedTask = 0, startDate = "xxxx-xx-xx", endDate = "xxxx-xx-xx") {
     const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).set({
         OrganizationId: orgId,
         TeamId: teamId,
         SprintNumber: newSprintId,
         TotalCompletedTask: 0,
-        TotalNumberOfTask: 0,
-        TotalUnCompletedTask: 0,
+        TotalNumberOfTask: totalNumberOfTask,
+        TotalUnCompletedTask: totalUnCompletedTask,
         StartDate: startDate,
         EndDate: endDate,
         Status: status,
