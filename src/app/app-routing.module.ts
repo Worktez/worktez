@@ -10,6 +10,7 @@ import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-gua
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
 import { Patch1Component } from './patches/patch1/patch1.component';
+import { Patch2Component } from './patches/patch2/patch2.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
+  {path: 'Patch2', component:Patch2Component},
   { path: 'Patch3', component: Patch3Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },

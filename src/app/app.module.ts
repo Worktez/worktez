@@ -56,6 +56,7 @@ import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
 import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
 import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
+import { Patch2Component } from './patches/patch2/patch2.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
 import { UpdateFieldComponent } from './patches/patch3/update-field/update-field.component';
 
@@ -103,6 +104,7 @@ import { UpdateFieldComponent } from './patches/patch3/update-field/update-field
     HomeComponent,
     PieChartComponent,
     WorkCompletionComponent,
+    Patch2Component,
     Patch3Component,
     UpdateFieldComponent,
   ],
