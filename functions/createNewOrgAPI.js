@@ -8,6 +8,7 @@ const cors = require("cors")({ origin: true });
 
 const admin = require("firebase-admin");
 const addUserEmailAPI = require("./addUserEmailAPI.js");
+const updateUserProfileAPI = require("./updateUserProfileAPI.js");
 
 const db = admin.firestore();
 
@@ -98,6 +99,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
         const statusLabels = data.StatusLabels;
         const priorityLabels = data.PriorityLabels;
         const difficultyLabels = data.DifficultyLabels;
+        const dateOfJoining = data.DateOfJoining;
         let orgId;
 
         const promise1 = db.collection("Organizations").where("OrganizationDomain", "==", organizationDomain).get().then((querySnapshot) => {
@@ -181,6 +183,7 @@ exports.createNewTeamWithLabels = functions.https.onRequest((request, response) 
 
         teamMembers.forEach((element) => {
             addUserEmailAPI.sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, organizationDomain, teamId);
+            updateUserProfileAPI.updateDateOfJoining(element, dateOfJoining);
         });
 
         let result;

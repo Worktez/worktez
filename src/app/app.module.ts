@@ -59,6 +59,7 @@ import { WorkCompletionComponent } from './body/tasks/work-completion/work-compl
 import { Patch2Component } from './patches/patch2/patch2.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
 import { UpdateFieldComponent } from './patches/patch3/update-field/update-field.component';
+import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { UpdateFieldComponent } from './patches/patch3/update-field/update-field
     Patch2Component,
     Patch3Component,
     UpdateFieldComponent,
+    ProfileIconsComponent,
   ],
   imports: [
     BrowserModule,
