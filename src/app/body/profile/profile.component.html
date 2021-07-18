@@ -1,15 +1,33 @@
 <div class="container py-5" id="profileTheme">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card pt-5" style="border: none; background: none;">
+        <div class="col-md-5">
+            <div class="card" style="border: none; background: none;">
                 <img class="mx-4" src={{photoURL}} alt="Card image cap" width="150" style=" border-radius: 50%;">
                 <div class="card-body">
-                    <h3 class="card-title pt-2">{{displayName}}</h3>
-                    <h6 class="card-title">{{email}}</h6>
-                    <p class="card-text py-3">{{aboutMe}}</p>
-                    <span type="button" class="material-icons" data-toggle="modal" data-target="#exampleModal"
+                    <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal"
                     data-whatever="@mdo" (click)="editProfile()" style="color: #16C85A;">edit
                     </span>
+                    <h3 class="card-title font-weight-bold font-italic">{{displayName}}</h3>
+                    <h6 class="card-title font-italic">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h6>
+                    <h6 class="card-subtitle pb-2 border-bottom font-italic text-muted">{{aboutMe}}</h6>
+                    <h6 class="card-title mt-2">
+                        <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
+                        {{email}}
+                    </h6>
+                    <h6 class="card-title">
+                        <app-profile-icons [profileIcon]="'phone'"></app-profile-icons>
+                        {{phoneNumber}}
+                    </h6>
+                    <h6 class="card-title">
+                        <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
+                        Managed by {{ managerEmail }}
+                    </h6>
+                    <a href="{{githubProfile}}" class="card-link" target="_blank">
+                        <app-profile-icons [profileIcon]="'github'"></app-profile-icons>
+                    </a>
+                    <a href="{{linkedInProfile}}" class="card-link" target="_blank">
+                        <app-profile-icons [profileIcon]="'linkedIn'"></app-profile-icons>
+                    </a>
                 </div>
             </div>
         </div>
@@ -23,5 +41,5 @@
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
-    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" (editProfileCompleted)="editProfileCompleted($event)"></app-edit-profile>
+    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)"></app-edit-profile>
 </ng-container>

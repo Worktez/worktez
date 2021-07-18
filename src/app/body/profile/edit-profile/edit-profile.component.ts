@@ -11,6 +11,9 @@ export class EditProfileComponent implements OnInit {
   @Input('uid') uid: string
   @Input('aboutMe') aboutMe: string
   @Input('displayName') displayName: string
+  @Input('phoneNumber') phoneNumber: string
+  @Input('githubProfile') githubProfile: string
+  @Input('linkedInProfile') linkedInProfile: string
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
 
@@ -26,7 +29,7 @@ export class EditProfileComponent implements OnInit {
     this.enableLoader = true 
       const callable = this.functions.httpsCallable('updateUserProfile');
       try {
-        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName}).toPromise();
+        await callable({Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile}).toPromise();
         console.log("Successful");
         this.showClose = true
       } catch (error) {
