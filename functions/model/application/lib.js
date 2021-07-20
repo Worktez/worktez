@@ -27,6 +27,11 @@ exports.setApplication = function() {
     return Promise.resolve(P1);
 };
 
+exports.updateApplication = function(inputJson) {
+    const P1 = firestore.collection("RawData").doc("AppDetails").update(inputJson);
+    return Promise.resolve(P1);
+};
+
 exports.getApplicationData = function() {
     const promise = firestore.collection("RawData").doc("AppDetails").get().then((doc) => {
         if (doc.exists) {

@@ -7,6 +7,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 // const { db } = require("../application/lib");
+const { addActivity } = require("../activity/addActivity");
 const { getOrgUseAppKey } = require("../organization/lib");
 const { getSprint, updateSprint, setSprint } = require("../sprints/lib");
 const { getTask, updateTask } = require("./lib");
@@ -28,8 +29,8 @@ exports.editTask = function(request, response) {
     const editedSprintName = createSprintName(editedSprintNumber);
     let result;
     let status = 200;
-    // const date = request.body.data.Date;
-    // const time = request.body.data.Time;
+    const date = request.body.data.Date;
+    const time = request.body.data.Time;
     let comment = "Edited task details: ";
 
     const promises = [];
@@ -108,9 +109,9 @@ exports.editTask = function(request, response) {
         };
         updateTask(updateTaskJson, orgDomain, taskId);
 
-        // add the activity
         comment = comment + changedData;
         console.log(comment);
+        addActivity("EDITED", comment, taskId, date, time, orgDomain);
 
         Promise.all(promises).then(() => {
                 result = { data: "OK" };

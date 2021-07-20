@@ -5,7 +5,8 @@
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
-const { functions } = require("../application/lib");
+const { functions, getApplicationData, updateApplication } = require("../application/lib");
+const { getOrgRawData, setOrgRawData } = require("../orgRawData/lib");
 
 const { setOrg } = require("./lib");
 const { getOrg } = require("./lib");
@@ -37,9 +38,33 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         status = 500;
         console.log("Error:", error);
     });
-    // promise-2 to set/update organization RawData
+
+    const promise2 = getOrgRawData(orgDomain).then((orgRawData) => {
+        if (orgRawData == undefined) {
+            setOrgRawData(orgDomain);
+
+            const p2 = getApplicationData().then((appData) => {
+                const totalNumberOfOrganizations = appData.TotalNumberOfOrganizations;
+
+                const appDetailsUpdateJson = {
+                    TotalNumberOfOrganizations: totalNumberOfOrganizations + 1,
+                };
+
+                updateApplication(appDetailsUpdateJson);
+            }).catch((error) => {
+                status = 500;
+                console.log("Error:", error);
+            });
+
+            return Promise.resolve(p2);
+        }
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
+    });
+
     let result;
-    const promises = [promise1];
+    const promises = [promise1, promise2];
     return Promise.all(promises).then(() => {
             const arr = ["Created Organization Successfully", appKey];
             result = { data: arr };

@@ -8,6 +8,7 @@
 const { functions, cors } = require("../application/lib");
 
 const { createNewTask } = require("./createTask");
+const { deleteTask } = require("./deleteTask");
 const { editTask } = require("./editTask");
 const { logWork } = require("./logwork");
 
@@ -21,6 +22,8 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return editTask(request, response);
         } else if (mode == "log") {
             return logWork(request, response);
+        } else if (mode == "delete") {
+            return deleteTask(request, response);
         }
     });
 });

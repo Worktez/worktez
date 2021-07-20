@@ -6,15 +6,13 @@
 
 const { functions, cors } = require("../application/lib");
 const { createTeam } = require("./createTeam");
-const { updateTeam } = require("./updateTeam");
+// const { updateTeam } = require("./updateTeam");
 
 exports.teams = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const mode = request.body.data.mode;
         if (mode == "create") {
             return createTeam(request, response);
-        } else if (mode == "update") {
-            return updateTeam(request, response);
         }
     });
 });

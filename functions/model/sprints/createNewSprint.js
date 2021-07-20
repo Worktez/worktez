@@ -24,7 +24,6 @@ exports.createNewSprint = function(request, response) {
     let inputJson;
 
     let status = 200;
-    status = 200;
 
     const promise = getOrgUseAppKey(appKey).then((orgDetail) => {
         orgDomain = orgDetail.OrganizationDomain;
@@ -40,7 +39,7 @@ exports.createNewSprint = function(request, response) {
                     const inputJson = {
                         EndDate: endDate,
                         StartDate: startDate,
-                        Status: status,
+                        Status: sprintStatus,
                         OrganizationId: orgId,
                     };
                     updateSprint(inputJson, orgDomain, teamName, newSprintIdString);

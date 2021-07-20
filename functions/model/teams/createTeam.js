@@ -56,6 +56,9 @@ exports.createTeam = function(request, response) {
                 };
                 updateTeamDetails(inputJson, orgDomain, teamName);
             }
+        }).catch((error) => {
+            status = 500;
+            console.log("Error:", error);
         });
         return Promise.resolve(promise2);
     }).catch((error) => {
@@ -68,6 +71,9 @@ exports.createTeam = function(request, response) {
         setSprint(orgDomain, teamName, "Deleted", orgId, teamId, -2, "-");
 
         setSprint(orgDomain, teamName, "Backlog", orgId, teamId, -1, "-");
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
     });
 
     const Promises = [promise1, promise2];

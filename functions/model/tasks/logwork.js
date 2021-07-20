@@ -1,4 +1,4 @@
-/* eslint-disable */ // require-jsdoc */
+/* eslint-disable require-jsdoc */
 /* eslint-disable object-curly-spacing */
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
@@ -7,10 +7,11 @@
 // eslint-disable-next-line no-dupe-else-if
 
 // const { db } = require("../application/lib");
+const { addActivity } = require("../activity/addActivity");
 const { getOrgUseAppKey } = require("../organization/lib");
-const { getSprint, updateSprint, setSprint } = require("../sprints/lib");
-const { updateTeamDetails, getTeam } = require("../teams/lib");
-const { setTask, getTask, updateTask } = require("./lib");
+const { getOrgRawData, updateOrgRawData } = require("../orgRawData/lib");
+const { getSprint, updateSprint } = require("../sprints/lib");
+const { getTask, updateTask } = require("./lib");
 
 exports.logWork = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -28,9 +29,10 @@ exports.logWork = function(request, response) {
     const today = new Date();
     const promises = [];
     let status = 200;
+    let result;
 
     const logWorkPromise = getOrgUseAppKey(appKey).then((orgDetails) => {
-        orgDomain = orgDetails.OrganizationDomain;
+        const orgDomain = orgDetails.OrganizationDomain;
 
         const promise1 = getTask(taskId, orgDomain).then((taskDoc) => {
             logWorkTotalTime = parseInt(taskDoc.LogWorkTotalTime);
@@ -60,7 +62,22 @@ exports.logWork = function(request, response) {
         promises.push(promise1);
 
         if (logStatus == "Completed") {
-            // Make promise2 which updates RawData
+            const promise2 = getOrgRawData(orgDomain).then((rawData) => {
+                let totalCompletedTask = parseInt(rawData.TotalCompletedTask);
+                let totalUnCompletedTask = parseInt(rawData.TotalUnCompletedTask);
+                totalCompletedTask += 1;
+                totalUnCompletedTask -= 1;
+
+                const updateRawDataInputJson = {
+                    TotalCompletedTask: totalCompletedTask,
+                    TotalUnCompletedTask: totalUnCompletedTask,
+                };
+                updateOrgRawData(updateRawDataInputJson, orgDomain);
+            }).catch((error) => {
+                status = 500;
+                console.log("Error:", error);
+            });
+            promises.push(promise2);
 
             const promise3 = getTask(taskId, orgDomain).then((taskDoc) => {
                 const project = taskDoc.Project;
@@ -72,12 +89,13 @@ exports.logWork = function(request, response) {
                     totalUnCompletedTask -= 1;
                     totalCompletedTask += 1;
 
-                    updateSprintInputJson = {
+                    const updateSprintInputJson = {
                         TotalCompletedTask: totalCompletedTask,
                         TotalUnCompletedTask: totalUnCompletedTask,
                     };
                     updateSprint(updateSprintInputJson, orgDomain, project, fullSprintName);
                 });
+                return Promise.resolve(sprintCounterUpdate);
             }).catch((error) => {
                 status = 500;
                 console.log("Error:", error);
@@ -85,7 +103,7 @@ exports.logWork = function(request, response) {
             promises.push(promise3);
         }
 
-        //add Activity
+        addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time, orgDomain);
         Promise.resolve(promises).then(() => {
                 result = { data: "Logged Work successfully!" };
                 console.log("Logged Work successfully!");

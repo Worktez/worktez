@@ -7,7 +7,9 @@
 // eslint-disable-next-line no-dupe-else-if
 
 // const { db } = require("../application/lib");
+const { addActivity } = require("../activity/addActivity");
 const { getOrgUseAppKey } = require("../organization/lib");
+const { getOrgRawData, updateOrgRawData } = require("../orgRawData/lib");
 const { getSprint, updateSprint, setSprint } = require("../sprints/lib");
 const { updateTeamDetails, getTeam } = require("../teams/lib");
 const { setTask } = require("./lib");
@@ -26,7 +28,7 @@ exports.createNewTask = function(request, response) {
     const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
     const sprintNumber = parseInt(request.body.data.SprintNumber);
     const creationDate = request.body.data.CreationDate;
-    // const time = request.body.data.Time;
+    const time = request.body.data.Time;
     const fullSprintName = createSprintName(sprintNumber);
     const loggedWorkTotalTime = 0;
     const workDone = 0;
@@ -52,12 +54,15 @@ exports.createNewTask = function(request, response) {
             const updateTeamJson = {
                 TotalTeamTasks: totalTeamTasks,
             };
-            const p1 = updateTeamDetails(updateTeamJson, orgDomain, project);
+            /* const p1 =*/
+            updateTeamDetails(updateTeamJson, orgDomain, project);
 
-            const p2 = setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId);
+            /* const p2 =*/
+            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId);
 
-            const promises1 = [p1, p2];
-            return Promise.all(promises1);
+            addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain);
+            // const promises1 = [p1, p2];
+            // return Promise.all(promises1);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
@@ -87,7 +92,21 @@ exports.createNewTask = function(request, response) {
             console.log("Error:", error);
         });
 
-        const promises = [promise1, promise2];
+        const promise3 = getOrgRawData(orgDomain).then((rawData) => {
+            totalNumberOfTask = rawData.TotalNumberOfTask;
+            totalUnCompletedTask = rawData.TotalUnCompletedTask;
+            totalUnCompletedTask += 1;
+            totalNumberOfTask += 1;
+
+            const updateRawDataInputJson = {
+                TotalNumberOfTask: totalNumberOfTask,
+                TotalUnCompletedTask: totalUnCompletedTask,
+            };
+
+            updateOrgRawData(updateRawDataInputJson, orgDomain);
+        });
+
+        const promises = [promise1, promise2, promise3];
         return Promise.all(promises).catch((error) => {
             status = 500;
             console.log("Error:", error);
