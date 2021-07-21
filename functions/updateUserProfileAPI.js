@@ -16,11 +16,17 @@ exports.updateUserProfile = functions.https.onRequest((request, response) => {
         const uid = request.body.data.Uid;
         const displayName = request.body.data.DisplayName;
         const aboutMe = request.body.data.AboutMe;
+        const phoneNumber = request.body.data.PhoneNumber;
+        const linkedInProfile = request.body.data.LinkedInProfile;
+        const githubProfile = request.body.data.GithubProfile;
         let result;
 
         db.collection("Users").doc(uid).update({
             displayName: displayName,
             AboutMe: aboutMe,
+            phoneNumber: phoneNumber,
+            LinkedInProfile: linkedInProfile,
+            GithubProfile: githubProfile
         }).then(() => {
             result = { data: "User Profile updated successfully" };
             console.log("Successful");
@@ -52,3 +58,25 @@ exports.updateTheme = functions.https.onRequest((request, response) => {
         });
     });
 });
+
+exports.updateDateOfJoining = function(memberEmail, date) {
+    const promise = db.collection('Users').where("email", "==", memberEmail).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            uid = doc.data().uid;
+            previousDateOfJoining = doc.data().DateOfJoining;
+        });
+
+        if(!previousDateOfJoining) {
+            const p1 = db.collection('Users').doc(uid).update({
+                DateOfJoining: date
+            });
+            return Promise.resolve(p1);
+        }
+    });
+    return Promise.resolve(promise).then(() => {
+        console.log('Updated Date of Joining successfully !');
+        return 0;
+    }).catch(error => {
+        console.log('Error occured in updating date of Joining', error);
+    })
+}

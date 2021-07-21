@@ -19,7 +19,7 @@ export class MyDashBoardComponent implements OnInit {
   componentName: string = "MY-DASHBOARD"
 
   user: User
-  username: string
+  userEmail: string
   userObservable: Observable<User>
   showContent: boolean = false;
   teamData: TeamDataId[] = [];
@@ -62,7 +62,7 @@ export class MyDashBoardComponent implements OnInit {
         }
       });
     }
-      this.username = data.displayName;
+      this.userEmail = data.email;
       return { ...data }
     }));
   }

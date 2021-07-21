@@ -19,7 +19,7 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
         const PhotoURL = user.photoURL;
         const DisplayName = user.displayName;
         const Email = user.email;
-        const PhoneNumber = user.phoneNumber;
+        const PhoneNumber = user.phoneNumber ? user.phoneNumber : "";
         const ProviderId = user.providerId;
 
         console.log(user);
@@ -36,6 +36,9 @@ exports.createNewUser = functions.https.onRequest((request, response) => {
                     providerId: ProviderId,
                     AboutMe: "",
                     AppTheme: "theme-light",
+                    GithubProfile: "",
+                    LinkedInProfile: "",
+                    DateOfJoining: ""
                 });
                 return Promise.resolve(userData);
             } else {

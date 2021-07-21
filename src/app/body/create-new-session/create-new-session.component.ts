@@ -109,7 +109,7 @@ export class CreateNewSessionComponent implements OnInit {
       console.log("Successfully created the task");
       console.log(result);
       this.cloneTask.resetTask();
-      this.router.navigate(['/']);
+      this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
