@@ -5,16 +5,17 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { db } = require("../application/lib");
+const { updateUser } = require("./lib");
 
 exports.updateTheme = function(request, response) {
     const uid = request.body.data.Uid;
     const appTheme = request.body.data.AppTheme;
     let result;
 
-    db.collection("Users").doc(uid).update({
+    updateUserInputJson = {
         AppTheme: appTheme,
-    }).then(() => {
+    };
+    updateUser(updateUserInputJson, uid).then(() => {
         result = { data: "User theme updated successfully" };
         console.log("Successful");
         return response.status(200).send(result);

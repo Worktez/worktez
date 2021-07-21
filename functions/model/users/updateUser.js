@@ -5,7 +5,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { db } = require("../application/lib");
+const { updateUser } = require("./lib");
 
 exports.updateUser = function(request, response) {
     const uid = request.body.data.Uid;
@@ -13,10 +13,11 @@ exports.updateUser = function(request, response) {
     const aboutMe = request.body.data.AboutMe;
     let result;
 
-    db.collection("Users").doc(uid).update({
+    updateUserInputJson = {
         displayName: displayName,
         AboutMe: aboutMe,
-    }).then(() => {
+    };
+    updateUser(updateUserInputJson, uid).then(() => {
         result = { data: "User Profile updated successfully" };
         console.log("Successful");
         return response.status(200).send(result);

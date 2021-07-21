@@ -5,7 +5,9 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { db } = require("../application/lib");
+const { getOrg } = require("../organization/lib");
+const { getTeam } = require("../teams/lib");
+const { getUserUseEmail, updateUser } = require("./lib");
 
 exports.verifyUser = function(request, response) {
     const organizationDomain = request.body.data.OrganizationDomain;
@@ -15,38 +17,39 @@ exports.verifyUser = function(request, response) {
     let appKey = "";
     let organizationId = "";
     let userID = "";
+    let status = 200;
 
-
-    db.collection("Organizations").doc(organizationDomain).collection("Teams").doc(teamName).get().then((doc) => {
-        const teamMembers = doc.data().TeamMembers;
+    getTeam(organizationDomain, teamName).then((teamDoc) => {
+        const teamMembers = teamDoc.TeamMembers;
         if (teamMembers.indexOf(userEmail) != -1) {
-            db.collection("Organizations").doc(organizationDomain).get().then((doc) => {
-                organizationId = doc.data().OrganizationId;
-                appKey = doc.data().AppKey;
-                const p11 = db.collection("Users").where("email", "==", userEmail).get().then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        userID = doc.data().uid;
-                        const p111 = db.collection("Users").doc(userID).update({
-                            OrganizationId: organizationId,
-                            TeamId: teamId,
-                            AppKey: appKey,
-                        });
-                        return Promise.resolve(p111);
-                    });
+            getOrg(organizationDomain).then((orgDoc) => {
+                organizationId = orgDoc.OrganizationId;
+                appKey = orgDoc.AppKey;
+                const p11 = getUserUseEmail(userEmail).then((userDoc) => {
+                    userID = userDoc.uid;
+                    updateUserInputJson = {
+                        OrganizationId: organizationId,
+                        TeamId: teamId,
+                        AppKey: appKey,
+                    };
+                    updateUser(updateUserInputJson, userID);
+                }).catch((error) => {
+                    status = 500;
+                    console.log("Error:", error);
                 });
                 return Promise.resolve(p11);
             });
             const result = { data: "User Verified Successfully" };
             console.log("User Verified Successfully");
-            return response.status(200).send(result);
+            return response.status(status).send(result);
         } else {
             const result = { data: "Can't verify user" };
             console.log("Can't verify user");
-            return response.status(500).send(result);
+            return response.status(status).send(result);
         }
     }).catch((error) => {
         const result = { data: error };
         console.error("Error ", error);
-        return response.status(500).send(result);
+        return response.status(status).send(result);
     });
 };
