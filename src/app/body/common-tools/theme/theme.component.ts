@@ -10,37 +10,39 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 export class ThemeComponent implements OnInit {
   @Input('appTheme') appTheme: string
   @Input('uid') uid: string
+  showloader: boolean = false;
 
   enableDarkTheme: boolean
   constructor(public themeService: ThemeService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-    if(this.appTheme == 'theme-dark'){
+    if (this.appTheme == 'theme-dark') {
       this.enableDarkTheme = true;
-    }else{
+    } else {
       this.enableDarkTheme = false;
     }
   }
 
-  changeThemeSwitch(){
-    if(!this.enableDarkTheme){
+  changeThemeSwitch() {
+    if (!this.enableDarkTheme) {
       return this.updateTheme('theme-dark')
     }
-    else{
+    else {
       return this.updateTheme('theme-light')
     }
-   
+
   }
 
-  async updateTheme(appTheme: string){
+  async updateTheme(appTheme: string) {
     const callable = this.functions.httpsCallable('users');
+    this.showloader = true;
+    this.themeService.changeTheme(appTheme);
 
     try {
-      const result = await callable({mode: "update-theme",Uid: this.uid, AppTheme: appTheme}).toPromise();
-
+      const result = await callable({ mode: "update-theme", Uid: this.uid, AppTheme: appTheme }).toPromise();
+      this.showloader = false;
       console.log("Successfully created the task");
       console.log(result);
-      this.themeService.changeTheme(appTheme);
     } catch (error) {
     }
   }

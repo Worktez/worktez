@@ -19,7 +19,7 @@ export class SetupComponent implements OnInit {
   public userObservable: Observable<User>
 
   appKey: string;
-  name: string;
+  email:string;
   public showLoader: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public router: Router, public authService: AuthService) { }
@@ -39,7 +39,7 @@ export class SetupComponent implements OnInit {
       return { ...data }
     })
     );
-    this.name = (await this.authService.afauth.currentUser).displayName;
+    this.email = (await this.authService.afauth.currentUser).email;
     this.createNewOrg();
 
   }
@@ -133,7 +133,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.name, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
@@ -142,7 +142,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.name, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

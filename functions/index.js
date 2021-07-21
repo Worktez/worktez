@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable require-jsdoc */
@@ -8,6 +9,7 @@
 
 const admin = require("firebase-admin");
 admin.initializeApp();
+
 
 // const createNewTaskAPI = require("./createNewTaskAPI");
 // const startNewSprintAPI = require("./startNewSprintAPI");
@@ -26,6 +28,9 @@ const { sprints } = require("./model/sprints/sprints");
 // const verifyUserAPI = require("./verifyUserAPI");
 // const updateUserProfileAPI = require("./updateUserProfileAPI");
 // const updateThemeAPI = require("./updateUserProfileAPI");
+const patch1API = require("./patch1API");
+const patch2API = require("./patch2API");
+const patch3API = require("./patch3API");
 
 
 // class Task {
@@ -65,3 +70,6 @@ exports.sprints = sprints;
 // exports.verifyUser = verifyUserAPI.verifyUser;
 // exports.updateUserProfile = updateUserProfileAPI.updateUserProfile;
 // exports.updateTheme = updateThemeAPI.updateTheme;
+exports.patch1 = patch1API.patch1;
+exports.patch2 = patch2API.patch2;
+exports.patch3 = patch3API.patch3;
