@@ -22,15 +22,16 @@ const { tasks } = require("./model/tasks/tasks");
 const { organization } = require("./model/organization/organization");
 const { teams } = require("./model/teams/teams");
 const { sprints } = require("./model/sprints/sprints");
+const { patch } = require("./model/patch/patch");
 // const updateSprintStatusAPI = require("./updateSprintStatusAPI");
 // const createNewOrgAPI = require("./createNewOrgAPI");
 // const patch1API = require("./patch1API");
 // const verifyUserAPI = require("./verifyUserAPI");
 // const updateUserProfileAPI = require("./updateUserProfileAPI");
 // const updateThemeAPI = require("./updateUserProfileAPI");
-const patch1API = require("./patch1API");
-const patch2API = require("./patch2API");
-const patch3API = require("./patch3API");
+// const patch1API = require("./patch1API");
+// const patch2API = require("./patch2API");
+// const patch3API = require("./patch3API");
 
 
 // class Task {
@@ -63,6 +64,7 @@ exports.tasks = tasks;
 exports.organization = organization;
 exports.teams = teams;
 exports.sprints = sprints;
+exports.patch = patch;
 // exports.updateSprintStatus = updateSprintStatusAPI.updateSprintStatus;
 // exports.createNewOrganization = createNewOrgAPI.createNewOrganization;
 // exports.createNewTeamWithLabels = createNewOrgAPI.createNewTeamWithLabels;
@@ -70,6 +72,6 @@ exports.sprints = sprints;
 // exports.verifyUser = verifyUserAPI.verifyUser;
 // exports.updateUserProfile = updateUserProfileAPI.updateUserProfile;
 // exports.updateTheme = updateThemeAPI.updateTheme;
-exports.patch1 = patch1API.patch1;
-exports.patch2 = patch2API.patch2;
-exports.patch3 = patch3API.patch3;
+// exports.patch1 = patch1API.patch1;
+// exports.patch2 = patch2API.patch2;
+// exports.patch3 = patch3API.patch3;

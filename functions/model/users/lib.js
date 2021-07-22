@@ -19,6 +19,9 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         providerId: ProviderId,
         AboutMe: AboutMe,
         AppTheme: AppTheme,
+        GithubProfile: "",
+        LinkedInProfile: "",
+        DateOfJoining: "",
     });
     return Promise.resolve(userData);
 };

@@ -11,11 +11,17 @@ exports.updateUser = function(request, response) {
     const uid = request.body.data.Uid;
     const displayName = request.body.data.DisplayName;
     const aboutMe = request.body.data.AboutMe;
+    const phoneNumber = request.body.data.PhoneNumber;
+    const linkedInProfile = request.body.data.LinkedInProfile;
+    const githubProfile = request.body.data.GithubProfile;
     let result;
 
     updateUserInputJson = {
         displayName: displayName,
         AboutMe: aboutMe,
+        phoneNumber: phoneNumber,
+        LinkedInProfile: linkedInProfile,
+        GithubProfile: githubProfile,
     };
     updateUser(updateUserInputJson, uid).then(() => {
         result = { data: "User Profile updated successfully" };
