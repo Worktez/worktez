@@ -126,4 +126,74 @@ import { ProgressGraphComponent } from './body/common-tools/progress-graph/progr
   ],
   bootstrap: [AppComponent]
 })
+
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    BodyComponent,
+    CreateNewSessionComponent,
+    CreateNewSprintComponent,
+    BoardComponent,
+    FeatureCardComponent,
+    SprintDetailsComponent,
+    TasksComponent,
+    TaskCardsComponent,
+    TaskDetailsComponent,
+    LogWorkComponent,
+    EditPageComponent,
+    LoaderComponent,
+    LoginComponent,
+    LoginHandlerComponent,
+    UserCardComponent,
+    MyDashBoardComponent,
+    PriorityIconsComponent,
+    StatusIconsComponent,
+    FilterTaskComponent,
+    NavbarComponent,
+    ChartComponent,
+    MyTasksComponent,
+    PerformanceChartComponent,
+    RangeCardComponent,
+    CreateNewOrganizationComponent,
+    ErrorComponent,
+    FilterTaskComponent,
+    Patch1Component,
+    OrganizationDetailsComponent,
+    TeamDetailsComponent,
+    FocusNavComponent,
+    UserVerificationComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    TimeChartComponent,
+    ThemeComponent,
+    SetupComponent,
+    HomeComponent,
+    PieChartComponent,
+    WorkCompletionComponent,
+    Patch2Component,
+    
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireFunctionsModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AppRoutingModule,
+    GoogleChartsModule.forRoot({ version: 'current' }),
+    HttpClientModule
+  ],
+  providers: [
+    AuthService,
+    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7002] : undefined },
+    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7001] : undefined }
+  ],
+  bootstrap: [AppComponent]
+})
 export class AppModule { }
