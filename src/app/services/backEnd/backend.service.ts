@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollectionGroup, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Organizations, OrganizationsDataId } from '../Interface/OrganizationInterface';
-import { RawDataType } from '../Interface/RawDataInterface';
+import { Organizations, OrganizationsDataId } from '../../Interface/OrganizationInterface';
+import { RawDataType } from '../../Interface/RawDataInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +50,9 @@ export class BackendService {
   
   getOrganizationTeamIds(){
     return this.organizationDetails.TeamsId;
+  }
+
+  getOrganizationName() {
+    return this.organizationDetails.OrganizationName;
   }
 }

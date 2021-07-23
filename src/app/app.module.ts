@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -57,6 +58,9 @@ import { HomeComponent } from './body/home/home.component';
 import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
 import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
 import { Patch2Component } from './patches/patch2/patch2.component';
+import { Patch3Component } from './patches/patch3/patch3.component';
+import { UpdateFieldComponent } from './patches/patch3/update-field/update-field.component';
+import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.component';
 import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
 
 @NgModule({
@@ -104,77 +108,10 @@ import { ProgressGraphComponent } from './body/common-tools/progress-graph/progr
     PieChartComponent,
     WorkCompletionComponent,
     Patch2Component,
+    Patch3Component,
+    UpdateFieldComponent,
     ProgressGraphComponent,
-  ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireFunctionsModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AppRoutingModule,
-    GoogleChartsModule.forRoot({ version: 'current' }),
-    HttpClientModule
-  ],
-  providers: [
-    AuthService,
-    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
-    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7002] : undefined },
-    { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', 7001] : undefined }
-  ],
-  bootstrap: [AppComponent]
-})
-
-
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    BodyComponent,
-    CreateNewSessionComponent,
-    CreateNewSprintComponent,
-    BoardComponent,
-    FeatureCardComponent,
-    SprintDetailsComponent,
-    TasksComponent,
-    TaskCardsComponent,
-    TaskDetailsComponent,
-    LogWorkComponent,
-    EditPageComponent,
-    LoaderComponent,
-    LoginComponent,
-    LoginHandlerComponent,
-    UserCardComponent,
-    MyDashBoardComponent,
-    PriorityIconsComponent,
-    StatusIconsComponent,
-    FilterTaskComponent,
-    NavbarComponent,
-    ChartComponent,
-    MyTasksComponent,
-    PerformanceChartComponent,
-    RangeCardComponent,
-    CreateNewOrganizationComponent,
-    ErrorComponent,
-    FilterTaskComponent,
-    Patch1Component,
-    OrganizationDetailsComponent,
-    TeamDetailsComponent,
-    FocusNavComponent,
-    UserVerificationComponent,
-    ProfileComponent,
-    EditProfileComponent,
-    TimeChartComponent,
-    ThemeComponent,
-    SetupComponent,
-    HomeComponent,
-    PieChartComponent,
-    WorkCompletionComponent,
-    Patch2Component,
-    
+    ProfileIconsComponent,
   ],
   imports: [
     BrowserModule,

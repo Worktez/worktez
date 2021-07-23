@@ -3,10 +3,10 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
-import { ValidationService } from '../../../services/validation.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service'
-import { ToolsService } from 'src/app/services/tools.service';
-import { BackendService } from 'src/app/services/backend.service';
+import { ValidationService } from '../../../services/validation/validation.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service'
+import { ToolsService } from 'src/app/services/tool/tools.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class EditPageComponent implements OnInit {
 
   editTask: Tasks
   previousSprintId: number
-  enableLoader: boolean = false
+  enableLoader: boolean = false;
   todayDate: string
   time: string
   changedData: string = ""
@@ -100,6 +100,7 @@ async generateChanges() {
         const result = await callable({AppKey: appKey,Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
+        this.enableLoader = false;
         this.showClose = true;
         // this.editTaskDone();
       }

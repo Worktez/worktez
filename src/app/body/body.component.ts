@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationSettingsService } from '../services/application-settings.service';
+import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
-import { BackendService } from '../services/backend.service';
+import { BackendService } from '../services/backend/backend.service';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -19,6 +19,7 @@ export class BodyComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
+      if(data)
       console.log("Logged In Successfully");
     });
   }

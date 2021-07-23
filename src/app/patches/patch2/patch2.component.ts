@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ToolsService } from '../../services/tools.service';
+import { ToolsService } from '../../services/tool/tools.service';
 @Component({
   selector: 'app-patch2',
   templateUrl: './patch2.component.html',
@@ -26,11 +26,12 @@ export class Patch2Component implements OnInit {
   async patch2() {
     this.showLoader = true;
     console.log("Patch2 function running");
-    console.log(this.orgDomain, this.orgId, this.taskId,this.newfield,this.newFieldValue);
+    console.log(this.orgDomain, this.newfield,this.newFieldValue);
     const callable = this.functions.httpsCallable('patch2');
-    await callable({OrgId: this.orgId, OrgDomain: this.orgDomain, TaskId: this.taskId,newField:this.newfield,NewFieldValue:this.newFieldValue}).toPromise().then(result => {
+    await callable({OrgDomain:this.orgDomain,newField:this.newfield,NewFieldValue:this.newFieldValue}).toPromise().then(result => {
       this.showLoader=false;
       console.log(result);
+      alert(result);
     });
   }
 
