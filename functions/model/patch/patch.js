@@ -15,10 +15,13 @@ exports.patch = functions.https.onRequest((request, response) => {
         const mode = request.body.data.mode;
 
         if (mode == "patch1") {
+            // To fix counters of all sprints
             return patch1(request, response);
         } else if (mode == "patch2") {
+            // To add a new field and value to all tasks
             return patch2(request, response);
         } else if (mode == "patch3") {
+            // To change a particular field in relevent tasks
             return patch3(request, response);
         }
     });

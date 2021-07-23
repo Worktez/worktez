@@ -6,10 +6,10 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-// const { db } = require("../application/lib");
+const { createSprintName } = require("../application/lib");
 const { addActivity } = require("../activity/addActivity");
 const { getOrgUseAppKey } = require("../organization/lib");
-const { getOrgRawData, updateOrgRawData } = require("../orgRawData/lib");
+const { getOrgRawData, updateOrgRawData } = require("../organization/lib");
 const { getSprint, updateSprint, setSprint } = require("../sprints/lib");
 const { updateTeamDetails, getTeam } = require("../teams/lib");
 const { setTask } = require("./lib");
@@ -124,13 +124,3 @@ exports.createNewTask = function(request, response) {
             return response.status(status).send(result);
         });
 };
-
-function createSprintName(sprintId) {
-    if (sprintId == -1) {
-        return "Backlog";
-    } else if (sprintId == -2) {
-        return "Deleted";
-    } else {
-        return ("S" + sprintId.toString());
-    }
-}

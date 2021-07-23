@@ -5,15 +5,11 @@
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
-const { functions, getApplicationData, updateApplication } = require("../application/lib");
-const { getOrgRawData, setOrgRawData } = require("../orgRawData/lib");
+const { functions, getApplicationData, updateApplication, generateBase64String } = require("../application/lib");
+const { getOrgRawData, setOrgRawData } = require("../organization/lib");
 
 const { setOrg } = require("./lib");
 const { getOrg } = require("./lib");
-
-function generateBase64String(temp) {
-    return Buffer.from(temp).toString("base64");
-}
 
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;

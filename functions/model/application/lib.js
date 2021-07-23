@@ -12,6 +12,10 @@ exports.db = firestore;
 exports.functions = functions;
 exports.cors = cors;
 
+exports.generateBase64String = function(temp) {
+    return Buffer.from(temp).toString("base64");
+};
+
 exports.setApplication = function() {
     const P1 = firestore.collection("RawData").doc("AppDetails").set({
         CurrentSprintId: 0,
@@ -41,4 +45,14 @@ exports.getApplicationData = function() {
         }
     });
     return Promise.resolve(promise);
+};
+
+exports.createSprintName = function(sprintId) {
+    if (sprintId == -1) {
+        return "Backlog";
+    } else if (sprintId == -2) {
+        return "Deleted";
+    } else {
+        return ("S" + sprintId.toString());
+    }
 };

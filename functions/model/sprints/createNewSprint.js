@@ -6,6 +6,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
+const { createSprintName } = require("../application/lib");
 const { getSprint, setSprint, updateSprint } = require("./lib");
 const { getOrgUseAppKey } = require("../organization/lib");
 const { getTeamUseTeamId, updateTeamDetails } = require("../teams/lib");
@@ -76,13 +77,3 @@ exports.createNewSprint = function(request, response) {
             return response.status(status).send(result);
         });
 };
-
-function createSprintName(sprintId) {
-    if (sprintId == -1) {
-        return "Backlog";
-    } else if (sprintId == -2) {
-        return "Deleted";
-    } else {
-        return ("S" + sprintId.toString());
-    }
-}

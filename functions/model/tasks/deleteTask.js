@@ -6,6 +6,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
+const { createSprintName } = require("../application/lib");
 const { addActivity } = require("../activity/addActivity");
 const { getOrgUseAppKey } = require("../organization/lib");
 const { getSprint, updateSprint, setSprint } = require("../sprints/lib");
@@ -97,13 +98,3 @@ exports.deleteTask = function(request, response) {
     });
     return Promise.resolve(deleteTaskPromise);
 };
-
-function createSprintName(sprintId) {
-    if (sprintId == -1) {
-        return "Backlog";
-    } else if (sprintId == -2) {
-        return "Deleted";
-    } else {
-        return ("S" + sprintId.toString());
-    }
-}
