@@ -66,13 +66,7 @@
                                 </div>
                                 <div class="col " id="storyPointNumberTaskDescription ">{{task.StoryPointNumber}}</div>
                             </div>
-                            <hr>
-                            <div class="row ">
-                                <div class="col ">
-                                    <span id="header ">Work Done:</span>
-                                </div>
-                                <div class="col " id="workDoneTaskDescription ">{{task.WorkDone}}</div>
-                            </div>
+                            
                             <hr>
                             <div class="row ">
                                 <div class="col ">
@@ -145,6 +139,25 @@
                                             <app-time-chart [loggedTime]="task.LogWorkTotalTime" [estimatedTime]="task.EstimatedTime"></app-time-chart>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="row ">
+                                        <div class="col ">
+                                            <span id="header ">Work Done:</span>
+                                        </div>
+                                        <div class="col " id="workDoneTaskDescription ">{{task.WorkDone}}
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="row" style="align-items: center;">
+                                        <div class="col-3"></div>
+                                        <div class="col-md-6 mx-auto">
+                                           <app-work-completion [workDone]="task.WorkDone" ></app-work-completion>
+                                            <b>Work Progress</b>
+                                        </div>
+                                        <div class="col-3"></div>
+                                    </div>
+                                   
+                                   
                                 </div>
                             </div>
                         </div>
