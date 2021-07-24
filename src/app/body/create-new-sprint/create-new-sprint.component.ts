@@ -38,7 +38,7 @@ export class CreateNewSprintComponent implements OnInit {
   teamCurrentSprintNumber: number;
 
   teamData: TeamDataId[] = [];
-  
+
   organizationDetails: Organizations
 
   public rawData: Observable<RawDataId[]>;
@@ -59,12 +59,12 @@ export class CreateNewSprintComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
     this.todayDate = this.toolsService.date().split('/').reverse().join('-');
 
-    this.authService.afauth.user.subscribe(data =>{
+    this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if(data.AppKey) {
+        if (data.AppKey) {
           this.selectedTeamId = data.TeamId;
           this.backendService.organizationsData.subscribe(data => {
-            if(data.length) {
+            if (data.length) {
               this.teams = data[0].TeamsId;
               this.showTeams = true;
               this.readApplicationData();
@@ -78,11 +78,11 @@ export class CreateNewSprintComponent implements OnInit {
   readApplicationData() {
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
-      this.nextSprintId = teams[0].CurrentSprintId+1;
+      this.nextSprintId = teams[0].CurrentSprintId + 1;
       this.readSprintData();
     });
   }
-  
+
   readSprintData() {
     this.showContent = false;
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.nextSprintId).subscribe(sprints => {
@@ -113,10 +113,10 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.status);
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
-    const callable = this.functions.httpsCallable('startNewSprint');
+    const callable = this.functions.httpsCallable('sprints');
 
     try {
-      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
+      const result = await callable({ mode: "create", AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
 
       console.log("Successfully created a new sprint");
       console.log(result);
@@ -132,6 +132,6 @@ export class CreateNewSprintComponent implements OnInit {
     this.location.back();
   }
 
-  
+
 
 }

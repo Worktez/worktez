@@ -50,8 +50,8 @@ export class CreateNewSessionComponent implements OnInit {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
     this.teamIds=this.backendService.getOrganizationTeamIds();
-    this.readTeamMembers(this.teamIds[0]);
-    this.project=this.teamIds[0];
+    this.project = this.authService.getTeamId();
+    this.readTeamMembers(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.task= this.cloneTask.getCloneData();
@@ -73,7 +73,7 @@ export class CreateNewSessionComponent implements OnInit {
     }); 
   }
   async submit() {
-    console.log(this.teamName);
+    this.assigneeName = this.toolsService.userName(this.assigneeName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
@@ -101,10 +101,10 @@ export class CreateNewSessionComponent implements OnInit {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
-    const callable = this.functions.httpsCallable('createNewTask');
+    const callable = this.functions.httpsCallable('tasks');
 
     try {
-      const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
