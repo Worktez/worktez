@@ -7,7 +7,7 @@
 const { functions, cors } = require("../application/lib");
 const { createNewUser } = require("./createNewUser");
 const { updateUser } = require("./updateUser");
-const { updateTheme } = require("../../updateUserProfileAPI");
+const { updateTheme } = require("./updateTheme");
 const { verifyUser } = require("./verifyUser");
 
 exports.users = functions.https.onRequest((request, response) => {

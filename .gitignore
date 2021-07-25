@@ -68,3 +68,8 @@ node_modules/
 
 # package lock json
 package-lock.json
+functions/package-lock.json
+
+# binary files
+.DS_Store
+functions/.DS_Store
