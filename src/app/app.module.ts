@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -60,6 +61,9 @@ import { Patch2Component } from './patches/patch2/patch2.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
 import { UpdateFieldComponent } from './patches/patch3/update-field/update-field.component';
 import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.component';
+
+import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
+
 import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
 
 @NgModule({
@@ -109,6 +113,7 @@ import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket
     Patch2Component,
     Patch3Component,
     UpdateFieldComponent,
+    ProgressGraphComponent,
     ProfileIconsComponent,
     SuggestionBucketComponent,
   ],
