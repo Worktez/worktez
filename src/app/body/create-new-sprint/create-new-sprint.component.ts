@@ -33,6 +33,7 @@ export class CreateNewSprintComponent implements OnInit {
   status: string
   enableLoader: boolean = false;
   user: User;
+  userTeam: string;
 
   selectedTeamId: string;
   teamCurrentSprintNumber: number;
@@ -57,9 +58,10 @@ export class CreateNewSprintComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-    this.todayDate = this.toolsService.date().split('/').reverse().join('-');
+    this.todayDate = this.toolsService.getFormattedDate();
 
     this.authService.afauth.user.subscribe(data => {
+      this.userTeam = this.authService.getTeamId();
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.AppKey) {
           this.selectedTeamId = data.TeamId;

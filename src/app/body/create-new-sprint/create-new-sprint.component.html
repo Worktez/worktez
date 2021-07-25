@@ -61,7 +61,7 @@
                     <div class="form-group col-md-3">
                         <label for="inputState">TeamId</label>
                         <select class="form-control" [(ngModel)]="selectedTeamId" [ngModelOptions]="{standalone: true}" (ngModelChange)="readApplicationData()">
-                            <option *ngFor="let team of teams">{{team}}</option>
+                            <option *ngFor="let team of teams" [selected]="team == selectedTeamId" [ngClass]=" team == userTeam ? 'font-weight-bold font-italic' : '' ">{{team}}</option>
                         </select>
                     </div>
                 </div>
