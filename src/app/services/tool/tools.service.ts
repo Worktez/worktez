@@ -32,4 +32,8 @@ export class ToolsService {
     return name.substring(startindex+1,endindex);
   }
 
+  getFormattedDate() {
+    return this.date().split('/').reverse().join('-');
+  }
+
 }
