@@ -7,8 +7,8 @@ import { ValidationService } from '../../../services/validation/validation.servi
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service'
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+
+
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit-page.component.html',
@@ -30,17 +30,12 @@ export class EditPageComponent implements OnInit {
   changedData: string = ""
   prevVal = []
   newVal = []
-  assigneeName: string
   showClose: boolean = false;
-  teamMembers: string[]
-  teamName: string
-  project: string
 
-  constructor(private functions: AngularFireFunctions,private authService: AuthService, public applicationSetting: ApplicationSettingsService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
-    this.project = this.authService.getTeamId();
-    this.readTeamMembers(this.project);
+
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
@@ -48,16 +43,8 @@ export class EditPageComponent implements OnInit {
     this.previousSprintId = this.task.SprintNumber;
     this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber];
   }
-  readTeamMembers(teamId :string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
-          this.teamMembers=teams[0].TeamMembers;
-          this.teamName=teams[0].TeamName;
-          console.log(this.teamName);
-    }); 
-  }
 
   async submit() {
-    this.editTask.Assignee = this.toolsService.userName(this.editTask.Assignee);
     let data = [{ label: "priority", value: this.editTask.Priority },
     { label: "estimatedTime", value: this.editTask.EstimatedTime },
     { label: "difficulty", value: this.editTask.Difficulty },
