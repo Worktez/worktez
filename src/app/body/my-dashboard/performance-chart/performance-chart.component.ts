@@ -42,7 +42,7 @@ export class PerformanceChartComponent implements OnInit {
           tempData.push(["S" + index, storyPoint]);
         })
         .catch(err => {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
         })
     }
     return tempData;
@@ -60,7 +60,9 @@ export class PerformanceChartComponent implements OnInit {
             storyPoint = storyPoint + sp;
           });
         })
-    } catch (error) { }
+    } catch (error) { 
+      console.log(error);
+    }
     return storyPoint
   }
   onGetRange(rangeData: { sprintRange1: number, sprintRange2: number }) {
