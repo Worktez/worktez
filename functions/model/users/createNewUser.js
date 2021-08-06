@@ -7,6 +7,7 @@
 
 const { setApplication, getApplicationData } = require("../application/lib");
 const { setUser, getUser } = require("./lib");
+const { setPatches } = require("../patch/lib");
 
 exports.createNewUser = function(request, response) {
     const user = request.body.data;
@@ -44,6 +45,7 @@ exports.createNewUser = function(request, response) {
     return Promise.all(Promises).then(() => {
             result = { data: "User Logged In Successfully" };
             console.log("User Logged In Successfully");
+            setPatches();
             return response.status(status).send(result);
         })
         .catch((error) => {

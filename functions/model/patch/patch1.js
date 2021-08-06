@@ -8,16 +8,19 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-const { updateSprint } = require("../sprints/lib");
+const { updateSprint, setSprint } = require("../sprints/lib");
 const { getTeamUseTeamId, updateTeamDetails } = require("../teams/lib");
+const { updatePatchData } = require("./lib");
 
 const db = admin.firestore();
 
 exports.patch1 = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
     const teamId = request.body.data.TeamId;
+    const uid = request.body.data.Uid;
 
     let teamName;
+    let orgId;
     let totalSprints;
     let fullSprintId;
     let totalTeamTask = 0;
@@ -25,10 +28,15 @@ exports.patch1 = function(request, response) {
     const promise1 = getTeamUseTeamId(orgDomain, teamId).then((teamDoc) => {
         totalSprints = teamDoc.CurrentSprintId;
         teamName = teamDoc.TeamName;
+        orgId = teamDoc.OrganizationId;
         console.log("Executing Promise1 of Patch1");
         for (i = -2; i <= totalSprints; i++) {
             if (i != 0) {
                 fullSprintId = createSprintId(i);
+                if (i < 0) {
+                    // creates Backlog and Deleted with Default Values if don't exist
+                    createBacklogAndDeleted(i, orgDomain, teamId, teamName, fullSprintId, orgId);
+                }
                 sprintCounters(i, orgDomain, teamId, teamName, fullSprintId);
             }
         }
@@ -49,6 +57,7 @@ exports.patch1 = function(request, response) {
     const Promises = [promise1, promise2];
     Promise.all(Promises).then(() => {
         result = { data: "OK! Patch1 executed" };
+        updatePatchData("Patch1", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
         console.log("Counters updated");
         return response.status(200).send(result);
     }).catch(function(error) {
@@ -89,4 +98,15 @@ function createSprintId(sprintNumber) {
     } else {
         return ("S" + sprintNumber);
     }
+}
+
+function createBacklogAndDeleted(i, orgDomain, teamId, teamName, fullSprintId, orgId) {
+    const promise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintId).get().then(doc => {
+        if (doc.exists) {
+            return 0;
+        } else {
+            setSprint(orgDomain, teamName, fullSprintId, orgId, teamId, i, "Not Started", 0, 0, "xxxx-xx-xx", "xxxx-xx-xx");
+        }
+    });
+    return Promise.resolve(promise);
 }

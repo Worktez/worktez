@@ -12,6 +12,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 export class UpdateFieldComponent implements OnInit {
   @Input('fieldName') fieldName: string;
   @Input('fieldValue') fieldValue: string;
+  @Input('uid') uid: string;
   @Output() updateFieldCompleted = new EventEmitter<{ completed: boolean }>();
 
   QueryShowLoader: boolean = false;
@@ -30,7 +31,7 @@ export class UpdateFieldComponent implements OnInit {
     console.log("Querying in Patch3");
     try {
       const callable = this.functions.httpsCallable('patch');
-      await callable({ mode: "patch2", OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue }).toPromise().then(result => {
+      await callable({ mode: "patch3", OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue, Uid: this.uid}).toPromise().then(result => {
         this.QueryShowLoader = false;
         this.showClose = true;
         console.log(result);
