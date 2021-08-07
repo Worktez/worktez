@@ -31,7 +31,6 @@ export class EditPageComponent implements OnInit {
   prevVal = []
   newVal = []
   showClose: boolean = false;
-  teamIds: string[]
   teamMembers: string[]
   teamName: string
   project: string
