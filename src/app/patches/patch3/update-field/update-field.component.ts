@@ -30,7 +30,7 @@ export class UpdateFieldComponent implements OnInit {
     console.log("Querying in Patch3");
     try {
       const callable = this.functions.httpsCallable('patch');
-      await callable({ mode: "patch2", OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue }).toPromise().then(result => {
+      await callable({ mode: "patch3", OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue }).toPromise().then(result => {
         this.QueryShowLoader = false;
         this.showClose = true;
         console.log(result);
