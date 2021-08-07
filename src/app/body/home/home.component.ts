@@ -27,9 +27,9 @@ export class HomeComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe((data)=> {
         if(data.AppKey){
           this.isAppKeyAvailable = true
-          if(this.router.url === '/') {
+          // if(this.router.url === '/') {
             this.router.navigate(['/MyDashboard']);
-          }
+          // }
         }
         else{
         this.showLoader = false

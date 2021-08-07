@@ -22,7 +22,7 @@ export class BodyComponent implements OnInit {
       if(data) {
         console.log("Logged In Successfully");
       }
-      this.router.navigate(['/Home']);
+      // this.router.navigate(['/Home']);
     });
   }
 
