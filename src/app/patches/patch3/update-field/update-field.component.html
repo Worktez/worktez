@@ -1,0 +1,82 @@
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <nav class="modal-header navbar navbar-expand navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link head" id="updateModalLabel">Update</h5>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons text-light" (click)="workDone()">close</span>
+                            </button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="container modal-body align-items-center px-4" id="updatePage">
+                <form class="px-4" #form="ngForm" *ngIf="!QueryShowLoader&&!showClose">
+                    <div class="form-group row">
+                        <label for="newfieldName" class="col-sm-4 col-form-label updateHead">New Field Name</label>
+                        <div class="col-sm-8">
+                                <select class="form-control mt-2 custom-select" placeholder="Enter Field Name" [(ngModel)]="newfieldName" [ngModelOptions]="{standalone: true}">
+                                    <option selected disabled value="">choose...</option>
+                                    <option>Assignee</option>
+                                    <option>CompletionDate</option>
+                                    <option>CreationDate</option>
+                                    <option>Creator</option>
+                                    <option>Description</option>
+                                    <option>Difficulty</option>
+                                    <option>EstimatedTime</option>
+                                    <option>LogWorkTotalTime</option>
+                                    <option>Priority</option>
+                                    <option>Project</option>
+                                    <option>Status</option>
+                                    <option>StoryPointNumber</option>
+                                    <option>Title</option>
+                                    <option>WorkDone</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="newfieldValue" class="col-sm-4 col-form-label updateHead">New Field Value</label>
+                        <div class="col-sm-8">
+                            <input type="newfieldValue" class="form-control" id="newfieldValue"
+                                placeholder="Enter New Field Value" [(ngModel)]="newfieldValue"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="orgDomain" class="col-sm-4 col-form-label updateHead">Organisation Domain</label>
+                        <div class="col-sm-8">
+                            <input type="orgDomain" class="form-control" id="orgDomain"
+                                placeholder="Enter  Organisation Domain" [(ngModel)]="orgDomain"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="updateFieldSubmit" [disabled]="QueryShowLoader" (click)="query()">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <ng-container *ngIf="QueryShowLoader">
+                    <app-loader> </app-loader>
+                </ng-container>
+                <ng-container *ngIf="showClose">
+                    <div class="row">
+                        <div class="col">Successfully Updated!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="workDone()">Close</button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+

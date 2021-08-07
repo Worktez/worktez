@@ -1,0 +1,53 @@
+#cardDescription {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+.activityHeading {
+    color: var(--text);
+}
+
+#button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#head {
+    font-weight: bolder;
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+#navbarMenu {
+    background-color: var(--primary-color);
+}
+
+.card {
+    background-color: #d1ecf1;
+    border: #d1ecf1;
+}
+
+.sprint {
+    color: var(--secondary-color);
+}
+
+#header {
+    font-weight: bold;
+}
+
+#font {
+    font-size: 20px;
+}
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        float: right;
+        flex-direction: row;
+    }
+}

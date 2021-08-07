@@ -1,0 +1,12 @@
+<div class="container-fluid" *ngIf="userObservable | async ">
+    <ng-container *ngIf="applicationSettingsService.teamData|async">
+        <div class="row pt-5">
+            <div class="col">
+                <app-performance-chart [userEmail]="userEmail" [currentSprint]="teamCurrentSprintNumber"></app-performance-chart>
+            </div>
+            <div class="col">
+                <app-my-tasks [userEmail]="userEmail" [currentSprint]="teamCurrentSprintNumber"></app-my-tasks>
+            </div>
+        </div>
+    </ng-container>
+</div>

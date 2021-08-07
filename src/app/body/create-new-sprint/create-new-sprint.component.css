@@ -1,0 +1,33 @@
+#startNewSprintContainer {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#button:focus,
+#button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+.alert {
+    background-color: var(--hover);
+    color: var(--text);
+}
+
+#navbarMenu {
+    background-color: var(--primary-color);
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}

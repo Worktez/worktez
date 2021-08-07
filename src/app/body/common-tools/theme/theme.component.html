@@ -1,0 +1,9 @@
+<div class="custom-control custom-switch custom-switch-md" *ngIf="(themeService.presentTheme$ | async)">
+  <input type="checkbox" [disabled]="showloader" class="custom-control-input" id="customSwitches" [(ngModel)]="enableDarkTheme" (click)="changeThemeSwitch()">
+  <label class="custom-control-label" for="customSwitches" style="font-weight: bold;">
+    <span class="material-icons">dark_mode</span>
+  </label>
+</div>
+<ng-container *ngIf="showloader">
+  <app-loader></app-loader>
+</ng-container>

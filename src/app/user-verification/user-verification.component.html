@@ -1,0 +1,17 @@
+<div class="container py-5" *ngIf="authService.afauth.user | async; else showText">
+    <h1 class="py-4">Worktrolly</h1>
+    <div class="card text-center">
+        <div class="card-body">
+            <h2 class="card-title">Join {{teamName}}</h2>
+            <h5 class="card-text py-3">{{organizationDomain}}</h5>
+            <button class="btn btn-success px-5" (click)="verifyUser()">Verify</button>
+        </div>
+    </div>
+</div>
+<ng-template #showText>
+    <div class="row align-items-center justify-content-center" class="p-5">
+        <div class="col text-center">
+            <h1>Login to Join Worktrolly</h1>
+        </div>
+    </div>
+</ng-template>

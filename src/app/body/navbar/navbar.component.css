@@ -1,0 +1,8 @@
+#currentTab {
+    color: #10be65;
+    font-weight: bolder;
+}
+
+#navbarString {
+    color: var(--text);
+}

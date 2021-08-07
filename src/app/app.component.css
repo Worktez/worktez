@@ -1,0 +1,30 @@
+.app-theme {
+    min-height: 100vh;
+    background-color: var(--primary-bg);
+}
+
+.theme-light {
+    --primary-color: #5A20F0;
+    --secondary-color: #16C85A;
+    --header-bg: #fff;
+    --text: #000;
+    --button-text: #fff;
+    --primary-bg: #ffffff;
+    --secondary-bg: #ffffff;
+    --primary-border: 1px solid #5A20F0;
+    --hover: #a4acff85;
+    --box-shadow-bottom: 0px 1px 2px 0px #5A20F0;
+}
+
+.theme-dark {
+    --primary-color: #5A20F0;
+    --secondary-color: #16C85A;
+    --header-bg: #20282E;
+    --text: #fff;
+    --button-text: #fff;
+    --primary-bg: #11171B;
+    --secondary-bg: #20282E;
+    --primary-border: 1px solid #5A20F0;
+    --hover: #636feb;
+    --box-shadow-bottom: 0px 0px 0px 0px #16C85A;
+}

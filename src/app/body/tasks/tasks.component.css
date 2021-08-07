@@ -1,0 +1,22 @@
+#navbarMenu {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+.toggleFilter {
+    color: var(--secondary-color);
+}

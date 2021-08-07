@@ -1,0 +1,72 @@
+<ng-container *ngIf="applicationSettingsService.sprintData|async">
+    <div class="card" style="border: none;">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-3">
+                    <h5 class="pl-2" style="font-size: 18px;">Sprint No: {{currentSprintName}}</h5>
+                    <p class="pl-2" style="font-size: 18px;">TeamId: {{sprintData.TeamId}}</p>
+                </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
+                        <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                            <button class="dropdown-item" type="button" (click)="ActiveSprint()">Active Sprint</button>
+                            <button class="dropdown-item" type="button" (click)="showBacklog()">Backlog</button>
+                            <button class="dropdown-item" type="button" (click)="showDeleted()">Deleted</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="btn-group" *ngIf="sprintData.Status != 'Completed' ">
+                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
+                        <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                            <button *ngIf="Status !== 'Under Progress'" class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
+                            <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
+                        </div>
+                    </div>
+                    <span class="material-icons align-middle" *ngIf="sprintData.Status === 'Completed' ">
+                                check_circle
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <button id="button" (click)="showTasks()">Show All Tasks</button>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <div class="dropdown float-right">
+                        <button class="material-icons" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">filter_list</button>
+                        <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                            <div class="input-group">
+                                <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                                <div class="col-md-3 col-3">
+                                    <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row py-2">
+                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Start Date:
+                </h6>
+                <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 12px;">
+                    {{sprintData.StartDate}}</h6>
+            </div>
+            <div class="row py-2">
+                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">End Date: </h6>
+                <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 12px;">{{sprintData.EndDate}}
+                </h6>
+            </div>
+            <div class="row py-2">
+                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Status: </h6>
+                <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;">{{sprintData.Status}}</h6>
+            </div>
+            <div class="row py-2">
+                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 14px;">Number of task: </h6>
+                <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 12px;">{{sprintData.TotalNumberOfTask}}</h6>
+            </div>
+        </div>
+    </div>
+</ng-container>
