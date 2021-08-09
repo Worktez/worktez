@@ -11,33 +11,21 @@ import { map } from 'rxjs/internal/operators/map'
 })
 export class HomeComponent implements OnInit {
 
-  isAppKeyAvailable : boolean = false
-  isLoggedIn : boolean = false
-  showLoader : boolean = false
 
   public useEmulator = environment.useEmulators;
 
   constructor(public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
-    this.showLoader = true
     this.authService.afauth.user.subscribe((data)=>{
-      if(data){
-      this.isLoggedIn = true
+      if(data!=null){
       this.authService.userAppSettingObservable.subscribe((data)=> {
         if(data.AppKey){
-          this.isAppKeyAvailable = true
           // if(this.router.url === '/') {
             this.router.navigate(['/MyDashboard']);
           // }
         }
-        else{
-        this.showLoader = false
-        }
       });
-    }
-    else{
-      this.showLoader = false
     }
     });
   }
