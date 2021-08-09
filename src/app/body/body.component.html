@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <app-error></app-error>
 
-<ng-container *ngIf="authService.userAppSettingObservable | async; else loader">
+<ng-container *ngIf="authService.completedLoadingApplication; else loader">
     <router-outlet></router-outlet>
 </ng-container>
 

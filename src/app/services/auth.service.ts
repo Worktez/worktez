@@ -19,6 +19,7 @@ export class AuthService {
   public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
 
   public organizationAvailable: boolean = true;
+  public completedLoadingApplication: boolean = false;
 
   user: User;
   userAppSetting: UserAppSetting;
@@ -74,7 +75,7 @@ export class AuthService {
       map(actions => {
         const data = actions.payload.data() as UserAppSetting;
         this.userAppSetting = data;
-        if (this.userAppSetting.AppKey != "") {
+        if (this.userAppSetting && this.userAppSetting.AppKey != "") {
           this.backendService.getOrgDetails(this.userAppSetting.AppKey);
           this.themeService.changeTheme(data.AppTheme);
         } else {
@@ -82,6 +83,7 @@ export class AuthService {
         }
         return { ...data }
       }));
+      this.completedLoadingApplication = true;
   }
 
   getAppKey() {

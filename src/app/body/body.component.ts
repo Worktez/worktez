@@ -18,12 +18,12 @@ export class BodyComponent implements OnInit {
   constructor(private router: Router, public applicationSettingsService: ApplicationSettingsService,public authService: AuthService, public backendService: BackendService) { }
 
   ngOnInit(): void {
-    this.authService.afauth.user.subscribe(data => {
-      if(data) {
-        console.log("Logged In Successfully");
-      }
-      // this.router.navigate(['/Home']);
-    });
+    // this.authService.afauth.user.subscribe(data => {
+    //   if(data) {
+    //     console.log("Logged In Successfully");
+    //   }
+    //   // this.router.navigate(['/Home']);
+    // });
   }
 
 }

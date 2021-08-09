@@ -13,20 +13,25 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 })
 export class LoginHandlerComponent implements OnInit {
   user: User
-  public userObservable: Observable<User>
 
   organizationAvailable: boolean = false;
   constructor(public authService: AuthService, public router: Router, public backendService: BackendService) { }
 
   ngOnInit(): void {
-    this.userObservable = this.authService.afauth.user.pipe(map(action => {
+    this.authService.afauth.user.subscribe((action) => {
+      this.authService.completedLoadingApplication = false;
       const data = action as User;
-      this.user = data
-      this.authService.user = data;
-      this.authService.getUserSettings();
-      return { ...data }
-    })
-    );
+      if(data) {
+        this.user = data
+        this.authService.user = data;
+        this.authService.getUserSettings(); 
+      } else {
+        this.authService.completedLoadingApplication = true;
+      }
+    }, (error) => {
+      this.authService.completedLoadingApplication = true;
+      console.log(error);
+    });
   }
 
 }
