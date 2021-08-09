@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.showLoader = true
     this.authService.afauth.user.subscribe((data)=>{
-      if(data){
+      if(data!=null){
       this.isLoggedIn = true
       this.authService.userAppSettingObservable.subscribe((data)=> {
         if(data.AppKey){
@@ -31,9 +31,7 @@ export class HomeComponent implements OnInit {
             this.router.navigate(['/MyDashboard']);
           // }
         }
-        else{
         this.showLoader = false
-        }
       });
     }
     else{
