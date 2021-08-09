@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AuthService } from 'src/app/services/auth.service';
 import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 @Component({
   selector: 'app-patch2',
   templateUrl: './patch2.component.html',
@@ -16,12 +17,7 @@ export class Patch2Component implements OnInit {
   newFieldValue: string;
   showLoader: boolean = false;
   uid: string;
-  patchName: string;
-  patchDescription: string;
-  CreationDate: string;
-  UpdatedOn: string;
-  LastUsedByOrg: string;
-  LastUsedByUid: string;
+  patch: Patch;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -29,7 +25,7 @@ export class Patch2Component implements OnInit {
     this.showLoader = true;
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.AppKey && !this.patch) {
           this.uid = this.authService.userAppSetting.uid;
           this.getPatchData();
           this.showLoader = false;
@@ -58,12 +54,7 @@ export class Patch2Component implements OnInit {
 
   getPatchData() {
     this.patchService.getPatchData("Patch2").subscribe(data => {
-      this.patchName = data.Name;
-      this.patchDescription = data.Description;
-      this.LastUsedByOrg = data.LastUsedByOrg;
-      this.LastUsedByUid = data.LastUsedByUid;
-      this.CreationDate = data.CreationDate;
-      this.UpdatedOn = data.UpdatedOn;
+      this.patch = data;
     });
   }
 }

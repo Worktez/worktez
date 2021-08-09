@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 
 @Component({
   selector: 'app-patch3',
@@ -21,12 +22,7 @@ export class Patch3Component implements OnInit {
   updateEnabled: boolean = false;
   FieldEntered: boolean = false;
   uid: string;
-  patchName: string;
-  patchDescription: string;
-  CreationDate: string;
-  UpdatedOn: string;
-  LastUsedByOrg: string;
-  LastUsedByUid: string;
+  patch: Patch;
   showLoader: boolean = false;
 
   tasksCollection: AngularFirestoreCollectionGroup<Tasks>
@@ -85,12 +81,7 @@ export class Patch3Component implements OnInit {
 
   getPatchData() {
     this.patchService.getPatchData("Patch3").subscribe(data => {
-      this.patchName = data.Name;
-      this.patchDescription = data.Description;
-      this.LastUsedByOrg = data.LastUsedByOrg;
-      this.LastUsedByUid = data.LastUsedByUid;
-      this.CreationDate = data.CreationDate;
-      this.UpdatedOn = data.UpdatedOn;
+      this.patch = data;
     });
   }
 

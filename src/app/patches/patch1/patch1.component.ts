@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AuthService } from 'src/app/services/auth.service';
 import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 
 @Component({
   selector: 'app-patch1',
@@ -15,12 +16,7 @@ export class Patch1Component implements OnInit {
   teamId: string;
   showLoader: boolean = false;
   uid: string;
-  patchName: string;
-  patchDescription: string;
-  CreationDate: string;
-  UpdatedOn: string;
-  LastUsedByOrg: string;
-  LastUsedByUid: string;
+  patch: Patch;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -55,12 +51,8 @@ export class Patch1Component implements OnInit {
 
   getPatchData() {
     this.patchService.getPatchData("Patch1").subscribe(data => {
-      this.patchName = data.Name;
-      this.patchDescription = data.Description;
-      this.LastUsedByOrg = data.LastUsedByOrg;
-      this.LastUsedByUid = data.LastUsedByUid;
-      this.CreationDate = data.CreationDate;
-      this.UpdatedOn = data.UpdatedOn;
+      this.patch = data;
+      console.log(data);
     });
   }
 }
