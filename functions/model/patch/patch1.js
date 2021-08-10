@@ -76,7 +76,7 @@ function sprintCounters(i, orgDomain, teamId, teamName, fullSprintId) {
             TotalUnCompletedTask: a[2],
         };
 
-        const p1 = updateSprint(updateSprintInputJson, orgDomain, teamName, fullsprintId);
+        const p1 = updateSprint(updateSprintInputJson, orgDomain, teamName, fullSprintId);
         return Promise.resolve(p1);
     });
 }
