@@ -25,7 +25,7 @@ export class Patch2Component implements OnInit {
     this.showLoader = true;
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey && !this.patch) {
+        if (data.AppKey) {
           this.uid = this.authService.userAppSetting.uid;
           this.getPatchData();
           this.showLoader = false;

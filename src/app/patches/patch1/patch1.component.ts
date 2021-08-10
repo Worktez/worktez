@@ -52,7 +52,6 @@ export class Patch1Component implements OnInit {
   getPatchData() {
     this.patchService.getPatchData("Patch1").subscribe(data => {
       this.patch = data;
-      console.log(data);
     });
   }
 }
