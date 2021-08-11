@@ -1,6 +1,15 @@
 .app-theme {
     min-height: 100vh;
     background-color: var(--primary-bg);
+    position: relative;
+}
+
+.wrap {
+    padding-bottom: 10vh;
+}
+
+body {
+    height: 100%;
 }
 
 .theme-light {
@@ -14,6 +23,7 @@
     --primary-border: 1px solid #5A20F0;
     --hover: #a4acff85;
     --box-shadow-bottom: 0px 1px 2px 0px #5A20F0;
+    --bottom-bg: rgba(0, 0, 0, 0.2);
 }
 
 .theme-dark {
@@ -27,4 +37,5 @@
     --primary-border: 1px solid #5A20F0;
     --hover: #636feb;
     --box-shadow-bottom: 0px 0px 0px 0px #16C85A;
+    --bottom-bg: rgba(0, 0, 0, 0.2);
 }
