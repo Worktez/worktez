@@ -13,6 +13,7 @@ import { ApplicationSettingsService } from 'src/app/services/application-setting
 import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/clone-task.service';
+import { user } from 'firebase-functions/lib/providers/auth';
 
 @Component({
   selector: 'app-create-new-session',
@@ -29,7 +30,7 @@ export class CreateNewSessionComponent implements OnInit {
   todayDate: string
   description: string
   assigneeName: string
-  creatorName: string
+  creatorName = this.authService.user.email
   estimatedTime: number
   project: string
   priority: string
