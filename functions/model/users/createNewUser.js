@@ -25,7 +25,7 @@ exports.createNewUser = function(request, response) {
         if (data == undefined) {
             setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId);
         }
-        setPatches();
+        // setPatches();
     }).catch((err) => {
         status = 500;
         console.error("Error : " + err);
