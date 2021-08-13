@@ -7,6 +7,7 @@
 
 const { setApplication, getApplicationData } = require("../application/lib");
 const { setUser, getUser } = require("./lib");
+const { setPatches } = require("../patch/setPatches");
 
 exports.createNewUser = function(request, response) {
     const user = request.body.data;
@@ -24,6 +25,7 @@ exports.createNewUser = function(request, response) {
         if (data == undefined) {
             setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId);
         }
+        // setPatches();
     }).catch((err) => {
         status = 500;
         console.error("Error : " + err);
