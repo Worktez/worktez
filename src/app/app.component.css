@@ -22,6 +22,7 @@ body {
     --secondary-bg: #ffffff;
     --primary-border: 1px solid #5A20F0;
     --hover: #a4acff85;
+    --box-shadow-top: 0px -1px 2px 0px #5A20F0;
     --box-shadow-bottom: 0px 1px 2px 0px #5A20F0;
     --bottom-bg: rgba(0, 0, 0, 0.2);
 }
@@ -36,6 +37,7 @@ body {
     --secondary-bg: #20282E;
     --primary-border: 1px solid #5A20F0;
     --hover: #636feb;
+    --box-shadow-top: 0px 0px 0px 0px #16C85A;
     --box-shadow-bottom: 0px 0px 0px 0px #16C85A;
     --bottom-bg: rgba(0, 0, 0, 0.2);
 }
