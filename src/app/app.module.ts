@@ -65,7 +65,7 @@ import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.compo
 import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
 
 import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
-import { FooterComponent } from './app/footer/footer.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
