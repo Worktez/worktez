@@ -153,12 +153,43 @@ export class SetupComponent implements OnInit {
     try {
       const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
-      this.showLoader = false;
       console.log("Successfully created the task");
+      console.log(result);
+      this.createPatchesCollection();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  async createPatchesCollection() {
+    const callable = this.functions.httpsCallable('patch');
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch1", PatchName: "Counter Fix", PatchDescription: "This patch Fixes all the counters for the team", CreationDate: "16/06/2021", UpdatedOn: "06/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch1 document");
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch2", PatchName: "Patch-2", PatchDescription: "This patch adds a new field to all the tasks with a default value.", CreationDate: "18/07/2021", UpdatedOn: "06/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch2 document");
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch3", PatchName: "Patch-3", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch3 document");
+      this.showLoader = false;
       console.log(result);
     } catch (error) {
       console.log(error);
     }
   }
-
 }

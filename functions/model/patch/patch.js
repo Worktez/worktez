@@ -9,6 +9,7 @@ const { functions, cors } = require("../application/lib");
 const { patch1 } = require("./patch1");
 const { patch2 } = require("./patch2");
 const { patch3 } = require("./patch3");
+const { patchModerator } = require("./patchModerator");
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -23,6 +24,8 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch3") {
             // To change a particular field in relevent tasks
             return patch3(request, response);
+        } else if (mode == "patchModerator") {
+            return patchModerator(request, response);
         }
     });
 });

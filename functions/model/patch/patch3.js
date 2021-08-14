@@ -10,6 +10,7 @@
 
 const admin = require("firebase-admin");
 const { updateTask } = require("../tasks/lib");
+const { updatePatchData } = require("./lib");
 
 const db = admin.firestore();
 
@@ -19,6 +20,7 @@ exports.patch3 = function(request, response) {
     const oldFieldValue = request.body.data.FieldValue;
     const newField = request.body.data.NewField;
     const newFieldValue = request.body.data.NewFieldValue;
+    const uid = request.body.data.Uid;
     let taskId;
 
     const promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where(oldField, "==", oldFieldValue).get().then((task) => {
@@ -33,6 +35,7 @@ exports.patch3 = function(request, response) {
         Promise.all(Promises).then(() => {
             result = { data: "OK! Patch3 executed" };
             console.log("updated");
+            updatePatchData("Patch3", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
             return response.status(200).send(result);
         }).catch(function(error) {
             result = { data: error };

@@ -4,7 +4,7 @@
       <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <h5 class="active nav-link" id="head">Patch-1</h5>
+                <h5 class="active nav-link" id="head">{{ patch.Name }}</h5>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -16,9 +16,28 @@
     </div>
   </div>
   <div class="px-6" id="weigh"> 
-    <div class="alert form-inline pb-3 px" id="font" role="alert">
-      <div class="pr-3">Date:</div>
-      <div>{{ todayDate }}</div>
+    <div class="container p-3 mr-3 my-3">
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
+        </div>
+        <div class="col-md-6">
+          <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
+        </div>
+        <div class="col-md-6">
+          <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col">
+            Description: <span class="pl-3">{{ patch.Description }}</span>
+        </div>
+      </div>
     </div>
     <form class="px-4">
       <div class="form-group row">

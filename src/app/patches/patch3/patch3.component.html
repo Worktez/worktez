@@ -4,7 +4,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <h5 class="active nav-link" id="head">Patch-3</h5>
+                        <h5 class="active nav-link" id="head">{{patch.Name}}</h5>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -16,6 +16,29 @@
         </div>
     </div>
     <div class="px-8" id="weigh">
+        <div class="container p-3 mr-3 my-3">
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col">
+                  Description: <span class="pl-3">{{ patch.Description }}</span>
+              </div>
+            </div>
+        </div>
         <form class="px-4" *ngIf="!PatchshowLoader">
             <div class="form-group row">
                 <label for="fieldName" class="col-sm-2 col-form-label">Field Name</label>
@@ -73,5 +96,5 @@
     </div>
 </div>
 <ng-container *ngIf="updateEnabled" id="updateModalLabel">
-    <app-update-field [fieldName]="fieldName" [fieldValue]="fieldValue" (updateFieldCompleted)="updateFieldCompleted($event)"></app-update-field>
+    <app-update-field [fieldName]="fieldName" [fieldValue]="fieldValue" [uid]="uid" (updateFieldCompleted)="updateFieldCompleted($event)"></app-update-field>
 </ng-container>

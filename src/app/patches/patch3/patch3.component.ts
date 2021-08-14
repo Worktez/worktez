@@ -5,6 +5,9 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
+import { AuthService } from 'src/app/services/auth.service';
+import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 
 @Component({
   selector: 'app-patch3',
@@ -18,13 +21,28 @@ export class Patch3Component implements OnInit {
   PatchshowLoader: boolean = false;
   updateEnabled: boolean = false;
   FieldEntered: boolean = false;
+  uid: string;
+  patch: Patch;
+  showLoader: boolean = false;
 
   tasksCollection: AngularFirestoreCollectionGroup<Tasks>
   tasksData: Observable<TasksId[]>;
 
-  constructor(private location: Location, public db: AngularFirestore) { }
+  constructor(private location: Location, public db: AngularFirestore, public authService: AuthService,  public patchService: PatchService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.PatchshowLoader = true;
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.uid = this.authService.userAppSetting.uid;
+          this.getPatchData();
+          this.PatchshowLoader = false;
+        }
+      });
+    });
+    console.log("patch running");
+  }
 
   patch3() {
     if(this.fieldName.length===0 ||this.fieldValue.length===0){
@@ -59,6 +77,12 @@ export class Patch3Component implements OnInit {
 
   backToDashboard() {
     this.location.back()
+  }
+
+  getPatchData() {
+    this.patchService.getPatchData("Patch3").subscribe(data => {
+      this.patch = data;
+    });
   }
 
 }
