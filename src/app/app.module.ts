@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -43,7 +44,7 @@ import { PerformanceChartComponent } from './body/my-dashboard/performance-chart
 import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-card/range-card.component";
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component'
 import { ErrorComponent } from './body/error/error.component';
-import { PatchComponent } from './patch/patch.component';
+import { Patch1Component } from './patches/patch1/patch1.component';
 import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
 import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
@@ -54,6 +55,16 @@ import { TimeChartComponent } from './body/common-tools/time-chart/time-chart/ti
 import { ThemeComponent } from './body/common-tools/theme/theme.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
+import { PieChartComponent } from './body/common-tools/pie-chart/pie-chart.component';
+import { WorkCompletionComponent } from './body/tasks/work-completion/work-completion.component';
+import { Patch2Component } from './patches/patch2/patch2.component';
+import { Patch3Component } from './patches/patch3/patch3.component';
+import { UpdateFieldComponent } from './patches/patch3/update-field/update-field.component';
+import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.component';
+
+import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
+
+import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +97,7 @@ import { HomeComponent } from './body/home/home.component';
     CreateNewOrganizationComponent,
     ErrorComponent,
     FilterTaskComponent,
-    PatchComponent,
+    Patch1Component,
     OrganizationDetailsComponent,
     TeamDetailsComponent,
     FocusNavComponent,
@@ -97,6 +108,14 @@ import { HomeComponent } from './body/home/home.component';
     ThemeComponent,
     SetupComponent,
     HomeComponent,
+    PieChartComponent,
+    WorkCompletionComponent,
+    Patch2Component,
+    Patch3Component,
+    UpdateFieldComponent,
+    ProgressGraphComponent,
+    ProfileIconsComponent,
+    SuggestionBucketComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/firestore';
 import { Tasks} from 'src/app/Interface/TasksInterface';
-import { BackendService } from 'src/app/services/backend.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-performance-chart',
@@ -11,7 +11,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 })
 export class PerformanceChartComponent implements OnInit {
 
-  @Input("username") username: string
+  @Input("userEmail") userEmail: string
   @Input("currentSprint") currentSprintNumber: number
 
   componentName: string="PERFORMANCE-CHART"
@@ -42,7 +42,7 @@ export class PerformanceChartComponent implements OnInit {
           tempData.push(["S" + index, storyPoint]);
         })
         .catch(err => {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
         })
     }
     return tempData;
@@ -51,7 +51,7 @@ export class PerformanceChartComponent implements OnInit {
     var storyPoint: number = 0;
     let orgDomain= this.backendService.getOrganizationDomain();
     try {
-      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.username)
+      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.userEmail)
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach((doc) => {
@@ -60,7 +60,9 @@ export class PerformanceChartComponent implements OnInit {
             storyPoint = storyPoint + sp;
           });
         })
-    } catch (error) { }
+    } catch (error) { 
+      console.log(error);
+    }
     return storyPoint
   }
   onGetRange(rangeData: { sprintRange1: number, sprintRange2: number }) {

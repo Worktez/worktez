@@ -1,4 +1,4 @@
-<form id="form" *ngIf="!enableLoader" class="p-md-5 p-4 align-items-center justify-content-center">
+<form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
     <ng-container>
         <div class="form-group row">
             <div class="col-md-8">
@@ -43,11 +43,11 @@
         </div>
         <div class="form-group row align-items-center justify-content-center">
             <div class="offset-6 col text-right">
-                <button (click)="submit()" id="submitButton" [disabled]="!logoUploaded && orgLogo">
+                <button (click)="submit()" id="submitButton" [disabled]="!logoUploaded && orgLogo && enableLoader">
                     <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Next">arrow_forward_ios</span>
                 </button>
             </div>
         </div>
     </ng-container>
+    <app-loader *ngIf="enableLoader"></app-loader>
 </form>
-<app-loader *ngIf="enableLoader"></app-loader>
