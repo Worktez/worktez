@@ -1,25 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ToolsService } from '../../services/tool/tools.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 @Component({
   selector: 'app-patch2',
   templateUrl: './patch2.component.html',
   styleUrls: ['./patch2.component.css']
 })
 export class Patch2Component implements OnInit {
-  todayDate: string;
   orgId: string;
   orgDomain: string;
   taskId: string;
   newfield: string;
   newFieldValue: string;
   showLoader: boolean = false;
+  uid: string;
+  patch: Patch;
 
-  constructor(private functions: AngularFireFunctions, private location: Location, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
   ngOnInit(): void {
-    this.todayDate = this.toolsService.date();
+    this.showLoader = true;
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.uid = this.authService.userAppSetting.uid;
+          this.getPatchData();
+          this.showLoader = false;
+        }
+      });
+    });
     console.log("patch running");
   }
 
@@ -28,7 +40,7 @@ export class Patch2Component implements OnInit {
     console.log("Patch2 function running");
     console.log(this.orgDomain, this.newfield, this.newFieldValue);
     const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch2", OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue }).toPromise().then(result => {
+    await callable({ mode: "patch2", OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, Uid: this.uid}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);
@@ -38,5 +50,11 @@ export class Patch2Component implements OnInit {
 
   backToDashboard() {
     this.location.back()
+  }
+
+  getPatchData() {
+    this.patchService.getPatchData("Patch2").subscribe(data => {
+      this.patch = data;
+    });
   }
 }

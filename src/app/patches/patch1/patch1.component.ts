@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ToolsService } from '../../services/tool/tools.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 
 @Component({
   selector: 'app-patch1',
@@ -9,17 +11,26 @@ import { ToolsService } from '../../services/tool/tools.service';
   styleUrls: ['./patch1.component.css']
 })
 export class Patch1Component implements OnInit {
-  todayDate: string;
   orgId: string;
   orgDomain: string;
   teamId: string;
   showLoader: boolean = false;
+  uid: string;
+  patch: Patch;
 
-
-  constructor(private functions: AngularFireFunctions, private location: Location, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
   ngOnInit(): void {
-    this.todayDate = this.toolsService.date();
+    this.showLoader = true;
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.uid = this.authService.userAppSetting.uid;
+          this.getPatchData();
+          this.showLoader = false;
+        }
+      });
+    });
     console.log("patch running");
   }
 
@@ -28,7 +39,7 @@ export class Patch1Component implements OnInit {
     console.log("Patch1 function running");
     console.log(this.orgDomain, this.orgId, this.teamId);
     const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch1", OrgId: this.orgId, OrgDomain: this.orgDomain, TeamId: this.teamId }).toPromise().then(result => {
+    await callable({ mode: "patch1", OrgId: this.orgId, OrgDomain: this.orgDomain, TeamId: this.teamId, Uid: this.uid }).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
     });
@@ -36,5 +47,11 @@ export class Patch1Component implements OnInit {
 
   backToDashboard() {
     this.location.back()
+  }
+
+  getPatchData() {
+    this.patchService.getPatchData("Patch1").subscribe(data => {
+      this.patch = data;
+    });
   }
 }
