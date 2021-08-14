@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
   myDashBoard(){
     console.log("load MyDashboard");
-    this.router.navigate(["/"])
+    this.router.navigate(["/MyDashboard"])
   }
 
   createTeam(){
@@ -45,5 +45,9 @@ export class HeaderComponent implements OnInit {
 
   createNewOrganization() {
     this.router.navigate(['/CreateNewOrganization']);
+  }
+
+  home() {
+    this.router.navigate(['/']);
   }
 }
