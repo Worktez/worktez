@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
   myDashBoard(){
     console.log("load MyDashboard");
-    this.router.navigate(["/MyDashboard"])
+    this.router.navigate(["/"])
   }
 
   createTeam(){

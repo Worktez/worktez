@@ -2,6 +2,7 @@
     border: var(--primary-border);
     background-color: var(--secondary-bg);
     color: var(--text);
+    white-space: pre-wrap;
 }
 
 .activityHeading {
