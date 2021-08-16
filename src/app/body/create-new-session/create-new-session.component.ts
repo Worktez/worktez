@@ -54,7 +54,7 @@ export class CreateNewSessionComponent implements OnInit {
     
     this.title=this.task.Title;
     this.description=this.task.Description;
-    this.creatorName=this.task.Creator;
+    this.creatorName=this.authService.getUserEmail();
     this.estimatedTime=this.task.EstimatedTime;
     this.project=this.task.Project;
     this.priority=this.task.Priority;
