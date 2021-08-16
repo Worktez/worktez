@@ -7,8 +7,8 @@ import { ValidationService } from '../../../services/validation/validation.servi
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service'
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
-
-
+import { AuthService } from 'src/app/services/auth.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit-page.component.html',
@@ -31,20 +31,34 @@ export class EditPageComponent implements OnInit {
   prevVal = []
   newVal = []
   showClose: boolean = false;
+  teamMembers: string[]
+  teamName: string
+  previousAssignee:string
 
-  constructor(private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  constructor(private functions: AngularFireFunctions,  public applicationSetting: ApplicationSettingsService,private authService: AuthService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
 
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+    this.readTeamMembers(this.task.TeamId);
+    this.previousAssignee = this.task.Assignee;
 
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
     this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber];
   }
+  readTeamMembers(teamId :string){
+    this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
+          this.teamMembers=teams[0].TeamMembers;
+          this.teamName=teams[0].TeamName;
+    }); 
+  }
 
   async submit() {
+    if(this.editTask.Assignee!==this.previousAssignee){
+    this.editTask.Assignee = this.toolsService.userName(this.editTask.Assignee);
+    }
     let data = [{ label: "priority", value: this.editTask.Priority },
     { label: "estimatedTime", value: this.editTask.EstimatedTime },
     { label: "difficulty", value: this.editTask.Difficulty },
@@ -114,6 +128,7 @@ export class EditPageComponent implements OnInit {
   }
 
   editTaskDone() {
+    if(this.editTask.Assignee === "")this.editTask.Assignee = this.previousAssignee;
     this.editTaskCompleted.emit({ completed: true });
   }
 

@@ -10,6 +10,7 @@
 
 const admin = require("firebase-admin");
 const { updateTask } = require("../tasks/lib");
+const { updatePatchData } = require("./lib");
 
 const db = admin.firestore();
 exports.patch2 = function(request, response) {
@@ -17,6 +18,7 @@ exports.patch2 = function(request, response) {
     let taskId;
     const newfield = request.body.data.newField;
     const newFieldValue = request.body.data.NewFieldValue;
+    const uid = request.body.data.Uid;
     const promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").get().then((task) => {
         task.forEach((doc) => {
             taskId = doc.data().Id;
@@ -28,6 +30,7 @@ exports.patch2 = function(request, response) {
         const Promises = [promise1];
         Promise.all(Promises).then(() => {
             result = { data: "OK! Patch2 executed" };
+            updatePatchData("Patch2", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
             console.log("Counters updated");
             return response.status(200).send(result);
         }).catch(function(error) {
