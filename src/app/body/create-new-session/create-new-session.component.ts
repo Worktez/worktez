@@ -12,8 +12,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { CloneTaskService } from 'src/app/services/clone-task.service';
-
+import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
 
 @Component({
   selector: 'app-create-new-session',
