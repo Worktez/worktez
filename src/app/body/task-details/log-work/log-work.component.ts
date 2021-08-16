@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ValidationService } from '../../../services/validation.service';
-import { ToolsService } from '../../../services/tools.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
+import { ValidationService } from '../../../services/validation/validation.service';
+import { ToolsService } from '../../../services/tool/tools.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
   selector: 'app-log-work',
@@ -26,7 +26,7 @@ export class LogWorkComponent implements OnInit {
   logWorkComment: string
   todayDate: string
   time: string
-  enableLoader: boolean = false
+  enableLoader: boolean = false;
   showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService) { }
@@ -56,14 +56,15 @@ export class LogWorkComponent implements OnInit {
 
   async submitLogWorkPage() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('logWork');
+    const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time }).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);
+      this.enableLoader = false;
       this.showClose = true;
       // this.workDone();
       return;

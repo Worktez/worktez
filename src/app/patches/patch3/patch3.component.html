@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="row">
+        <div class="col pl-0 pr-0">
+            <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link" id="head">{{patch.Name}}</h5>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="px-8" id="weigh">
+        <div class="container p-3 mr-3 my-3">
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col">
+                  Description: <span class="pl-3">{{ patch.Description }}</span>
+              </div>
+            </div>
+        </div>
+        <form class="px-4" *ngIf="!PatchshowLoader">
+            <div class="form-group row">
+                <label for="fieldName" class="col-sm-2 col-form-label">Field Name</label>
+                <div class="col-sm-4">
+                        <select class="form-control mt-2 custom-select" placeholder="Enter Field Name" [(ngModel)]="fieldName" [ngModelOptions]="{standalone: true}">
+                            <option selected disabled value="">choose...</option>
+                            <option>Assignee</option>
+                            <option>CompletionDate</option>
+                            <option>CreationDate</option>
+                            <option>Creator</option>
+                            <option>Description</option>
+                            <option>Difficulty</option>
+                            <option>EstimatedTime</option>
+                            <option>LogWorkTotalTime</option>
+                            <option>Priority</option>
+                            <option>Project</option>
+                            <option>Status</option>
+                            <option>StoryPointNumber</option>
+                            <option>Title</option>
+                            <option>WorkDone</option>
+                        </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fieldValue" class="col-sm-2 col-form-label">Field Value</label>
+                <div class="col-sm-4">
+                    <input type="fieldValue" class="form-control" id="fieldValue" placeholder="Enter Field Value"
+                        [(ngModel)]="fieldValue" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-5"></div>
+                <div class="col-md-4 col-8">
+                    <button type="submit" class="btn btn-primary" [disabled]="PatchshowLoader"
+                        (click)="patch3()">Query</button>
+                </div>
+                <div class="col-md-3 col-4" *ngIf="tasksData | async">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal" (click)="UpdatePage()">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <ng-container *ngIf="PatchshowLoader">
+        <app-loader> </app-loader>
+    </ng-container>
+    <div class="row">
+        <div class="col" *ngIf="tasksData | async">
+            <h3 class="m-2">Tasks</h3>
+            <ng-container *ngIf="tasksData | async">
+                <app-task-cards [tasks]="tasksData"></app-task-cards>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="updateEnabled" id="updateModalLabel">
+    <app-update-field [fieldName]="fieldName" [fieldValue]="fieldValue" [uid]="uid" (updateFieldCompleted)="updateFieldCompleted($event)"></app-update-field>
+</ng-container>

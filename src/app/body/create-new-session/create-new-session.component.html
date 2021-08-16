@@ -1,4 +1,4 @@
-<div *ngIf="!enableLoader" class="container py-5 ">
+<div class="container py-5 ">
     <div id="createNewTaskContainer">
         <div class="row">
             <div class="col">
@@ -47,7 +47,14 @@
                 <div class="form-row">
                     <div class="form-group col-sm-3">
                         <label for="input">Assignee</label>
-                        <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion">
+                            <datalist id="assigneeSuggestion">
+                                <ng-container *ngFor='let item of teamMembers '>
+                                    <option>
+                                        <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
+                                    </option>
+                                </ng-container>
+                            </datalist>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="text">Creator</label>
@@ -55,12 +62,10 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="input">Project</label>
-                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}">
-                    <option selected>choose...</option>
-                    <option>Business</option>
-                    <option>Development</option>
-                    <option>Marketing</option>
-                    <option>Other</option>
+                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (change)="readTeamMembers(project)">
+                    <ng-container *ngFor='let id of teamIds'>
+                        <option>{{ id }}</option>
+                    </ng-container>
                       </select>
                     </div>
                     <div class="form-group col-sm-3">
@@ -107,12 +112,12 @@
                     <div class="form-group col-sm-10 blank"></div>
                     <div class="form-group col-sm-2 pt-4">
                         <span class="align-bottom" class="justify-content-end">
-                    <div class="col-md-2"><button type="submit" class="btn" id="button">Submit</button></div>
+                    <div class="col-md-2"><button type="submit" class="btn" id="button" [disabled]="enableLoader">Submit</button></div>
                 </span>
                     </div>
                 </div>
+                <app-loader *ngIf="enableLoader"></app-loader>
             </form>
         </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader"></app-loader>

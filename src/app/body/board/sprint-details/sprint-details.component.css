@@ -13,6 +13,7 @@
 #button, #dropdownButton {
     background-color: var(--primary-color);
     color: var(--button-text);
+    border: none;
 }
 
 #button:hover, #dropdownButton:hover {
@@ -20,9 +21,9 @@
 }
 
 #filterMenu {
-    background-color: var(--secondary-color);
-    padding-right: 45px;
-    padding-left: 25px;
+    background-color: var(--secondary-bg);
+    padding-right: 35px;
+    padding-left: 5px;
 }
 
 #button:focus,

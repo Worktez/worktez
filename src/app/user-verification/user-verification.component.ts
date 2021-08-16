@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -26,10 +26,10 @@ export class UserVerificationComponent implements OnInit {
     console.log(this.teamName);
   }
 
-  async verifyUser(){
-    const callable = this.functions.httpsCallable('verifyUser');
-    try{
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
+  async verifyUser() {
+    const callable = this.functions.httpsCallable('users');
+    try {
+      const result = await callable({ mode: "verify", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
 
       console.log("Successfully verified User");
       console.log(result);

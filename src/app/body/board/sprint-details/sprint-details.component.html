@@ -1,5 +1,5 @@
 <ng-container *ngIf="applicationSettingsService.sprintData|async">
-    <div class="card m-3" style="border: none;">
+    <div class="card" style="border: none;">
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col-md-2 col-3">
@@ -30,14 +30,14 @@
                     </span>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-primary" (click)="showTasks()">Show All Tasks</button>
+                    <button id="button" (click)="showTasks()">Show All Tasks</button>
                 </div>
                 <div class="col-md-1 pl-0">
                     <div class="dropdown float-right">
-                        <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+                        <button class="material-icons" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">filter_list</button>
                         <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-                            <div class="row py-3">
-                                <input class="col-md-9 col-8" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                            <div class="input-group">
+                                <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
                                 <div class="col-md-3 col-3">
                                     <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
                                 </div>

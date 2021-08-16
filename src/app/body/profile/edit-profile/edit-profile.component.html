@@ -15,6 +15,18 @@
                             class="form-control" id="recipient-name">
                     </div>
                     <div class="form-group">
+                        <label for="recipient-phoneNo" class="col-form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="recipient-phoneNo" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-github" class="col-form-label">Github Profile</label>
+                        <input type="text" class="form-control" id="recipient-github" [(ngModel)]="githubProfile" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-linkedIn" class="col-form-label">LinkedIn Profile</label>
+                        <input type="text" class="form-control" id="recipient-linkedIn" [(ngModel)]="linkedInProfile" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
                         <label for="message-text" class="col-form-label">About Me:</label>
                         <textarea class="form-control" [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}"
                             id="message-text"></textarea>
@@ -39,4 +51,4 @@
         </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader"></app-loader>
+<app-loader *ngIf="enableLoader && !showClose"></app-loader>

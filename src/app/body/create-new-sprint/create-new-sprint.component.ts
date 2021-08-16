@@ -6,15 +6,16 @@ import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { Router } from '@angular/router';
-import { ValidationService } from '../../services/validation.service';
+import { ValidationService } from '../../services/validation/validation.service';
 import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler.service';
-import { ErrorHandlerService } from 'src/app/services/error-handler.service';
-import { BackendService } from 'src/app/services/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
-import { ApplicationSettingsService } from 'src/app/services/application-settings.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { ToolsService } from 'src/app/services/tool/tools.service';
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -32,44 +33,58 @@ export class CreateNewSprintComponent implements OnInit {
   status: string
   enableLoader: boolean = false;
   user: User;
+  userTeam: string;
 
-  selectedTeamId: string = "Dev";
+  selectedTeamId: string;
   teamCurrentSprintNumber: number;
 
   teamData: TeamDataId[] = [];
-  
+
   organizationDetails: Organizations
 
   public rawData: Observable<RawDataId[]>;
   public rawDocument: AngularFirestoreDocument<RawDataType>;
 
   sprintData: Sprint;
+  teams: [];
+  showTeams: boolean = false;
 
   nextSprintId: number;
   showContent: boolean;
+  todayDate: string;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService, private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
+    this.todayDate = this.toolsService.getFormattedDate();
 
-    this.readApplicationData();
+    this.authService.afauth.user.subscribe(data => {
+      this.userTeam = this.authService.getTeamId();
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.AppKey) {
+          this.selectedTeamId = data.TeamId;
+          this.backendService.organizationsData.subscribe(data => {
+            if (data.length) {
+              this.teams = data[0].TeamsId;
+              this.showTeams = true;
+              this.readApplicationData();
+            }
+          });
+        }
+      });
+    });
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails().subscribe(teams => {
-      this.teamData = teams;
-      teams.forEach(element => {
-        if(element.TeamId == this.selectedTeamId) {
-          this.teamCurrentSprintNumber = element.CurrentSprintId;
-          this.nextSprintId = element.CurrentSprintId+1;
-        }
-      });
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
+      this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
+      this.nextSprintId = teams[0].CurrentSprintId + 1;
       this.readSprintData();
     });
   }
-  
+
   readSprintData() {
     this.showContent = false;
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.nextSprintId).subscribe(sprints => {
@@ -77,15 +92,6 @@ export class CreateNewSprintComponent implements OnInit {
 
       this.showContent = true;
     });
-  }
-
-  loadSprintData() {
-    this.teamData.forEach(element => {
-      if(element.TeamId == this.selectedTeamId) {
-        this.nextSprintId = element.CurrentSprintId+1;
-      }
-    });
-    this.readSprintData();
   }
 
   async submit() {
@@ -109,14 +115,14 @@ export class CreateNewSprintComponent implements OnInit {
     console.log(this.status);
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
-    const callable = this.functions.httpsCallable('startNewSprint');
+    const callable = this.functions.httpsCallable('sprints');
 
     try {
-      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
+      const result = await callable({ mode: "create", AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
 
       console.log("Successfully created a new sprint");
       console.log(result);
-      this.router.navigate(['/']);
+      this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
@@ -128,6 +134,6 @@ export class CreateNewSprintComponent implements OnInit {
     this.location.back();
   }
 
-  
+
 
 }

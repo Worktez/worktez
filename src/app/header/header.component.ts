@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { BackendService } from '../services/backend.service';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from '../services/theme/theme.service';
+import { BackendService } from '../services/backend/backend.service';
+
+
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,6 @@ import { ThemeService } from '../services/theme.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  organizationAvailable: boolean = false;
 
   constructor(public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
 
@@ -26,7 +27,6 @@ export class HeaderComponent implements OnInit {
   }
 
   Board(){
-    console.log("load Board");
     this.router.navigate(['/Board']);
   }
 
@@ -41,5 +41,9 @@ export class HeaderComponent implements OnInit {
 
   updateTeam(){
     this.router.navigate(['/UpdateTeam', this.authService.getTeamId()]);
+  }
+
+  createNewOrganization() {
+    this.router.navigate(['/CreateNewOrganization']);
   }
 }
