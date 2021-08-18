@@ -65,6 +65,9 @@ import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.compo
 import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
 
 import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
+import { PerformanceColumnChartComponent } from './body/board/performance-column-chart/performance-column-chart.component';
+import { ColumnChartComponent } from './body/common-tools/column-chart/column-chart.component';
+import { SelectDropdownComponent } from './body/board/performance-column-chart/select-dropdown/select-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +119,9 @@ import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket
     ProgressGraphComponent,
     ProfileIconsComponent,
     SuggestionBucketComponent,
+    PerformanceColumnChartComponent,
+    ColumnChartComponent,
+    SelectDropdownComponent,
   ],
   imports: [
     BrowserModule,
