@@ -6,6 +6,7 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-team-details',
@@ -22,13 +23,18 @@ export class TeamDetailsComponent implements OnInit {
   childStep: number = 1
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
+  isUpdateTeam: boolean = false;
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
+    console.log(this.router.url);
     this.selectedTeamId = this.route.snapshot.params['teamId'];
     console.log(this.selectedTeamId);
     if (this.selectedTeamId != undefined) {
+      if (this.router.url.startsWith('/UpdateTeam')) {
+        this.isUpdateTeam = true;
+      }
       this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(teams => {
         this.teamName = teams[0].TeamName;
         this.teamId = teams[0].TeamId;
@@ -139,5 +145,9 @@ export class TeamDetailsComponent implements OnInit {
       this.enableLoader = false;
       console.error("Error", error);
     }
+  }
+
+  close() {
+    this.location.back();
   }
 }
