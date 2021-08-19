@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
@@ -12,7 +10,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 })
 export class PerformanceColumnChartComponent implements OnInit {
 
-  constructor(public db: AngularFirestore, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public db: AngularFirestore, public backendService: BackendService) { }
 
   showLoader: boolean = false;
   @Input("userEmail") userEmail: string;
