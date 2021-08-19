@@ -29,6 +29,8 @@ exports.createNewTask = function(request, response) {
     const sprintNumber = parseInt(request.body.data.SprintNumber);
     const creationDate = request.body.data.CreationDate;
     const time = request.body.data.Time;
+    const email = request.body.data.Email;
+    const photoURL = request.body.data.PhotoUrl;
     const fullSprintName = createSprintName(sprintNumber);
     const loggedWorkTotalTime = 0;
     const workDone = 0;
@@ -60,7 +62,7 @@ exports.createNewTask = function(request, response) {
             /* const p2 =*/
             setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId);
 
-            addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain);
+            addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, email, photoURL);
             // const promises1 = [p1, p2];
             // return Promise.all(promises1);
         }).catch((error) => {
