@@ -55,7 +55,3 @@ input[type="file"] {
 #submitButton:disabled {
     color: gray;
 }
-
-#navbarMenu {
-    background-color: var(--primary-color);
-}
