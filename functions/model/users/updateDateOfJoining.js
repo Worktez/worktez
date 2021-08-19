@@ -5,12 +5,14 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { updateUser, getUserUseEmail } = require("./lib");
+const { updateUser } = require("./lib");
 
 exports.updateDateOfJoining = function(memberEmail, date) {
-    const promise = getUserUseEmail(memberEmail).then((doc) => {
-        uid = doc.data().uid;
-        previousDateOfJoining = doc.data().DateOfJoining;
+    const promise = db.collection("Users").where("email", "==", memberEmail).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            uid = doc.data().uid;
+            previousDateOfJoining = doc.data().DateOfJoining;
+        });
 
         if (!previousDateOfJoining) {
             const updateUserInputJson = {
