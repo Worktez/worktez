@@ -12,7 +12,7 @@ export class ColumnChartComponent implements OnInit {
   @Input('columnNames') columnNames: [];
   constructor(public themeService: ThemeService) { }
 
-  title = 'Story Point';
+  title = 'Team Performance Chart';
   type = 'ColumnChart';
    options = {
     width: "100%",
@@ -24,7 +24,10 @@ export class ColumnChartComponent implements OnInit {
         color: this.themeService.fontColor
       },
       titleTextStyle: {
-        color: this.themeService.fontColor
+        color: this.themeService.fontColor,
+        fontSize: 12, 
+        bold: true,    
+        italic: false
       }
     },
     colors: ['#10be65'], 
@@ -34,11 +37,15 @@ export class ColumnChartComponent implements OnInit {
       color: this.themeService.fontColor
     },
     vAxis: {
+        title: 'Story points',
         textStyle: {
             color: this.themeService.fontColor
         },
         titleTextStyle: {
-            color: this.themeService.fontColor
+            color: this.themeService.fontColor,
+            fontSize: 12, 
+            bold: true,    
+            italic: false
         }
     },
     chartArea: {width: '70%'},
