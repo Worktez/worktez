@@ -33,8 +33,7 @@ export class EditPageComponent implements OnInit {
   showClose: boolean = false;
   teamMembers: string[]
   teamName: string
-  project: string
-  assigneeName:string
+  previousAssignee:string
 
   constructor(private functions: AngularFireFunctions,  public applicationSetting: ApplicationSettingsService,private authService: AuthService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
@@ -42,8 +41,8 @@ export class EditPageComponent implements OnInit {
 
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-    this.project = this.authService.getTeamId();
-    this.readTeamMembers(this.project);
+    this.readTeamMembers(this.task.TeamId);
+    this.previousAssignee = this.task.Assignee;
 
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
@@ -53,12 +52,13 @@ export class EditPageComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
-          console.log(this.teamName);
     }); 
   }
 
   async submit() {
-    this.assigneeName = this.toolsService.userName(this.assigneeName);
+    if(this.editTask.Assignee!==this.previousAssignee){
+    this.editTask.Assignee = this.toolsService.userName(this.editTask.Assignee);
+    }
     let data = [{ label: "priority", value: this.editTask.Priority },
     { label: "estimatedTime", value: this.editTask.EstimatedTime },
     { label: "difficulty", value: this.editTask.Difficulty },
@@ -128,6 +128,7 @@ export class EditPageComponent implements OnInit {
   }
 
   editTaskDone() {
+    if(this.editTask.Assignee === "")this.editTask.Assignee = this.previousAssignee;
     this.editTaskCompleted.emit({ completed: true });
   }
 

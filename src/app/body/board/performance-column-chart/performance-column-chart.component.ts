@@ -36,15 +36,17 @@ export class PerformanceColumnChartComponent implements OnInit {
 
   async getData() {
     let temp = [];
-    for (let i = this.sprintRange1; i <= this.sprintRange2; i++) {
-      if (this.teamMember == 'Team') {
+    if (this.teamMember == 'Team') {
+      for (let i = this.sprintRange1; i <= this.sprintRange2; i++) {
         await this.readTeamData(i, this.teamId).then(data => {
           temp.push(["S" + i, data]);
         }).catch(err => {
           console.log(err);
         });
         this.columnNames = ["Sprints", this.teamId];
-      } else {
+      }
+    } else {
+      for (let i = this.sprintRange1; i <= this.sprintRange2; i++) {
         await this.readMemberData(i, this.teamMember).then(data => {
           temp.push(["S" + i, data]);
         }).catch(err => {
