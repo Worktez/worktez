@@ -19,7 +19,6 @@ export class LogWorkComponent implements OnInit {
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
 
   componentName: string = "LOG-WORK";
-
   logWork : Tasks
   Id: string
   logWorkDone: number
