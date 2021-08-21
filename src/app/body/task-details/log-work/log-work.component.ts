@@ -17,11 +17,13 @@ export class LogWorkComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('task') task: Tasks
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
-  
+
   componentName: string = "LOG-WORK";
+
+  logWork : Tasks
   Id: string
   logWorkDone: number
-  logWorkStatus: number
+  logWorkStatus: string
   logHours: number
   logWorkComment: string
   todayDate: string
@@ -34,6 +36,8 @@ export class LogWorkComponent implements OnInit {
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+    this.logWorkDone = this.task.WorkDone;
+    this.logWorkStatus = this.task.Status;
   }
 
   async submit() {
