@@ -58,7 +58,7 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="text">Creator</label>
-                        <input type="text" class="form-control" [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}">
+                        <input type="text"  readonly class="form-control" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="input">Project</label>

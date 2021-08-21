@@ -1,0 +1,23 @@
+<div class="dropdown">
+    <span class="material-icons" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+        filter_list
+    </span>
+    <div class="dropdown-menu dropdown-menu-right p-0" id="dropdownSelectCard">
+        <form>
+            <div class="row align-items-center m-0 p-2 text-white" id="header">
+                <h6>Select Member/Team</h6>
+            </div>
+            <div class="row align-items-center p-2">
+                <div class="col">
+                    <select class="form-select" [(ngModel)]="selectedOption" [ngModelOptions]="{standalone: true}">
+                        <option [ngValue]="'Team'">Team</option>
+                        <option *ngFor="let teamMember of teamMembers"  [ngValue]="teamMember">{{ teamMember }}</option>
+                    </select>
+                </div>
+                <div class="col text-right">
+                    <button class="btn ml-3 mt-1" (click)="setSelectedOption()" style="font-size: 12px;">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
