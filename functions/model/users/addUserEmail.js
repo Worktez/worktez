@@ -4,7 +4,7 @@
 /* eslint-disable max-len */
 // const admin = require("firebase-admin");
 
-const { sendMail } = require("./lib");
+const { sendMail } = require("../email/lib");
 
 exports.sendVerificationEmail = function(teamName, teamManagerEmail, teamDescription, userEmail, organizationDomain) {
     return sendMail(userEmail, teamManagerEmail, teamName, teamDescription, organizationDomain).then(() => {
