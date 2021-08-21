@@ -1,0 +1,24 @@
+#header {
+    background-color: var(--primary-color);
+}
+
+#dropdownSelectCard {
+    color: var(--text);
+    background-color: var(--secondary-bg);
+}
+
+select:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    border: none;
+}
+
+button:hover {
+    background-color: var(--hover);
+}
