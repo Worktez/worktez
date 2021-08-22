@@ -62,7 +62,7 @@ export class LogWorkComponent implements OnInit {
     console.log(this.authService.user.email);
 
     try {
-      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Email:this.authService.user.email, PhotoUrl:this.authService.user.photoURL }).toPromise();
+      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid:this.authService.user.uid}).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);

@@ -102,10 +102,9 @@ export class CreateNewSessionComponent implements OnInit {
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
     const callable = this.functions.httpsCallable('tasks');
-    console.log(this.authService.user.email);
 
     try {
-      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Email: this.authService.user.email }).toPromise();
+      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

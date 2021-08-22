@@ -3,8 +3,7 @@ export interface Activity {
     Date:string;
     Time:string;
     Type: string;
-    Email: string;
-    PhotoUrl: string;
+    Uid: string;
 }
 
 export interface ActivityId extends Activity { id: string; }

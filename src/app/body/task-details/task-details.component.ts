@@ -79,9 +79,14 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Activity;
         const id = a.payload.doc.id;
-        return { id, ...data };
+        // console.log(id);
+        // console.log(data);
+        // const ud = this.getUserDetail(data.Uid);
+        // console.log(ud);
+        return { id, ...data};
       }))
     );
+    // console.log(this.activityData);
   }
 
   CloneTaskPage() {
@@ -107,7 +112,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Email: this.authService.user.email, PhotoUrl:this.authService.user.photoURL }).toPromise();
+      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Uid:this.authService.user.uid }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);

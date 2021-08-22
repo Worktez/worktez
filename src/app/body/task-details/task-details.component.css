@@ -1,6 +1,6 @@
 #cardDescription {
     border: var(--primary-border);
-    background-color: var(--secondary-bg);
+    /* background-color: var(--secondary-bg); */
     color: var(--text);
     white-space: pre-wrap;
 }
@@ -27,11 +27,6 @@
 
 #navbarMenu {
     background-color: var(--primary-color);
-}
-
-.card {
-    background-color: #d1ecf1;
-    border: #d1ecf1;
 }
 
 .sprint {

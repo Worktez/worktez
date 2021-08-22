@@ -32,8 +32,7 @@ exports.editTask = function(request, response) {
     const date = request.body.data.Date;
     const time = request.body.data.Time;
     let comment = "Edited task details: ";
-    const email = request.body.data.Email;
-    const photoURL = request.body.data.PhotoUrl;
+    const uid = request.body.data.Uid;
     const promises = [];
 
     const editTaskPromise = getOrgUseAppKey(appKey).then((orgDetail) => {
@@ -112,7 +111,7 @@ exports.editTask = function(request, response) {
 
         comment = comment + changedData;
         console.log(comment);
-        addActivity("EDITED", comment, taskId, date, time, orgDomain, email, photoURL);
+        addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
 
         Promise.all(promises).then(() => {
                 result = { data: "OK" };

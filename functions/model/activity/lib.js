@@ -32,14 +32,13 @@ exports.getActivities = function(orgDomain, taskId) {
     return Promise.resolve(getActivitiesPromise);
 };
 
-exports.setAction = function(orgDomain, taskId, actionId, type, comment, date, time, email, photoURL) {
+exports.setAction = function(orgDomain, taskId, actionId, type, comment, date, time, uid) {
     const setActionPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
         Type: type,
         Comment: comment,
         Date: date,
         Time: time,
-        Email: email,
-        PhotoUrl: photoURL,
+        Uid: uid,
     });
 
     return Promise.resolve(setActionPromise);

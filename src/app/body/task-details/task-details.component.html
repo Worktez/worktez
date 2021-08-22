@@ -168,7 +168,7 @@
                         <div class="col-md-10 ">
                             <label for="description " class="row-form-label" id="header">Description:</label>
                             <div class="alert alert-info form-inline col-md px " role="alert ">
-                                <div id="descriptionTaskDescription " class="card ">{{task.Description}}</div>
+                                <div id="descriptionTaskDescription ">{{task.Description}}</div>
                             </div>
                         </div>
                         <div class="col-md "></div>
@@ -177,28 +177,8 @@
             </div>
         </div>
         <h5 class="py-3 activityHeading">Activity</h5>
-        <ng-container *ngFor="let item of activityData | async">
-            <div class="card my-2" id="cardDescription">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img class="mx-4" src={{item.PhotoUrl}} alt="Card image cap" width="30" height="30" style=" border-radius: 50%;">
-                        </div>
-                        <div class="col-md-2">
-                            <h6>{{item.Date}} | {{item.Time}}</h6>
-                        </div>
-                        <div class="col-md-3">
-                            <span>{{item.Email}}</span>
-                        </div>
-                        <div class="col-md-2">
-                            <span>{{item.Comment}}</span>
-                        </div>
-                        <div class="col-md-3">
-                            <span> {{item.Type}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <ng-container *ngFor="let activity of activityData | async">
+            <app-activity [activity]="activity"></app-activity>
         </ng-container>
     </div>
     <ng-container *ngIf="logWorkEnabled" id="exampleModalLabel">

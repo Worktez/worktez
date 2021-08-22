@@ -1,0 +1,21 @@
+<div class="card mt-2" *ngIf="userObservable | async">
+    <div class="card-body row">
+        <!-- <p class="card-title"> -->
+        <div class="col-md-1">
+            <img src="{{user.photoURL}}" alt="Card image cap" width="30" height="30" style=" border-radius: 50%;">
+        </div>
+        <div class="col-md-2 bold">
+            {{user.displayName}}
+        </div>
+        <div class="col" style="text-align: left;">
+            {{activity.Type}} <span class="bold"> on </span> {{activity.Date}} <span class="bold">at</span> {{activity.Time}}
+        </div>
+        <!-- </p> -->
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col mb-2">
+            <p class="card-text">{{activity.Comment}}</p>
+        </div>
+    </div>
+</div>
