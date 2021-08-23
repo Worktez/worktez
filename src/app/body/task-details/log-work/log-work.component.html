@@ -20,11 +20,19 @@
                     <div class="row px pt-2">
                         <div class="col-md"></div>
                         <div class="col-md-5 pl-2">
+                            <span>{{task.Id}}</span>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md"></div>
+                    </div>
+                    <hr>
+                    <div class="row px pt-2">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-2">
                             <span id="logHead">Status:</span>
                         </div>
                         <div class="col-md-5">
                             <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
-                                            <option selected disabled value="">choose...</option>
                                             <option>Ice Box</option>
                                             <option>Ready to start</option>
                                             <option>Under Progress</option>
