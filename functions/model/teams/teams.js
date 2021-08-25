@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -6,6 +7,7 @@
 
 const { functions, cors } = require("../application/lib");
 const { createTeam } = require("./createTeam");
+const { addMember } = require("./addMember");
 // const { updateTeam } = require("./updateTeam");
 
 exports.teams = functions.https.onRequest((request, response) => {
@@ -13,6 +15,9 @@ exports.teams = functions.https.onRequest((request, response) => {
         const mode = request.body.data.mode;
         if (mode == "create") {
             return createTeam(request, response);
+        }
+        if (mode == "add-member") {
+            return addMember(request, response);
         }
     });
 });

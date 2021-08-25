@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Team,TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
@@ -21,7 +21,10 @@ export class TeamDetailsComponent implements OnInit {
 
   childStep: number = 1
   teamData: TeamDataId[] = [];
+  team: Team;
   selectedTeamId: string;
+  addMemberEnabled: boolean = false;
+  memberArray: string[];
 
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
@@ -35,6 +38,7 @@ export class TeamDetailsComponent implements OnInit {
         this.teamDescription = teams[0].TeamDescription;
         this.teamManagerEmail = teams[0].TeamManagerEmail;
         this.teamMembers = teams[0].TeamMembers.join(",");
+        this.memberArray = teams[0].TeamMembers  
       });
     }
   }
@@ -118,6 +122,19 @@ export class TeamDetailsComponent implements OnInit {
   submit() {
     //Functionality to Show Error When none of the option is checked in Particular labelName can be added
     this.createNewTeamWithLabels()
+  }
+
+  addMember() {
+    console.log("addMember()");
+    this.addMemberEnabled = true;
+  }
+
+  removeMember() {
+    console.log("removeMember()");
+  }
+
+  addedMember(data: { completed: boolean }) {
+    this.addMemberEnabled = false;
   }
 
   async createNewTeamWithLabels() {

@@ -65,6 +65,7 @@ import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.compo
 import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
 
 import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
+import { AddMemberComponent } from './body/create-new-organization/team-details/add-member/add-member.component';
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket
     ProgressGraphComponent,
     ProfileIconsComponent,
     SuggestionBucketComponent,
+    AddMemberComponent,
   ],
   imports: [
     BrowserModule,
