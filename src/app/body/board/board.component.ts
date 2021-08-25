@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit {
   teams: [];
   sprintNotExist: boolean = false;
   zeroSprint: boolean = false;
+  teamMembers: string[];
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -61,6 +62,7 @@ export class BoardComponent implements OnInit {
         if (element.TeamId == this.selectedTeamId) {
           this.teamCurrentSprintNumber = element.CurrentSprintId;
           this.currentSprintNumber = element.CurrentSprintId;
+          this.teamMembers = element.TeamMembers;
         }
       });
       this.readSprintData();
