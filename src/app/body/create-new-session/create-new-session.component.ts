@@ -29,7 +29,7 @@ export class CreateNewSessionComponent implements OnInit {
   todayDate: string
   description: string
   assigneeName: string
-  creatorName: string
+  creatorName : string
   estimatedTime: number
   project: string
   priority: string
@@ -51,6 +51,7 @@ export class CreateNewSessionComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
     this.teamIds=this.backendService.getOrganizationTeamIds();
     this.project = this.authService.getTeamId();
+    this.creatorName=this.authService.getUserEmail();
     this.readTeamMembers(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
@@ -58,7 +59,6 @@ export class CreateNewSessionComponent implements OnInit {
     
     this.title=this.task.Title;
     this.description=this.task.Description;
-    this.creatorName=this.task.Creator;
     this.estimatedTime=this.task.EstimatedTime;
     this.priority=this.task.Priority;
     this.difficulty=this.task.Difficulty;
