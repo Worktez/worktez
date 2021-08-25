@@ -2,7 +2,7 @@
     <img src="{{user.photoURL}}" alt="profile-pic" class="rounded-circle dropdown-toggle" width="30" height="30" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <div class="dropdown-menu dropdown-menu-right" id="dropdownUserCard">
         <p class="dropdown-item" id="username">Hello {{user.displayName}}</p>
-        <hr id="line" />
+        <hr>
         <button class="dropdown-item" type="button" (click)="profile()">Profile</button>
         <button class="dropdown-item" id="login-btn" type="button" (click)="onLogout()">Logout</button>
     </div>
