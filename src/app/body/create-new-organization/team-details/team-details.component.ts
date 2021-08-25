@@ -126,7 +126,6 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   async removeMember(remove: string) {
-    console.log(remove);
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('teams');
     if (this.organizationDomain == undefined) {

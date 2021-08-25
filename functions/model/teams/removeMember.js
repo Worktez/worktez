@@ -19,8 +19,7 @@ exports.removeMember = function(request, response) {
 
     const index = teamMembers.indexOf(remove);
     if (index != -1) {
-        teamMembers.splice(index, 1); // remove 1 element from index
-        console.log("new team-", teamMembers);
+        teamMembers.splice(index, 1);
         const updateJson = {
             TeamMembers: teamMembers,
         };

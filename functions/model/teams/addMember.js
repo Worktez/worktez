@@ -23,7 +23,6 @@ exports.addMember = function(request, response) {
 
     if (add != "") {
         teamMembers.push(add);
-        console.log("new team-", teamMembers);
         const updateJson = {
             TeamMembers: teamMembers,
         };
@@ -38,28 +37,3 @@ exports.addMember = function(request, response) {
     }
     return response.status(status).send(result);
 };
-//     const promise1 = getTeam(orgDomain, teamName).then((team) => {
-//         teamMembers.push(add);
-//         console.log("new team-", teamMembers);
-//         const updateJson = {
-//             TeamMembers: teamMembers,
-//         };
-//         console.log("before update: ", updateJson);
-//         updateTeamDetails(updateJson, orgDomain, teamName);
-//     }).catch((error) => {
-//         status = 500;
-//         console.log("Error: ", error);
-//     });
-
-//     const Promises = [promise1];
-//     return Promise.all(Promises).then(() => {
-//             result = { data: "Member added Successfully" };
-//             console.log("Member added Successfully");
-//             return response.status(status).send(result);
-//         })
-//         .catch((error) => {
-//             result = { data: error };
-//             console.error("Error while adding member", error);
-//             return response.status(status).send(result);
-//         });
-// };
