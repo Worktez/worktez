@@ -24,7 +24,12 @@ export class TeamDetailsComponent implements OnInit {
   team: Team;
   selectedTeamId: string;
   addMemberEnabled: boolean = false;
+  teamName: string;
+  teamId: string;
+  teamDescription: string = "";
+  teamManagerEmail: string;
   memberArray: string[];
+  enableLoader: boolean = false;
 
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
@@ -37,19 +42,10 @@ export class TeamDetailsComponent implements OnInit {
         this.teamId = teams[0].TeamId;
         this.teamDescription = teams[0].TeamDescription;
         this.teamManagerEmail = teams[0].TeamManagerEmail;
-        this.teamMembers = teams[0].TeamMembers.join(",");
         this.memberArray = teams[0].TeamMembers  
       });
     }
   }
-
-  teamName: string;
-  teamId: string
-  teamDescription: string = ""
-  teamManagerEmail: string
-  teamMembers: string
-  teamMemberEmailArray: string[] = []
-  enableLoader: boolean = false;
 
   handleIdInput() {
     this.teamId = this.teamName.slice(0, 3);
@@ -97,7 +93,7 @@ export class TeamDetailsComponent implements OnInit {
       { label: "teamId", value: this.teamId },
       { label: "teamDescription", value: this.teamDescription },
       { label: "teamManagerEmail", value: this.teamManagerEmail },
-      { label: "teamMemberEmails", value: this.teamMembers }
+      { label: "teamMemberEmails", value: this.memberArray }
     ];
 
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
@@ -105,9 +101,6 @@ export class TeamDetailsComponent implements OnInit {
     });
     if (condition) {
       console.log("Inputs are valid");
-      this.teamMembers.split(",").map(member => {
-        this.teamMemberEmailArray.push(member.trim());
-      })
       this.childStep += 1
     }
     else {
@@ -125,16 +118,28 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   addMember() {
-    console.log("addMember()");
     this.addMemberEnabled = true;
-  }
-
-  removeMember() {
-    console.log("removeMember()");
   }
 
   addedMember(data: { completed: boolean }) {
     this.addMemberEnabled = false;
+  }
+
+  async removeMember(remove: string) {
+    console.log(remove);
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('teams');
+    if (this.organizationDomain == undefined) {
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+    }
+    try {
+      const result = await callable({ mode: "remove-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.memberArray, Remove: remove}).toPromise();
+      console.log(result);
+      this.enableLoader = false;
+    } catch (error) {
+      this.enableLoader = false;
+      console.error("Error", error);
+    }  
   }
 
   async createNewTeamWithLabels() {
@@ -146,7 +151,7 @@ export class TeamDetailsComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMemberEmailArray, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, DateOfJoining: this.toolsService.date() }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.memberArray, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, DateOfJoining: this.toolsService.date() }).toPromise();
       console.log(result);
       this.enableLoader = false;
       this.teamFormSubmitted.emit({ submitted: false });

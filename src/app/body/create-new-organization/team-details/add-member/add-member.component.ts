@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Team } from 'src/app/Interface/TeamInterface';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-add-member',
@@ -10,25 +11,36 @@ import { Team } from 'src/app/Interface/TeamInterface';
 export class AddMemberComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
-  @Input('team') team: Team
+  @Input("teamName") teamName: string;
+  @Input("memberArray") memberArray: string[];
+  @Input("teamManager") teamManager: string;
+  @Input("teamDescription") teamDescription: string;
   @Output() addedMember = new EventEmitter<{ completed: boolean }>();
 
-  // componentName: string = "ADD-MEMBER";
+  componentName: string = "ADD-MEMBER";
+  organizationDomain: string
   memberEmail: string
   enableLoader: boolean = false;
   showClose: boolean = false;
 
-  constructor() { }
+  constructor(public backendService: BackendService,private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-    console.log(this.team);
+    this.organizationDomain = this.backendService.getOrganizationDomain();
   }
 
-  submit() {
-    // this.enableLoader = true;
-    console.log(this.memberEmail);
-    // this.enableLoader = false;
-    this.showClose = true;
+  async submit() {
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('teams');
+    try {
+      const result = await callable({ mode: "add-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.memberArray, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription }).toPromise();
+      console.log(result);
+      this.enableLoader = false;
+      this.showClose = true;
+    } catch (error) {
+      this.enableLoader = false;
+      console.error("Error", error);
+    }
   }
 
   added() {

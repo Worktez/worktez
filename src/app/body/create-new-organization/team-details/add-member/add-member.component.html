@@ -18,14 +18,12 @@
             <div class="container modal-body align-items-center px-4" id="addMemberPage">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row">
-                        <div class="col-md"></div>
-                        <div class="col-md-5 pl-2">
+                        <div class="col-md-2 pl-4">
                             <span class="form-inline">Email</span>
                         </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" [(ngModel)]="memberEmail" [ngModelOptions]="{standalone: true}">
+                        <div class="col-md-9">
+                            <input type="email" class="form-control" [(ngModel)]="memberEmail" [ngModelOptions]="{standalone: true}"> 
                         </div>
-                        <div class="col-md-1"></div>
                     </div>
                     <hr>
                     <div class="row">

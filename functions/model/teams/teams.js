@@ -8,6 +8,7 @@
 const { functions, cors } = require("../application/lib");
 const { createTeam } = require("./createTeam");
 const { addMember } = require("./addMember");
+const { removeMember } = require("./removeMember");
 // const { updateTeam } = require("./updateTeam");
 
 exports.teams = functions.https.onRequest((request, response) => {
@@ -18,6 +19,9 @@ exports.teams = functions.https.onRequest((request, response) => {
         }
         if (mode == "add-member") {
             return addMember(request, response);
+        }
+        if (mode == "remove-member") {
+            return removeMember(request, response);
         }
     });
 });
