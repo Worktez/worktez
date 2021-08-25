@@ -100,6 +100,7 @@ export class BoardComponent implements OnInit {
       this.showContent = true
       console.log("no sprint");
       this.zeroSprint = true;
+      this.changeSprintNumber(-1);
     }
   }
 

@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="zeroSprint == false && sprintNotExist == false">
+                    <ng-container *ngIf="sprintNotExist == false">
                         <div class="row">
                             <div class="col">
                                 <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
