@@ -32,8 +32,12 @@
                         <input type="text" class="form-control" [(ngModel)]="title" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="inputState">Sprint Number</label>
-                        <input type="number" class="form-control" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}">
+                        <label for="input">Project</label>
+                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (change)="readTeamData(project)">
+                        <ng-container *ngFor='let id of teamIds'>
+                            <option>{{ id }}</option>
+                        </ng-container>
+                      </select>
                     </div>
                 </div>
 
@@ -61,21 +65,15 @@
                         <input type="text"  readonly class="form-control" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="input">Project</label>
-                        <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (change)="readTeamMembers(project)">
-                    <ng-container *ngFor='let id of teamIds'>
-                        <option>{{ id }}</option>
-                    </ng-container>
-                      </select>
-                    </div>
+                        <label for="inputState">Sprint Number</label>
+                        <input type="number" class="form-control" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}">
+                    </div> 
                     <div class="form-group col-sm-3">
                         <label for="text">Priority</label>
                         <select class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
-                    <option selected>choose...</option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                    </select>
+                            <option selected>choose...</option>
+                            <option *ngFor="let label of priorityLabels">{{ label }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
@@ -86,22 +84,16 @@
                     <div class="form-group col-sm-3">
                         <label for="text">Difficulty</label>
                         <select class="form-control" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
-                    <option selected>choose...</option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                </select>
+                            <option selected>choose...</option>
+                            <option *ngFor="let label of difficultyLabels">{{ label }}</option>
+                        </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="inputState">Status</label>
                         <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
-                    <option selected>choose...</option>
-                    <option>Ice Box</option>
-                    <option>Ready to start</option>
-                    <option>Under Progress</option>
-                    <option>Blocked</option>
-                    <option>Completed</option>
-                </select>
+                            <option selected>choose...</option>
+                            <option *ngFor="let label of statusLabels">{{ label }}</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputState">Story Point</label>
