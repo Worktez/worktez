@@ -30,7 +30,7 @@ export class LogWorkComponent implements OnInit {
   enableLoader: boolean = false;
   showClose: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService,private authService: AuthService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService,  private authService: AuthService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -59,10 +59,9 @@ export class LogWorkComponent implements OnInit {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
-    console.log(this.authService.user.email);
 
     try {
-      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid:this.authService.user.uid}).toPromise();
+      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);

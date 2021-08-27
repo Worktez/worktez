@@ -31,8 +31,9 @@ exports.editTask = function(request, response) {
     let status = 200;
     const date = request.body.data.Date;
     const time = request.body.data.Time;
-    let comment = "Edited task details: ";
     const uid = request.body.data.Uid;
+    let comment = "Edited task details: ";
+
     const promises = [];
 
     const editTaskPromise = getOrgUseAppKey(appKey).then((orgDetail) => {

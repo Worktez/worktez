@@ -21,8 +21,8 @@ exports.deleteTask = function(request, response) {
     let result;
     const date = request.body.data.Date;
     const time = request.body.data.Time;
-    let status = 200;
     const uid = request.body.data.Uid;
+    let status = 200;
 
     const deleteTaskPromise = getOrgUseAppKey(appKey).then((orgDoc) => {
         const orgDomain = orgDoc.OrganizationDomain;
