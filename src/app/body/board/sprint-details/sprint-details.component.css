@@ -1,5 +1,8 @@
+.card {
+    box-shadow: var(--box-shadow-bottom);
+}
+
 .card-header {
-    font-weight: bold; 
     background-color: var(--primary-color); 
     color: var(--button-text);
 }
@@ -17,29 +20,16 @@
 }
 
 #button, #dropdownButton {
-    background-color: var(--primary-color);
+    background-color: var(--button-bg);
     color: var(--button-text);
-    border: none;
 }
 
 #button:hover, #dropdownButton:hover {
-    background-color: var(--hover);
+    background-color: var(--button-hover-bg);
 }
 
 #filterMenu {
     background-color: var(--secondary-bg);
     padding-right: 35px;
     padding-left: 5px;
-}
-
-#button:focus,
-#button:active,
-#dropdownButton:focus,
-#dropdownButton :active {
-    outline: none;
-    box-shadow: none;
-}
-
-#filterSprintNumberInput {
-    outline: none;
 }
