@@ -5,7 +5,6 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 
-
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
@@ -19,7 +18,6 @@ export class ActivityComponent implements OnInit {
   public userDocument: AngularFirestoreDocument<UserAppSetting>;
 
   user: UserAppSetting;
-  
 
   constructor(private db: AngularFirestore) { }
 
@@ -42,11 +40,7 @@ export class ActivityComponent implements OnInit {
         console.log(data);
         return { ...data }
       }));
-      // await this.db.collection('Users').doc(this.activity.Uid).get().toPromise().then(function (doc){
-      //   const data =doc.data() as User;
-      //   this.user = data;
-      //   console.log(this.user);
-      // })
-  }
 
+  }
 }
+
