@@ -1,6 +1,6 @@
 #dropdownUserCard {
-    border: var(--primary-border);
     background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
 }
 
 .dropdown-item {
@@ -15,8 +15,4 @@
     background-color: var(--primary-color);
     color: var(--button-text);
     font-weight: bolder;
-}
-
-#line {
-    border: var(--primary-border);
 }

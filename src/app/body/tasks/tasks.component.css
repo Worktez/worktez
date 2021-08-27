@@ -4,19 +4,16 @@
 }
 
 .container {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border: var(--primary-border);
     background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+}
+
+.btn {
+    background-color: var(--primary-color);
 }
 
 select:focus,
-input:focus {
-    box-shadow: none;
-    outline: 0 none;
-    border-color: var(--primary-color);
-}
-
-.toggleFilter {
-    color: var(--secondary-color);
+input:focus,
+.btn:hover {
+    background-color: var(--secondary-color);
 }

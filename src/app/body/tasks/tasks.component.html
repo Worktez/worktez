@@ -1,12 +1,12 @@
 <div id="taskPage">
     <div class="container">
-        <div class="row align-items-center p-3" id="navbarMenu">
+        <div class="row align-items-center py-2" id="navbarMenu">
             <div class="col-9 col-md-10">
                 <h5 style="font-weight:bolder">Tasks</h5>
             </div>
             <div class="col text-right">
-                <span type="button" [ngClass]="{'toggleFilter':showFilter}" class="material-icons" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
-                <span type="button" class="material-icons text-light pl-2" (click)="backToDashboard()">close</span>
+                <span type="button" [ngClass]="{'toggleFilter':showFilter}" class="btn material-icons text-light" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
+                <span type="button" class="btn material-icons text-light" (click)="backToDashboard()">close</span>
             </div>
         </div>
         <div class="row pt-1">
