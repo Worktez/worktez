@@ -48,29 +48,38 @@
             </div>
         </div>
         <div class="card-body">
+
+            <div class="col-md-6">
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 15px;">Start Date:
+                <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Start Date:
                 </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintStartDate" style="font-size: 13px;">
+                <h6 class="card-text " id="sprintStartDate" style="font-size: 13px;">
                     {{sprintData.StartDate}}</h6>
             </div>
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 15px;">End Date: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintEndDate" style="font-size: 13px;">{{sprintData.EndDate}}
+                <h6 class="card-title " style="font-weight: bold;font-size: 15px;">End Date: </h6>
+                <h6 class="card-text " id="sprintEndDate" style="font-size: 13px;">{{sprintData.EndDate}}
                 </h6>
             </div>
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 15px;">Status: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 13px;">{{sprintData.Status}}</h6>
+                <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Status: </h6>
+                <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.Status}}</h6>
+            </div>
+            </div>
+
+
+            <div class="col-md-6">
+            <div class="row py-2">
+                <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Total Tasks: </h6>
+                <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalNumberOfTask}}</h6>
             </div>
             <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 15px;">Total Tasks: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalNumberOfTask}}</h6>
+                <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Completed Tasks: </h6>
+                <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalCompletedTask}}</h6>
             </div>
-            <div class="row py-2">
-                <h6 class="card-title col-md-2 col-4" style="font-weight: bold;font-size: 15px;">Completed Tasks: </h6>
-                <h6 class="card-text col-md-10 col-8" id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalCompletedTask}}</h6>
             </div>
+
+
         </div>
     </div>
 </ng-container>
