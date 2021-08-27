@@ -72,7 +72,6 @@ export class CreateNewSessionComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.priorityLabels = teams[0].PriorityLabels;
           this.statusLabels = teams[0].StatusLabels;
-          this.priorityLabels = teams[0].PriorityLabels;
           this.difficultyLabels = teams[0].DifficultyLabels;
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
