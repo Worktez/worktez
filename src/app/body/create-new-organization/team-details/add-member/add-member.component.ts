@@ -12,16 +12,18 @@ export class AddMemberComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input("teamName") teamName: string;
-  @Input("memberArray") memberArray: string[];
+  @Input("teamMembers") teamMembers: string[];
   @Input("teamManager") teamManager: string;
   @Input("teamDescription") teamDescription: string;
-  @Output() addedMember = new EventEmitter<{ completed: boolean }>();
+  @Input("isUpdateTeam") isUpdateTeam: boolean;
+  @Output() addedMember = new EventEmitter<{ completed: boolean, memberEmail: string }>();
 
   componentName: string = "ADD-MEMBER";
   organizationDomain: string
   memberEmail: string
   enableLoader: boolean = false;
   showClose: boolean = false;
+  add: boolean = false;
 
   constructor(public backendService: BackendService,private functions: AngularFireFunctions) { }
 
@@ -29,21 +31,38 @@ export class AddMemberComponent implements OnInit {
     this.organizationDomain = this.backendService.getOrganizationDomain();
   }
 
-  async submit() {
-    this.enableLoader = true;
-    const callable = this.functions.httpsCallable('teams');
-    try {
-      const result = await callable({ mode: "add-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.memberArray, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription }).toPromise();
-      console.log(result);
-      this.enableLoader = false;
-      this.showClose = true;
-    } catch (error) {
-      this.enableLoader = false;
-      console.error("Error", error);
+  submit() {
+    if (this.isUpdateTeam == true) {
+      this.addUpdateTeam();
+    } else {
+      this.addCreateTeam();
     }
   }
 
+async addUpdateTeam() {
+  this.enableLoader = true;
+  const callable = this.functions.httpsCallable('teams');
+  try {
+    const result = await callable({ mode: "add-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription }).toPromise();
+    console.log(result);
+    this.enableLoader = false;
+    this.showClose = true;
+  } catch (error) {
+    this.enableLoader = false;
+    console.error("Error", error);
+  }
+}
+
+addCreateTeam() {
+  this.add= true;
+  this.showClose = true;
+}
+
   added() {
-    this.addedMember.emit({ completed: true });
+    if (this.add == true) {
+      this.addedMember.emit({ completed: true, memberEmail: this.memberEmail});
+    } else {
+      this.addedMember.emit({ completed: true, memberEmail: ""});
+    }
   }
 }

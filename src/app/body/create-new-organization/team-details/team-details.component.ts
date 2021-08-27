@@ -6,6 +6,7 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-team-details',
@@ -22,26 +23,31 @@ export class TeamDetailsComponent implements OnInit {
   childStep: number = 1
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
+  isUpdateTeam: boolean = false;
   addMemberEnabled: boolean = false;
   teamName: string;
   teamId: string;
   teamDescription: string = "";
   teamManagerEmail: string;
-  memberArray: string[];
+  teamMembers: string[] = [];
   enableLoader: boolean = false;
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
+    console.log(this.router.url);
     this.selectedTeamId = this.route.snapshot.params['teamId'];
     console.log(this.selectedTeamId);
     if (this.selectedTeamId != undefined) {
+      if (this.router.url.startsWith('/UpdateTeam')) {
+        this.isUpdateTeam = true;
+      }
       this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(teams => {
         this.teamName = teams[0].TeamName;
         this.teamId = teams[0].TeamId;
         this.teamDescription = teams[0].TeamDescription;
         this.teamManagerEmail = teams[0].TeamManagerEmail;
-        this.memberArray = teams[0].TeamMembers  
+        this.teamMembers = teams[0].TeamMembers;
       });
     }
   }
@@ -92,7 +98,7 @@ export class TeamDetailsComponent implements OnInit {
       { label: "teamId", value: this.teamId },
       { label: "teamDescription", value: this.teamDescription },
       { label: "teamManagerEmail", value: this.teamManagerEmail },
-      { label: "teamMemberEmails", value: this.memberArray }
+      { label: "teamMemberEmails", value: this.teamMembers }
     ];
 
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
@@ -113,25 +119,46 @@ export class TeamDetailsComponent implements OnInit {
 
   submit() {
     //Functionality to Show Error When none of the option is checked in Particular labelName can be added
-    this.createNewTeamWithLabels()
+    if (this.isUpdateTeam === false) {
+      this.createNewTeamWithLabels()
+    } else {
+      this.updateExistingTeam()
+    }
   }
+
 
   addMember() {
     this.addMemberEnabled = true;
   }
 
-  addedMember(data: { completed: boolean }) {
+  addedMember(data: { completed: boolean, memberEmail: string}) {
+    if (this.isUpdateTeam === false && data.memberEmail!="") {
+      this.teamMembers.push(data.memberEmail);
+    }
     this.addMemberEnabled = false;
   }
 
-  async removeMember(remove: string) {
+  removeMember(remove: string) {
+    if (this.isUpdateTeam === false) {
+      const index = this.teamMembers.indexOf(remove);
+      if (index != -1) {
+        this.teamMembers.splice(index, 1);
+      } else {
+        console.log("Error- Cannot remove member. Member not found");
+      }
+    } else {
+      this.removeMemberDB(remove)
+    }
+  }
+
+  async removeMemberDB(remove: string) {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('teams');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
     try {
-      const result = await callable({ mode: "remove-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.memberArray, Remove: remove}).toPromise();
+      const result = await callable({ mode: "remove-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
       console.log(result);
       this.enableLoader = false;
     } catch (error) {
@@ -149,7 +176,7 @@ export class TeamDetailsComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.memberArray, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, DateOfJoining: this.toolsService.date() }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, DateOfJoining: this.toolsService.date() }).toPromise();
       console.log(result);
       this.enableLoader = false;
       this.teamFormSubmitted.emit({ submitted: false });
@@ -159,5 +186,30 @@ export class TeamDetailsComponent implements OnInit {
       this.enableLoader = false;
       console.error("Error", error);
     }
+  }
+
+  async updateExistingTeam() {
+    this.enableLoader = true;
+    this.teamFormSubmitted.emit({ submitted: true })
+    const callable = this.functions.httpsCallable('teams');
+    if (this.organizationDomain == undefined) {
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+    }
+
+    try {
+      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, DateOfJoining: this.toolsService.date() }).toPromise();
+      console.log(result);
+      this.enableLoader = false;
+      this.teamFormSubmitted.emit({ submitted: false });
+      this.router.navigate(['MyDashboard']);
+    } catch (error) {
+
+      this.enableLoader = false;
+      console.error("Error", error);
+    }
+  }
+
+  close() {
+    this.location.back();
   }
 }

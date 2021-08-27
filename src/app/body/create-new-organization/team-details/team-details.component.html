@@ -1,150 +1,166 @@
-<div class="container">
-    <form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
-        <ng-container *ngIf="childStep===1">
-            <h5 class="font-weight-bold">Add Project/Product/Team</h5>
-            <div class="form-group row pt-2">
-                <label for="input" class="col-sm-3 col-form-label">Name<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <input type="text" class="input" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}">
-                </div>
+<div class="row align-items-center justify-content-center m-0 p-2" id="navbarMenu">
+    <div class="col">
+        <ng-container *ngIf="!isUpdateTeam">
+            <h5 class="font-weight-bold text-light">Create New Team</h5>
+        </ng-container>
+        <ng-container *ngIf="isUpdateTeam">
+            <h5 class="font-weight-bold text-light">Update Team</h5>
+        </ng-container>
+    </div>
+    <div class="col-1">
+        <div class="pl-lg-0" id="navbarTexts">
+            <ul class="nav navbar-nav ml-auto align-items-center">
+                <li class=" active py-1 justify-content-between">
+                    <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="close()">close</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
+    <ng-container *ngIf="childStep===1">
+        <h5 class="font-weight-bold">Add Project/Product/Team</h5>
+        <div class="form-group row pt-2">
+            <label for="input" class="col-sm-3 col-form-label">Name<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <input type="text" class="input" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}">
             </div>
-            <div class="form-group row pt-2">
-                <label for="input" class="col-sm-3 col-form-label">ID<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <input type="text" class="input" [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}">
-                </div>
+        </div>
+        <div class="form-group row pt-2">
+            <label for="input" class="col-sm-3 col-form-label">ID<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <input type="text" class="input" [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}">
             </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Description<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <textarea type="text" class="input" rows="2" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}"></textarea>
-                </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Description<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <textarea type="text" class="input" rows="2" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}"></textarea>
             </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Manager Email<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <input type="text" class="input" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}">
-                </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Manager Email<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <input type="text" class="input" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}">
             </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Members <span class="font-italic">(upto 10 Email's)</span><span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <ng-container *ngFor="let item of memberArray">
-                        <div  id="cardDescription">
-                            <div class="card-body input mb-2">
-                                <div class="row-3">
-                                    <div class="row ml-1 mr-1">
-                                        <span> {{item}}</span>
-                                        <span type="button" class="material-icons col text-right pl-2" data-bs-toggle="tooltip" data-bs-placement="top" title="remove-member" (click)="removeMember(item)">person_remove</span>                            
-                                    </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Members <span class="font-italic">(upto 10 Email's)</span><span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <ng-container *ngFor="let item of teamMembers">
+                    <div  id="cardDescription">
+                        <div class="card-body input mb-2">
+                            <div class="row-3">
+                                <div class="row ml-1 mr-1">
+                                    <span> {{item}}</span>
+                                    <span type="button" class="material-icons col text-right pl-2" data-bs-toggle="tooltip" data-bs-placement="top" title="remove-member" (click)="removeMember(item)">person_remove</span>                            
                                 </div>
                             </div>
                         </div>
-                    </ng-container>
-                </div>                
+                    </div>
+                </ng-container>            
             </div>
-            <div class="form-group row align-items-center justify-content-center">
-                <div class="offset-6 col-6 text-right">
-                    <span type="button" class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="addMember()">person_add</span>
-                </div>
+        </div>
+        <div class="form-group row align-items-center justify-content-center">
+            <div class="offset-6 col-6 text-right">
+                <span type="button" class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="addMember()">person_add</span>
             </div>
-            <hr>
-            <div class="form-group row align-items-center justify-content-center">
-                <div class="offset-6 col-6 text-right">
-                    <span class="material-icons" (click)="nextChildStep()" data-toggle="tooltip" data-placement="top" title="Next" [disabled]="enableLoader">arrow_forward_ios</span>
-                </div>
+        </div>
+        <div class="form-group row align-items-center justify-content-center">
+            <div class="offset-6 col-6 text-right">
+                <span class="material-icons" (click)="nextChildStep()" data-toggle="tooltip" data-placement="top" title="Next" [disabled]="enableLoader">arrow_forward_ios</span>
             </div>
-            <app-loader *ngIf="enableLoader"></app-loader>
-        </ng-container>
-        <ng-container *ngIf="childStep===2">
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Setup Task Labels<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Task1" name="Task" (change)="getLabels($event)" value="Bug" checked />
-                        <label class="form-check-label" for="Task1">Bug</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Task2" name="Task" (change)="getLabels($event)" value="Story" checked/>
-                        <label class="form-check-label" for="Task2">Story</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Task3" name="Task" (change)="getLabels($event)" value="Sub Task" checked/>
-                        <label class="form-check-label" for="Task4">Sub Task</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Setup Status Labels<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Status1" name="Status" (change)="getLabels($event)" value="Ice Box" checked />
-                        <label class="form-check-label" for="Status1">Ice Box</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Status2" name="Status" (change)="getLabels($event)" value="Ready to start" checked />
-                        <label class="form-check-label" for="Status2">Ready to start</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Status3" name="Status" (change)="getLabels($event)" value="Under Progress" checked />
-                        <label class="form-check-label" for="Status3">Under Progress</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Status4" name="Status" (change)="getLabels($event)" value="Blocked" checked/>
-                        <label class="form-check-label" for="Status4">Blocked</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Status5" name="Status" (change)="getLabels($event)" value="Completed" checked />
-                        <label class="form-check-label" for="Status5">Completed</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Setup Priority Labels<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Priority1" name="Priority" (change)="getLabels($event)" value="High" checked />
-                        <label class="form-check-label" for="Priority1">High</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Priority2" name="Priority" (change)="getLabels($event)" value="Medium" checked />
-                        <label class="form-check-label" for="Priority2">Medium</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Priority3" name="Priority" (change)="getLabels($event)" value="Low" checked />
-                        <label class="form-check-label" for="Priority3">Low</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="description" class="col-sm-3 col-form-label">Setup Difficulty Labels<span id="important" class="pl-1">*</span></label>
-                <div class="col-sm-8">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Difficulty1" name="Difficulty" (change)="getLabels($event)" value="High" checked/>
-                        <label class="form-check-label" for="Difficulty1">High</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Difficulty2" name="Difficulty" (change)="getLabels($event)" value="Medium" checked />
-                        <label class="form-check-label" for="Difficulty2">Medium</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="Difficulty3" name="Difficulty" (change)="getLabels($event)" value="Low" checked />
-                        <label class="form-check-label" for="Difficulty3">Low</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group row align-items-center justify-content-center">
-                <div class="col-6">
-                    <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Back" (click)="prevChildStep()">arrow_back_ios</span>
-                </div>
-                <div class="col-6 text-right">
-                    <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Submit" (click)="submit()" [disabled]="enableLoader">done</span>
-                </div>
-            </div>
-            <app-loader *ngIf="enableLoader"></app-loader>
-        </ng-container>
-    </form>
-    <ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
-        <app-add-member [teamName]="teamName" [memberArray]="memberArray" [teamManager]="teamManagerEmail" [teamDescription]="teamDescription" (addedMember)="addedMember($event)"></app-add-member>
+        </div>
+        <app-loader *ngIf="enableLoader"></app-loader>
     </ng-container>
-</div>
+    <ng-container *ngIf="childStep===2">
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Setup Task Labels<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Task1" name="Task" (change)="getLabels($event)" value="Bug" checked />
+                    <label class="form-check-label" for="Task1">Bug</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Task2" name="Task" (change)="getLabels($event)" value="Story" checked/>
+                    <label class="form-check-label" for="Task2">Story</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Task3" name="Task" (change)="getLabels($event)" value="Sub Task" checked/>
+                    <label class="form-check-label" for="Task4">Sub Task</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Setup Status Labels<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Status1" name="Status" (change)="getLabels($event)" value="Ice Box" checked />
+                    <label class="form-check-label" for="Status1">Ice Box</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Status2" name="Status" (change)="getLabels($event)" value="Ready to start" checked />
+                    <label class="form-check-label" for="Status2">Ready to start</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Status3" name="Status" (change)="getLabels($event)" value="Under Progress" checked />
+                    <label class="form-check-label" for="Status3">Under Progress</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Status4" name="Status" (change)="getLabels($event)" value="Blocked" checked/>
+                    <label class="form-check-label" for="Status4">Blocked</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Status5" name="Status" (change)="getLabels($event)" value="Completed" checked />
+                    <label class="form-check-label" for="Status5">Completed</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Setup Priority Labels<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Priority1" name="Priority" (change)="getLabels($event)" value="High" checked />
+                    <label class="form-check-label" for="Priority1">High</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Priority2" name="Priority" (change)="getLabels($event)" value="Medium" checked />
+                    <label class="form-check-label" for="Priority2">Medium</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Priority3" name="Priority" (change)="getLabels($event)" value="Low" checked />
+                    <label class="form-check-label" for="Priority3">Low</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label">Setup Difficulty Labels<span id="important" class="pl-1">*</span></label>
+            <div class="col-sm-8">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Difficulty1" name="Difficulty" (change)="getLabels($event)" value="High" checked/>
+                    <label class="form-check-label" for="Difficulty1">High</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Difficulty2" name="Difficulty" (change)="getLabels($event)" value="Medium" checked />
+                    <label class="form-check-label" for="Difficulty2">Medium</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="Difficulty3" name="Difficulty" (change)="getLabels($event)" value="Low" checked />
+                    <label class="form-check-label" for="Difficulty3">Low</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row align-items-center justify-content-center">
+            <div class="col-6">
+                <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Back" (click)="prevChildStep()">arrow_back_ios</span>
+            </div>
+            <div class="col-6 text-right">
+                <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Submit" (click)="submit()" [disabled]="enableLoader">done</span>
+            </div>
+        </div>
+        <app-loader *ngIf="enableLoader"></app-loader>
+    </ng-container>
+</form>
+<ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
+    <app-add-member [teamName]="teamName" [teamMembers]="teamMembers" [teamManager]="teamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="isUpdateTeam" (addedMember)="addedMember($event)"></app-add-member>
+</ng-container>
