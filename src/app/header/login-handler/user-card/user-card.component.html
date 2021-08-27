@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <img src="{{user.photoURL}}" alt="profile-pic" class="rounded-circle dropdown-toggle" width="30" height="30" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img src="{{user.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="30" height="30" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <div class="dropdown-menu dropdown-menu-right" id="dropdownUserCard">
         <p class="dropdown-item" id="username">Hello {{user.displayName}}</p>
         <hr id="line" />
