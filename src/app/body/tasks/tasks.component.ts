@@ -61,7 +61,10 @@ export class TasksComponent implements OnInit {
       if (this.filterProject) {
         queryRef = queryRef.where("Project", "==", this.filterProject);
       }     
-
+      else{
+        queryRef = queryRef.where("TeamId", "==", this.teamId);
+      }
+      
       if (this.filterAssignee) {
         queryRef = queryRef.where("Assignee", "==", this.filterAssignee);
       }
