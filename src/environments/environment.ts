@@ -5,7 +5,17 @@
 export const environment = {
   production: false,
   firebase: {
-    
+    apiKey: "AIzaSyBMK6VfZE8Pmz3mbfaOmn_RM7oRuKNNJ3Q",
+
+    authDomain: "worktrolly-5d532.firebaseapp.com",
+
+    projectId: "worktrolly-5d532",
+
+    storageBucket: "worktrolly-5d532.appspot.com",
+
+    messagingSenderId: "49597959622",
+
+    appId: "1:49597959622:web:db66e6cd9d1a98c04936c7"
   },
   useEmulators: true
 };

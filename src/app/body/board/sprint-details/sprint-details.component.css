@@ -8,6 +8,12 @@
     background-color: var(--secondary-bg);
     color: var(--text);
     border: var(--primary-border);
+    display: flex;
+}
+
+.card-text{
+    padding-left: 7px;
+    padding-top: 2.5px;
 }
 
 #button, #dropdownButton {
