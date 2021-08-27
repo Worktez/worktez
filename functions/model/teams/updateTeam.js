@@ -10,8 +10,6 @@ const { updateTeamDetails, getTeam} = require("./lib");
 
 exports.updateTeam = function(request, response) {
     const teamDescription = request.body.data.TeamDescription;
-    const teamManagerEmail = request.body.data.TeamManagerEmail;
-    const teamMembers = request.body.data.TeamMembers;
     const taskLabels = request.body.data.TaskLabels;
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
@@ -21,13 +19,12 @@ exports.updateTeam = function(request, response) {
     const teamName = request.body.data.TeamName;
 
     let status = 200;
+    let result = { data: "Error in updating team" };
 
     const promise1 = getTeam(orgDomain, teamName).then((team) => {
         if (team.exist) {
             const updateJson = {
                 TeamDescription: teamDescription,
-                TeamManagerEmail: teamManagerEmail,
-                TeamMembers: teamMembers,
                 TaskLabels: taskLabels,
                 StatusLabels: statusLabels,
                 PriorityLabels: priorityLabels,
@@ -47,7 +44,6 @@ exports.updateTeam = function(request, response) {
     });
 
     const Promises = [promise1];
-    let result;
     return Promise.all(Promises).then(() => {
             return response.status(status).send(result);
         })

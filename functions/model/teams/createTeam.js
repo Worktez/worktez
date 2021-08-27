@@ -27,6 +27,7 @@ exports.createTeam = function(request, response) {
     let orgId;
 
     let status = 200;
+    let result = { data: "Error in Creating Team" };
 
     const promise1 = getOrg(orgDomain).then((orgDoc) => {
         if (orgDoc != undefined) {
@@ -70,7 +71,6 @@ exports.createTeam = function(request, response) {
     });
 
     const Promises = [promise1, promise2];
-    let result;
     return Promise.all(Promises).then(() => {
             if (status != 500 ) {
                 result = { data: "Team Created Successfully" };
