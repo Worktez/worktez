@@ -68,6 +68,7 @@ import { PerformanceColumnChartComponent } from './body/board/performance-column
 import { ColumnChartComponent } from './body/common-tools/column-chart/column-chart.component';
 import { SelectDropdownComponent } from './body/board/performance-column-chart/select-dropdown/select-dropdown.component';
 import { FooterComponent } from './footer/footer.component';
+import { ActivityComponent } from './body/task-details/activity/activity.component';
 
 
 @NgModule({
@@ -124,7 +125,8 @@ import { FooterComponent } from './footer/footer.component';
     PerformanceColumnChartComponent,
     ColumnChartComponent,
     SelectDropdownComponent,
-    FooterComponent
+    FooterComponent,
+    ActivityComponent
   ],
   imports: [
     BrowserModule,

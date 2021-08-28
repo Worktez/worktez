@@ -6,6 +6,7 @@ import { ValidationService } from '../../../services/validation/validation.servi
 import { ToolsService } from '../../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-log-work',
@@ -29,7 +30,7 @@ export class LogWorkComponent implements OnInit {
   enableLoader: boolean = false;
   showClose: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService,  private authService: AuthService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -60,7 +61,7 @@ export class LogWorkComponent implements OnInit {
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
       console.log("Logged Work Successfully");
       console.log(result);

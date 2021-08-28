@@ -12,7 +12,7 @@ let actionId;
 let totalActions;
 let totalComments;
 
-exports.addActivity = function(type, comment, taskId, date, time, orgDomain) {
+exports.addActivity = function(type, comment, taskId, date, time, orgDomain, uid) {
     const promise1 = getActivities(orgDomain, taskId).then((activityDoc) => {
         if (activityDoc != undefined) {
             totalActions = activityDoc.TotalActions + 1;
@@ -33,7 +33,7 @@ exports.addActivity = function(type, comment, taskId, date, time, orgDomain) {
             setActivities(orgDomain, taskId);
         }
 
-        setAction(orgDomain, taskId, actionId, type, comment, date, time);
+        setAction(orgDomain, taskId, actionId, type, comment, date, time, uid);
     });
     return Promise.resolve(promise1).then(() => {
             console.log("Activity Tracked successfully!");

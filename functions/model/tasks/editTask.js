@@ -31,6 +31,7 @@ exports.editTask = function(request, response) {
     let status = 200;
     const date = request.body.data.Date;
     const time = request.body.data.Time;
+    const uid = request.body.data.Uid;
     let comment = "Edited task details: ";
 
     const promises = [];
@@ -111,7 +112,7 @@ exports.editTask = function(request, response) {
 
         comment = comment + changedData;
         console.log(comment);
-        addActivity("EDITED", comment, taskId, date, time, orgDomain);
+        addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
 
         Promise.all(promises).then(() => {
                 result = { data: "OK" };

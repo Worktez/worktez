@@ -1,4 +1,3 @@
-
 <ng-container *ngIf="(taskDataObservable | async) && (activityData | async)" class="task-position">
     <div class="container">
         <div class="card" id="cardDescription">
@@ -134,13 +133,13 @@
                                             <span id="header ">Work Done:</span>
                                         </div>
                                         <div class="col " id="workDoneTaskDescription ">{{task.WorkDone}}
-                                    
+
                                         </div>
                                     </div>
                                     <div class="row" style="align-items: center;">
                                         <div class="col-3"></div>
                                         <div class="col-md-6 mx-auto">
-                                           <app-work-completion [workDone]="task.WorkDone" ></app-work-completion>
+                                            <app-work-completion [workDone]="task.WorkDone"></app-work-completion>
                                             <b>Work Progress</b>
                                         </div>
                                         <div class="col-3"></div>
@@ -163,22 +162,8 @@
             </div>
         </div>
         <h5 class="py-3 activityHeading">Activity</h5>
-        <ng-container *ngFor="let item of activityData | async">
-            <div class="card my-2" id="cardDescription">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h6>{{item.Date}} | {{item.Time}}</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <span>{{item.Comment}}</span>
-                        </div>
-                        <div class="col-md-3">
-                            <span> {{item.Type}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <ng-container *ngFor="let activity of activityData | async">
+            <app-activity [activity]="activity"></app-activity>
         </ng-container>
     </div>
     <ng-container *ngIf="logWorkEnabled" id="exampleModalLabel">

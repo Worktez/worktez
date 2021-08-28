@@ -23,6 +23,7 @@ exports.logWork = function(request, response) {
     const logWorkComment = request.body.data.LogWorkComment;
     const date = request.body.data.Date;
     const time = request.body.data.Time;
+    const uid = request.body.data.Uid;
     const fullSprintName = createSprintName(sprintNumber);
     let logWorkTotalTime;
     let completiondate = "Not yet Completed";
@@ -103,7 +104,7 @@ exports.logWork = function(request, response) {
             promises.push(promise3);
         }
 
-        addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time, orgDomain);
+        addActivity("LOGWORK_COMMENT", logWorkComment, taskId, date, time, orgDomain, uid);
         Promise.resolve(promises).then(() => {
                 result = { data: "Logged Work successfully!" };
                 console.log("Logged Work successfully!");
