@@ -1,4 +1,10 @@
 .card {
     max-width: 18rem;
     background-color: var(--primary-color);
+    box-shadow: var(--box-shadow-bottom);
+}
+
+.selectedCustom {
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow-bottom);
 }

@@ -107,7 +107,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
       console.log(this.task.Id + " deleted");
       console.log(result);
       this.router.navigate(['/']);
@@ -118,11 +118,11 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async reopenTask() {
-    const callable = this.functions.httpsCallable('logWork');
+    const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
       console.log(result);
       return;
     }

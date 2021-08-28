@@ -1,7 +1,10 @@
 #cardDescription {
     border: var(--primary-border);
-    background-color: var(--secondary-bg);
+    /* background-color: var(--secondary-bg); */
     color: var(--text);
+}
+
+#descriptionTaskDescription {
     white-space: pre-wrap;
 }
 
@@ -9,33 +12,38 @@
     color: var(--text);
 }
 
-#button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
+#button, .btn {
+    background-color: var(--primary-color);
     color: var(--button-text);
 }
 
-#head {
-    font-weight: bolder;
-}
-
 #button:focus,
-#button:active {
-    outline: none;
-    box-shadow: none;
+#button:active,
+.btn:hover {
+    background-color: var(--secondary-color);
 }
 
 #navbarMenu {
     background-color: var(--primary-color);
 }
 
-.card {
-    background-color: #d1ecf1;
-    border: #d1ecf1;
-}
-
 .sprint {
     color: var(--secondary-color);
+}
+
+.card {
+    background-color: var(--primary-bg);
+    box-shadow: var(--box-shadow-bottom);
+}
+
+.card-body {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#idTaskDescription {
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 #header {

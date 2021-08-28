@@ -1,0 +1,9 @@
+.card {
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+    color: var(--text);
+}
+
+.bold {
+    font-weight: 500;
+}

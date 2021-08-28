@@ -1,0 +1,28 @@
+#navbarMenu,
+.modal-header {
+    background-color: var(--primary-color);
+}
+
+#addMemberPage,
+.modal-content {
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+    color: var(--text);
+}
+
+.head {
+    font-weight: bolder;
+}
+
+#addButton {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: #5A20F0;
+}
