@@ -21,8 +21,9 @@ export class LogWorkComponent implements OnInit {
   
   componentName: string = "LOG-WORK";
   Id: string
+  logWork: Tasks
   logWorkDone: number
-  logWorkStatus: number
+  logWorkStatus: string
   logHours: number
   logWorkComment: string
   todayDate: string
@@ -35,6 +36,8 @@ export class LogWorkComponent implements OnInit {
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+    this.logWorkStatus = this.task.Status;
+    this.logWorkDone = this.task.WorkDone;
   }
 
   async submit() {
