@@ -1,6 +1,5 @@
 .footerbox {
-    position: fixed;
-    bottom: 0;
+    position: absolute;
     width: 100%;
     background-color: var(--header-bg);
     box-shadow: var(--box-shadow-top);
