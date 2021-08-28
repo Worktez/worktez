@@ -3,10 +3,10 @@
     <app-error></app-error>
     
     <ng-container *ngIf="authService.completedLoadingApplication; else loader">
-    <router-outlet></router-outlet>
-</ng-container>
+        <router-outlet></router-outlet>
+    </ng-container>
 
-<ng-template #loader>
-    <app-loader></app-loader>
-</ng-template>
+    <ng-template #loader>
+        <app-loader></app-loader>
+    </ng-template>
 </div>
