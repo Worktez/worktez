@@ -1,12 +1,12 @@
 <div class="page">
     <app-navbar></app-navbar>
     <app-error></app-error>
-    
-    <ng-container *ngIf="authService.completedLoadingApplication; else loader">
-    <router-outlet></router-outlet>
-</ng-container>
 
-<ng-template #loader>
-    <app-loader></app-loader>
-</ng-template>
+    <ng-container *ngIf="authService.completedLoadingApplication; else loader">
+        <router-outlet></router-outlet>
+    </ng-container>
+
+    <ng-template #loader>
+        <app-loader></app-loader>
+    </ng-template>
 </div>
