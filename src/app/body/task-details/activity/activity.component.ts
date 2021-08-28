@@ -27,14 +27,10 @@ export class ActivityComponent implements OnInit {
   }
 
   getUserDetail() {
-    console.log(1);
     var documentName = "Users/"+this.activity.Uid;
-    console.log(1);
     this.userDocument = this.db.doc<UserAppSetting>(documentName);
-    console.log(1);
     this.userObservable = this.userDocument.snapshotChanges().pipe(
       map(actions => {
-        console.log(2);
         const data = actions.payload.data() as UserAppSetting;
         this.user = data;
         console.log(data);

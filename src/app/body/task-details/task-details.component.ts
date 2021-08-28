@@ -75,16 +75,13 @@ export class TaskDetailsComponent implements OnInit {
   getActivityData() {
     var documentName = 'Organizations/' + this.orgDomain + '/Activity/' + this.Id + '/Action';
     this.tasksCollection = this.db.collection<Activity>(documentName);
-    console.log(2);
     this.activityData = this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        console.log(2);
         const data = a.payload.doc.data() as Activity;
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
     );
-    console.log(this.activityData);
   }
 
   CloneTaskPage() {
