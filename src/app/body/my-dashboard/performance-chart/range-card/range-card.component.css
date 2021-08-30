@@ -1,13 +1,12 @@
-#button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
+#button, #dropdownMenuButton {
+    background-color: var(--primary-color);
     color: var(--button-text);
 }
 
 #button:focus,
-#button:active {
-    outline: 0 none;
-    box-shadow: none;
+#button:active,
+#dropdownMenuButton:hover {
+    background-color: var(--secondary-color);
 }
 
 input:focus,
