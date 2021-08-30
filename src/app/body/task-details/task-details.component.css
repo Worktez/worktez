@@ -46,6 +46,32 @@
     font-size: 20px;
 }
 
+.modal-header{
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    border: none;
+}
+
+
+.modal-body{
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+#modal-header{
+    color: var(--button-text);
+}
+
+.modal-footer{
+    background-color: var(--primary-bg);
+    color: var(--text);
+    border: none;
+}
+.btn{
+    color: var(--button-text);
+    background-color: var(--primary-color);
+}
+
+
 @media (max-width: 991px) {
     .navbar-nav {
         float: right;
