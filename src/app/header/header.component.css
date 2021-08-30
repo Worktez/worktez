@@ -13,13 +13,6 @@
     background-color: var(--header-bg);
 }
 
-#theme-button {
-    padding-top: 6px;
-    background-color: var(--header-bg);
-    color: var(--text);
-    border: none;
-}
-
 .dropdown-menu {
     background-color: var(--secondary-bg);
 }
@@ -43,16 +36,4 @@
 #navbarDropdownTeam:hover,
 #navbarDropdownCreate:hover {
     background-color: var(--hover);
-}
-
-#button {
-    background-color: #16C85A;
-    color: white;
-    height: 30px;
-    font-size: 12px;
-}
-
-#button:hover,
-#button:active {
-    background-color: #5A20F0;
 }

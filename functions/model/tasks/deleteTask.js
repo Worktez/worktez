@@ -21,6 +21,7 @@ exports.deleteTask = function(request, response) {
     let result;
     const date = request.body.data.Date;
     const time = request.body.data.Time;
+    const uid = request.body.data.Uid;
     let status = 200;
 
     const deleteTaskPromise = getOrgUseAppKey(appKey).then((orgDoc) => {
@@ -80,7 +81,7 @@ exports.deleteTask = function(request, response) {
                 console.log("Error:", error);
             });
 
-            addActivity("DELETED", "Deleted Task", taskId, date, time, orgDomain);
+            addActivity("DELETED", "Deleted Task", taskId, date, time, orgDomain, uid);
 
             const promises = [p1, p2];
             Promise.all(promises).then(() => {

@@ -6,4 +6,5 @@
 .card {
     border: var(--primary-border);
     background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
 }

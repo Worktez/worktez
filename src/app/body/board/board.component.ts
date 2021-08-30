@@ -27,7 +27,6 @@ export class BoardComponent implements OnInit {
   showTeams: boolean = false;
   teams: [];
   sprintNotExist: boolean = false;
-  zeroSprint: boolean = false;
   teamMembers: string[];
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
@@ -71,7 +70,6 @@ export class BoardComponent implements OnInit {
 
   getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
-    this.zeroSprint = false;
     this.showContent = false;
     this.selectedTeamId = teamId;
     this.readApplicationData();
@@ -98,8 +96,7 @@ export class BoardComponent implements OnInit {
       });
     } else {
       this.showContent = true
-      console.log("no sprint");
-      this.zeroSprint = true;
+      this.changeSprintNumber(-1);
     }
   }
 

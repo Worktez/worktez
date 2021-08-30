@@ -44,6 +44,9 @@ export class CreateNewSessionComponent implements OnInit {
   teamIds: string[]
   teamMembers: string[]
   teamName: string
+  statusLabels: string[]
+  priorityLabels: string[]
+  difficultyLabels: string[]
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public cloneTask: CloneTaskService, public applicationSetting: ApplicationSettingsService) { }
   ngOnInit(): void {
@@ -52,7 +55,7 @@ export class CreateNewSessionComponent implements OnInit {
     this.teamIds=this.backendService.getOrganizationTeamIds();
     this.project = this.authService.getTeamId();
     this.creatorName=this.authService.getUserEmail();
-    this.readTeamMembers(this.project);
+    this.readTeamData(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.task= this.cloneTask.getCloneData();
@@ -65,10 +68,14 @@ export class CreateNewSessionComponent implements OnInit {
     this.storyPoint=this.task.StoryPointNumber;
   }
 
-  readTeamMembers(teamId :string){
+  readTeamData(teamId :string){
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
+          this.priorityLabels = teams[0].PriorityLabels;
+          this.statusLabels = teams[0].StatusLabels;
+          this.difficultyLabels = teams[0].DifficultyLabels;
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
+          this.sprintNumber = teams[0].CurrentSprintId;
           console.log(this.teamName);
     }); 
   }
@@ -104,7 +111,7 @@ export class CreateNewSessionComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks');
 
     try {
-      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

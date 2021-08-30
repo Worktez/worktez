@@ -63,10 +63,12 @@ import { UpdateFieldComponent } from './patches/patch3/update-field/update-field
 import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.component';
 import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
 import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
+import { AddMemberComponent } from './body/create-new-organization/team-details/add-member/add-member.component';
 import { PerformanceColumnChartComponent } from './body/board/performance-column-chart/performance-column-chart.component';
 import { ColumnChartComponent } from './body/common-tools/column-chart/column-chart.component';
 import { SelectDropdownComponent } from './body/board/performance-column-chart/select-dropdown/select-dropdown.component';
 import { FooterComponent } from './footer/footer.component';
+import { ActivityComponent } from './body/task-details/activity/activity.component';
 
 
 @NgModule({
@@ -119,10 +121,12 @@ import { FooterComponent } from './footer/footer.component';
     ProgressGraphComponent,
     ProfileIconsComponent,
     SuggestionBucketComponent,
+    AddMemberComponent,
     PerformanceColumnChartComponent,
     ColumnChartComponent,
     SelectDropdownComponent,
-    FooterComponent
+    FooterComponent,
+    ActivityComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,7 @@
 .footerbox {
     position: absolute;
-    bottom: 0;
     width: 100%;
     background-color: var(--header-bg);
     box-shadow: var(--box-shadow-top);
-    border-bottom: none;
     color: var(--text);
 }

@@ -444,25 +444,24 @@ export class ValidationService {
             return (false);
         }
     }
-    async checkTeamMemberEmails(value: string) {
-        const memberEmails = value.split(",").map(member => member.trim());
+    async checkTeamMemberEmails(value: string[]) {
         let hasNoError;
         let errorType = this.componentName + "_VALIDATION_TEAM_MEMBER_EMAILS";
 
-        if (memberEmails.filter((e, i, a) => a.indexOf(e) !== i).length > 0) {
+        if (value.filter((e, i, a) => a.indexOf(e) !== i).length > 0) {
             this.errorHandlerService.addError(errorType, "Matching Team Member Emails are not Allowed");
             return (false);
         }
-        if (memberEmails.length >= 10) {
+        if (value.length >= 10) {
             this.errorHandlerService.addError(errorType, "Only 10 Team Member's Email is required");
             return (false);
         }
-        memberEmails.map((member, index) => {
+        value.map((member, index) => {
             const control = new FormControl(member, [Validators.required, Validators.email]);
             if (control.errors === null)
                 hasNoError = true
             else {
-                this.errorHandlerService.addError(errorType, `Team Member ${index + 1} Email is required`);
+                this.errorHandlerService.addError(errorType, `Team Member ${index + 1} Email is required. `);
                 hasNoError = false
             }
         });
