@@ -21,10 +21,9 @@ export class Patch4Component implements OnInit {
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
   ngOnInit(): void {
-    this.showLoader = true;
   }
 
-  async patch4() {
+  async submitOperation() {
     this.showLoader = true;
     console.log("Patch4 function running");
     const callable = this.functions.httpsCallable('patch');
