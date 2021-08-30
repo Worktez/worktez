@@ -9,7 +9,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-const { updatePatchData } = require("./lib");
+// const { updatePatchData } = require("./lib");
 
 const db = admin.firestore();
 
@@ -22,25 +22,29 @@ exports.patch4 = function(request, response) {
     const promise1 = db.collection("Organizations").doc(orgDomain).collection("Activity").get().then((activities) => {
         activities.forEach((activity) => {
             const updateActivities = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(activity.id).collection("Action").get().then((actions) => {
-                actions.forEach((action) => {
-                    const updateAction = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(activity.id).collection("Action").doc(action.id).update({
-                        Uid: uid,
+                console.log(activity.id + "Activity Length is " + actions.docs.length);
+                if (actions.docs.length > 0) {
+                    actions.forEach((action) => {
+                        console.log("Action" + action.id + "for Activity" + activity.id);
+                        const updateAction = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(activity.id).collection("Action").doc(action.id).update({
+                            Uid: uid,
+                        });
+                        return Promise.resolve(updateAction);
                     });
-                    return Promise.resolve(updateAction);
-                });
-                return Promise.resolve(updateActivities);
+                }
             });
+            return Promise.resolve(updateActivities);
         });
-        const Promises = [promise1];
-        Promise.all(Promises).then(() => {
-            result = { data: "OK! Patch4 executed" };
-            updatePatchData("Patch4", { LastUsedByUid: uid, LastUsedByOrg: orgDomain });
-            console.log("Counters updated");
-            return response.status(200).send(result);
-        }).catch(function(error) {
-            result = { data: error };
-            console.error("Patch error in updating counters", error);
-            return response.status(500).send(result);
-        });
+    });
+    const Promises = [promise1];
+    Promise.all(Promises).then(() => {
+        result = { data: "OK! Patch4 executed" };
+        // updatePatchData("Patch4", { LastUsedByUid: uid, LastUsedByOrg: orgDomain });
+        console.log("Activities updated");
+        return response.status(200).send(result);
+    }).catch(function(error) {
+        result = { data: error };
+        console.error("Patch error in updating Activities", error);
+        return response.status(500).send(result);
     });
 };

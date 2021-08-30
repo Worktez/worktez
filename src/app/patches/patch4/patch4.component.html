@@ -15,20 +15,26 @@
             </nav>
         </div>
     </div>
-    <div class="form-group row">
-        <label for="orgDomain" class="col-sm-2 col-form-label">OrgDomain</label>
-        <div class="col-sm-10">
-            <input type="orgDomain" class="form-control" id="orgDomain" placeholder="Enter OrgDomain" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
+    <form class="mt-3">
+        <div class="form-group row">
+            <label for="orgDomain" class="col-sm-2 col-form-label">OrgDomain</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="orgDomain" placeholder="Enter OrgDomain" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
+            </div>
+            <label for="orgDomain" class="col-sm-2 col-form-label">Uid</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="uid" placeholder="Enter Uid" [(ngModel)]="uid" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="col-sm-10">
+                <button type="button" class="btn btn-primary" [disabled]="showLoader" (click)="patch4()">update</button>
+                <ng-container *ngIf="showLoader">
+                    <app-loader> </app-loader>
+                </ng-container>
+            </div>
         </div>
-        <label for="orgDomain" class="col-sm-2 col-form-label">Uid</label>
-        <div class="col-sm-10">
-            <input type="uid" class="form-control" id="uid" placeholder="Enter Uid" [(ngModel)]="uid" [ngModelOptions]="{standalone: true}">
-        </div>
-        <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary" [disabled]="showLoader" (click)="patch4()">update</button>
-            <ng-container *ngIf="showLoader">
-                <app-loader> </app-loader>
-            </ng-container>
-        </div>
-    </div>
+    </form>
+    <!-- <button type="submit" class="btn btn-primary" [disabled]="showLoader" (click)="patch4()">update</button>
+    <ng-container *ngIf="showLoader">
+        <app-loader> </app-loader>
+    </ng-container> -->
 </div>

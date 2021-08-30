@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,6 +12,7 @@ import { Patch } from 'src/app/Interface/PatchInterface';
 })
 export class Patch4Component implements OnInit {
   
+  // @ViewChild('form') form: NgForm;
   uid: string;
   patch: Patch;
   orgDomain: string;
@@ -27,7 +28,7 @@ export class Patch4Component implements OnInit {
     this.showLoader = true;
     console.log("Patch4 function running");
     const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch4", OrgDomain: this.orgDomain, Uid: "xxxxxx"}).toPromise().then(result => {
+    await callable({ mode: "patch4", OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);
