@@ -1,5 +1,5 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
-
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
