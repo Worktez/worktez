@@ -115,7 +115,6 @@ export class TaskDetailsComponent implements OnInit {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       console.log("Error", error);
     }
-    location.reload();
   }
 
   async reopenTask() {

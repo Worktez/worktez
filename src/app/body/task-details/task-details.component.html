@@ -22,28 +22,6 @@
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
                             <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModal" title="Log work" (click)="logWorkPage()">pending_actions</span>
                         </li>
-                        <li class=" active pr-1 py-1 justify-content-between">
-                            <span type="button" class="material-icons text-light mr-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-toggle="modal" data-target="#exampleModal">delete </span>
-                            <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span id="modal-header" aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                This action cannot be reverted back, please proceed with caution.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn " *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2" (click)="deleteTask()">Delete Task</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Modal end -->
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'" >
                             <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter" title="Edit" (click)="editTask()">edit</span>
                         </li>
