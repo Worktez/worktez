@@ -27,6 +27,7 @@ export class TaskDetailsComponent implements OnInit {
   Id: string
   logWorkEnabled: boolean = false
   editTaskEnabled: boolean = false
+  deleteTaskEnabled: boolean = false
   userLoggedIn: boolean = false
   task: Tasks
   todayDate: string
@@ -87,12 +88,17 @@ export class TaskDetailsComponent implements OnInit {
   CloneTaskPage() {
     this.cloneTask.getCloneTask(this.task);
   }
+
   logWorkPage() {
     this.logWorkEnabled = true;
   }
 
   editTask() {
     this.editTaskEnabled = true;
+  }
+
+  deleteTask(){
+    this.deleteTaskEnabled = true;
   }
 
   logWorkCompleted(data: { completed: boolean }) {
@@ -102,19 +108,9 @@ export class TaskDetailsComponent implements OnInit {
   editTaskCompleted(data: { completed: boolean }) {
     this.editTaskEnabled = false;
   }
-
-  async deleteTask() {
-    const callable = this.functions.httpsCallable('tasks');
-    const appKey = this.backendService.getOrganizationAppKey();
-    try {
-      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
-      console.log(this.task.Id + " deleted");
-      console.log(result);
-      this.router.navigate(['/']);
-    } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-      console.log("Error", error);
-    }
+  
+  deleteTaskCompleted(data: { completed: boolean }){
+    this.deleteTaskEnabled = false;
   }
 
   async reopenTask() {
