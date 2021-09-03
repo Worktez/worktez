@@ -3,6 +3,8 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-organization-details',
   templateUrl: './organization-details.component.html',
@@ -13,9 +15,8 @@ export class OrganizationDetailsComponent implements OnInit {
   @Output() stepAndOrgDomain = new EventEmitter<{ step: number, organizationDomain: string }>();
 
   componentName: string = "ORGANIZATION-DETAILS"
-
   constructor(public validationService: ValidationService, public functions: AngularFireFunctions,
-    public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage) { }
+    public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location) { }
 
   ngOnInit(): void { }
 
@@ -74,5 +75,9 @@ export class OrganizationDetailsComponent implements OnInit {
       this.enableLoader = false;
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     }
+  }
+
+  close() {
+    this.location.back();
   }
 }

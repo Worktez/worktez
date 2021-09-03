@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-var */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-undef */
@@ -101,7 +102,7 @@ function createSprintId(sprintNumber) {
 }
 
 function createBacklogAndDeleted(i, orgDomain, teamId, teamName, fullSprintId, orgId) {
-    const promise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintId).get().then(doc => {
+    const promise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintId).get().then((doc) => {
         if (doc.exists) {
             return 0;
         } else {

@@ -1,3 +1,9 @@
+#cardDescription {
+    border: var(--primary-border);
+    /* background-color: var(--secondary-bg); */
+    color: var(--text);
+}
+
 #descriptionTaskDescription {
     white-space: pre-wrap;
 }
@@ -19,6 +25,10 @@
 
 #navbarMenu {
     background-color: var(--primary-color);
+}
+
+.sprint {
+    color: var(--secondary-color);
 }
 
 .card {

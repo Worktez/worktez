@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -9,6 +10,7 @@ const { functions, cors } = require("../application/lib");
 const { patch1 } = require("./patch1");
 const { patch2 } = require("./patch2");
 const { patch3 } = require("./patch3");
+const { patch4 } = require("./patch4");
 const { patchModerator } = require("./patchModerator");
 
 exports.patch = functions.https.onRequest((request, response) => {
@@ -24,6 +26,9 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch3") {
             // To change a particular field in relevent tasks
             return patch3(request, response);
+        } else if (mode == "patch4") {
+            // To update the uid for previous activities
+            return patch4(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         }

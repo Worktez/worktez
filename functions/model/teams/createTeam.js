@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable  object-curly-spacing*/
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
@@ -6,8 +7,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-const { setTeam, getTeam, updateTeamDetails } = require("./lib");
-// const { updateTeam } = require("./updateTeam");
+const { setTeam, getTeam} = require("./lib");
 const { getOrg, updateOrg } = require("../organization/lib");
 const { setSprint } = require("../sprints/lib");
 
@@ -27,6 +27,7 @@ exports.createTeam = function(request, response) {
     let orgId;
 
     let status = 200;
+    let result = { data: "Error in Creating Team" };
 
     const promise1 = getOrg(orgDomain).then((orgDoc) => {
         if (orgDoc != undefined) {
@@ -45,16 +46,9 @@ exports.createTeam = function(request, response) {
 
                 setTeam(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, taskLabels, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
             } else {
-                const inputJson = {
-                    TeamDescription: teamDescription,
-                    TeamManagerEmail: teamManagerEmail,
-                    TeamMembers: teamMembers,
-                    TaskLabels: taskLabels,
-                    StatusLabels: statusLabels,
-                    PriorityLabels: priorityLabels,
-                    DifficultyLabels: difficultyLabels,
-                };
-                updateTeamDetails(inputJson, orgDomain, teamName);
+                status=500;
+                result = { data: "Error: Team Exists! Use update team" };
+                console.log("Error: Team Exists! Use update team");
             }
         }).catch((error) => {
             status = 500;
@@ -77,10 +71,11 @@ exports.createTeam = function(request, response) {
     });
 
     const Promises = [promise1, promise2];
-    let result;
     return Promise.all(Promises).then(() => {
-            result = { data: "Team Created Successfully" };
-            console.log("Team Created Successfully");
+            if (status != 500 ) {
+                result = { data: "Team Created Successfully" };
+                console.log("Team Created Successfully");
+            }
             return response.status(status).send(result);
         })
         .catch((error) => {
