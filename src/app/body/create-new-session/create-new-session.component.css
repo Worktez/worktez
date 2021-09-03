@@ -37,5 +37,5 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border: var(--primary-border);
+    border-color: var(--primary-color);
 }
