@@ -6,13 +6,17 @@
     font-family: 'Nunito', sans-serif;
 }
 
-.page_404  img{
+/* .page_404  img{
      width:100%;
+} */
+
+
+.container{
+    padding: 41px 41px;
 }
 
 .four_zero_four_bg{
-    background-image: url('src/assets/error.gif');
-    height: 400px;
+    height: 150px;
     background-position: center;
 }
  
@@ -36,5 +40,6 @@
 }
 	
 .contant_box_404{
+        /* padding-bottom: 90px; */
      margin-top:-50px;
 }
