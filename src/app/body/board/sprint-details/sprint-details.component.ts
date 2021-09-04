@@ -16,6 +16,8 @@ export class SprintDetailsComponent implements OnInit {
   @Input('currentSprintName') currentSprintName: string;
   @Input('currentSprintNumber') currentSprintNumber: number
   @Input('sprintData') sprintData: Sprint;
+  @Input('workPercentage') workPercentage: number;
+  
   @Output() currentSprint = new EventEmitter<number>();
 
   componentName: string = "SPRINT-DETAILS"

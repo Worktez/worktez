@@ -26,3 +26,10 @@
     padding-right: 35px;
     padding-left: 5px;
 }
+
+#Progressgraph {
+    height: 20px; 
+    margin-top: 10px;
+    background-color: #E9ECEF;
+    width: 100%;
+}
