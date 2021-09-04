@@ -1,5 +1,4 @@
-.input,
-.input:focus {
+.input {
     border-radius: 10px;
     padding: 10px;
     border: var(--primary-border);
@@ -58,4 +57,12 @@ input[type="file"] {
 
 #navbarMenu {
     background-color: var(--primary-color);
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
 }
