@@ -20,9 +20,21 @@
     color: var(--button-text);
 }
 
+#addButton:hover {
+    background-color: var(--primary-color);
+}
+
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: #dc3226;
+}
+
+.btn-secondary {
+    background-color: var(--button-hover-bg);
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-bg);
 }

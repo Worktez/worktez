@@ -1,5 +1,5 @@
 #startNewSprintContainer {
-    border: var(--primary-border);
+    box-shadow: var(--box-shadow-top);
     background-color: var(--secondary-bg);
     color: var(--text);
 }
@@ -11,9 +11,11 @@
 }
 
 #button:focus,
-#button:active {
+#button:active,
+#button:hover {
     outline: none;
     box-shadow: none;
+    background-color: var(--primary-color);
 }
 
 .alert {

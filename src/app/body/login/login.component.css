@@ -22,7 +22,7 @@
 
 #nav-login-tab,
 #nav-signup-tab {
-    border: 2px solid #5a20f0;
+    border: 2px solid var(--primary-color);
     color: var(--text);
 }
 
@@ -35,7 +35,7 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5a20f0;
+    border-color: var(--primary-color);
 }
 
 #topBorder {

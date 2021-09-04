@@ -4,8 +4,7 @@
             <div class="card" style="border: none; background: none;">
                 <img class="mx-4 rounded-circle" src={{photoURL}} onerror="this.src = '../../assets/defaultavatar.jpg' " alt="Card image cap" width="180" height="180" style=" border-radius: 50%;">
                 <div class="card-body">
-                    <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal"
-                    data-whatever="@mdo" (click)="editProfile()" style="color: #16C85A;">edit
+                    <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" (click)="editProfile()" style="color: var(--secondary-color);">edit
                     </span>
                     <h3 class="card-title font-weight-bold font-italic">{{displayName}}</h3>
                     <h6 class="card-title font-italic">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h6>

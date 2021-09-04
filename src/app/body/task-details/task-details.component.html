@@ -13,7 +13,7 @@
                             <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Re-open" (click)="reopenTask()">restore</span>
                         </li>
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2" >
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" (click)="deleteTask()">delete </span>
+                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-toggle="modal" data-target="#exampleModalDel" (click)="deleteTask()">delete </span>
                         </li>
                         <li class="active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2" >
                             <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" title="Clone Task" (click)="CloneTaskPage()">content_copy</span>
@@ -171,6 +171,9 @@
     </ng-container>
     <ng-container *ngIf="editTaskEnabled" id="exampleModalCenterLabel">
         <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
+    </ng-container>
+    <ng-container *ngIf="deleteTaskEnabled" id="exampleModalDel">
+        <app-warning [task]="task" (deleteTaskCompleted)="deleteTaskCompleted($event)"></app-warning>
     </ng-container>
 </ng-container>
 <app-loader *ngIf="!(taskDataObservable | async) "></app-loader>
