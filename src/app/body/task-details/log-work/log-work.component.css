@@ -25,6 +25,10 @@
     color: var(--button-text);
 }
 
+#logWorkSubmit:hover {
+    background-color: var(--primary-color);
+}
+
 .clr {
     background-color: white;
 }

@@ -20,6 +20,10 @@
     color: var(--button-text);
 }
 
+#addButton:hover {
+    background-color: var(--primary-color);
+}
+
 select:focus,
 input:focus {
     box-shadow: none;
@@ -28,9 +32,9 @@ input:focus {
 }
 
 .btn-secondary {
-    background-color: var(--button-bg);
+    background-color: var(--button-hover-bg);
 }
 
 .btn-secondary:hover {
-    background-color: var(--button-hover-bg);
+    background-color: var(--button-bg);
 }
