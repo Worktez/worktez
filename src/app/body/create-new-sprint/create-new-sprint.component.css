@@ -1,5 +1,5 @@
 #startNewSprintContainer {
-    border: var(--primary-border);
+    box-shadow: var(--box-shadow-top);
     background-color: var(--secondary-bg);
     color: var(--text);
 }

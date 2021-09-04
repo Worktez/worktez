@@ -48,3 +48,11 @@ input:focus {
         border-color: var(--primary-color);
     }
 }
+
+.btn-secondary {
+    background-color: var(--button-bg);
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-hover-bg);
+}

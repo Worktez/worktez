@@ -37,3 +37,13 @@
 #navbarDropdownCreate:hover {
     background-color: var(--hover);
 }
+
+#button {
+    background-color: var(--button-bg);
+    color: white;
+}
+
+#button:hover {
+    background-color: var(--button-hover-bg);
+    color: white;
+}
