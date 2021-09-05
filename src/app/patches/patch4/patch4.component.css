@@ -1,21 +1,14 @@
-#createNewTaskContainer {
-    box-shadow: var(--box-shadow-top);
+.container {
+    border: var(--primary-border);
     background-color: var(--secondary-bg);
     color: var(--text);
 }
 
-#button {
+.btn {
     background-color: var(--secondary-color);
     border: var(--primary-border);
     color: var(--button-text);
-}
-
-#button:focus,
-#button:active,
-#button:hover {
-    background-color: var(--primary-color);
-    outline: 0 none;
-    box-shadow: none;
+    float: right;
 }
 
 #navbarMenu {
@@ -39,5 +32,5 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
+    border: var(--primary-border);
 }

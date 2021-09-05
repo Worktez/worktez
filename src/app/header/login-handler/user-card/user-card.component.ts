@@ -20,6 +20,7 @@ export class UserCardComponent implements OnInit {
   }
   onLogout() {
     this.authService.logout();
+    window.location.reload()
   }
   profile(){
     this.router.navigate(['/profile']);

@@ -1,23 +1,22 @@
 .card {
+    background-color: var(--secondary-bg);
+    color: var(--text);
     box-shadow: var(--box-shadow-bottom);
+    border: none;
 }
 
 .card-header {
-    background-color: var(--primary-color); 
-    color: var(--button-text);
+    background-color: var(--primary-color);
 }
 
-.card-body{
-    background-color: var(--secondary-bg);
-    color: var(--text);
-}
-
-#button, #dropdownButton {
+#button,
+#dropdownButton {
     background-color: var(--button-bg);
     color: var(--button-text);
 }
 
-#button:hover, #dropdownButton:hover {
+#button:hover,
+#dropdownButton:hover {
     background-color: var(--button-hover-bg);
 }
 
@@ -25,4 +24,8 @@
     background-color: var(--secondary-bg);
     padding-right: 35px;
     padding-left: 5px;
+}
+
+#navbarMenu {
+    background-color: var(--primary-color);
 }

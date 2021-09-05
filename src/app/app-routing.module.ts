@@ -12,11 +12,13 @@ import { CreateNewOrganizationComponent } from './body/create-new-organization/c
 import { Patch1Component } from './patches/patch1/patch1.component';
 import { Patch2Component } from './patches/patch2/patch2.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
+import { Patch4Component } from './patches/patch4/patch4.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
 import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -33,12 +35,14 @@ const routes: Routes = [
   { path: 'Patch1', component: Patch1Component },
   {path: 'Patch2', component:Patch2Component},
   { path: 'Patch3', component: Patch3Component },
+  { path: 'Patch4', component: Patch4Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateTeam', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
-  { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]}
+  { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
+  { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];
 
 @NgModule({

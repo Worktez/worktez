@@ -25,6 +25,10 @@
     color: var(--button-text);
 }
 
+#logWorkSubmit:hover {
+    background-color: var(--primary-color);
+}
+
 .clr {
     background-color: white;
 }
@@ -38,7 +42,7 @@ select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: #5A20F0;
+    border-color: var(--primary-color);
 }
 
 @media only screen and (max-width: 600px) {
@@ -47,4 +51,12 @@ input:focus {
         height: 100%;
         border-color: var(--primary-color);
     }
+}
+
+.btn-secondary {
+    background-color: var(--button-bg);
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-hover-bg);
 }

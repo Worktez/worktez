@@ -5,18 +5,16 @@
     color: var(--text);
 }
 
-#button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
+.btn{
     color: var(--button-text);
+    background-color: var(--button-bg);
 }
+
 
 #button:focus,
 #button:active,
-#button:hover {
-    background-color: var(--primary-color);
-    outline: none;
-    box-shadow: none;
+.btn:hover {
+    background-color: var(--hover);
 }
 
 .clr {
@@ -41,10 +39,6 @@
 .modal-header {
     background-color: var(--primary-color);
 }
-
-
-/* #non-editable {
-} */
 
 select:focus,
 input:focus {
