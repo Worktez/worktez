@@ -38,11 +38,9 @@ exports.createNewTask = function(request, response) {
     let result;
     let totalUnCompletedTask;
     const completiondate = "Not yet Completed";
-    const teamId = project.slice(0, 3);
     let orgDomain;
     let orgId;
     let status = 200;
-    console.log(teamId);
 
     const promise1 = getOrgUseAppKey(appKey).then((orgDetail) => {
         orgDomain = orgDetail.OrganizationDomain;
@@ -50,20 +48,17 @@ exports.createNewTask = function(request, response) {
 
         const promise1 = getTeam(orgDomain, project).then((team) => {
             const totalTeamTasks = team.TotalTeamTasks + 1;
-            taskId = teamId.toString() + totalTeamTasks.toString();
+            taskId = team.TeamId + totalTeamTasks.toString();
 
             const updateTeamJson = {
                 TotalTeamTasks: totalTeamTasks,
             };
-            /* const p1 =*/
             updateTeamDetails(updateTeamJson, orgDomain, project);
 
-            /* const p2 =*/
-            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId);
+            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
-            // const promises1 = [p1, p2];
-            // return Promise.all(promises1);
+
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
@@ -86,7 +81,12 @@ exports.createNewTask = function(request, response) {
                 totalNumberOfTask = 1;
                 totalUnCompletedTask = 1;
 
-                setSprint(orgDomain, project, fullSprintName, orgId, teamId, sprintNumber, "Not Started", totalNumberOfTask, totalUnCompletedTask);
+                const promise1 = getTeam(orgDomain, project).then((team) => {
+                    setSprint(orgDomain, project, fullSprintName, orgId, team.TeamId, sprintNumber, "Not Started", totalNumberOfTask, totalUnCompletedTask);
+                }).catch((error) => {
+                    status = 500;
+                    console.log("Error:", error)
+                });
             }
         }).catch((error) => {
             status = 500;
@@ -113,7 +113,6 @@ exports.createNewTask = function(request, response) {
             console.log("Error:", error);
         });
     });
-    // const createTaskPromises = [promise1];
     return Promise.resolve(promise1).then(() => {
             result = { data: "Task Created Successfully" };
             console.log("Task Created Successfully");
