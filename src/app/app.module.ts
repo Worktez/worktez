@@ -70,6 +70,7 @@ import { SelectDropdownComponent } from './body/board/performance-column-chart/s
 import { FooterComponent } from './footer/footer.component';
 import { ActivityComponent } from './body/task-details/activity/activity.component';
 import { Patch4Component } from './patches/patch4/patch4.component';
+import { WarningComponent } from './body/common-tools/warning/warning.component';
 
 
 @NgModule({
@@ -128,7 +129,8 @@ import { Patch4Component } from './patches/patch4/patch4.component';
     SelectDropdownComponent,
     FooterComponent,
     ActivityComponent,
-    Patch4Component
+    Patch4Component,
+    WarningComponent
   ],
   imports: [
     BrowserModule,

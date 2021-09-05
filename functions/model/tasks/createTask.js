@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable require-jsdoc */
 /* eslint-disable object-curly-spacing */
 // /* eslint-disable no-undef */

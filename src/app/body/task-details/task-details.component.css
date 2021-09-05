@@ -54,6 +54,12 @@
     font-size: 20px;
 }
 
+.btn{
+    color: var(--button-text);
+    background-color: var(--primary-color);
+}
+
+
 @media (max-width: 991px) {
     .navbar-nav {
         float: right;

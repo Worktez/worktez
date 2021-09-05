@@ -1,5 +1,5 @@
 #createNewTaskContainer {
-    border: var(--primary-border);
+    box-shadow: var(--box-shadow-top);
     background-color: var(--secondary-bg);
     color: var(--text);
 }
@@ -11,7 +11,9 @@
 }
 
 #button:focus,
-#button:active {
+#button:active,
+#button:hover {
+    background-color: var(--primary-color);
     outline: 0 none;
     box-shadow: none;
 }
@@ -37,5 +39,5 @@ select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border: var(--primary-border);
+    border-color: var(--primary-color);
 }
