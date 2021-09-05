@@ -105,7 +105,11 @@
                         </div>
                     </div>
                 </div>
-
+                <ng-container *ngIf = "sprintData.SprintNumber > 0">
+                    <div id="Progressgraph">
+                        <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress bg-success"></app-progress-graph>
+                    </div>
+                </ng-container>
             </div>
         </div>
     </div>
