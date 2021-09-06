@@ -1,5 +1,5 @@
 #currentTab {
-    color: #10be65;
+    color: var(--secondary-color);
     font-weight: bolder;
 }
 
