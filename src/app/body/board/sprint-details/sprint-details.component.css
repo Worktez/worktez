@@ -32,9 +32,12 @@
 
 #Progressgraph {
     height: 10px; 
-    margin: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 5px;
-    background-color: var(--progress-bg);
+    background-color: #E9ECEF;
     width: 100%;
 } 
 
