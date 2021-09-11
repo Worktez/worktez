@@ -1,0 +1,11 @@
+.card {
+    color: var(--text);
+}
+
+button {
+    color: var(--text);
+}
+
+button:focus {
+    box-shadow: none;
+}
