@@ -1,10 +1,20 @@
 <div id="taskPage">
     <div class="container">
         <div class="row align-items-center py-2" id="navbarMenu">
-            <div class="col-9 col-md-10">
+            <div class="col-8">
                 <h5 style="font-weight:bolder">Tasks</h5>
             </div>
             <div class="col text-right">
+                <span class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</span>
+                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                    <div class="input-group">
+                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                        <div class="col-md-3 col-3">
+                            <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprint(filterSprintNumber)">Filter</button>
+                        </div>
+                    </div>
+                </div>
+
                 <span type="button" [ngClass]="{'toggleFilter':showFilter}" class="btn material-icons text-light" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
                 <span type="button" class="btn material-icons text-light" (click)="backToDashboard()">close</span>
             </div>

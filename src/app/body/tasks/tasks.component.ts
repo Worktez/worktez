@@ -7,6 +7,9 @@ import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { TeamDataId } from 'src/app/Interface/TeamInterface';
+
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -28,8 +31,12 @@ export class TasksComponent implements OnInit {
   filterDifficulty: string
   filterStatus: string
   filterProject: string
+  filterSprintNumber: number;
   showFilter: boolean = false
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService) { }
+
+  teamData: TeamDataId[] = [];
+
+  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -44,7 +51,7 @@ export class TasksComponent implements OnInit {
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
     }
-    
+
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.AppKey) {
@@ -60,11 +67,11 @@ export class TasksComponent implements OnInit {
       queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
       if (this.filterProject) {
         queryRef = queryRef.where("Project", "==", this.filterProject);
-      }     
-      else{
+      }
+      else {
         queryRef = queryRef.where("TeamId", "==", this.teamId);
       }
-      
+
       if (this.filterAssignee) {
         queryRef = queryRef.where("Assignee", "==", this.filterAssignee);
       }
@@ -91,6 +98,25 @@ export class TasksComponent implements OnInit {
     this.router.navigate(['/Board']);
   }
 
+  changeSprint(newSprintNumber: number) {
+    if (newSprintNumber == 0) {
+      this.applicationSettingsService.getTeamDetails(this.teamId).subscribe(teams => {
+        this.teamData = teams;
+        console.log(1);
+        newSprintNumber = this.teamData[0].CurrentSprintId;
+        this.currentSprintName = this.fullSprintName(newSprintNumber);
+        this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
+        this.readData();
+      });
+    } else {
+      this.currentSprintNumber = newSprintNumber;
+      console.log(2);
+      this.currentSprintName = this.fullSprintName(newSprintNumber);
+      this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
+      this.readData();
+    }
+  }
+
   showFilterOptions() {
     this.showFilter = !this.showFilter
   }
@@ -103,8 +129,19 @@ export class TasksComponent implements OnInit {
     this.filterProject = data.Project
     this.readData();
   }
-  
+
   openTaskDetails(id: string) {
     this.router.navigate(['/TaskDetails', id]);
   }
+
+  fullSprintName(sprintNumber: number) {
+    if (sprintNumber == -1) {
+      return "Backlog"
+    } else if (sprintNumber == -2) {
+      return "Deleted"
+    } else {
+      return "S" + sprintNumber
+    }
+  }
+
 }
