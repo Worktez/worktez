@@ -26,11 +26,25 @@ export class ToolsService {
     return this.todayTime = hh + ":" + mn + ":" + ss;
   }
 
-  userName(name: string){
-    let startindex = name.indexOf('<')
-    let endindex = name.indexOf('>')
-    return name.substring(startindex+1,endindex);
+  getEmailString(email: string){
+    let startindex = email.indexOf('<')
+    let endindex = email.indexOf('>')
+
+    if(startindex > -1 && endindex > -1) {
+      return email.substring(startindex+1,endindex);
+    } else {
+      if(this.validateEmail(email)) {
+        return email;
+      } else {
+        return undefined;
+      }
+    }
   }
+
+  validateEmail(email: string) {
+    const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regularExpression.test(String(email).toLowerCase());
+   }
 
   getFormattedDate() {
     return this.date().split('/').reverse().join('-');
