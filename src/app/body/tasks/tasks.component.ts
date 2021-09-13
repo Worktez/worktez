@@ -33,9 +33,8 @@ export class TasksComponent implements OnInit {
   filterProject: string
   filterSprintNumber: number;
   showFilter: boolean = false
-
   teamData: TeamDataId[] = [];
-
+  
   constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
@@ -102,7 +101,6 @@ export class TasksComponent implements OnInit {
     if (newSprintNumber == 0) {
       this.applicationSettingsService.getTeamDetails(this.teamId).subscribe(teams => {
         this.teamData = teams;
-        console.log(1);
         newSprintNumber = this.teamData[0].CurrentSprintId;
         this.currentSprintName = this.fullSprintName(newSprintNumber);
         this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
@@ -110,7 +108,6 @@ export class TasksComponent implements OnInit {
       });
     } else {
       this.currentSprintNumber = newSprintNumber;
-      console.log(2);
       this.currentSprintName = this.fullSprintName(newSprintNumber);
       this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
       this.readData();
