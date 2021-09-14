@@ -9,8 +9,6 @@ import { BackendService } from '../backend/backend.service';
   providedIn: 'root'
 })
 
-
-
 export class ApplicationSettingsService {
   public edited: boolean = false;
   public editedTeamId: string = "";
