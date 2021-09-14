@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit {
   teams: [];
   sprintNotExist: boolean = false;
   teamMembers: string[];
+  changeTeam: boolean = false;
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -41,7 +42,12 @@ export class BoardComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.AppKey) {
           this.accessLevel = 1;
-          this.selectedTeamId = data.TeamId;
+          if (this.applicationSettingsService.edited) {
+            this.selectedTeamId = this.applicationSettingsService.editedTeamId;
+          } else {
+            this.selectedTeamId = data.TeamId;
+            this.applicationSettingsService.editedTeamId = this.selectedTeamId;
+          }
           this.backendService.organizationsData.subscribe(data => {
             if (data.length) {
               this.teams = data[0].TeamsId;
@@ -59,8 +65,15 @@ export class BoardComponent implements OnInit {
       this.teamData = teams;
       teams.forEach(element => {
         if (element.TeamId == this.selectedTeamId) {
-          this.teamCurrentSprintNumber = element.CurrentSprintId;
-          this.currentSprintNumber = element.CurrentSprintId;
+          if (this.applicationSettingsService.edited && this.changeTeam == false) {
+            this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
+            this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
+          } else {
+            this.teamCurrentSprintNumber = element.CurrentSprintId;
+            this.currentSprintNumber = element.CurrentSprintId;
+            this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
+            this.changeTeam = false;
+          }
           this.teamMembers = element.TeamMembers;
         }
       });
@@ -71,7 +84,10 @@ export class BoardComponent implements OnInit {
   getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
+    this.applicationSettingsService.edited = true;
+    this.applicationSettingsService.editedTeamId = teamId;
     this.selectedTeamId = teamId;
+    this.changeTeam = true;
     this.readApplicationData();
     // this.readSprintData();
   }
@@ -104,6 +120,8 @@ export class BoardComponent implements OnInit {
     console.log(filterSprintNumber);
     this.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+    this.applicationSettingsService.edited = true;
+    this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }
 }
