@@ -3,6 +3,9 @@ export interface Organizations {
     OrganizationId: string;
     OrganizationDomain: string;
     OrganizationName: string;
+    OrganizationEmail: string;
+    OrganizationDescription: string;
+    OrganizationLogoURL: string;
     TeamsId: [];
   }
 

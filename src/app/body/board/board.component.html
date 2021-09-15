@@ -20,7 +20,7 @@
                     <ng-container *ngIf="sprintNotExist == false">
                         <div class="row">
                             <div class="col">
-                                <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                                <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
                             </div>
                         </div>
                     </ng-container>
