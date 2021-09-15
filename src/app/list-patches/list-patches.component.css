@@ -1,0 +1,19 @@
+#navbarMenu {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.container {
+    background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+}
+
+.btn {
+    background-color: var(--primary-color);
+}
+
+select:focus,
+input:focus,
+.btn:hover {
+    background-color: var(--secondary-color);
+}
