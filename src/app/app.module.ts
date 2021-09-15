@@ -74,6 +74,7 @@ import { WarningComponent } from './body/common-tools/warning/warning.component'
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
 import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.component';
+import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
 
 
 @NgModule({
@@ -137,7 +138,8 @@ import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.compone
     WarningComponent,
     ListPatchesComponent,
     PatchCardsComponent,
-    EditPatchComponent
+    EditPatchComponent,
+    DifficultyIconsComponent
   ],
   imports: [
     BrowserModule,
