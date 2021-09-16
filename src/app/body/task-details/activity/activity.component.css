@@ -1,6 +1,5 @@
 .card {
-    background-color: var(--secondary-bg);
-    border: var(--primary-border);
+    background-color: var(--primary-bg);
     color: var(--text);
 }
 

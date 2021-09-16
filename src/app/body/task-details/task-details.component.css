@@ -12,14 +12,16 @@
     color: var(--text);
 }
 
-#button, .btn {
+#button,
+.btn {
     background-color: var(--primary-color);
     color: var(--button-text);
 }
 
 #button:focus,
 #button:active,
-.btn:hover {
+.btn:hover,
+.btn:active {
     background-color: var(--secondary-color);
 }
 
@@ -41,6 +43,10 @@
     color: var(--text);
 }
 
+#myTabContent {
+    background-color: var(--secondary-bg);
+}
+
 #idTaskDescription {
     color: var(--primary-color);
     font-weight: bold;
@@ -54,11 +60,19 @@
     font-size: 20px;
 }
 
-.btn{
+.btn {
     color: var(--button-text);
     background-color: var(--primary-color);
 }
 
+#activityNav {
+    background-color: var(--primary-color);
+}
+
+.button-active {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
 
 @media (max-width: 991px) {
     .navbar-nav {

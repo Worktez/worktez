@@ -3,21 +3,24 @@
 }
 
 .card-header {
-    background-color: var(--primary-color); 
+    background-color: var(--primary-color);
     color: var(--button-text);
 }
 
-.card-body{
+.card-body {
     background-color: var(--secondary-bg);
     color: var(--text);
 }
 
-#button, #dropdownButton {
+#button,
+#dropdownButton,
+.btn {
     background-color: var(--button-bg);
     color: var(--button-text);
 }
 
-#button:hover, #dropdownButton:hover {
+#button:hover,
+#dropdownButton:hover {
     background-color: var(--button-hover-bg);
 }
 
