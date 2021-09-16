@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 /* eslint-disable require-jsdoc */
 /* eslint-disable object-curly-spacing */
@@ -14,6 +15,7 @@ const { getOrgRawData, updateOrgRawData } = require("../organization/lib");
 const { getSprint, updateSprint, setSprint } = require("../sprints/lib");
 const { updateTeamDetails, getTeam } = require("../teams/lib");
 const { setTask } = require("./lib");
+const { sendMail } = require("../email/lib");
 
 exports.createNewTask = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -42,6 +44,9 @@ exports.createNewTask = function(request, response) {
     let orgDomain;
     let orgId;
     let status = 200;
+    const subjectMessage = creator + "created a task for you";
+    const htmlMessage = "<div style=\"width: 70%; margin: auto;  text-align: center;\"><h1 style=\"color: #dc3226; font-size: 36px;\">Welcome to Worktrolly</h1><div style=\"color: #000; background-color: #d5d9e6; border: 1px solid; \"><div style=\"padding: 30px;\"><h2 style=\"font-size: 26px;\">" + project +
+    "</h2><h2 style=\"padding-bottom: 10px\"></h2><a href=\"https://worktrolly.web.app/CreateNewSession/" + assignee + "style=\"background-color: #dc3226; color: white; text-decoration:none; padding: 15px; margin-bottom: 5px;\">Join Team</a></div></div></div>";
 
     const promise1 = getOrgUseAppKey(appKey).then((orgDetail) => {
         orgDomain = orgDetail.OrganizationDomain;
@@ -55,11 +60,10 @@ exports.createNewTask = function(request, response) {
                 TotalTeamTasks: totalTeamTasks,
             };
             updateTeamDetails(updateTeamJson, orgDomain, project);
-
+            sendMail(assignee, subjectMessage, htmlMessage);
             setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
-
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
@@ -86,7 +90,7 @@ exports.createNewTask = function(request, response) {
                     setSprint(orgDomain, project, fullSprintName, orgId, team.TeamId, sprintNumber, "Not Started", totalNumberOfTask, totalUnCompletedTask);
                 }).catch((error) => {
                     status = 500;
-                    console.log("Error:", error)
+                    console.log("Error:", error);
                 });
             }
         }).catch((error) => {
