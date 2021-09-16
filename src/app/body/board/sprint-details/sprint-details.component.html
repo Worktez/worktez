@@ -56,7 +56,11 @@
         </div>
         <div class="card-body">
             <div class="row">
-                
+                <ng-container *ngIf = "sprintData.SprintNumber > 0">
+                    <div id="Progressgraph">
+                        <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress bg-success"></app-progress-graph>
+                    </div>
+                </ng-container>
                 <div class="col-md-6 pl-4">
                     <div class="row py-2">
                         <div class="col-md-3">
@@ -105,7 +109,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
