@@ -1,5 +1,8 @@
 .card {
+    background-color: var(--secondary-bg);
+    color: var(--text);
     box-shadow: var(--box-shadow-bottom);
+    border: none;
 }
 
 .card-header {
@@ -13,8 +16,7 @@
 }
 
 #button,
-#dropdownButton,
-.btn {
+#dropdownButton {
     background-color: var(--button-bg);
     color: var(--button-text);
 }
@@ -28,4 +30,8 @@
     background-color: var(--secondary-bg);
     padding-right: 35px;
     padding-left: 5px;
+}
+
+#navbarMenu {
+    background-color: var(--primary-color);
 }
