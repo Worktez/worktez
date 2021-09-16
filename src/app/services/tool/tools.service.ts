@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {ValidationService} from '../validation/validation.service'
 
 @Injectable({
   providedIn: 'root'
@@ -27,20 +26,17 @@ export class ToolsService {
     return this.todayTime = hh + ":" + mn + ":" + ss;
   }
 
-  getEmailString(email: any){
-    let check = new ValidationService(email);
+  getEmailString(email: string){
     let startindex = email.indexOf('<')
     let endindex = email.indexOf('>')
 
     if(startindex > -1 && endindex > -1) {
       return email.substring(startindex+1,endindex);
-    } else {
-      if(check.checkAssignee(email)) {
+    } else if(email) {
         return email;
       } else {
         return undefined;
-      }
-    }   
+      }  
   }
 
   getFormattedDate() {
