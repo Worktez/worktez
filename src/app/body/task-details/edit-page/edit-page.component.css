@@ -12,7 +12,9 @@
 }
 
 #button:focus,
-#button:active {
+#button:active,
+#button:hover {
+    background-color: var(--primary-color);
     outline: none;
     box-shadow: none;
 }

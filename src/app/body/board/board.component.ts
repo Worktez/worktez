@@ -29,6 +29,13 @@ export class BoardComponent implements OnInit {
   sprintNotExist: boolean = false;
   teamMembers: string[];
   changeTeam: boolean = false;
+  DaysUp: any;
+  workPercentCalc: any;
+  workPercentage: number;
+  today: any = new Date();
+  EDate: any;
+  SDate: any;
+  
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -103,6 +110,19 @@ export class BoardComponent implements OnInit {
         if (sprints.length != 0) {
           this.sprintData = sprints[0];
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
+          this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
+          this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
+          this.DaysUp = Math.abs((this.today - this.SDate)/(1000 * 60 * 60 * 24));
+          if(this.today > this.EDate) {
+            this.workPercentCalc = 100;
+          } else if(this.today < this.SDate) {
+            this.workPercentCalc = 0;
+          } else {
+            this.workPercentCalc = Math.abs((parseInt(this.DaysUp)) /((this.EDate - this.SDate)/(1000 * 60 * 60 * 24)) * 100);
+        }
+          console.log(parseInt(this.DaysUp));
+          console.log(parseInt(this.workPercentCalc)); 
+          this.workPercentage = parseInt(this.workPercentCalc);
           this.showContent = true;
         } else {
           console.log("Not existing");
