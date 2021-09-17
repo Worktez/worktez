@@ -32,12 +32,14 @@ export class TaskDetailsComponent implements OnInit {
   showContent: boolean = false;
   activeAllBtn: boolean = false
   activeLogWorkBtn: boolean = false
+  activeCommentBtn: boolean = false
   activeEditBtn: boolean = false
   task: Tasks
   todayDate: string
   time: string
   orgDomain: string
   actionType: string = "All"
+  comment: string;
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
@@ -89,6 +91,8 @@ export class TaskDetailsComponent implements OnInit {
         queryRef = ref.where( 'Type', '==', "EDITED" );
       } else if ( this.actionType == "LOGWORK_COMMENT" ) {
         queryRef = ref.where( 'Type', '==', "LOGWORK_COMMENT" );
+      } else if ( this.actionType == "COMMENT" ) {
+        queryRef = ref.where( 'Type', '==', "COMMENT" );
       }
       this.showContent = true;
       return queryRef;
@@ -100,6 +104,23 @@ export class TaskDetailsComponent implements OnInit {
         return { id, ...data };
       } ) )
     );
+  }
+
+  async addComment() {
+    const callable = this.functions.httpsCallable('tasks');
+    const appKey = this.backendService.getOrganizationAppKey();
+
+    try {
+      const result = await callable({ mode: "comment", AppKey: appKey, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+
+      console.log("Logged Work Successfully");
+      this.comment = "";
+      console.log(result);
+      return;
+    } catch (error) {
+      this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
+      console.log("Error", error);
+    }
   }
 
   CloneTaskPage () {
@@ -157,14 +178,22 @@ export class TaskDetailsComponent implements OnInit {
       this.activeEditBtn = false;
       this.activeLogWorkBtn = false;
       this.activeAllBtn = true;
+      this.activeCommentBtn = false;
     } else if ( this.actionType == "LOGWORK_COMMENT"){
       this.activeAllBtn = false;
       this.activeEditBtn = false;
       this.activeLogWorkBtn = true;
+      this.activeCommentBtn = false;
     } else if ( this.actionType == "EDITED"){
       this.activeAllBtn = false;
       this.activeLogWorkBtn = false;
       this.activeEditBtn = true;
+      this.activeCommentBtn = false;
+    } else if ( this.actionType == "COMMENT"){
+      this.activeAllBtn = false;
+      this.activeLogWorkBtn = false;
+      this.activeEditBtn = false;
+      this.activeCommentBtn = true;
     }
   }
 }

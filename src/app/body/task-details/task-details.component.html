@@ -173,6 +173,9 @@
                     <li class="nav-item  ml-3">
                         <span class="py-2" id="edit-tab" data-toggle="tab" data-target="#edit" role="tab" aria-controls="contact" aria-selected="false" style="font-size: 17px;" (click)="changeType('EDITED')" [ngClass]="{'btn': true ,'button-active': activeEditBtn}">Edits</span>
                     </li>
+                    <li class="nav-item  ml-3">
+                        <span class="py-2" id="comment-tab" data-toggle="tab" data-target="#comment" role="tab" aria-controls="comment" aria-selected="false" style="font-size: 17px;" (click)="changeType('COMMENT')" [ngClass]="{'btn': true ,'button-active': activeCommentBtn}">Comments</span>
+                    </li>
                 </ul>
             </div>
             <div class="tab-content pb-3" id="myTabContent" *ngIf="showContent; else loader">
@@ -191,6 +194,24 @@
                         <app-activity [activity]="activity"></app-activity>
                     </ng-container>
                 </div>
+                <div class="tab-pane fade px-2" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                    <ng-container *ngFor="let activity of activityData | async">
+                        <app-activity [activity]="activity"></app-activity>
+                    </ng-container>
+                </div>
+                <form>
+                    <div class="form-row px-4 pt-4">
+                        <div class="form-group col">
+                            <label for="description" class="form-label">Comment</label>
+                            <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row px-4">
+                        <div class="form-group col">
+                            <button type="submit" class="btn" (click)="addComment()">Add Comment</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <ng-template #loader>
