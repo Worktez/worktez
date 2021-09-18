@@ -5,23 +5,19 @@
                 <h5 style="font-weight:bolder">Tasks</h5>
             </div>
             <div class="col text-right">
-                <span class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</span>
-                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                    <div class="input-group">
-                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
-                        <div class="col-md-3 col-3">
-                            <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprint(filterSprintNumber)">Filter</button>
-                        </div>
-                    </div>
-                </div>
-
                 <span type="button" [ngClass]="{'toggleFilter':showFilter}" class="btn material-icons text-light" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
                 <span type="button" class="btn material-icons text-light" (click)="backToDashboard()">close</span>
             </div>
         </div>
         <div class="row pt-1">
             <ng-container *ngIf="showFilter">
-                <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="input-group col-2">
+                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                        <div class="col-md-3 col-3">
+                            <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprint(filterSprintNumber)">Filter</button>
+                        </div>
+                    </div>
                     <app-filter-task (filterProperty)="applyFilters($event)" [defaultProject]="project"></app-filter-task>
                 </div>
             </ng-container>
