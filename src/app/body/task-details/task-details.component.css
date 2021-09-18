@@ -60,11 +60,6 @@
     font-size: 20px;
 }
 
-.btn {
-    color: var(--button-text);
-    background-color: var(--primary-color);
-}
-
 #activityNav {
     background-color: var(--primary-color);
 }
