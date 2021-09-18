@@ -1,0 +1,33 @@
+<div class="modal fade" id="exampleModalDel" tabindex="-1" role="dialog" aria-labelledby="exampleModalDelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  p-0" role="document">
+        <div class="modal-content">
+            <nav class="modal-header navbar  navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link head" id="exampleModalDelLabel">Are You Sure?</h5>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="material-icons text-light">close</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="container modal-body" id="editPageTaskContainer">
+                <ng-container>
+                    <div class="row">
+                        <div class="col">You are about to delete this Task.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn" id="button" type="button"  (click)="deleteTask()">Delete</button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

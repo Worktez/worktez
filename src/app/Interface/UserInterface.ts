@@ -16,3 +16,19 @@ export interface UserAppSetting extends User {
     LinkedInProfile: string;
     DateOfJoining: string;
 }
+
+export const defaultUser = {
+    uid: "defaultUser",
+    photoURL: "../../../assets/defaultavatar.jpg",
+    displayName: "Default User",
+    email: "defaultUser@worktez.com",
+    phoneNumber: null,
+    providerId: "worktez",
+    AppKey: "",
+    TeamId: "",
+    AboutMe: "",
+    AppTheme: "",
+    GithubProfile: "",
+    LinkedInProfile: "",
+    DateOfJoining: "",
+};

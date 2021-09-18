@@ -1,5 +1,5 @@
 #button {
-    background-color: #16C85A;
+    background-color: var(--secondary-color);
     color: white;
     height: 30px;
     font-size: 12px;
@@ -7,5 +7,5 @@
 
 #button:hover,
 #button:active {
-    background-color: #5A20F0;
+    background-color: var(--primary-color);
 }

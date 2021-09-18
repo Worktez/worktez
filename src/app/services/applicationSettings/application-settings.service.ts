@@ -9,7 +9,6 @@ import { BackendService } from '../backend/backend.service';
   providedIn: 'root'
 })
 
-
 export class ApplicationSettingsService {
   public editedTeamId: string = "";
   public editedSprintId: number = 0;

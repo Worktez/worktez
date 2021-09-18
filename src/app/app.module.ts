@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -69,6 +68,10 @@ import { ColumnChartComponent } from './body/common-tools/column-chart/column-ch
 import { SelectDropdownComponent } from './body/board/performance-column-chart/select-dropdown/select-dropdown.component';
 import { FooterComponent } from './footer/footer.component';
 import { ActivityComponent } from './body/task-details/activity/activity.component';
+import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
+import { Patch4Component } from './patches/patch4/patch4.component';
+import { WarningComponent } from './body/common-tools/warning/warning.component';
+import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
 
 
 @NgModule({
@@ -126,7 +129,11 @@ import { ActivityComponent } from './body/task-details/activity/activity.compone
     ColumnChartComponent,
     SelectDropdownComponent,
     FooterComponent,
-    ActivityComponent
+    ActivityComponent,
+    ViewOrganizationDetailsComponent,
+    Patch4Component,
+    WarningComponent,
+    DifficultyIconsComponent
   ],
   imports: [
     BrowserModule,
