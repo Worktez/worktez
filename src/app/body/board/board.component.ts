@@ -42,7 +42,7 @@ export class BoardComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.AppKey) {
           this.accessLevel = 1;
-          if (this.applicationSettingsService.edited) {
+          if (this.applicationSettingsService.editedTeamId != data.TeamId && this.applicationSettingsService.editedTeamId != "") {
             this.selectedTeamId = this.applicationSettingsService.editedTeamId;
           } else {
             this.selectedTeamId = data.TeamId;
@@ -65,7 +65,7 @@ export class BoardComponent implements OnInit {
       this.teamData = teams;
       teams.forEach(element => {
         if (element.TeamId == this.selectedTeamId) {
-          if (this.applicationSettingsService.edited && this.changeTeam == false) {
+          if (this.applicationSettingsService.editedSprintId != element.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
             this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
             this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
           } else {
@@ -84,12 +84,10 @@ export class BoardComponent implements OnInit {
   getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
-    this.applicationSettingsService.edited = true;
     this.applicationSettingsService.editedTeamId = teamId;
     this.selectedTeamId = teamId;
     this.changeTeam = true;
     this.readApplicationData();
-    // this.readSprintData();
   }
 
   readSprintData() {
@@ -120,7 +118,6 @@ export class BoardComponent implements OnInit {
     console.log(filterSprintNumber);
     this.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.teamCurrentSprintNumber;
-    this.applicationSettingsService.edited = true;
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }

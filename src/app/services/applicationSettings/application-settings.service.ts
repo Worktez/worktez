@@ -10,9 +10,7 @@ import { BackendService } from '../backend/backend.service';
 })
 
 
-
 export class ApplicationSettingsService {
-  public edited: boolean = false;
   public editedTeamId: string = "";
   public editedSprintId: number = 0;
 
