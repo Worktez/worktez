@@ -27,16 +27,16 @@ export class ToolsService {
   }
 
   getEmailString(email: string){
+    if(email == undefined)
+      return undefined;
+    
     let startindex = email.indexOf('<')
     let endindex = email.indexOf('>')
-
     if(startindex > -1 && endindex > -1) {
       return email.substring(startindex+1,endindex);
-    } else if(email) {
+    } else {
         return email;
-      } else {
-        return undefined;
-      }  
+    }
   }
 
   getFormattedDate() {
