@@ -12,6 +12,16 @@
     background-color: var(--primary-color);
 }
 
+#button,
+#dropdownButton {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+#filterSprintNumberInput {
+    background-color: var(--primary-bg);
+}
+
 select:focus,
 input:focus,
 .btn:hover {
