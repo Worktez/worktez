@@ -38,9 +38,7 @@ body {
     --primary-border: 0px solid #546e7a;
     --hover: #fbaa1a;
     --box-shadow-top: 0px 0px 3.5px 0px #20282E;
-    --box-shadow-bottom: 0px 0px 3.5px 0px #20282E;
-    --box-shadow-top: 0px 0px 2px 0px #20282E;
-    --box-shadow-bottom: 0px 0px 2px 0px #20282E;
+    --box-shadow-bottom: 0px 0px 3.5px 0px #20282E
     --button-bg: #dc3226;
     --button-hover-bg: #fbaa1a;
     --progress-bg: #E9ECEF;
