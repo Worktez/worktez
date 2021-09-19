@@ -1,0 +1,45 @@
+<ng-container *ngIf="patches | async; else loader">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="1">Patch No.</th>
+                    <th colspan="1">Creation Date</th>
+                    <th colspan="1" style="width: 10%;">Name</th>
+                    <th colspan="1">Description</th>
+                    <th colspan="1">Updated On</th>
+                    <th colspan="1">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="(patches|async).length==0">
+                    <tr>
+                        <td colspan="9" class="text-center">No patches available</td>
+                    </tr>
+                </ng-container>
+                <ng-container *ngFor="let patch of patches|async ; let i=index">
+                    <tr>
+                        <td colspan="1">
+                            {{i + 1}}
+                        </td>
+                        <td colspan="1">
+                            {{patch.CreationDate}}
+                        </td>
+                        <td colspan="1" style="width: 10%;">{{patch.Name}}</td>
+                        <td colspan="1">{{patch.Description}}</td>
+                        <td colspan="1">{{patch.UpdatedOn}}</td>
+                        <td colspan="1" class="editButton">
+                            <span type="button" class="btn material-icons " data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter" title="Edit" (click)="editPatches(patch.PatchId)">edit</span>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</ng-container>
+<ng-container *ngIf="editPatchEnabled" id="exampleModalCenterLabel">
+    <app-edit-patch [patch]="EditedName" (editPatchCompleted)="editPatchCompleted($event)"></app-edit-patch>
+</ng-container>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
