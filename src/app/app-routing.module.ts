@@ -17,6 +17,7 @@ import { UserVerificationComponent } from './user-verification/user-verification
 import { ProfileComponent } from './body/profile/profile.component';
 import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
+import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 
@@ -42,7 +43,8 @@ const routes: Routes = [
   { path: 'UpdateTeam/:teamId', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ListPatches', component: ListPatchesComponent}, 
-  { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
+  { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
+  { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];
 
 @NgModule({
