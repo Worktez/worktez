@@ -46,6 +46,7 @@ export class PatchCardsComponent implements OnInit {
     this.EditedName = name;
     this.editPatchEnabled = true;
   }
+  
   editPatchCompleted(data: { completed: boolean }) {
     this.editPatchEnabled = false;
   }
