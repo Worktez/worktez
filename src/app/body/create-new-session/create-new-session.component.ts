@@ -82,7 +82,7 @@ export class CreateNewSessionComponent implements OnInit {
     }); 
   }
   async submit() {
-    this.assigneeName = this.toolsService.userName(this.assigneeName);
+    this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },

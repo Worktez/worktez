@@ -57,7 +57,7 @@ export class EditPageComponent implements OnInit {
 
   async submit() {
     if(this.editTask.Assignee!==this.previousAssignee){
-    this.editTask.Assignee = this.toolsService.userName(this.editTask.Assignee);
+    this.editTask.Assignee = this.toolsService.getEmailString(this.editTask.Assignee);
     }
     let data = [{ label: "priority", value: this.editTask.Priority },
     { label: "estimatedTime", value: this.editTask.EstimatedTime },

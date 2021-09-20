@@ -26,10 +26,17 @@ export class ToolsService {
     return this.todayTime = hh + ":" + mn + ":" + ss;
   }
 
-  userName(name: string){
-    let startindex = name.indexOf('<')
-    let endindex = name.indexOf('>')
-    return name.substring(startindex+1,endindex);
+  getEmailString(email: string){
+    if(email == undefined)
+      return undefined;
+    
+    let startindex = email.indexOf('<')
+    let endindex = email.indexOf('>')
+    if(startindex > -1 && endindex > -1) {
+      return email.substring(startindex+1,endindex);
+    } else {
+        return email;
+    }
   }
 
   getFormattedDate() {

@@ -133,9 +133,9 @@ export class TasksComponent implements OnInit {
 
   fullSprintName(sprintNumber: number) {
     if (sprintNumber == -1) {
-      return "Backlog"
+      return "S" + sprintNumber
     } else if (sprintNumber == -2) {
-      return "Deleted"
+      return "S" + sprintNumber
     } else {
       return "S" + sprintNumber
     }
