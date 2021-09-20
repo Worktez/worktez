@@ -27,7 +27,6 @@ export class EditPageComponent implements OnInit {
   enableLoader: boolean = false;
   todayDate: string
   time: string
-  type: string
   changedData: string = ""
   prevVal = []
   newVal = []
@@ -114,12 +113,11 @@ export class EditPageComponent implements OnInit {
 
       console.log(this.editTask.SprintNumber);
       if (!(this.task.Status === "Completed")) {
-        const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.type}).toPromise();
+        const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
         this.enableLoader = false;
         this.showClose = true;
-        // this.editTaskDone();
       }
       else {
         console.log("Task is Completed , Cannot Update");

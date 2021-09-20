@@ -94,9 +94,7 @@ export class CreateNewSessionComponent implements OnInit {
     { label: "assignee", value: this.assigneeName },
     { label: "creationDate", value: this.todayDate },
     { label: "sprintNumber", value: this.sprintNumber },
-    { label: "storyPoint", value: this.storyPoint },
-    // { label: "type", value: this.type}
-    ];
+    { label: "storyPoint", value: this.storyPoint }];
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
