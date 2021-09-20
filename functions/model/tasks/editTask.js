@@ -28,6 +28,7 @@ exports.editTask = function(request, response) {
     const previousSprintName = createSprintName(previousId);
     const taskId = request.body.data.Id;
     const editedSprintName = createSprintName(editedSprintNumber);
+    const type = request.body.data.Type;
     let result;
     let status = 200;
     const date = request.body.data.Date;
@@ -108,6 +109,7 @@ exports.editTask = function(request, response) {
             EstimatedTime: estimatedTime,
             SprintNumber: editedSprintNumber,
             StoryPointNumber: storyPointNumber,
+            Type: type,
         };
         updateTask(updateTaskJson, orgDomain, taskId);
 

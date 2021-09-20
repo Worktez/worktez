@@ -32,6 +32,7 @@ exports.createNewTask = function(request, response) {
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
     const fullSprintName = createSprintName(sprintNumber);
+    const type = request.body.data.Type;
     const loggedWorkTotalTime = 0;
     const workDone = 0;
     let taskId;
@@ -56,7 +57,7 @@ exports.createNewTask = function(request, response) {
             };
             updateTeamDetails(updateTeamJson, orgDomain, project);
 
-            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId);
+            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
 

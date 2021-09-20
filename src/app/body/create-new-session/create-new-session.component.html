@@ -109,6 +109,17 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="input" class="form-label">Type</label>
+                        <input type="text" class="form-control" [(ngModel)]="type" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
+                        <datalist id="typeSuggestion">
+                            <option>Bug</option>
+                            <option>Feature</option>
+                            <option>UI</option>
+                            </datalist>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-sm-10 blank"></div>
                     <div class="form-group col-sm-2 pt-4">
                         <span class="align-bottom" class="justify-content-end">

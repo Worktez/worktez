@@ -27,6 +27,7 @@ export class EditPageComponent implements OnInit {
   enableLoader: boolean = false;
   todayDate: string
   time: string
+  type: string
   changedData: string = ""
   prevVal = []
   newVal = []
@@ -46,7 +47,7 @@ export class EditPageComponent implements OnInit {
 
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
-    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber];
+    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type];
   }
   readTeamMembers(teamId :string){
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
@@ -70,7 +71,7 @@ export class EditPageComponent implements OnInit {
       return res;
     });
     if (condition) {
-      this.newVal = [this.editTask.Description, this.editTask.Assignee, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber];
+      this.newVal = [this.editTask.Description, this.editTask.Assignee, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber, this.editTask.Type];
       this.generateChanges();
       console.log("Inputs are valid");
       this.editPage();
@@ -93,6 +94,8 @@ export class EditPageComponent implements OnInit {
       this.changedData = this.changedData + " difficulty,";
     if (this.prevVal[5] != this.newVal[5])
       this.changedData = this.changedData + " story-point,";
+    if (this.prevVal[6] != this.newVal[6])
+      this.changedData = this.changedData + " type,";
     if (this.changedData != "")
       this.changedData = "Edited-" + this.changedData;
     this.changedData = this.changedData.substring(0, this.changedData.length - 1) + "."
@@ -111,7 +114,7 @@ export class EditPageComponent implements OnInit {
 
       console.log(this.editTask.SprintNumber);
       if (!(this.task.Status === "Completed")) {
-        const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid }).toPromise();
+        const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.type}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
         this.enableLoader = false;

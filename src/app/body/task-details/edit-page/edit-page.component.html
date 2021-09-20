@@ -100,14 +100,14 @@
                                         <span class="header">Assignee:</span>
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control" [(ngModel)]="editTask.Assignee" [ngModelOptions]="{standalone: true}"  list="assigneeSuggestion">
+                                        <input type="text" class="form-control" [(ngModel)]="editTask.Assignee" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion">
                                         <datalist id="assigneeSuggestion">
                                         <ng-container *ngFor='let item of teamMembers'>
                                             <option>
                                                 <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
                                             </option>
                                         </ng-container>
-                                        </datalist>   
+                                        </datalist>
                                     </div>
                                 </div>
                                 <hr>
@@ -132,6 +132,20 @@
                                         <span class="header">Project :</span>
                                     </div>
                                     <div class="col" id="creatorEditPageTask">{{editTask.Project}}</div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Type:</span>
+                                    </div>
+                                    <div class="col" id="creatorEditPageTask">
+                                        <input type="text" class="form-control" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
+                                        <datalist id="typeSuggestion">
+                                            <option>Bug</option>
+                                            <option>Feature</option>
+                                            <option>UI</option>
+                                        </datalist>
+                                    </div>
                                 </div>
                                 <hr>
                             </div>
