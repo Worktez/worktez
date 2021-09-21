@@ -165,28 +165,18 @@
             <div class="container" id="activityNav">
                 <ul class="nav nav-tab" id="myTab" role="tablist">
                     <li class="nav-item  ml-3">
-                        <span class="py-2" id="all-activities-tab" data-toggle="tab" data-target="#all-activities" style="font-size: 17px;" role="tab" aria-controls="all-activities" aria-selected="true" (click)="changeType('All')" [ngClass]="{'btn': true ,'button-active': activeAllBtn}">All Activities</span>
+                        <span class="py-2" id="all-activities-tab" data-toggle="tab" data-target="#activities" style="font-size: 17px;" role="tab" aria-controls="all-activities" aria-selected="true" (click)="changeType('All')" [ngClass]="{'btn': true ,'button-active': activeAllBtn}">All Activities</span>
                     </li>
                     <li class="nav-item  ml-3">
-                        <span class="py-2" id="log-work-tab" data-toggle="tab" data-target="#log-work" role="tab" aria-controls="log-work" aria-selected="false" style="font-size: 17px;" (click)="changeType('LOGWORK_COMMENT')" [ngClass]="{'btn': true ,'button-active': activeLogWorkBtn}">Log Works</span>
+                        <span class="py-2" id="log-work-tab" data-toggle="tab" data-target="#activities" role="tab" aria-controls="log-work" aria-selected="false" style="font-size: 17px;" (click)="changeType('LOGWORK_COMMENT')" [ngClass]="{'btn': true ,'button-active': activeLogWorkBtn}">Log Works</span>
                     </li>
                     <li class="nav-item  ml-3">
-                        <span class="py-2" id="edit-tab" data-toggle="tab" data-target="#edit" role="tab" aria-controls="contact" aria-selected="false" style="font-size: 17px;" (click)="changeType('EDITED')" [ngClass]="{'btn': true ,'button-active': activeEditBtn}">Edits</span>
+                        <span class="py-2" id="edit-tab" data-toggle="tab" data-target="#activities" role="tab" aria-controls="contact" aria-selected="false" style="font-size: 17px;" (click)="changeType('EDITED')" [ngClass]="{'btn': true ,'button-active': activeEditBtn}">Edits</span>
                     </li>
                 </ul>
             </div>
             <div class="tab-content pb-3" id="myTabContent" *ngIf="showContent; else loader">
-                <div class="tab-pane fade show active px-2" id="all-activities" role="tabpanel" aria-labelledby="all-activities-tab">
-                    <ng-container *ngFor="let activity of activityData | async">
-                        <app-activity [activity]="activity"></app-activity>
-                    </ng-container>
-                </div>
-                <div class="tab-pane fade px-2" id="log-work" role="tabpanel" aria-labelledby="log-work-tab">
-                    <ng-container *ngFor="let activity of activityData | async">
-                        <app-activity [activity]="activity"></app-activity>
-                    </ng-container>
-                </div>
-                <div class="tab-pane fade px-2" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+                <div class="tab-pane fade show active px-2" id="activities" role="tabpanel" aria-labelledby="all-activities-tab">
                     <ng-container *ngFor="let activity of activityData | async">
                         <app-activity [activity]="activity"></app-activity>
                     </ng-container>
