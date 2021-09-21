@@ -30,11 +30,7 @@ export class EditPatchComponent implements OnInit {
     this.editPatchCompleted.emit({ completed: true });
   }
   
-  async submit(){    
-    this.editPage();
-  }
-
-  async editPage(){
+  async submit(){
     const callable = this.functions.httpsCallable('patch');
     this.enableLoader = true;
     try{

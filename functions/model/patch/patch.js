@@ -33,7 +33,6 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {
-            console.log("edit");
             return editPatch(request, response);
         }
     });

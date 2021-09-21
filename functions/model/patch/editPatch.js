@@ -1,18 +1,18 @@
 const { updatePatchData, getPatchData } = require("./lib");
 
 exports.editPatch = function(request, response) {
-    const Name = request.body.data.Name;
-    const Description = request.body.data.Description;
-    const PatchId = request.body.data.Id;
+    const name = request.body.data.Name;
+    const description = request.body.data.Description;
+    const patchId = request.body.data.Id;
     let status = 200;
 
-    const editPatchPromise = getPatchData(PatchId).then((patch) => {
+    const editPatchPromise = getPatchData(patchId).then((patch) => {
         if (patch != undefined) {
             const updatePatchJson = {
-                Name: Name,
-                Description: Description,
+                Name: name,
+                Description: description,
             };
-            updatePatchData(PatchId, updatePatchJson)
+            updatePatchData(patchId, updatePatchJson)
         }
     }).catch((error) => {
         status = 500;
