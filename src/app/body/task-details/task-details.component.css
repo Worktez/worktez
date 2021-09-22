@@ -59,12 +59,12 @@
 .options {
     /* background-color: var(--secondary-bg); */
     color: var(--button-text);
+    cursor: pointer;
 }
 
 #myTab {
     background-color: var(--primary-color);
     color: var(--button-text);
-    cursor: pointer;
 }
 
 @media (max-width: 991px) {

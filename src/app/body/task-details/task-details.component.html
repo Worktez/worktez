@@ -172,6 +172,11 @@
             <ng-container *ngIf="activityData | async ;else loader">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active px-2" id="activities" role="tabpanel" aria-labelledby="all-activities-tab">
+                        <ng-container *ngIf="(activityData|async).length==0">
+                            <div class="row">
+                                <div class="col text-center pt-2">No Activity Available.</div>
+                            </div>
+                        </ng-container>
                         <ng-container *ngFor="let activity of activityData | async">
                             <app-activity [activity]="activity"></app-activity>
                         </ng-container>
