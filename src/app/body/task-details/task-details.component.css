@@ -43,10 +43,6 @@
     color: var(--text);
 }
 
-#myTabContent {
-    background-color: var(--secondary-bg);
-}
-
 #idTaskDescription {
     color: var(--primary-color);
     font-weight: bold;
@@ -60,13 +56,15 @@
     font-size: 20px;
 }
 
-#activityNav {
-    background-color: var(--primary-color);
+.options {
+    /* background-color: var(--secondary-bg); */
+    color: var(--button-text);
 }
 
-.button-active {
-    background-color: var(--secondary-bg);
-    color: var(--text);
+#myTab {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+    cursor: pointer;
 }
 
 @media (max-width: 991px) {
