@@ -28,7 +28,6 @@ export class AddMemberComponent implements OnInit {
   constructor(public backendService: BackendService,private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-    this.organizationDomain = this.backendService.getOrganizationDomain();
   }
 
   submit() {
@@ -40,6 +39,7 @@ export class AddMemberComponent implements OnInit {
   }
 
 async addUpdateTeam() {
+  this.organizationDomain = this.backendService.getOrganizationDomain();
   this.enableLoader = true;
   const callable = this.functions.httpsCallable('teams');
   try {
