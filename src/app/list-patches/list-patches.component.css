@@ -17,3 +17,11 @@ input:focus,
 .btn:hover {
     background-color: var(--secondary-color);
 }
+
+#patchHeader {
+    display: flex;
+}
+
+#patchHeader span {
+    margin-left: 92%;
+}

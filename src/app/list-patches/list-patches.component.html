@@ -1,19 +1,23 @@
 <div id="taskPage">
     <div class="container">
-        <div class="row align-items-center py-2" id="navbarMenu">
-            <div class="col-9 col-md-10">
+        <div class="row py-2" id="navbarMenu">
+            <div class="col-8 col-md-11" id="patchHeader">
                 <h5 style="font-weight:bolder">Patches</h5>
+                <span type="button" class="btn material-icons" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter" title="Add" (click)="addPatch()">add</span>
             </div>
         </div>
-        <div class="row pt-1">
-            <ng-container *ngIf="items | async">
-                <div class="col">
-                    <app-patch-cards [patch]="items"></app-patch-cards>
+        <div class=" row pt-1 ">
+            <ng-container *ngIf="items | async ">
+                <div class="col ">
+                    <app-patch-cards [patch]="items "></app-patch-cards>
                 </div>
             </ng-container>
         </div>
     </div>
 </div>
-<ng-container *ngIf="!(items | async)">
+<ng-container *ngIf="!(items | async) ">
     <app-loader></app-loader>
+</ng-container>
+<ng-container *ngIf="addPatches==true">
+    <app-add-patch></app-add-patch>
 </ng-container>
