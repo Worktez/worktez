@@ -75,6 +75,7 @@ import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-ic
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
 import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.component';
+import { AddPatchComponent } from './list-patches/add-patch/add-patch.component';
 
 
 @NgModule({
@@ -139,7 +140,8 @@ import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.compone
     DifficultyIconsComponent,
     ListPatchesComponent,
     PatchCardsComponent,
-    EditPatchComponent
+    EditPatchComponent,
+    AddPatchComponent
   ],
   imports: [
     BrowserModule,
