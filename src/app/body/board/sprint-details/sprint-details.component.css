@@ -7,6 +7,12 @@
 
 .card-header {
     background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.card-body {
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 #button,
