@@ -168,10 +168,32 @@
                 </div>
             </div>
         </div>
-        <h5 class="py-3 activityHeading">Activity</h5>
-        <ng-container *ngFor="let activity of activityData | async">
-            <app-activity [activity]="activity"></app-activity>
-        </ng-container>
+        <div class="my-4 card pb-3">
+            <nav class="pt-2 px-2" id="myTab">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All Activities</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('EDITED')">Edits</a>
+                </div>
+            </nav>
+            <ng-container *ngIf="activityData | async ;else loader">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active px-2" id="activities" role="tabpanel" aria-labelledby="all-activities-tab">
+                        <ng-container *ngIf="(activityData|async).length==0">
+                            <div class="row">
+                                <div class="col text-center pt-2">No Activity Available.</div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngFor="let activity of activityData | async">
+                            <app-activity [activity]="activity"></app-activity>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <ng-template #loader>
+            <app-loader></app-loader>
+        </ng-template>
     </div>
     <ng-container *ngIf="logWorkEnabled" id="exampleModalLabel">
         <app-log-work [task]="task" (logWorkCompleted)="logWorkCompleted($event)"></app-log-work>
