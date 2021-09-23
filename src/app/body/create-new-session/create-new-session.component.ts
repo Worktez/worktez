@@ -48,6 +48,7 @@ export class CreateNewSessionComponent implements OnInit {
   statusLabels: string[]
   priorityLabels: string[]
   difficultyLabels: string[]
+  taskLabels: string[]
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public cloneTask: CloneTaskService, public applicationSetting: ApplicationSettingsService) { }
   ngOnInit(): void {
@@ -74,6 +75,7 @@ export class CreateNewSessionComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.priorityLabels = teams[0].PriorityLabels;
           this.statusLabels = teams[0].StatusLabels;
+          this.taskLabels = teams[0].TaskLabels;
           this.difficultyLabels = teams[0].DifficultyLabels;
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
