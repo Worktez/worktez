@@ -1,5 +1,5 @@
 #loginContainer {
-    border: var(--primary-border);
+    box-shadow: var(--box-shadow-bottom);
     background-color: var(--secondary-bg);
 }
 
