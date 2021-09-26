@@ -7,7 +7,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-const { setTeam, getTeam} = require("./lib");
+const { setTeam, getTeam } = require("./lib");
 const { getOrg, updateOrg } = require("../organization/lib");
 const { setSprint } = require("../sprints/lib");
 
@@ -17,7 +17,7 @@ exports.createTeam = function(request, response) {
     const teamDescription = request.body.data.TeamDescription;
     const teamManagerEmail = request.body.data.TeamManagerEmail;
     const teamMembers = request.body.data.TeamMembers;
-    const taskLabels = request.body.data.TaskLabels;
+    const typeLabels = request.body.data.TypeLabels;
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
@@ -44,9 +44,9 @@ exports.createTeam = function(request, response) {
             if (team == undefined) {
                 console.log(orgId);
 
-                setTeam(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, taskLabels, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
+                setTeam(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, typeLabels, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
             } else {
-                status=500;
+                status = 500;
                 result = { data: "Error: Team Exists! Use update team" };
                 console.log("Error: Team Exists! Use update team");
             }
@@ -72,7 +72,7 @@ exports.createTeam = function(request, response) {
 
     const Promises = [promise1, promise2];
     return Promise.all(Promises).then(() => {
-            if (status != 500 ) {
+            if (status != 500) {
                 result = { data: "Team Created Successfully" };
                 console.log("Team Created Successfully");
             }

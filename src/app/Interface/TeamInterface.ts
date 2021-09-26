@@ -18,7 +18,7 @@ export interface Team {
     TeamDescription: string;
     TeamManagerEmail: string;
     TeamMembers: string[];
-    TaskLabels: string[];
+    TypeLabels: string[];
     StatusLabels: string[];
     PriorityLabels: string[];
     DifficultyLabels: string[];

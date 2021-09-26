@@ -6,11 +6,11 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { updateTeamDetails, getTeam} = require("./lib");
+const { updateTeamDetails, getTeam } = require("./lib");
 
 exports.updateTeam = function(request, response) {
     const teamDescription = request.body.data.TeamDescription;
-    const taskLabels = request.body.data.TaskLabels;
+    const typeLabels = request.body.data.TypeLabels;
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
@@ -25,7 +25,7 @@ exports.updateTeam = function(request, response) {
         if (team.exist) {
             const updateJson = {
                 TeamDescription: teamDescription,
-                TaskLabels: taskLabels,
+                TypeLabels: typeLabels,
                 StatusLabels: statusLabels,
                 PriorityLabels: priorityLabels,
                 DifficultyLabels: difficultyLabels,
