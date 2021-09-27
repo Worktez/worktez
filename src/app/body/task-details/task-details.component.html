@@ -1,4 +1,4 @@
-<ng-container *ngIf="(taskDataObservable | async) && (activityData | async)" class="task-position">
+<ng-container *ngIf="(taskDataObservable | async)" class="task-position">
     <div class="container">
         <div class="card" id="cardDescription">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -167,6 +167,7 @@
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All Activities</a>
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('EDITED')">Edits</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('COMMENT')">Comments</a>
                 </div>
             </nav>
             <ng-container *ngIf="activityData | async ;else loader">
@@ -181,6 +182,19 @@
                             <app-activity [activity]="activity"></app-activity>
                         </ng-container>
                     </div>
+                    <form>
+                        <div class="form-row px-4 pt-4">
+                            <div class="form-group col">
+                                <label for="description" class="form-label">Comment</label>
+                                <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row px-4">
+                            <div class="form-group col">
+                                <button type="submit" class="btn" (click)="addComment()">Add Comment</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </ng-container>
         </div>
