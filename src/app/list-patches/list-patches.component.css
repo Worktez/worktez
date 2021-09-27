@@ -12,18 +12,16 @@
     background-color: var(--primary-color);
 }
 
-#button,
-#dropdownButton {
-    background-color: var(--button-bg);
-    color: var(--button-text);
-}
-
-#filterSprintNumberInput {
-    background-color: var(--primary-bg);
-}
-
 select:focus,
 input:focus,
 .btn:hover {
     background-color: var(--secondary-color);
+}
+
+#patchHeader {
+    display: flex;
+}
+
+#patchHeader span {
+    margin-left: 92%;
 }

@@ -1,0 +1,84 @@
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl p-0" role="document">
+        <div class="modal-content">
+            <nav class="modal-header navbar navbar-expand-xl navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link head" id="exampleModalCenterLabel">Add New Patch</h5>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            
+                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close">close</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <div class="container modal-body" id="editPageTaskContainer">
+                <form *ngIf="!showClose" (ngSubmit)="createNewPatch(form.value)" #form="ngForm">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Name:</span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" autocomplete="off" name="name" class="form-control" ngModel>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Description:</span>
+                                    </div>
+                                    <hr>
+                                    <textarea type="text" autocomplete="off" name="description" class="form-control" rows="6" cols="20" ngModel></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Created On:</span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" readonly class="form-control" [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="header">Updated On:</span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" readonly class="form-control" [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2"><button type="submit" class="btn" id="button" [disabled]="enableLoader">Submit</button></div>
+                    </div>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row">
+                        <div class="col">Successfully Added!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -71,6 +71,11 @@ import { ActivityComponent } from './body/task-details/activity/activity.compone
 import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
 import { Patch4Component } from './patches/patch4/patch4.component';
 import { WarningComponent } from './body/common-tools/warning/warning.component';
+import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
+import { ListPatchesComponent } from './list-patches/list-patches.component';
+import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
+import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.component';
+import { AddPatchComponent } from './list-patches/add-patch/add-patch.component';
 
 
 @NgModule({
@@ -131,7 +136,12 @@ import { WarningComponent } from './body/common-tools/warning/warning.component'
     ActivityComponent,
     ViewOrganizationDetailsComponent,
     Patch4Component,
-    WarningComponent
+    WarningComponent,
+    DifficultyIconsComponent,
+    ListPatchesComponent,
+    PatchCardsComponent,
+    EditPatchComponent,
+    AddPatchComponent
   ],
   imports: [
     BrowserModule,

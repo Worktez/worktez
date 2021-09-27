@@ -161,58 +161,28 @@
                 </div>
             </div>
         </div>
-        <div class="my-4 card">
-            <div class="container" id="activityNav">
-                <ul class="nav nav-tab" id="myTab" role="tablist">
-                    <li class="nav-item  ml-3">
-                        <span class="py-2" id="all-activities-tab" data-toggle="tab" data-target="#all-activities" style="font-size: 17px;" role="tab" aria-controls="all-activities" aria-selected="true" (click)="changeType('All')" [ngClass]="{'btn': true ,'button-active': activeAllBtn}">All Activities</span>
-                    </li>
-                    <li class="nav-item  ml-3">
-                        <span class="py-2" id="log-work-tab" data-toggle="tab" data-target="#log-work" role="tab" aria-controls="log-work" aria-selected="false" style="font-size: 17px;" (click)="changeType('LOGWORK_COMMENT')" [ngClass]="{'btn': true ,'button-active': activeLogWorkBtn}">Log Works</span>
-                    </li>
-                    <li class="nav-item  ml-3">
-                        <span class="py-2" id="edit-tab" data-toggle="tab" data-target="#edit" role="tab" aria-controls="contact" aria-selected="false" style="font-size: 17px;" (click)="changeType('EDITED')" [ngClass]="{'btn': true ,'button-active': activeEditBtn}">Edits</span>
-                    </li>
-                    <li class="nav-item  ml-3">
-                        <span class="py-2" id="comment-tab" data-toggle="tab" data-target="#comment" role="tab" aria-controls="comment" aria-selected="false" style="font-size: 17px;" (click)="changeType('COMMENT')" [ngClass]="{'btn': true ,'button-active': activeCommentBtn}">Comments</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-content pb-3" id="myTabContent" *ngIf="showContent; else loader">
-                <div class="tab-pane fade show active px-2" id="all-activities" role="tabpanel" aria-labelledby="all-activities-tab">
-                    <ng-container *ngFor="let activity of activityData | async">
-                        <app-activity [activity]="activity"></app-activity>
-                    </ng-container>
+        <div class="my-4 card pb-3">
+            <nav class="pt-2 px-2" id="myTab">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All Activities</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('EDITED')">Edits</a>
                 </div>
-                <div class="tab-pane fade px-2" id="log-work" role="tabpanel" aria-labelledby="log-work-tab">
-                    <ng-container *ngFor="let activity of activityData | async">
-                        <app-activity [activity]="activity"></app-activity>
-                    </ng-container>
-                </div>
-                <div class="tab-pane fade px-2" id="edit" role="tabpanel" aria-labelledby="edit-tab">
-                    <ng-container *ngFor="let activity of activityData | async">
-                        <app-activity [activity]="activity"></app-activity>
-                    </ng-container>
-                </div>
-                <div class="tab-pane fade px-2" id="comment" role="tabpanel" aria-labelledby="comment-tab">
-                    <ng-container *ngFor="let activity of activityData | async">
-                        <app-activity [activity]="activity"></app-activity>
-                    </ng-container>
-                </div>
-                <form>
-                    <div class="form-row px-4 pt-4">
-                        <div class="form-group col">
-                            <label for="description" class="form-label">Comment</label>
-                            <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
-                        </div>
+            </nav>
+            <ng-container *ngIf="activityData | async ;else loader">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active px-2" id="activities" role="tabpanel" aria-labelledby="all-activities-tab">
+                        <ng-container *ngIf="(activityData|async).length==0">
+                            <div class="row">
+                                <div class="col text-center pt-2">No Activity Available.</div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngFor="let activity of activityData | async">
+                            <app-activity [activity]="activity"></app-activity>
+                        </ng-container>
                     </div>
-                    <div class="form-row px-4">
-                        <div class="form-group col">
-                            <button type="submit" class="btn" (click)="addComment()">Add Comment</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </ng-container>
         </div>
         <ng-template #loader>
             <app-loader></app-loader>
