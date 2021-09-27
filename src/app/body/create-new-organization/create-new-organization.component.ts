@@ -1,8 +1,10 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Location } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,23 +17,68 @@ export class CreateNewOrganizationComponent implements OnInit {
   componentName: string = "CREATE-NEW-ORGANIZATION"
 
   enableLoader: boolean = false
-  step: number = 1
+  logoUploaded: boolean = false
+  orgAdmin: string
+  orgLogo: File = null;
+  orgName: string
   orgDomain: string
+  orgEmail: string
+  orgDescription: string = ""
+  orgLogoURL: string
 
-  constructor(public location: Location, public appSettings: ApplicationSettingsService, public validationService: ValidationService, private functions: AngularFireFunctions, private router: Router) { }
-
+  constructor(public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router) { }
   ngOnInit(): void {
-    if(this.router.url === '/CreateTeam' || this.router.url.startsWith('/UpdateTeam')) {
-      this.step = 2;
+    this.orgAdmin=this.authService.getUserEmail();
+   }
+
+  handleFileInput(files: FileList) {
+    this.orgLogo = files.item(0);
+    const filePath = `OrganizationLogos/${this.orgLogo.name}`;
+    const task = this.fireStorage.upload(filePath, this.orgLogo);
+  }
+
+  uploadLogo() {
+    this.fireStorage.ref(`OrganizationLogos/${this.orgLogo.name}`).getDownloadURL().subscribe(data => {
+      this.orgLogoURL = data
+      this.logoUploaded = true
+    });
+  }
+
+  async submit() {
+    let data = [
+      { label: "organizationName", value: this.orgName },
+      { label: "organizationDomain", value: this.orgDomain },
+      { label: "organizationEmail", value: this.orgEmail },
+    ];
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.createNewOrganization();
+    }
+    else {
+      console.log("Organization not created! Validation error");
     }
   }
 
-  changeStepAndGetOrg(data: { step: number, organizationDomain: string }) {
-    this.step = data.step
-    this.orgDomain = data.organizationDomain
+  async createNewOrganization() {
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('organization');
+    try {
+      const result = await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise();
+      console.log("Successfully created the Organization");
+      console.log(result[0]);
+      this.enableLoader = false;
+      // this.router.navigate(["/MyDashboard"])
+      // this.stepAndOrgDomain.emit({ step: 2, organizationDomain: this.orgDomain })
+    } catch (error) {
+      this.enableLoader = false;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+    }
   }
-  onTeamFormSubmitted(data: { submitted: boolean }) {
-    this.enableLoader = data.submitted
+
+  close() {
+    this.location.back();
   }
 }
-

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
@@ -9,17 +9,14 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-team-details',
-  templateUrl: './team-details.component.html',
-  styleUrls: ['./team-details.component.css']
+  selector: 'app-create-new-team',
+  templateUrl: './create-new-team.component.html',
+  styleUrls: ['./create-new-team.component.css']
 })
-export class TeamDetailsComponent implements OnInit {
-
-  @Input("orgDomain") organizationDomain: string
-  @Output() teamFormSubmitted = new EventEmitter<{ submitted: boolean }>();
-
+export class CreateNewTeamComponent implements OnInit {
   componentName: string = "TEAM-DETAILS"
 
+  organizationDomain: string
   childStep: number = 1
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
@@ -169,7 +166,7 @@ export class TeamDetailsComponent implements OnInit {
 
   async createNewTeamWithLabels() {
     this.enableLoader = true;
-    this.teamFormSubmitted.emit({ submitted: true })
+    // this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('teams');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
@@ -179,7 +176,7 @@ export class TeamDetailsComponent implements OnInit {
       const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       console.log(result);
       this.enableLoader = false;
-      this.teamFormSubmitted.emit({ submitted: false });
+      // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
 
@@ -190,7 +187,7 @@ export class TeamDetailsComponent implements OnInit {
 
   async updateExistingTeam() {
     this.enableLoader = true;
-    this.teamFormSubmitted.emit({ submitted: true })
+    // this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('teams');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
@@ -200,7 +197,7 @@ export class TeamDetailsComponent implements OnInit {
       const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       console.log(result);
       this.enableLoader = false;
-      this.teamFormSubmitted.emit({ submitted: false });
+      // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
 

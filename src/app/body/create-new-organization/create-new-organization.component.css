@@ -1,9 +1,44 @@
-#createNewOrgContainer {
+.input {
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+    width: 100%;
+    border: none;
     box-shadow: var(--box-shadow-top);
+}
+
+#createNewTaskContainer {
+    border: var(--primary-border);
     background-color: var(--secondary-bg);
     color: var(--text);
 }
 
+#important {
+    color: red;
+}
+
+#button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--primary-color);
+    outline: none;
+    box-shadow: none;
+}
+
 #navbarMenu {
     background-color: var(--primary-color);
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+    box-shadow: var(--box-shadow-top);
+    outline: 0 none;
+    border-color: var(--primary-color);
 }

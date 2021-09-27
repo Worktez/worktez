@@ -21,6 +21,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
     const organizationName = data.OrganizationName;
     const orgDomain = data.OrganizationDomain;
     const orgEmail = data.OrganizationEmail;
+    const orgAdmin = data.OrganizationAdmin;
     const orgDescription = data.OrganizationDescription;
     const orgLogoURL = data.OrganizationLogoURL;
     const securityPhrase = generateBase64String(orgId + appKey + organizationName + date.getMilliseconds() + date.getDay());
@@ -29,7 +30,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
 
     const promise1 = getOrg(orgDomain).then((orgDoc) => {
         if (orgDoc == undefined) {
-            setOrg(orgDomain, orgId, appKey, securityPhrase, organizationName, orgEmail, orgDescription, orgLogoURL);
+            setOrg(orgDomain, orgId, appKey, securityPhrase, organizationName, orgEmail, orgAdmin, orgDescription, orgLogoURL);
         }
     }).catch((error) => {
         status = 500;
