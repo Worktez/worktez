@@ -141,7 +141,7 @@
                                     <div class="col" id="creatorEditPageTask">
                                         <input type="text" class="form-control" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
                                         <datalist id="typeSuggestion">
-                                            <ng-container *ngFor='let item of typeLabels '>
+                                            <ng-container *ngFor='let item of type'>
                                                 <option>{{ item }}</option>
                                             </ng-container>
                                         </datalist>

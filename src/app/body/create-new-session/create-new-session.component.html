@@ -111,9 +111,9 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="input" class="form-label">Type</label>
-                        <input type="text" class="form-control" [(ngModel)]="type" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
+                        <input type="text" class="form-control" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
                         <datalist id="typeSuggestion">
-                            <ng-container *ngFor='let item of typeLabels '>
+                            <ng-container *ngFor='let item of type'>
                                 <option>{{ item }}</option>
                             </ng-container>
                         </datalist>

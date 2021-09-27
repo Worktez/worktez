@@ -72,13 +72,13 @@ export class SetupComponent implements OnInit {
   async createNewTeamWithLabels() {
     const callable = this.functions.httpsCallable('teams');
     const priority = ["High", "Medium", "Low"];
-    const typeLabels = ["Bug", "Story", "Sub Task"];
+    const type = ["Bug", "Story", "Sub Task"];
     const status = ["Ice Box", "Ready to Start", "Under Progress", "Blocked", "Completed"];
     const difficulty = ["High", "Medium", "Low"];
 
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Development", TeamId: "Dev", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], TypeLabels: typeLabels, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Development", TeamId: "Dev", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
       console.log(result);
       this.createNewSprint("Development", "Dev");
     } catch (error) {
@@ -86,7 +86,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Marketing", TeamId: "Mar", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], TypeLabels: typeLabels, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Marketing", TeamId: "Mar", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
       console.log(result);
       this.createNewSprint("Marketing", "Mar");
     } catch (error) {

@@ -17,7 +17,7 @@ exports.createTeam = function(request, response) {
     const teamDescription = request.body.data.TeamDescription;
     const teamManagerEmail = request.body.data.TeamManagerEmail;
     const teamMembers = request.body.data.TeamMembers;
-    const typeLabels = request.body.data.TypeLabels;
+    const type = request.body.data.Type;
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
@@ -44,7 +44,7 @@ exports.createTeam = function(request, response) {
             if (team == undefined) {
                 console.log(orgId);
 
-                setTeam(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, typeLabels, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
+                setTeam(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
             } else {
                 status = 500;
                 result = { data: "Error: Team Exists! Use update team" };

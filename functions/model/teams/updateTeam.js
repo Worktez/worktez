@@ -10,7 +10,7 @@ const { updateTeamDetails, getTeam } = require("./lib");
 
 exports.updateTeam = function(request, response) {
     const teamDescription = request.body.data.TeamDescription;
-    const typeLabels = request.body.data.TypeLabels;
+    const type = request.body.data.Type;
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
@@ -25,7 +25,7 @@ exports.updateTeam = function(request, response) {
         if (team.exist) {
             const updateJson = {
                 TeamDescription: teamDescription,
-                TypeLabels: typeLabels,
+                Type: type,
                 StatusLabels: statusLabels,
                 PriorityLabels: priorityLabels,
                 DifficultyLabels: difficultyLabels,

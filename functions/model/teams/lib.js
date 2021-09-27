@@ -9,13 +9,13 @@
 
 const { db } = require("../application/lib");
 
-exports.setTeam = function(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, typeLabels, statusLabels, priorityLabels, difficultyLabels, orgId, teamId) {
+exports.setTeam = function(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId) {
     const setTeam = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).set({
         TeamName: teamName,
         TeamDescription: teamDescription,
         TeamManagerEmail: teamManagerEmail,
         TeamMembers: teamMembers,
-        TypeLabels: typeLabels,
+        Type: type,
         StatusLabels: statusLabels,
         PriorityLabels: priorityLabels,
         DifficultyLabels: difficultyLabels,

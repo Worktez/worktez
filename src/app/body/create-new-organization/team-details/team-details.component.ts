@@ -56,7 +56,7 @@ export class TeamDetailsComponent implements OnInit {
     this.teamId = this.teamName.slice(0, 3);
   }
 
-  typeLabels: string[] = ["Bug", "Story", "Sub Task"]
+  type: string[] = ["Bug", "Story", "Sub Task"]
   statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
@@ -79,7 +79,7 @@ export class TeamDetailsComponent implements OnInit {
     let labelValue = (<HTMLInputElement>event.target).value;
     let isChecked = (<HTMLInputElement>event.target).checked;
     if (labelName === "Task") {
-      this.labelFunc(isChecked, labelValue, this.typeLabels)
+      this.labelFunc(isChecked, labelValue, this.type)
     }
     if (labelName === "Status") {
       this.labelFunc(isChecked, labelValue, this.statusLabels)
@@ -176,7 +176,7 @@ export class TeamDetailsComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.typeLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       console.log(result);
       this.enableLoader = false;
       this.teamFormSubmitted.emit({ submitted: false });
@@ -197,7 +197,7 @@ export class TeamDetailsComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.typeLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       console.log(result);
       this.enableLoader = false;
       this.teamFormSubmitted.emit({ submitted: false });
