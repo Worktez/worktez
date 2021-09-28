@@ -34,7 +34,7 @@
 }
 
 .card {
-    background-color: var(--primary-bg);
+    background-color: var(--secondary-bg);
     box-shadow: var(--box-shadow-bottom);
 }
 
@@ -65,6 +65,15 @@
 #myTab {
     background-color: var(--primary-color);
     color: var(--button-text);
+}
+
+.activeBtn {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#noActivityDesc {
+    color: var(--text);
 }
 
 @media (max-width: 991px) {

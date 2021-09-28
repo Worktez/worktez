@@ -17,6 +17,7 @@ export interface Tasks {
   CompletionDate: string;
   OrganizationId: string;
   TeamId: string;
+  Type: string;
 }
 
 export interface TasksId extends Tasks {id: string;}
