@@ -168,10 +168,11 @@
                 </div>
             </div>
         </div>
+        <h3 class="mt-2" id="noActivityDesc"> Activities </h3>
         <div class="my-4 card pb-3">
             <nav class="pt-2 px-2" id="myTab">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All Activities</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All</a>
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('EDITED')">Edits</a>
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('COMMENT')">Comments</a>
@@ -189,19 +190,21 @@
                             <app-activity [activity]="activity"></app-activity>
                         </ng-container>
                     </div>
-                    <form>
-                        <div class="form-row px-4 pt-4">
-                            <div class="form-group col">
-                                <label for="description" class="form-label">Comment</label>
-                                <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
+                    <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
+                        <form>
+                            <div class="form-row px-4 pt-4">
+                                <div class="form-group col">
+                                    <span for="description" class="py-2" id="noActivityDesc">Comment</span>
+                                    <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row px-4">
-                            <div class="form-group col">
-                                <button type="submit" class="btn" (click)="addComment()">Add Comment</button>
+                            <div class="form-row px-4">
+                                <div class="form-group col">
+                                    <button type="submit" class="btn" (click)="addComment()">Add Comment</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </ng-container>
                 </div>
             </ng-container>
         </div>
