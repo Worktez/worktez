@@ -10,6 +10,7 @@ const { createNewUser } = require("./createNewUser");
 const { updateUser } = require("./updateUser");
 const { updateTheme } = require("./updateTheme");
 const { verifyUser } = require("./verifyUser");
+const { getUserAppSettings } = require("./getUserAppSettings");
 
 exports.users = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -23,6 +24,8 @@ exports.users = functions.https.onRequest((request, response) => {
             return updateTheme(request, response);
         } else if (mode == "verify") {
             return verifyUser(request, response);
+        } else if (mode == "getUserAppSettings") {
+            return getUserAppSettings(request, response);
         }
     });
 });

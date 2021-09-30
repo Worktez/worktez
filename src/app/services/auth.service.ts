@@ -14,9 +14,7 @@ import { map } from 'rxjs/operators';
 })
 
 export class AuthService {
-
   public userAppSettingObservable: Observable<UserAppSetting>;
-  public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -69,21 +67,20 @@ export class AuthService {
 
   getUserSettings() {
     const uid = this.getLoggedInUser(); 
-    var documentName = 'Users/'+uid;
-    this.userAppSettingDocument = this.db.doc<UserAppSetting>(documentName);
-    this.userAppSettingObservable = this.userAppSettingDocument.snapshotChanges().pipe(
-      map(actions => {
-        const data = actions.payload.data() as UserAppSetting;
-        this.userAppSetting = data;
-        if (this.userAppSetting && this.userAppSetting.AppKey != "") {
-          this.backendService.getOrgDetails(this.userAppSetting.AppKey);
-          this.themeService.changeTheme(data.AppTheme);
-        } else {
-          this.organizationAvailable = false;
-        }
-        return { ...data }
-      }));
-      this.completedLoadingApplication = true;
+    const callable = this.functions.httpsCallable('users');
+  
+    this.userAppSettingObservable = callable({ mode: "getUserAppSettings", uid: uid }).pipe(map(res => {
+      const data = res.userData as UserAppSetting;
+      this.userAppSetting = data;
+      if (this.userAppSetting && this.userAppSetting.AppKey != "") {
+        this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+        this.themeService.changeTheme(data.AppTheme);
+      } else {
+        this.organizationAvailable = false;
+      }
+      return { ...data };
+    }));
+    this.completedLoadingApplication =true;
   }
 
   getAppKey() {
