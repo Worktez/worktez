@@ -9,11 +9,7 @@ import { GitData } from '../Interface/githubReleaseData';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  releaseData: string
   tag_name: string
-  id: string
-  created_at: string
-  published_at: string
 
   constructor(private httpService: HttpServiceService) { }
 
@@ -24,9 +20,7 @@ export class FooterComponent implements OnInit {
         return objData;
       })).subscribe(data => {
         this.tag_name = data.tag_name;
-        this.id = data.id;
-        this.created_at = data.created_at;
-        this.published_at = data.published_at;
+        
       });
     } catch (error) {
       
