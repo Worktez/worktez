@@ -21,6 +21,21 @@
                         <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
                         Managed by {{ managerEmail }}
                     </h6>
+                    <h6 class="card-title">
+                        Skills: {{skills}}
+                    </h6>
+                    <h6 class="card-title">
+                        Education: {{education}}
+                    </h6>
+                    <h6 class="card-title">
+                        Experience: {{experience}}
+                    </h6>
+                    <h6 class="card-title">
+                        Projects: {{projects}}
+                    </h6>
+                    <h6 class="card-title">
+                        Website: {{website}}
+                    </h6>
                     <a href="{{githubProfile}}" class="card-link" target="_blank">
                         <app-profile-icons [profileIcon]="'github'"></app-profile-icons>
                     </a>
@@ -40,5 +55,5 @@
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
-    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)"></app-edit-profile>
+    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" (skills)="skills" (education)="education" (experience)="experience" (projects)="projects" (website)="website"></app-edit-profile>
 </ng-container>

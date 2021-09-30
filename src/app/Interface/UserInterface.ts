@@ -15,6 +15,11 @@ export interface UserAppSetting extends User {
     GithubProfile: string;
     LinkedInProfile: string;
     DateOfJoining: string;
+    Skills: string;
+    Education: string;
+    Experience: string;
+    Projects: string;
+    Website: string;
 }
 
 export const defaultUser = {
@@ -31,4 +36,9 @@ export const defaultUser = {
     GithubProfile: "",
     LinkedInProfile: "",
     DateOfJoining: "",
+    Skills: "",
+    Education: "",
+    Experience: "",
+    Projects: "",
+    Website: "",
 };

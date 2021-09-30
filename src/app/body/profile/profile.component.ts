@@ -28,6 +28,11 @@ export class ProfileComponent implements OnInit {
   linkedInProfile: string;
   managerEmail: string;
   dateOfJoining: string;
+  skills: string;
+  education: string;
+  experience: string;
+  projects: string;
+  website: string;
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -75,6 +80,11 @@ export class ProfileComponent implements OnInit {
     this.linkedInProfile = this.authService.userAppSetting.LinkedInProfile;
     this.githubProfile = this.authService.userAppSetting.GithubProfile;
     this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
+    this.skills = this.authService.userAppSetting.Skills;
+    this.education = this.authService.userAppSetting.Education;
+    this.experience = this.authService.userAppSetting.Experience;
+    this.projects = this.authService.userAppSetting.Projects;
+    this.website = this.authService.userAppSetting.Website; 
   }
   
 }

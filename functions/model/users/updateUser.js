@@ -15,6 +15,11 @@ exports.updateUser = function(request, response) {
     const phoneNumber = request.body.data.PhoneNumber;
     const linkedInProfile = request.body.data.LinkedInProfile;
     const githubProfile = request.body.data.GithubProfile;
+    const skills = request.body.data.Skills;
+    const education = request.body.data.Education;
+    const experience = request.body.data.Experience;
+    const projects = request.body.data.Projects;
+    const website = request.body.data.Website;
     let result;
 
     updateUserInputJson = {
@@ -23,6 +28,11 @@ exports.updateUser = function(request, response) {
         phoneNumber: phoneNumber,
         LinkedInProfile: linkedInProfile,
         GithubProfile: githubProfile,
+        Skills: skills,
+        Education: education,
+        Experience: experience,
+        Projects: projects,
+        Website: website,
     };
     updateUser(updateUserInputJson, uid).then(() => {
         result = { data: "User Profile updated successfully" };
