@@ -45,3 +45,10 @@ exports.getTask = function(taskId, orgDomain) {
     });
     return Promise.resolve(getTaskDetails);
 };
+
+exports.getMyDashboardTaskData = function(orgDomain, sprintNumber, userEmail) {
+    const getMyDashBoardDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("Assignee", "==", userEmail).get().then((sprintData) => {
+        return sprintData;
+    });
+    return Promise.resolve(getMyDashBoardDetails);
+};

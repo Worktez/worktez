@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { AuthService } from 'src/app/services/auth.service';
 import { Tasks} from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -19,8 +21,9 @@ export class PerformanceChartComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
   data = [];
+  sprintNumber: number;
   
-  constructor(public db: AngularFirestore, public errorHandlerService: ErrorHandlerService,private backendService: BackendService) { }
+  constructor( private functions: AngularFireFunctions,private authService: AuthService, public db: AngularFirestore, public errorHandlerService: ErrorHandlerService,private backendService: BackendService) { }
 
   ngOnInit(): void {
     this.sprintRange2 = this.currentSprintNumber
@@ -50,15 +53,21 @@ export class PerformanceChartComponent implements OnInit {
   async readData(sprintNumber: number) {
     var storyPoint: number = 0;
     let orgDomain= this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('tasks');
     try {
-      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.userEmail)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach((doc) => {
-            const data = doc.data() as Tasks;
-            const sp = data.StoryPointNumber;
-            storyPoint = storyPoint + sp;
-          });
+      const result = await callable({mode: "getMyDashBoardData", SprintNumber: this.sprintNumber, Email: this.userEmail, OrgDomain: orgDomain }).toPromise()
+        // .then(function (querySnapshot) {
+        //   var docs = querySnapshot.sprintData;
+        //   console.log(docs);
+        //   docs.forEach((doc) => {
+        //     const data = doc.data() as Tasks;
+        //     const sp = data.StoryPointNumber;
+        //     storyPoint = storyPoint + sp;
+        //   });
+        // })
+        console.log(typeof(result));
+        result.sprintData.forEach((doc) => {
+          console.log(doc);
         })
     } catch (error) { 
       console.log(error);
