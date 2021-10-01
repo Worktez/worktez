@@ -8,8 +8,8 @@ export interface User {
 }
 
 export interface UserAppSetting extends User {
-    AppKey: string;
-    TeamId: string;
+    SelectedOrgAppKey: string;
+    SelectedTeamId: string;
     AboutMe: string;
     AppTheme: string;
     GithubProfile: string;

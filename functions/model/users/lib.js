@@ -10,8 +10,8 @@ const { db } = require("../application/lib");
 
 exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, AppKey = "", TeamId = "", AboutMe = "", AppTheme = "theme-light") {
     const userData = db.collection("Users").doc(Uid).set({
-        AppKey: AppKey,
-        TeamId: TeamId,
+        SelectedOrgAppKey: AppKey,
+        SelectedTeamId: TeamId,
         uid: Uid,
         photoURL: PhotoURL,
         displayName: DisplayName,
@@ -54,6 +54,33 @@ exports.getUserUseEmail = function(email) {
         });
         return data();
     });
+
+    return Promise.resolve(promise);
+};
+
+exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams=[], defaultTeam="") {
+    const setMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).set({
+        Uid: Uid,
+        OrgAppKey: orgAppKey,
+        Teams: teams,
+        DefaultTeam: defaultTeam,
+    });
+    return Promise.resolve(setMyOrgPromise);
+};
+
+exports.getMyOrgCollection = function(Uid, orgDomain) {
+    const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
+        if (doc.exists) {
+            return doc.data();
+        } else {
+            return;
+        }
+    });
+    return Promise.resolve(getMyOrgPromise);
+};
+
+exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
+    const promise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).update(inputJson);
 
     return Promise.resolve(promise);
 };

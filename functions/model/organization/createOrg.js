@@ -7,10 +7,8 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 const { functions, getApplicationData, updateApplication, generateBase64String } = require("../application/lib");
-const { getOrgRawData, setOrgRawData } = require("../organization/lib");
-
-const { setOrg } = require("./lib");
-const { getOrg } = require("./lib");
+const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("./lib");
+const { setMyOrgCollection, getMyOrgCollection } = require("../users/lib");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;
@@ -22,6 +20,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
     const orgDomain = data.OrganizationDomain;
     const orgEmail = data.OrganizationEmail;
     const orgAdmin = data.OrganizationAdmin;
+    const orgAdminUid = data.OrganizationAdminUid;
     const orgDescription = data.OrganizationDescription;
     const orgLogoURL = data.OrganizationLogoURL;
     const securityPhrase = generateBase64String(orgId + appKey + organizationName + date.getMilliseconds() + date.getDay());
@@ -55,6 +54,15 @@ exports.createOrg = functions.https.onRequest((request, response) => {
             });
 
             return Promise.resolve(p2);
+        }
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
+    });
+
+    const promise3 = getMyOrgCollection(orgAdminUid, orgDomain).then((orgDoc) => {
+        if (orgDoc == undefined) {
+            setMyOrgCollection(orgAdminUid, orgDomain, appKey);
         }
     }).catch((error) => {
         status = 500;

@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-new-team.component.css']
 })
 export class CreateNewTeamComponent implements OnInit {
-  componentName: string = "TEAM-DETAILS"
+  componentName: string = "CREATE-NEW-TEAM"
 
   organizationDomain: string
   childStep: number = 1
@@ -207,6 +207,7 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   close() {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(["MyDashboard"]);
   }
 }

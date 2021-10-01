@@ -19,6 +19,7 @@ export class CreateNewOrganizationComponent implements OnInit {
   enableLoader: boolean = false
   logoUploaded: boolean = false
   orgAdmin: string
+  orgAdminUid: string
   orgLogo: File = null;
   orgName: string
   orgDomain: string
@@ -28,7 +29,8 @@ export class CreateNewOrganizationComponent implements OnInit {
 
   constructor(public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router) { }
   ngOnInit(): void {
-    this.orgAdmin=this.authService.getUserEmail();
+    this.orgAdmin = this.authService.getUserEmail();
+    this.orgAdminUid = this.authService.getLoggedInUser()
    }
 
   handleFileInput(files: FileList) {
@@ -66,11 +68,11 @@ export class CreateNewOrganizationComponent implements OnInit {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('organization');
     try {
-      const result = await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise();
+      const result = await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise();
       console.log("Successfully created the Organization");
       console.log(result[0]);
       this.enableLoader = false;
-      // this.router.navigate(["/MyDashboard"])
+      this.router.navigate(["CreateNewTeam"]);
       // this.stepAndOrgDomain.emit({ step: 2, organizationDomain: this.orgDomain })
     } catch (error) {
       this.enableLoader = false;
