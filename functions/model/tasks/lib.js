@@ -44,3 +44,23 @@ exports.getTask = function(taskId, orgDomain) {
     });
     return Promise.resolve(getTaskDetails);
 };
+exports.getTasks = function(orgDomain, teamId, sprintNumber) {
+    const getTasks = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).where("SprintNumber", "==", sprintNumber).get().then((task) => {
+        const tempDoc = task.docs.map((doc) => {
+            return doc.data();
+        })
+        return tempDoc;
+    });
+
+    return Promise.resolve(getTasks);
+};
+exports.getTasksCard = function(orgDomain, sprintNumber, userEmail) {
+    const getTasks = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("Assignee", "==", userEmail).where("SprintNumber", "==", sprintNumber).get().then((task) => {
+        const tempDoc = task.docs.map((doc) => {
+            return doc.data();
+        })
+        return tempDoc;
+    });
+
+    return Promise.resolve(getTasks);
+};

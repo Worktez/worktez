@@ -21,7 +21,7 @@
                     <app-filter-task (filterProperty)="applyFilters($event)" [defaultProject]="project"></app-filter-task>
                 </div>
             </ng-container>
-            <ng-container *ngIf="tasksData | async">
+            <ng-container *ngIf="tasksData">
                 <div class="col">
                     <app-task-cards [tasks]="tasksData"></app-task-cards>
                 </div>
@@ -29,6 +29,6 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="!showFilter && !(tasksData | async)">
+<ng-container *ngIf="!showFilter && !(tasksData)">
     <app-loader></app-loader>
 </ng-container>

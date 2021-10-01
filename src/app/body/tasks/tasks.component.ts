@@ -9,6 +9,8 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
   selector: 'app-tasks',
@@ -19,13 +21,14 @@ export class TasksComponent implements OnInit {
 
   componentName: string = "TASKS"
 
+  taskDataObservable : Observable<Tasks>
   currentSprintName: string
   teamId: string
   currentSprintNumber: number
   searchAssignee: string = ""
   tasksCollection: AngularFirestoreCollectionGroup<Tasks>
   tasksData: Observable<TasksId[]>
-
+  orgDomain: string = ""
   filterAssignee: string
   filterPriority: string
   filterDifficulty: string
@@ -35,14 +38,12 @@ export class TasksComponent implements OnInit {
   showFilter: boolean = false
   teamData: TeamDataId[] = [];
   
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public backendService:BackendService,private functions: AngularFireFunctions,private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
-    this.currentSprintName = this.route.snapshot.params['currentSprintName'];
-
+    this.currentSprintName = this.route.snapshot.params['currentSprintName'];    
     this.navbarHandler.addToNavbar(this.teamId);
-
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
     } else if (this.currentSprintName == "Deleted") {
@@ -54,13 +55,16 @@ export class TasksComponent implements OnInit {
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.AppKey) {
+          this.backendService.organizationsData.subscribe( data => {
+          this.orgDomain = this.backendService.getOrganizationDomain();          
           this.readData();
-        }
+        })
+      }
       });
     });
   }
 
-  readData() {
+  async readData() {
     this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
       let queryRef = ref;
       queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
@@ -85,13 +89,18 @@ export class TasksComponent implements OnInit {
       }
       return queryRef;
     });
-    this.tasksData = this.tasksCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Tasks;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+
+
+    const callable = this.functions.httpsCallable('tasks');
+    try{
+      const result = await callable({mode: "getTasks",orgDomain:this.orgDomain, teamId:this.teamId, sprintNumber:this.currentSprintNumber}).toPromise();
+      this.tasksData = result.taskData;
+      
+    }
+    catch(err){
+      console.log(err);
+    }
+    
   }
   backToDashboard() {
     this.router.navigate(['/Board']);

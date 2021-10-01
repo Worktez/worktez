@@ -12,11 +12,12 @@ const { createNewTask } = require("./createTask");
 const { deleteTask } = require("./deleteTask");
 const { editTask } = require("./editTask");
 const { logWork } = require("./logwork");
+const { getTasks } = require("./getTasks");
+const { getTasksCard } = require("./getTasksCard")
 
 exports.tasks = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const mode = request.body.data.mode;
-
         if (mode == "create") {
             return createNewTask(request, response);
         } else if (mode == "edit") {
@@ -25,6 +26,10 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return logWork(request, response);
         } else if (mode == "delete") {
             return deleteTask(request, response);
+        } else if (mode == "getTasks") {
+            return getTasks(request, response);
+        } else if (mode == "getTasksCard") {
+            return getTasksCard(request, response);
         }
     });
 });

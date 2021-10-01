@@ -2,12 +2,12 @@
     <div class="card-header">
         <h6 class="m-0">My Tasks</h6>
     </div>
-    <div class="card-body" *ngIf="tasksData | async">
-        <ng-container *ngIf="tasksData|async">
+    <div class="card-body" *ngIf="tasksData">
+        <ng-container *ngIf="tasksData">
             <app-task-cards [tasks]="tasksData"></app-task-cards>
         </ng-container>
     </div>
-    <div class="card-body" *ngIf="!(tasksData | async)">
+    <div class="card-body" *ngIf="!(tasksData)">
         <app-loader></app-loader>
     </div>
 </div>

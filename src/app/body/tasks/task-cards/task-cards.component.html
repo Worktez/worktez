@@ -1,4 +1,4 @@
-<ng-container *ngIf="tasks | async; else loader">
+<ng-container *ngIf="tasks; else loader">
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -13,13 +13,13 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="(tasks|async).length==0">
+                <ng-container *ngIf="(tasks).length==0">
                     <tr>
                         <td colspan="9" class="text-center">No tasks available</td>
                     </tr>
                 </ng-container>
-                <ng-container *ngFor="let item of tasks|async">
-                    <tr (click)="openTaskDetails(item.id)">
+                <ng-container *ngFor="let item of tasks">
+                    <tr (click)="openTaskDetails(item.Id)">
                         <td colspan="1">
                             <app-status-icons [Status]="item.Status"></app-status-icons>
                         </td>
@@ -29,13 +29,13 @@
                         <td colspan="1">
                             <app-difficulty-icons [Difficulty]="item.Difficulty"></app-difficulty-icons>
                         </td>
-                        <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.id}}</span></td>
+                        <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.Id}}</span></td>
                         <td colspan="3">{{item.Title}}</td>
                         <td colspan="2"><span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{item.Assignee}}</td>
                         <td colspan="3">
-                        
-                          <app-progress-graph [workdone]="item.WorkDone"></app-progress-graph>
-                     
+
+                            <app-progress-graph [workdone]="item.WorkDone"></app-progress-graph>
+
                         </td>
                     </tr>
                 </ng-container>
