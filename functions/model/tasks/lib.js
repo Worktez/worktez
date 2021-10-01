@@ -63,4 +63,3 @@ exports.getTasksCard = function(orgDomain, sprintNumber, userEmail) {
     });
 
     return Promise.resolve(getTasks);
-};

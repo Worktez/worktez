@@ -14,6 +14,7 @@ const { editTask } = require("./editTask");
 const { logWork } = require("./logwork");
 const { getTasks } = require("./getTasks");
 const { getTasksCard } = require("./getTasksCard")
+const { addComment } = require("./addComment");
 
 exports.tasks = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -30,6 +31,8 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return getTasks(request, response);
         } else if (mode == "getTasksCard") {
             return getTasksCard(request, response);
+        } else if (mode == "comment") {
+            return addComment(request, response);
         }
     });
 });
