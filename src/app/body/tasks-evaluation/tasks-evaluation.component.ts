@@ -42,7 +42,7 @@ export class TasksEvaluationComponent implements OnInit {
 
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.SelectedOrgAppKey) {
           this.teamIds = this.backendService.getOrganizationTeamIds();
           this.selectedTeamId = this.authService.getTeamId();
           this.readTasks();   
