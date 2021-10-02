@@ -38,7 +38,7 @@ const routes: Routes = [
   { path: 'Patch3', component: Patch3Component },
   { path: 'Patch4', component: Patch4Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
-  { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'profile/:userName', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateTeam', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},

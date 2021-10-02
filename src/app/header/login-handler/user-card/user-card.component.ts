@@ -12,8 +12,10 @@ export class UserCardComponent implements OnInit {
   @Input('user') user: User
   showCard: boolean = false
   constructor(public authService: AuthService, public router: Router) { }
+  userName: string
 
   ngOnInit(): void {
+    this.userName = this.user.displayName;
   }
   toogleCard() {
     this.showCard = !this.showCard
@@ -23,6 +25,6 @@ export class UserCardComponent implements OnInit {
     window.location.reload()
   }
   profile(){
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile', this.userName]);
   }
 }
