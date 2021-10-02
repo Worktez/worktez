@@ -9,6 +9,8 @@ export interface Tasks {
   Creator: string;
   Project: string;
   Assignee: string;
+  Reporter: string;
+  Watcher: string[];
   LogWorkTotalTime: number;
   WorkDone: number;
   CreationDate: string;
@@ -17,6 +19,7 @@ export interface Tasks {
   CompletionDate: string;
   OrganizationId: string;
   TeamId: string;
+  Type: string;
 }
 
 export interface TasksId extends Tasks {id: string;}

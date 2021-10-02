@@ -29,6 +29,8 @@ export class CreateNewSessionComponent implements OnInit {
   todayDate: string
   description: string
   assigneeName: string
+  reporterName: string
+  watcherName: string[]
   creatorName : string
   estimatedTime: number
   project: string
@@ -37,7 +39,7 @@ export class CreateNewSessionComponent implements OnInit {
   status: string
   sprintNumber: number
   storyPoint: number
-  time: string
+  time: string 
   enableLoader: boolean = false
   valid: boolean = true
   task: Tasks
@@ -47,6 +49,8 @@ export class CreateNewSessionComponent implements OnInit {
   statusLabels: string[]
   priorityLabels: string[]
   difficultyLabels: string[]
+  type: string[]
+  taskType: string
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public cloneTask: CloneTaskService, public applicationSetting: ApplicationSettingsService) { }
   ngOnInit(): void {
@@ -66,12 +70,14 @@ export class CreateNewSessionComponent implements OnInit {
     this.priority=this.task.Priority;
     this.difficulty=this.task.Difficulty;
     this.storyPoint=this.task.StoryPointNumber;
+    this.taskType=this.task.Type;
   }
 
   readTeamData(teamId :string){
     this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
           this.priorityLabels = teams[0].PriorityLabels;
           this.statusLabels = teams[0].StatusLabels;
+          this.type = teams[0].Type;
           this.difficultyLabels = teams[0].DifficultyLabels;
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
@@ -81,6 +87,7 @@ export class CreateNewSessionComponent implements OnInit {
   }
   async submit() {
     this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
+    this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
@@ -90,6 +97,7 @@ export class CreateNewSessionComponent implements OnInit {
     { label: "creator", value: this.creatorName },
     { label: "project", value: this.teamName },
     { label: "assignee", value: this.assigneeName },
+    { label: "reporter", value: this.reporterName },
     { label: "creationDate", value: this.todayDate },
     { label: "sprintNumber", value: this.sprintNumber },
     { label: "storyPoint", value: this.storyPoint }];
@@ -111,7 +119,7 @@ export class CreateNewSessionComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks');
 
     try {
-      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, Reporter: this.reporterName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.user.uid, Type: this.taskType }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);

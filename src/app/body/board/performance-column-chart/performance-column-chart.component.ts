@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 
@@ -10,7 +10,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 })
 export class PerformanceColumnChartComponent implements OnInit {
 
-  constructor(public db: AngularFirestore, public backendService: BackendService) { }
+  constructor(public backendService: BackendService, private functions: AngularFireFunctions) { }
 
   showLoader: boolean = false;
   @Input("userEmail") userEmail: string;
@@ -47,7 +47,7 @@ export class PerformanceColumnChartComponent implements OnInit {
       }
     } else {
       for (let i = this.sprintRange1; i <= this.sprintRange2; i++) {
-        await this.readMemberData(i, this.teamMember).then(data => {
+        await this.readMemberData(i, this.teamMember, this.teamId).then(data => {
           temp.push(["S" + i, data]);
         }).catch(err => {
           console.log(err);
@@ -61,35 +61,25 @@ export class PerformanceColumnChartComponent implements OnInit {
   async readTeamData(sprintNumber: number, teamId: string) {
     var storyPoint: number = 0;
     let orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('performanceChart');
     try {
-      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).get().then(docs => {
-        docs.forEach(doc => {
-          const data = doc.data() as Tasks;
-          if (data.Status == "Completed") {
-            storyPoint += data.StoryPointNumber;
-          }
-        });
-      });
-    } catch (err) {
-      console.log(err);
+      const result = await callable({ mode: "performanceChartData", OrganizationDomain: orgDomain, SprintNumber: sprintNumber, TeamId: teamId}).toPromise();
+      storyPoint = result.StoryPoint;
+    } catch(error) {
+      console.log(error);
     }
     return storyPoint;
   }
 
-  async readMemberData(sprintNumber: number, teamMember: string) {
+  async readMemberData(sprintNumber: number, teamMember: string, teamId: string) {
     var storyPoint: number = 0;
     let orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('performanceChart');
     try {
-      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("TeamId", "==", this.teamId).where("Assignee", "==", teamMember).get().then(docs => {
-        docs.forEach(doc => {
-          const data = doc.data() as Tasks;
-          if (data.Status == "Completed") {
-            storyPoint += data.StoryPointNumber;
-          }
-        });
-      });
-    } catch (err) {
-      console.log(err);
+      const result = await callable({ mode: "performanceChartData", OrganizationDomain: orgDomain, SprintNumber: sprintNumber, TeamId: teamId, Assignee: teamMember}).toPromise();
+      storyPoint = result.StoryPoint;
+    } catch(error) {
+      console.log(error);
     }
     return storyPoint;
   }

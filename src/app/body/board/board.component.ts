@@ -47,12 +47,12 @@ export class BoardComponent implements OnInit {
     this.accessLevel = 0;
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.SelectedOrgAppKey) {
           this.accessLevel = 1;
-          if (this.applicationSettingsService.editedTeamId != data.TeamId && this.applicationSettingsService.editedTeamId != "") {
+          if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
             this.selectedTeamId = this.applicationSettingsService.editedTeamId;
           } else {
-            this.selectedTeamId = data.TeamId;
+            this.selectedTeamId = data.SelectedTeamId;
             this.applicationSettingsService.editedTeamId = this.selectedTeamId;
           }
           this.backendService.organizationsData.subscribe(data => {

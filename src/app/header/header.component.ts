@@ -54,4 +54,8 @@ export class HeaderComponent implements OnInit {
   organizationDetails() {
     this.router.navigate(['/ViewOrganizationDetails']);
   }
+
+  tasksEvaluation() {
+    this.router.navigate(['/TasksEvaluation']);
+  }
 }
