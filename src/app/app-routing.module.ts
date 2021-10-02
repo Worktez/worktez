@@ -20,6 +20,7 @@ import { SetupComponent } from './body/setup/setup.component';
 import { HomeComponent } from './body/home/home.component';
 import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluation.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'CreateNewSession', component: CreateNewSessionComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'StartNewSprint', component: CreateNewSprintComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'TasksEvaluation', component: TasksEvaluationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
