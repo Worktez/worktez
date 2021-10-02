@@ -1,0 +1,139 @@
+<div class="container">
+    <div class="row align-items-center py-2" id="navbarMenu">
+        <div class="col-8">
+            <h5 style="font-weight:bolder">Tasks</h5>
+        </div>
+        <div class="col-3 text-right">
+            <select class="form-select form-control-lg p-2"  [(ngModel)]="selectedTeamId" (ngModelChange)="readTasks()">
+                <ng-container *ngFor="let teamId of teamIds">
+                    <option>{{ teamId }}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div class="col-1 text-right">
+            <div class="dropdown float-right">
+                <button class="btn material-icons" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">filter_list</button>
+                <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+                    <div class="input-group">
+                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                        <div class="col-md-3 col-3">
+                            <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="readTasks()">Filter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-1">
+        <ng-container>
+            <div class="col">
+                <ng-container>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="1">Status</th>
+                                    <th colspan="1">Priority</th>
+                                    <th colspan="1">Difficulty</th>
+                                    <th colspan="1">Task Id</th>
+                                    <th colspan="3">Title</th>
+                                    <th colspan="2">Assignee</th>
+                                    <th colspan="1">Sprint</th>
+                                    <th colspan="2">Move to Current Sprint?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="!tasks.length && !showLoader;">
+                                    <tr>
+                                        <td colspan="12" class="text-center">No tasks available</td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="tasks.length && !showLoader;">
+                                    <ng-container *ngFor="let item of tasks">
+                                        <tr>
+                                            <td colspan="1">
+                                                <app-status-icons [Status]="item.Status"></app-status-icons>
+                                            </td>
+                                            <td colspan="1">
+                                                <app-priority-icons [Priority]="item.Priority"></app-priority-icons>
+                                            </td>
+                                            <td colspan="1">
+                                                <app-difficulty-icons [Difficulty]="item.Difficulty"></app-difficulty-icons>
+                                            </td>
+                                            <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.Id}}</span></td>
+                                            <td colspan="3">{{item.Title}}</td>
+                                            <td colspan="2"><span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{item.Assignee}}</td>
+                                            <td colspan="1">{{ getSprintName(item.SprintNumber) }}</td>
+                                            <td colspan="2" class="text-center">
+                                                <button class="btn" id="moveBtn" [disabled]="item.SprintNumber == teamCurrentSprint" (click)="moveToCurrentSprint(item)" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#Modal">Move</button>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="showLoader">
+                                    <tr> 
+                                        <td colspan="12" class="text-center"><app-loader></app-loader></td>
+                                    </tr>
+                                </ng-container>
+                                <tr>
+                                    <td colspan="12" class="pb-0">
+                                        <nav id="pagination">
+                                            <ul class="pagination justify-content-end">
+                                              <li [ngClass]="disable_prev ? 'page-item disabled' : 'page-item'" (click)="prevPage()">
+                                                <a class="page-link" tabindex="-1">Previous</a>
+                                              </li>
+                                              <li [ngClass]="disable_next ? 'page-item disabled' : 'page-item'" (click)="nextPage()">
+                                                <a class="page-link">Next</a>
+                                              </li>
+                                            </ul>
+                                          </nav>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <nav class="modal-header navbar navbar-expand navbar-dark" id="navbarMenu">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h5 class="active nav-link head" id="ModalLabel">Moving to Current Sprint</h5>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="material-icons text-light">close</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <ng-container *ngIf="showModalLoader">
+                <div class="container pt-2">
+                    <div class="row">
+                        <div class="col"><app-loader></app-loader></div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="!showModalLoader">
+                <div class="container pt-2">
+                    <div class="row">
+                        <div class="col">Successfully Moved to Current Sprint!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -70,6 +70,7 @@ import { ViewOrganizationDetailsComponent } from './body/view-organization-detai
 import { Patch4Component } from './patches/patch4/patch4.component';
 import { WarningComponent } from './body/common-tools/warning/warning.component';
 import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
+import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluation.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
 import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.component';
@@ -136,6 +137,7 @@ import { Patch5Component } from './patches/patch5/patch5.component';
     Patch4Component,
     WarningComponent,
     DifficultyIconsComponent,
+    TasksEvaluationComponent,
     ListPatchesComponent,
     PatchCardsComponent,
     EditPatchComponent,
