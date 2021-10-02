@@ -12,6 +12,7 @@ const { createNewTask } = require("./createTask");
 const { deleteTask } = require("./deleteTask");
 const { editTask } = require("./editTask");
 const { logWork } = require("./logwork");
+const { addComment } = require("./addComment");
 const { getTaskDetails } = require("./getTaskDetails");
 
 exports.tasks = functions.https.onRequest((request, response) => {
@@ -26,6 +27,8 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return logWork(request, response);
         } else if (mode == "delete") {
             return deleteTask(request, response);
+        } else if (mode == "comment") {
+            return addComment(request, response);
         } else if (mode == "getTaskDetails") {
             return getTaskDetails(request, response);
         }
