@@ -1,4 +1,8 @@
 <div class="container-fluid" *ngIf="userObservable | async ">
+    <ng-container *ngIf=!teamIdExists>
+        <h3>You are not a part of any team. Please create a new team.</h3>
+        <button type="submit" class="btn" id="button" (click)=createNewTeam()>Create Team</button>
+    </ng-container>
     <ng-container *ngIf="applicationSettingsService.teamData|async">
         <div class="row pt-2">
             <div class="col">

@@ -7,12 +7,6 @@
     box-shadow: var(--box-shadow-top);
 }
 
-#createNewTaskContainer {
-    border: var(--primary-border);
-    background-color: var(--secondary-bg);
-    color: var(--text);
-}
-
 #important {
     color: red;
 }

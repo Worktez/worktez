@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     this.authService.afauth.user.subscribe((data)=>{
       if(data!=null){
       this.authService.userAppSettingObservable.subscribe((data)=> {
-        if(data.AppKey){
+        if(data.SelectedOrgAppKey){
           // if(this.router.url === '/') {
             this.router.navigate(['/MyDashboard']);
           // }

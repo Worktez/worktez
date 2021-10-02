@@ -8,7 +8,7 @@
 /* eslint-disable indent */
 const { functions, getApplicationData, updateApplication, generateBase64String } = require("../application/lib");
 const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("./lib");
-const { setMyOrgCollection, getMyOrgCollection } = require("../users/lib");
+const { setMyOrgCollection, getMyOrgCollection, getUser, updateUser } = require("../users/lib");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;
@@ -69,8 +69,19 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         console.log("Error:", error);
     });
 
+    const promise4 = getUser(orgAdminUid).then((userDoc) => {
+        const selectedAppKey = appKey;
+        const userUpdateJson = {
+            SelectedOrgAppKey: selectedAppKey,
+        };
+        updateUser(userUpdateJson, orgAdminUid);
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
+    });
+
     let result;
-    const promises = [promise1, promise2];
+    const promises = [promise1, promise2, promise3, promise4];
     return Promise.all(promises).then(() => {
             const arr = ["Created Organization Successfully", appKey];
             result = { data: arr };

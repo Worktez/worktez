@@ -34,7 +34,7 @@ export class Patch3Component implements OnInit {
     this.PatchshowLoader = true;
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.SelectedOrgAppKey) {
           this.uid = this.authService.userAppSetting.uid;
           this.getPatchData();
           this.PatchshowLoader = false;

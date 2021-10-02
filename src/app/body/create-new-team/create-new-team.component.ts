@@ -7,6 +7,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-create-new-team',
@@ -17,7 +18,10 @@ export class CreateNewTeamComponent implements OnInit {
   componentName: string = "CREATE-NEW-TEAM"
 
   organizationDomain: string
+  appKey: string
   childStep: number = 1
+  teamAdmin: string
+  uid: string
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
   isUpdateTeam: boolean = false;
@@ -29,9 +33,14 @@ export class CreateNewTeamComponent implements OnInit {
   teamMembers: string[] = [];
   enableLoader: boolean = false;
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
+    this.appKey = this.authService.getAppKey();
+    this.backendService.getOrgDetails(this.appKey);
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    this.teamAdmin = this.authService.getUserEmail();
+    this.uid = this.authService.getLoggedInUser();
     console.log(this.router.url);
     this.selectedTeamId = this.route.snapshot.params['teamId'];
     console.log(this.selectedTeamId);
@@ -173,7 +182,7 @@ export class CreateNewTeamComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
       console.log(result);
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
