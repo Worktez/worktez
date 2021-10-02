@@ -72,6 +72,7 @@ import { ViewOrganizationDetailsComponent } from './body/view-organization-detai
 import { Patch4Component } from './patches/patch4/patch4.component';
 import { WarningComponent } from './body/common-tools/warning/warning.component';
 import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
+import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluation.component';
 
 
 @NgModule({
@@ -133,7 +134,8 @@ import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-ic
     ViewOrganizationDetailsComponent,
     Patch4Component,
     WarningComponent,
-    DifficultyIconsComponent
+    DifficultyIconsComponent,
+    TasksEvaluationComponent
   ],
   imports: [
     BrowserModule,
