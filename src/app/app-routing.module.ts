@@ -21,6 +21,7 @@ import { HomeComponent } from './body/home/home.component';
 import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
+import { Patch5Component } from './patches/patch5/patch5.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'Patch2', component:Patch2Component},
   { path: 'Patch3', component: Patch3Component },
   { path: 'Patch4', component: Patch4Component },
+  { path: 'Patch5', component: Patch5Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateTeam', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
