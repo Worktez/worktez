@@ -8,11 +8,14 @@ import { BackendService } from '../backend/backend.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApplicationSettingsService {
+  public editedTeamId: string = "";
+  public editedSprintId: number = 0;
 
   public teamData: Observable<TeamDataId[]>;
   public teamCollection: AngularFirestoreCollectionGroup<Team>;
-  
+
   public sprintData: Observable<SprintDataId[]>;
   public sprintCollection: AngularFirestoreCollectionGroup<Sprint>;
 
@@ -29,7 +32,7 @@ export class ApplicationSettingsService {
         return { id, ...data };
       }))
     );
-    
+
     return this.teamData;
   }
 
@@ -65,7 +68,7 @@ export class ApplicationSettingsService {
     "Medium",
     "Low"
   ]
-  
+
   project: string[] = [
     "Business",
     "Development",

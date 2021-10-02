@@ -1,4 +1,4 @@
-<div class="card mt-2" *ngIf="(userObservable | async) || (activity.Uid == 'defaultUser')">
+<div class="card mt-3 mx-2" *ngIf="(userObservable | async) || (activity.Uid == 'defaultUser')">
     <div class="card-body row">
         <div class="col-md-1">
             <img src="{{user.photoURL}}" alt="Card image cap" width="30" height="30" style=" border-radius: 50%;">
