@@ -4,6 +4,7 @@ exports.editPatch = function(request, response) {
     const name = request.body.data.Name;
     const description = request.body.data.Description;
     const patchId = request.body.data.Id;
+    const updatedOn = request.body.data.UpdatedOn;
     let status = 200;
 
     const editPatchPromise = getPatchData(patchId).then((patch) => {
@@ -11,6 +12,7 @@ exports.editPatch = function(request, response) {
             const updatePatchJson = {
                 Name: name,
                 Description: description,
+                UpdatedOn: updatedOn,
             };
             updatePatchData(patchId, updatePatchJson)
         }
