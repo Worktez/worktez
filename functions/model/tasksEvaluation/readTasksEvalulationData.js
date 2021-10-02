@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
+/* eslint-disable prefer-const */
 /* eslint-disable require-jsdoc */
 /* eslint-disable object-curly-spacing */
 // /* eslint-disable no-undef */
@@ -7,7 +9,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { db } = require('../application/lib');
+const { db } = require("../application/lib");
 
 exports.readTasksEvaluationData = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
@@ -17,45 +19,45 @@ exports.readTasksEvaluationData = function(request, response) {
     const lastInResultTaskId = request.body.data.LastInResultTaskId;
     const firstInResultTaskId = request.body.data.FirstInResultTaskId;
     const startAt = request.body.data.StartAt;
-    let tasks = [];
+    const tasks = [];
     let status = 200;
     let disableNext = false;
     let disablePrev = false;
     let promise;
-    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").where('TeamId', '==', teamId).orderBy('Id', 'desc');
+    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).orderBy("Id", "desc");
 
     if (sprintNumber) {
-        query = query.where('SprintNumber', '==', sprintNumber);
+        query = query.where("SprintNumber", "==", sprintNumber);
     }
 
-    if(pageToLoad == 'initial') {
+    if (pageToLoad == "initial") {
         query = query.limit(20);
-    } else if(pageToLoad == 'next') {
+    } else if (pageToLoad == "next") {
         query = query.startAfter(lastInResultTaskId).limit(20);
-    } else if(pageToLoad == 'previous') {
+    } else if (pageToLoad == "previous") {
         query = query.startAt(startAt).endBefore(firstInResultTaskId).limit(20);
     }
 
-    promise = query.get().then(snapshot => {
-        snapshot.docs.forEach(doc => {
+    promise = query.get().then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
             tasks.push(doc.data());
         });
         let p1;
-        if(pageToLoad == 'next') {
-            p1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where('TeamId', '==', teamId).orderBy('Id', 'desc').startAfter(tasks[tasks.length - 1].Id).get().then(docs => {
-                if(docs.empty) {
+        if (pageToLoad == "next") {
+            p1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).orderBy("Id", "desc").startAfter(tasks[tasks.length - 1].Id).get().then((docs) => {
+                if (docs.empty) {
                     disableNext = true;
                 }
             });
-        } else if(pageToLoad == 'previous') {
-            p1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where('TeamId', '==', teamId).orderBy('Id', 'desc').endBefore(tasks[0].Id).get().then(docs => {
-                if(docs.empty) {
+        } else if (pageToLoad == "previous") {
+            p1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).orderBy("Id", "desc").endBefore(tasks[0].Id).get().then((docs) => {
+                if (docs.empty) {
                     disablePrev = true;
                 }
             });
         }
         return Promise.resolve(p1);
-    }).catch(error => {
+    }).catch((error) => {
         console.log(error);
         status = 500;
     });
@@ -64,7 +66,7 @@ exports.readTasksEvaluationData = function(request, response) {
         result = { data: {Tasks: tasks, DisableNext: disableNext, DisablePrev: disablePrev} };
         console.log("Read Task Evaluation Page Data Successfully");
         return response.status(status).send(result);
-    }).catch(err => {
+    }).catch((err) => {
         result = { data: err };
         console.log("Error occured");
         return response.status(status).send(result);

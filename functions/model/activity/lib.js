@@ -49,7 +49,7 @@ exports.getAction = function(orgDomain, taskId, type) {
     console.log("type : ", type);
     let query = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action");
 
-    if(type!="") {
+    if (type!="") {
         query = query.where("Type", "==", type);
     }
 
