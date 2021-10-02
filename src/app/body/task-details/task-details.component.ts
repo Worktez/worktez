@@ -44,7 +44,6 @@ export class TaskDetailsComponent implements OnInit {
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
-  activityCollection: AngularFirestoreCollection<Activity>
 
   constructor ( private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
 
@@ -82,36 +81,12 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async getActivityData () {
-    // var documentName = 'Organizations/' + this.orgDomain + '/Activity/' + this.Id + '/Action';
-    // this.activityCollection = this.db.collection<Activity>( documentName, ref => {
-    //   let queryRef;
-    //   if ( this.actionType == "All" ) {
-    //     queryRef = ref;
-    //   } else if ( this.actionType == "EDITED" ) {
-    //     queryRef = ref.where( 'Type', '==', "EDITED" );
-    //   } else if ( this.actionType == "LOGWORK_COMMENT" ) {
-    //     queryRef = ref.where( 'Type', '==', "LOGWORK_COMMENT" );
-    //   } else if ( this.actionType == "COMMENT" ) {
-    //     queryRef = ref.where( 'Type', '==', "COMMENT" );
-    //   }
-    //   this.showContent = true;
-    //   return queryRef;
-    // } );
-    // this.activityData = this.activityCollection.snapshotChanges().pipe(
-    //   map( actions => actions.map( a => {
-    //     const data = a.payload.doc.data() as Activity;
-    //     const id = a.payload.doc.id;
-    //     return { id, ...data };
-    //   } ) )
-    // );
-
     const callable = this.functions.httpsCallable("activity");
     this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
         console.log(actions.data);
         return actions.data as Activity[];
     }));
-
   }
 
   async addComment() {
