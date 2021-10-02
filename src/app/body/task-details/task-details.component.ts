@@ -41,7 +41,6 @@ export class TaskDetailsComponent implements OnInit {
   actionType: string = "All"
   comment: string;
 
-  public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
 
