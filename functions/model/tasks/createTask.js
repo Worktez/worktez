@@ -61,14 +61,8 @@ exports.createNewTask = function(request, response) {
                 TotalTeamTasks: totalTeamTasks,
             };
             updateTeamDetails(updateTeamJson, orgDomain, project);
-
-
             setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId);
-
             sendMail(assignee, subjectMessage, htmlMessage);
-            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type);
-
-
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
         }).catch((error) => {
             status = 500;
