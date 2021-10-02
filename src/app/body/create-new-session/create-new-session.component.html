@@ -67,9 +67,22 @@
                         <input type="text" readonly class="form-control" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="form-group col-sm-3">
+                        <label for="input">Reporter</label>
+                        <input type="text" class="form-control" [(ngModel)]="reporterName" [ngModelOptions]="{standalone: true}" list="reporterSuggestion">
+                        <datalist id="reporterSuggestion">
+                                <ng-container *ngFor='let item of teamMembers '>
+                                    <option>
+                                        <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
+                                    </option>
+                                </ng-container>
+                            </datalist>
+                    </div>
+                    <div class="form-group col-sm-3">
                         <label for="inputState">Sprint Number</label>
                         <input type="number" class="form-control" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}">
                     </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-sm-3">
                         <label for="text">Priority</label>
                         <select class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
@@ -79,13 +92,11 @@
                             </ng-container>
                         </select>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-sm-3">
                         <label for="text">Estimated Time</label>
                         <input type="number" class="form-control" [(ngModel)]="estimatedTime" [ngModelOptions]="{standalone: true}">
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-2">
                         <label for="text">Difficulty</label>
                         <select class="form-control" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
                             <option selected>choose...</option>
@@ -94,7 +105,7 @@
                             </ng-container>
                         </select>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-2">
                         <label for="inputState">Status</label>
                         <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                             <option selected>choose...</option>
@@ -103,7 +114,7 @@
                             </ng-container>
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="inputState">Story Point</label>
                         <input type="number" min="0" class="form-control" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}">
                     </div>

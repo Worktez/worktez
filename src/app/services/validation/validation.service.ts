@@ -40,6 +40,9 @@ export class ValidationService {
             case 'assignee': {
                 return (this.checkAssignee(value));
             }
+            case 'reporter': {
+                return (this.checkAssignee(value));
+            }
             case 'creationDate': {
                 return (this.checkCreationDate(value));
             }

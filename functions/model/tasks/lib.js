@@ -9,7 +9,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -18,6 +18,8 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         Difficulty: difficulty,
         Creator: creator,
         Assignee: assignee,
+        Reporter: reporter,
+        Watcher: [],
         EstimatedTime: estimatedTime,
         Status: status,
         Project: project,

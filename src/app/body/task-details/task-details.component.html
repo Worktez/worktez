@@ -104,6 +104,23 @@
                             <hr>
                             <div class="row ">
                                 <div class="col ">
+                                    <span id="header ">Reporter:</span>
+                                </div>
+                                <div class="col " id="assigneeTaskDescription ">{{task.Reporter}}</div>
+                            </div>
+                            <hr>
+                                <div class="row ">
+                                    <div class="col ">
+                                        <span id="header ">Watchers:</span>
+                                    </div>
+                                    <ng-container *ngIf="task.Watcher.length == 0 ; else showWatchers">
+                                    <div class="col " id="assigneeTaskDescription ">No watcher present</div>
+                                </ng-container>
+                                <ng-template #showWatcher>{{task.Watcher}}</ng-template>
+                            </div>
+                                <hr>
+                            <div class="row ">
+                                <div class="col ">
                                     <span id="header ">Creator:</span>
                                 </div>
                                 <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
