@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
 
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.SelectedOrgAppKey) {
           this.readUser();
 
           this.organizationName = this.backendService.getOrganizationName();

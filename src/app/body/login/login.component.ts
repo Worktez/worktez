@@ -73,10 +73,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  onSignUpWithOrg() {
-    this.router.navigate(['/CreateNewOrganization']);
-  }
-
   navigateToVerification(path) {
     this.router.navigate([path]);
   }

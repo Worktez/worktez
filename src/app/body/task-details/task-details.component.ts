@@ -41,7 +41,6 @@ export class TaskDetailsComponent implements OnInit {
   actionType: string = "All"
   comment: string;
 
-  public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
 
@@ -55,10 +54,10 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
 
-    this.authService.afauth.user.subscribe( data => {
-      this.authService.userAppSettingObservable.subscribe( data => {
-        if ( data.AppKey ) {
-          this.backendService.organizationsData.subscribe( data => {
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.SelectedOrgAppKey) {
+          this.backendService.organizationsData.subscribe(data => {
             this.orgDomain = this.backendService.getOrganizationDomain();
             this.getTaskDetail();
             this.getActivityData();
@@ -70,15 +69,13 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getTaskDetail () {
-    var documentName = 'Organizations/' + this.orgDomain + '/Tasks/' + this.Id;
-    this.taskDocument = this.db.doc<Tasks>( documentName );
-    this.taskDataObservable = this.taskDocument.snapshotChanges().pipe(
-      map( actions => {
-        const data = actions.payload.data() as Tasks;
-        this.task = data;
-        return { ...data }
-      } ) );
-  }
+     const callable = this.functions.httpsCallable('tasks');
+     this.taskDataObservable = callable({ mode: "getTaskDetails", Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
+         const data = res.taskData as Tasks;
+         this.task = data;
+         return { ...data }
+       }));
+   }
 
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity");

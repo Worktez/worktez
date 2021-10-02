@@ -1,6 +1,6 @@
 <ng-container *ngIf="authService.afauth.user|async">
     <ng-container *ngIf="authService.userAppSettingObservable | async; else loader">
-        <ng-container *ngIf="authService.userAppSetting.AppKey == ''">
+        <ng-container *ngIf="authService.userAppSetting.SelectedOrgAppKey == ''">
             <div class="container-fluid mt-0 mb-4 py-2" style="background-color: rgba(255, 0, 0, 0.414);">
                 <h5>Organization Key not found, Please create new organization</h5>
             </div>

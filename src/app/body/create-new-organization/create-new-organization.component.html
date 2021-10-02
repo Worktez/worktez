@@ -1,11 +1,74 @@
-<div class="container">
-    <div id="createNewOrgContainer">
-        <ng-container *ngIf="step===1">
-            <app-organization-details (stepAndOrgDomain)="changeStepAndGetOrg($event)"></app-organization-details>
-        </ng-container>
-        <ng-container *ngIf="step===2">
-            <app-team-details [orgDomain]="orgDomain" (teamFormSubmitted)="onTeamFormSubmitted($event)"></app-team-details>
-        </ng-container>
+<div class="row align-items-center justify-content-center m-0 p-2" id="navbarMenu">
+    <div class="col">
+        <h5 class="font-weight-bold text-light">Create New Organization</h5>
+    </div>
+    <div class="col-1">
+        <div class="pl-lg-0" id="navbarTexts">
+            <ul class="nav navbar-nav ml-auto align-items-center">
+                <li class=" active py-1 justify-content-between">
+                    <span type="button" class="material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="close()">close</span>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader"></app-loader>
+<form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
+    <ng-container>
+        <div class="form-group row">
+            <div class="col-md-8">
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-3 col-form-label">Organization Name<span id="important" class="pl-1">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="input" [(ngModel)]="orgName" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-3 col-form-label">Organization Domain<span id="important" class="pl-1">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="input" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <label for="input" class="col-sm-3 col-form-label">Organization Email<span id="important" class="pl-1">*</span></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="input" [(ngModel)]="orgEmail" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <label for="text" class="col-sm-3 col-form-label">Organization Admin</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly class="form-control" value={{this.orgAdmin}} [(ngModel)]="orgAdmin" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-3">
+                <div class="form-group row pt-2 align-items-center justify-content-center" id="uploadButtonContainer">
+                    <label id="uploadFile" class="col-12 col-form-label p-5 text-center">
+                    Choose Logo
+                    <input type="file" accept="image/*" required id="file" (change)="handleFileInput($event.target.files)"/>
+                </label>
+                </div>
+                <div class="form-group row pt-2 text-center" id="uploadButtonContainer">
+                    <div class="col-12">
+                        <button type="submit" class="btn" id="button" (click)="uploadLogo()" [disabled]="!orgLogo">Upload Logo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+                <textarea type="text" class="input" rows="3" [(ngModel)]="orgDescription" [ngModelOptions]="{standalone: true}"></textarea>
+            </div>
+        </div>
+        <div class="form-group row align-items-center justify-content-center">
+            <div class="offset-6 col text-right">
+                <button type="submit" class="btn" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit</button>
+                <!-- <button (click)="submit()" id="button" [disabled]="!logoUploaded && orgLogo && enableLoader">
+                    <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Next">arrow_forward_ios</span>
+                </button> -->
+            </div>
+        </div>
+    </ng-container>
+    <app-loader *ngIf="enableLoader"></app-loader>
+</form>
