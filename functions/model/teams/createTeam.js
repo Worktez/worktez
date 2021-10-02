@@ -74,33 +74,6 @@ exports.createTeam = function(request, response) {
         console.log("Error:", error);
     });
 
-    // const promise3 = getMyOrgCollection(uid, orgDomain).then((orgDoc) => {
-    //     if (orgDoc == undefined) {
-    //         setMyOrgCollection(uid, orgDomain, orgAppKey, teamId, teamId);
-    //     } else {
-    //         const teams= orgDoc.Teams;
-    //         teams.push(teamId);
-    //         let defaultTeam;
-    //         let updateJson = {
-    //             Teams: teams,
-    //         };
-    //         if (teams.length==1) {
-    //             defaultTeam = teamId;
-    //             updateJson = {
-    //                 Teams: teams,
-    //                 DefaultTeam: defaultTeam,
-    //             };
-    //         }
-    //         updateMyOrgCollection(updateJson, uid, orgDomain);
-    //         result = { data: "MyOrganizations Updated Successfully" };
-    //         console.log("MyOrganizations Updated Successfully");
-    //     }
-    // }).catch((error) => {
-    //     status = 500;
-    //     console.log("Error:", error);
-    // });
-
-
     const Promises = [promise1, promise2];
     return Promise.all(Promises).then(() => {
             if (status != 500) {
