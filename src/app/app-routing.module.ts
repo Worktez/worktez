@@ -9,6 +9,7 @@ import { TasksComponent } from './body/tasks/tasks.component';
 import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
+import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
 import { Patch1Component } from './patches/patch1/patch1.component';
 import { Patch2Component } from './patches/patch2/patch2.component';
 import { Patch3Component } from './patches/patch3/patch3.component';
@@ -35,8 +36,9 @@ const routes: Routes = [
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
-  {path: 'Patch2', component:Patch2Component},
+  { path: 'Patch2', component:Patch2Component},
   { path: 'Patch3', component: Patch3Component },
   { path: 'Patch4', component: Patch4Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },

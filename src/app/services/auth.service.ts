@@ -75,9 +75,11 @@ export class AuthService {
       map(actions => {
         const data = actions.payload.data() as UserAppSetting;
         this.userAppSetting = data;
-        if (this.userAppSetting && this.userAppSetting.AppKey != "") {
-          this.backendService.getOrgDetails(this.userAppSetting.AppKey);
+        if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
+          this.organizationAvailable = true;
+          this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
           this.themeService.changeTheme(data.AppTheme);
+
         } else {
           this.organizationAvailable = false;
         }
@@ -87,11 +89,11 @@ export class AuthService {
   }
 
   getAppKey() {
-    return this.userAppSetting.AppKey;
+    return this.userAppSetting.SelectedOrgAppKey;
   }
 
   getTeamId() {
-    return this.userAppSetting.TeamId;
+    return this.userAppSetting.SelectedTeamId;
   }
   getUserEmail(){
     return this.user.email;

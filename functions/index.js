@@ -10,13 +10,6 @@
 const admin = require("firebase-admin");
 admin.initializeApp();
 
-
-// const createNewTaskAPI = require("./createNewTaskAPI");
-// const startNewSprintAPI = require("./startNewSprintAPI");
-// const logWorkAPI = require("./logWorkAPI");
-// const editPageTaskAPI = require("./editPageTaskAPI");
-// const deleteTaskAPI = require("./deleteTaskAPI");
-// const createNewUserAPI = require("./createNewUserAPI");
 const { users } = require("./model/users/users");
 const { tasks } = require("./model/tasks/tasks");
 const { organization } = require("./model/organization/organization");
@@ -55,12 +48,9 @@ const { performanceChart } = require("./model/performanceChart/performanceChart"
 //         this.StoryPointNumber = storyPointNumber;
 //     }
 // }
+const { performanceChart } = require("./model/performanceChart/performanceChart")
+const { activity } = require("./model/activity/activity")
 
-// exports.createNewTask = createNewTaskAPI.createNewTask;
-// exports.startNewSprint = startNewSprintAPI.startNewSprint;
-// exports.logWork = logWorkAPI.logWork;
-// exports.editPageTask = editPageTaskAPI.editPageTask;
-// exports.deleteTask = deleteTaskAPI.deleteTask;
 exports.users = users;
 exports.tasks = tasks;
 exports.organization = organization;
@@ -69,13 +59,4 @@ exports.sprints = sprints;
 exports.patch = patch;
 exports.tasksEvaluation = tasksEvaluation;
 exports.performanceChart = performanceChart;
-// exports.updateSprintStatus = updateSprintStatusAPI.updateSprintStatus;
-// exports.createNewOrganization = createNewOrgAPI.createNewOrganization;
-// exports.createNewTeamWithLabels = createNewOrgAPI.createNewTeamWithLabels;
-// exports.patch1 = patch1API.patch1;
-// exports.verifyUser = verifyUserAPI.verifyUser;
-// exports.updateUserProfile = updateUserProfileAPI.updateUserProfile;
-// exports.updateTheme = updateThemeAPI.updateTheme;
-// exports.patch1 = patch1API.patch1;
-// exports.patch2 = patch2API.patch2;
-// exports.patch3 = patch3API.patch3;
+exports.activity = activity;

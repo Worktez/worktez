@@ -20,6 +20,7 @@ export class SetupComponent implements OnInit {
 
   appKey: string;
   email:string;
+  uid: string;
   public showLoader: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public router: Router, public authService: AuthService) { }
@@ -40,6 +41,7 @@ export class SetupComponent implements OnInit {
     })
     );
     this.email = (await this.authService.afauth.currentUser).email;
+    this.uid = (await this.authService.afauth.currentUser).uid;
     this.createNewOrg();
 
   }
@@ -58,7 +60,7 @@ export class SetupComponent implements OnInit {
   async createNewOrganization() {
     const callable = this.functions.httpsCallable('organization');
     try {
-      const result = await callable({ mode: "create", OrganizationName: "Worktrolly", OrganizationEmail: "worktrolly@gmail.com", OrganizationDomain: "worktrolly.web.app", OrganizationDescription: "dev setup", OrganizationLogoURL: "this.orgLogoURL" }).toPromise();
+      const result = await callable({ mode: "create", OrganizationName: "Worktrolly", OrganizationEmail: "worktrolly@gmail.com", OrganizationDomain: "worktrolly.web.app", OrganizationDescription: "dev setup", OrganizationAdmin: this.email, OrganizationAdminUid:this.uid, OrganizationLogoURL: "this.orgLogoURL" }).toPromise();
       console.log("Successfully created the Organization");
       console.log(result[0]);
       console.log("APPKEY: ", result[1]);
@@ -78,7 +80,7 @@ export class SetupComponent implements OnInit {
 
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Development", TeamId: "Dev", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Development", TeamId: "Dev", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], TeamAdmin: this.email, Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty, OrganizationAppKey: this.appKey, Uid: this.uid }).toPromise();
       console.log(result);
       this.createNewSprint("Development", "Dev");
     } catch (error) {
@@ -86,7 +88,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Marketing", TeamId: "Mar", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Marketing", TeamId: "Mar", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], TeamAdmin: this.email, Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty, OrganizationAppKey: this.appKey, Uid: this.uid }).toPromise();
       console.log(result);
       this.createNewSprint("Marketing", "Mar");
     } catch (error) {

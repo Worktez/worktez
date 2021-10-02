@@ -44,8 +44,6 @@ import { RangeCardComponent } from "./body/my-dashboard/performance-chart/range-
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component'
 import { ErrorComponent } from './body/error/error.component';
 import { Patch1Component } from './patches/patch1/patch1.component';
-import { OrganizationDetailsComponent } from './body/create-new-organization/organization-details/organization-details.component';
-import { TeamDetailsComponent } from './body/create-new-organization/team-details/team-details.component';
 import { FocusNavComponent } from './body/board/focus-nav/focus-nav.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
@@ -62,7 +60,7 @@ import { UpdateFieldComponent } from './patches/patch3/update-field/update-field
 import { ProfileIconsComponent } from './icons/profile-icons/profile-icons.component';
 import { ProgressGraphComponent } from './body/common-tools/progress-graph/progress-graph.component';
 import { SuggestionBucketComponent } from './body/common-tools/suggestion-bucket/suggestion-bucket.component';
-import { AddMemberComponent } from './body/create-new-organization/team-details/add-member/add-member.component';
+import { AddMemberComponent } from './body/create-new-team/add-member/add-member.component';
 import { PerformanceColumnChartComponent } from './body/board/performance-column-chart/performance-column-chart.component';
 import { ColumnChartComponent } from './body/common-tools/column-chart/column-chart.component';
 import { SelectDropdownComponent } from './body/board/performance-column-chart/select-dropdown/select-dropdown.component';
@@ -76,6 +74,7 @@ import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluati
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
 import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.component';
+import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
 import { AddPatchComponent } from './list-patches/add-patch/add-patch.component';
 
 
@@ -111,8 +110,6 @@ import { AddPatchComponent } from './list-patches/add-patch/add-patch.component'
     ErrorComponent,
     FilterTaskComponent,
     Patch1Component,
-    OrganizationDetailsComponent,
-    TeamDetailsComponent,
     FocusNavComponent,
     UserVerificationComponent,
     ProfileComponent,
@@ -143,6 +140,7 @@ import { AddPatchComponent } from './list-patches/add-patch/add-patch.component'
     ListPatchesComponent,
     PatchCardsComponent,
     EditPatchComponent,
+    CreateNewTeamComponent,
     AddPatchComponent
   ],
   imports: [

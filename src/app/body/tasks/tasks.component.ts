@@ -53,7 +53,7 @@ export class TasksComponent implements OnInit {
 
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.SelectedOrgAppKey) {
           this.readData();
         }
       });

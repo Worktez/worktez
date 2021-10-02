@@ -41,10 +41,8 @@ export class TaskDetailsComponent implements OnInit {
   actionType: string = "All"
   comment: string;
 
-  public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
-  activityData: Observable<ActivityId[]>
-  activityCollection: AngularFirestoreCollection<Activity>
+  activityData: Observable<Activity[]>
 
   constructor ( private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
 
@@ -56,10 +54,10 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
 
-    this.authService.afauth.user.subscribe( data => {
-      this.authService.userAppSettingObservable.subscribe( data => {
-        if ( data.AppKey ) {
-          this.backendService.organizationsData.subscribe( data => {
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.SelectedOrgAppKey) {
+          this.backendService.organizationsData.subscribe(data => {
             this.orgDomain = this.backendService.getOrganizationDomain();
             this.getTaskDetail();
             this.getActivityData();
@@ -71,39 +69,21 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getTaskDetail () {
-    var documentName = 'Organizations/' + this.orgDomain + '/Tasks/' + this.Id;
-    this.taskDocument = this.db.doc<Tasks>( documentName );
-    this.taskDataObservable = this.taskDocument.snapshotChanges().pipe(
-      map( actions => {
-        const data = actions.payload.data() as Tasks;
-        this.task = data;
-        return { ...data }
-      } ) );
-  }
+     const callable = this.functions.httpsCallable('tasks');
+     this.taskDataObservable = callable({ mode: "getTaskDetails", Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
+         const data = res.taskData as Tasks;
+         this.task = data;
+         return { ...data }
+       }));
+   }
 
-  getActivityData () {
-    var documentName = 'Organizations/' + this.orgDomain + '/Activity/' + this.Id + '/Action';
-    this.activityCollection = this.db.collection<Activity>( documentName, ref => {
-      let queryRef;
-      if ( this.actionType == "All" ) {
-        queryRef = ref;
-      } else if ( this.actionType == "EDITED" ) {
-        queryRef = ref.where( 'Type', '==', "EDITED" );
-      } else if ( this.actionType == "LOGWORK_COMMENT" ) {
-        queryRef = ref.where( 'Type', '==', "LOGWORK_COMMENT" );
-      } else if ( this.actionType == "COMMENT" ) {
-        queryRef = ref.where( 'Type', '==', "COMMENT" );
-      }
-      this.showContent = true;
-      return queryRef;
-    } );
-    this.activityData = this.activityCollection.snapshotChanges().pipe(
-      map( actions => actions.map( a => {
-        const data = a.payload.doc.data() as Activity;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      } ) )
-    );
+  async getActivityData () {
+    const callable = this.functions.httpsCallable("activity");
+    this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
+      map(actions => {
+        console.log(actions.data);
+        return actions.data as Activity[];
+    }));
   }
 
   async addComment() {
