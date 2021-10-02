@@ -25,6 +25,7 @@ exports.createNewTask = function(request, response) {
     const difficulty = request.body.data.Difficulty;
     const creator = request.body.data.Creator;
     const assignee = request.body.data.Assignee;
+    const reporter = request.body.data.Reporter;
     const estimatedTime = parseInt(request.body.data.EstimatedTime);
     const taskStatus = request.body.data.Status;
     const project = request.body.data.Project;
@@ -61,7 +62,7 @@ exports.createNewTask = function(request, response) {
             };
             updateTeamDetails(updateTeamJson, orgDomain, project);
             sendMail(assignee, subjectMessage, htmlMessage);
-            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type);
+            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
         }).catch((error) => {
