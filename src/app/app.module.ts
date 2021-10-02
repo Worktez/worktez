@@ -76,6 +76,7 @@ import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.comp
 import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.component';
 import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
 import { AddPatchComponent } from './list-patches/add-patch/add-patch.component';
+import { Patch5Component } from './patches/patch5/patch5.component';
 
 
 @NgModule({
@@ -141,7 +142,8 @@ import { AddPatchComponent } from './list-patches/add-patch/add-patch.component'
     PatchCardsComponent,
     EditPatchComponent,
     CreateNewTeamComponent,
-    AddPatchComponent
+    AddPatchComponent,
+    Patch5Component
   ],
   imports: [
     BrowserModule,
