@@ -18,7 +18,7 @@ export class Patch5Component implements OnInit {
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.showLoader = true;
+    this.showLoader = false;
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.SelectedOrgAppKey) {
