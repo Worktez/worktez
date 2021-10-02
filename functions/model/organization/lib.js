@@ -8,7 +8,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, orgEmail, orgDescription, orgLogoURL) {
+exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, orgEmail, orgAdmin, orgDescription, orgLogoURL) {
     const orgData = db.collection("Organizations").doc(orgDomain).set({
         OrganizationId: orgId,
         AppKey: appKey,
@@ -16,6 +16,7 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
         OrganizationName: orgName,
         OrganizationDomain: orgDomain,
         OrganizationEmail: orgEmail,
+        OrganizationAdmin: orgAdmin,
         OrganizationDescription: orgDescription,
         OrganizationLogoURL: orgLogoURL,
         TeamsId: [],

@@ -21,13 +21,14 @@ export class MyDashBoardComponent implements OnInit {
   user: User
   userEmail: string
   userObservable: Observable<User>
-  showContent: boolean = false;
+  showContent: boolean = true;
   teamData: TeamDataId[] = [];
 
   currentSprintName: string;
 
   selectedTeamId: string = "Dev";
   teamCurrentSprintNumber: number;
+  teamIdExists: boolean = false;
 
   constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -53,17 +54,27 @@ export class MyDashBoardComponent implements OnInit {
         this.router.navigate(['/Board']);
       } else {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if(data.AppKey) {
-          this.selectedTeamId = data.TeamId;
-          this.backendService.organizationsData.subscribe(data => {
-            if(data.length)
-            this.readApplicationData();
-          });
+        if(data.SelectedOrgAppKey) {
+          if(data.SelectedTeamId != ""){
+            this.selectedTeamId = data.SelectedTeamId;
+            this.teamIdExists = true;
+            this.backendService.organizationsData.subscribe(data => {
+              if(data.length)
+              this.readApplicationData();
+            });
+          } else {
+            this.teamIdExists = false;
+          }
         }
       });
     }
       this.userEmail = data.email;
       return { ...data }
     }));
+  }
+
+  createNewTeam() {
+    this.teamIdExists = true;
+    this.router.navigate(["CreateNewTeam"]);
   }
 }

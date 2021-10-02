@@ -10,18 +10,21 @@ const admin = require("firebase-admin");
 const { setTeam, getTeam } = require("./lib");
 const { getOrg, updateOrg } = require("../organization/lib");
 const { setSprint } = require("../sprints/lib");
+const { myOrganizations} = require("../users/myOrganizations");
 
 
 exports.createTeam = function(request, response) {
     const teamId = request.body.data.TeamId;
     const teamDescription = request.body.data.TeamDescription;
+    const teamAdmin = request.body.data.TeamAdmin;
     const teamManagerEmail = request.body.data.TeamManagerEmail;
     const teamMembers = request.body.data.TeamMembers;
     const type = request.body.data.Type;
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
-
+    const uid = request.body.data.Uid;
+    const orgAppKey = request.body.data.OrganizationAppKey;
     const orgDomain = request.body.data.OrganizationDomain;
     const teamName = request.body.data.TeamName;
     let orgId;
@@ -40,11 +43,12 @@ exports.createTeam = function(request, response) {
             updateOrg(orgDomain, inputJson);
         }
 
-        const promise2 = getTeam(orgDomain, teamName).then((team) => {
+        const prom2 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
                 console.log(orgId);
 
-                setTeam(orgDomain, teamName, teamDescription, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
+                myOrganizations(uid, orgDomain, orgAppKey, teamId);
             } else {
                 status = 500;
                 result = { data: "Error: Team Exists! Use update team" };
@@ -54,7 +58,7 @@ exports.createTeam = function(request, response) {
             status = 500;
             console.log("Error:", error);
         });
-        return Promise.resolve(promise2);
+        return Promise.resolve(prom2);
     }).catch((error) => {
         status = 500;
         console.log("Error:", error);

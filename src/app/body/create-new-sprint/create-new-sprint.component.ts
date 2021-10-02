@@ -63,8 +63,8 @@ export class CreateNewSprintComponent implements OnInit {
     this.authService.afauth.user.subscribe(data => {
       this.userTeam = this.authService.getTeamId();
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
-          this.selectedTeamId = data.TeamId;
+        if (data.SelectedOrgAppKey) {
+          this.selectedTeamId = data.SelectedTeamId;
           this.backendService.organizationsData.subscribe(data => {
             if (data.length) {
               this.teams = data[0].TeamsId;
