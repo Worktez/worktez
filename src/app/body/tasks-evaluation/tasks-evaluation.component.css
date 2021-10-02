@@ -1,0 +1,103 @@
+#navbarMenu {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.container {
+    background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+    color: var(--text);
+}
+
+.table th {
+    color: var(--text);
+}
+
+.table td:not(:last-child){
+    color: var(--text);
+    cursor: pointer;
+}
+
+#moveBtn, #dropdownButton {
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+}
+
+#moveBtn:hover:disabled {
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+}
+
+#moveBtn:hover {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.dropdown #button {
+    color: var(--button-text);
+}
+
+.dropdown #button:hover {
+    background-color: var(--secondary-color);
+}
+
+select {
+    background: none;
+    border: none;
+    color: var(--button-text);
+}
+
+select:hover {
+    background-color: var(--secondary-color);
+}
+
+select option {
+    background-color: var(--secondary-color);
+}
+
+.pagination li a:hover {
+    cursor: pointer;
+    background-color: var(--secondary-bg);
+}
+
+.pagination li a:focus {
+    box-shadow: none;
+    outline: none 0;
+}
+
+.pagination li a {
+    color: var(--secondary-color);
+    background-color: var(--secondary-bg);
+}
+
+.pagination .disabled a {
+    color: var(--text);
+}
+
+#filterMenu {
+    background-color: var(--secondary-bg);
+    padding-right: 35px;
+    padding-left: 5px;
+}
+
+.modal-header {
+    background-color: var(--primary-color);
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+    color: var(--text);
+}
+
+.head {
+    font-weight: bolder;
+}
+
+.btn-secondary {
+    background-color: var(--button-hover-bg);
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-bg);
+}

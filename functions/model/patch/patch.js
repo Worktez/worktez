@@ -12,6 +12,7 @@ const { patch2 } = require("./patch2");
 const { patch3 } = require("./patch3");
 const { patch4 } = require("./patch4");
 const { patchModerator } = require("./patchModerator");
+const { editPatch } = require("./editPatch");
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -31,6 +32,8 @@ exports.patch = functions.https.onRequest((request, response) => {
             return patch4(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
+        } else if (mode == "edit") {
+            return editPatch(request, response);
         }
     });
 });

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
@@ -7,20 +7,21 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Location } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-team-details',
-  templateUrl: './team-details.component.html',
-  styleUrls: ['./team-details.component.css']
+  selector: 'app-create-new-team',
+  templateUrl: './create-new-team.component.html',
+  styleUrls: ['./create-new-team.component.css']
 })
-export class TeamDetailsComponent implements OnInit {
+export class CreateNewTeamComponent implements OnInit {
+  componentName: string = "CREATE-NEW-TEAM"
 
-  @Input("orgDomain") organizationDomain: string
-  @Output() teamFormSubmitted = new EventEmitter<{ submitted: boolean }>();
-
-  componentName: string = "TEAM-DETAILS"
-
+  organizationDomain: string
+  appKey: string
   childStep: number = 1
+  teamAdmin: string
+  uid: string
   teamData: TeamDataId[] = [];
   selectedTeamId: string;
   isUpdateTeam: boolean = false;
@@ -32,9 +33,14 @@ export class TeamDetailsComponent implements OnInit {
   teamMembers: string[] = [];
   enableLoader: boolean = false;
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
+    this.appKey = this.authService.getAppKey();
+    this.backendService.getOrgDetails(this.appKey);
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    this.teamAdmin = this.authService.getUserEmail();
+    this.uid = this.authService.getLoggedInUser();
     console.log(this.router.url);
     this.selectedTeamId = this.route.snapshot.params['teamId'];
     console.log(this.selectedTeamId);
@@ -56,7 +62,7 @@ export class TeamDetailsComponent implements OnInit {
     this.teamId = this.teamName.slice(0, 3);
   }
 
-  taskLabels: string[] = ["Bug", "Story", "Sub Task"]
+  type: string[] = ["Bug", "Story", "Sub Task"]
   statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
@@ -79,7 +85,7 @@ export class TeamDetailsComponent implements OnInit {
     let labelValue = (<HTMLInputElement>event.target).value;
     let isChecked = (<HTMLInputElement>event.target).checked;
     if (labelName === "Task") {
-      this.labelFunc(isChecked, labelValue, this.taskLabels)
+      this.labelFunc(isChecked, labelValue, this.type)
     }
     if (labelName === "Status") {
       this.labelFunc(isChecked, labelValue, this.statusLabels)
@@ -169,17 +175,17 @@ export class TeamDetailsComponent implements OnInit {
 
   async createNewTeamWithLabels() {
     this.enableLoader = true;
-    this.teamFormSubmitted.emit({ submitted: true })
+    // this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('teams');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
       console.log(result);
       this.enableLoader = false;
-      this.teamFormSubmitted.emit({ submitted: false });
+      // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
 
@@ -190,17 +196,17 @@ export class TeamDetailsComponent implements OnInit {
 
   async updateExistingTeam() {
     this.enableLoader = true;
-    this.teamFormSubmitted.emit({ submitted: true })
+    // this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('teams');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
     try {
-      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TaskLabels: this.taskLabels, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       console.log(result);
       this.enableLoader = false;
-      this.teamFormSubmitted.emit({ submitted: false });
+      // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
 
@@ -210,6 +216,7 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   close() {
-    this.location.back();
+    // this.location.back();
+    this.router.navigate(["MyDashboard"]);
   }
 }
