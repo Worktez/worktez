@@ -72,13 +72,13 @@ export class SetupComponent implements OnInit {
   async createNewTeamWithLabels() {
     const callable = this.functions.httpsCallable('teams');
     const priority = ["High", "Medium", "Low"];
-    const taskLabels = ["Bug", "Story", "Sub Task"];
+    const type = ["Bug", "Story", "Sub Task"];
     const status = ["Ice Box", "Ready to Start", "Under Progress", "Blocked", "Completed"];
     const difficulty = ["High", "Medium", "Low"];
 
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Development", TeamId: "Dev", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], TaskLabels: taskLabels, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Development", TeamId: "Dev", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
       console.log(result);
       this.createNewSprint("Development", "Dev");
     } catch (error) {
@@ -86,7 +86,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Marketing", TeamId: "Mar", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], TaskLabels: taskLabels, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
+      const result = await callable({ mode: "create", OrganizationDomain: "worktrolly.web.app", TeamName: "Marketing", TeamId: "Mar", TeamDescription: "test", TeamManagerEmail: "worktrolly@gmail.com", TeamMembers: ["member@gmail.com"], Type: type, StatusLabels: status, PriorityLabels: priority, DifficultyLabels: difficulty }).toPromise();
       console.log(result);
       this.createNewSprint("Marketing", "Mar");
     } catch (error) {
@@ -117,6 +117,9 @@ export class SetupComponent implements OnInit {
     try {
       const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story" }).toPromise();
+
+
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -124,8 +127,12 @@ export class SetupComponent implements OnInit {
     }
 
     try {
+
       const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: "Createor", Assignee: "-", EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug" }).toPromise();
+
+
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -133,8 +140,12 @@ export class SetupComponent implements OnInit {
     }
 
     try {
+
       const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task" }).toPromise();
+
+
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -142,8 +153,12 @@ export class SetupComponent implements OnInit {
     }
 
     try {
+
       const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
 
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug" }).toPromise();
+
+
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -151,7 +166,11 @@ export class SetupComponent implements OnInit {
     }
 
     try {
+
       const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21" }).toPromise();
+
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: this.appKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story" }).toPromise();
+
 
       console.log("Successfully created the task");
       console.log(result);

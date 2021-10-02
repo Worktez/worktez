@@ -12,14 +12,16 @@
     color: var(--text);
 }
 
-#button, .btn {
+#button,
+.btn {
     background-color: var(--primary-color);
     color: var(--button-text);
 }
 
 #button:focus,
 #button:active,
-.btn:hover {
+.btn:hover,
+.btn:active {
     background-color: var(--secondary-color);
 }
 
@@ -32,7 +34,7 @@
 }
 
 .card {
-    background-color: var(--primary-bg);
+    background-color: var(--secondary-bg);
     box-shadow: var(--box-shadow-bottom);
 }
 
@@ -54,11 +56,25 @@
     font-size: 20px;
 }
 
-.btn{
+.options {
+    /* background-color: var(--secondary-bg); */
     color: var(--button-text);
-    background-color: var(--primary-color);
+    cursor: pointer;
 }
 
+#myTab {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.activeBtn {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#noActivityDesc {
+    color: var(--text);
+}
 
 @media (max-width: 991px) {
     .navbar-nav {

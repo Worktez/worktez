@@ -14,11 +14,11 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Activity, ActivityId } from 'src/app/Interface/ActivityInterface';
 
-@Component({
+@Component( {
   selector: 'app-task-details',
   templateUrl: './task-details.component.html',
-  styleUrls: ['./task-details.component.css']
-})
+  styleUrls: [ './task-details.component.css' ]
+} )
 export class TaskDetailsComponent implements OnInit {
 
   componentName: string = "TASK-DETAILS"
@@ -29,108 +29,154 @@ export class TaskDetailsComponent implements OnInit {
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
   userLoggedIn: boolean = false
+  showContent: boolean = false;
+  activeAllBtn: boolean = false
+  activeLogWorkBtn: boolean = false
+  activeCommentBtn: boolean = false
+  activeEditBtn: boolean = false
   task: Tasks
   todayDate: string
   time: string
   orgDomain: string
+  actionType: string = "All"
+  comment: string;
 
   public taskDocument: AngularFirestoreDocument<Tasks>
   public taskDataObservable: Observable<Tasks>
-  activityData: Observable<ActivityId[]>
-  tasksCollection: AngularFirestoreCollection<Activity>
+  activityData: Observable<Activity[]>
 
-  constructor(private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService) { }
+  constructor ( private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
-    this.Id = this.route.snapshot.params['taskId'];
+    this.Id = this.route.snapshot.params[ 'taskId' ];
 
-    this.navbarHandler.addToNavbar(this.Id);
+    this.navbarHandler.addToNavbar( this.Id );
 
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
-          this.backendService.organizationsData.subscribe(data => {
+    this.authService.afauth.user.subscribe( data => {
+      this.authService.userAppSettingObservable.subscribe( data => {
+        if ( data.AppKey ) {
+          this.backendService.organizationsData.subscribe( data => {
             this.orgDomain = this.backendService.getOrganizationDomain();
             this.getTaskDetail();
             this.getActivityData();
-          });
+            this.activeAllBtn = true;
+          } );
         }
-      });
-    });
+      } );
+    } );
   }
 
-  getTaskDetail() {
+  getTaskDetail () {
     var documentName = 'Organizations/' + this.orgDomain + '/Tasks/' + this.Id;
-    this.taskDocument = this.db.doc<Tasks>(documentName);
+    this.taskDocument = this.db.doc<Tasks>( documentName );
     this.taskDataObservable = this.taskDocument.snapshotChanges().pipe(
-      map(actions => {
+      map( actions => {
         const data = actions.payload.data() as Tasks;
         this.task = data;
         return { ...data }
-      }));
+      } ) );
   }
 
-  getActivityData() {
-    var documentName = 'Organizations/' + this.orgDomain + '/Activity/' + this.Id + '/Action';
-    this.tasksCollection = this.db.collection<Activity>(documentName);
-    this.activityData = this.tasksCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Activity;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+  async getActivityData () {
+    const callable = this.functions.httpsCallable("activity");
+    this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
+      map(actions => {
+        console.log(actions.data);
+        return actions.data as Activity[];
+    }));
   }
 
-  CloneTaskPage() {
-    this.cloneTask.getCloneTask(this.task);
-  }
-
-  logWorkPage() {
-    this.logWorkEnabled = true;
-  }
-
-  editTask() {
-    this.editTaskEnabled = true;
-  }
-
-  deleteTask(){
-    this.deleteTaskEnabled = true;
-  }
-
-  logWorkCompleted(data: { completed: boolean }) {
-    this.logWorkEnabled = false;
-  }
-
-  editTaskCompleted(data: { completed: boolean }) {
-    this.editTaskEnabled = false;
-  }
-
-  deleteTaskCompleted(data: { completed: boolean }){
-  this.deleteTaskEnabled = false;
-  }
-
-  async reopenTask() {
+  async addComment() {
     const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+      const result = await callable({ mode: "comment", AppKey: appKey, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+
+      console.log("Logged Work Successfully");
+      this.comment = "";
       console.log(result);
       return;
-    }
-
-    catch (error) {
-      this.errorHandlerService.getErrorCode("LOGWORK", "InternalError");
+    } catch (error) {
+      this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
       console.log("Error", error);
     }
   }
 
-  backToTasks() {
+  CloneTaskPage () {
+    this.cloneTask.getCloneTask( this.task );
+  }
+
+  logWorkPage () {
+    this.logWorkEnabled = true;
+  }
+
+  editTask () {
+    this.editTaskEnabled = true;
+  }
+
+  deleteTask () {
+    this.deleteTaskEnabled = true;
+  }
+
+  logWorkCompleted ( data: { completed: boolean } ) {
+    this.logWorkEnabled = false;
+  }
+
+  editTaskCompleted ( data: { completed: boolean } ) {
+    this.editTaskEnabled = false;
+  }
+
+  deleteTaskCompleted ( data: { completed: boolean } ) {
+    this.deleteTaskEnabled = false;
+  }
+
+  async reopenTask () {
+    const callable = this.functions.httpsCallable( 'tasks' );
+    const appKey = this.backendService.getOrganizationAppKey();
+
+    try {
+      const result = await callable( { mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
+      console.log( result );
+      return;
+    }
+
+    catch ( error ) {
+      this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );
+      console.log( "Error", error );
+    }
+  }
+
+  backToTasks () {
     this.location.back()
   }
 
+  changeType ( actionType: string ) {
+    this.actionType = actionType
+    this.getActivityData();
+    if( this.actionType == "All" ){
+      this.activeEditBtn = false;
+      this.activeLogWorkBtn = false;
+      this.activeAllBtn = true;
+      this.activeCommentBtn = false;
+    } else if ( this.actionType == "LOGWORK_COMMENT"){
+      this.activeAllBtn = false;
+      this.activeEditBtn = false;
+      this.activeLogWorkBtn = true;
+      this.activeCommentBtn = false;
+    } else if ( this.actionType == "EDITED"){
+      this.activeAllBtn = false;
+      this.activeLogWorkBtn = false;
+      this.activeEditBtn = true;
+      this.activeCommentBtn = false;
+    } else if ( this.actionType == "COMMENT"){
+      this.activeAllBtn = false;
+      this.activeLogWorkBtn = false;
+      this.activeEditBtn = false;
+      this.activeCommentBtn = true;
+    }
+  }
 }

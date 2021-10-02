@@ -216,7 +216,9 @@ export class ValidationService {
 
     async checkAssignee(value: String) {
         const control = new FormControl(value, Validators.required);
-        if (control.errors === null)
+        const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const result = regularExpression.test(String(value).toLowerCase());
+        if (control.errors === null && result == true)
             return (true);
         else {
             let errorType = this.componentName + "_VALIDATION_ASSIGNEE";

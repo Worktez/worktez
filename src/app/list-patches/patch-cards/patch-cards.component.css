@@ -1,0 +1,15 @@
+.table-responsive {
+    cursor: context-menu;
+}
+
+.table th {
+    color: var(--text);
+}
+
+.table td {
+    color: var(--text);
+}
+
+.editButton span {
+    background-color: var(--primary-color);
+}
