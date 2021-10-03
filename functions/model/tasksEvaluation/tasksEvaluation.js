@@ -11,8 +11,8 @@ const { readTasksEvaluationData } = require("./readTasksEvalulationData");
 exports.tasksEvaluation = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const mode = request.body.data.mode;
-        if(mode == 'readTasksEvaluationData') {
+        if (mode == "readTasksEvaluationData") {
             return readTasksEvaluationData(request, response);
-        }   
+        }
     });
 });

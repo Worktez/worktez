@@ -18,19 +18,24 @@ exports.patch2 = function(request, response) {
     let taskId;
     const newfield = request.body.data.newField;
     const newFieldValue = request.body.data.NewFieldValue;
+    const newFieldValueType = request.body.data.NewFieldValueType;
     const uid = request.body.data.Uid;
     const promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").get().then((task) => {
         task.forEach((doc) => {
             taskId = doc.data().Id;
             console.log("Executing Promise1 of Patch2");
             data = {};
-            data[newfield] = newFieldValue;
+            if (newFieldValueType == "Array") {
+                data[newfield] = [];
+            } else if (newFieldValueType == "String") {
+                data[newfield] = newFieldValue;
+            }
             updateTask(data, orgDomain, taskId);
         });
         const Promises = [promise1];
         Promise.all(Promises).then(() => {
             result = { data: "OK! Patch2 executed" };
-            updatePatchData("Patch2", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
+            updatePatchData("Patch2", { LastUsedByUid: uid, LastUsedByOrg: orgDomain });
             console.log("Counters updated");
             return response.status(200).send(result);
         }).catch(function(error) {

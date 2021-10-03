@@ -14,7 +14,8 @@ export class Patch2Component implements OnInit {
   orgDomain: string;
   taskId: string;
   newfield: string;
-  newFieldValue: string;
+  newFieldValue: string = "";
+  newFieldValueType: string;
   showLoader: boolean = false;
   uid: string;
   patch: Patch;
@@ -40,7 +41,7 @@ export class Patch2Component implements OnInit {
     console.log("Patch2 function running");
     console.log(this.orgDomain, this.newfield, this.newFieldValue);
     const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch2", OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, Uid: this.uid}).toPromise().then(result => {
+    await callable({ mode: "patch2", OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);

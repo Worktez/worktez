@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -19,26 +21,26 @@ exports.performanceChartData = function(request, response) {
     let promise1;
 
     if (assignee) {
-        promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).where("Assignee", '==', assignee).get().then(docs => {
-            docs.forEach(doc => {
+        promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).where("Assignee", "==", assignee).get().then((docs) => {
+            docs.forEach((doc) => {
                 const data = doc.data();
                 if (data.Status == "Completed") {
                     storyPoint += data.StoryPointNumber;
                 }
             });
-        }).catch(error => {
+        }).catch((error) => {
             status = 500;
             console.log(error);
         });
     } else {
-        promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).get().then(docs => {
-            docs.forEach(doc => {
+        promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).get().then((docs) => {
+            docs.forEach((doc) => {
                 const data = doc.data();
                 if (data.Status == "Completed") {
                     storyPoint += data.StoryPointNumber;
                 }
             });
-        }).catch(error => {
+        }).catch((error) => {
             status = 500;
             console.log(error);
         });
