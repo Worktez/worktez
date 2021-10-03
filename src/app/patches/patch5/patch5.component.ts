@@ -12,7 +12,7 @@ export class Patch5Component implements OnInit {
 
   orgId: string;
   orgDomain: string;
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   uid: string;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService) { }
