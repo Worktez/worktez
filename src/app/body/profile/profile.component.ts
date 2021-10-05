@@ -84,7 +84,10 @@ export class ProfileComponent implements OnInit {
     this.education = this.authService.userAppSetting.Education;
     this.experience = this.authService.userAppSetting.Experience;
     this.projects = this.authService.userAppSetting.Projects;
-    this.website = this.authService.userAppSetting.Website; 
+    this.website = this.authService.userAppSetting.Website;
+    if(this.website.includes("https://") == false){
+      this.website = "https://"+this.website;
+    } 
   }
   
 }
