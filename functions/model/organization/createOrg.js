@@ -13,7 +13,7 @@ const { setMyOrgCollection, getMyOrgCollection, getUser, updateUser } = require(
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;
     const date = new Date();
-    const orgId = generateBase64String(date.toString());
+    const orgId = generateBase64String(date.toString() + date.getMilliseconds().toString());
     const appKey = generateBase64String(date.getMilliseconds() + orgId);
 
     const organizationName = data.OrganizationName;
