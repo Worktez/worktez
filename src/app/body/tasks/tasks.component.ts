@@ -65,7 +65,6 @@ export class TasksComponent implements OnInit {
     const callable = this.functions.httpsCallable("tasks");
     this.tasksData = await callable({ mode: "getAllTasks", OrgDomain: "worktrolly.web.app", TeamId: this.teamId, SprintNumber: this.currentSprintNumber, FilterAssignee: this.filterAssignee, FilterPriority: this.filterPriority, FilterDifficulty: this.filterDifficulty, FilterStatus: this.filterStatus, FilterProject: this.filterProject }).pipe(
       map(actions => {
-        console.log(actions.data);
         return actions.data as Tasks[];
       }));
   }
