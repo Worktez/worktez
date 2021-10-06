@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
-
+import { map } from 'rxjs/operators'
+import { Observable } from 'rxjs';
+import { MyOrganisationData, User } from '../Interface/UserInterface';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 
 @Component({
@@ -13,9 +16,34 @@ import { BackendService } from '../services/backend/backend.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
+  public myOrgCollectionsData: Observable<MyOrganisationData[]>
+  uid: string
+
+  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
 
   ngOnInit(): void {
+    this.authService.afauth.user.subscribe((action) => {
+      const data = action as User;
+      if(data) {
+        this.uid = data.uid;
+        this.getListedOrganizationData();
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  getListedOrganizationData() {
+    const callable = this.functions.httpsCallable("users");
+    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: this.uid}).pipe(
+      map(actions => {
+        return actions.data as MyOrganisationData[];
+    }));
+  }
+
+  setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
+    const callable = this.functions.httpsCallable("users");
+    callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
   }
 
   startNewSprint() {
