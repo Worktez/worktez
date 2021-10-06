@@ -1,10 +1,10 @@
-<div class="container" *ngIf="patchService.patchObservable | async">
+<div class="container">
     <div class="row">
         <div class="col pl-0 pr-0">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <h5 class="active nav-link" id="head">{{ patch.Name }}</h5>
+                        <h5 class="active nav-link" id="head">Patch5</h5>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -19,23 +19,23 @@
         <div class="container p-3 mr-3 my-3">
             <div class="row mb-2">
                 <div class="col-md-6">
-                    <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
+                    <div>Creation Date: <span class="pl-3">2/10/2021</span></div>
                 </div>
                 <div class="col-md-6">
-                    <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
+                    <div class="pr-3">Last Updated On: <span class="pl-3">2/10/2021</span></div>
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="col-md-6">
-                    <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
+                    <div class="pr-3">Last Used by Org: <span class="pl-3"></span></div>
                 </div>
                 <div class="col-md-6">
-                    <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
+                    <div class="pr-3">Last Used by Uid: <span class="pl-3"></span></div>
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="col">
-                    Description: <span class="pl-3">{{ patch.Description }}</span>
+                    Description: <span class="pl-3">To change user doc to new structure of organization</span>
                 </div>
             </div>
         </div>
@@ -47,20 +47,8 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="orgId" class="col-sm-2 col-form-label">OrgID</label>
                 <div class="col-sm-10">
-                    <input type="orgId" class="form-control" id="orgId" placeholder="Enter OrgId" [(ngModel)]="orgId" [ngModelOptions]="{standalone: true}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="teamId" class="col-sm-2 col-form-label">TeamId</label>
-                <div class="col-sm-10">
-                    <input type="teamId" class="form-control" id="teamId" placeholder="Enter TeamId" [(ngModel)]="teamId" [ngModelOptions]="{standalone: true}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary" [disabled]="showLoader" (click)="patch1()">Submit</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="showLoader" (click)="patch5()">Submit</button>
                     <ng-container *ngIf="showLoader">
                         <app-loader> </app-loader>
                     </ng-container>

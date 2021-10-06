@@ -58,7 +58,15 @@ exports.getUserUseEmail = function(email) {
     return Promise.resolve(promise);
 };
 
-exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams=[], defaultTeam= "") {
+exports.getAllUsers = function() {
+    const promise = db.collection("Users").get().then((users) => {
+        return users;
+    });
+
+    return Promise.resolve(promise);
+};
+
+exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], defaultTeam = "") {
     const setMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).set({
         Uid: Uid,
         OrgAppKey: orgAppKey,

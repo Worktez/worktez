@@ -11,6 +11,7 @@ const { patch1 } = require("./patch1");
 const { patch2 } = require("./patch2");
 const { patch3 } = require("./patch3");
 const { patch4 } = require("./patch4");
+const { patch5 } = require("./patch5");
 const { patchModerator } = require("./patchModerator");
 const { editPatch } = require("./editPatch");
 
@@ -30,6 +31,9 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch4") {
             // To update the uid for previous activities
             return patch4(request, response);
+        } else if (mode == "patch5") {
+            // To update the userDoc for all Users to change Organization structure
+            return patch5(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {

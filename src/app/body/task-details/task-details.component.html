@@ -10,22 +10,34 @@
                 <div class="pl-lg-0" id="navbarTexts">
                     <ul class="nav navbar-nav ml-auto align-items-center">
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
-                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Re-open" (click)="reopenTask()">restore</span>
+                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Re-open" (click)="reopenTask()">restore</span>
                         </li>
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-toggle="modal" data-target="#exampleModalDel" (click)="deleteTask()">delete </span>
+                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="Delete" data-toggle="modal"
+                                data-target="#exampleModalDel" (click)="deleteTask()">delete </span>
                         </li>
-                        <li class="active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" title="Clone Task" (click)="CloneTaskPage()">content_copy</span>
+                        <li class="active"
+                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-toggle="modal" title="Clone Task"
+                                (click)="CloneTaskPage()">content_copy</span>
                         </li>
-                        <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModal" title="Log work" (click)="logWorkPage()">pending_actions</span>
+                        <li class=" active"
+                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-toggle="modal" data-target="#exampleModal" title="Log work"
+                                (click)="logWorkPage()">pending_actions</span>
                         </li>
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter" title="Edit" (click)="editTask()">edit</span>
+                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip"
+                                data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter"
+                                title="Edit" (click)="editTask()">edit</span>
                         </li>
                         <li class=" active">
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="backToTasks()">close</span>
+                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip"
+                                data-bs-placement="top" title="close" (click)="backToTasks()">close</span>
                         </li>
                     </ul>
                 </div>
@@ -104,6 +116,31 @@
                         <hr>
                         <div class="row ">
                             <div class="col ">
+                                <span id="header ">Reporter:</span>
+                            </div>
+                            <div class="col " id="assigneeTaskDescription ">{{task.Reporter}}</div>
+                        </div>
+                        <hr>
+                        <div class="row ">
+                            <div class="col ">
+                                <span id="header ">Watchers:</span>
+                            </div>
+                            <ng-container *ngIf="task.Watcher.length == 0 ; else showWatchers">
+                                <div class="col " id="assigneeTaskDescription ">No watcher present</div>
+                            </ng-container>
+                            <ng-template #showWatcher>{{task.Watcher}}</ng-template>
+                        </div>
+                        <hr>
+                        <div class="row ">
+                            <div class="col ">
+                                <span id="header ">Creator:</span>
+                            </div>
+                            <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
+                        </div>
+
+                        <hr>
+                        <div class="row ">
+                            <div class="col ">
                                 <span id="header ">Assignee:</span>
                             </div>
                             <div class="col " id="assigneeTaskDescription ">{{task.Assignee}}</div>
@@ -120,18 +157,22 @@
                             <div class="col">
                                 <div class="row ">
                                     <div class="col ">
-                                        <span class="font-weight-bold" id="headerTime ">RT: {{task.EstimatedTime - task.LogWorkTotalTime}}</span>
+                                        <span class="font-weight-bold" id="headerTime ">RT: {{task.EstimatedTime -
+                                            task.LogWorkTotalTime}}</span>
                                     </div>
                                     <div class="col ">
-                                        <span class="font-weight-bold" id="headerTime ">LT: {{task.LogWorkTotalTime}}</span>
+                                        <span class="font-weight-bold" id="headerTime ">LT:
+                                            {{task.LogWorkTotalTime}}</span>
                                     </div>
                                     <div class="col ">
-                                        <span class="font-weight-bold" id="headerTime ">ET: {{task.EstimatedTime}}</span>
+                                        <span class="font-weight-bold" id="headerTime ">ET:
+                                            {{task.EstimatedTime}}</span>
                                     </div>
                                 </div>
                                 <div class="row pt-2">
                                     <div class="col" id="TimeChart">
-                                        <app-time-chart [loggedTime]="task.LogWorkTotalTime" [estimatedTime]="task.EstimatedTime"></app-time-chart>
+                                        <app-time-chart [loggedTime]="task.LogWorkTotalTime"
+                                            [estimatedTime]="task.EstimatedTime"></app-time-chart>
                                     </div>
                                 </div>
                                 <hr>
@@ -172,15 +213,23 @@
         <div class="my-4 card pb-3">
             <nav class="pt-2 px-2" id="myTab">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All</a>
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('EDITED')">Edits</a>
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false" (click)="changeType('COMMENT')">Comments</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab"
+                        role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab"
+                        role="tab" aria-controls="profile" aria-selected="false"
+                        (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab"
+                        role="tab" aria-controls="contact" aria-selected="false"
+                        (click)="changeType('EDITED')">Edits</a>
+                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab"
+                        role="tab" aria-controls="contact" aria-selected="false"
+                        (click)="changeType('COMMENT')">Comments</a>
                 </div>
             </nav>
             <ng-container *ngIf="activityData | async; else loader">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active px-2" id="activities" role="tabpanel" aria-labelledby="all-activities-tab">
+                    <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
+                        aria-labelledby="all-activities-tab">
                         <ng-container *ngIf="(activityData|async).length==0">
                             <div class="row">
                                 <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.</div>
@@ -195,7 +244,8 @@
                             <div class="form-row px-4 pt-4">
                                 <div class="form-group col">
                                     <span for="description" class="py-2" id="noActivityDesc">Comment</span>
-                                    <textarea type="text" class="form-control form-control-sm" rows="2" [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
+                                    <textarea type="text" class="form-control form-control-sm" rows="2"
+                                        [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
                                 </div>
                             </div>
                             <div class="form-row px-4">
