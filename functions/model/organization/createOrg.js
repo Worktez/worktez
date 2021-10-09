@@ -69,7 +69,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         console.log("Error:", error);
     });
 
-    const promise4 = getUser(orgAdminUid).then((userDoc) => {
+    const promise4 = getUser(orgAdminUid, "").then((userDoc) => {
         const selectedAppKey = appKey;
         const userUpdateJson = {
             SelectedOrgAppKey: selectedAppKey,

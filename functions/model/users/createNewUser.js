@@ -9,7 +9,6 @@
 
 const { setApplication, getApplicationData } = require("../application/lib");
 const { setUser, getUser } = require("./lib");
-const { setPatches } = require("../patch/setPatches");
 
 exports.createNewUser = function(request, response) {
     const user = request.body.data;
@@ -20,14 +19,16 @@ exports.createNewUser = function(request, response) {
     const PhoneNumber = user.phoneNumber;
     const ProviderId = user.providerId;
 
+    const date = new Date();
+    const Username = generateBase64String(date.getMilliseconds() + "Random");
+
     let status = 200;
 
-    const promise1 = getUser(Uid).then((data) => {
+    const promise1 = getUser(Uid, "").then((data) => {
         console.log("Getting User Data");
         if (data == undefined) {
-            setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId);
+            setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, Username);
         }
-        // setPatches();
     }).catch((err) => {
         status = 500;
         console.error("Error : " + err);

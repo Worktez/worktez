@@ -4,6 +4,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -35,10 +36,12 @@ export class ProfileComponent implements OnInit {
   website: string;
   username: string;
 
-  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.addToNavbar(this.componentName);
+
+    this.username = this.route.snapshot.params['username'];
 
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
@@ -47,21 +50,19 @@ export class ProfileComponent implements OnInit {
 
           this.organizationName = this.backendService.getOrganizationName();
           this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
-          this.teamName = teams[0].TeamName;
-          this.managerEmail = teams[0].TeamManagerEmail;
-          if(teams[0].TeamManagerEmail == this.email) {
-            this.role = "Manager";
-          } else {
-            this.role = "Member";
-          }
+            this.teamName = teams[0].TeamName;
+            this.managerEmail = teams[0].TeamManagerEmail;
+            if(teams[0].TeamManagerEmail == this.email) {
+              this.role = "Manager";
+            } else {
+              this.role = "Member";
+            }
           });
         }
       });
     });
 
-  }    
-  
-
+  }
 
   editProfile(){
     this.editProfileEnabled = true;

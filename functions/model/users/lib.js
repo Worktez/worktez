@@ -8,7 +8,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, AppKey = "", TeamId = "", AboutMe = "", AppTheme = "theme-light") {
+exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, Username, AppKey = "", TeamId = "", AboutMe = "", AppTheme = "theme-light") {
     const userData = db.collection("Users").doc(Uid).set({
         SelectedOrgAppKey: AppKey,
         SelectedTeamId: TeamId,
@@ -28,7 +28,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         Experience: "",
         Projects: "",
         Website: "",
-
+        Username: Username,
     });
     return Promise.resolve(userData);
 };
@@ -39,14 +39,26 @@ exports.updateUser = function(inputJson, Uid) {
     return Promise.resolve(promise);
 };
 
-exports.getUser = function(Uid) {
-    console.log("Uid : " + Uid);
-    const promise = db.collection("Users").doc(Uid).get().then((doc) => {
-        if (doc.exists) {
-            return (doc.data());
-        } else {
-            return;
-        }
+exports.getUser = function(Uid, username) {
+    let query = db.collection("Users");
+
+    if(username != "") {
+        query = query.where("Username", "==", username);
+    }
+    
+    if(Uid != "") {
+        query = query.where("uid", "==", Uid);
+    }
+
+    const promise = query.get().then((doc) => {
+        let data;
+        doc.forEach((element) => {
+            if (element.exists) {
+                data = element.data();
+            }
+        });
+
+        return data;
     });
 
     return Promise.resolve(promise);
@@ -58,7 +70,7 @@ exports.getUserUseEmail = function(email) {
         doc.forEach((user) => {
             data = user.data();
         });
-        return data();
+        return data;
     });
 
     return Promise.resolve(promise);
