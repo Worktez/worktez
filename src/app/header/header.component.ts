@@ -5,7 +5,7 @@ import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
-import { MyOrganisationData, User } from '../Interface/UserInterface';
+import { MyOrganizationData, User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 
@@ -16,7 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 })
 export class HeaderComponent implements OnInit {
 
-  public myOrgCollectionsData: Observable<MyOrganisationData[]>
+  public myOrgCollectionsData: Observable<MyOrganizationData[]>
   uid: string
 
   constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
     const callable = this.functions.httpsCallable("users");
     this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: this.uid}).pipe(
       map(actions => {
-        return actions.data as MyOrganisationData[];
+        return actions.data as MyOrganizationData[];
     }));
   }
 

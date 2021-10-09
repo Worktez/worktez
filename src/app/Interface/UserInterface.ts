@@ -17,7 +17,7 @@ export interface UserAppSetting extends User {
     DateOfJoining: string;
 }
 
-export interface MyOrganisationData {
+export interface MyOrganizationData {
     DefaultTeam: string;
     OrgAppKey: string;
     Teams: [];
