@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
   experience: string;
   projects: string;
   website: string;
+  username: string;
 
   constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
@@ -57,7 +58,8 @@ export class ProfileComponent implements OnInit {
         }
       });
     });
-    }    
+
+  }    
   
 
 
@@ -85,9 +87,9 @@ export class ProfileComponent implements OnInit {
     this.experience = this.authService.userAppSetting.Experience;
     this.projects = this.authService.userAppSetting.Projects;
     this.website = this.authService.userAppSetting.Website;
-    if(this.website.includes("https://") == false){
+    if(this.website.includes("https://") == false) {
       this.website = "https://"+this.website;
-    } 
+    }
   }
   
 }

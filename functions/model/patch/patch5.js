@@ -12,9 +12,12 @@
 // const { updatePatchData } = require("./lib");
 const { getOrg } = require("../organization/lib");
 const { getAllUsers, updateUser, setMyOrgCollection } = require("../users/lib");
+const { generateBase64String } = require("../application/lib");
 
 exports.patch5 = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
+    const key = request.body.data.Key;
+    const value = request.body.data.Value;
 
     let status = 200;
 
@@ -24,16 +27,15 @@ exports.patch5 = function(request, response) {
                 users.forEach((userDoc) => {
                     userData = userDoc.data();
 
-                    const userUpdateInputJson = {
-                        SelectedOrgAppKey: userData.AppKey,
-                        SelectedTeamId: userData.TeamId,
-                    };
-                    updateUser(userUpdateInputJson, userData.uid);
+                    const userUpdateInputJson = {};
 
-                    if (userData.AppKey != "") {
-                        teams = [userData.TeamId];
-                        setMyOrgCollection(userData.uid, orgData.OrganizationDomain, userData.AppKey, teams, userData.TeamId);
+                    if(value == "Random"){
+                        const date = new Date();
+                        value = generateBase64String(date.getMilliseconds() + "Random");
                     }
+
+                    userUpdateInputJson[key] = value;
+                    updateUser(userUpdateInputJson, userData.uid);
                 });
             }
         });
