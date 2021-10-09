@@ -90,11 +90,12 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
         OrgAppKey: orgAppKey,
         Teams: teams,
         DefaultTeam: defaultTeam,
+        OrgDomain: orgDomain,
     });
     return Promise.resolve(setMyOrgPromise);
 };
 
-exports.getMyOrgCollection = function(Uid, orgDomain) {
+exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
     const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
         if (doc.exists) {
             return doc.data();
@@ -109,4 +110,9 @@ exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
     const promise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).update(inputJson);
 
     return Promise.resolve(promise);
+};
+
+exports.getMyOrgCollection = function(Uid) {
+    const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").get();
+    return Promise.resolve(getMyOrgPromise);
 };
