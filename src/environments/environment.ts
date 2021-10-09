@@ -9,7 +9,6 @@ export const environment = {
   },
   useEmulators: true,
   gitApiUrl: "https://api.github.com/repos/Worktez/worktez"
-
 };
 
 /*
