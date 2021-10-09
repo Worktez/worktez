@@ -77,6 +77,8 @@ import { EditPatchComponent } from './list-patches/edit-patch/edit-patch.compone
 import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
 import { AddPatchComponent } from './list-patches/add-patch/add-patch.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
+import { UploadFilesComponent } from './body/task-details/upload-files/upload-files.component';
+import { ShowFilesComponent } from './body/common-tools/show-files/show-files.component';
 
 
 @NgModule({
@@ -143,7 +145,9 @@ import { Patch5Component } from './patches/patch5/patch5.component';
     EditPatchComponent,
     CreateNewTeamComponent,
     AddPatchComponent,
-    Patch5Component
+    Patch5Component,
+    UploadFilesComponent,
+    ShowFilesComponent
   ],
   imports: [
     BrowserModule,
