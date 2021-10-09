@@ -27,6 +27,26 @@
                         <label for="message-text" class="col-form-label">About Me:</label>
                         <textarea class="form-control" [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" id="message-text"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="recipient-skills" class="col-form-label">Skills</label>
+                        <input type="text" class="form-control" id="recipient-skills" [(ngModel)]="skills" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-education" class="col-form-label">Education</label>
+                        <input type="text" class="form-control" id="recipient-education" [(ngModel)]="education" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-experience" class="col-form-label">Experience</label>
+                        <input type="text" class="form-control" id="recipient-experience" [(ngModel)]="experience" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-projects" class="col-form-label">Projects</label>
+                        <input type="text" class="form-control" id="recipient-projects" [(ngModel)]="projects" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-website" class="col-form-label">Website</label>
+                        <input type="text" class="form-control" id="recipient-website" [(ngModel)]="website" [ngModelOptions]="{standalone: true}">
+                    </div>
                     <div class="row px-4 py-4">
                         <button type="button" class="ml-auto col-md-3 btn" (click)="editProfile()">Save</button>
                     </div>

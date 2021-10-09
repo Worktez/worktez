@@ -5,12 +5,12 @@
 /* eslint-disable indent */
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
-const { getMyOrgCollection, setMyOrgCollection, updateMyOrgCollection } = require("./lib");
+const { getMyOrgCollectionDoc, setMyOrgCollection, updateMyOrgCollection } = require("./lib");
 
 exports.myOrganizations = function(uid, orgDomain, orgAppKey, teamId) {
     let status = 200;
 
-    const promise1 = getMyOrgCollection(uid, orgDomain).then((orgDoc) => {
+    const promise1 = getMyOrgCollectionDoc(uid, orgDomain).then((orgDoc) => {
         if (orgDoc == undefined) {
             setMyOrgCollection(uid, orgDomain, orgAppKey, teamId, teamId);
             result = { data: "MyOrganizations Created Successfully" };
