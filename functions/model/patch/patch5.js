@@ -11,13 +11,13 @@
 // const admin = require("firebase-admin");
 // const { updatePatchData } = require("./lib");
 const { getOrg } = require("../organization/lib");
-const { getAllUsers, updateUser, setMyOrgCollection } = require("../users/lib");
+const { getAllUsers, updateUser } = require("../users/lib");
 const { generateBase64String } = require("../application/lib");
 
 exports.patch5 = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
     const key = request.body.data.Key;
-    const value = request.body.data.Value;
+    let value = request.body.data.Value;
 
     let status = 200;
 
@@ -29,7 +29,7 @@ exports.patch5 = function(request, response) {
 
                     const userUpdateInputJson = {};
 
-                    if(value == "Random"){
+                    if(value == "Random") {
                         const date = new Date();
                         value = generateBase64String(date.getMilliseconds() + "Random");
                     }
