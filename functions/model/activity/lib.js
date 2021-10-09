@@ -46,7 +46,6 @@ exports.setAction = function(orgDomain, taskId, actionId, type, comment, date, t
 };
 
 exports.getAction = function(orgDomain, taskId, type) {
-    console.log("type : ", type);
     let query = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action");
 
     if (type!="") {

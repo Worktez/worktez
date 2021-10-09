@@ -21,6 +21,8 @@ export class BackendService {
   currentSprintNumber: number = 0;
   currentSprintName: string;
 
+  selectedTaskId: string = "";
+
   constructor(private db: AngularFirestore) { }
 
   getOrgDetails(AppKey: string) {

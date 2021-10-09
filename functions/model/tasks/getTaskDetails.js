@@ -2,15 +2,13 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-unused-vars */
-const { getTask, updateTask } = require("./lib");
-const { getOrgUseAppKey } = require("../organization/lib");
+const { getTask } = require("./lib");
 
 exports.getTaskDetails = function(request, response) {
   const orgDomain = request.body.data.OrgDomain;
   const taskId = request.body.data.Id;
   let result;
   let status = 200;
-  const promises = [];
   
   const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
     if (taskDoc == undefined) {
