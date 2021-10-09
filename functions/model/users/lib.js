@@ -23,6 +23,12 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         GithubProfile: "",
         LinkedInProfile: "",
         DateOfJoining: "",
+        Skills: "",
+        Education: "",
+        Experience: "",
+        Projects: "",
+        Website: "",
+
     });
     return Promise.resolve(userData);
 };
