@@ -2,6 +2,11 @@
     color: var(--text);
 }
 
+.card {
+    border: 1px solid var(--secondary-color);
+    background-color: var(--secondary-bg);
+}
+
 button {
     background-color: var(--secondary-color);
     border: var(--primary-border);

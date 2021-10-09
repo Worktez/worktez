@@ -17,6 +17,7 @@ const { getTaskDetails } = require("./getTaskDetails");
 const { uploadFileToTask } = require("./uploadFileToTask");
 const { getFilesInTask } = require("./getFilesInTask");
 const { deleteFilesInTask } = require("./deleteFilesInTask");
+const { getTasks } = require("./getTasks");
 
 exports.tasks = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -40,6 +41,8 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return getFilesInTask(request, response);
         } else if (mode == "DeleteFilesInTask") {
             return deleteFilesInTask(request, response);
+        } else if (mode == "getAllTasks") {
+            return getTasks(request, response);
         }
     });
 });

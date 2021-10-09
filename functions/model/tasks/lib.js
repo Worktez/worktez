@@ -67,3 +67,31 @@ exports.getFileInTask = function(orgDomain, taskId) {
 
     return Promise.resolve(getFilesPromise);
 };
+
+exports.getAllTasks = function(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject) {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
+
+    query = query.where("SprintNumber", "==", sprintNumber);
+
+    if (filterAssignee != "") {
+        query = query.where("Assignee", "==", filterAssignee);
+    }
+    if (filterPriority != "") {
+        query = query.where("Priority", "==", filterPriority);
+    }
+    if (filterDifficulty != "") {
+        query = query.where("Difficulty", "==", filterDifficulty);
+    }
+    if (filterStatus != "") {
+        query = query.where("Status", "==", filterStatus);
+    }
+    if (filterProject != "") {
+        query = query.where("TeamId", "==", filterProject);
+    } else {
+        query = query.where("TeamId", "==", teamId);
+    }
+
+    const getAllTasksPromise = query.get();
+
+    return Promise.resolve(getAllTasksPromise);
+};
