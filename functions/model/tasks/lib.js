@@ -50,8 +50,8 @@ exports.getTask = function(taskId, orgDomain) {
 };
 
 exports.setFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
-    const updateFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).set(inputJson);
-    return Promise.resolve(updateFileToTaskPromise);
+    const setFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).set(inputJson);
+    return Promise.resolve(setFileToTaskPromise);
 };
 
 exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {

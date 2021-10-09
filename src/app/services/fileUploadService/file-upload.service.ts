@@ -58,14 +58,6 @@ export class FileUploadService {
     this.fileUploadStatus = false;
   }
 
-  // deleteFile(fileUpload: FileUpload): void {
-  //   this.deleteFileDatabase(fileUpload.key)
-  //     .then(() => {
-  //       this.deleteFileStorage(fileUpload.name);
-  //     })
-  //     .catch(error => console.log(error));
-  // }
-
   private async deleteFileFromDB(fileName, taskId, taskFileDocumentName) {
     const appKey = this.backendService.getOrganizationAppKey();
     const todayDate = this.toolsService.date();

@@ -30,7 +30,7 @@ exports.deleteFilesInTask = function(request, response) {
                 };
                 updateFileToTask(updateTaskFileJson, orgDomain, taskId, taskFileDocumentName);
                 
-                comment = "Removed " + fileName;
+                const comment = "Removed " + fileName;
                 addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
             }
         }).catch((error) => {

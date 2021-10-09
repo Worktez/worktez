@@ -55,7 +55,7 @@ exports.uploadFileToTask = function(request, response) {
 
             updateTask(updateTaskForCounter, orgDomain, taskId);
         
-            comment = "Added " + fileName;
+            const comment = "Added " + fileName;
             addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
         }
       }).catch((error) => {
