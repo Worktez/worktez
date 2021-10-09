@@ -79,7 +79,6 @@ export class AuthService {
           this.organizationAvailable = true;
           this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
           this.themeService.changeTheme(data.AppTheme);
-
         } else {
           this.organizationAvailable = false;
         }

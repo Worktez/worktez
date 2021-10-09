@@ -22,6 +22,14 @@ export interface UserAppSetting extends User {
     Website: string;
 }
 
+export interface MyOrganizationData {
+    DefaultTeam: string;
+    OrgAppKey: string;
+    Teams: [];
+    Uid: string;
+    OrgDomain: string;
+}
+
 export const defaultUser = {
     uid: "defaultUser",
     photoURL: "../../../assets/defaultavatar.jpg",
