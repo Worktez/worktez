@@ -12,16 +12,16 @@ exports.myOrganizations = function(uid, orgDomain, orgAppKey, teamId) {
 
     const promise1 = getMyOrgCollectionDoc(uid, orgDomain).then((orgDoc) => {
         if (orgDoc == undefined) {
-            setMyOrgCollection(uid, orgDomain, orgAppKey, teamId, teamId);
+            setMyOrgCollection(uid, orgDomain, orgAppKey, [teamId], teamId);
             result = { data: "MyOrganizations Created Successfully" };
         } else {
-            const teams= orgDoc.Teams;
+            const teams = orgDoc.Teams;
             teams.push(teamId);
             let defaultTeam;
             let updateJson = {
                 Teams: teams,
             };
-            if (teams.length==1) {
+            if (teams.length == 1) {
                 defaultTeam = teamId;
                 updateJson = {
                     Teams: teams,
