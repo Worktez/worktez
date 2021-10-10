@@ -9,7 +9,6 @@ const { updateUser } = require("./lib");
 
 exports.setMyOrganization = function(request, response) {
     const uid = request.body.data.Uid;
-    const orgDomain = request.body.data.OrgDomain;
     const orgAppKey = request.body.data.OrgAppKey;
     const selectedTeam = request.body.data.SelectedTeam;
 

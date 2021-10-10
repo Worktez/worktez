@@ -11,15 +11,15 @@ exports.getMyOrgList = function(request, response) {
     const uid = request.body.data.Uid;
 
     let status = 200;
-    let resultData = [];
+    const resultData = [];
 
     const promise1 = getMyOrgCollection(uid).then((snapshot) => {
         if (snapshot == undefined) {
             result = { data: {status: "Not Found", data: "No Organization Listed"} };
         } else {
-            snapshot.forEach(element => {
-                let data = element.data();
-                data['OrgDomain'] = element.id;
+            snapshot.forEach((element) => {
+                const data = element.data();
+                data["OrgDomain"] = element.id;
                 resultData.push(data);
             });
             result = { data: {status: "Ok", data: resultData} };

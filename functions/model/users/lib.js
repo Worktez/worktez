@@ -18,6 +18,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         email: Email,
         phoneNumber: PhoneNumber,
         providerId: ProviderId,
+        Username: Username,
         AboutMe: AboutMe,
         AppTheme: AppTheme,
         GithubProfile: "",
@@ -28,7 +29,6 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         Experience: "",
         Projects: "",
         Website: "",
-        Username: Username,
     });
     return Promise.resolve(userData);
 };
@@ -42,11 +42,11 @@ exports.updateUser = function(inputJson, Uid) {
 exports.getUser = function(Uid, username) {
     let query = db.collection("Users");
 
-    if(username != "") {
+    if (username != "") {
         query = query.where("Username", "==", username);
     }
-    
-    if(Uid != "") {
+
+    if (Uid != "") {
         query = query.where("uid", "==", Uid);
     }
 

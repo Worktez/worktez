@@ -7,7 +7,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { setApplication, getApplicationData } = require("../application/lib");
+const { setApplication, getApplicationData, generateBase64String } = require("../application/lib");
 const { setUser, getUser } = require("./lib");
 
 exports.createNewUser = function(request, response) {
