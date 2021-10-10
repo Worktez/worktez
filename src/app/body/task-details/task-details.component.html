@@ -209,9 +209,41 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <h3 class="mt-2" id="linkDec"> Link
+            <span type="button" class="material-icons col-10 align-items-center text-right" id= "link-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#linkModal" title="link" (click)="addLink()" >add_link</span>
+        </h3>
+            <div class="table-responsive card">
+            <ng-container *ngIf="linkData | async; else loader">
+                <table class="table table-hover">
+                    <thead id="navbarMenu">
+                        <tr>
+                            <th colspan="3">Link ID</th>
+                            <th colspan="3">Link Type</th>
+                            <th colspan="6">Link URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="(linkData|async)?.length==0">
+                            <tr>
+                                <td colspan="9" class="text-center">No links available</td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngFor="let link of linkData|async">
+                            <tr>
+                                <td colspan="3"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{link.LinkID}}</span></td>
+                                <td colspan="3">{{link.LinkType}}</td>
+                                <td colspan="6"><a href={{link.LinkURL}}>{{link.LinkURL}}</a></td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </ng-container>
+        </div>    
+        <hr>
         <h3 class="mt-2" id="noActivityDesc"> Activities </h3>
         <div class="my-4 card pb-3">
-            <nav class="pt-2 px-2" id="myTab">
+            <nav class="pt-2 px-2" id="navbarMenu">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab"
                         role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All</a>
@@ -230,7 +262,7 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
                         aria-labelledby="all-activities-tab">
-                        <ng-container *ngIf="(activityData|async).length==0">
+                        <ng-container *ngIf="(activityData|async)?.length==0">
                             <div class="row">
                                 <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.</div>
                             </div>
@@ -270,6 +302,9 @@
     </ng-container>
     <ng-container *ngIf="deleteTaskEnabled" id="exampleModalDel">
         <app-warning [task]="task" (deleteTaskCompleted)="deleteTaskCompleted($event)"></app-warning>
+    </ng-container>
+    <ng-container *ngIf="linkEnabled" id="linkModalLabel">
+        <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
 </ng-container>
 <app-loader *ngIf="!(taskDataObservable | async) "></app-loader>

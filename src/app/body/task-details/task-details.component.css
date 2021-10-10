@@ -27,6 +27,7 @@
 
 #navbarMenu {
     background-color: var(--primary-color);
+    color: var(--button-text);
 }
 
 .sprint {
@@ -62,9 +63,9 @@
     cursor: pointer;
 }
 
-#myTab {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+#link-icon {
+    padding-right:0px; 
+    max-width: 91%;
 }
 
 .activeBtn {
