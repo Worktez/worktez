@@ -11,9 +11,7 @@ export class ProgressGraphComponent implements OnInit {
   workdonePercentage:number=0
   constructor() { }
 
-
   ngOnInit(): void {
     this.workdonePercentage=this.workdone
   }
-
 }

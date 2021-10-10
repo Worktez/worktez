@@ -15,6 +15,19 @@ export interface UserAppSetting extends User {
     GithubProfile: string;
     LinkedInProfile: string;
     DateOfJoining: string;
+    Skills: string;
+    Education: string;
+    Experience: string;
+    Projects: string;
+    Website: string;
+}
+
+export interface MyOrganizationData {
+    DefaultTeam: string;
+    OrgAppKey: string;
+    Teams: [];
+    Uid: string;
+    OrgDomain: string;
 }
 
 export const defaultUser = {
@@ -31,4 +44,9 @@ export const defaultUser = {
     GithubProfile: "",
     LinkedInProfile: "",
     DateOfJoining: "",
+    Skills: "",
+    Education: "",
+    Experience: "",
+    Projects: "",
+    Website: "",
 };

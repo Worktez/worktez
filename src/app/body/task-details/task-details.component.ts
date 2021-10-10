@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks, Link } from 'src/app/Interface/TasksInterface';
@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { Activity, ActivityId } from 'src/app/Interface/ActivityInterface';
+import { Activity } from 'src/app/Interface/ActivityInterface';
 
 @Component( {
   selector: 'app-task-details',
@@ -46,13 +46,15 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( private route: ActivatedRoute, public db: AngularFirestore, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
+  constructor ( private route: ActivatedRoute, public db: AngularFirestore, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
     this.Id = this.route.snapshot.params[ 'taskId' ];
+
+    this.backendService.selectedTaskId = this.Id;
 
     this.navbarHandler.addToNavbar( this.Id );
 
@@ -65,10 +67,10 @@ export class TaskDetailsComponent implements OnInit {
             this.getActivityData();
             this.getLinkData();
             this.activeAllBtn = true;
-          } );
+          });
         }
-      } );
-    } );
+      });
+    });
   }
 
   getTaskDetail () {
@@ -77,14 +79,13 @@ export class TaskDetailsComponent implements OnInit {
          const data = res.taskData as Tasks;
          this.task = data;
          return { ...data }
-       }));
-   }
+      }));
+  }
 
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity");
     this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
-        console.log(actions.data);
         return actions.data as Activity[];
     }));
   }
@@ -159,9 +160,7 @@ export class TaskDetailsComponent implements OnInit {
       const result = await callable( { mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
       console.log( result );
       return;
-    }
-
-    catch ( error ) {
+    } catch ( error ) {
       this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );
       console.log( "Error", error );
     }
@@ -174,22 +173,22 @@ export class TaskDetailsComponent implements OnInit {
   changeType ( actionType: string ) {
     this.actionType = actionType
     this.getActivityData();
-    if( this.actionType == "All" ){
+    if( this.actionType == "All" ) {
       this.activeEditBtn = false;
       this.activeLogWorkBtn = false;
       this.activeAllBtn = true;
       this.activeCommentBtn = false;
-    } else if ( this.actionType == "LOGWORK_COMMENT"){
+    } else if ( this.actionType == "LOGWORK_COMMENT") {
       this.activeAllBtn = false;
       this.activeEditBtn = false;
       this.activeLogWorkBtn = true;
       this.activeCommentBtn = false;
-    } else if ( this.actionType == "EDITED"){
+    } else if ( this.actionType == "EDITED") {
       this.activeAllBtn = false;
       this.activeLogWorkBtn = false;
       this.activeEditBtn = true;
       this.activeCommentBtn = false;
-    } else if ( this.actionType == "COMMENT"){
+    } else if ( this.actionType == "COMMENT") {
       this.activeAllBtn = false;
       this.activeLogWorkBtn = false;
       this.activeEditBtn = false;

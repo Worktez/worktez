@@ -39,7 +39,6 @@ export class EditPageComponent implements OnInit {
   constructor(private functions: AngularFireFunctions,  public applicationSetting: ApplicationSettingsService,private authService: AuthService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
-
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.readTeamMembers(this.task.TeamId);
@@ -100,7 +99,6 @@ export class EditPageComponent implements OnInit {
     if (this.changedData != "")
       this.changedData = "Edited-" + this.changedData;
     this.changedData = this.changedData.substring(0, this.changedData.length - 1) + "."
-    console.log(this.changedData);
   }
 
   async editPage() {
@@ -109,19 +107,13 @@ export class EditPageComponent implements OnInit {
 
     try {
       const appKey = this.backendService.getOrganizationAppKey();
-      console.log(this.editTask.Id);
-      console.log(this.editTask.Title);
-      console.log(this.editTask.Creator);
-
-      console.log(this.editTask.SprintNumber);
       if (!(this.task.Status === "Completed")) {
         const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type}).toPromise();
         console.log("Successfully Updated the task");
         console.log(result);
         this.enableLoader = false;
         this.showClose = true;
-      }
-      else {
+      } else {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
