@@ -82,7 +82,6 @@ export class CreateNewSessionComponent implements OnInit {
           this.teamMembers=teams[0].TeamMembers;
           this.teamName=teams[0].TeamName;
           this.sprintNumber = teams[0].CurrentSprintId;
-          console.log(this.teamName);
     }); 
   }
   async submit() {
@@ -120,9 +119,6 @@ export class CreateNewSessionComponent implements OnInit {
 
     try {
       const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, Reporter: this.reporterName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.user.uid, Type: this.taskType }).toPromise();
-
-      console.log("Successfully created the task");
-      console.log(result);
       this.cloneTask.resetTask();
       this.router.navigate(['MyDashboard']);
     } catch (error) {

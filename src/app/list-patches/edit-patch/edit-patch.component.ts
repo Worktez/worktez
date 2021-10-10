@@ -37,7 +37,7 @@ export class EditPatchComponent implements OnInit {
     this.enableLoader = true;
     try{
       const result = await callable({mode: "edit",Id: this.patch,Name:this.editPatch.Name, Description:this.editPatch.Description, UpdatedOn:this.date}).toPromise();
-      console.log(result);
+
       this.enableLoader = false;
       this.showClose = true;
     }

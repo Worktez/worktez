@@ -110,18 +110,12 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   async createNewSprint() {
-    console.log(this.startDate);
-    console.log(this.endDate);
-    console.log(this.status);
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const callable = this.functions.httpsCallable('sprints');
 
     try {
       const result = await callable({ mode: "create", AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
-
-      console.log("Successfully created a new sprint");
-      console.log(result);
       this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
