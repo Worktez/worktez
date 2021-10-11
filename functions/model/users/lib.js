@@ -112,7 +112,7 @@ exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
     return Promise.resolve(promise);
 };
 
-exports.getMyOrgCollection = function(Uid) {
-    const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").get();
+exports.getMyOrgCollection = function(uid) {
+    const getMyOrgPromise = db.collection("Users").doc(uid).collection("MyOrganizations").get();
     return Promise.resolve(getMyOrgPromise);
 };
