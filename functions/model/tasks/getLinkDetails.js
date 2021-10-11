@@ -14,7 +14,7 @@ exports.getLinkDetails = function(request, response) {
   
   const promise = getLink(orgDomain, taskId).then((linkDoc) => {
     if (linkDoc == undefined) {
-      result = {data: {status: "ERROR", data: "No Links Available"}};
+      result = {data: {status: "OK", data: "No Links Available"}};
     } else {
       linkDoc.forEach((element) => {
         const data = element.data();

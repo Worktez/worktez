@@ -4,12 +4,10 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-// const admin = require("firebase-admin");
-// const db = admin.firestore();
 
 const { db } = require("../application/lib");
 
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkcounter=0) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter=0) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -33,7 +31,7 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         TeamId: teamId,
         Type: type,
         TaskFilesCounter: taskFileCounter,
-        LinkCounter: linkcounter,
+        LinkCounter: linkCounter,
     });
     return Promise.resolve(createTask);
 };

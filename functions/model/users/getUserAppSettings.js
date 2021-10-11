@@ -21,7 +21,7 @@ exports.getUserAppSettings = function(request, response) {
         console.log("Getting User Data");
         if (data == undefined) {
             console.log("User doesn't exist");
-            result = { data: {status: "Error", userData: undefined}};
+            result = { data: {status: "Ok", userData: undefined}};
         } else {
             userData = data;
             console.log(userData.AppKey);

@@ -6,8 +6,6 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-// get linkcounter and make linkID
-// orgDomain, taskId, linkType, linkURL, linkID
 const { getTask, setLinkDoc, updateTask } = require("./lib");
 
 
@@ -24,11 +22,11 @@ exports.setLinkDetails = function(request, response) {
         if (taskDetail == undefined) {
             result = {data: {status: "ERROR"}};
         } else {
-            const linkcounter = taskDetail.LinkCounter + 1;
-            const linkId= "Link"+(linkcounter);
+            const linkCounter = taskDetail.LinkCounter + 1;
+            const linkId= "Link"+(linkCounter);
             setLinkDoc(orgDomain, taskId, linkType, linkURL, linkId);
             const inputJson = {
-                LinkCounter: linkcounter,
+                LinkCounter: linkCounter,
             };
             updateTask(inputJson, orgDomain, taskId);
         }

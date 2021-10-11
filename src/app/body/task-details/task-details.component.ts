@@ -94,7 +94,6 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable("tasks");
     this.linkData = callable({mode: "getLink", OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
       map(actions => {
-        console.log(actions.data);
         return actions.data as Link[];
     }));
   }
