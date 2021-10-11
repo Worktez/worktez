@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User, UserAppSetting } from "../Interface/UserInterface";
+import { MyOrganizationData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -17,6 +17,8 @@ export class AuthService {
 
   public userAppSettingObservable: Observable<UserAppSetting>;
   public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
+
+  public myOrgCollectionsData: Observable<MyOrganizationData[]>
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -77,6 +79,7 @@ export class AuthService {
         this.userAppSetting = data;
         if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
           this.organizationAvailable = true;
+          this.getListedOrganizationData(data.uid);
           this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
           this.themeService.changeTheme(data.AppTheme);
         } else {
@@ -85,6 +88,14 @@ export class AuthService {
         return { ...data }
       }));
       this.completedLoadingApplication = true;
+  }
+
+  getListedOrganizationData(uid: string) {
+    const callable = this.functions.httpsCallable("users");
+    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: uid}).pipe(
+      map(actions => {
+        return actions.data as MyOrganizationData[];
+    }));
   }
 
   getAppKey() {
