@@ -19,6 +19,7 @@ export class EditProfileComponent implements OnInit {
   @Input('experience') experience: string
   @Input('projects') projects: string
   @Input('website') website: string
+  @Input('email') email: string
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
 
@@ -34,7 +35,7 @@ export class EditProfileComponent implements OnInit {
     this.enableLoader = true
     const callable = this.functions.httpsCallable('users');
     try {
-      await callable({ mode: "update", Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website }).toPromise();
+      await callable({ mode: "update", Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website }).toPromise();
       console.log("Successful");
       this.showClose = true
     } catch (error) {

@@ -62,6 +62,6 @@
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
-    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills" [education]="education"
+    <app-edit-profile [email]="email" [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills" [education]="education"
         [experience]="experience" [projects]="projects" [website]="website"></app-edit-profile>
 </ng-container>
