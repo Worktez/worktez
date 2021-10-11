@@ -62,7 +62,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
 
     const promise3 = getMyOrgCollectionDoc(orgAdminUid, orgDomain).then((orgDoc) => {
         if (orgDoc == undefined) {
-            setMyOrgCollection(orgAdminUid, orgDomain, appKey, organizationName);
+            setMyOrgCollection(orgAdminUid, orgDomain, appKey);
         }
     }).catch((error) => {
         status = 500;

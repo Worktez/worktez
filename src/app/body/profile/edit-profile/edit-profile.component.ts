@@ -59,9 +59,7 @@ export class EditProfileComponent implements OnInit {
     const callable = this.functions.httpsCallable('users');
     try {
       const result = await callable({ mode: "CheckAvailableUsername", Username: this.userName }).toPromise();
-      console.log(result);
       if(result == "User Already Available"){
-        console.log("1");
         this.userAvailable = false;
       } else {
         this.userAvailable = true;
