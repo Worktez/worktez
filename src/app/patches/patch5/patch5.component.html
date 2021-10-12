@@ -47,6 +47,18 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="fieldName" class="col-sm-2 col-form-label">FieldName</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="Enter FieldName" [(ngModel)]="fieldName" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fieldValue" class="col-sm-2 col-form-label">FieldValue</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="Enter FieldValue" [(ngModel)]="fieldValue" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary" [disabled]="showLoader" (click)="patch5()">Submit</button>
                     <ng-container *ngIf="showLoader">

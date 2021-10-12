@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/functions';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit-profile',
@@ -19,19 +21,25 @@ export class EditProfileComponent implements OnInit {
   @Input('experience') experience: string
   @Input('projects') projects: string
   @Input('website') website: string
+<<<<<<< HEAD
   @Input('email') email: string
+=======
+  @Input('userName') userName: string
+>>>>>>> 4e9598c218c4be35ce4d8127f10727f0ab2b9520
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
 
   enableLoader: boolean = false
   showClose: boolean = false
+  public userAvailable: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, private router: Router) { }
+  constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
   }
 
   async editProfile() {
+<<<<<<< HEAD
     this.enableLoader = true
     const callable = this.functions.httpsCallable('users');
     try {
@@ -41,11 +49,40 @@ export class EditProfileComponent implements OnInit {
     } catch (error) {
       console.log("error");
       this.enableLoader = false
+=======
+    if(this.userAvailable == true) {
+      this.enableLoader = true
+      const callable = this.functions.httpsCallable('users');
+      try {
+        await callable({ mode: "update", Uid: this.uid, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).toPromise();
+        console.log("Successful");
+        this.showClose = true
+      } catch (error) {
+        console.log("error");
+        this.enableLoader = false
+      }
+    } else {
+      console.log("User Not Available");
+>>>>>>> 4e9598c218c4be35ce4d8127f10727f0ab2b9520
     }
   }
 
   editProfileDone() {
     this.editProfileCompleted.emit({ completed: true });
+  }
+
+  async checkAvailability() {
+    const callable = this.functions.httpsCallable('users');
+    try {
+      const result = await callable({ mode: "CheckAvailableUsername", Username: this.userName }).toPromise();
+      if(result == "User Already Available"){
+        this.userAvailable = false;
+      } else {
+        this.userAvailable = true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

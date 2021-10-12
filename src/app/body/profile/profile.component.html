@@ -27,6 +27,9 @@
                                 Managed by {{ managerEmail }}
                             </h6>
                             <h6 class="card-title">
+                                Username: {{username}}
+                            </h6>
+                            <h6 class="card-title">
                                 Skills: {{skills}}
                             </h6>
                             <h6 class="card-title">
@@ -62,6 +65,11 @@
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
+<<<<<<< HEAD
     <app-edit-profile [email]="email" [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills" [education]="education"
         [experience]="experience" [projects]="projects" [website]="website"></app-edit-profile>
+=======
+    <app-edit-profile [aboutMe]="aboutMe" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills" [education]="education"
+        [experience]="experience" [projects]="projects" [website]="website" [userName]="username"></app-edit-profile>
+>>>>>>> 4e9598c218c4be35ce4d8127f10727f0ab2b9520
 </ng-container>
