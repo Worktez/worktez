@@ -83,7 +83,6 @@ export class EditPageComponent implements OnInit {
   }
 
   async generateChanges() {
-    console.log(this.editTask, this.task);
     if (this.prevVal[0] != this.newVal[0])
       this.changedData = this.changedData + " description,";
     if (this.prevVal[1] != this.newVal[1])
@@ -111,8 +110,6 @@ export class EditPageComponent implements OnInit {
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(this.task.Status === "Completed")) {
         const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type}).toPromise();
-        console.log("Successfully Updated the task");
-        console.log(result);
         this.enableLoader = false;
         this.showClose = true;
       } else {

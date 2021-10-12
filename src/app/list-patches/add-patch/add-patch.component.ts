@@ -27,8 +27,7 @@ export class AddPatchComponent implements OnInit {
 
     try {
       const result = await callable({mode: "patchModerator",Patch: data.name,PatchName: data.name, PatchDescription: data.description, CreationDate: this.date, UpdatedOn: this.date, LastUsedByOrg:"", LastUsedByUid:""}).toPromise();
-      console.log("Successfully created the patch");
-      console.log(result);
+
       this.enableLoader = false;
       this.showClose = true;
     } catch (error) {

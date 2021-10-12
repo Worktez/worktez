@@ -14,7 +14,7 @@ export class Patch2Component implements OnInit {
   orgDomain: string;
   taskId: string;
   newfield: string;
-  newFieldValue: string = "";
+  newFieldValue: any;
   newFieldValueType: string;
   showLoader: boolean = false;
   uid: string;

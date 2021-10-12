@@ -68,10 +68,12 @@ exports.getFileInTask = function(orgDomain, taskId) {
     return Promise.resolve(getFilesPromise);
 };
 
-exports.getAllTasks = function(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject, sortByFields, userEmail) {
+exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="", sortByFields, userEmail) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
 
-    query = query.where("SprintNumber", "==", sprintNumber);
+    if (sprintNumber != "") {
+        query = query.where("SprintNumber", "==", sprintNumber);
+    }
 
     if (userEmail) {
         query = query.where("Assignee", "==", userEmail);
@@ -90,11 +92,11 @@ exports.getAllTasks = function(orgDomain, teamId, sprintNumber, filterAssignee, 
         }
         if (filterProject != "") {
             query = query.where("TeamId", "==", filterProject);
-        } else {
+        } if (teamId != "") {
             query = query.where("TeamId", "==", teamId);
         }
     }
-
+    
     for (const field in sortByFields) {
         if (sortByFields[field] != null) {
             if (field == "Progress") {

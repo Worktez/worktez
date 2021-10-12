@@ -44,7 +44,6 @@ async addUpdateTeam() {
   const callable = this.functions.httpsCallable('teams');
   try {
     const result = await callable({ mode: "add-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription }).toPromise();
-    console.log(result);
     this.enableLoader = false;
     this.showClose = true;
   } catch (error) {

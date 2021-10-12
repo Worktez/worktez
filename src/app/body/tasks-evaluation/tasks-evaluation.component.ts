@@ -87,7 +87,7 @@ export class TasksEvaluationComponent implements OnInit {
       try {
         const result = await callable({ mode: 'readTasksEvaluationData', OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'next', LastInResultTaskId: this.lastInResultTaskId, SprintNumber: this.filterSprintNumber }).toPromise();
         this.tasks = result.Tasks;
-        console.log(this.tasks);
+
         if (!this.tasks.length) {
           this.disable_next = true;
           return;
@@ -158,8 +158,7 @@ export class TasksEvaluationComponent implements OnInit {
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(task.Status === "Completed") && this.teamCurrentSprint != task.SprintNumber) {
         const result = await callable({ mode: "edit", AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).toPromise();
-        console.log("Successfully Updated the task");
-        console.log(result);
+
         this.readTasks();
         this.showModalLoader = false;
         this.showLoader = false;

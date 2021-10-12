@@ -111,7 +111,7 @@ export class SetupComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks');
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "2@@High", Difficulty: "0@@Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "1@@Ready to start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story" }).toPromise();
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "2@@High", Difficulty: "0@@Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "1@@Ready to start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
 
       console.log("Successfully created the task");
       console.log(result);
@@ -120,8 +120,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "2@@High", Difficulty: "2@@High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "0@@Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug" }).toPromise();
-
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "2@@High", Difficulty: "2@@High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "0@@Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid }).toPromise();
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -129,8 +128,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "1@@Medium", Difficulty: "0@@Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "1@@Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task"  }).toPromise();
-
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "1@@Medium", Difficulty: "0@@Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "1@@Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task", Uid: this.authService.userAppSetting.uid }).toPromise();
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -138,8 +136,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "2@@High", Difficulty: "1@@Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "0@@Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug" }).toPromise();
-
+      const result = await callable({ mode: "create", TeamId: teamId, organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "2@@High", Difficulty: "1@@Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "0@@Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid }).toPromise();
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -147,8 +144,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "2@@High", Difficulty: "1@@Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "1@@Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story" }).toPromise();
-
+      const result = await callable({ mode: "create", TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "2@@High", Difficulty: "1@@Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "1@@Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
       console.log("Successfully created the task");
       console.log(result);
       this.createPatchesCollection();

@@ -9,18 +9,19 @@
         <div class="collapse navbar-collapse pl-3" id="navbarText">
             <ng-container *ngIf="(backendService.organizationsData | async)">
                 <ng-container *ngFor="let item of backendService.organizationsData | async">
-                    <ul class="navbar-nav" *ngIf="myOrgCollectionsData | async">
-                        <li class="nav-item dropdown">
-                            <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style="color: var(--text);">{{item.OrganizationName}}</span>
-                            </a>
-                            <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                                <ng-container *ngFor="let item of myOrgCollectionsData | async">
-                                    <a class="dropdown-item" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
-                                </ng-container>
-                            </div>
-                        </li>
-                        
+                    <ul class="navbar-nav">
+                        <ng-container *ngIf="authService.myOrgCollectionsData | async">
+                            <li class="nav-item dropdown">
+                                <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span style="color: var(--text);">{{item.OrganizationName}}</span>
+                                </a>
+                                <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                                    <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
+                                        <a class="dropdown-item" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
+                                    </ng-container>
+                                </div>
+                            </li>
+                        </ng-container>
                         <li class="nav-item dropdown">
                             <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span style="color: var(--text);">Create</span>

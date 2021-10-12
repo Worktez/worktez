@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
-import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
+import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -37,7 +37,7 @@ export class TasksComponent implements OnInit {
   teamData: TeamDataId[] = [];
   sortByFields: {} = {'Status': null, 'Priority': null, 'Difficulty': null, 'Id': null, 'Title': null, 'Assignee': null, 'Progress': null};
 
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
+  constructor(private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
