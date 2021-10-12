@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
@@ -26,54 +27,54 @@ exports.uploadFileToTask = function(request, response) {
     const orgId = orgDetail.OrganizationId;
 
     const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
-        if (taskDoc == undefined) {
-          result = {data: {status: "ERROR"}};
-        } else {
-            let taskFilesCounter = taskDoc.TaskFilesCounter;
-            taskFilesCounter++;
+      if (taskDoc == undefined) {
+        result = {data: {status: "ERROR"}};
+      } else {
+        let taskFilesCounter = taskDoc.TaskFilesCounter;
+        taskFilesCounter++;
 
-            const taskFileDocumentName = "File"+taskFilesCounter;
-            const updateTaskFileJson = {
-                FileName: fileName,
-                FileUrl: fileUrl,
-                LastModified: lastModified,
-                Size: size,
-                Uid: uid,
-                Date: date,
-                Time: time,
-                TaskId: taskId,
-                OrgId: orgId,
-                TaskFileDocumentName: taskFileDocumentName,
-                BasePath: basePath,
-                FileStatus: "OK",
-            };
-            setFileToTask(updateTaskFileJson, orgDomain, taskId, taskFileDocumentName);
+        const taskFileDocumentName = "File"+taskFilesCounter;
+        const updateTaskFileJson = {
+          FileName: fileName,
+          FileUrl: fileUrl,
+          LastModified: lastModified,
+          Size: size,
+          Uid: uid,
+          Date: date,
+          Time: time,
+          TaskId: taskId,
+          OrgId: orgId,
+          TaskFileDocumentName: taskFileDocumentName,
+          BasePath: basePath,
+          FileStatus: "OK",
+        };
+        setFileToTask(updateTaskFileJson, orgDomain, taskId, taskFileDocumentName);
 
-            const updateTaskForCounter = {
-                TaskFilesCounter: taskFilesCounter,
-            }
+        const updateTaskForCounter = {
+          TaskFilesCounter: taskFilesCounter,
+        };
 
-            updateTask(updateTaskForCounter, orgDomain, taskId);
+        updateTask(updateTaskForCounter, orgDomain, taskId);
         
-            const comment = "Added " + fileName;
-            addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
-        }
-      }).catch((error) => {
-        status = 500;
-        console.log("Error:", error);
-      });
-
-      return Promise.resolve(p1);
+        const comment = "Added " + fileName;
+        addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
+      }
+    }).catch((error) => {
+      status = 500;
+      console.log("Error:", error);
     });
 
-  Promise.resolve(promise).then(() => {
-      result = { data: {status: "OK"} };
-      console.log("File Uploaded Successfully");
-      return response.status(status).send(result);
-  })
-  .catch((error) => {
-      result = { data: error };
-      console.error("Error Uploading", error);
-      return response.status(status).send(result);
+    return Promise.resolve(p1);
   });
+
+  Promise.resolve(promise).then(() => {
+    result = { data: {status: "OK"} };
+    console.log("File Uploaded Successfully");
+    return response.status(status).send(result);
+  })
+      .catch((error) => {
+        result = { data: error };
+        console.error("Error Uploading", error);
+        return response.status(status).send(result);
+      });
 };
