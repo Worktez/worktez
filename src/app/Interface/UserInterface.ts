@@ -20,6 +20,7 @@ export interface UserAppSetting extends User {
     Experience: string;
     Projects: string;
     Website: string;
+    Username: string;
 }
 
 export interface MyOrganizationData {
@@ -49,4 +50,5 @@ export const defaultUser = {
     Experience: "",
     Projects: "",
     Website: "",
+    Username: "",
 };

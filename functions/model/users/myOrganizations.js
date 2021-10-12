@@ -12,9 +12,11 @@ exports.myOrganizations = function(uid, orgDomain, orgAppKey, teamId) {
 
     const promise1 = getMyOrgCollectionDoc(uid, orgDomain).then((orgDoc) => {
         if (orgDoc == undefined) {
-            setMyOrgCollection(uid, orgDomain, orgAppKey, teamId, teamId);
+            const teamIdArray = [teamId];
+            setMyOrgCollection(uid, orgDomain, orgAppKey, teamIdArray, teamId);
             result = { data: "MyOrganizations Created Successfully" };
         } else {
+            console.log("orgTeam: ", orgDoc.Teams);
             const teams= orgDoc.Teams;
             teams.push(teamId);
             let defaultTeam;

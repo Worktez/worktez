@@ -32,8 +32,6 @@ export class SprintDetailsComponent implements OnInit {
     const appKey = this.backendService.getOrganizationAppKey();
     try {
       const result = await callable({ mode: "update", AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
-      console.log(sprintStatus);
-      console.log("Successfully updated Status");
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     }

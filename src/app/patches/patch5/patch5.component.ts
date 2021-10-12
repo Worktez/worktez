@@ -14,6 +14,8 @@ export class Patch5Component implements OnInit {
   orgDomain: string;
   showLoader: boolean = true;
   uid: string;
+  fieldName: string;
+  fieldValue: string;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService) { }
 
@@ -35,13 +37,12 @@ export class Patch5Component implements OnInit {
     console.log("Patch5 function running");
     console.log(this.orgDomain);
     const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch5", OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
+    await callable({ mode: "patch5", OrgDomain: this.orgDomain, Uid: this.uid, Key: this.fieldName, Value: this.fieldValue}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);
     });
   }
-
 
   backToDashboard() {
     this.location.back()

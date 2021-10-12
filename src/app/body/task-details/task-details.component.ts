@@ -94,9 +94,7 @@ export class TaskDetailsComponent implements OnInit {
     try {
       const result = await callable({ mode: "comment", AppKey: appKey, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
-      console.log("Logged Work Successfully");
       this.comment = "";
-      console.log(result);
       return;
     } catch (error) {
       this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
@@ -138,7 +136,6 @@ export class TaskDetailsComponent implements OnInit {
 
     try {
       const result = await callable( { mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
-      console.log( result );
       return;
     } catch ( error ) {
       this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );

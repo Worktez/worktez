@@ -23,7 +23,6 @@ export class UserVerificationComponent implements OnInit {
     this.teamName = this.route.snapshot.params['teamName'];
     this.userEmail = this.route.snapshot.params['userEmail'];
     this.teamId = this.route.snapshot.params['teamId'];
-    console.log(this.teamName);
   }
 
   async verifyUser() {
@@ -31,8 +30,6 @@ export class UserVerificationComponent implements OnInit {
     try {
       const result = await callable({ mode: "verify", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
 
-      console.log("Successfully verified User");
-      console.log(result);
       this.router.navigate(['/']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
