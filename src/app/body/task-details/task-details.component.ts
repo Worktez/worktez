@@ -13,6 +13,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Activity } from 'src/app/Interface/ActivityInterface';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -40,11 +41,15 @@ export class TaskDetailsComponent implements OnInit {
   orgDomain: string
   actionType: string = "All"
   comment: string;
+  priorityLabels: string[];
+  statusLabels: string[];
+  difficultyLabels: string[];
+
 
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
 
-  constructor ( private route: ActivatedRoute, public db: AngularFirestore, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
+  constructor ( private route: ActivatedRoute, public db: AngularFirestore, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService, private applicationSettingsService: ApplicationSettingsService  ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
@@ -63,6 +68,7 @@ export class TaskDetailsComponent implements OnInit {
             this.orgDomain = this.backendService.getOrganizationDomain();
             this.getTaskDetail();
             this.getActivityData();
+            this.getLabels();
             this.activeAllBtn = true;
           });
         }
@@ -174,5 +180,14 @@ export class TaskDetailsComponent implements OnInit {
       this.activeEditBtn = false;
       this.activeCommentBtn = true;
     }
+  }
+
+  getLabels() {
+    const teamId = this.authService.getTeamId();
+    this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
+      this.statusLabels = data[0].StatusLabels;
+      this.priorityLabels = data[0].PriorityLabels;
+      this.difficultyLabels = data[0].DifficultyLabels;
+    });
   }
 }

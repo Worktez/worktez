@@ -20,6 +20,8 @@ export class EditPageComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input('task') task: Tasks
+  @Input('priorityLabels') priorityLabels: string[]
+  @Input('difficultyLabels') difficultyLabels: string[]
   @Output() editTaskCompleted = new EventEmitter<{ completed: boolean }>();
 
   editTask: Tasks

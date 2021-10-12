@@ -4,7 +4,7 @@
     </div>
     <div class="card-body" *ngIf="tasksData | async">
         <ng-container *ngIf="tasksData|async">
-            <app-task-cards [tasks]="tasksData"></app-task-cards>
+            <app-task-cards [tasks]="tasksData" (getSortByFields)="sortTasks($event)" [sortByFields]="sortByFields"></app-task-cards>
         </ng-container>
     </div>
     <div class="card-body" *ngIf="!(tasksData | async)">

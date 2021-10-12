@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
@@ -14,28 +15,25 @@ export class MyTasksComponent implements OnInit {
   @Input("userEmail") userEmail: string
   @Input("currentSprint") currentSprintNumber: number
 
-  tasksCollection: AngularFirestoreCollectionGroup<Tasks>
-  tasksData: Observable<TasksId[]>
+  tasksData: Observable<Tasks[]>
+  sortByFields: {} = {'Status': null, 'Priority': null, 'Difficulty': null, 'Id': null, 'Title': null, 'Assignee': null, 'Progress': null};
 
-  constructor(public db: AngularFirestore) { }
+  constructor(public db: AngularFirestore, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.readTaskData();
   }
 
-  readTaskData() {
-    this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
-      let queryRef = ref;
-      queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
-      queryRef = queryRef.where('Assignee', '==', this.userEmail);
-      return queryRef;
-    });
-    this.tasksData = this.tasksCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Tasks;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+  async readTaskData() {
+    const callable = this.functions.httpsCallable("tasks");
+    this.tasksData = await callable({ mode: "getAllTasks", OrgDomain: "worktrolly.web.app", SprintNumber: this.currentSprintNumber, SortByFields: this.sortByFields, UserEmail: this.userEmail }).pipe(
+      map(actions => {
+        return actions.data as Tasks[];
+      }));
+  }
+
+  sortTasks(sortByFields: object) {
+    this.sortByFields = sortByFields;
+    this.readTaskData();
   }
 }

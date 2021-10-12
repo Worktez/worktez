@@ -71,11 +71,11 @@
                                     </div>
                                     <div class="col">
                                         <select class="custom-select" [(ngModel)]="editTask.Priority" [ngModelOptions]="{standalone: true}">
-                                                    <option selected disabled value="">choose...</option>
-                                                    <option>High</option>
-                                                    <option>Medium</option>
-                                                    <option>Low</option>
-                                                </select>
+                                            <option selected disabled value="">choose...</option>
+                                            <ng-container *ngFor="let label of priorityLabels">
+                                                <option [value]="label">{{label.split("@@")[1]}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                                 <hr>
@@ -85,11 +85,11 @@
                                     </div>
                                     <div class="col">
                                         <select class="custom-select" [(ngModel)]="editTask.Difficulty" [ngModelOptions]="{standalone: true}">
-                                                    <option selected disabled value="">choose...</option>
-                                                    <option>High</option>
-                                                    <option>Medium</option>
-                                                    <option>Low</option>
-                                                </select>
+                                            <option selected disabled value="">choose...</option>
+                                            <ng-container *ngFor="let label of difficultyLabels">
+                                                <option [value]="label">{{label.split("@@")[1]}}</option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                         <span class="header">Status:</span>
                                     </div>
                                     <div class="col">
-                                        <div id="creatorEditPageTask">{{editTask.Status}}</div>
+                                        <div id="creatorEditPageTask">{{editTask.Status.split("@@")[1]}}</div>
                                     </div>
                                 </div>
                                 <hr>

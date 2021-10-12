@@ -34,12 +34,10 @@
                         </div>
                         <div class="col-md-5">
                             <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
-                                            <option>Ice Box</option>
-                                            <option>Ready to start</option>
-                                            <option>Under Progress</option>
-                                            <option>Blocked</option>
-                                            <option>Completed</option>
-                                        </select>
+                                <ng-container *ngFor="let label of statusLabels">
+                                    <option [value]="label">{{label.split("@@")[1]}}</option>
+                                </ng-container>
+                            </select>
                         </div>
                         <div class="col-md"></div>
                     </div>

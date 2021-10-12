@@ -79,21 +79,21 @@
                             <div class="col ">
                                 <span id="header ">Priority:</span>
                             </div>
-                            <div class="col " id="priorityTaskDescription ">{{task.Priority}}</div>
+                            <div class="col " id="priorityTaskDescription ">{{task.Priority.split("@@")[1]}}</div>
                         </div>
                         <hr>
                         <div class="row ">
                             <div class="col ">
                                 <span id="header ">Difficulty:</span>
                             </div>
-                            <div class="col " id="difficultyTaskDescription ">{{task.Difficulty}}</div>
+                            <div class="col " id="difficultyTaskDescription ">{{task.Difficulty.split("@@")[1]}}</div>
                         </div>
                         <hr>
                         <div class="row ">
                             <div class="col ">
                                 <span id="header ">Status:</span>
                             </div>
-                            <div class="col " id="statusTaskDescription ">{{task.Status}}</div>
+                            <div class="col " id="statusTaskDescription ">{{task.Status.split("@@")[1]}}</div>
                         </div>
                         <hr>
                         <div class="row ">
@@ -274,10 +274,10 @@
         </ng-template>
     </div>
     <ng-container *ngIf="logWorkEnabled" id="exampleModalLabel">
-        <app-log-work [task]="task" (logWorkCompleted)="logWorkCompleted($event)"></app-log-work>
+        <app-log-work [task]="task" [statusLabels]="statusLabels" (logWorkCompleted)="logWorkCompleted($event)"></app-log-work>
     </ng-container>
     <ng-container *ngIf="editTaskEnabled" id="exampleModalCenterLabel">
-        <app-edit-page [task]="task" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
+        <app-edit-page [task]="task" [priorityLabels]="priorityLabels" [difficultyLabels]="difficultyLabels" (editTaskCompleted)="editTaskCompleted($event)"></app-edit-page>
     </ng-container>
     <ng-container *ngIf="deleteTaskEnabled" id="exampleModalDel">
         <app-warning [task]="task" (deleteTaskCompleted)="deleteTaskCompleted($event)"></app-warning>

@@ -68,29 +68,44 @@ exports.getFileInTask = function(orgDomain, taskId) {
     return Promise.resolve(getFilesPromise);
 };
 
-exports.getAllTasks = function(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject) {
+exports.getAllTasks = function(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject, sortByFields, userEmail) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
 
     query = query.where("SprintNumber", "==", sprintNumber);
 
-    if (filterAssignee != "") {
-        query = query.where("Assignee", "==", filterAssignee);
-    }
-    if (filterPriority != "") {
-        query = query.where("Priority", "==", filterPriority);
-    }
-    if (filterDifficulty != "") {
-        query = query.where("Difficulty", "==", filterDifficulty);
-    }
-    if (filterStatus != "") {
-        query = query.where("Status", "==", filterStatus);
-    }
-    if (filterProject != "") {
-        query = query.where("TeamId", "==", filterProject);
+    if (userEmail) {
+        query = query.where("Assignee", "==", userEmail);
     } else {
-        query = query.where("TeamId", "==", teamId);
+        if (filterAssignee != "") {
+            query = query.where("Assignee", "==", filterAssignee);
+        }
+        if (filterPriority != "") {
+            query = query.where("Priority", "==", filterPriority);
+        }
+        if (filterDifficulty != "") {
+            query = query.where("Difficulty", "==", filterDifficulty);
+        }
+        if (filterStatus != "") {
+            query = query.where("Status", "==", filterStatus);
+        }
+        if (filterProject != "") {
+            query = query.where("TeamId", "==", filterProject);
+        } else {
+            query = query.where("TeamId", "==", teamId);
+        }
     }
 
+    for (const field in sortByFields) {
+        if (sortByFields[field] != null) {
+            if (field == "Progress") {
+                query = query.orderBy("WorkDone", sortByFields[field]);
+            } if (field == "Status" || field == "Priority" || field == "Difficulty") {
+                query = query.orderBy(field.split("@@")[0], sortByFields[field]);
+            } if (field == "Id" || field == "Title" || field == "Assignee") {
+                query = query.orderBy(field, sortByFields[field]);
+            }
+        }
+    }
     const getAllTasksPromise = query.get();
 
     return Promise.resolve(getAllTasksPromise);

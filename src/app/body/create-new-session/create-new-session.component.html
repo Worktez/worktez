@@ -88,7 +88,7 @@
                         <select class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
                             <option selected>choose...</option>
                             <ng-container *ngFor='let label of priorityLabels'>
-                                <option>{{ label }}</option>
+                                <option [value]="label">{{ label.split("@@")[1] }}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -101,7 +101,7 @@
                         <select class="form-control" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
                             <option selected>choose...</option>
                             <ng-container *ngFor='let label of difficultyLabels'>
-                                <option>{{ label }}</option>
+                                <option [value]="label">{{ label.split("@@")[1] }}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -110,7 +110,7 @@
                         <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                             <option selected>choose...</option>
                             <ng-container *ngFor='let label of statusLabels'>
-                                <option>{{ label }}</option>
+                                <option [value]="label">{{ label.split("@@")[1] }}</option>
                             </ng-container>
                         </select>
                     </div>

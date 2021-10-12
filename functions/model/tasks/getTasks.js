@@ -18,11 +18,13 @@ exports.getTasks = function(request, response) {
     const filterDifficulty = request.body.data.FilterDifficulty;
     const filterStatus = request.body.data.FilterStatus;
     const filterProject = request.body.data.FilterProject;
+    const sortByFields = request.body.data.SortByFields;
+    const userEmail = request.body.data.UserEmail;
     const tasksData = [];
     let status = 200;
     let result;
 
-    const getTasksPromise = getAllTasks(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject).then((taskCol) => {
+    const getTasksPromise = getAllTasks(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject, sortByFields, userEmail).then((taskCol) => {
         taskCol.forEach((taskDoc) => {
             tasksData.push(taskDoc.data());
         });

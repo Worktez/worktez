@@ -3,13 +3,17 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th colspan="1">Status</th>
-                    <th colspan="1">Priority</th>
-                    <th colspan="1">Difficulty</th>
-                    <th colspan="1">Task Id</th>
-                    <th colspan="3">Title</th>
-                    <th colspan="2">Assignee</th>
-                    <th colspan="3">Progress</th>
+                    <ng-container *ngFor="let header of tableHeaders">
+                        <th [colSpan]="getColSpan(header)" (click)="toggleSortBy(header)" style="cursor: pointer;">
+                            {{header}}
+                            <ng-container *ngIf="sortByFields[header] == 'asc'">
+                                <span class="material-icons" style="position: relative;top: 5px;font-size: medium;">arrow_upward</span>
+                            </ng-container>
+                            <ng-container *ngIf="sortByFields[header] == 'desc'">
+                                <span class="material-icons" style="position: relative;top: 5px;font-size: medium;">arrow_downward</span>
+                            </ng-container>
+                        </th>
+                    </ng-container>
                 </tr>
             </thead>
             <tbody>
@@ -21,13 +25,13 @@
                 <ng-container *ngFor="let item of tasks|async">
                     <tr (click)="openTaskDetails(item.Id)">
                         <td colspan="1">
-                            <app-status-icons [Status]="item.Status"></app-status-icons>
+                            <app-status-icons [Status]="item.Status.split('@@')[1]"></app-status-icons>
                         </td>
                         <td colspan="1">
-                            <app-priority-icons [Priority]="item.Priority"></app-priority-icons>
+                            <app-priority-icons [Priority]="item.Priority.split('@@')[1]"></app-priority-icons>
                         </td>
                         <td colspan="1">
-                            <app-difficulty-icons [Difficulty]="item.Difficulty"></app-difficulty-icons>
+                            <app-difficulty-icons [Difficulty]="item.Difficulty.split('@@')[1]"></app-difficulty-icons>
                         </td>
                         <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.Id}}</span></td>
                         <td colspan="3">{{item.Title}}</td>

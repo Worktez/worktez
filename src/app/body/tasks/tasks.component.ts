@@ -35,6 +35,7 @@ export class TasksComponent implements OnInit {
   filterSprintNumber: number;
   showFilter: boolean = false
   teamData: TeamDataId[] = [];
+  sortByFields: {} = {'Status': null, 'Priority': null, 'Difficulty': null, 'Id': null, 'Title': null, 'Assignee': null, 'Progress': null};
 
   constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
 
@@ -63,7 +64,7 @@ export class TasksComponent implements OnInit {
 
   async readData() {
     const callable = this.functions.httpsCallable("tasks");
-    this.tasksData = await callable({ mode: "getAllTasks", OrgDomain: "worktrolly.web.app", TeamId: this.teamId, SprintNumber: this.currentSprintNumber, FilterAssignee: this.filterAssignee, FilterPriority: this.filterPriority, FilterDifficulty: this.filterDifficulty, FilterStatus: this.filterStatus, FilterProject: this.filterProject }).pipe(
+    this.tasksData = await callable({ mode: "getAllTasks", OrgDomain: "worktrolly.web.app", TeamId: this.teamId, SprintNumber: this.currentSprintNumber, FilterAssignee: this.filterAssignee, FilterPriority: this.filterPriority, FilterDifficulty: this.filterDifficulty, FilterStatus: this.filterStatus, FilterProject: this.filterProject, SortByFields: this.sortByFields }).pipe(
       map(actions => {
         return actions.data as Tasks[];
       }));
@@ -114,6 +115,11 @@ export class TasksComponent implements OnInit {
     } else {
       return "S" + sprintNumber
     }
+  }
+
+  sortTasks(sortByFields: object) {
+    this.sortByFields = sortByFields;
+    this.readData();
   }
 
 }

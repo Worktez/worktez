@@ -17,6 +17,7 @@ export class LogWorkComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input('task') task: Tasks
+  @Input('statusLabels') statusLabels: string[];
   @Output() logWorkCompleted = new EventEmitter<{ completed: boolean }>();
   
   componentName: string = "LOG-WORK";
