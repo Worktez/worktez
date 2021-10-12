@@ -21,11 +21,7 @@ export class EditProfileComponent implements OnInit {
   @Input('experience') experience: string
   @Input('projects') projects: string
   @Input('website') website: string
-<<<<<<< HEAD
-  @Input('email') email: string
-=======
   @Input('userName') userName: string
->>>>>>> 4e9598c218c4be35ce4d8127f10727f0ab2b9520
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
 
@@ -39,17 +35,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   async editProfile() {
-<<<<<<< HEAD
-    this.enableLoader = true
-    const callable = this.functions.httpsCallable('users');
-    try {
-      await callable({ mode: "update", Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website }).toPromise();
-      console.log("Successful");
-      this.showClose = true
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false
-=======
     if(this.userAvailable == true) {
       this.enableLoader = true
       const callable = this.functions.httpsCallable('users');
@@ -63,7 +48,6 @@ export class EditProfileComponent implements OnInit {
       }
     } else {
       console.log("User Not Available");
->>>>>>> 4e9598c218c4be35ce4d8127f10727f0ab2b9520
     }
   }
 
