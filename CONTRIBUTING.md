@@ -25,4 +25,4 @@
 20. Pull all new changes from dev-angular using: `git pull upstream dev-angular` to your new branch to contribute again.
  
 #### Note:
-you’ll be able to access the localhost and auto-setup button only if the emulator is running parallelly throughout the process.
+You will be able to access the localhost and auto-setup button only if the emulator is running parallelly throughout the process.
