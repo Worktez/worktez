@@ -69,8 +69,6 @@ export class CreateNewOrganizationComponent implements OnInit {
     const callable = this.functions.httpsCallable('organization');
     try {
       const result = await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise();
-      console.log("Successfully created the Organization");
-      console.log(result[0]);
       this.enableLoader = false;
       this.router.navigate(["CreateNewTeam"]);
       // this.stepAndOrgDomain.emit({ step: 2, organizationDomain: this.orgDomain })

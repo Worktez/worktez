@@ -104,7 +104,6 @@ export class BoardComponent implements OnInit {
     })
     if (this.teamCurrentSprintNumber != 0) {
       this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
-        console.log(sprints);
         if (sprints.length != 0) {
           this.sprintData = sprints[0];
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
@@ -118,8 +117,6 @@ export class BoardComponent implements OnInit {
           } else {
             this.workPercentCalc = Math.abs((parseInt(this.DaysUp)) /((this.EDate - this.SDate)/(1000 * 60 * 60 * 24)) * 100);
         }
-          console.log(parseInt(this.DaysUp));
-          console.log(parseInt(this.workPercentCalc)); 
           this.workPercentage = parseInt(this.workPercentCalc);
           this.showContent = true;
         } else {
@@ -135,7 +132,6 @@ export class BoardComponent implements OnInit {
   }
 
   changeSprintNumber(filterSprintNumber: any) {
-    console.log(filterSprintNumber);
     this.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.teamCurrentSprintNumber;
     this.applicationSettingsService.editedSprintId = filterSprintNumber;

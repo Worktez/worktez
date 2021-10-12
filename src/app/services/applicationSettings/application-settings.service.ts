@@ -23,7 +23,6 @@ export class ApplicationSettingsService {
 
   getTeamDetails(teamId: string) {
     const orgId = this.backendService.organizationDetails.OrganizationId;
-    console.log("here")
     this.teamCollection = this.db.collectionGroup<Team>('Teams', ref => ref.where('OrganizationId', '==', orgId).where('TeamId', '==', teamId));
     this.teamData = this.teamCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {

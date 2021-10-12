@@ -86,7 +86,6 @@ export class PerformanceColumnChartComponent implements OnInit {
 
   onGetTeamMember(selectedOption) {
     this.showLoader = true;
-    console.log(selectedOption.teamMember);
     this.teamMember = selectedOption.teamMember;
     this.getData().then(data => {
       this.data = data;
