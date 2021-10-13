@@ -1,0 +1,23 @@
+<div class="row">
+    <ng-container *ngFor="let item of uploadService.filesData | async">
+        <div class="col text-center">
+            <app-show-files [file]="item"  (changeFileStatus)="changeFileStatus($event)"></app-show-files>
+        </div>
+    </ng-container>
+</div>
+
+<form>
+    <div class="form-group">
+      <label class="btn btn-primary" for="exampleFormControlFile1">
+          Upload File
+      </label>
+      <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+    </div>
+</form>
+
+<ng-container *ngIf="uploadService.fileUploadStatus">
+    <div class="progress" style="height: 10px; margin-top: 10px;">
+        <div class="progress-bar bg-success" role="progressbar"  [ngStyle]="{'width': percentage + '%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    Uploading {{fileName}} ...
+</ng-container>

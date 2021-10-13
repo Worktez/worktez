@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col">
+        <span id="files" class="material-icons" (click)="showmenu()">
+            description
+        </span>
+        <label>{{shortName}}</label>
+    </div>
+</div>
+<ng-container *ngIf="showMenu">
+    <a [href]="file.Fileurl" [download]="file.FileName">
+        <span class="material-icons menu" (click)="download()">
+            download
+        </span>
+    </a> 
+    <span class="material-icons menu" (click)="delete()">
+        delete
+    </span>
+</ng-container>

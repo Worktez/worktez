@@ -9,6 +9,8 @@ export interface Tasks {
   Creator: string;
   Project: string;
   Assignee: string;
+  Reporter: string;
+  Watcher: string[];
   LogWorkTotalTime: number;
   WorkDone: number;
   CreationDate: string;

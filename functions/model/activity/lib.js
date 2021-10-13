@@ -44,3 +44,15 @@ exports.setAction = function(orgDomain, taskId, actionId, type, comment, date, t
 
     return Promise.resolve(setActionPromise);
 };
+
+exports.getAction = function(orgDomain, taskId, type) {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action");
+
+    if (type!="") {
+        query = query.where("Type", "==", type);
+    }
+
+    const getActionPromise = query.get();
+
+    return Promise.resolve(getActionPromise);
+};

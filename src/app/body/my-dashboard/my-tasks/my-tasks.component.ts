@@ -20,12 +20,10 @@ export class MyTasksComponent implements OnInit {
   constructor(public db: AngularFirestore) { }
 
   ngOnInit(): void {
-    console.log("1");
     this.readTaskData();
   }
 
   readTaskData() {
-    console.log(this.currentSprintNumber);
     this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
       let queryRef = ref;
       queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
@@ -36,7 +34,6 @@ export class MyTasksComponent implements OnInit {
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;
         const id = a.payload.doc.id;
-        console.log(data);
         return { id, ...data };
       }))
     );

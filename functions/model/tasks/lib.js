@@ -9,7 +9,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -18,6 +18,8 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         Difficulty: difficulty,
         Creator: creator,
         Assignee: assignee,
+        Reporter: reporter,
+        Watcher: [],
         EstimatedTime: estimatedTime,
         Status: status,
         Project: project,
@@ -30,6 +32,7 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         OrganizationId: orgId,
         TeamId: teamId,
         Type: type,
+        TaskFilesCounter: taskFileCounter,
     });
     return Promise.resolve(createTask);
 };
@@ -46,9 +49,49 @@ exports.getTask = function(taskId, orgDomain) {
     return Promise.resolve(getTaskDetails);
 };
 
-exports.getMyDashboardTaskData = function(orgDomain, sprintNumber, userEmail) {
-    const getMyDashBoardDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("Assignee", "==", userEmail).get().then((sprintData) => {
-        return sprintData;
-    });
-    return Promise.resolve(getMyDashBoardDetails);
+exports.setFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
+    const setFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).set(inputJson);
+    return Promise.resolve(setFileToTaskPromise);
+};
+
+exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
+    const updateFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).update(inputJson);
+    return Promise.resolve(updateFileToTaskPromise);
+};
+
+exports.getFileInTask = function(orgDomain, taskId) {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files");
+    query = query.where("FileStatus", "==", "OK");
+
+    const getFilesPromise = query.get();
+
+    return Promise.resolve(getFilesPromise);
+};
+
+exports.getAllTasks = function(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject) {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
+
+    query = query.where("SprintNumber", "==", sprintNumber);
+
+    if (filterAssignee != "") {
+        query = query.where("Assignee", "==", filterAssignee);
+    }
+    if (filterPriority != "") {
+        query = query.where("Priority", "==", filterPriority);
+    }
+    if (filterDifficulty != "") {
+        query = query.where("Difficulty", "==", filterDifficulty);
+    }
+    if (filterStatus != "") {
+        query = query.where("Status", "==", filterStatus);
+    }
+    if (filterProject != "") {
+        query = query.where("TeamId", "==", filterProject);
+    } else {
+        query = query.where("TeamId", "==", teamId);
+    }
+
+    const getAllTasksPromise = query.get();
+
+    return Promise.resolve(getAllTasksPromise);
 };

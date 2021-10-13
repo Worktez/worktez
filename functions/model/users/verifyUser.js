@@ -30,10 +30,11 @@ exports.verifyUser = function(request, response) {
                     userID = userDoc.uid;
                     updateUserInputJson = {
                         OrganizationId: organizationId,
-                        TeamId: teamId,
-                        AppKey: appKey,
+                        SelectedTeamId: teamId,
+                        SelectedOrgAppKey: appKey,
                     };
                     updateUser(updateUserInputJson, userID);
+                    myOrganizations(userID, organizationDomain, appKey, teamId);
                 }).catch((error) => {
                     status = 500;
                     console.log("Error:", error);

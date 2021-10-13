@@ -9,6 +9,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-tasks',
@@ -24,18 +25,18 @@ export class TasksComponent implements OnInit {
   currentSprintNumber: number
   searchAssignee: string = ""
   tasksCollection: AngularFirestoreCollectionGroup<Tasks>
-  tasksData: Observable<TasksId[]>
+  tasksData: Observable<Tasks[]>
 
-  filterAssignee: string
-  filterPriority: string
-  filterDifficulty: string
-  filterStatus: string
-  filterProject: string
+  filterAssignee: string = ""
+  filterPriority: string = ""
+  filterDifficulty: string = ""
+  filterStatus: string = ""
+  filterProject: string = ""
   filterSprintNumber: number;
   showFilter: boolean = false
   teamData: TeamDataId[] = [];
-  
-  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService) { }
+
+  constructor(private route: ActivatedRoute, private router: Router, private db: AngularFirestore, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -43,9 +44,9 @@ export class TasksComponent implements OnInit {
 
     this.navbarHandler.addToNavbar(this.teamId);
 
-    if (this.currentSprintName == "Backlog") {
+    if (this.currentSprintName == "S-1") {
       this.currentSprintNumber = -1;
-    } else if (this.currentSprintName == "Deleted") {
+    } else if (this.currentSprintName == "S-2") {
       this.currentSprintNumber = -2;
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
@@ -53,45 +54,19 @@ export class TasksComponent implements OnInit {
 
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.AppKey) {
+        if (data.SelectedOrgAppKey) {
           this.readData();
         }
       });
     });
   }
 
-  readData() {
-    this.tasksCollection = this.db.collectionGroup<Tasks>("Tasks", ref => {
-      let queryRef = ref;
-      queryRef = queryRef.where('SprintNumber', '==', this.currentSprintNumber);
-      if (this.filterProject) {
-        queryRef = queryRef.where("Project", "==", this.filterProject);
-      }
-      else {
-        queryRef = queryRef.where("TeamId", "==", this.teamId);
-      }
-
-      if (this.filterAssignee) {
-        queryRef = queryRef.where("Assignee", "==", this.filterAssignee);
-      }
-      if (this.filterPriority) {
-        queryRef = queryRef.where("Priority", "==", this.filterPriority);
-      }
-      if (this.filterStatus) {
-        queryRef = queryRef.where("Status", "==", this.filterStatus);
-      }
-      if (this.filterDifficulty) {
-        queryRef = queryRef.where("Difficulty", "==", this.filterDifficulty);
-      }
-      return queryRef;
-    });
-    this.tasksData = this.tasksCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Tasks;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+  async readData() {
+    const callable = this.functions.httpsCallable("tasks");
+    this.tasksData = await callable({ mode: "getAllTasks", OrgDomain: "worktrolly.web.app", TeamId: this.teamId, SprintNumber: this.currentSprintNumber, FilterAssignee: this.filterAssignee, FilterPriority: this.filterPriority, FilterDifficulty: this.filterDifficulty, FilterStatus: this.filterStatus, FilterProject: this.filterProject }).pipe(
+      map(actions => {
+        return actions.data as Tasks[];
+      }));
   }
   backToDashboard() {
     this.router.navigate(['/Board']);

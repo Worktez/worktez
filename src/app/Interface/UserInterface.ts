@@ -8,13 +8,26 @@ export interface User {
 }
 
 export interface UserAppSetting extends User {
-    AppKey: string;
-    TeamId: string;
+    SelectedOrgAppKey: string;
+    SelectedTeamId: string;
     AboutMe: string;
     AppTheme: string;
     GithubProfile: string;
     LinkedInProfile: string;
     DateOfJoining: string;
+    Skills: string;
+    Education: string;
+    Experience: string;
+    Projects: string;
+    Website: string;
+}
+
+export interface MyOrganizationData {
+    DefaultTeam: string;
+    OrgAppKey: string;
+    Teams: [];
+    Uid: string;
+    OrgDomain: string;
 }
 
 export const defaultUser = {
@@ -24,11 +37,16 @@ export const defaultUser = {
     email: "defaultUser@worktez.com",
     phoneNumber: null,
     providerId: "worktez",
-    AppKey: "",
-    TeamId: "",
+    SelectedOrgAppKey: "",
+    SelectedTeamId: "",
     AboutMe: "",
     AppTheme: "",
     GithubProfile: "",
     LinkedInProfile: "",
     DateOfJoining: "",
+    Skills: "",
+    Education: "",
+    Experience: "",
+    Projects: "",
+    Website: "",
 };

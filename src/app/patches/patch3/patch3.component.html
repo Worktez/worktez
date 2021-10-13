@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="patchService.patchObservable | async">
     <div class="row">
         <div class="col pl-0 pr-0">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -18,32 +18,32 @@
     <div class="px-8" id="weigh">
         <div class="container p-3 mr-3 my-3">
             <div class="row mb-2">
-              <div class="col-md-6">
-                <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
-              </div>
-              <div class="col-md-6">
-                <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
-              </div>
+                <div class="col-md-6">
+                    <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
+                </div>
             </div>
             <div class="row mb-2">
-              <div class="col-md-6">
-                <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
-              </div>
-              <div class="col-md-6">
-                <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
-              </div>
+                <div class="col-md-6">
+                    <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
+                </div>
             </div>
             <div class="row mb-2">
-              <div class="col">
-                  Description: <span class="pl-3">{{ patch.Description }}</span>
-              </div>
+                <div class="col">
+                    Description: <span class="pl-3">{{ patch.Description }}</span>
+                </div>
             </div>
         </div>
         <form class="px-4" *ngIf="!PatchshowLoader">
             <div class="form-group row">
                 <label for="fieldName" class="col-sm-2 col-form-label">Field Name</label>
                 <div class="col-sm-4">
-                        <select class="form-control mt-2 custom-select" placeholder="Enter Field Name" [(ngModel)]="fieldName" [ngModelOptions]="{standalone: true}">
+                    <select class="form-control mt-2 custom-select" placeholder="Enter Field Name" [(ngModel)]="fieldName" [ngModelOptions]="{standalone: true}">
                             <option selected disabled value="">choose...</option>
                             <option>Assignee</option>
                             <option>CompletionDate</option>
@@ -65,15 +65,13 @@
             <div class="form-group row">
                 <label for="fieldValue" class="col-sm-2 col-form-label">Field Value</label>
                 <div class="col-sm-4">
-                    <input type="fieldValue" class="form-control" id="fieldValue" placeholder="Enter Field Value"
-                        [(ngModel)]="fieldValue" [ngModelOptions]="{standalone: true}">
+                    <input type="fieldValue" class="form-control" id="fieldValue" placeholder="Enter Field Value" [(ngModel)]="fieldValue" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-md-5"></div>
                 <div class="col-md-4 col-8">
-                    <button type="submit" class="btn btn-primary" [disabled]="PatchshowLoader"
-                        (click)="patch3()">Query</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="PatchshowLoader" (click)="patch3()">Query</button>
                 </div>
                 <div class="col-md-3 col-4" *ngIf="tasksData | async">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal" (click)="UpdatePage()">
