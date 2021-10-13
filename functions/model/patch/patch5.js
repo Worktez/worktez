@@ -8,8 +8,6 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-// const admin = require("firebase-admin");
-// const { updatePatchData } = require("./lib");
 const { getOrg } = require("../organization/lib");
 const { getAllUsers, updateUser } = require("../users/lib");
 const { generateBase64String } = require("../application/lib");
@@ -29,7 +27,7 @@ exports.patch5 = function(request, response) {
 
                     const userUpdateInputJson = {};
 
-                    if(value == "Random") {
+                    if (value == "Random") {
                         const date = new Date();
                         value = generateBase64String(date.getMilliseconds() + "Random");
                     }
