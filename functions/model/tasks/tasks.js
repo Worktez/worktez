@@ -15,6 +15,8 @@ const { logWork } = require("./logwork");
 const { addComment } = require("./addComment");
 const { getTaskDetails } = require("./getTaskDetails");
 const { getTasks } = require("./getTasks");
+const { getLinkDetails } = require("./getLinkDetails");
+const { setLinkDetails } = require("./setLinkDetails");
 
 exports.tasks = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -32,6 +34,10 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return addComment(request, response);
         } else if (mode == "getTaskDetails") {
             return getTaskDetails(request, response);
+        } else if (mode == "getLink") {
+            return getLinkDetails(request, response);
+        } else if (mode == "setLink") {
+            return setLinkDetails(request, response);
         } else if (mode == "getAllTasks") {
             return getTasks(request, response);
         }

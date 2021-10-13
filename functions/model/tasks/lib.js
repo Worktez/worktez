@@ -4,12 +4,10 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-// const admin = require("firebase-admin");
-// const db = admin.firestore();
 
 const { db } = require("../application/lib");
 
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter=0) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -33,6 +31,7 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         TeamId: teamId,
         Type: type,
         TaskFilesCounter: taskFileCounter,
+        LinkCounter: linkCounter,
     });
     return Promise.resolve(createTask);
 };
@@ -48,7 +47,6 @@ exports.getTask = function(taskId, orgDomain) {
     });
     return Promise.resolve(getTaskDetails);
 };
-
 
 exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
@@ -78,4 +76,20 @@ exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssi
     const getAllTasksPromise = query.get();
 
     return Promise.resolve(getAllTasksPromise);
+};
+
+exports.getLink = function(orgDomain, taskId) {
+    const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").get();
+    return Promise.resolve(getLinkDetails);
+};
+
+exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
+    const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).set({
+        LinkType: linkType,
+        LinkURL: linkURL,
+        TaskID: taskId,
+        LinkID: linkID,
+        OrgDomain: orgDomain,
+    });
+    return Promise.resolve(setLinkDetails);
 };

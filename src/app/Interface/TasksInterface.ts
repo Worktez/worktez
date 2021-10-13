@@ -20,6 +20,14 @@ export interface Tasks {
   OrganizationId: string;
   TeamId: string;
   Type: string;
+  LinkCounter: number;
 }
 
 export interface TasksId extends Tasks {id: string;}
+
+export interface Link {
+  LinkType: string;
+  LinkURL: string;
+  OrganizationID: string;
+  TaskID: string;
+}
