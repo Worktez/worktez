@@ -20,9 +20,9 @@ exports.createTeam = function(request, response) {
     const teamManagerEmail = request.body.data.TeamManagerEmail;
     const teamMembers = request.body.data.TeamMembers;
     const type = request.body.data.Type;
-    const statusLabels = request.body.data.StatusLabels;
-    const priorityLabels = request.body.data.PriorityLabels;
-    const difficultyLabels = request.body.data.DifficultyLabels;
+    let statusLabels = request.body.data.StatusLabels;
+    let priorityLabels = request.body.data.PriorityLabels;
+    let difficultyLabels = request.body.data.DifficultyLabels;
     const uid = request.body.data.Uid;
     const orgAppKey = request.body.data.OrganizationAppKey;
     const orgDomain = request.body.data.OrganizationDomain;
@@ -46,7 +46,9 @@ exports.createTeam = function(request, response) {
         const prom2 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
                 console.log(orgId);
-
+                statusLabels = addSortingValueToLabels(statusLabels, "StatusLabels");
+                priorityLabels = addSortingValueToLabels(priorityLabels, "PriorityLabels");
+                difficultyLabels = addSortingValueToLabels(difficultyLabels, "DifficultyLabels");
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
                 myOrganizations(uid, orgDomain, orgAppKey, teamId);
             } else {
@@ -88,3 +90,32 @@ exports.createTeam = function(request, response) {
             return response.status(status).send(result);
         });
 };
+
+function addSortingValueToLabels(labels, labelsType) {
+    if (labelsType == "PriorityLabels" || labelsType == "DifficultyLabels") {
+        labels.forEach((label, index) => {
+            if (label == "High") {
+                labels[index] = "2@@" + labels[index]; 
+            } else if (label == "Medium") {
+                labels[index] = "1@@" + labels[index];
+            } else if (label == "Low") {
+                labels[index] = "0@@" + labels[index];
+            }
+        });
+    } else {
+        labels.forEach((label, index) => {
+            if (label == "Ready to start") {
+                labels[index] = "1@@" + labels[index]; 
+            } else if (label == "Ice Box") {
+                labels[index] = "0@@" + labels[index];
+            } else if (label == "Under Progress") {
+                labels[index] = "2@@" + labels[index];
+            } else if (label == "Blocked") {
+                labels[index] = "3@@" + labels[index];
+            } else if (label == "Completed") {
+                labels[index] = "4@@" + labels[index];
+            }
+        });
+    }
+    return labels;
+}

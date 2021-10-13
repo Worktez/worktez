@@ -63,9 +63,9 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   type: string[] = ["Bug", "Story", "Sub Task"]
-  statusLabels: string[] = ["0@@Ice Box", "1@@Ready to start", "2@@Under Progress", "3@@Blocked", "4@@Completed"]
-  priorityLabels: string[] = ["2@@High", "1@@Medium", "0@@Low"]
-  difficultyLabels: string[] = ["2@@High", "1@@Medium", "0@@Low"]
+  statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
+  priorityLabels: string[] = ["High", "Medium", "Low"]
+  difficultyLabels: string[] = ["High", "Medium", "Low"]
 
   labelFunc(checked: boolean, value: string, array: string[]) {
     if (checked === false) {

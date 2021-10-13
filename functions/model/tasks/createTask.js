@@ -21,13 +21,13 @@ exports.createNewTask = function(request, response) {
     const appKey = request.body.data.AppKey;
     const title = request.body.data.Title;
     const des = request.body.data.Description;
-    const priority = request.body.data.Priority;
-    const difficulty = request.body.data.Difficulty;
+    let priority = request.body.data.Priority;
+    let difficulty = request.body.data.Difficulty;
     const creator = request.body.data.Creator;
     const assignee = request.body.data.Assignee;
     const reporter = request.body.data.Reporter;
     const estimatedTime = parseInt(request.body.data.EstimatedTime);
-    const taskStatus = request.body.data.Status;
+    let taskStatus = request.body.data.Status;
     const project = request.body.data.Project;
     const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
     const sprintNumber = parseInt(request.body.data.SprintNumber);
@@ -62,6 +62,9 @@ exports.createNewTask = function(request, response) {
             };
             updateTeamDetails(updateTeamJson, orgDomain, project);
             sendMail(assignee, subjectMessage, htmlMessage);
+            priority = addSortingValueToLabel(priority, "PriorityLabel");
+            difficulty = addSortingValueToLabel(difficulty, "DifficultyLabel");
+            taskStatus = addSortingValueToLabel(taskStatus, "StatusLabel");
             setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
@@ -130,3 +133,28 @@ exports.createNewTask = function(request, response) {
             return response.status(status).send(result);
         });
 };
+
+function addSortingValueToLabel(label, labelType) {
+    if (labelType == "PriorityLabel" || labelType == "DifficultyLabel") {
+        if (label == "High") {
+            label = "2@@" + label; 
+        } else if (label == "Medium") {
+            label = "1@@" + label; ;
+        } else if (label == "Low") {
+            label = "0@@" + label; ;
+        }
+    } else {
+        if (label == "Ready to start") {
+            label = "1@@" + label; 
+        } else if (label == "Ice Box") {
+            label = "0@@" + label;
+        } else if (label == "Under Progress") {
+            label = "2@@" + label;
+        } else if (label == "Blocked") {
+            label = "3@@" + label;
+        } else if (label == "Completed") {
+            label = "4@@" + label;
+        }
+    }
+    return label;
+}
