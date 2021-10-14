@@ -7,6 +7,7 @@
 
 const { functions, cors } = require("../application/lib");
 const { performanceChartData } = require("./performanceChartData");
+const { getUserPerformanceChartData } = require("./getUserPerformanceChartData");
 
 exports.performanceChart = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -14,6 +15,8 @@ exports.performanceChart = functions.https.onRequest((request, response) => {
 
         if (mode == "performanceChartData") {
             return performanceChartData(request, response);
+        } else if (mode == "getUserPerformanceChartData") {
+            return getUserPerformanceChartData(request, response);
         }
     });
 });
