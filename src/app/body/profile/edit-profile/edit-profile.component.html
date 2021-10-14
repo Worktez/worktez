@@ -8,8 +8,14 @@
             <div class="modal-body">
                 <form *ngIf="!enableLoader">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">User Name</label>
+                        <label for="recipient-name" class="col-form-label">Display Name</label>
                         <input type="text" [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Username</label>
+                        <input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name">
+                        <a *ngIf="!userAvailable" class="btn btn-primary" (click)="checkAvailability()">check availability</a>
+                        <a *ngIf="userAvailable" class="btn btn-success">Username available</a>
                     </div>
                     <div class="form-group">
                         <label for="recipient-phoneNo" class="col-form-label">Phone Number</label>

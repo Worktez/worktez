@@ -10,6 +10,8 @@ const { createNewUser } = require("./createNewUser");
 const { updateUser } = require("./updateUser");
 const { updateTheme } = require("./updateTheme");
 const { verifyUser } = require("./verifyUser");
+const { getUserAppSettings } = require("./getUserAppSettings");
+const { checkAvailableUsername } = require("./checkAvailableUsername");
 const { getMyOrgList } = require("./getMyOrgList");
 const { setMyOrganization } = require("./setMyOrganization");
 
@@ -25,6 +27,10 @@ exports.users = functions.https.onRequest((request, response) => {
             return updateTheme(request, response);
         } else if (mode == "verify") {
             return verifyUser(request, response);
+        } else if (mode == "getUserAppSettings") {
+            return getUserAppSettings(request, response);
+        } else if (mode == "CheckAvailableUsername") {
+            return checkAvailableUsername(request, response);
         } else if (mode == "getMyOrgList") {
             return getMyOrgList(request, response);
         } else if (mode == "setMyOrganization") {

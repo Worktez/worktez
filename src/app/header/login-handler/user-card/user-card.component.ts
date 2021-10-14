@@ -23,6 +23,6 @@ export class UserCardComponent implements OnInit {
     window.location.reload()
   }
   profile(){
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/profile', this.authService.userAppSetting.Username]);
   }
 }

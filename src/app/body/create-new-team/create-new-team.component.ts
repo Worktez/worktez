@@ -43,7 +43,7 @@ export class CreateNewTeamComponent implements OnInit {
     this.uid = this.authService.getLoggedInUser();
     console.log(this.router.url);
     this.selectedTeamId = this.route.snapshot.params['teamId'];
-    console.log(this.selectedTeamId);
+
     if (this.selectedTeamId != undefined) {
       if (this.router.url.startsWith('/UpdateTeam')) {
         this.isUpdateTeam = true;
@@ -165,7 +165,6 @@ export class CreateNewTeamComponent implements OnInit {
     }
     try {
       const result = await callable({ mode: "remove-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
-      console.log(result);
       this.enableLoader = false;
     } catch (error) {
       this.enableLoader = false;
@@ -183,7 +182,6 @@ export class CreateNewTeamComponent implements OnInit {
 
     try {
       const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
-      console.log(result);
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
@@ -204,7 +202,6 @@ export class CreateNewTeamComponent implements OnInit {
 
     try {
       const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
-      console.log(result);
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
