@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Tasks } from 'src/app/Interface/TasksInterface';
+import { map } from 'rxjs/operators'
+import { Tasks, Link } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../services/tool/tools.service';
@@ -28,6 +28,7 @@ export class TaskDetailsComponent implements OnInit {
   logWorkEnabled: boolean = false
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
+  linkEnabled: boolean = false
   userLoggedIn: boolean = false
   showContent: boolean = false;
   activeAllBtn: boolean = false
@@ -43,6 +44,7 @@ export class TaskDetailsComponent implements OnInit {
 
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
+  linkData: Observable<Link[]>
 
   constructor ( private route: ActivatedRoute, public db: AngularFirestore, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
 
@@ -63,6 +65,7 @@ export class TaskDetailsComponent implements OnInit {
             this.orgDomain = this.backendService.getOrganizationDomain();
             this.getTaskDetail();
             this.getActivityData();
+            this.getLinkData();
             this.activeAllBtn = true;
           });
         }
@@ -87,16 +90,22 @@ export class TaskDetailsComponent implements OnInit {
     }));
   }
 
+  async getLinkData() {
+    const callable = this.functions.httpsCallable("tasks");
+    this.linkData = callable({mode: "getLink", OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
+      map(actions => {
+        return actions.data as Link[];
+    }));
+  }
+
   async addComment() {
     const callable = this.functions.httpsCallable('tasks');
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ mode: "comment", AppKey: appKey, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+      const result = await callable({ mode: "comment", AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
-      console.log("Logged Work Successfully");
       this.comment = "";
-      console.log(result);
       return;
     } catch (error) {
       this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
@@ -120,6 +129,10 @@ export class TaskDetailsComponent implements OnInit {
     this.deleteTaskEnabled = true;
   }
 
+  addLink() {
+    this.linkEnabled = true;
+  }
+
   logWorkCompleted ( data: { completed: boolean } ) {
     this.logWorkEnabled = false;
   }
@@ -132,13 +145,16 @@ export class TaskDetailsComponent implements OnInit {
     this.deleteTaskEnabled = false;
   }
 
+  addedLink( data: { completed: boolean } ) {
+    this.linkEnabled = false;
+  }
+
   async reopenTask () {
     const callable = this.functions.httpsCallable( 'tasks' );
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
       const result = await callable( { mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
-      console.log( result );
       return;
     } catch ( error ) {
       this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );

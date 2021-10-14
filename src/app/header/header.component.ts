@@ -16,7 +16,6 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 })
 export class HeaderComponent implements OnInit {
 
-  public myOrgCollectionsData: Observable<MyOrganizationData[]>
   uid: string
 
   constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
@@ -26,19 +25,10 @@ export class HeaderComponent implements OnInit {
       const data = action as User;
       if(data) {
         this.uid = data.uid;
-        this.getListedOrganizationData();
       }
     }, (error) => {
       console.log(error);
     });
-  }
-
-  getListedOrganizationData() {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: this.uid}).pipe(
-      map(actions => {
-        return actions.data as MyOrganizationData[];
-    }));
   }
 
   setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
@@ -59,7 +49,6 @@ export class HeaderComponent implements OnInit {
   }
 
   myDashBoard(){
-    console.log("load MyDashboard");
     this.router.navigate(["/MyDashboard"])
   }
 

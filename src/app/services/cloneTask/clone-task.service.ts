@@ -12,7 +12,6 @@ export class CloneTaskService {
   constructor(private router: Router) { }
   getCloneTask(cloneTask: Tasks){
     this.task = cloneTask;
-    console.log(this.task);
     this.router.navigate(['/CreateNewSession']);
   }
   getCloneData(){

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { User, UserAppSetting } from "../Interface/UserInterface";
+import { MyOrganizationData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -14,9 +14,9 @@ import { map } from 'rxjs/operators';
 })
 
 export class AuthService {
-
   public userAppSettingObservable: Observable<UserAppSetting>;
-  public userAppSettingDocument: AngularFirestoreDocument<UserAppSetting>;
+
+  public myOrgCollectionsData: Observable<MyOrganizationData[]>
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -46,7 +46,7 @@ export class AuthService {
     const callable = this.functions.httpsCallable('users');
     try {
       const result = await callable({ mode: "create", uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
-      console.log(result);
+
     } catch (error) {
       console.error("Error", error);
     }
@@ -69,22 +69,30 @@ export class AuthService {
 
   getUserSettings() {
     const uid = this.getLoggedInUser(); 
-    var documentName = 'Users/'+uid;
-    this.userAppSettingDocument = this.db.doc<UserAppSetting>(documentName);
-    this.userAppSettingObservable = this.userAppSettingDocument.snapshotChanges().pipe(
+    const callable = this.functions.httpsCallable('users');
+  
+    this.userAppSettingObservable = callable({ mode: "getUserAppSettings", uid: uid }).pipe(map(res => {
+      const data = res.userData as UserAppSetting;
+      this.userAppSetting = data;
+      if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
+        this.organizationAvailable = true;
+        this.getListedOrganizationData(data.uid);
+        this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
+        this.themeService.changeTheme(data.AppTheme);
+      } else {
+        this.organizationAvailable = false;
+      }
+      return { ...data };
+    }));
+    this.completedLoadingApplication =true;
+  }
+
+  getListedOrganizationData(uid: string) {
+    const callable = this.functions.httpsCallable("users");
+    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: uid}).pipe(
       map(actions => {
-        const data = actions.payload.data() as UserAppSetting;
-        this.userAppSetting = data;
-        if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
-          this.organizationAvailable = true;
-          this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
-          this.themeService.changeTheme(data.AppTheme);
-        } else {
-          this.organizationAvailable = false;
-        }
-        return { ...data }
-      }));
-      this.completedLoadingApplication = true;
+        return actions.data as MyOrganizationData[];
+    }));
   }
 
   getAppKey() {

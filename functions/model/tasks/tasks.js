@@ -18,6 +18,8 @@ const { uploadFileToTask } = require("./uploadFileToTask");
 const { getFilesInTask } = require("./getFilesInTask");
 const { deleteFilesInTask } = require("./deleteFilesInTask");
 const { getTasks } = require("./getTasks");
+const { getLinkDetails } = require("./getLinkDetails");
+const { setLinkDetails } = require("./setLinkDetails");
 
 exports.tasks = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -35,6 +37,10 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return addComment(request, response);
         } else if (mode == "getTaskDetails") {
             return getTaskDetails(request, response);
+        } else if (mode == "getLink") {
+            return getLinkDetails(request, response);
+        } else if (mode == "setLink") {
+            return setLinkDetails(request, response);
         } else if (mode == "UploadFileToTask") {
             return uploadFileToTask(request, response);
         } else if (mode == "GetFilesInTask") {

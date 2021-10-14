@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="(tasks|async).length==0">
+                <ng-container *ngIf="(tasks|async)?.length==0">
                     <tr>
                         <td colspan="9" class="text-center">No tasks available</td>
                     </tr>
