@@ -46,16 +46,19 @@ export class ProfileComponent implements OnInit {
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.SelectedOrgAppKey) {
-          this.readUser();
-
-          this.organizationName = this.backendService.getOrganizationName();
-          this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
-            this.teamName = teams[0].TeamName;
-            this.managerEmail = teams[0].TeamManagerEmail;
-            if(teams[0].TeamManagerEmail == this.email) {
-              this.role = "Manager";
-            } else {
-              this.role = "Member";
+          this.backendService.organizationsData.subscribe(data => {
+            if (data.length) {
+              this.readUser();
+              this.organizationName = this.backendService.getOrganizationName();
+              this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
+              this.teamName = teams[0].TeamName;
+              this.managerEmail = teams[0].TeamManagerEmail;
+              if(teams[0].TeamManagerEmail == this.email) {
+                this.role = "Manager";
+              } else {
+                this.role = "Member";
+              }
+              });
             }
           });
         }
