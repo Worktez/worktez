@@ -17,7 +17,7 @@ exports.getUserAppSettings = function(request, response) {
     let status = 200;
     let result;
 
-    const promise1 = getUser(Uid).then((data) => {
+    const promise1 = getUser(Uid, "").then((data) => {
         console.log("Getting User Data");
         if (data == undefined) {
             console.log("User doesn't exist");

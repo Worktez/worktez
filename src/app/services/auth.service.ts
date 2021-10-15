@@ -70,7 +70,7 @@ export class AuthService {
   getUserSettings() {
     const uid = this.getLoggedInUser(); 
     const callable = this.functions.httpsCallable('users');
-  
+
     this.userAppSettingObservable = callable({ mode: "getUserAppSettings", uid: uid }).pipe(map(res => {
       const data = res.userData as UserAppSetting;
       this.userAppSetting = data;

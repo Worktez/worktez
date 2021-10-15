@@ -29,7 +29,7 @@ exports.patch5 = function(request, response) {
 
                     const userUpdateInputJson = {};
 
-                    if(value == "Random") {
+                    if (value == "Random") {
                         const date = new Date();
                         value = generateBase64String(date.getMilliseconds() + "Random");
                     }

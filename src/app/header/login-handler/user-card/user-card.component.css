@@ -4,15 +4,14 @@
 }
 
 .dropdown-item {
-    color: var(--text);
+    color: var(--button-text);
 }
 
 .dropdown-item:hover {
-    background-color: var(--hover);
+    color: var(--button-text-hover);
 }
 
 #username {
-    background-color: var(--primary-color);
     color: var(--button-text);
     font-weight: bolder;
 }

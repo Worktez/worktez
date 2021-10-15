@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs';
-import { MyOrganizationData, User } from '../Interface/UserInterface';
+import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 

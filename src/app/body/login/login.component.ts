@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   showPassword: boolean = false
   componentName: string = "LOGIN"
 
+  activeLogin: boolean = true
+
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location) { }
 
   ngOnInit(): void {
@@ -75,5 +77,9 @@ export class LoginComponent implements OnInit {
 
   navigateToVerification(path) {
     this.router.navigate([path]);
+  }
+
+  changeTab() {
+    this.activeLogin = !this.activeLogin;
   }
 }

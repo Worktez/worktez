@@ -9,37 +9,43 @@ body {
 }
 
 .theme-light {
-    --primary-color: #dc3226;
-    --secondary-color: #fbaa1a;
+    --primary-color: #5559D9;
+    --secondary-color: #67CB45;
     --header-bg: #fff;
-    --text: #000;
-    --button-text: #fff;
-    --primary-bg: #ffffff;
-    --secondary-bg: #ffffff;
-    --primary-navbar-background-image: linear-gradient(to right, #d81b61, #dc3226, #fbaa1a);
+    --text: #545454;
+    --button-text: #545454;
+    --button-text-hover: #5559D9;
+    --primary-bg: #F6F7F9;
+    --secondary-bg: #FFFFFF;
+    --secondary-header-bg: rgba(92, 96, 236, 0.2);
     --primary-border: 0px solid #546e7a;
-    --hover: #fbaa1a;
+    --hover: #5C60EC;
     --box-shadow-top: 0px 0px 5px 0px #546e7a;
     --box-shadow-bottom: 0px 0px 5px 0px #546e7a;
-    --button-bg: #dc3226;
-    --button-hover-bg: #fbaa1a;
+    --button-bg: none;
+    --button-hover-bg: #fff;
     --progress-bg: #E9ECEF;
+    --input-field: #F6F7F9;
+    --heading-text: #272845;
 }
 
 .theme-dark {
-    --primary-color: #dc3226;
-    --secondary-color: #fbaa1a;
+    --primary-color: #5559D9;
+    --secondary-color: #67CB45;
     --header-bg: #20282E;
     --text: #fff;
     --button-text: #fff;
+    --button-text-hover: #5559D9;
     --primary-bg: #11171B;
     --secondary-bg: #20282E;
-    --primary-navbar-background-image: linear-gradient(to right, #d81b61, #dc3226, #fbaa1a);
+    --secondary-header-bg: rgba(92, 96, 236, 0.2);
     --primary-border: 0px solid #546e7a;
-    --hover: #fbaa1a;
+    --hover: #5559D9;
     --box-shadow-top: 0px 0px 2px 0px #20282E;
     --box-shadow-bottom: 0px 0px 2px 0px #20282E;
-    --button-bg: #dc3226;
-    --button-hover-bg: #fbaa1a;
+    --button-bg: none;
+    --button-hover-bg: #20282E;
     --progress-bg: #E9ECEF;
+    --input-field: #F6F7F9;
+    --heading-text: #F6F7F9;
 }
