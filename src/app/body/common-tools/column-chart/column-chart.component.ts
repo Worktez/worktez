@@ -8,11 +8,11 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 })
 export class ColumnChartComponent implements OnInit {
 
+  @Input('title') title:string;
   @Input('data') data: [];
   @Input('columnNames') columnNames: [];
   constructor(public themeService: ThemeService) { }
 
-  title = 'Team Performance Chart';
   type = 'ColumnChart';
    options = {
     width: "100%",
@@ -30,7 +30,7 @@ export class ColumnChartComponent implements OnInit {
         italic: false
       }
     },
-    colors: ['#10be65'], 
+    colors: ['#10be65', '#DC3226', '#FBAA1A'], 
     is3D: true,
     backgroundColor: "none",
     titleTextStyle: {

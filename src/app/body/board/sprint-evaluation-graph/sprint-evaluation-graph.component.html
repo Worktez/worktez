@@ -2,13 +2,10 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-8">
-                <h6 class="m-0">Team Performance Chart</h6>
+                <h6 class="m-0">Sprint Evaluation Graph</h6>
             </div>
             <div class="col-3 text-right">
                 <app-range-card (setRange)="onGetRange($event)"></app-range-card>
-            </div>
-            <div class="col-1 text-right">
-                <app-select-dropdown [teamMembers]="teamMembers" (setteamMember)="onGetTeamMember($event)"></app-select-dropdown>
             </div>
         </div>
     </div>

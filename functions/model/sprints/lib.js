@@ -9,7 +9,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId, newSprintId, status, totalNumberOfTask = 0, totalUnCompletedTask = 0, startDate = "xxxx-xx-xx", endDate = "xxxx-xx-xx") {
+exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId, newSprintId, status, totalNumberOfTask = 0, totalUnCompletedTask = 0, startStoryPoint = 0, midStoryPoint = 0, startDate = "xxxx-xx-xx", endDate = "xxxx-xx-xx") {
     const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).set({
         OrganizationId: orgId,
         TeamId: teamId,
@@ -20,6 +20,10 @@ exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId,
         StartDate: startDate,
         EndDate: endDate,
         Status: status,
+        StartStoryPoint: startStoryPoint,
+        MidStoryPoint: midStoryPoint,
+        EndStoryPoint: 0,
+        CompletedStoryPoint: 0,
     });
     return Promise.resolve(setSprint);
 };

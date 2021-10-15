@@ -22,6 +22,7 @@ export class PerformanceColumnChartComponent implements OnInit {
   teamMember: string;
   sprintRange1: number;
   sprintRange2: number;
+  title: string = "Team Performance Chart";
 
   ngOnInit(): void {
     this.showLoader = true;
