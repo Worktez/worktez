@@ -5,13 +5,18 @@
 
 .dropdown-item {
     color: var(--button-text);
+    cursor: pointer;
 }
 
 .dropdown-item:hover {
     color: var(--button-text-hover);
+    background-color: var(--secondary-bg);
 }
 
 #username {
-    color: var(--button-text);
-    font-weight: bolder;
+    color: var(--text);
+}
+
+#logout-btn {
+    color: var(--danger-color);
 }

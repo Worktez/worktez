@@ -17,7 +17,7 @@
                             <h3 class="py-3">Welcome <a class="header">Back</a></h3>
                             <form (submit)="onLoginWithEmail()">
                                 <div class="input-group pb-3">
-                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                     <div class="input-group-text">
                                         <span class="material-icons icons">
                                             email
@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                                 <div class="input-group pb-3">
-                                    <input type="password" class="form-control" placeholder="Enter Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                    <input type="password" class="form-control" placeholder="Enter your password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
                                     <div class="input-group-text">
                                         <span class="material-icons icons">
                                             vpn_key
@@ -45,7 +45,7 @@
                             </h3>
                             <form (submit)="onSignUpWithEmail()">
                                 <div class="input-group pb-3">
-                                    <input type="text" class="form-control" placeholder="Enter Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+                                    <input type="text" class="form-control" placeholder="Enter your username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
                                     <div class="input-group-text">
                                         <span class="material-icons icons">
                                             perm_identity
@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="input-group pb-3">
-                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                     <div class="input-group-text">
                                         <span class="material-icons icons">
                                             email
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                                 <div class="input-group pb-3">
-                                    <input [type]="showPassword ? 'text':'password'" class="form-control" placeholder="Enter Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                    <input [type]="showPassword ? 'text':'password'" class="form-control" placeholder="Enter your password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
                                     <div class="input-group-text">
                                         <span class="material-icons icons">
                                             email
@@ -83,7 +83,7 @@
             <div class="row text-center py-4">
                 <div class="col">OR</div>
             </div>
-            <div class="row align-middle px-4 pb-3" id="topBorder">
+            <div class="row align-middle px-4 pb-3">
                 <div class="col text-center">
                     <button type="submit" class="btn btn-lg btn-block" id="button" (click)="onSignInWithGoogle()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google mb-1"  viewBox="0 0 16 16">
