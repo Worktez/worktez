@@ -79,6 +79,7 @@ import { AddPatchComponent } from './list-patches/add-patch/add-patch.component'
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { UploadFilesComponent } from './body/task-details/upload-files/upload-files.component';
 import { ShowFilesComponent } from './body/common-tools/show-files/show-files.component';
+import { UploadLogoComponent } from './body/create-new-organization/upload-logo/upload-logo.component';
 import { LinkComponent } from './body/task-details/link/link.component';
 
 
@@ -149,6 +150,7 @@ import { LinkComponent } from './body/task-details/link/link.component';
     Patch5Component,
     UploadFilesComponent,
     ShowFilesComponent,
+    UploadLogoComponent,
     LinkComponent
   ],
   imports: [

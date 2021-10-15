@@ -41,17 +41,16 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-3">
-                <div class="form-group row pt-2 align-items-center justify-content-center" id="uploadButtonContainer">
-                    <label id="uploadFile" class="col-12 col-form-label p-5 text-center">
-                    Choose Logo
-                    <input type="file" accept="image/*" required id="file" (change)="handleFileInput($event.target.files)"/>
-                </label>
-                </div>
-                <div class="form-group row pt-2 text-center" id="uploadButtonContainer">
-                    <div class="col-12">
-                        <button type="submit" class="btn" id="button" (click)="uploadLogo()" [disabled]="!orgLogo">Upload Logo</button>
-                    </div>
+            <div class="col-md-2">
+                <div class="form-group col p-2 alert-info" id="uploadButtonContainer">
+                    <ng-container *ngIf="!logoUploaded; else uploadedImg">
+                        <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>
+                    </ng-container>
+                    <ng-template #uploadedImg>
+                        <span id="files" class="material-icons">image</span>
+                        <label>{{fileName}}</label>
+                        <span class="material-icons menu" id="delete" (click)="delete()">delete</span>
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -64,9 +63,6 @@
         <div class="form-group row align-items-center justify-content-center">
             <div class="offset-6 col text-right">
                 <button type="submit" class="btn" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit</button>
-                <!-- <button (click)="submit()" id="button" [disabled]="!logoUploaded && orgLogo && enableLoader">
-                    <span class="material-icons" data-toggle="tooltip" data-placement="top" title="Next">arrow_forward_ios</span>
-                </button> -->
             </div>
         </div>
     </ng-container>

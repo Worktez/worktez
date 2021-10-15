@@ -8,7 +8,6 @@
 const { getActivities, updateActivities, setActivities, setAction } = require("./lib");
 
 
-// let activityPromise;
 let actionId;
 let totalActions;
 let totalComments;
