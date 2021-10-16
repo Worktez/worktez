@@ -7,12 +7,20 @@
 #button {
     background-color: var(--primary-color);
     color: var(--secondary-bg);
+    font-size: 18px;
 }
 
 #button:focus,
 #button:active {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
 }
+
+#button2 {
+    background-color: var(--button-bg);
+    color: var(--button-text2);
+    font-size: 18px;
+}
+
 
 .nav-login-tab,
 .nav-signup-tab {
@@ -32,6 +40,7 @@ input:focus,
 select:focus,
 textarea:focus {
     border-color: var(--primary-color);
+    box-shadow: none;
 }
 
 input,
@@ -39,6 +48,7 @@ select,
 textarea {
     border-color: none;
     background-color: var(--input-field);
+    outline: none;
 }
 
 .header {
@@ -46,7 +56,8 @@ textarea {
 }
 
 .icons {
-    color: var(--primary-color)
+    color: var(--primary-color);
+    background-color: var(--input-field);
 }
 
 .forgotPassword {
