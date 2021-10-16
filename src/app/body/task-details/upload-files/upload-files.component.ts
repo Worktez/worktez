@@ -27,7 +27,7 @@ export class UploadFilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.basePath = '/Organizations/'+this.organizationId+'/'+this.teamId+'/'+this.taskId;
-    this.uploadService.readFiles();
+    this.uploadService.readFiles(this.orgDomain, this.taskId);
   }
 
   detectFiles(event) {

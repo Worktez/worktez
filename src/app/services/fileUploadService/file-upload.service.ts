@@ -32,7 +32,7 @@ export class FileUploadService {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload, basePath, taskId).then((data) => {
-            this.readFiles();
+            this.readFiles(this.backendService.getOrganizationDomain(), taskId);
           });
         });
       })
@@ -52,9 +52,12 @@ export class FileUploadService {
     const lastModified = fileUpload.file.lastModified;
     const size = fileUpload.file.size;
 
-    const callable = this.functions.httpsCallable( 'tasks' );
-    await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: taskId, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-
+    const callable = this.functions.httpsCallable( 'librarian' );
+    if ( taskId != "Logo") {
+      await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: taskId, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    } else {
+      await callable( { mode: "UploadLogoFile", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    }
     this.fileUploadStatus = false;
   }
 
@@ -63,7 +66,7 @@ export class FileUploadService {
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
 
-    const callable = this.functions.httpsCallable( 'tasks' );
+    const callable = this.functions.httpsCallable( 'librarian' );
     return await callable( { mode: "DeleteFilesInTask", FileName: fileName, TaskId: taskId, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time, TaskFileDocumentName:  taskFileDocumentName} ).toPromise();
   }
 
@@ -75,18 +78,17 @@ export class FileUploadService {
   async deleteFile(file: FileData) {
     this.deleteFileStorage(file.FileName, file.BasePath);
     this.deleteFileFromDB(file.FileName, file.TaskId, file.TaskFileDocumentName).then((data) => {
-      this.readFiles();
+      this.readFiles(this.backendService.getOrganizationDomain(), file.TaskId);
     });
   }
 
-  readFiles() {
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const selectedTaskId = this.backendService.selectedTaskId;
-
-    const callable = this.functions.httpsCallable("tasks");
-    this.filesData = callable({ mode: "GetFilesInTask", OrgDomain: orgDomain, Id: selectedTaskId }).pipe(
-      map(actions => {
-        return actions.data as FileData[];
-    }));
+  readFiles(orgDomain: string, id: string) {
+    if (id != "Logo") {
+      const callable = this.functions.httpsCallable("librarian");
+      this.filesData = callable({ mode: "GetFilesInTask", OrgDomain: orgDomain, Id: id }).pipe(
+        map(actions => {
+          return actions.data as FileData[];
+      }));
+    }
   }
 }

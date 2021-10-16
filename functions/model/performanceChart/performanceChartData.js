@@ -7,52 +7,47 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { functions, db } = require("../application/lib");
+const { getAllTasks } = require("../tasks/lib");
 
 exports.performanceChartData = function(request, response) {
     const data = request.body.data;
     const orgDomain = data.OrganizationDomain;
-    const sprintNumber = data.SprintNumber;
+    const sprintRange = data.SprintNumberRange;
     const teamId = data.TeamId;
-    const assignee = data.Assignee;
+    let assignee = data.Assignee;
     let status = 200;
 
-    let storyPoint = 0;
-    let promise1;
+    let responseData = [];
 
-    if (assignee) {
-        promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).where("Assignee", "==", assignee).get().then((docs) => {
-            docs.forEach((doc) => {
-                const data = doc.data();
-                if (data.Status == "Completed") {
-                    storyPoint += data.StoryPointNumber;
-                }
-            });
-        }).catch((error) => {
-            status = 500;
-            console.log(error);
-        });
-    } else {
-        promise1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", "==", sprintNumber).where("TeamId", "==", teamId).get().then((docs) => {
-            docs.forEach((doc) => {
-                const data = doc.data();
-                if (data.Status == "Completed") {
-                    storyPoint += data.StoryPointNumber;
-                }
-            });
-        }).catch((error) => {
-            status = 500;
-            console.log(error);
-        });
+    if (assignee == "Team") {
+        assignee = "";
     }
-
-    return Promise.resolve(promise1).then(() => {
-        result = {data: {StoryPoint: storyPoint}};
-        console.log("Sent Performance Chart Data Successfully");
-        return response.status(status).send(result);
-    })
-    .catch((error) => {
-        result = { data: error };
-        return response.status(status).send(result);
+    const performanceChartDataPromise = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
+        let i, storyPoint, data;
+        for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
+            storyPoint = 0;
+            snapshot.docs.forEach((taskDoc) => {
+                data = taskDoc.data();
+                if (data.SprintNumber == i) {
+                    storyPoint += data.StoryPointNumber;
+                }
+            });
+            responseData.push(["S" + i, storyPoint]);
+        }
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
     });
+
+    const promises = [performanceChartDataPromise];
+    Promise.all(promises).then(() => {
+            result = { data: { status: "OK", data: responseData } };
+            console.log("Got Performance Chart Data Sucessfully");
+            return response.status(status).send(result);
+        })
+        .catch((error) => {
+            console.error("Error Getting Performance Chart Data", error);
+            result = { data: { status: "Error", data: undefined } };
+            return response.status(status).send(result);
+        });
 };

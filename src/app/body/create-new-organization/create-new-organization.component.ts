@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
+import { FileUpload } from 'src/app/Interface/FileInterface';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
   selector: 'app-create-new-organization',
@@ -20,31 +23,22 @@ export class CreateNewOrganizationComponent implements OnInit {
   logoUploaded: boolean = false
   orgAdmin: string
   orgAdminUid: string
-  orgLogo: File = null;
   orgName: string
   orgDomain: string
   orgEmail: string
   orgDescription: string = ""
   orgLogoURL: string
+  orgLogo: FileUpload
+  orgId:string
+  basePath: string
+  fileName: string
+  percentage: number = 0;
 
-  constructor(public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router) { }
+  constructor(public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService) { }
   ngOnInit(): void {
     this.orgAdmin = this.authService.getUserEmail();
     this.orgAdminUid = this.authService.getLoggedInUser()
    }
-
-  handleFileInput(files: FileList) {
-    this.orgLogo = files.item(0);
-    const filePath = `OrganizationLogos/${this.orgLogo.name}`;
-    const task = this.fireStorage.upload(filePath, this.orgLogo);
-  }
-
-  uploadLogo() {
-    this.fireStorage.ref(`OrganizationLogos/${this.orgLogo.name}`).getDownloadURL().subscribe(data => {
-      this.orgLogoURL = data
-      this.logoUploaded = true
-    });
-  }
 
   async submit() {
     let data = [
@@ -55,7 +49,7 @@ export class CreateNewOrganizationComponent implements OnInit {
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
-    if (condition) {
+    if (condition && this.logoUploaded) {
       console.log("Inputs are valid");
       this.createNewOrganization();
     }
@@ -67,15 +61,28 @@ export class CreateNewOrganizationComponent implements OnInit {
   async createNewOrganization() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('organization');
-    try {
-      const result = await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise();
+    await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise().then(result => {
+      this.orgId = result[2];
+      this.uploadLogo();
       this.enableLoader = false;
       this.router.navigate(["CreateNewTeam"]);
-      // this.stepAndOrgDomain.emit({ step: 2, organizationDomain: this.orgDomain })
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-    }
+    });
+  }
+
+  uploadedLogo(data: { completed: boolean, logoFile: FileUpload }) {
+    this.logoUploaded = data.completed;
+    this.orgLogo = data.logoFile;
+    this.orgLogoURL = data.logoFile.url;
+    this.fileName = data.logoFile.file.name;
+  }
+
+  delete() {
+    this.logoUploaded = false;
+  }
+
+  uploadLogo () {
+    this.basePath = '/Organizations/'+this.orgId+'/Logo';
+    this.uploadService.pushFileToTaskStorage(this.orgLogo, this.basePath, "Logo");
   }
 
   close() {

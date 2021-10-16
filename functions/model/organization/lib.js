@@ -3,8 +3,6 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-// const admin = require("firebase-admin");
-// const db = admin.firestore();
 
 const { db } = require("../application/lib");
 
@@ -20,6 +18,7 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
         OrganizationDescription: orgDescription,
         OrganizationLogoURL: orgLogoURL,
         TeamsId: [],
+        LogoCounter: 0,
     });
     return Promise.resolve(orgData);
 };

@@ -47,16 +47,6 @@ exports.getTask = function(taskId, orgDomain) {
     });
     return Promise.resolve(getTaskDetails);
 };
-exports.setFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
-    const setFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).set(inputJson);
-    return Promise.resolve(setFileToTaskPromise);
-};
-
-exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
-    const updateFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).update(inputJson);
-    return Promise.resolve(updateFileToTaskPromise);
-};
-
 exports.getFileInTask = function(orgDomain, taskId) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files");
     query = query.where("FileStatus", "==", "OK");
@@ -65,11 +55,17 @@ exports.getFileInTask = function(orgDomain, taskId) {
 
     return Promise.resolve(getFilesPromise);
 };
-
-exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filterAssignee = "", filterPriority = "", filterDifficulty = "", filterStatus = "", filterProject = "") {
+exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="", sprintRange1="", sprintRange2="") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
-
-    query = query.where("SprintNumber", "==", sprintNumber);
+    if (sprintNumber != "") {
+        query = query.where("SprintNumber", "==", sprintNumber);
+    }
+    if (sprintRange1 != "") {
+        query = query.where("SprintNumber", ">=", sprintRange1);
+    }
+    if (sprintRange2 != "") {
+        query = query.where("SprintNumber", "<=", sprintRange2);
+    }
 
     if (filterAssignee != "") {
         query = query.where("Assignee", "==", filterAssignee);

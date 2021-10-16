@@ -11,6 +11,22 @@
     color: red;
 }
 
+#files {
+    font-size: 60px;
+}
+
+#delete {
+    cursor: pointer;
+}
+
+#uploadButtonContainer{
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+}
+
+
 #button {
     background-color: var(--secondary-color);
     border: var(--primary-border);
