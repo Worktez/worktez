@@ -19,6 +19,7 @@ const { patch } = require("./model/patch/patch");
 const { tasksEvaluation } = require("./model/tasksEvaluation/tasksEvaluation");
 const { performanceChart } = require("./model/performanceChart/performanceChart");
 const { activity } = require("./model/activity/activity");
+const { librarian } = require("./model/librarian/librarian");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -29,3 +30,4 @@ exports.patch = patch;
 exports.tasksEvaluation = tasksEvaluation;
 exports.performanceChart = performanceChart;
 exports.activity = activity;
+exports.librarian = librarian;
