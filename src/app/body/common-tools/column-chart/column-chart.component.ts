@@ -30,7 +30,7 @@ export class ColumnChartComponent implements OnInit {
         italic: false
       }
     },
-    colors: ['#10be65', '#DC3226', '#FBAA1A'], 
+    colors: ['#10BE65'], 
     is3D: true,
     backgroundColor: "none",
     titleTextStyle: {
