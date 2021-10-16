@@ -1,4 +1,4 @@
-<ng-container *ngIf="applicationSettingsService.sprintData|async">
+<ng-container *ngIf="applicationSettingsService.sprintDataObservable|async">
     <div class="card">
         <div class="card-header">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -93,9 +93,9 @@
 
                 <div class="col-md-6">
                     <div class="row py-2">
-                        <dv class="col-md-3">
+                        <div class="col-md-3">
                             <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Total Tasks: </h6>
-                        </dv>
+                        </div>
                         <div class="col-md-9">
                             <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalNumberOfTask}}</h6>
                         </div>

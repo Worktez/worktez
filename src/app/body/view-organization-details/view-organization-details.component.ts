@@ -26,7 +26,11 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
-    this.getOrganizationDetails();
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        this.getOrganizationDetails();
+      });
+    });
   }
 
   getOrganizationDetails() {
@@ -61,7 +65,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.addMemberEnabled = true;
   }
 
-  addedMember(data: { completed: boolean, memberEmail: string}) {
+  addedMember(data: { completed: boolean, memberEmail: string }) {
     this.getOrganizationDetails();
     this.addMemberEnabled = false;
   }
