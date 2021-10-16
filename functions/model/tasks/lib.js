@@ -7,7 +7,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter=0) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -48,7 +48,7 @@ exports.getTask = function(taskId, orgDomain) {
     return Promise.resolve(getTaskDetails);
 };
 
-exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="", sprintRange1="", sprintRange2="") {
+exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filterAssignee = "", filterPriority = "", filterDifficulty = "", filterStatus = "", filterProject = "", sprintRange1 = "", sprintRange2 = "") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
     if (sprintNumber != "") {
         query = query.where("SprintNumber", "==", sprintNumber);
@@ -72,12 +72,11 @@ exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssi
         query = query.where("Status", "==", filterStatus);
     }
     if (filterProject != "") {
-        query = query.where("TeamId", "==", filterProject);
+        query = query.where("Project", "==", filterProject);
     }
     if (teamId != "") {
         query = query.where("TeamId", "==", teamId);
     }
-
     const getAllTasksPromise = query.get();
 
     return Promise.resolve(getAllTasksPromise);
