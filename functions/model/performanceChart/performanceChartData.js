@@ -17,13 +17,13 @@ exports.performanceChartData = function(request, response) {
     let assignee = data.Assignee;
     let status = 200;
 
-    let responseData = [];
+    const responseData = [];
 
     if (assignee == "Team") {
         assignee = "";
     }
     const performanceChartDataPromise = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
-        let i, storyPoint, data;
+        let i; let storyPoint; let data;
         for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
             storyPoint = 0;
             snapshot.docs.forEach((taskDoc) => {
