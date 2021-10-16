@@ -12,10 +12,10 @@
             </div>
         </div>
     </div>
-    <div class="card-body" *ngIf="!showLoader">
-        <app-column-chart [data]="data" [columnNames]="columnNames"></app-column-chart>
+    <div class="card-body" *ngIf="!showLoader && (data|async).length != 0">
+        <app-column-chart [data]="data | async" [columnNames]="columnNames"></app-column-chart>
     </div>
-    <div class="card-body" *ngIf="showLoader">
+    <div class="card-body" *ngIf="showLoader || (data|async).length == 0">
         <app-loader></app-loader>
     </div>
 </div>

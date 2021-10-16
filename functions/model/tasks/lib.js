@@ -48,11 +48,16 @@ exports.getTask = function(taskId, orgDomain) {
     return Promise.resolve(getTaskDetails);
 };
 
-exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="") {
+exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="", sprintRange1="", sprintRange2="") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
-
     if (sprintNumber != "") {
         query = query.where("SprintNumber", "==", sprintNumber);
+    }
+    if (sprintRange1 != "") {
+        query = query.where("SprintNumber", ">=", sprintRange1);
+    }
+    if (sprintRange2 != "") {
+        query = query.where("SprintNumber", "<=", sprintRange2);
     }
     if (filterAssignee != "") {
         query = query.where("Assignee", "==", filterAssignee);
