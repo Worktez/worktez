@@ -55,7 +55,6 @@ export class PerformanceChartComponent implements OnInit {
   async readData(sprintNumber: number) {
     var storyPoint: number = 0;
     let orgDomain = this.backendService.getOrganizationDomain();
-    console.log(orgDomain);
     const callable = this.functions.httpsCallable('performanceChart');
     try {
       const result = await callable({ mode: "getUserPerformanceChartData", OrganizationDomain: orgDomain, SprintNumber: sprintNumber, Assignee: this.userEmail}).toPromise();
