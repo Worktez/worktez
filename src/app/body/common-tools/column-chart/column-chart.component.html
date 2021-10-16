@@ -1,8 +1,10 @@
-<google-chart id="chart"
+<ng-container *ngIf="data.length">
+   <google-chart id="chart"
    [title]="title"
    [type]="type"
    [data]="data"
    [columns]="columnNames"
    [options]="options"
    [dynamicResize]="dynamicResizable">
-</google-chart>
+   </google-chart>
+</ng-container>

@@ -11,31 +11,25 @@ exports.getMyOrgList = function(request, response) {
     const uid = request.body.data.Uid;
 
     let status = 200;
-    let resultData = [];
+    const resultData = [];
+    let result;
 
-    const promise1 = getMyOrgCollection(uid).then((snapshot) => {
+    getMyOrgCollection(uid).then((snapshot) => {
         if (snapshot == undefined) {
             result = { data: {status: "Not Found", data: "No Organization Listed"} };
         } else {
-            snapshot.forEach(element => {
-                let data = element.data();
-                data['OrgDomain'] = element.id;
+            snapshot.forEach((element) => {
+                const data = element.data();
+                data["OrgDomain"] = element.id;
                 resultData.push(data);
             });
             result = { data: {status: "Ok", data: resultData} };
         }
+        return response.status(status).send(result);
     }).catch((error) => {
         status = 500;
         console.log("Error: ", error);
+        result = { data: {status: "Error", data: "No Organization Listed"}};
+        return response.status(status).send(result);
     });
-
-    const Promises = [promise1];
-    return Promise.all(Promises).then(() => {
-            return response.status(status).send(result);
-        })
-        .catch((error) => {
-            result = { data: error };
-            console.error("Error in Getting MyOrganizations", error);
-            return response.status(status).send(result);
-        });
 };

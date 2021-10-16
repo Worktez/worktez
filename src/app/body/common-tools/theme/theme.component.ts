@@ -41,8 +41,6 @@ export class ThemeComponent implements OnInit {
     try {
       const result = await callable({ mode: "update-theme", Uid: this.uid, AppTheme: appTheme }).toPromise();
       this.showloader = false;
-      console.log("Successfully created the task");
-      console.log(result);
     } catch (error) {
     }
   }

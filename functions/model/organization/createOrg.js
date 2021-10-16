@@ -62,14 +62,14 @@ exports.createOrg = functions.https.onRequest((request, response) => {
 
     const promise3 = getMyOrgCollectionDoc(orgAdminUid, orgDomain).then((orgDoc) => {
         if (orgDoc == undefined) {
-            setMyOrgCollection(orgAdminUid, orgDomain, appKey, organizationName);
+            setMyOrgCollection(orgAdminUid, orgDomain, appKey);
         }
     }).catch((error) => {
         status = 500;
         console.log("Error:", error);
     });
 
-    const promise4 = getUser(orgAdminUid).then((userDoc) => {
+    const promise4 = getUser(orgAdminUid, "").then((userDoc) => {
         const selectedAppKey = appKey;
         const userUpdateJson = {
             SelectedOrgAppKey: selectedAppKey,
@@ -83,7 +83,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
     let result;
     const promises = [promise1, promise2, promise3, promise4];
     return Promise.all(promises).then(() => {
-            const arr = ["Created Organization Successfully", appKey];
+            const arr = ["Created Organization Successfully", appKey, orgId];
             result = { data: arr };
             console.log("Created Organization Successfully");
             return response.status(status).send(result);
