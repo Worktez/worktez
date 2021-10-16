@@ -7,19 +7,22 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getPerformanceChartData } = require("../tasks/lib");
+const { getAllTasks } = require("../tasks/lib");
 
 exports.performanceChartData = function(request, response) {
     const data = request.body.data;
     const orgDomain = data.OrganizationDomain;
     const sprintRange = data.SprintNumberRange;
     const teamId = data.TeamId;
-    const assignee = data.Assignee;
+    let assignee = data.Assignee;
     let status = 200;
 
     let responseData = [];
 
-    const performanceChartDataPromise = getPerformanceChartData(orgDomain, sprintRange, teamId, assignee).then((snapshot) => {
+    if (assignee == "Team") {
+        assignee = "";
+    }
+    const performanceChartDataPromise = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
         let i, storyPoint, data;
         for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
             storyPoint = 0;

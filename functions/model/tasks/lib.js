@@ -48,11 +48,16 @@ exports.getTask = function(taskId, orgDomain) {
     return Promise.resolve(getTaskDetails);
 };
 
-exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="") {
+exports.getAllTasks = function(orgDomain, teamId="", sprintNumber="", filterAssignee="", filterPriority="", filterDifficulty="", filterStatus="", filterProject="", sprintRange1="", sprintRange2="") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
-
     if (sprintNumber != "") {
         query = query.where("SprintNumber", "==", sprintNumber);
+    }
+    if (sprintRange1 != "") {
+        query = query.where("SprintNumber", ">=", sprintRange1);
+    }
+    if (sprintRange2 != "") {
+        query = query.where("SprintNumber", "<=", sprintRange2);
     }
     if (filterAssignee != "") {
         query = query.where("Assignee", "==", filterAssignee);
@@ -93,17 +98,3 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
     });
     return Promise.resolve(setLinkDetails);
 };
-
-exports.getPerformanceChartData = function(orgDomain, sprintRange, teamId, assignee) {
-    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("SprintNumber", ">=", sprintRange["SprintRange1"]).where("SprintNumber", "<=", sprintRange["SprintRange2"]).where("Status", "==", "Completed");
-
-    if (assignee == "Team" && teamId) {
-        query = query.where("TeamId", "==", teamId);
-    } else {
-        query = query.where("Assignee", "==", assignee);
-    }
-
-    const getPerformanceChartDataPromise = query.get();
-
-    return Promise.resolve(getPerformanceChartDataPromise);
-}
