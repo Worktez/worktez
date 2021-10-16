@@ -8,9 +8,6 @@ exports.getSprintDetails = function(request, response) {
   const sprintNumber = request.body.data.SprintNumber;
   const teamName = request.body.data.TeamName;
   const fullSprintName = createSprintName(sprintNumber);
-  console.log("check1", orgDomain);
-  console.log("check2", fullSprintName);
-  console.log("check3", teamName);
   let result;
   const status = 200;
 
@@ -20,7 +17,6 @@ exports.getSprintDetails = function(request, response) {
 
   return Promise.resolve(p1).then(() => {
     result = {data: {status: "Ok", sprintData: result}};
-    console.log(result);
     return response.status(status).send(result);
   }).catch((error) => {
     console.error(error);
