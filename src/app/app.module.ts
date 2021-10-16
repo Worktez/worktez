@@ -151,7 +151,10 @@ import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-g
     UploadFilesComponent,
     ShowFilesComponent,
     LinkComponent,
-    SprintEvaluationGraphComponent
+    SprintEvaluationGraphComponent,
+    SprintEvaluationGraphComponent,
+    UploadFilesComponent,
+    LinkComponent
   ],
   imports: [
     BrowserModule,
