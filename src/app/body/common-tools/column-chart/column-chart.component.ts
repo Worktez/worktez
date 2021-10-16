@@ -8,11 +8,11 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 })
 export class ColumnChartComponent implements OnInit {
 
-  @Input('title') title:string;
   @Input('data') data: [];
   @Input('columnNames') columnNames: [];
   constructor(public themeService: ThemeService) { }
 
+  title = 'Team Performance Chart';
   type = 'ColumnChart';
    options = {
     width: "100%",

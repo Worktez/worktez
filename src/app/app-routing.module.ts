@@ -45,7 +45,6 @@ const routes: Routes = [
   { path: 'Patch5', component: Patch5Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'CreateTeam', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},

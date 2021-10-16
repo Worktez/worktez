@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="card-body" *ngIf="!showLoader">
-        <app-column-chart [data]="data" [columnNames]="columnNames" [title]="title"></app-column-chart>
+        <app-column-chart [data]="data" [columnNames]="columnNames"></app-column-chart>
     </div>
     <div class="card-body" *ngIf="showLoader">
         <app-loader></app-loader>

@@ -51,6 +51,7 @@ exports.deleteTask = function(request, response) {
                     } else {
                         totalUnCompletedTask = totalUnCompletedTask - 1;
                     }
+
                     const updatesprintInputJson = {
                         TotalCompletedTask: totalCompletedTask,
                         TotalNumberOfTask: totalNumberOfTask,

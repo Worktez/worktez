@@ -8,12 +8,9 @@ export interface Sprint {
     StartDate: string;
     EndDate: string;
     Status: string;
-    StartStoryPoint: number,
-    MidStoryPoint: number,
-    EndStoryPoint: number,
 }
 
-export interface SprintDataId extends Sprint { id: string; }
+export interface SprintDataId extends Sprint{id: string;}
 
 export interface Team {
     TeamName: string;
@@ -30,4 +27,4 @@ export interface Team {
     CurrentSprintId: number;
 }
 
-export interface TeamDataId extends Team { id: string; }
+export interface TeamDataId extends Team {id: string;}

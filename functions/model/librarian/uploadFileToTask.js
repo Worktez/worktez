@@ -1,9 +1,10 @@
-/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-unused-vars */
-const { getTask, setFileToTask, updateTask } = require("./lib");
+const { setFileToTask} = require("./lib");
+const { getTask, updateTask } = require("../tasks/lib");
 const { getOrgUseAppKey } = require("../organization/lib");
 const { addActivity } = require("../activity/addActivity");
 

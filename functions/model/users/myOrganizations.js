@@ -16,14 +16,13 @@ exports.myOrganizations = function(uid, orgDomain, orgAppKey, teamId) {
             setMyOrgCollection(uid, orgDomain, orgAppKey, teamIdArray, teamId);
             result = { data: "MyOrganizations Created Successfully" };
         } else {
-            console.log("orgTeam: ", orgDoc.Teams);
             const teams= orgDoc.Teams;
             teams.push(teamId);
             let defaultTeam;
             let updateJson = {
                 Teams: teams,
             };
-            if (teams.length==1) {
+            if (teams.length == 1) {
                 defaultTeam = teamId;
                 updateJson = {
                     Teams: teams,
