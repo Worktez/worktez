@@ -72,11 +72,11 @@ exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filter
         query = query.where("Status", "==", filterStatus);
     }
     if (filterProject != "") {
-        query = query.where("TeamId", "==", filterProject);
-    } else {
+        query = query.where("Project", "==", filterProject);
+    }
+    if (teamId != "") {
         query = query.where("TeamId", "==", teamId);
     }
-
     const getAllTasksPromise = query.get();
 
     return Promise.resolve(getAllTasksPromise);
