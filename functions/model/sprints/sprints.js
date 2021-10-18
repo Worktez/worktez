@@ -8,6 +8,7 @@
 const { functions, cors } = require("../application/lib");
 const { createNewSprint } = require("./createNewSprint");
 const { updateSprintStatus } = require("./updateSprintStatus");
+const { getSprintDetails } = require("./getSprintDetails");
 
 exports.sprints = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -16,6 +17,8 @@ exports.sprints = functions.https.onRequest((request, response) => {
             return createNewSprint(request, response);
         } else if (mode == "update") {
             return updateSprintStatus(request, response);
+        } else if (mode == "getSprintDetails") {
+            return getSprintDetails(request, response);
         }
     });
 });
