@@ -21,8 +21,8 @@ exports.editTask = function(request, response) {
     const difficulty = request.body.data.Difficulty;
     const assignee = request.body.data.Assignee;
     const estimatedTime = request.body.data.EstimatedTime;
-    const storyPointNumber = request.body.data.StoryPointNumber;
-    const oldStoryPointNumber = request.body.data.OldStoryPointNumber;
+    const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
+    const oldStoryPointNumber = parseInt(request.body.data.OldStoryPointNumber);
     const editedSprintNumber = request.body.data.SprintNumber;
     const previousId = request.body.data.PreviousId;
     const creationDate = request.body.data.CreationDate;
@@ -60,10 +60,39 @@ exports.editTask = function(request, response) {
                         totalUnCompletedTask -= 1;
                         totalNumberOfTask -= 1;
 
-                        const updatePrevSprintJson = {
-                            TotalNumberOfTask: totalNumberOfTask,
-                            TotalUnCompletedTask: totalUnCompletedTask,
-                        };
+                        // const updatePrevSprintJson = {
+                        //     TotalNumberOfTask: totalNumberOfTask,
+                        //     TotalUnCompletedTask: totalUnCompletedTask,
+                        // };
+
+                        let updatePrevSprintJson;
+                        if (parseInt(prevSprint.SprintNumber) > 0) {
+                            if (prevSprint.Status == "Not Started" || prevSprint.Status == "Ready to Start") {
+                                const startStoryPointNumber = parseInt(prevSprint.StartStoryPoint) - oldStoryPointNumber;
+                                updatePrevSprintJson = {
+                                    TotalNumberOfTask: totalNumberOfTask,
+                                    TotalUnCompletedTask: totalUnCompletedTask,
+                                    StartStoryPoint: startStoryPointNumber,
+                                };
+                            } else if (prevSprint.Status == "Under Progress") {
+                                const midStoryPointNumber = parseInt(prevSprint.MidStoryPoint) - oldStoryPointNumber;
+                                updatePrevSprintJson = {
+                                    TotalNumberOfTask: totalNumberOfTask,
+                                    TotalUnCompletedTask: totalUnCompletedTask,
+                                    MidStoryPoint: midStoryPointNumber,
+                                };
+                            } else {
+                                updatePrevSprintJson = {
+                                    TotalNumberOfTask: totalNumberOfTask,
+                                    TotalUnCompletedTask: totalUnCompletedTask,
+                                };
+                            }
+                        } else {
+                            updatePrevSprintJson = {
+                                TotalNumberOfTask: totalNumberOfTask,
+                                TotalUnCompletedTask: totalUnCompletedTask,
+                            };
+                        }
 
                         updateSprint(updatePrevSprintJson, orgDomain, project, previousSprintName);
                     }
@@ -132,8 +161,8 @@ exports.editTask = function(request, response) {
             const updateSprintPromise = getTask(taskId, orgDomain).then((taskDoc) => {
                 const teamName = taskDoc.Project;
                 let updateNewSprintJson;
-                getSprint(orgDomain, teamName, previousSprintName).then((sprintDoc) => {
-                    if (sprintDoc.Status == "Not Started") {
+                const storyPointSameSprintPromise = getSprint(orgDomain, teamName, previousSprintName).then((sprintDoc) => {
+                    if (sprintDoc.Status == "Not Started" || sprintDoc.Status == "Ready to Start") {
                         const startStoryPointNumber = parseInt(sprintDoc.StartStoryPoint) - oldStoryPointNumber + storyPointNumber;
                         updateNewSprintJson = {
                             StartStoryPoint: startStoryPointNumber,
@@ -146,6 +175,7 @@ exports.editTask = function(request, response) {
                     }
                     updateSprint(updateNewSprintJson, orgDomain, teamName, previousSprintName);
                 });
+                return Promise.resolve(storyPointSameSprintPromise);
             });
             promises.push(updateSprintPromise);
         }
