@@ -1,21 +1,21 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { User } from 'src/app/Interface/UserInterface';
-import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation/validation.service';
-import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'app-create-new-sprint',
@@ -26,15 +26,16 @@ export class CreateNewSprintComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input('newSprintId') newSprintId: string;
+  @Output() sprintCreated = new EventEmitter<{ completed: boolean }>();
 
   componentName: string = "CREATE-NEW-SPRINT";
   startDate: string
   endDate: string
-  status: string
+  status: string = null
   enableLoader: boolean = false;
   user: User;
   userTeam: string;
-
+  taskNo: number;
   selectedTeamId: string;
   teamCurrentSprintNumber: number;
 
@@ -53,13 +54,10 @@ export class CreateNewSprintComponent implements OnInit {
   showContent: boolean;
   todayDate: string;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public toolsService: ToolsService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public validationService: ValidationService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public popupHandlerService: PopupHandlerService, public toolsService:ToolsService) { }
 
   ngOnInit(): void {
-    this.navbarHandler.resetNavbar();
-    this.navbarHandler.addToNavbar(this.componentName);
-    this.todayDate = this.toolsService.getFormattedDate();
-
+    this.todayDate = this.toolsService.date();
     this.authService.afauth.user.subscribe(data => {
       this.userTeam = this.authService.getTeamId();
       this.authService.userAppSettingObservable.subscribe(data => {
@@ -89,7 +87,11 @@ export class CreateNewSprintComponent implements OnInit {
     this.showContent = false;
     this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.nextSprintId).subscribe(sprints => {
       this.sprintData = sprints[0];
-
+      if (this.sprintData != undefined) {
+        this.taskNo = this.sprintData.TotalNumberOfTask;
+      } else{
+        this.taskNo = 0;
+      }
       this.showContent = true;
     });
   }
@@ -116,18 +118,16 @@ export class CreateNewSprintComponent implements OnInit {
 
     try {
       const result = await callable({ mode: "create", AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
-      this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
     }
-
+    this.close();
   }
 
-  backToDashboard() {
-    this.location.back();
+  close() {
+    jQuery('#createNewSprint').modal('hide');
+    jQuery('#form').trigger("reset");
+    this.sprintCreated.emit({ completed: true });
   }
-
-
-
 }

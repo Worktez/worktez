@@ -36,8 +36,8 @@
                             <label>Create</label>
                         </a>
                         <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                            <a class="dropdown-item" (click)="startNewSession()">Create New Task</a>
-                            <a class="dropdown-item" (click)="startNewSprint()">Start New Sprint</a>
+                            <a class="dropdown-item" (click)="createNewTask()"data-toggle="modal" data-target="#createNewTask">Create New Task</a>
+                            <a class="dropdown-item" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</a>
                         </div>
                     </li>
 

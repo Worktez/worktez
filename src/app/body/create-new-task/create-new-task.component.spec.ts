@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateNewSessionComponent } from './create-new-session.component';
+import { CreateNewTaskComponent } from './create-new-task.component';
 
-describe('CreateNewSessionComponent', () => {
-  let component: CreateNewSessionComponent;
-  let fixture: ComponentFixture<CreateNewSessionComponent>;
+describe('CreateNewTaskComponent', () => {
+  let component: CreateNewTaskComponent;
+  let fixture: ComponentFixture<CreateNewTaskComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateNewSessionComponent ]
+      declarations: [ CreateNewTaskComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateNewSessionComponent);
+    fixture = TestBed.createComponent(CreateNewTaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
