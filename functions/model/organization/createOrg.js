@@ -83,7 +83,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
     let result;
     const promises = [promise1, promise2, promise3, promise4];
     return Promise.all(promises).then(() => {
-            const arr = ["Created Organization Successfully", appKey];
+            const arr = ["Created Organization Successfully", appKey, orgId];
             result = { data: arr };
             console.log("Created Organization Successfully");
             return response.status(status).send(result);

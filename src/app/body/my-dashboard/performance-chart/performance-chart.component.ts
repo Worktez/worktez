@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore} from '@angular/fire/firestore';
-import { Tasks} from 'src/app/Interface/TasksInterface';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
+import { AuthService } from 'src/app/services/auth.service';
+import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-performance-chart',
@@ -14,13 +17,15 @@ export class PerformanceChartComponent implements OnInit {
   @Input("userEmail") userEmail: string
   @Input("currentSprint") currentSprintNumber: number
 
-  componentName: string="PERFORMANCE-CHART"
+  componentName: string = "PERFORMANCE-CHART"
   showLoader: boolean = true
   sprintRange1: number
   sprintRange2: number
   data = [];
-  
-  constructor(public db: AngularFirestore, public errorHandlerService: ErrorHandlerService,private backendService: BackendService) { }
+  sprintNumber: number;
+  tasksData: Observable<Tasks[]>
+
+  constructor(private functions: AngularFireFunctions, private authService: AuthService, public db: AngularFirestore, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
     this.sprintRange2 = this.currentSprintNumber
@@ -49,21 +54,15 @@ export class PerformanceChartComponent implements OnInit {
   }
   async readData(sprintNumber: number) {
     var storyPoint: number = 0;
-    let orgDomain= this.backendService.getOrganizationDomain();
+    let orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('performanceChart');
     try {
-      await this.db.collection("Organizations").doc(orgDomain).collection("Tasks").ref.where("SprintNumber", "==", sprintNumber).where("Assignee", "==", this.userEmail)
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach((doc) => {
-            const data = doc.data() as Tasks;
-            const sp = data.StoryPointNumber;
-            storyPoint = storyPoint + sp;
-          });
-        })
-    } catch (error) { 
+      const result = await callable({ mode: "getUserPerformanceChartData", OrganizationDomain: orgDomain, SprintNumber: sprintNumber, Assignee: this.userEmail}).toPromise();
+      storyPoint = result.StoryPoint;
+    } catch(error) {
       console.log(error);
     }
-    return storyPoint
+    return storyPoint;
   }
   onGetRange(rangeData: { sprintRange1: number, sprintRange2: number }) {
     this.showLoader = true

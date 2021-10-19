@@ -85,9 +85,9 @@ export class CreateNewSprintComponent implements OnInit {
 
   readSprintData() {
     this.showContent = false;
-    this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.nextSprintId).subscribe(sprints => {
-      this.sprintData = sprints[0];
-      if (this.sprintData != undefined) {
+    this.applicationSettingsService.getSprintsDetails(this.nextSprintId).subscribe(sprints => {
+      if (sprints != undefined) {
+        this.sprintData = sprints[0];
         this.taskNo = this.sprintData.TotalNumberOfTask;
       } else{
         this.taskNo = 0;

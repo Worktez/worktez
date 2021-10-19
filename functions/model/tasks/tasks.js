@@ -14,9 +14,6 @@ const { editTask } = require("./editTask");
 const { logWork } = require("./logwork");
 const { addComment } = require("./addComment");
 const { getTaskDetails } = require("./getTaskDetails");
-const { uploadFileToTask } = require("./uploadFileToTask");
-const { getFilesInTask } = require("./getFilesInTask");
-const { deleteFilesInTask } = require("./deleteFilesInTask");
 const { getTasks } = require("./getTasks");
 const { getLinkDetails } = require("./getLinkDetails");
 const { setLinkDetails } = require("./setLinkDetails");
@@ -41,12 +38,6 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return getLinkDetails(request, response);
         } else if (mode == "setLink") {
             return setLinkDetails(request, response);
-        } else if (mode == "UploadFileToTask") {
-            return uploadFileToTask(request, response);
-        } else if (mode == "GetFilesInTask") {
-            return getFilesInTask(request, response);
-        } else if (mode == "DeleteFilesInTask") {
-            return deleteFilesInTask(request, response);
         } else if (mode == "getAllTasks") {
             return getTasks(request, response);
         }
