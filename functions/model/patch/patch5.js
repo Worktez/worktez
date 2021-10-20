@@ -8,8 +8,6 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-// const admin = require("firebase-admin");
-// const { updatePatchData } = require("./lib");
 const { getOrg } = require("../organization/lib");
 const { getAllUsers, updateUser } = require("../users/lib");
 const { generateBase64String } = require("../application/lib");
@@ -17,7 +15,8 @@ const { generateBase64String } = require("../application/lib");
 exports.patch5 = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
     const key = request.body.data.Key;
-    let value = request.body.data.Value;
+    const value = request.body.data.Value;
+    let userValue;
 
     let status = 200;
 
@@ -26,15 +25,14 @@ exports.patch5 = function(request, response) {
             if (users.docs.length > 0) {
                 users.forEach((userDoc) => {
                     userData = userDoc.data();
-
                     const userUpdateInputJson = {};
 
                     if (value == "Random") {
                         const date = new Date();
-                        value = generateBase64String(date.getMilliseconds() + "Random");
+                        userValue = generateBase64String(Math.random()+date.getMilliseconds() + "Random");
                     }
 
-                    userUpdateInputJson[key] = value;
+                    userUpdateInputJson[key] = userValue;
                     updateUser(userUpdateInputJson, userData.uid);
                 });
             }

@@ -103,9 +103,9 @@ export class BoardComponent implements OnInit {
       child.highlightSelectedTeam(this.selectedTeamId);
     })
     if (this.teamCurrentSprintNumber != 0) {
-      this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
-        if (sprints.length != 0) {
-          this.sprintData = sprints[0];
+      this.applicationSettingsService.getSprintsDetails(this.teamCurrentSprintNumber).subscribe(sprints => {
+        if (sprints) {
+          this.sprintData = sprints;
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));

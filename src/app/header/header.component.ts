@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
+import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   uid: string
 
-  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
+  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe((action) => {
@@ -35,11 +36,11 @@ export class HeaderComponent implements OnInit {
   }
 
   startNewSprint() {
-    this.router.navigate(['/StartNewSprint']);
+    this.popupHandlerService.createNewSprintEnabled= true;
   }
 
-  startNewSession() {
-    this.router.navigate(['/CreateNewSession']);
+  createNewTask() {
+    this.popupHandlerService.createNewTaskEnabled= true;
   }
 
   Board(){

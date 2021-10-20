@@ -26,6 +26,7 @@ body {
     --button-hover-bg: #fff;
     --progress-bg: #5C60EC;
     --progress-left-bg: rgba(70, 70, 70, 0.23);
+    --card-bg: #FFFFFF;
     --input-field: #F6F7F9;
     --heading-text: #272845;
     --danger-color: #c62828;
@@ -53,7 +54,8 @@ body {
     --button-hover-bg: #20282E;
     --progress-bg: #5C60EC;
     --progress-left-bg: rgba(70, 70, 70, 1);
-    --input-field: #F6F7F9;
+    --card-bg: #26272E;
+    --input-field: #1E1F28;
     --heading-text: #F6F7F9;
     --danger-color: #c62828;
     --button-bg: #4286f43f;
