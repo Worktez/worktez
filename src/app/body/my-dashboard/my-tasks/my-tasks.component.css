@@ -7,5 +7,5 @@
 .card {
     background-color: var(--secondary-bg);
     color: var(--text);
-    box-shadow: var(--box-shadow-bottom);
+    border: none;
 }

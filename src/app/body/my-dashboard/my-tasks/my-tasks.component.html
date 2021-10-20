@@ -6,7 +6,7 @@
     </div>
     <div class="card-body pt-0" *ngIf="tasksData | async">
         <ng-container *ngIf="tasksData|async">
-            <app-task-cards [tasks]="tasksData"></app-task-cards>
+            <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards>
         </ng-container>
     </div>
     <div class="card-body" *ngIf="!(tasksData | async)">

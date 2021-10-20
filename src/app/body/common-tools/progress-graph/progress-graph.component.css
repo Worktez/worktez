@@ -1,3 +1,7 @@
-.progress-bar {
-    background-color: #5c60ec;
+#completed {
+    background-color: var(--progress-bg);
+}
+
+#left {
+    background-color: var(--progress-left-bg);
 }

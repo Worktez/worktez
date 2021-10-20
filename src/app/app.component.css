@@ -24,7 +24,8 @@ body {
     --box-shadow-bottom: 0px 0px 3px 0px #0C0F7112;
     --button-bg: none;
     --button-hover-bg: #fff;
-    --progress-bg: #E9ECEF;
+    --progress-bg: #5C60EC;
+    --progress-left-bg: rgba(70, 70, 70, 0.23);
     --input-field: #F6F7F9;
     --heading-text: #272845;
     --danger-color: #c62828;
@@ -50,7 +51,8 @@ body {
     --box-shadow-bottom: 0px 0px 2px 0px #20282E;
     --button-bg: none;
     --button-hover-bg: #20282E;
-    --progress-bg: #E9ECEF;
+    --progress-bg: #5C60EC;
+    --progress-left-bg: rgba(70, 70, 70, 1);
     --input-field: #F6F7F9;
     --heading-text: #F6F7F9;
     --danger-color: #c62828;

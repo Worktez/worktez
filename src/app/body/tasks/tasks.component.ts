@@ -35,6 +35,7 @@ export class TasksComponent implements OnInit {
   filterSprintNumber: number;
   showFilter: boolean = false
   teamData: TeamDataId[] = [];
+  parentComponent: string = "Tasks"
 
   constructor(private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
 

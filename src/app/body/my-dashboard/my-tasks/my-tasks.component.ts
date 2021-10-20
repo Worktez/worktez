@@ -16,6 +16,7 @@ export class MyTasksComponent implements OnInit {
 
   tasksCollection: AngularFirestoreCollectionGroup<Tasks>
   tasksData: Observable<TasksId[]>
+  parentComponent: string = "MyDashboard"
 
   constructor(public db: AngularFirestore) { }
 
