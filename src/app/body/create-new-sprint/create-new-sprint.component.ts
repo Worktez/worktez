@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from 'src/app/Interface/UserInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation/validation.service';
@@ -42,9 +40,6 @@ export class CreateNewSprintComponent implements OnInit {
 
   organizationDetails: Organizations
 
-  public rawData: Observable<RawDataId[]>;
-  public rawDocument: AngularFirestoreDocument<RawDataType>;
-
   sprintData: Sprint;
   teams: [];
   showTeams: boolean = false;
@@ -53,7 +48,7 @@ export class CreateNewSprintComponent implements OnInit {
   showContent: boolean;
   todayDate: string;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private db: AngularFirestore, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public toolsService: ToolsService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, private router: Router, public validationService: ValidationService, private location: Location, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -66,11 +61,9 @@ export class CreateNewSprintComponent implements OnInit {
         if (data.SelectedOrgAppKey) {
           this.selectedTeamId = data.SelectedTeamId;
           this.backendService.organizationsData.subscribe(data => {
-            if (data.length) {
               this.teams = data[0].TeamsId;
               this.showTeams = true;
               this.readApplicationData();
-            }
           });
         }
       });
