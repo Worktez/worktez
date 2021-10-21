@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body" *ngIf="data.length && !showLoader">
+    <div class="card-body pb-4" *ngIf="data.length && !showLoader">
         <app-chart [data]="data"></app-chart>
     </div>
     <div class="card-body" *ngIf="showLoader">

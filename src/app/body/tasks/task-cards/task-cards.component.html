@@ -9,9 +9,9 @@
                         <th colspan="1">Difficulty</th>
                     </ng-container>
                     <th colspan="1">Task ID</th> 
-                    <th [colspan]="parentComponent == 'MyDashboard' ? 5 : 3">Title</th>
+                    <th [colspan]="parentComponent == 'MyDashboard' ? 5 : 3" class="text-center">Title</th>
                     <ng-container *ngIf="parentComponent == 'Tasks'"> 
-                        <th colspan="3">Assignee</th>
+                        <th colspan="3" class="text-center">Assignee</th>
                     </ng-container>
                     <th colspan="2">Progress</th>
                 </tr>
