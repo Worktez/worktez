@@ -1,90 +1,91 @@
+<div class="container-fluid">
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <nav class="modal-header navbar navbar-expand navbar-dark" id="navbarMenu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <h5 class="active nav-link head" id="exampleModalLabel">Log Work</h5>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons text-light" (click)="workDone()">close</span>
-                            </button>
-                    </li>
-                </ul>
-            </nav>
-            <div class="container modal-body align-items-center px-4" id="logWorkPage">
+            <div class="modal-header row-pt-2">
+                <div class="col-md"></div>
+                <div class="col-md-5 pl-2">
+                    <h5 class="modal-title" id="exampleModalLabel">Log Work</h5>
+                </div>
+                <div class="col-md-4"></div>
+                <button type="button" class="close col-md" data-dismiss="modal" (click)="workDone()" aria-label="Close">
+                    <span aria-hidden="true" class="material-icons">close</span>
+                </button>
+                <div class="col-md"></div>
+            </div>
+            <div class="container-fluid modal-body align-items-center px-4" id="logWorkPage">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row pt-2">
                         <div class="col-md"></div>
                         <div class="col-md-5 pl-2">
-                            <label id="logHead">Task ID:</label>
-                            <span> {{task.Id}}</span>
+                            <label id="TaskID">Task ID:</label>
+                            <span style="font-weight: bold;"> {{task.Id}}</span>
                         </div>
                         <div class="col-md-5"></div>
                         <div class="col-md"></div>
                     </div>
-                    <hr>
                     <div class="row pt-2">
-                        <div class="col-md"></div>
-                        <div class="col-md-5 pl-2">
-                            <span id="logHead">Status:</span>
-                        </div>
-                        <div class="col-md-5">
-                            <select class="custom-select" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
-                                            <option>Ice Box</option>
-                                            <option>Ready to start</option>
-                                            <option>Under Progress</option>
-                                            <option>Blocked</option>
-                                            <option>Completed</option>
-                                        </select>
-                        </div>
-                        <div class="col-md"></div>
-                    </div>
-                    <hr>
-                    <div class="row">
                         <div class="col-md"></div>
                         <div class="col-md-5 pl-2">
                             <span id="logHead" class="form-inline">Log Hours:</span>
                         </div>
-                        <div class="col-md-4">
-                            <input type="number" min="1" class="form-control" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
-                        </div>
-                        <div class="col-md-1" id="LogWorkHour"><small>hrs</small></div>
-                        <div class="col-md-1"></div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md"></div>
                         <div class="col-md-5 pl-2">
                             <span id="logHead">Work Completed:</span>
                         </div>
-                        <div class="col-md-4">
-                            <input type="number" min="1" max="100" class="form-control" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
-                        </div>
-                        <div class="col-md-1" id="LogWorkHour">%</div>
-                        <div class="col-md-1"></div>
+                        <div class="col-md"></div>
                     </div>
-                    <hr>
+                    <div class="row pt-2">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-2">
+                            <input type="number" min="1" class="form-control" placeholder="Log Hours(Hr)" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-5 pl-2">
+                            <input type="number" min="1" max="100" class="form-control" placeholder="Work Completed(%)" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-md"></div>
+                        <div class="col-md-5 pl-2">
+                            <span id="logHead">Task Status:</span>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
                     <div class="row">
                         <div class="col-md"></div>
                         <div class="col-md-10 px mx">
-                            <label for="comment" class="form-label" id="logHead">Comment: </label>
-                            <span style="font-size: 14px;"> {{todayDate}} | {{time}}</span>
-                            <div class="row">
-                                <textarea class="form-control md clr" rows="2" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></textarea>
-                            </div>
+                            <select class="custom-select form-control" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
+                                <option>Ice Box</option>
+                                <option>Ready to start</option>
+                                <option>Under Progress</option>
+                                <option>Blocked</option>
+                                <option>Completed</option>
+                            </select>
                         </div>
                         <div class="col-md"></div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn" type="submit" id="logWorkSubmit" [disabled]="enableLoader">Submit</button>
+                    <div class="row py-2">
+                        <div class="col-md"></div>
+                        <div class="col-md-10 px mx">
+                            <label for="comment" class="form-label" id="logHead">Comment: </label>
+                            <span id="logHead"> {{todayDate}} | {{time}}</span>
                         </div>
+                        <div class="col-md"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-10 px mx">
+                            <textarea class="form-control md clr" rows="2" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        <div class="col-md-10 pb-3 px">
+                            <button class="btn form-control" type="submit" id="logWorkSubmit" [disabled]="enableLoader">Submit</button>
+                        </div>
+                        <div class="col-md"></div>
                     </div>
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
@@ -102,4 +103,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
