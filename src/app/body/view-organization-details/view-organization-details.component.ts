@@ -57,7 +57,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   createTeam() {
-    this.router.navigate(['/CreateTeam']);
+    this.router.navigate(['/CreateNewTeam']);
   }
 
   enableAddMember(team: Team) {
