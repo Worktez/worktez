@@ -18,19 +18,22 @@ body {
     --primary-bg: #F6F7F9;
     --secondary-bg: #FFFFFF;
     --secondary-header-bg: rgba(92, 96, 236, 0.2);
-    --primary-border: 0px solid #546e7a;
+    --primary-border: 1px solid rgba(84, 84, 84, 0.17);
     --hover: #5C60EC;
     --box-shadow-top: 0px 0px 3px 0px #0C0F7112;
     --box-shadow-bottom: 0px 0px 3px 0px #0C0F7112;
     --button-bg: none;
     --button-hover-bg: #fff;
-    --progress-bg: #E9ECEF;
+    --progress-bg: #5C60EC;
+    --progress-left-bg: rgba(70, 70, 70, 0.23);
     --card-bg: #FFFFFF;
     --input-field: #F6F7F9;
     --heading-text: #272845;
     --danger-color: #c62828;
     --button-bg: #4286f43f;
     --button-text2: #4285F4;
+    --table-header: #545454;
+    --scrollbar-color: rgba(84, 84, 84, 0.17);
 }
 
 .theme-dark {
@@ -43,17 +46,20 @@ body {
     --primary-bg: #11171B;
     --secondary-bg: #20282E;
     --secondary-header-bg: rgba(92, 96, 236, 0.2);
-    --primary-border: 0px solid #546e7a;
+    --primary-border: 1px solid #546e7a;
     --hover: #5559D9;
     --box-shadow-top: 0px 0px 2px 0px #20282E;
     --box-shadow-bottom: 0px 0px 2px 0px #20282E;
     --button-bg: none;
     --button-hover-bg: #20282E;
-    --progress-bg: #E9ECEF;
+    --progress-bg: #5C60EC;
+    --progress-left-bg: rgba(70, 70, 70, 1);
     --card-bg: #26272E;
     --input-field: #1E1F28;
     --heading-text: #F6F7F9;
     --danger-color: #c62828;
     --button-bg: #4286f43f;
     --button-text2: #4285F4;
+    --table-header: #d4d4d6;
+    --scrollbar-color: rgba(255, 255, 255, 0.51);
 }

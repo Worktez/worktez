@@ -1,6 +1,10 @@
-#button, #dropdownMenuButton {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+#header {
+    color: var(--text);
+}
+
+#button {
+    background-color: var(--secondary-color);
+    color: var(--input-field);
 }
 
 #button:focus,
@@ -9,20 +13,20 @@
     background-color: var(--secondary-color);
 }
 
+input {
+    background-color: var(--primary-bg);
+    border: none;
+}
+
 input:focus,
 select:focus,
 textarea:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
-}
-
-#header {
-    background-color: var(--primary-color);
+    background-color: var(--primary-bg);
 }
 
 #dropdownRangeCard {
-    color: var(--text);
     background-color: var(--secondary-bg);
-    border-color: var(--primary-color);
+    color: var(--input-field);
 }

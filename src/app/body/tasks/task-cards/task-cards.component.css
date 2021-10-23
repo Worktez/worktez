@@ -5,12 +5,38 @@
     font-size: 10px;
     length: 100%;
 } */
+.table thead, .table thead tr {
+    border: none;
+}
 
 .table th {
-    color: var(--text);
+    color: var(--table-header);
+    border-top: none;
+    font-style: normal;
+    font-size: medium;
+    border-bottom: var(--primary-border);
 }
 
 .table td {
     color: var(--text);
     cursor: pointer;
+}
+
+.table-responsive {
+    max-height:240px;
+}
+
+.table-responsive::-webkit-scrollbar {
+    width: 17px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-color);
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
 }

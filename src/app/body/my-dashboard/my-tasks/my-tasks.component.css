@@ -1,10 +1,11 @@
 .card-header {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border: none;
 }
 
 .card {
     background-color: var(--secondary-bg);
     color: var(--text);
-    box-shadow: var(--box-shadow-bottom);
+    border: none;
 }
