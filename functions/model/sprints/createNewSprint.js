@@ -38,33 +38,23 @@ exports.createNewSprint = function(request, response) {
                 if (sprint == undefined) {
                     setSprint(orgDomain, teamName, newSprintIdString, orgId, teamId, newSprintId, sprintStatus, 0, 0, 0, 0, startDate, endDate);
                 } else {
-                    let inputJson;
+                    const inputJson = {
+                        EndDate: endDate,
+                        StartDate: startDate,
+                        Status: sprintStatus,
+                        OrganizationId: orgId,
+                    };
+                    let value;
                     if (sprintStatus == "Under Progress") {
                         const startStoryPointNumber = sprint.StartStoryPoint;
-                        inputJson = {
-                            EndDate: endDate,
-                            StartDate: startDate,
-                            Status: sprintStatus,
-                            OrganizationId: orgId,
-                            MidStoryPoint: startStoryPointNumber,
-                        };
+                        value = "MidStoryPoint";
+                        inputJson[value] = startStoryPointNumber;
                     } else if (sprintStatus == "Completed") {
                         const startStoryPointNumber = sprint.StartStoryPoint;
-                        inputJson = {
-                            EndDate: endDate,
-                            StartDate: startDate,
-                            Status: sprintStatus,
-                            OrganizationId: orgId,
-                            MidStoryPoint: startStoryPointNumber,
-                            EndStoryPoint: startStoryPointNumber,
-                        };
-                    } else {
-                        inputJson = {
-                            EndDate: endDate,
-                            StartDate: startDate,
-                            Status: sprintStatus,
-                            OrganizationId: orgId,
-                        };
+                        value = "MidStoryPoint";
+                        inputJson[value] = startStoryPointNumber;
+                        value = "EndStoryPoint";
+                        inputJson[value] = startStoryPointNumber;
                     }
                     updateSprint(inputJson, orgDomain, teamName, newSprintIdString);
                 }
