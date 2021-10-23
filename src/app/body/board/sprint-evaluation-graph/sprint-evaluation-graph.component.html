@@ -1,0 +1,18 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col-8">
+                <h6 class="m-0">Sprint Evaluation Graph</h6>
+            </div>
+            <div class="col-3 text-right">
+                <app-range-card (setRange)="onGetRange($event)"></app-range-card>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="!showLoader">
+        <app-bar-chart [data]="data" [columnNames]="columnNames" [title]="title"></app-bar-chart>
+    </div>
+    <div class="card-body" *ngIf="showLoader">
+        <app-loader></app-loader>
+    </div>
+</div>
