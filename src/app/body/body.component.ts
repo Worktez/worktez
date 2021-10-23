@@ -15,7 +15,7 @@ export class BodyComponent implements OnInit {
   showLoader: boolean = true;
   showlogin: boolean = false;
 
-  constructor(private router: Router, public applicationSettingsService: ApplicationSettingsService,public authService: AuthService, public backendService: BackendService) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService,public authService: AuthService, public backendService: BackendService) { }
 
   ngOnInit(): void {
     // this.authService.afauth.user.subscribe(data => {

@@ -8,6 +8,7 @@
 const { functions, cors } = require("../application/lib");
 
 const { createOrg } = require("./createOrg");
+const { getOrgData } = require("./getOrganizationData");
 
 exports.organization = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -15,6 +16,8 @@ exports.organization = functions.https.onRequest((request, response) => {
 
         if (mode == "create") {
             return createOrg(request, response);
+        } else if (mode == "getOrgData") {
+            return getOrgData(request, response);
         }
     });
 });

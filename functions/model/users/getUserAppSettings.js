@@ -24,7 +24,6 @@ exports.getUserAppSettings = function(request, response) {
             result = { data: { status: "Ok", userData: undefined } };
         } else {
             userData = data;
-            console.log(userData.AppKey);
             result = { data: { status: "Ok", userData: userData } };
         }
     }).catch((err) => {
