@@ -56,7 +56,7 @@ export class BoardComponent implements OnInit {
             this.applicationSettingsService.editedTeamId = this.selectedTeamId;
           }
           this.backendService.organizationsData.subscribe(data => {
-              this.teams = data[0].TeamsId;
+              this.teams = data.TeamsId;
               this.showTeams = true;
               this.readApplicationData();
           });

@@ -14,7 +14,7 @@ export class BodyComponent implements OnInit {
   showLoader: boolean = true;
   showlogin: boolean = false;
 
-  constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public backendService: BackendService, , public popupHandlerService: PopupHandlerService) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }

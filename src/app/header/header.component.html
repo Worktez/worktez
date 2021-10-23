@@ -12,7 +12,10 @@
                         <ng-container *ngIf="authService.myOrgCollectionsData | async">
                             <li class="nav-item dropdown">
                                 <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span style="color: var(--text);">{{backendService.organizationDetails.OrganizationName}}</span>
+                                    <span class="material-icons align-middle pr-2">
+                                        corporate_fare
+                                    </span>
+                                    <label style="color: var(--text);">{{backendService.organizationDetails.OrganizationName}}</label>
                                 </a>
                                 <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
                                     <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
@@ -21,23 +24,10 @@
                                 </div>
                             </li>
                         </ng-container>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="material-icons align-middle pr-2">
-                                    corporate_fare
-                                </span>
-                                <label>{{item.OrganizationName}}</label>
-                            </a>
-                            <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                                <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
-                                    <a class="dropdown-item" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
-                                </ng-container>
-                            </div>
-                        </li>
                     </ul>
             </ng-container>
             <ul class="navbar-nav ml-auto">
-                <ng-container *ngFor="let item of backendService.organizationsData | async">
+                <ng-container *ngIf="(backendService.organizationsData | async)">
                     <li class="nav-item dropdown">
                         <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="material-icons align-middle pr-2">
