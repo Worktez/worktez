@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { RawDataId, RawDataType } from 'src/app/Interface/RawDataInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -43,9 +40,6 @@ export class CreateNewSprintComponent implements OnInit {
 
   organizationDetails: Organizations
 
-  public rawData: Observable<RawDataId[]>;
-  public rawDocument: AngularFirestoreDocument<RawDataType>;
-
   sprintData: Sprint;
   teams: [];
   showTeams: boolean = false;
@@ -64,11 +58,9 @@ export class CreateNewSprintComponent implements OnInit {
         if (data.SelectedOrgAppKey) {
           this.selectedTeamId = data.SelectedTeamId;
           this.backendService.organizationsData.subscribe(data => {
-            if (data.length) {
               this.teams = data[0].TeamsId;
               this.showTeams = true;
               this.readApplicationData();
-            }
           });
         }
       });

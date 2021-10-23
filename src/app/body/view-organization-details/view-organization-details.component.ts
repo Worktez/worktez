@@ -38,7 +38,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     const appKey = this.authService.getAppKey();
     this.teams = [];
     this.backendService.getOrgDetails(appKey).subscribe(data => {
-      this.organization = data[0];
+      this.organization = data;
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);
       });
@@ -48,7 +48,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   getTeamDetails(teamId: string) {
     this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
-      this.teams.push(data[0]);
+      this.teams.push(data);
     });
   }
 

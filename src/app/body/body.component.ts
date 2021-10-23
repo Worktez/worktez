@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 
@@ -13,7 +14,7 @@ export class BodyComponent implements OnInit {
   showLoader: boolean = true;
   showlogin: boolean = false;
 
-  constructor(public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public backendService: BackendService, , public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }

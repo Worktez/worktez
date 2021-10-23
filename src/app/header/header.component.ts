@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
+<<<<<<< HEAD
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
+=======
+>>>>>>> 08e90c8583d3207c5ceeadf5fed8940ff6d5307f
 import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
@@ -30,9 +33,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
+  async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
     const callable = this.functions.httpsCallable("users");
-    callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
+    await callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
+    window.location.reload()
   }
 
   startNewSprint() {

@@ -10,21 +10,21 @@ const { createTeam } = require("./createTeam");
 const { addMember } = require("./addMember");
 const { removeMember } = require("./removeMember");
 const { updateTeam } = require("./updateTeam");
+const { getTeamData } = require("./getTeamData");
 
 exports.teams = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const mode = request.body.data.mode;
         if (mode == "create") {
             return createTeam(request, response);
-        }
-        if (mode == "update") {
+        } else if (mode == "update") {
             return updateTeam(request, response);
-        }
-        if (mode == "add-member") {
+        } else if (mode == "add-member") {
             return addMember(request, response);
-        }
-        if (mode == "remove-member") {
+        } else if (mode == "remove-member") {
             return removeMember(request, response);
+        } else if (mode == "getTeamData") {
+            return getTeamData(request, response);
         }
     });
 });

@@ -68,7 +68,9 @@ exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filter
     if (filterDifficulty != "") {
         query = query.where("Difficulty", "==", filterDifficulty);
     }
-    if (filterStatus != "") {
+    if (filterStatus == "Incomplete") {
+        query = query.where("Status", "!=", "Completed");
+    } else if (filterStatus != "") {
         query = query.where("Status", "==", filterStatus);
     }
     if (filterProject != "") {
@@ -77,6 +79,7 @@ exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filter
     if (teamId != "") {
         query = query.where("TeamId", "==", teamId);
     }
+
     const getAllTasksPromise = query.get();
 
     return Promise.resolve(getAllTasksPromise);

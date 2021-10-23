@@ -78,21 +78,40 @@ exports.createNewTask = function(request, response) {
                 totalUnCompletedTask = totalUnCompletedTask + 1;
                 totalNumberOfTask = totalNumberOfTask + 1;
 
-                const updateSprintJson = {
-                    TotalNumberOfTask: totalNumberOfTask,
-                    TotalUnCompletedTask: totalUnCompletedTask,
-                };
+                let updateSprintJson;
+                if (sprint.Status == "Not Started" || sprint.Status == "Ready to Start") {
+                    const startStoryPointNumber = storyPointNumber + parseInt(sprint.StartStoryPoint);
+                    updateSprintJson = {
+                        TotalNumberOfTask: totalNumberOfTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                        StartStoryPoint: startStoryPointNumber,
+                    };
+                } else if (sprint.Status == "Under Progress") {
+                    const midStoryPointNumber = storyPointNumber + parseInt(sprint.MidStoryPoint);
+                    updateSprintJson = {
+                        TotalNumberOfTask: totalNumberOfTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                        MidStoryPoint: midStoryPointNumber,
+                    };
+                } else {
+                    updateSprintJson = {
+                        TotalNumberOfTask: totalNumberOfTask,
+                        TotalUnCompletedTask: totalUnCompletedTask,
+                    };
+                }
                 updateSprint(updateSprintJson, orgDomain, project, fullSprintName);
             } else {
                 totalNumberOfTask = 1;
                 totalUnCompletedTask = 1;
+                const startStoryPointNumber = storyPointNumber + parseInt(sprint.StartStoryPoint);
 
-                const promise1 = getTeam(orgDomain, project).then((team) => {
-                    setSprint(orgDomain, project, fullSprintName, orgId, team.TeamId, sprintNumber, "Not Started", totalNumberOfTask, totalUnCompletedTask);
+                const newSprintPromise = getTeam(orgDomain, project).then((team) => {
+                    setSprint(orgDomain, project, fullSprintName, orgId, team.TeamId, sprintNumber, "Not Started", totalNumberOfTask, totalUnCompletedTask, startStoryPointNumber);
                 }).catch((error) => {
                     status = 500;
                     console.log("Error:", error);
                 });
+                return Promise.resolve(newSprintPromise);
             }
         }).catch((error) => {
             status = 500;
