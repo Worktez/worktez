@@ -60,11 +60,6 @@ exports.editTask = function(request, response) {
                         totalUnCompletedTask -= 1;
                         totalNumberOfTask -= 1;
 
-                        // const updatePrevSprintJson = {
-                        //     TotalNumberOfTask: totalNumberOfTask,
-                        //     TotalUnCompletedTask: totalUnCompletedTask,
-                        // };
-
                         let updatePrevSprintJson;
                         if (parseInt(prevSprint.SprintNumber) > 0) {
                             if (prevSprint.Status == "Not Started" || prevSprint.Status == "Ready to Start") {
