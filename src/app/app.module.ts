@@ -81,6 +81,8 @@ import { UploadFilesComponent } from './body/task-details/upload-files/upload-fi
 import { ShowFilesComponent } from './body/common-tools/show-files/show-files.component';
 import { UploadLogoComponent } from './body/create-new-organization/upload-logo/upload-logo.component';
 import { LinkComponent } from './body/task-details/link/link.component';
+import { BarChartComponent } from './body/common-tools/bar-chart/bar-chart.component';
+import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-graph/sprint-evaluation-graph.component';
 
 
 @NgModule({
@@ -151,6 +153,8 @@ import { LinkComponent } from './body/task-details/link/link.component';
     UploadFilesComponent,
     ShowFilesComponent,
     UploadLogoComponent,
+    SprintEvaluationGraphComponent,
+    BarChartComponent,
     LinkComponent
   ],
   imports: [

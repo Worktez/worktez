@@ -1,0 +1,10 @@
+.card-header {
+    background-color: var(--primary-color);
+    color: var(--button-text);
+}
+
+.card {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+}

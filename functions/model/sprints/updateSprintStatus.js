@@ -9,7 +9,7 @@
 
 const { getOrgUseAppKey } = require("../organization/lib");
 const { getTeamUseTeamId } = require("../teams/lib");
-const { updateSprint } = require("./lib");
+const { updateSprint, getSprint } = require("./lib");
 
 
 exports.updateSprintStatus = function(request, response) {
@@ -18,7 +18,6 @@ exports.updateSprintStatus = function(request, response) {
     const appKey = request.body.data.AppKey;
     const teamId = request.body.data.TeamId;
     let orgDomain;
-    console.log(currentSprintName);
     let result;
     let status = 200;
 
@@ -28,10 +27,24 @@ exports.updateSprintStatus = function(request, response) {
         const updateTeamSprintStatus = getTeamUseTeamId(orgDomain, teamId).then((teamDoc) => {
             const teamName = teamDoc.TeamName;
 
-            const updateSprintStatusInputJson = {
-                Status: sprintStatus,
-            };
-            updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
+            let updateSprintStatusInputJson;
+            const getSprintPromise = getSprint(orgDomain, teamName, currentSprintName).then((sprintDoc) => {
+                if (sprintStatus == "Under Progress") {
+                    const startStoryPointNumber = sprintDoc.StartStoryPoint;
+                    updateSprintStatusInputJson = {
+                        Status: sprintStatus,
+                        MidStoryPoint: startStoryPointNumber,
+                    };
+                    updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
+                } else if (sprintStatus == "Completed") {
+                    updateSprintStatusInputJson = {
+                        Status: sprintStatus,
+                        EndStoryPoint: sprintDoc.CompletedStoryPoint,
+                    };
+                    updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
+                }
+            });
+            return Promise.resolve(getSprintPromise);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
