@@ -33,7 +33,7 @@ select:focus,
 input:focus,
 textarea:focus {
     box-shadow: none;
-    /*outline: 0 none; */
+    outline: 0 none; 
     border-color: var(--primary-color);
     color: var(--text);
 }
@@ -57,7 +57,7 @@ textarea:focus {
     background-color: var(--primary-bg);
 }
 
-#exampleModalLabel {
+#ModalLabel {
     color: var(--text);
     font-weight: bold;
 }
