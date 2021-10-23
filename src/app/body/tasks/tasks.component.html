@@ -23,7 +23,7 @@
             </ng-container>
             <ng-container *ngIf="tasksData | async">
                 <div class="col">
-                    <app-task-cards [tasks]="tasksData"></app-task-cards>
+                    <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards>
                 </div>
             </ng-container>
         </div>

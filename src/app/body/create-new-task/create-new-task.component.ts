@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/Interface/UserInterface';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ToolsService } from '../../services/tool/tools.service';
 import { Location } from '@angular/common';
@@ -12,16 +11,19 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+
+declare var jQuery:any;
 
 @Component({
-  selector: 'app-create-new-session',
-  templateUrl: './create-new-session.component.html',
-  styleUrls: ['./create-new-session.component.css']
+  selector: 'app-create-new-task',
+  templateUrl: './create-new-task.component.html',
+  styleUrls: ['./create-new-task.component.css']
 })
-export class CreateNewSessionComponent implements OnInit {
+export class CreateNewTaskComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
+  @Output() taskCreated = new EventEmitter<{ completed: boolean }>();
 
   componentName: string = "CREATE-NEW-TASK";
 
@@ -33,10 +35,10 @@ export class CreateNewSessionComponent implements OnInit {
   watcherName: string[]
   creatorName : string
   estimatedTime: number
-  project: string
-  priority: string
-  difficulty: string
-  status: string
+  project: string = null
+  priority: string = null
+  difficulty: string = null
+  status: string = null
   sprintNumber: number
   storyPoint: number
   time: string 
@@ -52,25 +54,14 @@ export class CreateNewSessionComponent implements OnInit {
   type: string[]
   taskType: string
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router, private location: Location, public toolsService: ToolsService, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public cloneTask: CloneTaskService, public applicationSetting: ApplicationSettingsService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
-    this.navbarHandler.resetNavbar();
-    this.navbarHandler.addToNavbar(this.componentName);
     this.teamIds=this.backendService.getOrganizationTeamIds();
     this.project = this.authService.getTeamId();
     this.creatorName=this.authService.getUserEmail();
     this.readTeamData(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-    this.task= this.cloneTask.getCloneData();
-    
-    this.title=this.task.Title;
-    this.description=this.task.Description;
-    this.estimatedTime=this.task.EstimatedTime;
-    this.priority=this.task.Priority;
-    this.difficulty=this.task.Difficulty;
-    this.storyPoint=this.task.StoryPointNumber;
-    this.taskType=this.task.Type;
   }
 
   readTeamData(teamId :string){
@@ -85,6 +76,7 @@ export class CreateNewSessionComponent implements OnInit {
     }); 
   }
   async submit() {
+    console.log("in submit");
     this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
     this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
@@ -105,13 +97,13 @@ export class CreateNewSessionComponent implements OnInit {
     });
     if (condition) {
       console.log("Inputs are valid");
-      this.createNewSession();
+      this.createNewTask();
     }
     else
       console.log("Task not created! Validation error");
   }
 
-  async createNewSession() {
+  async createNewTask() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
@@ -119,16 +111,17 @@ export class CreateNewSessionComponent implements OnInit {
 
     try {
       const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, Reporter: this.reporterName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType }).toPromise();
-      this.cloneTask.resetTask();
-      this.router.navigate(['MyDashboard']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
     }
+    this.close();
   }
 
-  backToDashboard() {
-    this.location.back()
+  close() {
+    jQuery('#createNewTask').modal('hide');
+    jQuery('#form').trigger("reset");
+    this.taskCreated.emit({ completed: true });
   }
 
 }

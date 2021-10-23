@@ -5,10 +5,10 @@
     </ng-container>
     <ng-container *ngIf="applicationSettingsService.teamData|async">
         <div class="row pt-2">
-            <div class="col">
+            <div class="col col-md-5">
                 <app-performance-chart [userEmail]="userEmail" [currentSprint]="teamCurrentSprintNumber"></app-performance-chart>
             </div>
-            <div class="col">
+            <div class="col col-md-7">
                 <app-my-tasks [userEmail]="userEmail" [currentSprint]="teamCurrentSprintNumber"></app-my-tasks>
             </div>
         </div>

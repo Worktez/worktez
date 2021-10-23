@@ -17,6 +17,7 @@ export class MyTasksComponent implements OnInit {
   @Input("currentSprint") currentSprintNumber: number
 
   tasksData: Observable<Tasks>
+  parentComponent: string = "MyDashboard"
 
   constructor(private backendService: BackendService, private functions: AngularFireFunctions) { }
 

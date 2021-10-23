@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
-import { BackendService } from '../services/backend/backend.service';
+import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-body',
@@ -15,15 +14,17 @@ export class BodyComponent implements OnInit {
   showLoader: boolean = true;
   showlogin: boolean = false;
 
-  constructor(public applicationSettingsService: ApplicationSettingsService,public authService: AuthService, public backendService: BackendService) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public backendService: BackendService, , public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    // this.authService.afauth.user.subscribe(data => {
-    //   if(data) {
-    //     console.log("Logged In Successfully");
-    //   }
-    //   // this.router.navigate(['/Home']);
-    // });
+  }
+
+  sprintCreated( completed: boolean ) {
+    this.popupHandlerService.createNewSprintEnabled= false;
+  }
+
+  taskCreated( completed: boolean ) {
+    this.popupHandlerService.createNewTaskEnabled= false;
   }
 
 }

@@ -18,11 +18,12 @@
 }
 
 .dropdown-item {
-    color: var(--text);
+    color: var(--button-text);
 }
 
 .dropdown-item:hover {
-    background-color: var(--hover);
+    color: var(--hover);
+    background-color: var(--button-hover-bg);
     cursor: pointer;
 }
 
@@ -35,7 +36,7 @@
 #navbarDropdownBoards:hover,
 #navbarDropdownTeam:hover,
 #navbarDropdownCreate:hover {
-    background-color: var(--hover);
+    color: var(--button-text-hover);
 }
 
 button {

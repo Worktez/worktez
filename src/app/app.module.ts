@@ -17,7 +17,7 @@ import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions'
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
-import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
+import { CreateNewTaskComponent } from './body/create-new-task/create-new-task.component';
 import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
 import { BoardComponent } from './body/board/board.component';
 import { FeatureCardComponent } from './body/board/feature-card/feature-card.component';
@@ -90,7 +90,7 @@ import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-g
     AppComponent,
     HeaderComponent,
     BodyComponent,
-    CreateNewSessionComponent,
+    CreateNewTaskComponent,
     CreateNewSprintComponent,
     BoardComponent,
     FeatureCardComponent,
