@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
-<<<<<<< HEAD
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
-=======
->>>>>>> 08e90c8583d3207c5ceeadf5fed8940ff6d5307f
 import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 

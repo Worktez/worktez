@@ -7,11 +7,6 @@
         <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
     </button>
         <div class="collapse navbar-collapse pl-3" id="navbarText">
-<<<<<<< HEAD
-            <ng-container *ngFor="let item of backendService.organizationsData | async">
-                <ul class="navbar-nav">
-                    <ng-container *ngIf="authService.myOrgCollectionsData | async">
-=======
             <ng-container *ngIf="(backendService.organizationsData | async)">
                     <ul class="navbar-nav">
                         <ng-container *ngIf="authService.myOrgCollectionsData | async">
@@ -26,7 +21,6 @@
                                 </div>
                             </li>
                         </ng-container>
->>>>>>> 08e90c8583d3207c5ceeadf5fed8940ff6d5307f
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="material-icons align-middle pr-2">
@@ -40,12 +34,7 @@
                                 </ng-container>
                             </div>
                         </li>
-<<<<<<< HEAD
-                    </ng-container>
-                </ul>
-=======
                     </ul>
->>>>>>> 08e90c8583d3207c5ceeadf5fed8940ff6d5307f
             </ng-container>
             <ul class="navbar-nav ml-auto">
                 <ng-container *ngFor="let item of backendService.organizationsData | async">
