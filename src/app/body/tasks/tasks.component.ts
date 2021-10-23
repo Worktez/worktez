@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
+import { AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { Team, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Team } from 'src/app/Interface/TeamInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { BackendService } from 'src/app/services/backend/backend.service';
 

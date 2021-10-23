@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Console } from 'console';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { User } from 'src/app/Interface/UserInterface';

@@ -29,7 +29,7 @@ exports.getTasksForDashboard = function(request, response) {
     const promises = [getTasksPromise];
     Promise.all(promises).then(() => {
             result = { data: { status: "OK", data: tasksData } };
-            console.log("Got Task Sucessfully");
+            console.log("Got Task Successfully");
             return response.status(status).send(result);
         })
         .catch((error) => {
