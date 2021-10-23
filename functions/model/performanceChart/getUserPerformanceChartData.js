@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable prefer-const */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */

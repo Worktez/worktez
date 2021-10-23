@@ -25,7 +25,7 @@ export class PerformanceChartComponent implements OnInit {
   sprintNumber: number;
   tasksData: Observable<Tasks[]>
 
-  constructor(private functions: AngularFireFunctions, private authService: AuthService, public db: AngularFirestore, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
     this.sprintRange2 = this.currentSprintNumber

@@ -55,7 +55,6 @@ exports.getUser = function(Uid, username) {
                 data = element.data();
             }
         });
-
         return data;
     });
 

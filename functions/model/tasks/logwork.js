@@ -92,13 +92,16 @@ exports.logWork = function(request, response) {
                 const sprintCounterUpdate = getSprint(orgDomain, project, fullSprintName).then((sprintDetails) => {
                     let totalUnCompletedTask = sprintDetails.TotalUnCompletedTask;
                     let totalCompletedTask = sprintDetails.TotalCompletedTask;
+                    let completedStoryPoint = sprintDetails.CompletedStoryPoint;
 
                     totalUnCompletedTask -= 1;
                     totalCompletedTask += 1;
+                    completedStoryPoint += taskDoc.StoryPointNumber;
 
                     const updateSprintInputJson = {
                         TotalCompletedTask: totalCompletedTask,
                         TotalUnCompletedTask: totalUnCompletedTask,
+                        CompletedStoryPoint: completedStoryPoint,
                     };
                     updateSprint(updateSprintInputJson, orgDomain, project, fullSprintName);
                 });

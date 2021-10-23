@@ -1,52 +1,70 @@
 #loginContainer {
     box-shadow: var(--box-shadow-bottom);
     background-color: var(--secondary-bg);
-}
-
-#loginNavbar {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+    border-radius: 5px;
 }
 
 #button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
+    background-color: var(--primary-color);
+    color: var(--secondary-bg);
+    font-size: 18px;
 }
 
 #button:focus,
 #button:active {
-    outline: none;
-    box-shadow: none;
+    background-color: var(--primary-color);
 }
 
-#nav-login-tab,
-#nav-signup-tab {
-    border: 2px solid var(--primary-color);
-    color: var(--text);
+#button2 {
+    background-color: var(--button-bg);
+    color: var(--button-text2);
+    font-size: 18px;
 }
 
-#emailForm {
-    color: var(--text);
+
+.nav-login-tab,
+.nav-signup-tab {
+    background-color: var(--secondary-header-bg);
+}
+
+.nav-item {
+    color: var(--primary-color);
+}
+
+.tab-active {
+    background-color: var(--primary-color);
+    color: var(--secondary-bg);
 }
 
 input:focus,
 select:focus,
 textarea:focus {
-    box-shadow: none;
-    outline: 0 none;
     border-color: var(--primary-color);
+    box-shadow: none;
 }
 
-#topBorder {
-    border-top: var(--primary-border);
+input,
+select,
+textarea {
+    border-color: none;
+    background-color: var(--input-field);
+    outline: none;
 }
 
-.nav-tabs {
-    border-bottom: var(--primary-border);
+.header {
+    color: var(--primary-color);
 }
 
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
-    background-color: var(--primary-bg);
+.icons {
+    color: var(--primary-color);
+    background-color: var(--input-field);
+}
+
+.forgotPassword {
+    color: var(--text);
+    font-size: 12px;
+}
+
+h3 {
+    color: var(--heading-text);
 }

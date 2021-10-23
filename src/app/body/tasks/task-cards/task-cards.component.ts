@@ -10,6 +10,7 @@ import { TasksId } from 'src/app/Interface/TasksInterface';
 export class TaskCardsComponent implements OnInit {
 
   @Input('tasks') tasks: TasksId[]
+  @Input('parentComponent') parentComponent: string;
 
   constructor(private router: Router) { }
 

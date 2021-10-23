@@ -36,24 +36,36 @@ export class CreateNewTeamComponent implements OnInit {
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
 
   ngOnInit(): void {
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        if (data.SelectedOrgAppKey) {
+          this.backendService.organizationsData.subscribe(data => {
+            this.loadData();
+          });
+        }
+      });
+    });
+  
+    this.selectedTeamId = this.route.snapshot.params['teamId'];
+  }
+
+  loadData() {
     this.appKey = this.authService.getAppKey();
     this.backendService.getOrgDetails(this.appKey);
     this.organizationDomain = this.backendService.getOrganizationDomain();
     this.teamAdmin = this.authService.getUserEmail();
     this.uid = this.authService.getLoggedInUser();
-    console.log(this.router.url);
-    this.selectedTeamId = this.route.snapshot.params['teamId'];
 
     if (this.selectedTeamId != undefined) {
       if (this.router.url.startsWith('/UpdateTeam')) {
         this.isUpdateTeam = true;
       }
-      this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-        this.teamName = teams[0].TeamName;
-        this.teamId = teams[0].TeamId;
-        this.teamDescription = teams[0].TeamDescription;
-        this.teamManagerEmail = teams[0].TeamManagerEmail;
-        this.teamMembers = teams[0].TeamMembers;
+      this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(team => {
+        this.teamName = team.TeamName;
+        this.teamId = team.TeamId;
+        this.teamDescription = team.TeamDescription;
+        this.teamManagerEmail = team.TeamManagerEmail;
+        this.teamMembers = team.TeamMembers;
       });
     }
   }

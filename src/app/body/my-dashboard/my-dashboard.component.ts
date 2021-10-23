@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
-import { Team, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,7 +21,6 @@ export class MyDashBoardComponent implements OnInit {
   userEmail: string
   userObservable: Observable<User>
   showContent: boolean = true;
-  teamData: TeamDataId[] = [];
 
   currentSprintName: string;
 
@@ -40,8 +38,8 @@ export class MyDashBoardComponent implements OnInit {
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-          this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(team => {
+          this.teamCurrentSprintNumber = team.CurrentSprintId;
           this.currentSprintName = "S" + this.teamCurrentSprintNumber;
     });
   }
@@ -59,7 +57,6 @@ export class MyDashBoardComponent implements OnInit {
             this.selectedTeamId = data.SelectedTeamId;
             this.teamIdExists = true;
             this.backendService.organizationsData.subscribe(data => {
-              if(data.length)
               this.readApplicationData();
             });
           } else {

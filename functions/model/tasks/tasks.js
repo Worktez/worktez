@@ -17,6 +17,7 @@ const { getTaskDetails } = require("./getTaskDetails");
 const { getTasks } = require("./getTasks");
 const { getLinkDetails } = require("./getLinkDetails");
 const { setLinkDetails } = require("./setLinkDetails");
+const { getTasksForDashboard } = require("./getTasksForDashboard");
 
 exports.tasks = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -40,6 +41,8 @@ exports.tasks = functions.https.onRequest((request, response) => {
             return setLinkDetails(request, response);
         } else if (mode == "getAllTasks") {
             return getTasks(request, response);
+        } else if (mode == "getTasksForDashboard") {
+            return getTasksForDashboard(request, response);
         }
     });
 });

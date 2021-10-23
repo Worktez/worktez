@@ -1,10 +1,12 @@
 <div class="card">
-    <div class="card-header">
-        <h6 class="m-0">My Tasks</h6>
+    <div class="card-header pb-0">
+        <div class="row align-items-center">
+            <div class="col pl-4 pt-2"><h6>My Tasks</h6></div>
+        </div>
     </div>
-    <div class="card-body" *ngIf="tasksData | async">
+    <div class="card-body pt-0" *ngIf="tasksData | async">
         <ng-container *ngIf="tasksData|async">
-            <app-task-cards [tasks]="tasksData"></app-task-cards>
+            <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards>
         </ng-container>
     </div>
     <div class="card-body" *ngIf="!(tasksData | async)">

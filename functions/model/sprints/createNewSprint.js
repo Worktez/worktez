@@ -36,7 +36,7 @@ exports.createNewSprint = function(request, response) {
 
             const createSprint = getSprint(orgDomain, teamName, newSprintIdString).then((sprint) => {
                 if (sprint == undefined) {
-                    setSprint(orgDomain, teamName, newSprintIdString, orgId, teamId, newSprintId, sprintStatus, 0, 0, startDate, endDate);
+                    setSprint(orgDomain, teamName, newSprintIdString, orgId, teamId, newSprintId, sprintStatus, 0, 0, 0, 0, startDate, endDate);
                 } else {
                     const inputJson = {
                         EndDate: endDate,
@@ -44,6 +44,18 @@ exports.createNewSprint = function(request, response) {
                         Status: sprintStatus,
                         OrganizationId: orgId,
                     };
+                    let value;
+                    if (sprintStatus == "Under Progress") {
+                        const startStoryPointNumber = sprint.StartStoryPoint;
+                        value = "MidStoryPoint";
+                        inputJson[value] = startStoryPointNumber;
+                    } else if (sprintStatus == "Completed") {
+                        const startStoryPointNumber = sprint.StartStoryPoint;
+                        value = "MidStoryPoint";
+                        inputJson[value] = startStoryPointNumber;
+                        value = "EndStoryPoint";
+                        inputJson[value] = startStoryPointNumber;
+                    }
                     updateSprint(inputJson, orgDomain, teamName, newSprintIdString);
                 }
             }).catch((error) => {

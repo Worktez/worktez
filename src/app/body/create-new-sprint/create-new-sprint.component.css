@@ -1,13 +1,58 @@
-#startNewSprintContainer {
-    box-shadow: var(--box-shadow-top);
-    background-color: var(--secondary-bg);
+.sprintCard {
+    margin: 8px auto;
+    position: absolute;
+    z-index: 1;
+    background: var(--card-bg);
+    width: 100%;
+    height: 100%;
+}
+
+.modal-header {
+    border-bottom: none !important;
+    padding: 1.1rem;
+}
+
+.modal-footer {
+    border-top: none !important;
+    padding: 1.1rem;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
     color: var(--text);
+    border-radius: 6px;
+    min-width: 600px;
+    min-height: 300px;
+    justify-content: space-evenly;
+    padding: 1.1rem;
+}
+
+.close {
+    color: var(--text);
+}
+
+.form-row {
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
 }
 
 #button {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
+    color: white;
 }
 
 #button:focus,
@@ -18,18 +63,16 @@
     background-color: var(--primary-color);
 }
 
-.alert {
-    background-color: var(--hover);
-    color: var(--text);
-}
-
-#navbarMenu {
-    background-color: var(--primary-color);
-}
-
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
+}
+
+@media only screen and (max-width: 600px) {
+    .sprintCard {
+        width: 100%;
+        height: 160%;
+    }
 }

@@ -1,0 +1,7 @@
+#completed {
+    background-color: var(--progress-bg);
+}
+
+#left {
+    background-color: var(--progress-left-bg);
+}

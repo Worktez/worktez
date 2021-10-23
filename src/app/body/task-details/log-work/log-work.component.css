@@ -1,28 +1,17 @@
-#logHead,
-#logWorkHour {
-    font-weight: bold;
-}
-
-.head {
-    font-weight: bolder;
-}
+#logHead {
+    color: var(--button-text);
+    font-size: 14px;
+} 
 
 #logWorkPage,
 .modal-content {
     background-color: var(--secondary-bg);
-    border: var(--primary-border);
-    color: var(--text);
-}
-
-#logDetail {
-    background-color: var(--secondary-color);
     color: var(--button-text);
 }
 
 #logWorkSubmit {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
+    color:white; 
 }
 
 #logWorkSubmit:hover {
@@ -32,31 +21,56 @@
 .clr {
     background-color: white;
 }
-
-#navbarMenu,
-.modal-header {
-    background-color: var(--primary-color);
+ 
+select,
+input {
+    border: none;
+    color: var(--text);
+    font-size: 15px;
 }
 
 select:focus,
-input:focus {
+input:focus,
+textarea:focus {
     box-shadow: none;
-    outline: 0 none;
+    outline: 0 none; 
     border-color: var(--primary-color);
+    color: var(--text);
 }
 
 @media only screen and (max-width: 600px) {
     #logWorkPage {
         width: 70%;
         height: 100%;
-        border-color: var(--primary-color);
     }
 }
 
 .btn-secondary {
-    background-color: var(--button-bg);
+    background-color: var(--secondary-color);
 }
 
 .btn-secondary:hover {
-    background-color: var(--button-hover-bg);
+    background-color: var(--primary-color);
+}
+
+.form-control {
+    background-color: var(--primary-bg);
+}
+
+#ModalLabel {
+    color: var(--text);
+    font-weight: bold;
+}
+
+.close {
+    color: var(--text);
+}
+
+.close:hover {
+    transform: scale(1.3);
+} 
+
+textarea {
+    border: none;
+    color: var(--text);
 }

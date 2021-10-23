@@ -18,6 +18,7 @@ export class ChartComponent implements OnInit {
     is3D: true,
     curveType: 'function',
     backgroundColor: "none",
+    areaOpacity: 0.0,
     legend: "none",
     chartArea:{ left:20, top:20, width:'100%', height:'80%' },
     hAxis: {textStyle: {color: this.themeService.fontColor}, gridlines: {color: this.themeService.chartGridlinesColor}},

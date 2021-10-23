@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { ThemeService } from '../services/theme/theme.service';
 import { BackendService } from '../services/backend/backend.service';
-import { map } from 'rxjs/operators'
-import { Observable } from 'rxjs';
-import { MyOrganizationData, User } from '../Interface/UserInterface';
+import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
+import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/functions';
 
 
@@ -18,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   uid: string
 
-  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public themeService: ThemeService) { }
+  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe((action) => {
@@ -31,17 +29,18 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
+  async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
     const callable = this.functions.httpsCallable("users");
-    callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
+    await callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
+    window.location.reload()
   }
 
   startNewSprint() {
-    this.router.navigate(['/StartNewSprint']);
+    this.popupHandlerService.createNewSprintEnabled= true;
   }
 
-  startNewSession() {
-    this.router.navigate(['/CreateNewSession']);
+  createNewTask() {
+    this.popupHandlerService.createNewTaskEnabled= true;
   }
 
   Board(){
