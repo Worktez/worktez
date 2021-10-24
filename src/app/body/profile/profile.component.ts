@@ -49,10 +49,10 @@ export class ProfileComponent implements OnInit {
           this.backendService.organizationsData.subscribe(data => {
             this.readUser();
             this.organizationName = this.backendService.getOrganizationName();
-            this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
-            this.teamName = teams[0].TeamName;
-            this.managerEmail = teams[0].TeamManagerEmail;
-            if(teams[0].TeamManagerEmail == this.email) {
+            this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(team => {
+            this.teamName = team.TeamName;
+            this.managerEmail = team.TeamManagerEmail;
+            if(team.TeamManagerEmail == this.email) {
               this.role = "Manager";
             } else {
               this.role = "Member";
