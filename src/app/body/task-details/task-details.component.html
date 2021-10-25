@@ -27,7 +27,7 @@
                         <li class=" active"
                             *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
                             <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" data-toggle="modal" data-target="#exampleModal" title="Log work"
+                                data-bs-placement="top" data-toggle="modal" data-target="#Modal" title="Log work"
                                 (click)="logWorkPage()">pending_actions</span>
                         </li>
                         <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">

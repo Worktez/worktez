@@ -38,13 +38,6 @@ textarea:focus {
     color: var(--text);
 }
 
-@media only screen and (max-width: 600px) {
-    #logWorkPage {
-        width: 70%;
-        height: 100%;
-    }
-}
-
 .btn-secondary {
     background-color: var(--secondary-color);
 }
