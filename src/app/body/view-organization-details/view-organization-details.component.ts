@@ -26,7 +26,11 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
-    this.getOrganizationDetails();
+    this.authService.afauth.user.subscribe(data => {
+      this.authService.userAppSettingObservable.subscribe(data => {
+        this.getOrganizationDetails();
+      });
+    });
   }
 
   getOrganizationDetails() {
@@ -34,7 +38,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     const appKey = this.authService.getAppKey();
     this.teams = [];
     this.backendService.getOrgDetails(appKey).subscribe(data => {
-      this.organization = data[0];
+      this.organization = data;
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);
       });
@@ -44,7 +48,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   getTeamDetails(teamId: string) {
     this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
-      this.teams.push(data[0]);
+      this.teams.push(data);
     });
   }
 
@@ -53,7 +57,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   createTeam() {
-    this.router.navigate(['/CreateTeam']);
+    this.router.navigate(['/CreateNewTeam']);
   }
 
   enableAddMember(team: Team) {
@@ -61,7 +65,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.addMemberEnabled = true;
   }
 
-  addedMember(data: { completed: boolean, memberEmail: string}) {
+  addedMember(data: { completed: boolean, memberEmail: string }) {
     this.getOrganizationDetails();
     this.addMemberEnabled = false;
   }

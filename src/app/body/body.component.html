@@ -1,7 +1,12 @@
-<div class="page py-2">
+<div class="page">
     <app-navbar></app-navbar>
     <app-error></app-error>
-
+    <ng-container *ngIf="popupHandlerService.createNewSprintEnabled">
+        <app-create-new-sprint (sprintCreated)="sprintCreated($event)"></app-create-new-sprint>
+    </ng-container>
+    <ng-container *ngIf="popupHandlerService.createNewTaskEnabled">
+        <app-create-new-task (taskCreated)="taskCreated($event)"></app-create-new-task>
+    </ng-container>
     <ng-container *ngIf="authService.completedLoadingApplication; else loader">
         <router-outlet></router-outlet>
     </ng-container>

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollectionGroup, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Organizations, OrganizationsDataId } from '../../Interface/OrganizationInterface';
-import { RawDataType } from '../../Interface/RawDataInterface';
+import { Organizations } from '../../Interface/OrganizationInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,29 +11,23 @@ export class BackendService {
 
   organizationDetails: Organizations
 
-  organizationsCollection: AngularFirestoreCollectionGroup<Organizations>
-  organizationsData: Observable<OrganizationsDataId[]>
-
-  public rawDataObservable: Observable<RawDataType>;
-  public rawDocument: AngularFirestoreDocument<RawDataType>;
+  organizationsData: Observable<Organizations>
 
   currentSprintNumber: number = 0;
   currentSprintName: string;
 
   selectedTaskId: string = "";
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private functions: AngularFireFunctions) { }
 
   getOrgDetails(AppKey: string) {
-    this.organizationsCollection = this.db.collectionGroup<Organizations>("Organizations", ref => ref.where('AppKey', '==', AppKey));
-    this.organizationsData = this.organizationsCollection.snapshotChanges().pipe(
-      map(actions => actions.map(action => {
-        const data = action.payload.doc.data() as Organizations
-        this.organizationDetails = data;
-        const id = action.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
+    const callable = this.functions.httpsCallable("organization");
+    this.organizationsData = callable({mode: "getOrgData", AppKey: AppKey}).pipe(
+      map(actions => {
+        this.organizationDetails = actions.resultData as Organizations
+        return actions.resultData as Organizations;
+    }));
+
     return this.organizationsData;
   }
 

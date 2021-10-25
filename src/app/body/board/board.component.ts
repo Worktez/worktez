@@ -1,5 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Sprint, SprintDataId, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Sprint, SprintDataId, Team, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -18,7 +18,7 @@ export class BoardComponent implements OnInit {
   componentName: string = "BOARD";
   currentSprintNumber: number
   showContent: boolean = false;
-  teamData: TeamDataId[] = [];
+  teamData: Team;
   selectedTeamId: string;
   teamCurrentSprintNumber: number = -100;
   sprintData: Sprint;
@@ -56,11 +56,9 @@ export class BoardComponent implements OnInit {
             this.applicationSettingsService.editedTeamId = this.selectedTeamId;
           }
           this.backendService.organizationsData.subscribe(data => {
-            if (data.length) {
               this.teams = data[0].TeamsId;
               this.showTeams = true;
               this.readApplicationData();
-            }
           });
         }
       });
@@ -70,20 +68,18 @@ export class BoardComponent implements OnInit {
   readApplicationData() {
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
-      teams.forEach(element => {
-        if (element.TeamId == this.selectedTeamId) {
-          if (this.applicationSettingsService.editedSprintId != element.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
-            this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
-            this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
-          } else {
-            this.teamCurrentSprintNumber = element.CurrentSprintId;
-            this.currentSprintNumber = element.CurrentSprintId;
-            this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
-            this.changeTeam = false;
-          }
-          this.teamMembers = element.TeamMembers;
+      if (this.teamData.TeamId == this.selectedTeamId) {
+        if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
+          this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
+          this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
+        } else {
+          this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
+          this.currentSprintNumber = this.teamData.CurrentSprintId;
+          this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
+          this.changeTeam = false;
         }
-      });
+        this.teamMembers = this.teamData.TeamMembers;
+      }
       this.readSprintData();
     });
   }
@@ -103,9 +99,9 @@ export class BoardComponent implements OnInit {
       child.highlightSelectedTeam(this.selectedTeamId);
     })
     if (this.teamCurrentSprintNumber != 0) {
-      this.applicationSettingsService.getSprintsDetails(this.selectedTeamId, this.teamCurrentSprintNumber).subscribe(sprints => {
-        if (sprints.length != 0) {
-          this.sprintData = sprints[0];
+      this.applicationSettingsService.getSprintsDetails(this.teamCurrentSprintNumber).subscribe(sprints => {
+        if (sprints) {
+          this.sprintData = sprints;
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));

@@ -36,7 +36,7 @@ export class ProfileComponent implements OnInit {
   website: string;
   username: string;
 
-  constructor(public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public db: AngularFirestore, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.addToNavbar(this.componentName);
@@ -46,10 +46,10 @@ export class ProfileComponent implements OnInit {
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.SelectedOrgAppKey) {
-          this.readUser();
-
-          this.organizationName = this.backendService.getOrganizationName();
-          this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
+          this.backendService.organizationsData.subscribe(data => {
+            this.readUser();
+            this.organizationName = this.backendService.getOrganizationName();
+            this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(teams => {
             this.teamName = teams[0].TeamName;
             this.managerEmail = teams[0].TeamManagerEmail;
             if(teams[0].TeamManagerEmail == this.email) {
@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
             } else {
               this.role = "Member";
             }
+            });
           });
         }
       });

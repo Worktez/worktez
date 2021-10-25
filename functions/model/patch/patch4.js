@@ -9,7 +9,6 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-// const { updatePatchData } = require("./lib");
 
 const db = admin.firestore();
 
@@ -39,7 +38,6 @@ exports.patch4 = function(request, response) {
     const Promises = [promise1];
     Promise.all(Promises).then(() => {
         result = { data: "OK! Patch4 executed" };
-        // updatePatchData("Patch4", { LastUsedByUid: uid, LastUsedByOrg: orgDomain });
         console.log("Activities updated");
         return response.status(200).send(result);
     }).catch(function(error) {

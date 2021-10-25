@@ -13,6 +13,7 @@ export class TaskCardsComponent implements OnInit {
   @Input('sortByFields') sortByFields: {}
   @Output('getSortByFields') getSortByFields = new EventEmitter<object>();
   tableHeaders = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'Assignee', 'Progress'];
+  @Input('parentComponent') parentComponent: string;
 
   constructor(private router: Router) { }
 

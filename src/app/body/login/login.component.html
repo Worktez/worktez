@@ -1,69 +1,107 @@
-<div class="container mt-2" id="loginContainer" *ngIf="!(authService.afauth.user | async)">
-    <div class="row" id="loginNavbar">
-        <div class="col">
-            <h5 class="p-2" style="font-weight:bolder">Get Started</h5>
-        </div>
-    </div>
-    <div class="row align-items-center justify-content-center">
-        <div class="col-12 col-sm-6 col-md-6 p-2" id="containerBorder">
-            <div class="row" id="emailForm">
+<div class="container" *ngIf="!(authService.afauth.user | async)">
+    <div class="row align-middle">
+        <div class="col-md-4"></div>
+        <div class="col-12 col-sm-6 col-md-4" id="loginContainer">
+            <div class="row text-center">
+                <div [ngClass]="{'col nav-login-tab py-2': true, 'tab-active': activeLogin}">
+                    <a [ngClass]="{'nav-item nav-link': true, 'tab-active': activeLogin}" data-toggle="tab" href="#login" role="tab" aria-controls="nav-login" aria-selected="false" (click)="changeTab()">Login</a>
+                </div>
+                <div [ngClass]="{'col nav-signup-tab py-2': true, 'tab-active': !activeLogin}">
+                    <a [ngClass]="{'nav-item nav-link': true, 'tab-active': !activeLogin}" data-toggle="tab" href="#signup" role="tab" aria-controls="nav-signup" aria-selected="false" (click)="changeTab()">Sign Up</a>
+                </div>
+            </div>
+            <div class="row px-4" >
                 <div class="col">
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="nav-login" aria-selected="true">Login</a>
-                            <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#signup" role="tab" aria-controls="nav-signup" aria-selected="false">Sign Up</a>
-                        </div>
-                    </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="nav-login-tab">
-                            <form class="p-2" (submit)="onLoginWithEmail()">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                            <h3 class="py-3 ">Welcome <a class="header">Back</a></h3>
+                            <form (submit)="onLoginWithEmail()">
+                                <div class="input-group pb-3">
+                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text icons" id="emailHelp">
+                                            <span class="material-icons icons">
+                                                email
+                                            </span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="form-control" placeholder="Enter Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                <div class="input-group pb-3">
+                                    <input type="password" class="form-control" placeholder="Enter your password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text icons">
+                                            <span class="material-icons icons">
+                                                vpn_key
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn" id="button">Login</button>
+                                <div class="input-group pb-3">
+                                    <a class="forgotPassword" href="#">Forgot Password?</a>
+                                </div>
+
+                                <button type="submit" class="btn btn-lg btn-block" id="button">Login</button>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="signup" role="tabpanel" aria-labelledby="nav-signup-tab">
-                            <form class="p-2" (submit)="onSignUpWithEmail()">
-                                <div class="form-group">
-                                    <label for="name">Username</label>
-                                    <input type="text" class="form-control" placeholder="Enter Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+                            <h3 class="py-3">Get <a class="header">Started</a>
+                                <p class="forgotPassword">Sign up for getting started and organize your work!</p>
+                            </h3>
+                            <form (submit)="onSignUpWithEmail()">
+                                <div class="input-group pb-3">
+                                    <input type="text" class="form-control" placeholder="Enter your username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text icons">
+                                            <span class="material-icons icons">
+                                                perm_identity
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                <div class="input-group pb-3">
+                                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text icons">
+                                            <span class="material-icons icons">
+                                                email
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input [type]="showPassword ? 'text':'password'" class="form-control" placeholder="Enter Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                <div class="input-group pb-3">
+                                    <input [type]="showPassword ? 'text':'password'" class="form-control" placeholder="Enter your password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text icons">
+                                            <span class="material-icons icons">
+                                                vpn_key
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-check form-group">
-                                    <input class="form-check-input" type="checkbox" value="" (click)="togglePassword()" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
+                                <div class="form-check form-group align-middle">
+                                    <input class="form-check-input forgotPassword" type="checkbox" value="" (click)="togglePassword()" id="flexCheckDefault">
+                                    <label class="form-check-label forgotPassword" for="flexCheckDefault">
                                         Show Password
                                     </label>
                                 </div>
-                                <button type="submit" class="btn" id="button">Create Account</button>
+                                <button type="submit" class="btn btn-lg btn-block" id="button">REGISTER NOW</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row align-items-center justify-content-center" class="p-5" id="topBorder">
+            <div class="row text-center py-4">
+                <div class="col">OR</div>
+            </div>
+            <div class="row align-middle px-4 pb-3">
                 <div class="col text-center">
-                    <button type="submit" class="btn" id="button" (click)="onSignInWithGoogle()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google mb-1"  viewBox="0 0 16 16">
-                            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
-                        </svg>
+                    <button type="submit" class="btn btn-lg btn-block" id="button2" (click)="onSignInWithGoogle()">
+                        <img class="pr-2" src="../../../assets/googleLogo.svg" alt="google icon" srcset="google login icon">
                         Login with Google
                     </button>
                 </div>
             </div>
         </div>
+        <div class="col-md-4"></div>
     </div>
 </div>

@@ -3,7 +3,6 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-// const admin = require("firebase-admin");
 
 const { sendMail } = require("../email/lib");
 

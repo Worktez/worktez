@@ -1,9 +1,9 @@
 <ng-container *ngIf="tasks | async; else loader">
-    <div class="table-responsive">
-        <table class="table table-hover">
+    <div [ngClass]="parentComponent == 'MyDashboard' ? 'table-responsive' : ''">
+        <table class="table table-hover table-borderless">
             <thead>
                 <tr>
-                    <ng-container *ngFor="let header of tableHeaders">
+                    <!-- <ng-container *ngFor="let header of tableHeaders">
                         <th [colSpan]="getColSpan(header)" (click)="toggleSortBy(header)" style="cursor: pointer;">
                             {{header}}
                             <ng-container *ngIf="sortByFields[header] == 'asc'">
@@ -13,7 +13,18 @@
                                 <span class="material-icons" style="position: relative;top: 5px;font-size: medium;">arrow_downward</span>
                             </ng-container>
                         </th>
+                    </ng-container> -->
+                    <th colspan="1">Status</th>
+                    <th colspan="1">Priority</th>
+                    <ng-container *ngIf="parentComponent == 'Tasks'"> 
+                        <th colspan="1">Difficulty</th>
                     </ng-container>
+                    <th colspan="1">Task ID</th> 
+                    <th [colspan]="parentComponent == 'MyDashboard' ? 5 : 3" class="text-center">Title</th>
+                    <ng-container *ngIf="parentComponent == 'Tasks'"> 
+                        <th colspan="3" class="text-center">Assignee</th>
+                    </ng-container>
+                    <th colspan="2">Progress</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,17 +41,27 @@
                         <td colspan="1">
                             <app-priority-icons [Priority]="item.Priority.split('@@')[1]"></app-priority-icons>
                         </td>
+<<<<<<< HEAD
                         <td colspan="1">
                             <app-difficulty-icons [Difficulty]="item.Difficulty.split('@@')[1]"></app-difficulty-icons>
                         </td>
+=======
+                        <ng-container *ngIf="parentComponent == 'Tasks'"> 
+                            <td colspan="1">
+                                <app-difficulty-icons [Difficulty]="item.Difficulty"></app-difficulty-icons>
+                            </td>
+                        </ng-container>
+>>>>>>> d4a86f8256211fe256bb094b2aae74011ec5b68e
                         <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.Id}}</span></td>
-                        <td colspan="3">{{item.Title}}</td>
-                        <td colspan="2"><span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{item.Assignee}}</td>
-                        <td colspan="3">
-
+                    
+                        <td [colspan]="parentComponent == 'MyDashboard' ? 5 : 3">{{item.Title}}</td>
+                        
+                        <ng-container *ngIf="parentComponent == 'Tasks'">
+                            <td colspan="3">{{item.Assignee}}</td>
+                        </ng-container>
+                        <td colspan="2">
                             <app-progress-graph [workdone]="item.WorkDone"></app-progress-graph>
-
-                        </td>
+                        </td>                                  
                     </tr>
                 </ng-container>
             </tbody>

@@ -17,7 +17,7 @@ import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/functions'
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BodyComponent } from './body/body.component';
-import { CreateNewSessionComponent } from './body/create-new-session/create-new-session.component';
+import { CreateNewTaskComponent } from './body/create-new-task/create-new-task.component';
 import { CreateNewSprintComponent } from './body/create-new-sprint/create-new-sprint.component';
 import { BoardComponent } from './body/board/board.component';
 import { FeatureCardComponent } from './body/board/feature-card/feature-card.component';
@@ -79,7 +79,10 @@ import { AddPatchComponent } from './list-patches/add-patch/add-patch.component'
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { UploadFilesComponent } from './body/task-details/upload-files/upload-files.component';
 import { ShowFilesComponent } from './body/common-tools/show-files/show-files.component';
+import { UploadLogoComponent } from './body/create-new-organization/upload-logo/upload-logo.component';
 import { LinkComponent } from './body/task-details/link/link.component';
+import { BarChartComponent } from './body/common-tools/bar-chart/bar-chart.component';
+import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-graph/sprint-evaluation-graph.component';
 
 
 @NgModule({
@@ -87,7 +90,7 @@ import { LinkComponent } from './body/task-details/link/link.component';
     AppComponent,
     HeaderComponent,
     BodyComponent,
-    CreateNewSessionComponent,
+    CreateNewTaskComponent,
     CreateNewSprintComponent,
     BoardComponent,
     FeatureCardComponent,
@@ -149,6 +152,9 @@ import { LinkComponent } from './body/task-details/link/link.component';
     Patch5Component,
     UploadFilesComponent,
     ShowFilesComponent,
+    UploadLogoComponent,
+    SprintEvaluationGraphComponent,
+    BarChartComponent,
     LinkComponent
   ],
   imports: [

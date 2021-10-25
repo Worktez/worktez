@@ -3,8 +3,6 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-// const admin = require("firebase-admin");
-// const db = admin.firestore();
 
 const { db } = require("../application/lib");
 
@@ -57,7 +55,6 @@ exports.getUser = function(Uid, username) {
                 data = element.data();
             }
         });
-
         return data;
     });
 

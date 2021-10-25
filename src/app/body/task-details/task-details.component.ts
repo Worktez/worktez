@@ -51,7 +51,7 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( private route: ActivatedRoute, public db: AngularFirestore, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService, private applicationSettingsService: ApplicationSettingsService  ) { }
+  constructor ( private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService, public applicationSettingsService: ApplicationSettingsService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
