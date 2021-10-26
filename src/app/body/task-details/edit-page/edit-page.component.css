@@ -1,14 +1,12 @@
 #editPageTaskContainer,
 .modal-content {
-    border: var(--primary-border);
     background-color: var(--secondary-bg);
-    color: var(--text);
+    color: var(--button-text);
 }
 
 #button {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
+    color:white;
 }
 
 #button:focus,
@@ -20,15 +18,9 @@
 }
 
 .clr {
-    background-color: white;
-}
-
-.header {
-    font-weight: bold;
-}
-
-.head {
-    font-weight: bolder;
+    border: none;
+    color: var(--text);
+    background-color: var(--primary-bg);
 }
 
 #font {
@@ -37,18 +29,44 @@
     color: var(--button-text);
 }
 
-#navbarMenu,
-.modal-header {
-    background-color: var(--primary-color);
+
+.modal-title {
+    color: var(--text);
+    font-weight: bold;
 }
 
-
-/* #non-editable {
-} */
+select,
+input {
+    border: none;
+    color: var(--text);
+    font-size: 15px;
+    background-color: var(--primary-bg);
+}
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
+#label {
+    color: var(--button-text);
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.close {
+    color: var(--text);
+}
+
+.close:hover {
+    transform: scale(1.3);
+}
+
+#non-editable {
+    background-color: var(--primary-bg);
+    color: var(--text);
 }
