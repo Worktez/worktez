@@ -1,16 +1,16 @@
-<div class="container-fluid">
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header row pt-3">
+            <div class="row pt-3">
+                    <div class="col-1 col-md-1"></div>
                 <div class="col-8 col-md-8 pl-2">
-                    <h5 class="modal-title col-md-6" id="ModalCenterLabel">Edit Task</h5>
-                    <span class="col-md pl-3" style="color: var(--text);">{{ todayDate }}</span>
+                    <h5 class="modal-title" id="ModalCenterLabel">Edit Task</h5>
+                    <span style="color: var(--text);">{{ todayDate }}</span>
                 </div>
                 <div class="col-2 col-md-2">
-                <button type="button" class="close col-md-4" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="material-icons" (click)="editTaskDone()">close</span>
-                </button>
+                    <button type="button" class="close col-md" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="material-icons" (click)="editTaskDone()">close</span>
+                    </button>
                 </div>
                 <div class="col-1 col-md-1"></div>
             </div>
@@ -126,5 +126,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>
