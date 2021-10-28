@@ -1,31 +1,30 @@
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="row modal-content">
             <div class="modal-header pt-3">
                 <div class="col-8 col-md-8 pl-2">
-                    <h5 class="modal-title col-md-6" id="exampleModalCenterLabel">Edit Task</h5>
-                    <span class="col-md pl-3" style="color: var(--text);">{{ todayDate }}</span>
+                    <h5 class="modal-title pl-3" id="exampleModalCenterLabel">Edit Task</h5>
+                    <span class="pl-3" style="color: var(--text);">{{ todayDate }}</span>
                 </div>
                 <div class="col-2 col-md-2">
-                <button type="button" class="close col-md-4" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="material-icons" (click)="editTaskDone()">close</span>
                 </button>
                 </div>
-                <div class="col-1 col-md-1"></div>
             </div>
     <div class="container-fluid modal-body px-5" id="editPageTaskContainer">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
-                        <div class="form-row">
-                            <div class="form-group col-md-8">
+                        <div class="row">
+                            <div class="col-md-8 pl-2">
                                 <span id="label">Task Title</span>
                                 <input type="text" class="form-control" [(ngModel)]="editTask.Title" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="col-md-4 pr-2">
                                 <span id="label">Project Name</span>
                                 <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Project}} [(ngModel)]="task.Project" [ngModelOptions]="{standalone: true}">
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="row">
                             <div class="col-md-6 ml-auto px-2">  
                                 <span id="label">Creator Name</span>                      
                                 <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Creator}} [(ngModel)]="task.Creator" [ngModelOptions]="{standalone: true}">
@@ -42,7 +41,7 @@
                                 </datalist>
                             </div>
                             </div>
-                            <div class="form-row pt-3">
+                            <div class="row pt-3">
                                 <div class="col-md-6 ml-auto px-2">  
                                     <span id="label">Reporter Name</span>                      
                                     <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Reporter}} [(ngModel)]="task.Reporter" [ngModelOptions]="{standalone: true}">
@@ -57,7 +56,7 @@
                                     </datalist>
                                 </div>
                             </div>
-                            <div class="form-row pt-3">
+                            <div class="row pt-3">
                                 <div class="col-md-4 ml-auto px-2">
                                     <span id="label">Sprint Number</span>
                                     <input type="number" min="-1" class="form-control" [(ngModel)]="editTask.SprintNumber" [ngModelOptions]="{standalone: true}">
@@ -76,7 +75,7 @@
                                     <input type="number" min="0" class="form-control" [(ngModel)]="editTask.StoryPointNumber" [ngModelOptions]="{standalone: true}">
                                 </div>
                             </div>
-                            <div class="form-row pt-3">
+                            <div class="row pt-3">
                                 <div class="col-md-4 px-2">
                                     <span id="label">Task Status</span>
                                     <input type="text" readonly class="form-control" id="non-editable" value={{this.editTask.Status}} [(ngModel)]="editTask.Status" [ngModelOptions]="{standalone: true}">
@@ -95,13 +94,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-row pt-3">
-                                <div class="form-group col-md-12">
+                            <div class="row pt-3">
+                                <div class="col-md-12 px-2">
                                     <span id="label">Task Description</span>
                                     <textarea class="form-control clr" rows="2" [(ngModel)]="editTask.Description" [ngModelOptions]="{standalone: true}"></textarea>
                                 </div>
                             </div>
-                    <div class="form-row py-3">
+                    <div class="row py-3">
                         <button type="submit" class="btn col-md-12" id="button" [disabled]="enableLoader">Submit</button>
                     </div>
                     <app-loader *ngIf="enableLoader"></app-loader>
