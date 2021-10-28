@@ -113,3 +113,14 @@ exports.getMyOrgCollection = function(uid) {
     const getMyOrgPromise = db.collection("Users").doc(uid).collection("MyOrganizations").get();
     return Promise.resolve(getMyOrgPromise);
 };
+
+exports.getMyTeamCollection = function(uid, orgAppKey) {
+    const promise = db.collection("Users").doc(uid).collection("MyOrganizations").where("OrgAppKey", "==", orgAppKey).get().then((doc) => {
+        let data;
+        doc.forEach((user) => {
+            data = user.data();
+        });
+        return data.Teams;
+    });
+    return Promise.resolve(promise);
+};

@@ -5,6 +5,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FeatureCardComponent } from './feature-card/feature-card.component';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Component({
   selector: 'app-board',
@@ -18,6 +19,7 @@ export class BoardComponent implements OnInit {
   componentName: string = "BOARD";
   currentSprintNumber: number
   showContent: boolean = false;
+  uid: string;
   teamData: Team;
   selectedTeamId: string;
   teamCurrentSprintNumber: number = -100;
@@ -25,7 +27,7 @@ export class BoardComponent implements OnInit {
   currentSprintName: string;
   accessLevel: number;
   showTeams: boolean = false;
-  teams: [];
+  teams: string[];
   sprintNotExist: boolean = false;
   teamMembers: string[];
   changeTeam: boolean = false;
@@ -37,17 +39,19 @@ export class BoardComponent implements OnInit {
   SDate: any;
   
 
-  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
-    // Efficient for now
     this.accessLevel = 0;
     this.authService.afauth.user.subscribe(data => {
       this.authService.userAppSettingObservable.subscribe(data => {
+        this.uid= data.uid;
+        this.selectedTeamId= data.SelectedTeamId;
         if (data.SelectedOrgAppKey) {
+          this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
           this.accessLevel = 1;
           if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
             this.selectedTeamId = this.applicationSettingsService.editedTeamId;
@@ -56,9 +60,11 @@ export class BoardComponent implements OnInit {
             this.applicationSettingsService.editedTeamId = this.selectedTeamId;
           }
           this.backendService.organizationsData.subscribe(data => {
-              this.teams = data.TeamsId;
+            this.authService.myTeamsListObservable.subscribe(data => {
+              this.teams = data;
               this.showTeams = true;
               this.readApplicationData();
+            });
           });
         }
       });
@@ -84,13 +90,20 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  getSprintDetails(teamId: string) {
+  async getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
     this.applicationSettingsService.editedTeamId = teamId;
     this.selectedTeamId = teamId;
     this.changeTeam = true;
     this.readApplicationData();
+    const callable = this.functions.httpsCallable('users');
+    try {
+      const result = await callable({ mode: "updateSelectedTeam", Uid: this.uid , SelectedTeam: this.selectedTeamId}).toPromise();
+      console.log("Successful updated Selected Team in db");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   readSprintData() {
