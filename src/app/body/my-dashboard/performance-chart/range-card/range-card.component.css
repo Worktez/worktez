@@ -4,14 +4,18 @@
 
 #button {
     background-color: var(--secondary-color);
-    color: var(--input-field);
+    color: white;
+}
+
+#dropdownMenuButton{
+    color: var(--text);
 }
 
 #button:focus,
 #button:active,
 #dropdownMenuButton:hover {
-    background-color: var(--secondary-color);
-}
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); }
 
 input {
     background-color: var(--primary-bg);
@@ -29,4 +33,5 @@ textarea:focus {
 #dropdownRangeCard {
     background-color: var(--secondary-bg);
     color: var(--input-field);
+border-color: var(--primary-color);
 }

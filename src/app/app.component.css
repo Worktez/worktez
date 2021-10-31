@@ -19,6 +19,7 @@ body {
     --secondary-bg: #FFFFFF;
     --secondary-header-bg: rgba(92, 96, 236, 0.2);
     --primary-border: 1px solid rgba(84, 84, 84, 0.17);
+    --dropdown-hover: #DDDEF4;
     --hover: #5C60EC;
     --box-shadow-top: 0px 0px 3px 0px #0C0F7112;
     --box-shadow-bottom: 0px 0px 3px 0px #0C0F7112;
@@ -47,6 +48,7 @@ body {
     --secondary-bg: #20282E;
     --secondary-header-bg: rgba(92, 96, 236, 0.2);
     --primary-border: 1px solid #546e7a;
+    --dropdown-hover:rgba(126,129,233,0.12);
     --hover: #5559D9;
     --box-shadow-top: 0px 0px 2px 0px #20282E;
     --box-shadow-bottom: 0px 0px 2px 0px #20282E;

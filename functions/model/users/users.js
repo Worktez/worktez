@@ -13,7 +13,9 @@ const { verifyUser } = require("./verifyUser");
 const { getUserAppSettings } = require("./getUserAppSettings");
 const { checkAvailableUsername } = require("./checkAvailableUsername");
 const { getMyOrgList } = require("./getMyOrgList");
+const { getMyTeamsList } = require("./getMyTeamsList");
 const { setMyOrganization } = require("./setMyOrganization");
+const { updateSelectedTeam } = require("./updateSelectedTeam");
 
 exports.users = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -33,8 +35,12 @@ exports.users = functions.https.onRequest((request, response) => {
             return checkAvailableUsername(request, response);
         } else if (mode == "getMyOrgList") {
             return getMyOrgList(request, response);
+        } else if (mode == "getMyTeamsList") {
+            return getMyTeamsList(request, response);
         } else if (mode == "setMyOrganization") {
             return setMyOrganization(request, response);
+        } else if (mode == "updateSelectedTeam") {
+            return updateSelectedTeam(request, response);
         }
     });
 });

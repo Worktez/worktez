@@ -5,45 +5,59 @@
     border: none;
 }
 
-.card-header {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+.card-header, .btn {
+    color: var(--text);
+    text-decoration: var(--text);
+    background-color: var(--secondary-bg);
 }
 
-.card-body {
+.buttons { 
+    justify-content: space-between; 
+} 
+
+.dropdown-menu {
+    border-color: var(--primary-color) ;
+    color: var(--text);
     background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
     color: var(--text);
 }
 
-#button,
-#dropdownButton {
-    background-color: var(--button-bg);
+.dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
+}
+
+#button{
+    background-color: var(--button-hover-bg);
     color: var(--button-text);
 }
 
 #button:hover,
 #dropdownButton:hover {
-    background-color: var(--button-hover-bg);
-}
-
-#filterMenu {
-    background-color: var(--secondary-bg);
-    padding-right: 35px;
-    padding-left: 5px;
-}
-
-#navbarMenu {
-    background-color: var(--primary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
 }
 
 #Progressgraph {
     height: 10px; 
-    margin: 20px;
-    border-radius: 5px;
-    background-color: var(--progress-bg);
+    margin: 0px 20px 10px 10px;
+    border-radius: 2%;
+    background-color: var(--progress-left-bg);
     width: 100%;
 } 
 
 .progress {
     height: 10px;
+    background-color: var(--progress-bg);
+}
+
+#StartDate {
+    color: var(--secondary-color);
+}
+
+#EndDate {
+    color: var(--danger-color);
 }
