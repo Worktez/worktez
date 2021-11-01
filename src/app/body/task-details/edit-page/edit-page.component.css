@@ -70,3 +70,7 @@ input:focus {
     background-color: var(--primary-bg);
     color: var(--text);
 }
+
+#date {
+    color: var(--text);
+}
