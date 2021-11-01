@@ -1,0 +1,13 @@
+.avatar img {
+    border-radius: 50%;
+    position: relative;
+    left: -5px;
+    margin-left: -20px;
+    z-index: 1;
+}
+  
+.avatars {
+direction: rtl;
+text-align: left;
+padding-left: 20px;
+}

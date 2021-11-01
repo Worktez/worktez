@@ -1,0 +1,11 @@
+.progress {
+    border-radius: 10px;
+}
+
+.logged {
+    background-color: var(--primary-color);
+}
+
+.total {
+    background-color: var(--scrollbar-color);
+}
