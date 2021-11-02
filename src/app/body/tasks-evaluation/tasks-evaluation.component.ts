@@ -72,7 +72,7 @@ export class TasksEvaluationComponent implements OnInit {
 
       this.prev_strt_at.push(this.firstInResultTaskId);
       this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
-        this.teamCurrentSprint = data[0].CurrentSprintId;
+        this.teamCurrentSprint = data.CurrentSprintId;
         this.showLoader = false;
       });
     } catch (error) {

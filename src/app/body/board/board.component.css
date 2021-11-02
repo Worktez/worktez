@@ -2,3 +2,44 @@
     color: var(--text);
     text-align: center;
 }
+
+.vertical-menu {
+    width: auto;
+    height: 400px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}
+
+.vertical-menu-mobile {
+    display: none;
+}
+
+#button{
+    background-color: var(--button-hover-bg);
+    color: var(--button-text);
+}
+
+#button:hover{
+    background-color: var(--button-hover-bg);
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}
+@media only screen and (max-width: 600px) {
+    .vertical-menu {
+        display: none;
+    }   
+    .vertical-menu-mobile {
+        display: block;
+    }
+}

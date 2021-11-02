@@ -58,7 +58,7 @@ export class CreateNewSprintComponent implements OnInit {
         if (data.SelectedOrgAppKey) {
           this.selectedTeamId = data.SelectedTeamId;
           this.backendService.organizationsData.subscribe(data => {
-              this.teams = data[0].TeamsId;
+              this.teams = data.TeamsId;
               this.showTeams = true;
               this.readApplicationData();
           });
@@ -68,9 +68,9 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-      this.teamCurrentSprintNumber = teams[0].CurrentSprintId;
-      this.nextSprintId = teams[0].CurrentSprintId + 1;
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(team => {
+      this.teamCurrentSprintNumber = team.CurrentSprintId;
+      this.nextSprintId = team.CurrentSprintId + 1;
       this.readSprintData();
     });
   }
@@ -79,7 +79,7 @@ export class CreateNewSprintComponent implements OnInit {
     this.showContent = false;
     this.applicationSettingsService.getSprintsDetails(this.nextSprintId).subscribe(sprints => {
       if (sprints != undefined) {
-        this.sprintData = sprints[0];
+        this.sprintData = sprints;
         this.taskNo = this.sprintData.TotalNumberOfTask;
       } else{
         this.taskNo = 0;

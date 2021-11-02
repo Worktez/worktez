@@ -2,11 +2,35 @@
     color: #ffff00; 
     padding: right 16px;
 }
+.lowBorder {
+    color: #ffff00; 
+    text-align: center;
+    border-style: dashed;
+    border-color:#ffff00; 
+    border-width: 1px;  
+    padding-top: 4px;    
+}
 .medium {
     color: #ee82ee; 
     padding: right 16px;
 }
+.mediumBorder {
+    color: #ee82ee; 
+    text-align: center;
+    border-style: dashed;
+    border-color:#ee82ee;  
+    border-width: 1px; 
+    padding-top: 4px;    
+}
 .high {
     color: #ff0000;
     padding: right 16px;
+}
+.highBorder {
+    color: #ff0000;
+    text-align: center;
+    border-style: dashed;
+    border-color:#ff0000; 
+    border-width: 1px;    
+    padding-top: 4px;  
 }

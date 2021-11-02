@@ -17,6 +17,7 @@ export class AuthService {
   public userAppSettingObservable: Observable<UserAppSetting>;
 
   public myOrgCollectionsData: Observable<MyOrganizationData[]>
+  public myTeamsListObservable: Observable<string[]>
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -93,6 +94,14 @@ export class AuthService {
       map(actions => {
         return actions.data as MyOrganizationData[];
     }));
+  }
+
+  getListedTeams(uid: string, appKey: string) {
+    const callable = this.functions.httpsCallable("users");
+    this.myTeamsListObservable = callable({mode: "getMyTeamsList", Uid: uid, OrgAppKey: appKey}).pipe(
+      map(actions => {
+        return actions.data as string[];
+    }));  
   }
 
   getAppKey() {

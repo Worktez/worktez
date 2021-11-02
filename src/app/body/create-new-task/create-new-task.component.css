@@ -1,13 +1,3 @@
-.taskCard {
-    margin: 4px auto;
-    position: absolute;
-    z-index: 1;
-    background: var(--secondary-bg);
-    width: 100%;
-    height: 100%;
-    border-radius: 3px; 
-}
-
 .modal-header {
     border-bottom: none !important;
     padding: 1.1rem;
@@ -23,7 +13,6 @@
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 6px; 
-    min-width: 600px;
     min-height: 350px;
     padding: 1.1rem;
     justify-content: space-evenly;
@@ -71,11 +60,4 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
-}
-
-@media only screen and (max-width: 600px) {
-    .sprintCard {
-        width: 100%;
-        height: 160%;
-    }
 }

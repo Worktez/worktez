@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DifficultyIconsComponent implements OnInit {
   @Input('Difficulty') Difficulty: string
+  @Input('Border') Border: boolean
   constructor() { }
 
   ngOnInit(): void {

@@ -61,6 +61,17 @@ exports.getUser = function(Uid, username) {
     return Promise.resolve(promise);
 };
 
+exports.getAllPhotos = function(emails) {
+    const data=[];
+    const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
+        doc.forEach((user) => {
+            data.push(user.data().photoURL);
+        });
+        return data;
+    });
+    return Promise.resolve(promise);
+};
+
 exports.getUserUseEmail = function(email) {
     const promise = db.collection("Users").where("email", "==", email).get().then((doc) => {
         let data;
@@ -112,4 +123,15 @@ exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
 exports.getMyOrgCollection = function(uid) {
     const getMyOrgPromise = db.collection("Users").doc(uid).collection("MyOrganizations").get();
     return Promise.resolve(getMyOrgPromise);
+};
+
+exports.getMyTeamCollection = function(uid, orgAppKey) {
+    const promise = db.collection("Users").doc(uid).collection("MyOrganizations").where("OrgAppKey", "==", orgAppKey).get().then((doc) => {
+        let data;
+        doc.forEach((user) => {
+            data = user.data();
+        });
+        return data.Teams;
+    });
+    return Promise.resolve(promise);
 };

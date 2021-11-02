@@ -49,10 +49,10 @@ export class EditPageComponent implements OnInit {
     this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type];
   }
   readTeamMembers(teamId :string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
-          this.teamMembers=teams[0].TeamMembers;
-          this.teamName=teams[0].TeamName;
-          this.type = teams[0].Type;
+    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
+          this.teamMembers=team.TeamMembers;
+          this.teamName=team.TeamName;
+          this.type = team.Type;
     }); 
   }
 

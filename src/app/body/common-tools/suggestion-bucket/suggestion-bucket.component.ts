@@ -30,6 +30,5 @@ export class SuggestionBucketComponent implements OnInit {
     }))).subscribe(user=>{
           this.userName= user[0].displayName;
         });
-
   }
 }

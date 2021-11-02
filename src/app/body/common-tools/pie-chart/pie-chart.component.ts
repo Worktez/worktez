@@ -19,8 +19,8 @@ options={
   pieSliceText:'none',
   legend:'none',
   slices:{
-    0:{color:'green'},
-    1: {color:'blue'}
+    0: {color: '#5559D9'},
+    1: {color: '#cbc9cc'}
   },
   chatArea:{left:0,top:0,width:'100%',height:'100%'}
 };

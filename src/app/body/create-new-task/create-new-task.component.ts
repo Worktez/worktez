@@ -1,11 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ToolsService } from '../../services/tool/tools.service';
-import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -65,18 +62,17 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   readTeamData(teamId :string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(teams => {
-          this.priorityLabels = teams[0].PriorityLabels;
-          this.statusLabels = teams[0].StatusLabels;
-          this.type = teams[0].Type;
-          this.difficultyLabels = teams[0].DifficultyLabels;
-          this.teamMembers=teams[0].TeamMembers;
-          this.teamName=teams[0].TeamName;
-          this.sprintNumber = teams[0].CurrentSprintId;
+    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
+          this.priorityLabels = team.PriorityLabels;
+          this.statusLabels = team.StatusLabels;
+          this.type = team.Type;
+          this.difficultyLabels = team.DifficultyLabels;
+          this.teamMembers=team.TeamMembers;
+          this.teamName=team.TeamName;
+          this.sprintNumber = team.CurrentSprintId;
     }); 
   }
   async submit() {
-    console.log("in submit");
     this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
     this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },

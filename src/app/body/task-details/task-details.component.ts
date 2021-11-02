@@ -13,6 +13,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Activity } from 'src/app/Interface/ActivityInterface';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -38,6 +39,9 @@ export class TaskDetailsComponent implements OnInit {
   task: Tasks
   todayDate: string
   time: string
+  assignee: string
+  creator: string
+  watcherList: string[] =[]
   orgDomain: string
   actionType: string = "All"
   comment: string;
@@ -46,7 +50,7 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService ) { }
+  constructor ( private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
@@ -78,10 +82,23 @@ export class TaskDetailsComponent implements OnInit {
      this.taskDataObservable = callable({ mode: "getTaskDetails", Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
          const data = res.taskData as Tasks;
          this.task = data;
+         this.getName(data.Assignee, "Assignee");
+         this.getName(data.Creator, "Creator");
          return { ...data }
-      }));
+        }));      
   }
 
+  getName (email, value) {
+    let name="";
+    this.userService.getUserData(email).then(data => {
+      name = data.displayName;
+      if (value == "Assignee") {
+        this.assignee = name.split(' ')[0];
+      } else if (value == "Creator") {
+        this.creator = name.split(' ')[0];
+      }
+    });
+  }
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity");
     this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(

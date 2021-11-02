@@ -1,49 +1,46 @@
 <ng-container *ngIf="accessLevel; else unauthorizedAccess">
-    <div class="row" *ngIf="showTeams">
-        <div class="col">
-            <div class="container">
-                <div class="row">
-                    <ng-container *ngFor="let item of teams">
-                        <div class="col" type="button" (click)="getSprintDetails(item)">
-                            <app-feature-card [cardName]="item"></app-feature-card>
-                        </div>
-                    </ng-container>
-                </div>
-                <ng-container *ngIf="showContent; else loader">
-                    <ng-container *ngIf="sprintNotExist">
-                        <div class="row mt-5">
-                            <div class="col">
-                                <p class="board-text">The Sprint does not exist</p>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="sprintNotExist == false">
-                        <div class="row">
-                            <div class="col">
-                                <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="sprintNotExist == false">
-                        <div class="row my-4">
-                            <div class="col">
-                                <app-performance-column-chart [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-performance-column-chart>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="sprintNotExist == false">
-                        <div class="row my-4">
-                            <div class="col">
-                                <app-sprint-evaluation-graph [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-sprint-evaluation-graph>
-                            </div>
-                        </div>
-                    </ng-container>
+    <div class="row p-4" *ngIf="showTeams">
+        <div class="col-md-2 pb-2">
+            <div class="vertical-menu">
+                <ng-container *ngFor="let item of teams">
+                    <div (click)="getSprintDetails(item)">
+                        <app-feature-card [cardName]="item"></app-feature-card>
+                    </div>
                 </ng-container>
-                <ng-template #loader>
-                    <app-loader></app-loader>
-                </ng-template>
+            </div>
+            <div class="vertical-menu-mobile">
+                <div class="btn-group">
+                    <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{selectedTeamId}}&nbsp;&nbsp;</button>
+                    <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                        <ng-container *ngFor="let item of teams">
+                            <button class="dropdown-item" type="button" (click)="getSprintDetails(item)">{{item}}</button>
+                        </ng-container>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="col-md-10">
+            <div class="row">
+                <ng-container *ngIf="showContent; else loader">     
+                    <div class="col-md-4 pb-2">
+                        <ng-container *ngIf="sprintNotExist">
+                            <p class="board-text">The Sprint does not exist</p>
+                        </ng-container>
+                        <ng-container *ngIf="sprintNotExist == false">
+                            <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                        </ng-container>
+                    </div>
+                    <div class="col-md-8 pb-2">
+                        <ng-container *ngIf="sprintNotExist == false">
+                            <app-performance-column-chart [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-performance-column-chart>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <ng-template #loader>
+            <app-loader></app-loader>
+        </ng-template>
     </div>
 </ng-container>
 <ng-template #unauthorizedAccess>

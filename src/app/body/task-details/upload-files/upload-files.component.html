@@ -1,19 +1,34 @@
-<div class="row">
-    <ng-container *ngFor="let item of uploadService.filesData | async">
-        <div class="col text-center">
-            <app-show-files [file]="item"  (changeFileStatus)="changeFileStatus($event)"></app-show-files>
+<div *ngIf="(uploadService.filesData | async)?.length != 0; else upload">
+    <div class="row" style="max-height: 40px;">
+        <h6 class="col-md-11 col-10 pt-2 mb-0">Upload Files</h6>
+        <div class="col-md-1 col-2 pt-1">
+            <form>
+                <div class="form-group">
+                    <label class="btn" for="exampleFormControlFile1"><span class="material-icons uploadIcon">cloud_upload</span></label>
+                  <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+                </div>
+            </form>
         </div>
-    </ng-container>
+    </div>
+    <div class="row">
+        <ng-container *ngFor="let item of uploadService.filesData | async">
+            <div class="col px-1 text-center">
+                <app-show-files [file]="item"  (changeFileStatus)="changeFileStatus($event)"></app-show-files>
+            </div>
+        </ng-container>
+    </div>
 </div>
 
-<form>
-    <div class="form-group">
-      <label class="btn btn-primary" for="exampleFormControlFile1">
-          Upload File
-      </label>
-      <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
-    </div>
-</form>
+<ng-template #upload>
+    <form>
+        <div class="form-group">
+            <label class="btn btn-outline-secondary btn-lg btn-block p-2" for="exampleFormControlFile1">
+              <h5><span class="material-icons">cloud_upload</span> Click to Upload Document</h5>
+            </label>
+          <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+        </div>
+    </form>
+</ng-template>
 
 <ng-container *ngIf="uploadService.fileUploadStatus">
     <div class="progress" style="height: 10px; margin-top: 10px;">
