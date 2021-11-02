@@ -1,7 +1,7 @@
 <div class="container p-0" *ngIf="!showLoader">
     <div class="row p-2">
         <div class="col-12">
-            <div class="card" style="border: none;background: none;">
+            <div class="card">
                 <div class="card-header h3" style="border: none;background: none;">
                     <span class="mr-2">
                         <img src="{{ organization.OrganizationLogoURL }}" alt="" height="30" width="50">
@@ -10,10 +10,25 @@
                 </div>
                 <div class="card-body">
                     <h6 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h6>
-                    <span type="button" (click)="showOrgDetails = true;" [ngClass]="showOrgDetails? 'text-left pl-4 pr-4 mt-3 d-inline mr-0' : 'text-left text-muted pl-4 pr-4 mt-3 d-inline mr-0'" [ngStyle]="!showOrgDetails ? {'border-bottom': '1px solid #6c757d'} : {'border-bottom': '1px solid var(--text)'}">Organization</span>
-                    <span type="button" (click)="showOrgDetails = false;" [ngClass]="showOrgDetails ? 'text-left text-muted pl-4 pr-4 mt-3 d-inline ml-0': 'text-left pl-4 pr-4 mt-3 d-inline ml-0'" [ngStyle]="showOrgDetails ? {'border-bottom': '1px solid #6c757d'} : {'border-bottom': '1px solid var(--text)'}">Teams <span class="material-icons" style="position: relative;top: 5px;">groups</span></span>
-                    <span type="button" class="material-icons float-right pt-4" *ngIf="!showOrgDetails" (click)="createTeam()">group_add</span>
-                    <ng-container *ngIf="showOrgDetails;else showTeamDetails">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                          <a (click)="switchView('showOrgDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDetails}" aria-current="page">
+                              Organization<span class="material-icons align-middle px-2">corporate_fare</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
+                                Teams <span class="material-icons align-middle px-2">groups</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
+                                Documents <span class="material-icons align-middle px-2">snippet_folder</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <span type="button" class="material-icons float-right pt-4" *ngIf="showTeamsDetails" (click)="createTeam()">group_add</span>
+                    <ng-container *ngIf="showOrgDetails">
                         <h6 class="card-title mt-4">
                             <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
                             {{ organization.OrganizationEmail }}
@@ -22,50 +37,26 @@
                             <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
                             {{ organization.OrganizationDomain }}
                         </h6>
-    
                     </ng-container>
-                    <ng-template #showTeamDetails>
+                    <ng-container *ngIf="showTeamsDetails">
                         <div class="container">
                             <div class="row">
                                 <ng-container *ngFor="let team of teams">
-                                    <div class="col-lg-6 pt-4">
-                                        <div class="card" style="box-shadow: var(--box-shadow-bottom);background: var(--secondary-bg);">
-                                                <div class="card-body pt-4">
-                                                    <h5 class="card-title">{{ team.TeamName }}</h5>
-                                                    <span class="material-icons mr-2 float-right" type="button" (click)="updateTeam(team.TeamId)">manage_accounts</span>
-                                                    <span class="material-icons mr-4 float-right" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="enableAddMember(team)">person_add</span>
-                                                    <h6 class="card-subtitle text-muted">{{ team.TeamDescription }}</h6>
-                                                    <h6 class="card-title mt-2">
-                                                        <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons>
-                                                        {{ team.TeamManagerEmail }}
-                                                    </h6>
-                                                    <h6 class="card-title mt-2">
-                                                        <span class="material-icons mr-2" style="position: relative;top: 5px;">groups</span>
-                                                        {{ team.TeamMembers.join(', ') }}
-                                                    </h6>
-                                                    <h6 class="card-title mt-2">
-                                                        <span class="material-icons mr-2" style="position: relative;top: 5px;">task</span>
-                                                        Total Team Tasks - {{ team.TotalTeamTasks }}
-                                                    </h6>
-                                                    <h6 class="card-title mt-2">
-                                                        <span class="material-icons mr-2" style="position: relative;top: 5px;">sports_score</span>
-                                                        Current Sprint Id - {{ team.CurrentSprintId }}
-                                                    </h6>
-                                                </div>
-                                        </div>
+                                    <div class="col col-md-4 col-lg-6 pt-4">
+                                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
                                     </div>
                                 </ng-container>
                             </div>
                         </div>
-                    </ng-template>
+                    </ng-container>
+                    <ng-container *ngIf="showOrgDocuments">
+                        <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
+                    </ng-container>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
-    <app-add-member [teamName]="teamToAddMember.TeamName" [teamMembers]="teamToAddMember.TeamMembers" [teamManager]="teamToAddMember.TeamManager" [teamDescription]="teamToAddMember.TeamDescription" [isUpdateTeam]="true" (addedMember)="addedMember($event)"></app-add-member>
-</ng-container>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
 </ng-container>

@@ -84,6 +84,8 @@ import { LinkComponent } from './body/task-details/link/link.component';
 import { BarChartComponent } from './body/common-tools/bar-chart/bar-chart.component';
 import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-graph/sprint-evaluation-graph.component';
 import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-images.component';
+import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
+import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 
 
 @NgModule({
@@ -157,7 +159,9 @@ import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-ima
     SprintEvaluationGraphComponent,
     BarChartComponent,
     LinkComponent,
-    SpeedImagesComponent
+    SpeedImagesComponent,
+    TeamsCardComponent,
+    OrgDocumentsComponent
   ],
   imports: [
     BrowserModule,
