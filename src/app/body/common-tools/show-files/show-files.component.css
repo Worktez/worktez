@@ -1,9 +1,11 @@
-#files {
-    font-size: 60px;
-    cursor: pointer;
+.card {
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
-
-.menu {
-    margin: 5px;
+.material-icons {
+    color: var(--text);
+}
+#files {
+    font-size: 50px;
     cursor: pointer;
 }

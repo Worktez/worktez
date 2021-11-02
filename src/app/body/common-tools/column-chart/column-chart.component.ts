@@ -9,14 +9,15 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 export class ColumnChartComponent implements OnInit {
 
   @Input('data') data: [];
+  @Input('teamId') teamId: string = "";
   @Input('columnNames') columnNames: [];
   constructor(public themeService: ThemeService) { }
-
-  title = 'Team Performance Chart';
+  
+  title: string = "";
   type = 'ColumnChart';
    options = {
     width: "100%",
-    height: 350,
+    height: 300,
     bar: { width: "30%"},
     hAxis: {
       title: 'Sprints',
@@ -30,7 +31,7 @@ export class ColumnChartComponent implements OnInit {
         italic: false
       }
     },
-    colors: ['#10BE65'], 
+    colors: ['#5559D9'], 
     is3D: true,
     backgroundColor: "none",
     titleTextStyle: {
@@ -48,7 +49,7 @@ export class ColumnChartComponent implements OnInit {
             italic: false
         }
     },
-    chartArea: {width: '70%'},
+    chartArea: {width: '85%'},
     legend: { 
       position: 'top', 
       alignment: 'end', 
@@ -60,6 +61,9 @@ export class ColumnChartComponent implements OnInit {
    dynamicResizable: boolean = true;
 
   ngOnInit(): void {
+    if (this.teamId != ""){
+      this.title = "TeamID: "+this.teamId;
+    }
   }
 
 }

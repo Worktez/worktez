@@ -1,18 +1,21 @@
-<div class="row">
-    <div class="col">
-        <span id="files" class="material-icons" (click)="showmenu()">
-            description
-        </span>
-        <label>{{shortName}}</label>
+<div class="card" style="width: 10rem;">
+    <div class="dropdown text-right py-0">
+        <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"> 
+            <span class="material-icons">more_vert</span>
+        </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+      <button class="dropdown-item" type="button">Download</button>
+      <button class="dropdown-item" type="button">Delete</button>
     </div>
-</div>
-<ng-container *ngIf="showMenu">
-    <a [href]="file.Fileurl" [download]="file.FileName">
-        <span class="material-icons menu" (click)="download()">
-            download
-        </span>
-    </a> 
-    <span class="material-icons menu" (click)="delete()">
-        delete
-    </span>
-</ng-container>
+  </div>
+    <div class="card-body py-0">
+        <div class="row">
+            <div class="col text-center">
+                <span id="files" class="material-icons">
+                    description
+                </span>
+                <label>{{shortName}}</label>
+            </div>
+        </div>
+    </div>
+  </div>

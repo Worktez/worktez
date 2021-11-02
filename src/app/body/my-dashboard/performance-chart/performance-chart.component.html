@@ -9,8 +9,6 @@
             </div>
         </div>
     </div>
-    {{data.length}}
-    {{showLoader}}
     <div class="card-body pb-4" *ngIf="data.length && !showLoader">
         <app-chart [data]="data"></app-chart>
     </div>

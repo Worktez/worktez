@@ -1,113 +1,94 @@
 <ng-container *ngIf="applicationSettingsService.sprintDataObservable|async">
-    <div class="card">
+    <ul class="nav flex-container buttons mb-2">
+        <li class="active flex-item">
+            <div class="btn-group">
+                <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu&nbsp;&nbsp;</button>
+                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                    <button class="dropdown-item" type="button" (click)="ActiveSprint()">Active Sprint</button>
+                    <button class="dropdown-item" type="button" (click)="showBacklog()">Backlog</button>
+                    <button class="dropdown-item" type="button" (click)="showDeleted()">Deleted</button>
+                </div>
+            </div>
+        </li>
+        <li class="active flex-item">
+            <div class="btn-group" *ngIf="sprintData.Status != 'Completed' ">
+                <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status&nbsp;&nbsp;</button>
+                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                    <button *ngIf="Status !== 'Under Progress'" class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
+                    <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
+                </div>
+            </div>
+            <span class="material-icons align-middle" *ngIf="sprintData.Status === 'Completed' ">
+                check_circle
+            </span>
+        </li>
+        <li class="active flex-item">
+            <button class="btn px-4" type="button" id="button" (click)="showTasks()">Tasks</button>
+        </li>                        
+    </ul>
+    <div class="card pb-4">
         <div class="card-header">
-            <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
-                <ul class="navbar-nav mr-auto">
+            <div class="dropdown float-right">
+                <button type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn material-icons">filter_list</button>
+                <div class="dropdown-menu dropdown-menu-right py-4 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton" >
+                    <div class="input-group">
+                        <h5>Sprint No.</h5>
+                        <input type="number" id="filterSprintNumberInput" class="form-control ng-untouched ng-pristine ng-valid" style="font-size: 11px;">
+                        <button id="dropdownButton" class="btn" style="font-size: 10px;">Filter</button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-expand-lg p-0" id="navbarMenu">
+                <ul class="nav mr-auto">
                     <li class="nav-item">
-                        <h5 class="active nav-link navbar-text" id="head">Sprint No: {{currentSprintName}}</h5>
+                        <h6 class="active nav-link navbar-text" id="head" style="font-size: 19px;">Sprint No: {{currentSprintName}}</h6>
                     </li>
                     <li class="nav-item">
-                        <h5 class="active nav-link navbar-text" id="head">TeamId: {{sprintData.TeamId}}</h5>
+                        <h6 class="active nav-link navbar-text" id="head" style="font-size: 19px;">TeamId: {{sprintData.TeamId}}</h6>
                     </li>
                 </ul>
-                <div class="pl-lg-0" id="navbarTexts">
-                    <ul class="nav navbar-nav ml-auto align-items-center">
-                        <li class=" active">
-                            <div class="btn-group">
-                                <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
-                                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                                    <button class="dropdown-item" type="button" (click)="ActiveSprint()">Active Sprint</button>
-                                    <button class="dropdown-item" type="button" (click)="showBacklog()">Backlog</button>
-                                    <button class="dropdown-item" type="button" (click)="showDeleted()">Deleted</button>
-                                </div>
-                            </div>
-                        </li>
-                        <li class=" active">
-                            <div class="btn-group" *ngIf="sprintData.Status != 'Completed' ">
-                                <button class="btn dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
-                                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                                    <button *ngIf="Status !== 'Under Progress'" class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
-                                    <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
-                                </div>
-                            </div>
-                            <span class="material-icons align-middle" *ngIf="sprintData.Status === 'Completed' ">
-                                check_circle
-                    </span>
-                        </li>
-                        <li class="active">
-                            <button class="btn" type="button" id="button" (click)="showTasks()">Show All Tasks</button>
-                        </li>
-                        <li class=" active">
-                            <div class="dropdown float-right">
-                                <button class="btn material-icons" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">filter_list</button>
-                                <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-                                    <div class="input-group">
-                                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
-                                        <div class="col-md-3 col-3">
-                                            <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </nav>
         </div>
-        <div class="card-body">
+        <div class="card-body ml-4">
             <div class="row">
+                <div class="col-md-6 col">
+                    <h6 class="row card-title" id="StartDate" style="font-weight: bold;font-size: 15px;"><span class="material-icons" style="font-size: 17px;">date_range</span>Start Date:</h6>
+                    <h6 class="row card-text " id="sprintStartDate" style="font-size: 14px;">{{sprintData.StartDate}}</h6>
+                </div>
+                <div class="col-md-6 col">
+                    <h6 class="row card-title" id="EndDate" style="font-weight: bold;font-size: 15px;"><span class="material-icons" style="font-size: 17px;">date_range</span>End Date: </h6>
+                    <h6 class="row card-text " id="sprintEndDate" style="font-size: 14px;">{{sprintData.EndDate}}</h6>
+                </div>
+            </div>
+            <div class="row my-4">
                 <ng-container *ngIf = "sprintData.SprintNumber > 0">
+                    <div class="row">
+                        <span class="material-icons ml-3" style="font-size: 18px;">donut_large</span>          
+                        <h6>&nbsp;&nbsp;Status</h6>         
+                    </div>
                     <div id="Progressgraph">
-                        <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress bg-success"></app-progress-graph>
+                        <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress"></app-progress-graph>
+                        <div class="row mt-1">
+                            <h6 class="col-md-7 col" id="sprintStatus" style="font-size: 13px;">{{sprintData.Status}}</h6>
+                            <h6 class="col-md-5 col text-right" style="font-size: 13px;">{{workPercentage}}%</h6>
+                        </div>      
                     </div>
                 </ng-container>
-                <div class="col-md-6 pl-4">
-                    <div class="row py-2">
-                        <div class="col-md-3">
-                            <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Start Date:
-                            </h6>
-                        </div>
-                        <div class="col-md-9">
-                            <h6 class="card-text " id="sprintStartDate" style="font-size: 13px;">
-                                {{sprintData.StartDate}}</h6>
-                        </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col-md-3">
-                            <h6 class="card-title " style="font-weight: bold;font-size: 15px;">End Date: </h6>
-                        </div>
-                        <div class="col-md-9">
-                            <h6 class="card-text " id="sprintEndDate" style="font-size: 13px;">{{sprintData.EndDate}}
-                        </h6>
-                        </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col-md-3">
-                            <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Status: </h6>
-                        </div>
-                        <div class="col-md-9">
-                            <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.Status}}</h6>
-                        </div>
-                    </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-7 col">
+                    <h6 class="row card-title " style="font-weight: bold;font-size: 15px;"><span class="material-icons" style="font-size: 18px;">format_list_numbered</span>&nbsp;&nbsp;Total Tasks: </h6>
                 </div>
-
-                <div class="col-md-6">
-                    <div class="row py-2">
-                        <div class="col-md-3">
-                            <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Total Tasks: </h6>
-                        </div>
-                        <div class="col-md-9">
-                            <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalNumberOfTask}}</h6>
-                        </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col-md-3">
-                            <h6 class="card-title " style="font-weight: bold;font-size: 15px;">Completed Tasks: </h6>
-                        </div>
-                        <div class="col-md-9">
-                            <h6 class="card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalCompletedTask}}</h6>
-                        </div>
-                    </div>
+                <div class="col-md-5 col">
+                    <h6 class="row card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalNumberOfTask}}</h6>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-7 col">
+                    <h6 class="row card-title " style="font-weight: bold;font-size: 15px;"><span class="material-icons" style="font-size: 18px;">checklist</span>&nbsp;&nbsp;Completed Tasks: </h6>
+                </div>
+                <div class="col-md-5 col">
+                    <h6 class="row card-text " id="sprintStatus" style="font-size: 13px;">{{sprintData.TotalCompletedTask}}</h6>
                 </div>
             </div>
         </div>

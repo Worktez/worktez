@@ -12,8 +12,7 @@ export class ShowFilesComponent implements OnInit {
   @Output() changeFileStatus = new EventEmitter<{ changeStatus: string, file: FileData}>();
 
   shortName: string = "";
-  showMenu: boolean = false;
-
+  
   constructor() { }
 
   ngOnInit(): void {
@@ -24,10 +23,6 @@ export class ShowFilesComponent implements OnInit {
     this.shortName += this.file.FileName.substring(0,8);
     this.shortName += "...";
     this.shortName += this.file.FileName.substring(this.file.FileName.lastIndexOf("."), this.file.FileName.length);
-  }
-
-  showmenu() {
-    this.showMenu = !this.showMenu;
   }
 
   download() {

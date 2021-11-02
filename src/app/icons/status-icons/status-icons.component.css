@@ -2,19 +2,59 @@
     color: #00ff00; 
     padding-right:20px;
 }
+.completedBorder {
+    color: #00ff00; 
+    text-align: center;
+    border-style: dashed;
+    border-color:#00ff00; 
+    border-width: 1px;   
+    padding-top: 4px;  
+}
 .Ready {
     color: #ff0080; 
     padding-right:20px;
+}
+.ReadyBorder {
+    color: #ff0080; 
+    text-align: center;
+    border-style: dashed;
+    border-color: #ff0080;
+    border-width: 1px;
+    padding-top: 4px;    
 }
 .blocked {
     color: #808080; 
     padding-right:20px;
 }
+.blockedBorder {
+    color: #808080; 
+    text-align: center;
+    border-style: dashed;
+    border-color: #808080;
+    border-width: 1px;  
+    padding-top: 4px;  
+}
 .Under {
     color: #fc6a03; 
     padding-right:20px;
 }
+.UnderBorder {
+    color: #fc6a03; 
+    text-align: center;
+    border-style: dashed;
+    border-color: #fc6a03;
+    border-width: 1px;  
+    padding-top: 4px;  
+}
 .Ice {
     color: #87ceeb; 
     padding-right:20px;
+}
+.IceBorder {
+    color: #87ceeb; 
+    text-align: center;
+    border-style: dashed;
+    border-color: #87ceeb;
+    border-width: 1px;  
+    padding-top: 4px;  
 }

@@ -1,305 +1,236 @@
 <ng-container *ngIf="(taskDataObservable | async)" class="task-position">
-    <div class="container">
-        <div class="card" id="cardDescription">
-            <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <h5 class="active nav-link navbar-text" id="head">Task Details</h5>
-                    </li>
-                </ul>
-                <div class="pl-lg-0" id="navbarTexts">
-                    <ul class="nav navbar-nav ml-auto align-items-center">
-                        <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
-                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Re-open" (click)="reopenTask()">restore</span>
-                        </li>
-                        <li class=" active" *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Delete" data-toggle="modal"
-                                data-target="#exampleModalDel" (click)="deleteTask()">delete </span>
-                        </li>
-                        <li class="active"
-                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" data-toggle="modal" title="Clone Task"
-                                (click)="CloneTaskPage()">content_copy</span>
-                        </li>
-                        <li class=" active"
-                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                            <span type="submit" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" data-toggle="modal" data-target="#Modal" title="Log work"
-                                (click)="logWorkPage()">pending_actions</span>
-                        </li>
-                        <li class=" active" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" data-toggle="modal" data-target="#exampleModalCenter"
-                                title="Edit" (click)="editTask()">edit</span>
-                        </li>
-                        <li class=" active">
-                            <span type="button" class="btn material-icons text-light" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="close" (click)="backToTasks()">close</span>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="card-body">
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-10"><h4>Task Details</h4></div>
+            <div class="col-2">
+                <span class="btn material-icons float-right" (click)="backToTasks()">close</span>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-md-6 part">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-1" id="idTaskDescription">{{task.Id}}</div>
-                    <div class="col-md-9" id="font">
-                        <div id="header">{{task.Title}}</div>
+                    <div class="col-md-8 col-9">
+                        <div class="row">
+                            <div class="status labels mx-2">
+                                <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <app-status-icons [Status]="task.Status" [Border]="true"></app-status-icons>
+                            </div>
+                            <div class="priority labels mx-2">
+                                <span id="headerLabel">Priority &nbsp;&nbsp;</span>
+                                    <app-priority-icons [Priority]="task.Priority" [Border]="true"></app-priority-icons>
+                            </div>
+                            <div class="difficulty labels mx-2">
+                                <span id="headerLabel">Difficulty</span>
+                                    <app-difficulty-icons [Difficulty]="task.Difficulty" [Border]="true"></app-difficulty-icons>
+                            </div>
+                        </div>
+                        
                     </div>
-                </div>
-                <hr>
-                <div class="row ">
-                    <div class="col-md "></div>
-                    <div class="col-md-4 ">
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Sprint Number:</span>
+                    <div class="col-md-4 col-3">
+                        <div class="row float-right" >
+                            <div class="logWork mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                <button class="material-icons btn" type="button" data-toggle="modal" data-target="#Modal" (click)="logWorkPage()">post_add</button>
                             </div>
-                            <div class="col " id="sprintNumberTaskDescription ">{{task.SprintNumber}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Story Point:</span>
-                            </div>
-                            <div class="col " id="storyPointNumberTaskDescription ">{{task.StoryPointNumber}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Estimated Time:</span>
-                            </div>
-                            <div class="col " id="estimatedTimeTaskDescription ">{{task.EstimatedTime}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Priority:</span>
-                            </div>
-                            <div class="col " id="priorityTaskDescription ">{{task.Priority}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Difficulty:</span>
-                            </div>
-                            <div class="col " id="difficultyTaskDescription ">{{task.Difficulty}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Status:</span>
-                            </div>
-                            <div class="col " id="statusTaskDescription ">{{task.Status}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Type:</span>
-                            </div>
-                            <div class="col " id="statusTaskDescription ">{{task.Type}}</div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 "></div>
-                    <div class="col-md-4 ">
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Creation Date:</span>
-                            </div>
-                            <div class="col ">
-                                <div id="creationDateTaskDescription ">{{task.CreationDate}}</div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Reporter:</span>
-                            </div>
-                            <div class="col " id="assigneeTaskDescription ">{{task.Reporter}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Watchers:</span>
-                            </div>
-                            <ng-container *ngIf="task.Watcher.length == 0 ; else showWatchers">
-                                <div class="col " id="assigneeTaskDescription ">No watcher present</div>
-                            </ng-container>
-                            <ng-template #showWatcher>{{task.Watcher}}</ng-template>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Creator:</span>
-                            </div>
-                            <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
-                        </div>
-
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Assignee:</span>
-                            </div>
-                            <div class="col " id="assigneeTaskDescription ">{{task.Assignee}}</div>
-                        </div>
-                        <hr>
-                        <div class="row ">
-                            <div class="col ">
-                                <span id="header ">Creator:</span>
-                            </div>
-                            <div class="col " id="creatorTaskDescription ">{{task.Creator}}</div>
-                        </div>
-                        <hr>
-                        <div class="row border-0 p-2" id="timeBox">
-                            <div class="col">
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span class="font-weight-bold" id="headerTime ">RT: {{task.EstimatedTime -
-                                            task.LogWorkTotalTime}}</span>
+                            <div class="menu mt-3">
+                                <div class="dropdown">
+                                        <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"> 
+                                            <span class="material-icons">more_horiz</span>
+                                        </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                        <div class="reopenTask mt-4" *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
+                                            <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen Task</button>
+                                        </div>
+                                        <div class="editTask mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                                            <button class="dropdown-item" type="button"data-toggle="modal" data-target="#exampleModalCenter" (click)="editTask()">Edit Task</button>
+                                        </div>
+                                        <div class="cloneTask mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            <button class="dropdown-item" type="button" data-toggle="modal" (click)="CloneTaskPage()">Clone Task</button>
+                                        </div>
+                                        <div class="addLink mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#linkModal" (click)="addLink()" >Add Link</button>
+                                        </div>
+                                        <div class="delete mt-4" *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
+                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                            data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
+                                        </div>
                                     </div>
-                                    <div class="col ">
-                                        <span class="font-weight-bold" id="headerTime ">LT:
-                                            {{task.LogWorkTotalTime}}</span>
-                                    </div>
-                                    <div class="col ">
-                                        <span class="font-weight-bold" id="headerTime ">ET:
-                                            {{task.EstimatedTime}}</span>
-                                    </div>
-                                </div>
-                                <div class="row pt-2">
-                                    <div class="col" id="TimeChart">
-                                        <app-time-chart [loggedTime]="task.LogWorkTotalTime"
-                                            [estimatedTime]="task.EstimatedTime"></app-time-chart>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row ">
-                                    <div class="col ">
-                                        <span id="header ">Work Done:</span>
-                                    </div>
-                                    <div class="col " id="workDoneTaskDescription ">{{task.WorkDone}}
-
-                                    </div>
-                                </div>
-                                <div class="row" style="align-items: center;">
-                                    <div class="col-3"></div>
-                                    <div class="col-md-6 mx-auto">
-                                        <app-work-completion [workDone]="task.WorkDone"></app-work-completion>
-                                        <b>Work Progress</b>
-                                    </div>
-                                    <div class="col-3"></div>
-                                </div>
+                                  </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row ">
-                    <div class="col-md "></div>
-                    <div class="col-md-10 ">
-                        <label for="description " class="row-form-label" id="header">Documents:</label>
-                        <div class="alert alert-info form-inline col-md" role="alert ">
-                            <app-upload-files [taskId]="task.Id" [teamId]="task.TeamId" [organizationId]="task.OrganizationId" [orgDomain]="orgDomain"></app-upload-files>
-                        </div>
+            </div>
+            <div class="col-md-6 part">
+                <div class="row">
+                    <div class="col-3 creationDate">
+                        <span id="headerLabel">Creation Date</span>
+                        <h5 class="pt-1">{{task.CreationDate}}</h5>
                     </div>
-                    <div class="col-md "></div>
-                </div>
-                <hr>
-                <div class="row ">
-                    <div class="col-md "></div>
-                    <div class="col-md-10 ">
-                        <label for="description " class="row-form-label" id="header">Description:</label>
-                        <div class="alert alert-info form-inline col-md" role="alert ">
-                            <div id="descriptionTaskDescription">{{task.Description}}</div>
-                        </div>
+                    <div class="col-3 assignee">
+                        <span id="headerLabel">Assignee</span>
+                        <h5 class="pt-1">{{assignee}}</h5>
                     </div>
-                    <div class="col-md "></div>
+                    <div class="col-3 creator">
+                        <span id="headerLabel">Creator</span>
+                        <h5 class="pt-1">{{creator}}</h5>
+                    </div>
+                    <ng-container *ngFor="let item of watchList">
+                        <span class="avatar">
+                            <img [src]='item' width="50" height="50"/>
+                        </span>
+                    </ng-container>
+                    <div class="col-3 watchers">
+                        <span id="headerLabel">Watchers</span>
+                        <div class="avatars">
+                            <app-speed-images [emails]="task.Watcher"></app-speed-images>
+                          </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <hr>
-        <h3 class="mt-2" id="linkDec"> Link
-            <span type="button" class="material-icons col-10 align-items-center text-right" id= "link-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#linkModal" title="link" (click)="addLink()" >add_link</span>
-        </h3>
-            <div class="table-responsive card">
-            <ng-container *ngIf="linkData | async; else loader">
-                <table class="table table-hover">
-                    <thead id="navbarMenu">
-                        <tr>
-                            <th colspan="3">Link ID</th>
-                            <th colspan="3">Link Type</th>
-                            <th colspan="6">Link URL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ng-container *ngIf="(linkData|async)?.length==0">
-                            <tr>
-                                <td colspan="9" class="text-center">No links available</td>
-                            </tr>
-                        </ng-container>
-                        <ng-container *ngFor="let link of linkData|async">
-                            <tr>
-                                <td colspan="3"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{link.LinkID}}</span></td>
-                                <td colspan="3">{{link.LinkType}}</td>
-                                <td colspan="6"><a href={{link.LinkURL}}>{{link.LinkURL}}</a></td>
-                            </tr>
-                        </ng-container>
-                    </tbody>
-                </table>
-            </ng-container>
-        </div>    
-        <hr>
-        <h3 class="mt-2" id="noActivityDesc"> Activities </h3>
-        <div class="my-4 card pb-3">
-            <nav class="pt-2 px-2" id="navbarMenu">
-                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab"
-                        role="tab" aria-controls="home" aria-selected="true" (click)="changeType('All')">All</a>
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab"
-                        role="tab" aria-controls="profile" aria-selected="false"
-                        (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab"
-                        role="tab" aria-controls="contact" aria-selected="false"
-                        (click)="changeType('EDITED')">Edits</a>
-                    <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab"
-                        role="tab" aria-controls="contact" aria-selected="false"
-                        (click)="changeType('COMMENT')">Comments</a>
-                </div>
-            </nav>
-            <ng-container *ngIf="activityData | async; else loader">
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
-                        aria-labelledby="all-activities-tab">
-                        <ng-container *ngIf="(activityData|async)?.length==0">
-                            <div class="row">
-                                <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.</div>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngFor="let activity of activityData | async">
-                            <app-activity [activity]="activity"></app-activity>
-                        </ng-container>
+        <div class="row">
+            <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 500px;">
+                <h5 id="label">{{task.Id}}</h5>
+                <h4 id="value">{{task.Title}}</h4>
+                <div class="row mt-2">
+                    <div class="col-md-4 ">
+                        <span id="label">Sprint Number:</span>
+                        <span id="value">{{task.SprintNumber}}</span>
                     </div>
-                    <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
-                        <form>
-                            <div class="form-row px-4 pt-4">
-                                <div class="form-group col">
-                                    <span for="description" class="py-2" id="noActivityDesc">Comment</span>
-                                    <textarea type="text" class="form-control form-control-sm" rows="2"
-                                        [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"></textarea>
-                                </div>
+                    <div class="col-md-4 ">
+                        <span id="label">Story Point:</span>
+                        <span id="value">{{task.StoryPointNumber}}</span>
+                    </div>
+                    <div class="col-md-4 ">
+                        <span id="label">Estimated Time:</span>
+                        <span id="value">{{task.EstimatedTime}}</span>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-4">
+                                <span id="label">RT</span>
+                                <br>
+                                <span id="value">{{task.EstimatedTime - task.LogWorkTotalTime}}</span></div>
+                            <div class="col-4">
+                                <span id="label">LT</span>
+                                <br>
+                                <span id="value"> {{task.LogWorkTotalTime}}</span>
                             </div>
-                            <div class="form-row px-4">
-                                <div class="form-group col">
-                                    <button type="submit" class="btn" (click)="addComment()">Add Comment</button>
-                                </div>
+                            <div class="col-4">
+                                <span id="label">ET</span>
+                                <br>
+                                <span id="value">{{task.EstimatedTime}}</span>
                             </div>
-                        </form>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col" id="TimeChart">
+                                <app-time-chart [loggedTime]="task.LogWorkTotalTime" [estimatedTime]="task.EstimatedTime"></app-time-chart>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 float-right">
+                        <span id="label">Work Done:</span>
+                        <span id="value">{{task.WorkDone}}</span>  
+                        <app-work-completion [workDone]="task.WorkDone"></app-work-completion>                      
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="uploadContainer col-12 p-0">
+                        <app-upload-files [taskId]="task.Id" [teamId]="task.TeamId" [organizationId]="task.OrganizationId" [orgDomain]="orgDomain"></app-upload-files>
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <span id="label ">Description</span>
+                    <div class="col-12 p-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="descriptionTaskDescription">{{task.Description}}</div>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <span id="label ">Link</span>
+                    <div class="table-responsive card">
+                        <ng-container *ngIf="linkData | async; else loader">
+                            <table class="table table-hover">
+                                <thead id="navbarMenu">
+                                    <tr>
+                                        <th colspan="3">Link ID</th>
+                                        <th colspan="3">Link Type</th>
+                                        <th colspan="6">Link URL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="(linkData|async)?.length==0">
+                                        <tr>
+                                            <td colspan="9" class="text-center">No links available</td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngFor="let link of linkData|async">
+                                        <tr>
+                                            <td colspan="3"><span data-toggle="tooltip" data-placement="top" title="task.id">{{link.LinkID}}</span></td>
+                                            <td colspan="3">{{link.LinkType}}</td>
+                                            <td colspan="6"><a href={{link.LinkURL}}>{{link.LinkURL}}</a></td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                    </div> 
+                </div>
+            </div>
+            <div class="col-md-6 part" style="overflow-y:auto; max-height: 500px;">
+                <div class="activity-card my-4 pb-3">
+                    <nav class="px-2" id="navbarMenu">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab"
+                                role="tab" aria-controls="All" aria-selected="true" (click)="changeType('All')">All</a>
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab"
+                                role="tab" aria-controls="Logs" aria-selected="false"
+                                (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab"
+                                role="tab" aria-controls="Edits" aria-selected="false"
+                                (click)="changeType('EDITED')">Edits</a>
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab"
+                                role="tab" aria-controls="Comments" aria-selected="false"
+                                (click)="changeType('COMMENT')">Comments</a>
+                        </div>
+                    </nav>
+                    <ng-container *ngIf="activityData | async; else loader">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
+                                aria-labelledby="all-activities-tab">
+                                <ng-container *ngIf="(activityData|async)?.length==0">
+                                    <div class="row">
+                                        <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.</div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngFor="let activity of activityData | async">
+                                    <app-activity [activity]="activity"></app-activity>
+                                </ng-container>
+                            </div>
+                            <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
+                                <form>
+                                    <div class="form-row px-4 pt-4">
+                                        <div class="form-group col-11">
+                                            <textarea type="text" class="form-control form-control-sm card" rows="2"
+                                                [(ngModel)]="comment" [ngModelOptions]="{standalone: true}" placeholder="Enter comment" style="background-color: var(--input-field);"></textarea>
+                                        </div>
+                                        <div class="form-group col-1">
+                                            <button type="submit" class="btn pt-2" (click)="addComment()"><span class="material-icons">send</span></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </ng-container>
+                        </div>
                     </ng-container>
                 </div>
-            </ng-container>
+            </div>
         </div>
         <ng-template #loader>
             <app-loader></app-loader>
@@ -318,4 +249,4 @@
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
 </ng-container>
-<app-loader *ngIf="!(taskDataObservable | async) "></app-loader>
+<app-loader *ngIf="!(taskDataObservable | async)"></app-loader>

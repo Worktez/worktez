@@ -11,16 +11,16 @@
                 <div class="modal-body container-fluid">
                     <form #form="ngForm">
                         <div class="form-row">
-                            <div class="form-group col-md-5 ml-auto">
+                            <div class="form-group col-md-5 col-4 ml-auto">
                                 <select class="form-control" [(ngModel)]="selectedTeamId" [ngModelOptions]="{standalone: true}" (ngModelChange)="readApplicationData()">
                                     <option *ngFor="let team of teams" [selected]="team == selectedTeamId" [ngClass]=" team == userTeam ? 'font-weight-bold font-italic' : '' ">{{team}}</option>
                                 </select>
                             </div>
-                            <div class="form-control form-group col-md-3 ml-auto">Sprint: {{ nextSprintId }}</div>
-                            <div class="form-control form-group col-md-4 ml-auto">No. of Task: {{ taskNo }}</div>
+                            <div class="form-control form-group col-md-3 col-3 ml-auto">Sprint: {{ nextSprintId }}</div>
+                            <div class="form-control form-group col-md-4 col-5 ml-auto">No. of Task: {{ taskNo }}</div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-12 col">
                                 <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Status</option>
                                     <option>Ready to Start</option>
@@ -30,10 +30,10 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-6 ml-auto">                       
+                            <div class="col-md-6 col ml-auto">                       
                                 <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The Start Date ">
                             </div>
-                            <div class="col-md-6 ml-auto">                        
+                            <div class="col-md-6 col ml-auto">                        
                                 <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
                             </div>
                         </div>

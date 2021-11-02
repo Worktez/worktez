@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class StatusIconsComponent implements OnInit {
 
   @Input('Status') Status : string
+  @Input('Border') Border: boolean
   constructor() { }
 
   ngOnInit(): void {
