@@ -1,5 +1,6 @@
 #navbarMenu{
-    background-color: var(--primary-color);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 #addLinkPage,
@@ -15,8 +16,7 @@
 
 #addButton {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
+    color: white;
 }
 
 #addButton:hover {
@@ -30,10 +30,10 @@ input:focus {
     border-color: svar(--primary-color);
 }
 
-.btn-secondary {
-    background-color: var(--button-hover-bg);
-}
+.btn {
+    color: var(--button-text);
+    background-color: var(--button-bg);}
 
-.btn-secondary:hover {
+.btn:hover {
     background-color: var(--button-bg);
 }

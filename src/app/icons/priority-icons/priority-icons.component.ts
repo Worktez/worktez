@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PriorityIconsComponent implements OnInit {
 
   @Input('Priority') Priority : string
+  @Input('Border') Border: boolean
   constructor() { }
 
   ngOnInit(): void {

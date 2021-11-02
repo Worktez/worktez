@@ -1,7 +1,7 @@
 <div class="modal fade" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <nav class="modal-header navbar navbar-expand navbar-dark" id="navbarMenu">
+            <nav class="modal-header navbar navbar-expand" id="navbarMenu">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <h5 class="active nav-link head" id="linkModalLabel">Add Link</h5>
@@ -10,7 +10,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="material-icons text-light" (click)="close()">close</span>
+                            <span aria-hidden="true" class="material-icons" (click)="close()">close</span>
                         </button>
                     </li>
                 </ul>
@@ -35,9 +35,8 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn" type="submit" id="addButton" [disabled]="enableLoader">Add</button>
+                        <div class="col-12 pb-2 px-4">
+                            <button class="btn btn-lg btn-block" type="submit" id="addButton" [disabled]="enableLoader">Add</button>
                         </div>
                     </div>
                     <app-loader *ngIf="enableLoader"></app-loader>
@@ -49,7 +48,7 @@
                     <div class="row">
                         <div class="col-md-9"></div>
                         <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+                            <button class="btn" type="button" data-dismiss="modal" (click)="close()">Close</button>
                         </div>
                     </div>
                 </ng-container>

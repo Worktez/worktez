@@ -83,6 +83,7 @@ import { UploadLogoComponent } from './body/create-new-organization/upload-logo/
 import { LinkComponent } from './body/task-details/link/link.component';
 import { BarChartComponent } from './body/common-tools/bar-chart/bar-chart.component';
 import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-graph/sprint-evaluation-graph.component';
+import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-images.component';
 
 
 @NgModule({
@@ -155,7 +156,8 @@ import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-g
     UploadLogoComponent,
     SprintEvaluationGraphComponent,
     BarChartComponent,
-    LinkComponent
+    LinkComponent,
+    SpeedImagesComponent
   ],
   imports: [
     BrowserModule,

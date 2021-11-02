@@ -1,85 +1,95 @@
-#cardDescription {
-    border: var(--primary-border);
-    /* background-color: var(--secondary-bg); */
+.container-fluid{
+    padding: 20px 110px 0px 110px;
     color: var(--text);
 }
 
-#descriptionTaskDescription {
-    white-space: pre-wrap;
+.card, .table {
+    background-color: var(--secondary-bg);
+    color: var(--text) !important;
 }
 
-.activityHeading {
+.dropdown-menu {
+    border-color: var(--primary-color) ;
+    color: var(--text);
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
     color: var(--text);
 }
 
-#button,
+.dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
+}
+
+.activity-card {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#headerLabel{
+    font-size: 14px;
+    color: var(--table-header);
+}
+
+#label{
+    color: var(--table-header);
+    margin-right:8px;
+}
+#value {
+    color: var(--text);
+    font-weight: bolder;
+}
+
+.part {
+    padding: 2px 30px 2px 30px;
+    border-color: var(--dropdown-hover);
+    border-style: solid;
+}
+
 .btn {
-    background-color: var(--primary-color);
-    color: var(--button-text);
-}
-
-#button:focus,
-#button:active,
-.btn:hover,
-.btn:active {
-    background-color: var(--secondary-color);
-}
-
-#navbarMenu {
-    background-color: var(--primary-color);
-    color: var(--button-text);
-}
-
-.sprint {
-    color: var(--secondary-color);
-}
-
-.card {
-    background-color: var(--secondary-bg);
-    box-shadow: var(--box-shadow-bottom);
-}
-
-.card-body {
-    background-color: var(--secondary-bg);
+    padding: 2px;
+    font-size: 30px;
     color: var(--text);
 }
 
-#idTaskDescription {
-    color: var(--primary-color);
-    font-weight: bold;
+a.active.nav-link{
+    background-color: var(--dropdown-hover) !important;
+    color: var(--button-text-hover) !important;  
+    border-color: var(--button-text-hover) !important;
+    font-weight: bolder;    
 }
 
-#header {
-    font-weight: bold;
-}
-
-#font {
-    font-size: 20px;
-}
-
-.options {
-    /* background-color: var(--secondary-bg); */
-    color: var(--button-text);
-    cursor: pointer;
-}
-
-#link-icon {
-    padding-right:0px; 
-    max-width: 91%;
-}
-
-.activeBtn {
-    background-color: var(--secondary-bg);
-    color: var(--text);
+a.nav-link{
+    background-color: var(--secondary-bg) !important;
+    color: var(--text) !important;      
 }
 
 #noActivityDesc {
     color: var(--text);
 }
 
-@media (max-width: 991px) {
-    .navbar-nav {
-        float: right;
-        flex-direction: row;
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .container-fluid {
+        padding: 4px 40px 0px 40px;
+    }   
+    .part {
+        padding: 1px 10px 1px 10px;
+    }
+    h5 {
+        font-size: 14px;
+    }
+    #headerLabel {
+        font-size: 10px;
     }
 }
