@@ -86,6 +86,7 @@ import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-g
 import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-images.component';
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
+import { Patch6Component } from './patches/patch6/patch6.component';
 
 
 @NgModule({
@@ -161,7 +162,8 @@ import { OrgDocumentsComponent } from './body/view-organization-details/org-docu
     LinkComponent,
     SpeedImagesComponent,
     TeamsCardComponent,
-    OrgDocumentsComponent
+    OrgDocumentsComponent,
+    Patch6Component
   ],
   imports: [
     BrowserModule,

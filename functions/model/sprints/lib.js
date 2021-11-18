@@ -42,3 +42,16 @@ exports.getSprint = function(orgDomain, teamName, fullSprintName) {
     });
     return Promise.resolve(getSrpintDetails);
 };
+
+exports.getSprints = function(orgDomain, teamName) {
+    const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").get().then((sprintsData) => {
+        const sprints = [];
+        sprintsData.forEach((element) => {
+            if (element.exists) {
+                sprints.push(element.data());
+            }
+        });
+        return sprints;
+    });
+    return Promise.resolve(getSrpintDetails);
+};
