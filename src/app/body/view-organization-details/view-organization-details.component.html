@@ -57,6 +57,9 @@
         </div>
     </div>
 </div>
+<ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
+    <app-add-member [teamId]="teamToAddMember.TeamId" [teamName]="teamToAddMember.TeamName" [teamMembers]="teamToAddMember.TeamMembers" [teamManager]="teamToAddMember.TeamManager" [teamDescription]="teamToAddMember.TeamDescription" [isUpdateTeam]="true" (addedMember)="addedMember($event)"></app-add-member>
+</ng-container>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
 </ng-container>
