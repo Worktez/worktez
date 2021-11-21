@@ -9,8 +9,7 @@
                 <span type="button" class="btn material-icons text-light" (click)="backToDashboard()">close</span>
             </div>
         </div>
-        <div class="row pt-1">
-            <ng-container *ngIf="showFilter">
+        <div class="row pt-1" *ngIf="showFilter">]
                 <div class="col-md-12">
                     <div class="input-group col-2">
                         <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
@@ -20,15 +19,17 @@
                     </div>
                     <app-filter-task (filterProperty)="applyFilters($event)" [defaultProject]="project"></app-filter-task>
                 </div>
-            </ng-container>
-            <ng-container *ngIf="tasksData | async">
+        </div>
+        <div class="row pt-1">
+            <ng-container *ngIf="dataTableService.tasksDataObservable | async">
                 <div class="col">
-                    <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards>
+                    <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
+                    <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
                 </div>
             </ng-container>
         </div>
     </div>
 </div>
-<ng-container *ngIf="!showFilter && !(tasksData | async)">
+<ng-container *ngIf="!showFilter && !(dataTableService.tasksDataObservable | async)">
     <app-loader></app-loader>
 </ng-container>

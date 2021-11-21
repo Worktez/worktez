@@ -2,6 +2,7 @@
     background-color: var(--secondary-bg);
     color: var(--text);
     border: none;
+    height: 30px;
 }
 
 .card {
