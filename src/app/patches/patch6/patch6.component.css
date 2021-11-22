@@ -1,0 +1,35 @@
+.container {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+.btn {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
+#navbarMenu {
+    background-color: var(--primary-color);
+}
+
+#font {
+    font-size: 20px;
+}
+
+#weigh {
+    font-weight: bold;
+}
+
+#head {
+    font-weight: bolder;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border: var(--primary-border);
+}

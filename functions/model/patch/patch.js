@@ -14,6 +14,7 @@ const { patch4 } = require("./patch4");
 const { patch5 } = require("./patch5");
 const { patchModerator } = require("./patchModerator");
 const { editPatch } = require("./editPatch");
+const { patch6 } = require("./patch6");
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -34,6 +35,9 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch5") {
             // To update the userDoc for all Users to change Organization structure
             return patch5(request, response);
+        } else if (mode == "patch6") {
+            // To update the Sprints collections with new field values
+            return patch6(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {

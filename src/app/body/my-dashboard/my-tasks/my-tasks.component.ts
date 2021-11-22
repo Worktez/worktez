@@ -1,10 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
-import { BackendService } from 'src/app/services/backend/backend.service';
+import { Tasks } from 'src/app/Interface/TasksInterface';
+import { DataTableService } from 'src/app/services/dataTable/data-table.service';
 
 @Component({
   selector: 'app-my-tasks',
@@ -16,22 +12,20 @@ export class MyTasksComponent implements OnInit {
   @Input("userEmail") userEmail: string
   @Input("currentSprint") currentSprintNumber: number
 
-  tasksData: Observable<Tasks>
   parentComponent: string = "MyDashboard"
+  tasksData: Tasks[]
+  showLoader: boolean = false;
 
-  constructor(private backendService: BackendService, private functions: AngularFireFunctions) { }
+  displayColoumns = [];
+
+  constructor(private dataTableService: DataTableService) { }
 
   ngOnInit(): void {
-    this.readTaskData();
-  }
-
-  async readTaskData() {
-    var orgDomain = this.backendService.getOrganizationDomain();
-
-    const callable = this.functions.httpsCallable("tasks");
-    this.tasksData = await callable({ mode: "getTasksForDashboard", OrgDomain: orgDomain, FilterAssignee: this.userEmail}).pipe(
-      map(actions => {
-        return actions.data as Tasks;
-      }));
+    this.showLoader = true;
+    this.dataTableService.readTaskDataForDashboard().subscribe((data) => {
+      this.tasksData = data;
+      this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
+      this.showLoader = false;
+    });
   }
 }

@@ -1,7 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { FileData, FileUpload } from 'src/app/Interface/FileInterface';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 

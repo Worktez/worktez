@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Team } from 'src/app/Interface/TeamInterface';
-import { AngularFireFunctions } from '@angular/fire/functions';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { DataTableService } from 'src/app/services/dataTable/data-table.service';
 
 @Component({
   selector: 'app-tasks',
@@ -25,8 +23,7 @@ export class TasksComponent implements OnInit {
   teamId: string
   currentSprintNumber: number
   searchAssignee: string = ""
-  tasksCollection: AngularFirestoreCollectionGroup<Tasks>
-  tasksData: Observable<Tasks[]>
+  tasksData: Tasks[]
 
   filterAssignee: string = ""
   filterPriority: string = ""
@@ -38,7 +35,10 @@ export class TasksComponent implements OnInit {
   teamData: Team;
   parentComponent: string = "Tasks"
 
-  constructor(private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public backendService: BackendService) { }
+  displayColoumns: string[] = []
+  showLoader: boolean = true;
+
+  constructor(public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -58,21 +58,18 @@ export class TasksComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.SelectedOrgAppKey) {
           this.backendService.organizationsData.subscribe(data => {
-            this.readData();
+            this.showLoader = true
+            this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
+              this.tasksData = data;
+              this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
+              this.showLoader = false;
+            });
           });
         }
       });
     });
   }
 
-  async readData() {
-    var orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("tasks");
-    this.tasksData = await callable({ mode: "getAllTasks", OrgDomain: orgDomain, TeamId: this.teamId, SprintNumber: this.currentSprintNumber, FilterAssignee: this.filterAssignee, FilterPriority: this.filterPriority, FilterDifficulty: this.filterDifficulty, FilterStatus: this.filterStatus, FilterProject: this.filterProject }).pipe(
-      map(actions => {
-        return actions.data as Tasks[];
-      }));
-  }
   backToDashboard() {
     this.router.navigate(['/Board']);
   }
@@ -84,13 +81,19 @@ export class TasksComponent implements OnInit {
         newSprintNumber = this.teamData.CurrentSprintId;
         this.currentSprintName = this.fullSprintName(newSprintNumber);
         this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
-        this.readData();
+        this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
+          this.tasksData = data;
+          this.showLoader = false;
+        });
       });
     } else {
       this.currentSprintNumber = newSprintNumber;
       this.currentSprintName = this.fullSprintName(newSprintNumber);
       this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
-      this.readData();
+      this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
+        this.tasksData = data;
+        this.showLoader = false;
+      });
     }
   }
 
@@ -104,7 +107,10 @@ export class TasksComponent implements OnInit {
     this.filterDifficulty = data.Difficulty
     this.filterStatus = data.Status
     this.filterProject = data.Project
-    this.readData();
+    this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
+      this.tasksData = data;
+      this.showLoader = false;
+    });
   }
 
   openTaskDetails(id: string) {

@@ -17,6 +17,7 @@ exports.addMember = function(request, response) {
     const add = request.body.data.Add;
     const teamManager = request.body.data.TeamManager;
     const teamDescription = request.body.data.TeamDescription;
+    const teamId = request.body.data.TeamId;
 
     let result;
     let status = 200;
@@ -27,7 +28,7 @@ exports.addMember = function(request, response) {
             TeamMembers: teamMembers,
         };
         updateTeamDetails(updateJson, orgDomain, teamName);
-        sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain);
+        sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member added Successfully" };
         console.log("Member added Successfully");
     } else {

@@ -5,3 +5,14 @@
     background-color: transparent;
     color: var(--text);
 }
+
+span {
+    cursor: pointer;
+    color: var(--text);
+}
+
+@media only screen and (max-width: 600px) {
+    span {
+        font-size: 11px;
+    }
+}

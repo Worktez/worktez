@@ -84,6 +84,14 @@ import { LinkComponent } from './body/task-details/link/link.component';
 import { BarChartComponent } from './body/common-tools/bar-chart/bar-chart.component';
 import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-graph/sprint-evaluation-graph.component';
 import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-images.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DataTableComponent } from './body/common-tools/data-table/data-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
+import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
+import { Patch6Component } from './patches/patch6/patch6.component';
 
 
 @NgModule({
@@ -157,7 +165,11 @@ import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-ima
     SprintEvaluationGraphComponent,
     BarChartComponent,
     LinkComponent,
-    SpeedImagesComponent
+    SpeedImagesComponent,
+    DataTableComponent,
+    TeamsCardComponent,
+    OrgDocumentsComponent,
+    Patch6Component
   ],
   imports: [
     BrowserModule,
@@ -169,7 +181,11 @@ import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-ima
     AngularFireStorageModule,
     AppRoutingModule,
     GoogleChartsModule.forRoot({ version: 'current' }),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [
     AuthService,

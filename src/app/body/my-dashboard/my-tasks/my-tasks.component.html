@@ -1,15 +1,14 @@
 <div class="card">
     <div class="card-header pb-0">
-        <div class="row align-items-center">
-            <div class="col pl-4 pt-2"><h6>My Tasks</h6></div>
-        </div>
+            <div class="pl-4 pt-1"><h4>My Tasks</h4></div>
     </div>
-    <div class="card-body pt-0" *ngIf="tasksData | async">
-        <ng-container *ngIf="tasksData|async">
-            <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards>
+    <div class="card-body pt-0">
+        <ng-container *ngIf="!showLoader"; else loader>
+            <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
+            <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="5"></app-data-table>
         </ng-container>
-    </div>
-    <div class="card-body" *ngIf="!(tasksData | async)">
-        <app-loader></app-loader>
+        <ng-template #loader>
+            <app-loader></app-loader>
+        </ng-template>
     </div>
 </div>

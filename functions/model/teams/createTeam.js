@@ -39,6 +39,7 @@ exports.createTeam = function(request, response) {
 
             const inputJson = {
                 TeamsId: admin.firestore.FieldValue.arrayUnion(teamId),
+                TeamsName: admin.firestore.FieldValue.arrayUnion(teamName),
             };
             updateOrg(orgDomain, inputJson);
         }

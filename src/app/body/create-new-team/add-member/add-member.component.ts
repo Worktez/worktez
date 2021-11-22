@@ -15,6 +15,7 @@ export class AddMemberComponent implements OnInit {
   @Input("teamMembers") teamMembers: string[];
   @Input("teamManager") teamManager: string;
   @Input("teamDescription") teamDescription: string;
+  @Input("teamId") teamId: string;
   @Input("isUpdateTeam") isUpdateTeam: boolean;
   @Output() addedMember = new EventEmitter<{ completed: boolean, memberEmail: string }>();
 
@@ -43,7 +44,7 @@ async addUpdateTeam() {
   this.enableLoader = true;
   const callable = this.functions.httpsCallable('teams');
   try {
-    const result = await callable({ mode: "add-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription }).toPromise();
+    const result = await callable({ mode: "add-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription, TeamId: this.teamId }).toPromise();
     this.enableLoader = false;
     this.showClose = true;
   } catch (error) {

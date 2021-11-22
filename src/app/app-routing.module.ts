@@ -21,6 +21,7 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluation.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
+import { Patch6Component } from './patches/patch6/patch6.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'Patch3', component: Patch3Component },
   { path: 'Patch4', component: Patch4Component },
   { path: 'Patch5', component: Patch5Component },
+  { path: 'Patch6', component: Patch6Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard]},

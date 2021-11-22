@@ -170,5 +170,5 @@
     </ng-container>
 </form>
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
-    <app-add-member [teamName]="teamName" [teamMembers]="teamMembers" [teamManager]="teamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="isUpdateTeam" (addedMember)="addedMember($event)"></app-add-member>
+    <app-add-member [teamId]="teamId" [teamName]="teamName" [teamMembers]="teamMembers" [teamManager]="teamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="isUpdateTeam" (addedMember)="addedMember($event)"></app-add-member>
 </ng-container>
