@@ -18,8 +18,8 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   teams: Team[] = []
   showLoader: boolean = false;
   showOrgDetails: boolean = true;
-  addMemberEnabled: boolean = false;
-  teamToAddMember: Team;
+  showTeamsDetails: boolean = false;
+  showOrgDocuments: boolean = false;
 
   constructor(public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService) { }
 
@@ -52,21 +52,27 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     });
   }
 
-  updateTeam(TeamId: string) {
-    this.router.navigate(['/UpdateTeam', TeamId]);
-  }
-
   createTeam() {
     this.router.navigate(['/CreateNewTeam']);
   }
 
-  enableAddMember(team: Team) {
-    this.teamToAddMember = team;
-    this.addMemberEnabled = true;
+  updatedDetails(data) {
+    if(data) {
+      this.getOrganizationDetails();
+    }
   }
 
-  addedMember(data: { completed: boolean, memberEmail: string }) {
-    this.getOrganizationDetails();
-    this.addMemberEnabled = false;
+  switchView(data: any){
+    this.showOrgDetails = false;
+    this.showTeamsDetails = false;
+    this.showOrgDocuments = false;
+
+    if(data == "showOrgDetails") {
+      this.showOrgDetails = true;
+    } else if(data == "showTeamsDetails") {
+      this.showTeamsDetails = true;
+    } else {
+      this.showOrgDocuments = true;
+    }
   }
 }

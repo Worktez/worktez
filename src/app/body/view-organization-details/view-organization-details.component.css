@@ -1,11 +1,18 @@
 .card {
     color: var(--text);
+    background-color: var(--secondary-bg);
 }
 
-button {
+.nav-link {
+    color: var(--text);
+    cursor: pointer;
+    background-color: var(--primary-bg);
+}
+
+.nav-link:focus {
     color: var(--text);
 }
 
-button:focus {
-    box-shadow: none;
+.activeBg {
+    background-color: var(--secondary-bg);
 }

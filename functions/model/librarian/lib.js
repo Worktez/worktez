@@ -30,3 +30,17 @@ exports.setFileToOrg = function(inputJson, orgDomain, logoFileName) {
     const setFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("LogoFiles").doc(logoFileName).set(inputJson);
     return Promise.resolve(setFileToOrgPromise);
 };
+
+exports.setFileToOrgDocument = function(inputJson, orgDomain, orgFileDocumentName) {
+    const setFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(orgFileDocumentName).set(inputJson);
+    return Promise.resolve(setFileToOrgPromise);
+};
+
+exports.getFileInOrgDocument = function(orgDomain) {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Documents");
+    query = query.where("FileStatus", "==", "OK");
+
+    const getFilesPromise = query.get();
+
+    return Promise.resolve(getFilesPromise);
+};

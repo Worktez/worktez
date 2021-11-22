@@ -20,7 +20,7 @@ export class FileUploadService {
 
   constructor(private storage: AngularFireStorage, private functions: AngularFireFunctions, private backendService: BackendService, private authService: AuthService, private toolsService: ToolsService) { }
 
-  pushFileToTaskStorage(fileUpload: FileUpload, basePath: string, taskId: string): Observable<number> {
+  pushFileToTaskStorage(fileUpload: FileUpload, basePath: string, folderName: string): Observable<number> {
     this.fileUploadStatus = true;
     const filePath = `${basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
@@ -31,8 +31,8 @@ export class FileUploadService {
         storageRef.getDownloadURL().subscribe(downloadURL => {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
-          this.saveFileData(fileUpload, basePath, taskId).then((data) => {
-            this.readFiles(this.backendService.getOrganizationDomain(), taskId);
+          this.saveFileData(fileUpload, basePath, folderName).then((data) => {
+            this.readFiles(this.backendService.getOrganizationDomain(), folderName);
           });
         });
       })
@@ -41,7 +41,7 @@ export class FileUploadService {
     return uploadTask.percentageChanges();
   }
 
-  async saveFileData(fileUpload: FileUpload, basePath: string, taskId: string) {
+  async saveFileData(fileUpload: FileUpload, basePath: string, folderName: string) {
     const appKey = this.backendService.getOrganizationAppKey();
 
     const todayDate = this.toolsService.date();
@@ -53,10 +53,13 @@ export class FileUploadService {
     const size = fileUpload.file.size;
 
     const callable = this.functions.httpsCallable( 'librarian' );
-    if ( taskId != "Logo") {
-      await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: taskId, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    } else {
+    if ( folderName == "Logo") {
       await callable( { mode: "UploadLogoFile", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    } else if(folderName == "Documents") {
+      await callable( { mode: "UploadFileToOrgDocuments", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    }
+     else {
+      await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
     }
     this.fileUploadStatus = false;
   }
@@ -85,10 +88,17 @@ export class FileUploadService {
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
       const callable = this.functions.httpsCallable("librarian");
-      this.filesData = callable({ mode: "GetFilesInTask", OrgDomain: orgDomain, Id: id }).pipe(
-        map(actions => {
-          return actions.data as FileData[];
-      }));
+      if(id == "Documents") {
+        this.filesData = callable({ mode: "GetFilesInOrgDocument", OrgDomain: orgDomain}).pipe(
+          map(actions => {
+            return actions.data as FileData[];
+        }));
+      } else {
+        this.filesData = callable({ mode: "GetFilesInTask", OrgDomain: orgDomain, Id: id }).pipe(
+          map(actions => {
+            return actions.data as FileData[];
+        })); 
+      }
     }
   }
 }
