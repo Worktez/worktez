@@ -89,6 +89,9 @@ import { DataTableComponent } from './body/common-tools/data-table/data-table.co
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
+import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
+import { Patch6Component } from './patches/patch6/patch6.component';
 
 
 @NgModule({
@@ -163,7 +166,10 @@ import { MatSortModule } from '@angular/material/sort';
     BarChartComponent,
     LinkComponent,
     SpeedImagesComponent,
-    DataTableComponent
+    DataTableComponent,
+    TeamsCardComponent,
+    OrgDocumentsComponent,
+    Patch6Component
   ],
   imports: [
     BrowserModule,

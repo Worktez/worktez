@@ -3,28 +3,27 @@ import { FileData, FileUpload } from 'src/app/Interface/FileInterface';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 
 @Component({
-  selector: 'app-upload-files',
-  templateUrl: './upload-files.component.html',
-  styleUrls: ['./upload-files.component.css']
+  selector: 'app-org-documents',
+  templateUrl: './org-documents.component.html',
+  styleUrls: ['./org-documents.component.css']
 })
-export class UploadFilesComponent implements OnInit {
+export class OrgDocumentsComponent implements OnInit {
 
-  @Input('taskId') taskId: string;
-  @Input('teamId') teamId: string;
-  @Input('organizationId') organizationId: string;
-  @Input('orgDomain') orgDomain: string;
+  @Input('organizationId') organizationId: string
+  @Input('orgDomain') orgDomain: string
 
-  private basePath: string;
-  private selectedFile: FileList;
   private currentFileUpload: FileUpload;
+  private selectedFile: FileList;
   percentage: number = 0;
   public fileName: string;
+
+  private basePath: string;
 
   constructor(public uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    this.basePath = '/Organizations/'+this.organizationId+'/'+this.teamId+'/'+this.taskId;
-    this.uploadService.readFiles(this.orgDomain, this.taskId);
+    this.basePath = '/Organizations/'+this.organizationId+'/Documents';
+    this.uploadService.readFiles(this.orgDomain, "Documents");
   }
 
   detectFiles(event) {
@@ -34,14 +33,14 @@ export class UploadFilesComponent implements OnInit {
     this.currentFileUpload = new FileUpload(file);
     this.fileName = this.currentFileUpload.file.name;
 
-    this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, this.taskId)
+    this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "Documents")
     .subscribe(percentage => {
         this.percentage = Math.round(percentage);
       },
       error => {
         console.log(error);
       }
-    );;
+    );
   }
 
   changeFileStatus(data: {changeStatus: string, file: FileData} ) {

@@ -18,6 +18,7 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
         OrganizationDescription: orgDescription,
         OrganizationLogoURL: orgLogoURL,
         TeamsId: [],
+        TeamsName: [],
         LogoCounter: 0,
     });
     return Promise.resolve(orgData);

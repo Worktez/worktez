@@ -187,5 +187,35 @@ export class SetupComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch4", PatchName: "Patch-4", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch4 document");
+      this.showLoader = false;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch5", PatchName: "Patch-5", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch5 document");
+      this.showLoader = false;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch6", PatchName: "Patch-6", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch6 document");
+      this.showLoader = false;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
