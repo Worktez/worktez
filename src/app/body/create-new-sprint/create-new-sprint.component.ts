@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { User } from 'src/app/Interface/UserInterface';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';

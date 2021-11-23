@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import firebase from 'firebase/app';
-import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/compat/app';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MyOrganizationData, User, UserAppSetting } from "../Interface/UserInterface";
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend/backend.service';
 import { ThemeService } from './theme/theme.service';

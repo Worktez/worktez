@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Activity } from 'src/app/Interface/ActivityInterface';
 import { User, UserAppSetting, defaultUser} from "../../../Interface/UserInterface";
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 

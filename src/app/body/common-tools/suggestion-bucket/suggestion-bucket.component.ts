@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {  map } from 'rxjs/operators';
 import { UserAppSetting } from 'src/app/Interface/UserInterface';
 

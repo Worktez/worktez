@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollectionGroup } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ThemeService } from '../../../services/theme/theme.service';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 @Component({
   selector: 'app-theme',

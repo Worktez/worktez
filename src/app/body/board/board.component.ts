@@ -5,7 +5,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FeatureCardComponent } from './feature-card/feature-card.component';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 @Component({
   selector: 'app-board',

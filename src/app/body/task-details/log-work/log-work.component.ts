@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ValidationService } from '../../../services/validation/validation.service';
 import { ToolsService } from '../../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';

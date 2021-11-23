@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Patch } from 'src/app/Interface/PatchInterface';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 @Component({
   selector: 'app-add-patch',

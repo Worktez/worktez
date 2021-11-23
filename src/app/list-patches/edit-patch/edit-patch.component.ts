@@ -2,8 +2,8 @@
 import { Component, OnInit, Input,Output, EventEmitter,ViewChild } from '@angular/core';
 import { Patch } from 'src/app/Interface/PatchInterface';
 import { PatchService } from 'src/app/services/patch/patch.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 @Component({
   selector: 'app-edit-patch',

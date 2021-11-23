@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { AuthService } from '../services/auth.service';

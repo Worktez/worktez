@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/functions';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { FileData, FileUpload } from 'src/app/Interface/FileInterface';

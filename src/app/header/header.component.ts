@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { BackendService } from '../services/backend/backend.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { User } from '../Interface/UserInterface';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 
 @Component({

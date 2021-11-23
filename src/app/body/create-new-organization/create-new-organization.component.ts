@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/functions';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { FileUpload } from 'src/app/Interface/FileInterface';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
