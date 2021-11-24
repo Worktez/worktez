@@ -15,9 +15,11 @@ export class SpeedImagesComponent implements OnInit {
   watcherList: string[] = [];
 
   ngOnInit(): void {
-    this.userService.getPhotoList(this.emails);
-    this.userService.photoUrlObservable.subscribe(data => {
-    this.watcherList = data;
-    }); 
+    if (this.emails.length) {
+      this.userService.getPhotoList(this.emails);
+      this.userService.photoUrlObservable.subscribe(data => {
+      this.watcherList = data;
+      }); 
+    }
   }
 }

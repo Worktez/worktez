@@ -1,43 +1,45 @@
 {
   "hosting": {
-        "public": "./dist/worktrolly-ui",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-        ],
-        "rewrites": [{
-            "source": "**",
-            "destination": "/index.html",
-            "function": "app"
-        }]
-    },
-    "firestore": {
-        "rules": "firestore.rules",
-        "indexes": "firestore.indexes.json"
+    "public": "./dist/worktrolly-ui",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html",
+        "function": "app"
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ],
+    "source": "functions"
+  },
+  "emulators": {
+    "auth": {
+      "port": 9099
     },
     "functions": {
-        "predeploy": [
-            "npm --prefix \"$RESOURCE_DIR\" run lint"
-        ],
-        "source": "functions"
+      "port": 7001
     },
-    "emulators": {
-        "auth": {
-            "port": 9099
-        },
-        "functions": {
-            "port": 7001
-        },
-        "firestore": {
-            "port": 7002
-        },
-        "hosting": {
-            "port": 7004
-        },
-        "ui": {
-            "enabled": true,
-            "port": 7000
+    "firestore": {
+      "port": 7002
+    },
+    "hosting": {
+      "port": 7004
+    },
+    "ui": {
+      "enabled": true,
+      "port": 7000
     },
     "storage": {
       "port": 9199

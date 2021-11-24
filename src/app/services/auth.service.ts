@@ -3,7 +3,6 @@ import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MyOrganizationData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend/backend.service';
 import { ThemeService } from './theme/theme.service';
@@ -25,7 +24,7 @@ export class AuthService {
   user: User;
   userAppSetting: UserAppSetting;
 
-  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private db: AngularFirestore, private backendService: BackendService, private themeService: ThemeService) { }
+  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private backendService: BackendService, private themeService: ThemeService) { }
 
   async createUser(email: string, password: string, username: string) {
     await this.afauth.createUserWithEmailAndPassword(email, password);
