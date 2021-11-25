@@ -1,6 +1,6 @@
 .card-header {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
 .card {

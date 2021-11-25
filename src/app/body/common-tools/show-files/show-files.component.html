@@ -4,8 +4,8 @@
             <span class="material-icons">more_vert</span>
         </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-      <button class="dropdown-item" type="button">Download</button>
-      <button class="dropdown-item" type="button">Delete</button>
+        <a [href]="file.FileUrl" [download]="file.FileName"><button class="dropdown-item" type="button" (click)="download()">Download</button></a>
+        <button class="dropdown-item" type="button" (click)="delete()">Delete</button>
     </div>
   </div>
     <div class="card-body py-0">
