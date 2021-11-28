@@ -26,5 +26,4 @@ export class BodyComponent implements OnInit {
   taskCreated( completed: boolean ) {
     this.popupHandlerService.createNewTaskEnabled= false;
   }
-
 }
