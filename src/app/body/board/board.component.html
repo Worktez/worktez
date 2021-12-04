@@ -37,6 +37,17 @@
                     </div>
                 </ng-container>
             </div>
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <ng-container *ngIf="sprintNotExist == false">
+                        <div class="row my-4">
+                            <div class="col">
+                                <app-sprint-evaluation-graph [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-sprint-evaluation-graph>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
         </div>
         <ng-template #loader>
             <app-loader></app-loader>

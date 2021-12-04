@@ -1,10 +1,10 @@
 <div class="row align-items-center justify-content-center m-0 p-2" id="navbarMenu">
     <div class="col">
         <ng-container *ngIf="!isUpdateTeam">
-            <h5 class="font-weight-bold text-light">Create New Team</h5>
+            <h4 class="font-weight-bold text-light">Create New Team</h4>
         </ng-container>
         <ng-container *ngIf="isUpdateTeam">
-            <h5 class="font-weight-bold text-light">Update Team</h5>
+            <h4 class="font-weight-bold text-light">Update Team</h4>
         </ng-container>
     </div>
     <div class="col-1">
@@ -21,7 +21,7 @@
 </div>
 <form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
     <ng-container *ngIf="childStep===1">
-        <h5 class="font-weight-bold">Add Project/Product/Team</h5>
+        <h4 class="font-weight-bold">Add Project/Product/Team</h4>
         <div class="form-group row pt-2">
             <label for="input" class="col-sm-3 col-form-label">Name<span id="important" class="pl-1">*</span></label>
             <div class="col-sm-8">
