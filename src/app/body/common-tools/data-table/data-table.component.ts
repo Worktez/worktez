@@ -30,8 +30,10 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.dataSource.data = this.dataForTable;
-    this.displayedColumns = this.displayColoumns;
+    if(this.dataForTable != undefined) {
+      this.dataSource.data = this.dataForTable;
+      this.displayedColumns = this.displayColoumns;
+    }
   }
 
   ngAfterViewInit(): void {

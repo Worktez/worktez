@@ -16,7 +16,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   organization: Organizations;
   teams: Team[] = []
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   showOrgDetails: boolean = true;
   showTeamsDetails: boolean = false;
   showOrgDocuments: boolean = false;

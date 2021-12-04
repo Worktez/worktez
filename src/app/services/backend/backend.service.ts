@@ -27,7 +27,6 @@ export class BackendService {
         this.organizationDetails = actions.resultData as Organizations
         return actions.resultData as Organizations;
     }));
-
     return this.organizationsData;
   }
 

@@ -51,14 +51,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(["/MyDashboard"])
   }
 
-  createTeam(){
-    this.router.navigate(['/CreateTeam']);
-  }
-
-  updateTeam(){
-    this.router.navigate(['/UpdateTeam', this.authService.getTeamId()]);
-  }
-
   createNewOrganization() {
     this.router.navigate(['/CreateNewOrganization']);
   }

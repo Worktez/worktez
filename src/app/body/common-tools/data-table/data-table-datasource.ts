@@ -30,7 +30,8 @@ export class DataTableDataSource extends DataSource<Tasks> {
       // stream for the data-table to consume.
       return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
         .pipe(map(() => {
-          return this.getPagedData(this.getSortedData([...this.data ]));
+          if(this.data != undefined)
+            return this.getPagedData(this.getSortedData([...this.data ]));
         }));
     } else {
       throw Error('Please set the paginator and sort on the data source before connecting.');

@@ -60,9 +60,11 @@ export class TasksComponent implements OnInit {
           this.backendService.organizationsData.subscribe(data => {
             this.showLoader = true
             this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-              this.tasksData = data;
-              this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
-              this.showLoader = false;
+              if(data.length) {
+                this.tasksData = data;
+                this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
+                this.showLoader = false;
+              }
             });
           });
         }
@@ -82,8 +84,10 @@ export class TasksComponent implements OnInit {
         this.currentSprintName = this.fullSprintName(newSprintNumber);
         this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
         this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-          this.tasksData = data;
-          this.showLoader = false;
+          if(data.length) {
+            this.tasksData = data;
+            this.showLoader = false;
+          }
         });
       });
     } else {
@@ -91,8 +95,10 @@ export class TasksComponent implements OnInit {
       this.currentSprintName = this.fullSprintName(newSprintNumber);
       this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
       this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-        this.tasksData = data;
-        this.showLoader = false;
+        if(data.length) {
+          this.tasksData = data;
+          this.showLoader = false;
+        }
       });
     }
   }
@@ -108,8 +114,10 @@ export class TasksComponent implements OnInit {
     this.filterStatus = data.Status
     this.filterProject = data.Project
     this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-      this.tasksData = data;
-      this.showLoader = false;
+      if(data.length) {
+        this.tasksData = data;
+        this.showLoader = false;
+      }
     });
   }
 

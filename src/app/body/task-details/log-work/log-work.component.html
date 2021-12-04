@@ -35,11 +35,9 @@
                         <div class="col col-md">
                             <span id="logHead">Task Status:</span>
                             <select class="custom-select form-control" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
-                                <option>Ice Box</option>
-                                <option>Ready to start</option>
-                                <option>Under Progress</option>
-                                <option>Blocked</option>
-                                <option>Completed</option>
+                                <ng-container *ngFor="let item of applicationSettingService.status">
+                                    <option>{{item}}</option>
+                                </ng-container>
                             </select>
                         </div>
                     </div>
