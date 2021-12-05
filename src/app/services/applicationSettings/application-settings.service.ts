@@ -41,7 +41,7 @@ export class ApplicationSettingsService {
           this.priority = this.team.PriorityLabels;
           this.difficulty = this.team.DifficultyLabels;
           this.type = this.team.Type;
-          this.project = this.backendService.organizationDetails.TeamsName;
+          this.project = this.backendService.organizationDetails.TeamsId;
           return this.team;
       }));
     }
