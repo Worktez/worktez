@@ -43,11 +43,11 @@ export class HeaderComponent implements OnInit {
     this.popupHandlerService.createNewTaskEnabled= true;
   }
 
-  Board(){
+  Board() {
     this.router.navigate(['/Board']);
   }
 
-  myDashBoard(){
+  myDashBoard() {
     this.router.navigate(["/MyDashboard"])
   }
 

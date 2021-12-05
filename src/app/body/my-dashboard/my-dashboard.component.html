@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="userObservable | async ">
+<div class="container-fluid" *ngIf="userObservable | async; else loader ">
     <ng-container *ngIf=!teamIdExists>
         <h3>You are not a part of any team. Please create a new team.</h3>
         <button type="submit" class="btn" id="button" (click)=createNewTeam()>Create Team</button>
@@ -14,3 +14,6 @@
         </div>
     </ng-container>
 </div>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
