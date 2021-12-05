@@ -27,7 +27,7 @@ export class SprintEvaluationGraphComponent implements OnInit {
   ngOnInit(): void {
     this.showLoader = true;
     this.sprintRange2 = this.currentSprintNumber;
-    this.sprintRange1 = 1;
+    this.sprintRange1 = this.currentSprintNumber - 4;
     this.teamMember = 'Team';
     this.getData().then(data => {
       this.data = data;

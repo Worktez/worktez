@@ -18,8 +18,7 @@ export class TeamsCardComponent implements OnInit {
 
   constructor(public router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   updateTeam(TeamId: string) {
     this.router.navigate(['/UpdateTeam', TeamId]);

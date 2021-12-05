@@ -20,21 +20,22 @@ exports.patch6 = function(request, response) {
     // const newFieldValueType = request.body.data.NewFieldValueType;
     const uid = request.body.data.Uid;
     const promise1 = getOrg(orgDomain).then((orgData) => {
-        const teamNames = orgData.TeamsName;
-
-        teamNames.forEach((teamName) => {
-            getSprints(orgDomain, teamName).then((sprint) => {
-                sprint.forEach((element) => {
-                    const sprintName = createSprintName(element.SprintNumber);
-                    const inputJson = {
-                        MidStoryPoint: 0,
-                        EndStoryPoint: 0,
-                        CompletedStoryPoint: 0,
-                    };
-                    updateSprint(inputJson, orgDomain, teamName, sprintName);
+        if (orgData != undefined) {
+            const teamNames = orgData.TeamsName;
+            teamNames.forEach((teamName) => {
+                getSprints(orgDomain, teamName).then((sprint) => {
+                    sprint.forEach((element) => {
+                        const sprintName = createSprintName(element.SprintNumber);
+                        const inputJson = {
+                            MidStoryPoint: 0,
+                            EndStoryPoint: 0,
+                            CompletedStoryPoint: 0,
+                        };
+                        updateSprint(inputJson, orgDomain, teamName, sprintName);
+                    });
                 });
             });
-        });
+        }
         const promiseUpdatePatchData = updatePatchData("Patch6", { LastUsedByUid: uid, LastUsedByOrg: orgDomain });
 
         return Promise.resolve(promiseUpdatePatchData);

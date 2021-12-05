@@ -27,6 +27,7 @@ exports.addMember = function(request, response) {
         const updateJson = {
             TeamMembers: teamMembers,
         };
+        console.log(teamId);
         updateTeamDetails(updateJson, orgDomain, teamName);
         sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member added Successfully" };

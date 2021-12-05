@@ -33,8 +33,8 @@
                 <div class="dropdown-menu dropdown-menu-right py-4 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton" >
                     <div class="input-group">
                         <h5>Sprint No.</h5>
-                        <input type="number" id="filterSprintNumberInput" class="form-control ng-untouched ng-pristine ng-valid" style="font-size: 11px;">
-                        <button id="dropdownButton" class="btn" style="font-size: 10px;">Filter</button>
+                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
+                        <button id="dropdownButton" class="btn" style="font-size: 10px;" (click)="changeSprintNumber()">Filter</button>
                     </div>
                 </div>
             </div>

@@ -12,11 +12,11 @@ export class BarChartComponent implements OnInit {
   @Input('columnNames') columnNames: [];
   constructor(public themeService: ThemeService) { }
 
-  type = 'Bar';
+  type = 'ColumnChart';
   options = {
     width: "100%",
     height: 350,
-    bar: { width: "30%" },
+    backgroundColor: "none",
     hAxis: {
       title: 'Sprints',
       textStyle: {
@@ -31,7 +31,6 @@ export class BarChartComponent implements OnInit {
     },
     colors: ['blue', '#FBAA1A', '#10BE65'],
     is3D: true,
-    backgroundColor: "none",
     titleTextStyle: {
       color: this.themeService.fontColor
     },
@@ -47,7 +46,6 @@ export class BarChartComponent implements OnInit {
         italic: false
       }
     },
-    chartArea: { width: '70%' },
     legend: {
       position: 'top',
       alignment: 'end',

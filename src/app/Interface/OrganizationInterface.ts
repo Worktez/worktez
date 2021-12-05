@@ -7,6 +7,7 @@ export interface Organizations {
     OrganizationDescription: string;
     OrganizationLogoURL: string;
     TeamsId: [];
+    TeamsName: [];
   }
 
 export interface OrganizationsDataId extends Organizations {id: string;}

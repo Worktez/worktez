@@ -23,9 +23,11 @@ export class MyTasksComponent implements OnInit {
   ngOnInit(): void {
     this.showLoader = true;
     this.dataTableService.readTaskDataForDashboard().subscribe((data) => {
-      this.tasksData = data;
-      this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
-      this.showLoader = false;
+      if(data.length) {
+        this.tasksData = data;
+        this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
+        this.showLoader = false;
+      }
     });
   }
 }

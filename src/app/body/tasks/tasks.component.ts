@@ -9,6 +9,7 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { DataTableService } from 'src/app/services/dataTable/data-table.service';
+import { FilterTaskService } from 'src/app/services/filter-task/filter-task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -38,7 +39,7 @@ export class TasksComponent implements OnInit {
   displayColoumns: string[] = []
   showLoader: boolean = true;
 
-  constructor(public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService) { }
+  constructor(public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -58,12 +59,7 @@ export class TasksComponent implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.SelectedOrgAppKey) {
           this.backendService.organizationsData.subscribe(data => {
-            this.showLoader = true
-            this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-              this.tasksData = data;
-              this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
-              this.showLoader = false;
-            });
+            this.getFilterData();
           });
         }
       });
@@ -80,37 +76,51 @@ export class TasksComponent implements OnInit {
         this.teamData = teams;
         newSprintNumber = this.teamData.CurrentSprintId;
         this.currentSprintName = this.fullSprintName(newSprintNumber);
-        this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
-        this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-          this.tasksData = data;
-          this.showLoader = false;
-        });
+        this.changeRoute(this.teamId, this.currentSprintName);
       });
     } else {
       this.currentSprintNumber = newSprintNumber;
       this.currentSprintName = this.fullSprintName(newSprintNumber);
-      this.router.navigate(['Tasks/', this.teamId, this.currentSprintName]);
-      this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-        this.tasksData = data;
-        this.showLoader = false;
-      });
+      this.changeRoute(this.teamId, this.currentSprintName);
     }
   }
+
+  changeRoute(newTeamID: string, newSprintName: string) {
+      this.router.navigate(['Tasks/', newTeamID, newSprintName]);
+      this.getFilterData();
+  }
+
 
   showFilterOptions() {
     this.showFilter = !this.showFilter
   }
 
-  applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string }) {
-    this.filterAssignee = data.Assignee
-    this.filterPriority = data.Priority
-    this.filterDifficulty = data.Difficulty
-    this.filterStatus = data.Status
-    this.filterProject = data.Project
+  applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string, Sprint: number }) {
+    this.filterTaskService.saveFilterData(data.Assignee, data.Project, data.Priority, data.Difficulty, data.Status, data.Sprint)
+    if (data.Project != this.teamId) {
+      this.teamId = data.Project
+    }
+    if (data.Sprint != this.currentSprintNumber) {
+      this.currentSprintNumber = data.Sprint
+      this.currentSprintName = this.fullSprintName(this.currentSprintNumber);
+    }
+      this.changeRoute(this.teamId, this.currentSprintName)
+  }
+
+  getFilterData() {
+    this.showLoader = true
+    this.filterAssignee = this.filterTaskService.filterAssignee
+    this.filterPriority = this.filterTaskService.filterPriority
+    this.filterDifficulty = this.filterTaskService.filterDifficulty
+    this.filterStatus = this.filterTaskService.filterStatus
     this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
-      this.tasksData = data;
-      this.showLoader = false;
+      if(data.length) {
+        this.tasksData = data;
+        this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
+        this.showLoader = false;
+      }
     });
+
   }
 
   openTaskDetails(id: string) {

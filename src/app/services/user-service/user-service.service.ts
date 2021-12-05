@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserServiceService {
-
   public photoUrlObservable: Observable<string[]>
 
   constructor(private functions: AngularFireFunctions) { }

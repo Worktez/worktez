@@ -11,39 +11,39 @@
                         <div class="card-body">
                             <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" (click)="editProfile()" style="color: var(--secondary-color);">edit
                     </span>
-                            <h3 class="card-title font-weight-bold font-italic">{{displayName}}</h3>
-                            <h6 class="card-title font-italic">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h6>
-                            <h6 class="card-subtitle pb-2 border-bottom font-italic text-muted">{{aboutMe}}</h6>
-                            <h6 class="card-title mt-2">
+                            <h2 class="card-title font-weight-bold font-italic">{{displayName}}</h2>
+                            <h5 class="card-title font-italic">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h5>
+                            <h5 class="card-subtitle pb-2 border-bottom font-italic text-muted">{{aboutMe}}</h5>
+                            <h5 class="card-title mt-2">
                                 <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
                                 {{email}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 <app-profile-icons [profileIcon]="'phone'"></app-profile-icons>
                                 {{phoneNumber}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
                                 Managed by {{ managerEmail }}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 Username: {{username}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 Skills: {{skills}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 Education: {{education}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 Experience: {{experience}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 Projects: {{projects}}
-                            </h6>
-                            <h6 class="card-title">
+                            </h5>
+                            <h5 class="card-title">
                                 Website: <a href="{{website}}/" target="_blank">{{website}}</a>
-                            </h6>
+                            </h5>
                             <a href="{{githubProfile}}" class="card-link" target="_blank">
                                 <app-profile-icons [profileIcon]="'github'"></app-profile-icons>
                             </a>

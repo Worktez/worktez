@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,6 +13,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Activity } from 'src/app/Interface/ActivityInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -50,7 +50,7 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
+  constructor ( private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
@@ -78,14 +78,15 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getTaskDetail () {
-     const callable = this.functions.httpsCallable('tasks');
-     this.taskDataObservable = callable({ mode: "getTaskDetails", Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
-         const data = res.taskData as Tasks;
-         this.task = data;
-         this.getName(data.Assignee, "Assignee");
-         this.getName(data.Creator, "Creator");
-         return { ...data }
-        }));      
+    const callable = this.functions.httpsCallable('tasks');
+    this.taskDataObservable = callable({ mode: "getTaskDetails", Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
+        const data = res.taskData as Tasks;
+        this.task = data;
+        this.getName(data.Assignee, "Assignee");
+        this.getName(data.Creator, "Creator");
+        this.applicationSettingService.getTeamDetails(data.TeamId);
+        return { ...data }
+    }));
   }
 
   getName (email, value) {
@@ -99,6 +100,7 @@ export class TaskDetailsComponent implements OnInit {
       }
     });
   }
+
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity");
     this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(

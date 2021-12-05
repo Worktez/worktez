@@ -43,20 +43,12 @@ export class HeaderComponent implements OnInit {
     this.popupHandlerService.createNewTaskEnabled= true;
   }
 
-  Board(){
+  Board() {
     this.router.navigate(['/Board']);
   }
 
-  myDashBoard(){
+  myDashBoard() {
     this.router.navigate(["/MyDashboard"])
-  }
-
-  createTeam(){
-    this.router.navigate(['/CreateTeam']);
-  }
-
-  updateTeam(){
-    this.router.navigate(['/UpdateTeam', this.authService.getTeamId()]);
   }
 
   createNewOrganization() {

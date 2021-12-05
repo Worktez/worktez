@@ -26,7 +26,7 @@ export class MyDashBoardComponent implements OnInit {
 
   selectedTeamId: string = "Dev";
   teamCurrentSprintNumber: number;
-  teamIdExists: boolean = false;
+  teamIdExists: boolean = true;
 
   constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
 
