@@ -93,7 +93,6 @@ import { TeamsCardComponent } from './body/view-organization-details/teams-card/
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

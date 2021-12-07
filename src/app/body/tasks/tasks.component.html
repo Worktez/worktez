@@ -1,21 +1,19 @@
 <div id="taskPage">
     <div class="container">
-        <div class="row align-items-center py-2 pl-4" id="navbarMenu">
-            <div class="col-8">
-                <h2 style="font-weight:bolder">Tasks</h2>
+        <div class="row align-items-center py-1 pl-4" id="navbarMenu">
+            <div class="col-8 align-middle">
+                <h4>Tasks</h4>
             </div>
             <div class="col text-right">
-                <span type="button" [ngClass]="{'toggleFilter':showFilter}" class="btn material-icons" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
-                <span type="button" class="btn material-icons" (click)="backToDashboard()">close</span>
+                <span [ngClass]="{'toggleFilter':showFilter}" class="btn material-icons" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
+                <span class="btn material-icons" (click)="backToDashboard()">close</span>
             </div>
         </div>
-        <div class="row" *ngIf="showFilter">
-                <div class="col-md-12">
-                    <app-filter-task (filterProperty)="applyFilters($event)" [currentSprintNumber]="currentSprintNumber" [defaultProject]="teamId"></app-filter-task>
-                </div>
-        </div>
-        <div class="row">
-            <ng-container *ngIf="dataTableService.tasksDataObservable | async">
+        <ng-container *ngIf="showFilter">
+            <app-filter-task (filterProperty)="applyFilters($event)" [currentSprintNumber]="currentSprintNumber" [defaultProject]="teamId"></app-filter-task>
+        </ng-container>
+        <div class="row pt-1">
+            <ng-container *ngIf="!showLoader; else loader">
                 <div class="col">
                     <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
                     <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
@@ -24,6 +22,6 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="!showFilter && !(dataTableService.tasksDataObservable | async)">
+<ng-template #loader>
     <app-loader></app-loader>
-</ng-container>
+</ng-template>
