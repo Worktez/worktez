@@ -20,10 +20,4 @@ exports.setPatches = function() {
       setPatch("Patch3", "Patch3", "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", "07/07/2021", "06/08/2021", "", "");
     }
   });
-
-  getPatchData("Patch7").then((patch) => {
-    if (patch == undefined) {
-      setPatch("Patch7", "Patch7", "This patch allows the user to add new fields for Organization", "09/12/2021", "09/12/2021", "", "");
-    }
-  });
 };
