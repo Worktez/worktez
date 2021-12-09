@@ -1,0 +1,6 @@
+.container{
+    color: var(--text);
+}
+a{
+    color: var(--primary-color);
+}

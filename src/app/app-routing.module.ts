@@ -22,6 +22,7 @@ import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluati
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+import { PrivacyComponent} from './body/privacy/privacy.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ListPatches', component: ListPatchesComponent },
+  { path: 'privacy', component: PrivacyComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];
 
