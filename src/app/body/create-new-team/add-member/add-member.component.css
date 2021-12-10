@@ -6,18 +6,28 @@
 #addMemberPage,
 .modal-content {
     background-color: var(--secondary-bg);
-    border: var(--primary-border);
+    border-radius: 8px;
+    color: var(--text);
+}
+
+.text {
     color: var(--text);
 }
 
 .head {
-    font-weight: bolder;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 #addButton {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
     color: var(--button-text);
+    width: 100%;
+    text-align: center;
 }
 
 #addButton:hover {
@@ -29,6 +39,11 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: #dc3226;
+}
+
+.form-email {
+    background-color: var(--primary-bg);
+    border: none;
 }
 
 .btn-secondary {

@@ -1,25 +1,46 @@
-<div class="card" style="box-shadow: var(--box-shadow-bottom);background: var(--secondary-bg);">
+<div class="card">
     <div class="card-body pt-4">
-        <h4 class="card-title">{{ team.TeamName }}</h4>
-        <span class="material-icons mr-2 float-right" type="button" (click)="updateTeam(team.TeamId)">manage_accounts</span>
-        <span class="material-icons mr-4 float-right" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="enableAddMember(team)">person_add</span>
-        <h5 class="card-subtitle text-muted">{{ team.TeamDescription }}</h5>
-        <h5 class="card-title mt-2">
-            <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons>
-            {{ team.TeamManagerEmail }}
-        </h5>
-        <h5 class="card-title mt-2">
-            <span class="material-icons mr-2" style="position: relative;top: 5px;">groups</span>
-            {{ team.TeamMembers.join(', ') }}
-        </h5>
-        <h5 class="card-title mt-2">
-            <span class="material-icons mr-2" style="position: relative;top: 5px;">task</span>
-            Total Team Tasks - {{ team.TotalTeamTasks }}
-        </h5>
-        <h5 class="card-title mt-2">
-            <span class="material-icons mr-2" style="position: relative;top: 5px;">sports_score</span>
-            Current Sprint Id - {{ team.CurrentSprintId }}
-        </h5>
+        <div class="row">
+            <div class="col-3">
+                <img src="https://images.unsplash.com/photo-1520209759809-a9bcb6cb3241?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1nfGVufDB8fDB8fA%3D%3D&w=1000&q=80" class="team-pic" alt="img">
+            </div>
+            <div class="col">
+                <span class="material-icons mr-2 p-2 float-right" type="button" (click)="updateTeam(team.TeamId)">manage_accounts</span>
+                <div class="mr-4 float-right p-2 add-member" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="enableAddMember(team)">
+                    <span class="material-icons">person_add</span>
+                    <span class="pl-2 pb-2">Add Member</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2 class="card-title">{{ team.TeamName }}</h2>
+                <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h4 class="card-title mt-2">
+                    <span class="material-icons mr-2" style="position: relative;top: 5px;">task</span> Total Team Tasks {{ team.TotalTeamTasks }}
+                </h4>
+            </div>
+            <div class="col-6">
+                <h4 class="card-title mt-2">
+                    <span class="material-icons mr-2" style="position: relative;top: 5px;">sports_score</span> Current Sprint Id {{ team.CurrentSprintId }}
+                </h4>
+            </div>
+            <div class="col-12">
+                <h4 class="card-title mt-2">
+                    <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons>
+                    {{ team.TeamManagerEmail }}
+                </h4>
+            </div>
+            <div class="col-12">
+                <h4 class="card-title mt-2">
+                    <span class="material-icons mr-2" style="position: relative;top: 5px;">groups</span> {{ team.TeamMembers.join(', ') }}
+                </h4>
+            </div>
+        </div>
     </div>
 </div>
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
