@@ -1,6 +1,63 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="container-fluid">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content profileEditTheme">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Edit Profile</h4>
+                    <button type="button" class="close" (click)= "editProfileDone()" aria-label="Close">
+                        <span aria-hidden="true" class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="modal-body container-fluid pt-0">
+                    <form #form="ngForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <input type="text" [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Display Name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <input type="text" class="form-control" id="recipient-phoneNo" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}" placeholder="Phone Number">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <input type="text" class="form-control" id="recipient-github" [(ngModel)]="githubProfile" [ngModelOptions]="{standalone: true}" placeholder="githubProfile">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <input type="text" class="form-control" id="recipient-linkedIn" [(ngModel)]="linkedInProfile" [ngModelOptions]="{standalone: true}" placeholder="LinkedIn Profile">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <textarea class="form-control" [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" id="message-text" placeholder="About Me"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <input type="text" class="form-control" id="recipient-website" [(ngModel)]="website" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                        <app-loader *ngIf="enableLoader && !showClose"></app-loader>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "editProfile()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content profileEditTheme">
+        <div class="modal-content ">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
                 <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editProfileDone()" style="color: var(--secondary-color);">close</span>
@@ -10,13 +67,7 @@
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Display Name</label>
                         <input type="text" [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Username</label>
-                        <input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name">
-                        <a *ngIf="!userAvailable" class="btn btn-primary" (click)="checkAvailability()">check availability</a>
-                        <a *ngIf="userAvailable" class="btn btn-success">Username available</a>
-                    </div>
+                    </div>                
                     <div class="form-group">
                         <label for="recipient-phoneNo" class="col-form-label">Phone Number</label>
                         <input type="text" class="form-control" id="recipient-phoneNo" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
@@ -32,22 +83,6 @@
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">About Me:</label>
                         <textarea class="form-control" [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" id="message-text"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-skills" class="col-form-label">Skills</label>
-                        <input type="text" class="form-control" id="recipient-skills" [(ngModel)]="skills" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-education" class="col-form-label">Education</label>
-                        <input type="text" class="form-control" id="recipient-education" [(ngModel)]="education" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-experience" class="col-form-label">Experience</label>
-                        <input type="text" class="form-control" id="recipient-experience" [(ngModel)]="experience" [ngModelOptions]="{standalone: true}">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-projects" class="col-form-label">Projects</label>
-                        <input type="text" class="form-control" id="recipient-projects" [(ngModel)]="projects" [ngModelOptions]="{standalone: true}">
                     </div>
                     <div class="form-group">
                         <label for="recipient-website" class="col-form-label">Website</label>
@@ -71,5 +106,37 @@
             </div>
         </div>
     </div>
-</div>
-<app-loader *ngIf="enableLoader && !showClose"></app-loader>
+</div> -->
+<!-- <app-loader *ngIf="enableLoader && !showClose"></app-loader> -->
+
+
+
+
+
+
+<!-- <div class="form-group">
+<label for="recipient-name" class="col-form-label">Username</label>
+<input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name">
+<a *ngIf="!userAvailable" class="btn btn-primary" (click)="checkAvailability()">check availability</a>
+<a *ngIf="userAvailable" class="btn btn-success">Username available</a>
+</div> -->
+
+                    <!-- <div class="form-group">
+                        <label for="recipient-skills" class="col-form-label">Skills</label>
+                        <input type="text" class="form-control" id="recipient-skills" [(ngModel)]="skills" [ngModelOptions]="{standalone: true}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-education" class="col-form-label">Education</label>
+                        <input type="text" class="form-control" id="recipient-education" [(ngModel)]="education" [ngModelOptions]="{standalone: true}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-experience" class="col-form-label">Experience</label>
+                        <input type="text" class="form-control" id="recipient-experience" [(ngModel)]="experience" [ngModelOptions]="{standalone: true}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-projects" class="col-form-label">Projects</label>
+                        <input type="text" class="form-control" id="recipient-projects" [(ngModel)]="projects" [ngModelOptions]="{standalone: true}">
+                    </div> -->

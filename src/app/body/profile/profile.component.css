@@ -3,12 +3,33 @@
 }
 
 .card {
-    border: 1px solid var(--secondary-color);
+    /* border: 1px solid var(--secondary-color); */
     background-color: var(--secondary-bg);
 }
+
+h2{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h4{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* h5{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h3{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+} */
 
 button {
     background-color: var(--secondary-color);
     border: var(--primary-border);
     color: var(--button-text);
 }
+
+/* .rounded-circle:hover
+    .card-title{
+        color: aqua;
+} */

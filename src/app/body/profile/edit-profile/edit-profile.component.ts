@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -30,7 +31,7 @@ export class EditProfileComponent implements OnInit {
   showClose: boolean = false
   public userAvailable: boolean = false;
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }

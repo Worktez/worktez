@@ -35,6 +35,7 @@ body {
     --button-text2: #4285F4;
     --table-header: #545454;
     --scrollbar-color: rgba(84, 84, 84, 0.17);
+    --togglebutton-color: #f3d4d6;
 }
 
 .theme-dark {
@@ -64,4 +65,5 @@ body {
     --button-text2: #4285F4;
     --table-header: #d4d4d6;
     --scrollbar-color: rgba(255, 255, 255, 0.51);
+    --togglebutton-color: #29382c;
 }
