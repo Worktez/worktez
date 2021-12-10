@@ -18,6 +18,7 @@ const { setMyOrganization } = require("./setMyOrganization");
 const { updateSelectedTeam } = require("./updateSelectedTeam");
 const { getUserByEmail } = require("./getUserByEmail");
 const { getPhotoURLList } = require("./getPhotoURLList");
+const { getMyOrgCollectionDocs } = require("./getMyOrgCollectionDoc");
 
 exports.users = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -47,6 +48,8 @@ exports.users = functions.https.onRequest((request, response) => {
             return updateSelectedTeam(request, response);
         } else if (mode == "getPhotoURLList") {
             return getPhotoURLList(request, response);
+        } else if (mode == "getMyOrgCollectionDocs") {
+            return getMyOrgCollectionDocs(request, response);
         }
     });
 });

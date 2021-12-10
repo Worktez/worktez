@@ -89,9 +89,12 @@ import { DataTableComponent } from './body/common-tools/data-table/data-table.co
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 
 @NgModule({
   declarations: [
@@ -168,7 +171,8 @@ import { Patch6Component } from './patches/patch6/patch6.component';
     DataTableComponent,
     TeamsCardComponent,
     OrgDocumentsComponent,
-    Patch6Component
+    Patch6Component,
+    NotificationCenterComponent
   ],
   imports: [
     BrowserModule,
@@ -184,6 +188,8 @@ import { Patch6Component } from './patches/patch6/patch6.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatIconModule,
+    MatBadgeModule,
     MatSortModule
   ],
   providers: [
