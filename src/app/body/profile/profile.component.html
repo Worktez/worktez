@@ -1,4 +1,4 @@
-<div class="container py-5 my-3" id="profileTheme" *ngIf="authService.userAppSettingObservable && backendService.organizationsData | async">
+<div class="px-5" id="profileTheme" *ngIf="authService.userAppSettingObservable && backendService.organizationsData | async">
    <div class="row">
        <div class="col-3">
            <h2>Profile Page</h2>
@@ -11,7 +11,7 @@
         </div>
    </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-4">
             <div class="card p-2">
                 <div class="row">
                     <div class="col">
@@ -54,26 +54,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-4">
             <div class="row-my-5 pb-4">
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
                             <span type="button" class="material-icons float-right">add</span>
                             <h2>Education</h2>
-                            <!-- <div class="card-body"> -->
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
-                                <!-- <h4 class="card-title">{{education}}</h4> -->
-                                <h3>Lorem University,India</h3>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <h3 style="font-size: 14px;">B.Tech CSE</h3>
-                                    </div>
-                                    <div class="col-8">
-                                        <ul><li>2019</li></ul>
-                                    </div>
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
+                            <!-- <h4 class="card-title">{{education}}</h4> -->
+                            <h3>Lorem University,India</h3>
+                            <div class="row">
+                                <div class="col-4">
+                                    <h3 style="font-size: 14px;">B.Tech CSE</h3>
                                 </div>
-                            <!-- </div> -->
+                                <div class="col-8">
+                                    <ul><li>2019</li></ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,19 +82,17 @@
                         <div class="col-md">
                             <span type="button" class="material-icons float-right">add</span>
                             <h2>Work Experience</h2>
-                            <!-- <div class="card-body"> -->
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
-                                <h3>Random Position</h3>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <h3 style="font-size: 14px;">Random Company</h3>
-                                    </div>
-                                    <div class="col-6">
-                                        <ul><li>2019-present</li></ul>
-                                    </div>
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
+                            <h3>Random Position</h3>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3 style="font-size: 14px;">Random Company</h3>
                                 </div>
-                                <!-- <h4 class="card-title">{{experience}}</h4> -->
-                            <!-- </div> -->
+                                <div class="col-6">
+                                    <ul><li>2019-present</li></ul>
+                                </div>
+                            </div>
+                            <!-- <h4 class="card-title">{{experience}}</h4> -->
                         </div>
                     </div>
                 </div>
@@ -107,44 +103,40 @@
                         <div class="col-md">
                             <span type="button" class="material-icons float-right">add</span>
                             <h2>Projects</h2>
-                            <!-- <div class="card-body"> -->
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
-                                <h3>Random Project Name</h3>
-                                <h3>2019-present</h3>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam provident mollitia soluta molestias accusamus expedita accusantium autem repudiandae in doloremque itaque dolore maxime.</h3>
-                                <!-- <h4 class="card-title">{{projects}}</h4> -->
-                            <!-- </div> -->
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
+                            <h3>Random Project Name</h3>
+                            <h3>2019-present</h3>
+                            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
+                            <!-- <h4 class="card-title">{{projects}}</h4> -->
                         </div>
                     </div>
                 </div>
             </div> 
         </div>
-        <div class="col-lg-4">
+        <div class="col-4">
             <div class="row-my-5 pb-4">
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
                             <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
                             <h2>Skills</h2>
-                            <!-- <div class="card-body">  -->
-                                <div class="row">
-                                    <div class="col-7">
-                                        <ul>
-                                            <li>Marketing</li>
-                                            <li>UI/UX</li>
-                                            <li>Content Creation</li>
-                                            <li>Social media</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-5">
-                                        <ul>
-                                            <li>Video Editing</li>
-                                            <li>Graphic designing</li>
-                                        </ul>
-                                    </div>
+                            <div class="row">
+                                <div class="col-7">
+                                    <ul>
+                                        <li>Marketing</li>
+                                        <li>UI/UX</li>
+                                        <li>Content Creation</li>
+                                        <li>Social media</li>
+                                    </ul>
                                 </div>
-                                <!-- <h4 class="card-title">{{skills}}</h4> -->
-                            <!-- </div> -->
+                                <div class="col-5">
+                                    <ul>
+                                        <li>Video Editing</li>
+                                        <li>Graphic designing</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- <h4 class="card-title">{{skills}}</h4> -->
                         </div>
                     </div>
                 </div>
