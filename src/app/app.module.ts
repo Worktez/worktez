@@ -94,7 +94,11 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+<<<<<<< HEAD
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
+=======
+import { CopyrightComponent } from './body/copyright/copyright.component';
+>>>>>>> cf747c82ccd827c20f023722781de295b5b8a47d
 
 @NgModule({
   declarations: [
@@ -172,7 +176,11 @@ import { NotificationCenterComponent } from './header/notification-center/notifi
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
+<<<<<<< HEAD
     NotificationCenterComponent
+=======
+    CopyrightComponent
+>>>>>>> cf747c82ccd827c20f023722781de295b5b8a47d
   ],
   imports: [
     BrowserModule,
