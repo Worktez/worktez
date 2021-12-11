@@ -22,11 +22,8 @@ import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluati
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
-<<<<<<< HEAD
 import { Patch7Component } from './patches/patch7/patch7.component';
-=======
 import { CopyrightComponent } from './body/copyright/copyright.component'
->>>>>>> cf747c82ccd827c20f023722781de295b5b8a47d
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
