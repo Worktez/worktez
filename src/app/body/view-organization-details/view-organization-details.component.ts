@@ -17,8 +17,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   organization: Organizations;
   teams: Team[] = []
   showLoader: boolean = true;
-  showOrgDetails: boolean = true;
-  showTeamsDetails: boolean = false;
+  showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
 
   constructor(public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService) { }
@@ -63,13 +62,10 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   switchView(data: any){
-    this.showOrgDetails = false;
     this.showTeamsDetails = false;
     this.showOrgDocuments = false;
 
-    if(data == "showOrgDetails") {
-      this.showOrgDetails = true;
-    } else if(data == "showTeamsDetails") {
+    if(data == "showTeamsDetails") {
       this.showTeamsDetails = true;
     } else {
       this.showOrgDocuments = true;

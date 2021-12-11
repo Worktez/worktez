@@ -95,6 +95,10 @@ import { TeamsCardComponent } from './body/view-organization-details/teams-card/
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
 import { PrivacyComponent } from './body/privacy/privacy.component';
+import { EditEducationComponent } from './body/profile/edit-education/edit-education.component';
+import { EditWorkexperienceComponent } from './body/profile/edit-workexperience/edit-workexperience.component';
+import { EditProjectsComponent } from './body/profile/edit-projects/edit-projects.component';
+import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.component';
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
@@ -176,9 +180,14 @@ import { CopyrightComponent } from './body/copyright/copyright.component';
     OrgDocumentsComponent,
     Patch6Component,
     PrivacyComponent,
+    EditEducationComponent,
+    EditWorkexperienceComponent,
+    EditProjectsComponent,
+    EditSkillsComponent,
+    CopyrightComponent,
     NotificationCenterComponent,
     Patch7Component,
-    CopyrightComponent
+    CopyrightComponent,
   ],
   imports: [
     BrowserModule,
