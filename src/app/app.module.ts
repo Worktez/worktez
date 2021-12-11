@@ -179,16 +179,11 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
-<<<<<<< HEAD
-<<<<<<< HEAD
     CopyrightComponent,
-    Patch8Component
-=======
+    Patch8Component,
     NotificationCenterComponent,
     Patch7Component,
-    CopyrightComponent
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
-=======
+    CopyrightComponent,
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,
@@ -196,8 +191,7 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     CopyrightComponent,
     NotificationCenterComponent,
     Patch7Component,
-    CopyrightComponent,
->>>>>>> 44db7230f4dcfdbb1383f06344e5a014ae449188
+    CopyrightComponent
   ],
   imports: [
     BrowserModule,

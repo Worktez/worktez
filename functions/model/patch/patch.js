@@ -15,11 +15,8 @@ const { patch5 } = require("./patch5");
 const { patchModerator } = require("./patchModerator");
 const { editPatch } = require("./editPatch");
 const { patch6 } = require("./patch6");
-<<<<<<< HEAD
-const { patch8 } = require("./patch8");
-=======
 const { patch7 } = require("./patch7");
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
+const { patch8 } = require("./patch8");
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -43,15 +40,12 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch6") {
             // To update the Sprints collections with new field values
             return patch6(request, response);
-<<<<<<< HEAD
-        } else if (mode == "patch8") {
-            // To add a new field and value to teams
-            return patch8(request, response);
-=======
         } else if (mode == "patch7") {
             // To add a new field to the organization
             return patch7(request, response);
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
+        } else if (mode == "patch8") {
+            // To add a new field and value to teams
+            return patch8(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {
