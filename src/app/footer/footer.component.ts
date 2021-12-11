@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
-import { Router } from '@angular/router'
-=======
 import { Router } from '@angular/router';
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
 import { map } from 'rxjs/operators';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GitData } from '../Interface/githubReleaseData';
@@ -35,11 +31,8 @@ export class FooterComponent implements OnInit {
   privacy(){
     this.router.navigate(['/privacy']);
   }
-<<<<<<< HEAD
-=======
 
   copyright(){
     this.router.navigate(['/copyright']);
   }
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
 }

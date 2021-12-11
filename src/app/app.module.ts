@@ -94,13 +94,10 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
-<<<<<<< HEAD
 import { PrivacyComponent } from './body/privacy/privacy.component';
-=======
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
 
 @NgModule({
   declarations: [
@@ -178,13 +175,10 @@ import { CopyrightComponent } from './body/copyright/copyright.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
-<<<<<<< HEAD
     PrivacyComponent,
-=======
     NotificationCenterComponent,
     Patch7Component,
     CopyrightComponent
->>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
   ],
   imports: [
     BrowserModule,
