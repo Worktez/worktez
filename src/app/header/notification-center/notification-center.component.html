@@ -1,0 +1,31 @@
+<div class="btn-group">
+    <mat-icon fontSet="material-icons-outlined" matBadge="{{activeNotifications}}" matBadgeColor="warn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="loadNotifications()">notifications</mat-icon>
+    <div class="dropdown-menu dropdown-menu-right" id="dropdownUserCard">
+        <ng-container *ngIf="!showLoader; else loader">
+            <div class="notificationCenter px-1 py-1">
+                <ng-container *ngIf="notificationsList.length == 0">
+                    <div class="text-center">
+                        No New Notification
+                    </div>
+                </ng-container>
+                <ng-container *ngFor="let item of notificationsList">
+                    <a href="{{item.Link}}">
+                        <div class="row text-center py-2 mx-1" id="notificationBox">
+                            <div class="col-9" id="message">
+                                {{item.Message}}
+                            </div>
+                            <div class="col" id="date">
+                                {{item.CreationDate}}
+                                <br>
+                                {{item.CreationTime}}
+                            </div>
+                        </div>
+                    </a>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-template #loader>
+            <app-loader></app-loader>
+        </ng-template>
+    </div>
+</div>

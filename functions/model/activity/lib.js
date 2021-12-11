@@ -17,7 +17,6 @@ exports.setActivities = function(orgDomain, taskId, totalActions = 0, totalComme
 
 exports.updateActivities = function(inputJson, orgDomain, taskId) {
     const updateActivitiesPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).update(inputJson);
-
     return Promise.resolve(updateActivitiesPromise);
 };
 

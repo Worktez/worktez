@@ -11,6 +11,7 @@ const { addMember } = require("./addMember");
 const { removeMember } = require("./removeMember");
 const { updateTeam } = require("./updateTeam");
 const { getTeamData } = require("./getTeamData");
+const { deleteTeam } = require("./deleteTeam");
 
 exports.teams = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -25,6 +26,8 @@ exports.teams = functions.https.onRequest((request, response) => {
             return removeMember(request, response);
         } else if (mode == "getTeamData") {
             return getTeamData(request, response);
+        } else if (mode == "delete") {
+            return deleteTeam(request, response);
         }
     });
 });

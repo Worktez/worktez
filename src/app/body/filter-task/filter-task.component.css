@@ -1,29 +1,18 @@
-.row{
-    color: var(--text);
-}
 #button {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
     color: var(--button-text);
-}
-
-#button:focus,
-#button:active {
-    outline: none;
-    box-shadow: none;
 }
 
 select,
 input {
     background-color: var(--primary-bg);
+    color: var(--text);
 }
 
 select:focus,
 input:focus {
     background-color: var(--primary-bg);
-    box-shadow: none;
-    outline: 0 none;
-    border-color: var(--primary-color);
+    color: var(--text);
 }
 
 #dropdownMenuButton {

@@ -1,0 +1,81 @@
+<div class="container" *ngIf="patchService.patchObservable | async">
+  <div class="row">
+      <div class="col pl-0 pr-0">
+          <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                      <h5 class="active nav-link" id="head">{{patch.Name}}</h5>
+                  </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="nav-item">
+                      <span type="button" class="material-icons text-light" (click)="backToDashboard()">close</span>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+  </div>
+  <div class="px-6" id="weigh">
+      <div class="container p-3 mr-3 my-3">
+          <div class="row mb-2">
+              <div class="col-md-6">
+                  <div>Creation Date: <span class="pl-3">{{ patch.CreationDate }}</span></div>
+              </div>
+              <div class="col-md-6">
+                  <div class="pr-3">Last Updated On: <span class="pl-3">{{ patch.UpdatedOn }}</span></div>
+              </div>
+          </div>
+          <div class="row mb-2">
+              <div class="col-md-6">
+                  <div class="pr-3">Last Used by Org: <span class="pl-3">{{ patch.LastUsedByOrg }}</span></div>
+              </div>
+              <div class="col-md-6">
+                  <div class="pr-3">Last Used by Uid: <span class="pl-3">{{ patch.LastUsedByUid }}</span></div>
+              </div>
+          </div>
+          <div class="row mb-2">
+              <div class="col">
+                  Description: <span class="pl-3">{{ patch.Description }}</span>
+              </div>
+          </div>
+      </div>
+      <form class="px-4">
+          <div class="form-group row">
+              <label for="orgDomain" class="col-sm-2 col-form-label">OrgDomain</label>
+              <div class="col-sm-10">
+                  <input type="orgDomain" class="form-control" id="orgDomain" placeholder="Enter OrgDomain" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
+              </div>
+          </div>
+          <div class="form-group row">
+              <label for="orgId" class="col-sm-2 col-form-label">NewField Name</label>
+              <div class="col-sm-10">
+                  <input type="newfield" class="form-control" id="newfield" placeholder="Enter New Field Name" [(ngModel)]="newfield" [ngModelOptions]="{standalone: true}">
+              </div>
+          </div>
+          <div class="form-group row">
+              <label for="orgId" class="col-sm-2 col-form-label">NewField Value</label>
+              <div class="col-sm-10">
+                  <input type="newFieldValue" class="form-control" id="newFieldValue" placeholder="Enter New Field Value" [(ngModel)]="newFieldValue" [ngModelOptions]="{standalone: true}">
+              </div>
+          </div>
+          <div class="form-group row">
+              <label for="orgId" class="col-sm-2 col-form-label">NewField Value Type</label>
+              <select class="form-control" [(ngModel)]="newFieldValueType" [ngModelOptions]="{standalone: true}">
+                  <option selected>choose...</option>
+                  <option>Array</option>
+                  <option>String</option>
+                  <option>Number</option>
+              </select>
+          </div>
+
+          <div class="form-group row">
+              <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary" [disabled]="showLoader" (click)="patch7()">Submit</button>
+                  <ng-container *ngIf="showLoader">
+                      <app-loader> </app-loader>
+                  </ng-container>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>

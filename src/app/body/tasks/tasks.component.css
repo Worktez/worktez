@@ -22,7 +22,6 @@
 }
 
 select:focus,
-input:focus,
-.btn:hover {
+input:focus {
     background-color: var(--secondary-color);
 }

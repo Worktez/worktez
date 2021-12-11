@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ActivatedRoute } from '@angular/router';
