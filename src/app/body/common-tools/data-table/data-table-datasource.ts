@@ -70,10 +70,10 @@ export class DataTableDataSource extends DataSource<Tasks> {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
         case 'Status': return compare(a.Status, b.Status, isAsc);
-        case 'Priority': return compare(+a.Priority, +b.Priority, isAsc);
-        case 'Difficulty': return compare(+a.Difficulty, +b.Difficulty, isAsc);
+        case 'Priority': return compare(a.Priority, b.Priority, isAsc);
+        case 'Difficulty': return compare(a.Difficulty, b.Difficulty, isAsc);
         case 'Id': return compare(a.Id, b.Id, isAsc);
-        case 'Title': return compare(+a.Title, +b.Title, isAsc);
+        case 'Title': return compare(a.Title, b.Title, isAsc);
         case 'WorkDone': return compare(a.WorkDone, b.WorkDone, isAsc);
         case 'Assignee': return compare(a.Assignee, b.Assignee, isAsc);
         default: return 0;

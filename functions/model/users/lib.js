@@ -27,6 +27,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         Experience: "",
         Projects: "",
         Website: "",
+        Notification: 0,
     });
     return Promise.resolve(userData);
 };
@@ -99,6 +100,7 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
         Teams: teams,
         DefaultTeam: defaultTeam,
         OrgDomain: orgDomain,
+        ActiveNotifications: 0,
     });
     return Promise.resolve(setMyOrgPromise);
 };
