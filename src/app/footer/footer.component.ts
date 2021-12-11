@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GitData } from '../Interface/githubReleaseData';
@@ -11,7 +12,7 @@ import { GitData } from '../Interface/githubReleaseData';
 export class FooterComponent implements OnInit {
   tag_name: string
 
-  constructor(private httpService: HttpServiceService) { }
+  constructor(private httpService: HttpServiceService, public router: Router) { }
 
   ngOnInit(): void {
     try {
@@ -25,6 +26,13 @@ export class FooterComponent implements OnInit {
     } catch (error) {
       
     }
+    
+  }
+  privacy(){
+    this.router.navigate(['/privacy']);
   }
 
+  copyright(){
+    this.router.navigate(['/copyright']);
+  }
 }

@@ -7,7 +7,7 @@ export class PopupHandlerService {
 
   createNewSprintEnabled: boolean = false
   createNewTaskEnabled: boolean = false
-
+  
   constructor() { }
 
 }

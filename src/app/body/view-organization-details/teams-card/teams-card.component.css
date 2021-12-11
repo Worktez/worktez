@@ -1,0 +1,27 @@
+.card {
+    box-shadow: var(--box-shadow-bottom);
+    background: var(--secondary-bg);
+    color: var(--text);
+    border: 1px solid var(--scrollbar-color);
+    border-radius: 10px;
+    height: 100%;
+}
+
+.team-pic {
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+}
+
+.add-member {
+    background-color: var(--input-field);
+    font-size: 16px;
+}
+
+.add-member .material-icons {
+    font-size: 16px;
+}
+
+.add-member:hover {
+    cursor: pointer;
+}

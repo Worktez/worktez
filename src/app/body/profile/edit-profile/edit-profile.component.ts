@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-edit-profile',

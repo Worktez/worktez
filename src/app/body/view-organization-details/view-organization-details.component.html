@@ -1,60 +1,63 @@
-<div class="container p-0" *ngIf="!showLoader">
+<div class=" m-5 p-5" id="mOrgContainer" *ngIf="!showLoader">
     <div class="row p-2">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header h3" style="border: none;background: none;">
-                    <span class="mr-2">
-                        <img src="{{ organization.OrganizationLogoURL }}" alt="" height="30" width="50">
-                    </span>
-                    {{ organization.OrganizationName }}
-                </div>
-                <div class="card-body">
-                    <h4 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h4>
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                          <a (click)="switchView('showOrgDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDetails}" aria-current="page">
-                              Organization<span class="material-icons align-middle px-2">corporate_fare</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
-                                Teams <span class="material-icons align-middle px-2">groups</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
-                                Documents <span class="material-icons align-middle px-2">snippet_folder</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <span type="button" class="material-icons float-right pt-4" *ngIf="showTeamsDetails" (click)="createTeam()">group_add</span>
-                    <ng-container *ngIf="showOrgDetails">
-                        <h5 class="card-title mt-4">
-                            <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
-                            {{ organization.OrganizationEmail }}
-                        </h5>
-                        <h5 class="card-title mt-4">
-                            <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
-                            {{ organization.OrganizationDomain }}
-                        </h5>
-                    </ng-container>
-                    <ng-container *ngIf="showTeamsDetails">
-                        <div class="container">
-                            <div class="row">
-                                <ng-container *ngFor="let team of teams">
-                                    <div class="col col-md-4 col-lg-6 pt-4">
-                                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
-                                    </div>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf="showOrgDocuments">
-                        <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
-                    </ng-container>
-                </div>
+        <div class="col-3">
+            <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg">
+        </div>
+    </div>
+    <div class="row p-2 my-1">
+        <div class="col-6">
+            <div class="h2 heading" style="border: none;background: none;">
+                {{ organization.OrganizationName }}
+                <h3 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h3>
             </div>
         </div>
+        <div class="col-2"></div>
+        <div class="col">
+            <h4 class="card-title">
+                <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
+                {{ organization.OrganizationEmail }}
+            </h4>
+            <h4 class="card-title">
+                <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
+                {{ organization.OrganizationDomain }}
+            </h4>
+        </div>
+    </div>
+    <hr>
+    <div class="row p-2">
+        <div class="col-md-10">
+            <ul class="nav">
+                <li class="nav-item mx-2">
+                    <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
+                        Teams
+                    </a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
+                        Documents
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-2">
+            <span type="button" class="material-icons float-right p-2 add-team" *ngIf="showTeamsDetails" (click)="createTeam()">group_add</span>
+        </div>
+    </div>
+    <div class="row p-2">
+        <ng-container *ngIf="showTeamsDetails">
+            <!-- <div class="container"> -->
+            <div class="row">
+                <ng-container *ngFor="let team of teams">
+                    <div class="col-md-4 my-3">
+                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- </div> -->
+        </ng-container>
+        <ng-container *ngIf="showOrgDocuments">
+            <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
+        </ng-container>
     </div>
 </div>
 <ng-container *ngIf="showLoader">

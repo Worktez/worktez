@@ -18,6 +18,8 @@ export class AuthService {
   public myOrgCollectionsData: Observable<MyOrganizationData[]>
   public myTeamsListObservable: Observable<string[]>
 
+  public myOrgCollectionDocData: Observable<MyOrganizationData>
+
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
 
@@ -78,6 +80,7 @@ export class AuthService {
         this.organizationAvailable = true;
         this.getListedOrganizationData(data.uid);
         this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
+        this.getMyOrgCollectionDocs(data.uid, data.SelectedOrgAppKey);
         this.themeService.changeTheme(data.AppTheme);
       } else {
         this.organizationAvailable = false;
@@ -92,6 +95,14 @@ export class AuthService {
     this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: uid}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData[];
+    }));
+  }
+
+  getMyOrgCollectionDocs(uid, appKey) {
+    const callable = this.functions.httpsCallable("users");
+    this.myOrgCollectionDocData = callable({mode: "getMyOrgCollectionDocs", Uid: uid, OrgAppKey: appKey}).pipe(
+      map(actions => {
+        return actions.data as MyOrganizationData;
     }));
   }
 

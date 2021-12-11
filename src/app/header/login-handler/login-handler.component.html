@@ -1,5 +1,12 @@
 <div *ngIf="authService.afauth.user | async; else showLoginButton">
-    <app-user-card [user]="user"></app-user-card>
+    <div class="row pl-2">
+        <div class="col-5 pt-2">
+            <app-notification-center></app-notification-center>
+        </div>
+        <div class="col">
+            <app-user-card [user]="user"></app-user-card>
+        </div>
+    </div>
 </div>
 <ng-template #showLoginButton>
     <button class="btn" id="button" type="button" routerLink="/login" skipLocationChange>Login</button>

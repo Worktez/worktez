@@ -1,12 +1,21 @@
+#mOrgContainer {
+    background-color: var(--header-bg);
+}
+
 .card {
     color: var(--text);
     background-color: var(--secondary-bg);
 }
 
+.card-title {
+    color: var(--text);
+    text-align: right;
+}
+
 .nav-link {
     color: var(--text);
     cursor: pointer;
-    background-color: var(--primary-bg);
+    font-size: 18px;
 }
 
 .nav-link:focus {
@@ -14,5 +23,27 @@
 }
 
 .activeBg {
-    background-color: var(--secondary-bg);
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.add-team {
+    color: var(--text);
+}
+
+.heading {
+    color: var(--text);
+}
+
+hr {
+    margin: 0;
+    border: none;
+    border-bottom: 2px solid var(--scrollbar-color);
+}
+
+#orgImg {
+    height: 122px;
+    width: 122px;
+    border-radius: 50%;
 }

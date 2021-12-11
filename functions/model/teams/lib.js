@@ -7,7 +7,7 @@
 
 const { db } = require("../application/lib");
 
-exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId) {
+exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus) {
     const setTeam = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).set({
         TeamName: teamName,
         TeamDescription: teamDescription,
@@ -21,6 +21,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         TotalTeamTasks: 0,
         OrganizationId: orgId,
         TeamId: teamId,
+        TeamStatus: teamStatus,
         CurrentSprintId: 0,
     });
     return Promise.resolve(setTeam);
@@ -40,6 +41,7 @@ exports.getTeam = function(orgDomain, teamName) {
 };
 
 exports.getTeamUseTeamId = function(orgDomain, teamId) {
+    console.log(teamId, orgDomain);
     const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").where("TeamId", "==", teamId).get().then((doc) => {
         let data;
         doc.forEach((team) => {
