@@ -22,6 +22,7 @@ import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluati
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+import { PrivacyComponent} from './body/privacy/privacy.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component'
 
@@ -50,6 +51,7 @@ const routes: Routes = [
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ListPatches', component: ListPatchesComponent },
+  { path: 'privacy', component: PrivacyComponent },
   { path: 'copyright', component: CopyrightComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];

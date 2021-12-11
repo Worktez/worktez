@@ -26,6 +26,10 @@ export class FooterComponent implements OnInit {
     } catch (error) {
       
     }
+    
+  }
+  privacy(){
+    this.router.navigate(['/privacy']);
   }
 
   copyright(){
