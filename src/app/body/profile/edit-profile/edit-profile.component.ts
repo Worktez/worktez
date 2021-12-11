@@ -31,7 +31,7 @@ export class EditProfileComponent implements OnInit {
   showClose: boolean = false
   public userAvailable: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
   }

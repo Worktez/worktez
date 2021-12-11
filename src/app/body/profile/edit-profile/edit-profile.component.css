@@ -61,16 +61,3 @@ input:focus {
     outline: 0 none;
     border-color: var(--primary-color);
 }
-
-
-/* .profileEditTheme {
-    border: var(--primary-border);
-    background-color: var(--secondary-bg);
-    color: var(--text);
-}
-
-button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
-} */
