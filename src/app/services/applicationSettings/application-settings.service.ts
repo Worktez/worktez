@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Notification } from 'src/app/Interface/NotificationInterface';
 import { Team, Sprint } from '../../Interface/TeamInterface';
+import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
 
 @Injectable({
@@ -28,7 +30,9 @@ export class ApplicationSettingsService {
 
   public sprintDataObservable: Observable<Sprint>;
 
-  constructor(private backendService: BackendService, private functions: AngularFireFunctions) { }
+  public notificationListObservable: Observable<Notification[]>;
+
+  constructor(private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
   getTeamDetails(teamId: string) {
     if(this.team == undefined || this.team.TeamId != teamId) {
@@ -56,5 +60,14 @@ export class ApplicationSettingsService {
         return actions.sprintData as Sprint;
     }));
     return this.sprintDataObservable;
+  }
+
+  getNotificationsList() {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable("notifications");
+    this.notificationListObservable = callable({mode: "getNotifications", Uid: this.authService.user.uid, OrgDomain: orgDomain}).pipe(map(actions => {
+        return actions as Notification[];
+    }));
+    return this.notificationListObservable;
   }
 }

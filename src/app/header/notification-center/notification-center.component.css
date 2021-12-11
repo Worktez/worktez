@@ -1,0 +1,57 @@
+mat-icon {
+    cursor: pointer;
+}
+
+.badge {
+    width: 10px;
+    height: 20px;
+    position: relative;
+    top: -12px;
+    left: -15px;
+    text-align: center;
+}
+
+.dropdown-item {
+    color: var(--button-text);
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    color: var(--button-text-hover);
+    background-color: var(--secondary-bg);
+}
+
+#dropdownUserCard {
+    background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+}
+
+a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+#notificationBox:focus,
+#notificationBox:hover {
+    border: 1px solid var(--button-text-hover);
+}
+
+#message {
+    font-size: 14px;
+}
+
+#date {
+    font-size: 12px;
+}
+
+.notificationCenter {
+    width: 400px;
+    height: auto;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}

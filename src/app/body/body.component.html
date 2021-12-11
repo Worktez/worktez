@@ -1,6 +1,11 @@
 <div class="page">
     <app-navbar></app-navbar>
     <app-error></app-error>
+    <ng-container *ngIf="applicationSettingsService.teamData | async">
+        <ng-container *ngIf="applicationSettingsService.team.TeamStatus == -1">
+            <p class="alert alert-danger" role="alert">The current team is marked as inactive by the org admin</p>
+        </ng-container>
+    </ng-container>
     <ng-container *ngIf="popupHandlerService.createNewSprintEnabled">
         <app-create-new-sprint (sprintCreated)="sprintCreated($event)"></app-create-new-sprint>
     </ng-container>
