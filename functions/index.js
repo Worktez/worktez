@@ -20,6 +20,7 @@ const { tasksEvaluation } = require("./model/tasksEvaluation/tasksEvaluation");
 const { performanceChart } = require("./model/performanceChart/performanceChart");
 const { activity } = require("./model/activity/activity");
 const { librarian } = require("./model/librarian/librarian");
+const { notifications } = require("./model/notifications/notifications");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -31,3 +32,4 @@ exports.tasksEvaluation = tasksEvaluation;
 exports.performanceChart = performanceChart;
 exports.activity = activity;
 exports.librarian = librarian;
+exports.notifications = notifications;

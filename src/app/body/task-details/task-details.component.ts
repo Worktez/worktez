@@ -92,11 +92,13 @@ export class TaskDetailsComponent implements OnInit {
   getName (email, value) {
     let name="";
     this.userService.getUserData(email).then(data => {
-      name = data.displayName;
-      if (value == "Assignee") {
-        this.assignee = name.split(' ')[0];
-      } else if (value == "Creator") {
-        this.creator = name.split(' ')[0];
+      if(data) {
+        name = data.displayName;
+        if (value == "Assignee") {
+          this.assignee = name.split(' ')[0];
+        } else if (value == "Creator") {
+          this.creator = name.split(' ')[0];
+        }
       }
     });
   }

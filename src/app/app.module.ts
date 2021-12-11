@@ -89,9 +89,13 @@ import { DataTableComponent } from './body/common-tools/data-table/data-table.co
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
+import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
 import { Patch8Component } from './patches/patch8/patch8.component';
 
@@ -171,8 +175,14 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
+<<<<<<< HEAD
     CopyrightComponent,
     Patch8Component
+=======
+    NotificationCenterComponent,
+    Patch7Component,
+    CopyrightComponent
+>>>>>>> 57e713a13398ad53259d1b579a88361ee52c3e53
   ],
   imports: [
     BrowserModule,
@@ -188,6 +198,8 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatIconModule,
+    MatBadgeModule,
     MatSortModule
   ],
   providers: [

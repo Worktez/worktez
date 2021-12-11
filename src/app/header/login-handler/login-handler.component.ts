@@ -22,6 +22,7 @@ export class LoginHandlerComponent implements OnInit {
       if(data) {
         this.user = data
         this.authService.user = data;
+        console.log("trigger 24");
         this.authService.getUserSettings(); 
       } else {
         this.authService.completedLoadingApplication = true;
