@@ -15,6 +15,7 @@ export interface SprintDataId extends Sprint{id: string;}
 export interface Team {
     TeamName: string;
     TeamId: string;
+    TeamStatus: number;
     TeamDescription: string;
     TeamManagerEmail: string;
     TeamMembers: string[];
