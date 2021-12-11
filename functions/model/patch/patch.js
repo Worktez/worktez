@@ -15,6 +15,7 @@ const { patch5 } = require("./patch5");
 const { patchModerator } = require("./patchModerator");
 const { editPatch } = require("./editPatch");
 const { patch6 } = require("./patch6");
+const { patch8 } = require("./patch8");
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -38,6 +39,9 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch6") {
             // To update the Sprints collections with new field values
             return patch6(request, response);
+        } else if (mode == "patch8") {
+            // To add a new field and value to teams
+            return patch8(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {

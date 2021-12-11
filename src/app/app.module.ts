@@ -93,6 +93,7 @@ import { TeamsCardComponent } from './body/view-organization-details/teams-card/
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
+import { Patch8Component } from './patches/patch8/patch8.component';
 
 @NgModule({
   declarations: [
@@ -170,7 +171,8 @@ import { CopyrightComponent } from './body/copyright/copyright.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
-    CopyrightComponent
+    CopyrightComponent,
+    Patch8Component
   ],
   imports: [
     BrowserModule,
