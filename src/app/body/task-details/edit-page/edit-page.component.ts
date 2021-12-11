@@ -34,7 +34,6 @@ export class EditPageComponent implements OnInit {
   teamMembers: string[]
   teamName: string
   previousAssignee:string
-  type: string[]
 
   constructor(private functions: AngularFireFunctions,  public applicationSetting: ApplicationSettingsService,private authService: AuthService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
@@ -52,7 +51,6 @@ export class EditPageComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
-          this.type = team.Type;
     }); 
   }
 

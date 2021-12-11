@@ -96,7 +96,7 @@ import { EditEducationComponent } from './body/profile/edit-education/edit-educa
 import { EditWorkexperienceComponent } from './body/profile/edit-workexperience/edit-workexperience.component';
 import { EditProjectsComponent } from './body/profile/edit-projects/edit-projects.component';
 import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.component';
-
+import { CopyrightComponent } from './body/copyright/copyright.component';
 
 @NgModule({
   declarations: [
@@ -177,7 +177,8 @@ import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.comp
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,
-    EditSkillsComponent
+    EditSkillsComponent,
+    CopyrightComponent,
   ],
   imports: [
     BrowserModule,

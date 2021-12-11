@@ -9,7 +9,7 @@
                     {{ organization.OrganizationName }}
                 </div>
                 <div class="card-body">
-                    <h6 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h6>
+                    <h4 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h4>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                           <a (click)="switchView('showOrgDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDetails}" aria-current="page">
@@ -29,14 +29,14 @@
                     </ul>
                     <span type="button" class="material-icons float-right pt-4" *ngIf="showTeamsDetails" (click)="createTeam()">group_add</span>
                     <ng-container *ngIf="showOrgDetails">
-                        <h6 class="card-title mt-4">
+                        <h5 class="card-title mt-4">
                             <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
                             {{ organization.OrganizationEmail }}
-                        </h6>
-                        <h6 class="card-title mt-4">
+                        </h5>
+                        <h5 class="card-title mt-4">
                             <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
                             {{ organization.OrganizationDomain }}
-                        </h6>
+                        </h5>
                     </ng-container>
                     <ng-container *ngIf="showTeamsDetails">
                         <div class="container">

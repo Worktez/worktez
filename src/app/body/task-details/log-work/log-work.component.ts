@@ -7,6 +7,7 @@ import { ToolsService } from '../../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AuthService } from '../../../services/auth.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 
 @Component({
   selector: 'app-log-work',
@@ -31,7 +32,7 @@ export class LogWorkComponent implements OnInit {
   enableLoader: boolean = false;
   showClose: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService,  private authService: AuthService) { }
+  constructor(public applicationSettingService: ApplicationSettingsService, private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, public backendService: BackendService,  private authService: AuthService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();

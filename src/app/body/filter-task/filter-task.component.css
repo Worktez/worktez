@@ -1,26 +1,35 @@
-.row{
-    color: var(--text);
-}
 #button {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
     color: var(--button-text);
 }
 
-#button:focus,
-#button:active {
-    outline: none;
-    box-shadow: none;
+select,
+input {
+    background-color: var(--primary-bg);
+    color: var(--text);
 }
-
-
-/* option {
-    background-color: #5A20F0;
-} */
 
 select:focus,
 input:focus {
-    box-shadow: none;
-    outline: 0 none;
-    border-color: var(--primary-color);
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
+#dropdownMenuButton {
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
+.dropdown-item {
+    color: var(--button-text);
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    color: var(--button-text-hover);
+    background-color: var(--secondary-bg);
+}
+
+#dropdownMenu {
+    background-color: var(--secondary-bg);
 }

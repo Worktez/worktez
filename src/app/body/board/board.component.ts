@@ -17,7 +17,7 @@ export class BoardComponent implements OnInit {
   @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
   componentName: string = "BOARD";
-  currentSprintNumber: number
+  currentSprintNumber: number = 0;
   showContent: boolean = false;
   uid: string;
   teamData: Team;

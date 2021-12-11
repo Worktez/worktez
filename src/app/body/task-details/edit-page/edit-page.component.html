@@ -3,7 +3,7 @@
         <div class="row modal-content">
             <div class="modal-header pt-3">
                 <div class="col-8 col-md-8 pl-2">
-                    <h5 class="modal-title pl-3" id="exampleModalCenterLabel">Edit Task</h5>
+                    <h4 class="modal-title pl-3" id="exampleModalCenterLabel">Edit Task</h4>
                     <span class="pl-3" id="date">{{ todayDate }}</span>
                 </div>
                 <div class="col-2 col-md-2">
@@ -12,7 +12,7 @@
                 </button>
                 </div>
             </div>
-    <div class="container-fluid modal-body px-5" id="editPageTaskContainer">
+            <div class="container-fluid modal-body px-5" id="editPageTaskContainer">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                         <div class="row">
                             <div class="col-md-8 pl-2">
@@ -50,7 +50,7 @@
                                     <span id="label">Task Type</span>
                                     <input type="text" class="form-control" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
                                     <datalist id="typeSuggestion">
-                                        <ng-container *ngFor='let item of type'>
+                                        <ng-container *ngFor='let item of applicationSetting.type'>
                                             <option>{{ item }}</option>
                                         </ng-container>
                                     </datalist>
@@ -65,9 +65,9 @@
                                     <span id="label">Task Priority</span>
                                     <select class="custom-select" [(ngModel)]="editTask.Priority" [ngModelOptions]="{standalone: true}">
                                         <option selected disabled value="">Select Priority</option>
-                                        <option>High</option>
-                                        <option>Medium</option>
-                                        <option>Low</option>
+                                        <ng-container *ngFor="let item of applicationSetting.priority">
+                                            <option>{{item}}</option>
+                                        </ng-container>
                                     </select>
                                 </div>
                                 <div class="col-md-4 px-2">
@@ -88,9 +88,9 @@
                                     <span id="label">Task Difficulty</span>
                                     <select class="custom-select" [(ngModel)]="editTask.Difficulty" [ngModelOptions]="{standalone: true}">
                                         <option selected disabled value="">Select Difficulty</option>
-                                        <option>High</option>
-                                        <option>Medium</option>
-                                        <option>Low</option>
+                                        <ng-container *ngFor="let item of applicationSetting.difficulty">
+                                            <option>{{item}}</option>
+                                        </ng-container>
                                     </select>
                                 </div>
                             </div>

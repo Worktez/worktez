@@ -1,5 +1,4 @@
 #navbarMenu {
-    background-color: var(--primary-color);
     color: var(--button-text);
 }
 
@@ -9,7 +8,7 @@
 }
 
 .btn {
-    background-color: var(--primary-color);
+    color: var(--text);
 }
 
 #button,
@@ -23,7 +22,6 @@
 }
 
 select:focus,
-input:focus,
-.btn:hover {
+input:focus {
     background-color: var(--secondary-color);
 }

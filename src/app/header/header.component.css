@@ -35,8 +35,11 @@
 
 #navbarDropdownBoards:hover,
 #navbarDropdownTeam:hover,
-#navbarDropdownCreate:hover {
+#navbarDropdownCreate:hover,
+a:hover,
+label:hover {
     color: var(--button-text-hover);
+    cursor: pointer;
 }
 
 button {

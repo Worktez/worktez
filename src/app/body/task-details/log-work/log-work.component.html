@@ -4,7 +4,7 @@
             <div class="modal-header pt-3">
                 <div class="col-1 col-md-1"></div>
                 <div class="col-8 col-md-8 pl-2">
-                    <h5 class="modal-title" id="ModalLabel">Log Work</h5>
+                    <h4 class="modal-title" id="ModalLabel">Log Work</h4>
                 </div>
                 <div class="col-2 col-md-2">
                     <button type="button" class="close col-md" data-dismiss="modal" (click)="workDone()" aria-label="Close">
@@ -35,11 +35,9 @@
                         <div class="col col-md">
                             <span id="logHead">Task Status:</span>
                             <select class="custom-select form-control" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
-                                <option>Ice Box</option>
-                                <option>Ready to start</option>
-                                <option>Under Progress</option>
-                                <option>Blocked</option>
-                                <option>Completed</option>
+                                <ng-container *ngFor="let item of applicationSettingService.status">
+                                    <option>{{item}}</option>
+                                </ng-container>
                             </select>
                         </div>
                     </div>
