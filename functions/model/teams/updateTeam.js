@@ -49,7 +49,7 @@ exports.updateTeam = function(request, response) {
         })
         .catch((error) => {
             result = { data: error };
-            console.error("Error Creating Team", error);
+            console.error("Error updating Team", error);
             return response.status(status).send(result);
         });
 };

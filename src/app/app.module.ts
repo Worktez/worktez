@@ -95,6 +95,7 @@ import { TeamsCardComponent } from './body/view-organization-details/teams-card/
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
+import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
 
 @NgModule({
@@ -174,6 +175,7 @@ import { CopyrightComponent } from './body/copyright/copyright.component';
     OrgDocumentsComponent,
     Patch6Component,
     NotificationCenterComponent,
+    Patch7Component,
     CopyrightComponent
   ],
   imports: [
