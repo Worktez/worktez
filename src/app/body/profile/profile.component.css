@@ -3,8 +3,17 @@
 }
 
 .card {
-    border: 1px solid var(--secondary-color);
+
     background-color: var(--secondary-bg);
+}
+
+h2{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: var(--text-color);
+}
+
+h4{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 button {

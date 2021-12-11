@@ -6,19 +6,20 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { functions, cors } = require("../application/lib");
-const { performanceChartData } = require("./performanceChartData");
+const { getPerformanceChartData } = require("./getperformanceChartData");
 const { getUserPerformanceChartData } = require("./getUserPerformanceChartData");
-const { sprintEvaluationGraph } = require("./sprintEvaluationGraph");
+const { getSprintEvaluationGraph } = require("./getSprintEvaluationGraph");
+
 
 exports.performanceChart = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
         const mode = request.body.data.mode;
 
         if (mode == "performanceChartData") {
-            return performanceChartData(request, response);
+            return getPerformanceChartData(request, response);
         } else if (mode == "sprintEvaluationGraph") {
-            return sprintEvaluationGraph(request, response);
-        } else if (mode == "getUserPerformanceChartData") {
+            return getSprintEvaluationGraph(request, response);
+        } else if (mode == "userPerformanceChartData") {
             return getUserPerformanceChartData(request, response);
         }
     });
