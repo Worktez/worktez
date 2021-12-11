@@ -44,6 +44,7 @@ input:focus {
 .form-email {
     background-color: var(--primary-bg);
     border: none;
+    color: var(--text);
 }
 
 .btn-secondary {

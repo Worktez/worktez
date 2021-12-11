@@ -1,4 +1,4 @@
-<div class="container px-5 py-3" id="mOrgContainer" *ngIf="!showLoader">
+<div class=" m-5 p-5" id="mOrgContainer" *ngIf="!showLoader">
     <div class="row p-2">
         <div class="col-3">
             <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg">
@@ -45,15 +45,15 @@
     </div>
     <div class="row p-2">
         <ng-container *ngIf="showTeamsDetails">
-            <div class="container">
-                <div class="row">
-                    <ng-container *ngFor="let team of teams">
-                        <div class="col col-md-4 col-lg-6 pt-4">
-                            <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
-                        </div>
-                    </ng-container>
-                </div>
+            <!-- <div class="container"> -->
+            <div class="row">
+                <ng-container *ngFor="let team of teams">
+                    <div class="col-md-4 my-3">
+                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
+                    </div>
+                </ng-container>
             </div>
+            <!-- </div> -->
         </ng-container>
         <ng-container *ngIf="showOrgDocuments">
             <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>

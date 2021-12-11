@@ -23,8 +23,9 @@
 }
 
 .activeBg {
-    padding-bottom: 0;
+    padding-bottom: 5px;
     border-bottom: 2px solid var(--primary-color);
+    color: var(--primary-color);
 }
 
 .add-team {
@@ -37,7 +38,8 @@
 
 hr {
     margin: 0;
-    border-color: var(--text);
+    border: none;
+    border-bottom: 2px solid var(--scrollbar-color);
 }
 
 #orgImg {
