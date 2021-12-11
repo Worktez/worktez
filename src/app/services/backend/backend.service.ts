@@ -21,7 +21,6 @@ export class BackendService {
   constructor(private functions: AngularFireFunctions) { }
 
   getOrgDetails(AppKey: string) {
-    console.log("trigger22");
     const callable = this.functions.httpsCallable("organization");
     this.organizationsData = callable({mode: "getOrgData", AppKey: AppKey}).pipe(
       map(actions => {

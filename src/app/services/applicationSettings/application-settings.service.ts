@@ -63,7 +63,6 @@ export class ApplicationSettingsService {
   }
 
   getNotificationsList() {
-    console.log("triggers");
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("notifications");
     this.notificationListObservable = callable({mode: "getNotifications", Uid: this.authService.user.uid, OrgDomain: orgDomain}).pipe(map(actions => {
