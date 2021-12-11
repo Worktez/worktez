@@ -66,7 +66,7 @@ exports.checkUpdateTime = function(lastUpdated) {
     // for 1 day difference - 86400000
     const diff = currentTimeStamp - lastUpdated;
     console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
-    if (diff >= 60000) {
+    if (diff >= 3600000) {
         return currentTimeStamp;
     }
     return 0;
