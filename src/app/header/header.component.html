@@ -3,19 +3,22 @@
         <a class="navbar-brand text-white px-1" (click)="home()">
             <img src="../../assets/logo.png" width="50" height="30"> 
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="height:fit-content; padding: 0 10px; margin-top: -16px;">
-        <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
-    </button>
-        <div class="collapse navbar-collapse pl-3" id="navbarText">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
+        </button>
+        <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
             <ng-container *ngIf="(backendService.organizationsData | async)">
                     <ul class="navbar-nav">
                         <ng-container *ngIf="authService.myOrgCollectionsData | async">
                             <li class="nav-item dropdown">
-                                <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="material-icons align-middle pr-2">
+                                <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                         corporate_fare
-                                    </span>
-                                    <label style="color: var(--text);">{{backendService.organizationDetails.OrganizationName}}</label>
+                                    </mat-icon>
+                                    {{backendService.organizationDetails.OrganizationName}}
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                        expand_more
+                                    </mat-icon>
                                 </a>
                                 <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
                                     <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
@@ -29,24 +32,30 @@
             <ul class="navbar-nav ml-auto">
                 <ng-container *ngIf="(backendService.organizationsData | async)">
                     <li class="nav-item dropdown">
-                        <a class="btn nav-link dropdown-toggle" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="material-icons align-middle pr-2">
+                        <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                 add_box
-                            </span>
-                            <label>Create</label>
+                            </mat-icon>
+                            Create
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                expand_more
+                            </mat-icon>
                         </a>
-                        <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                             <a class="dropdown-item" (click)="createNewTask()"data-toggle="modal" data-target="#createNewTask">Create New Task</a>
                             <a class="dropdown-item" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</a>
                         </div>
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="btn nav-link dropdown-toggle" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="material-icons align-middle pr-2">
+                        <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                 dashboard
-                            </span>
-                            <label>Boards</label>
+                            </mat-icon>
+                            Boards
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                expand_more
+                            </mat-icon>
                         </a>
                         <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards">
                             <a class="dropdown-item " (click)="Board() ">Board</a>
@@ -56,7 +65,7 @@
                     </li>
                     <ng-container *ngIf="(authService.organizationAvailable) && authService.afauth.user | async">
                         <li class="nav-item px-1">
-                            <a class="btn nav-link" id="navbarDropdownBoards" role="button" (click)="organizationDetails()">
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="organizationDetails()">
                                 <label>My Organization</label>
                             </a>
                         </li>
@@ -64,7 +73,7 @@
                 </ng-container>
                 <ng-container *ngIf="!(authService.organizationAvailable) && authService.afauth.user | async">
                     <li class="nav-item px-1">
-                        <a class="btn nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
+                        <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
                             <label>Create New Organization</label>
                         </a>
                     </li>

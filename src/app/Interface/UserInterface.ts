@@ -29,6 +29,7 @@ export interface MyOrganizationData {
     Teams: [];
     Uid: string;
     OrgDomain: string;
+    ActiveNotifications: number;
 }
 
 export const defaultUser = {

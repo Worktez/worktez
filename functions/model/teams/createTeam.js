@@ -28,6 +28,7 @@ exports.createTeam = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
     const teamName = request.body.data.TeamName;
     let orgId;
+    const teamStatus = 1;
 
     let status = 200;
     let result = { data: "Error in Creating Team" };
@@ -48,7 +49,7 @@ exports.createTeam = function(request, response) {
             if (team == undefined) {
                 console.log(orgId);
 
-                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId);
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus);
                 myOrganizations(uid, orgDomain, orgAppKey, teamId);
             } else {
                 status = 500;
