@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-sprint-evaluation-graph',
@@ -17,8 +19,8 @@ export class SprintEvaluationGraphComponent implements OnInit {
   @Input("currentSprint") currentSprintNumber: number;
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
-  data = [];
-  columnNames: string[];
+  data: Observable<[]>;
+  columnNames: string[] = ["Sprints", "Start", "Mid", "End"];
   teamMember: string;
   sprintRange1: number;
   sprintRange2: number;
@@ -29,38 +31,23 @@ export class SprintEvaluationGraphComponent implements OnInit {
     this.sprintRange2 = this.currentSprintNumber;
     this.sprintRange1 = this.currentSprintNumber - 4;
     this.teamMember = 'Team';
-    this.getData().then(data => {
-      this.data = data;
-      this.showLoader = false;
-    });
+    this.getData();
   }
 
   async getData() {
-    let temp = [];
-      for (let i = this.sprintRange1; i <= this.sprintRange2; i++) {
-        await this.readData(i, this.teamId).then(data => {
-          temp.push(["S" + i, data[0], data[1], data[2]]);
-        }).catch(err => {
-          console.log(err);
-        });
-        this.columnNames = ["Sprints", "Start", "Mid", "End"];
-      }
-    return temp;
-  }
-
-  async readData(sprintNumber: number, teamId: string) {
-    var storyPointArray: number[];
     let orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('performanceChart');
     try {
-      const result = await callable({ mode: "sprintEvaluationGraph", OrganizationDomain: orgDomain, SprintNumber: sprintNumber, TeamId: teamId}).toPromise();
-      storyPointArray = result.StoryPointArray;
+      this.data = await callable({ mode: "sprintEvaluationGraph", OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
+        map(actions => {
+          console.log(actions.data);
+          return actions.data as [];
+        }));
+      this.showLoader = false;
     } catch(error) {
       console.log(error);
     }
-    return storyPointArray;
   }
-
   onGetRange(range) {
     this.showLoader = true;
     this.sprintRange1 = range.sprintRange1;
@@ -68,10 +55,6 @@ export class SprintEvaluationGraphComponent implements OnInit {
     if (this.sprintRange2 > this.currentSprintNumber) {
       this.sprintRange2 = this.currentSprintNumber;
     }
-    this.getData().then(data => {
-      this.data = data;
-      this.showLoader = false;
-    });
+    this.getData();
   }
-
 }
