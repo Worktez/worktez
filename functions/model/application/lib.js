@@ -58,3 +58,16 @@ exports.createSprintName = function(sprintId) {
         return ("S" + sprintId.toString());
     }
 };
+
+exports.checkUpdateTime = function(lastUpdated) {
+    const currentTimeStamp = Date.now();
+    // for 1 minute difference - 60000
+    // for 1 hour difference - 3600000
+    // for 1 day difference - 86400000
+    const diff = currentTimeStamp - lastUpdated;
+    console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
+    if (diff >= 3600000) {
+        return currentTimeStamp;
+    }
+    return 0;
+};
