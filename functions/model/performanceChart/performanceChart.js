@@ -6,7 +6,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { functions, cors } = require("../application/lib");
-const { getPerformanceChartData } = require("./getperformanceChartData");
+const { getPerformanceChartData } = require("./getPerformanceChartData");
 const { getUserPerformanceChartData } = require("./getUserPerformanceChartData");
 const { getSprintEvaluationGraph } = require("./getSprintEvaluationGraph");
 

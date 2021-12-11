@@ -23,14 +23,14 @@ exports.getPerformanceChartData = function(request, response) {
     const p1 = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((doc) => {
       updatePerformanceChartData(doc.LastUpdated, orgDomain, teamId, assignee, sprintRange);
       const responseData = [];
-      for (const i in doc) {
-        if (i!="LastUpdated") {
-          responseData.push([i, doc[i]]);
-        }
-      }
       if (doc == undefined) {
         result = {data: {status: "ERROR", data: undefined}};
       } else {
+        for (const i in doc) {
+          if (i!="LastUpdated") {
+            responseData.push([i, doc[i]]);
+          }
+        }
         result = { data: { status: "OK", data: responseData } };
       }
     });

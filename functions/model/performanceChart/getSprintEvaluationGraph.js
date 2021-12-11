@@ -22,17 +22,17 @@ exports.getSprintEvaluationGraph = function(request, response) {
     const p1 = getOrganizationsChartDetails(orgDomain, teamName, "SprintEvaluationGraph").then((doc) => {
       updateSprintEvaluationGraphData(doc.LastUpdated, orgDomain, teamId, sprintRange);
       const responseData = [];
-      for (const i in doc) {
-        if (i!="LastUpdated") {
-          const start = doc[i][0];
-          const mid = doc[i][1];
-          const end = doc[i][2];
-          responseData.push([i, start, mid, end]);
-        }
-      }
       if (doc == undefined) {
         result = {data: {status: "ERROR", data: undefined}};
       } else {
+        for (const i in doc) {
+          if (i!="LastUpdated") {
+            const start = doc[i][0];
+            const mid = doc[i][1];
+            const end = doc[i][2];
+            responseData.push([i, start, mid, end]);
+          }
+        }
         result = { data: { status: "OK", data: responseData } };
       }
     });

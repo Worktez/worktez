@@ -35,7 +35,6 @@ exports.updateSprintEvaluationGraphData = function(lastUpdated, orgDomain, teamI
                 return Promise.resolve(getSprintPromise);
             }
         }).catch((error) => {
-            status = 500;
             console.log(error);
         });
         return Promise.resolve(sprintEvaluationGraphPromise).then(() => {
