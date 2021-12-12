@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 module.exports = {
   root: true,
   env: {

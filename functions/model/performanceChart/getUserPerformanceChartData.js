@@ -14,14 +14,19 @@ exports.getUserPerformanceChartData = function(request, response) {
   const assignee = data.Assignee;
   const uid=data.Uid;
   let result;
+  let lastUpdated = 0;
   let status = 200;
   
   getUserPerformanceChart(orgDomain, uid).then((doc) => {
-    updatedUserPerformanceChartData(doc.LastUpdated, orgDomain, assignee, uid, sprintRange);
     const responseData = [];
     if (doc == undefined) {
+      updatedUserPerformanceChartData(0, orgDomain, assignee, uid, sprintRange);
       result = {data: {status: "ERROR", data: undefined}};
     } else {
+      if (doc.LastUpdated != undefined) {
+        lastUpdated = doc.LastUpdated;
+      }
+      updatedUserPerformanceChartData(lastUpdated, orgDomain, assignee, uid, sprintRange);
       for (const i in doc) {
         if (i!="LastUpdated") {
           responseData.push([i, doc[i]]);

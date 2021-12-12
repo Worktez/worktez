@@ -16,16 +16,21 @@ exports.getPerformanceChartData = function(request, response) {
   const sprintRange = data.SprintNumberRange;
   let teamName;
   let result;
+  let lastUpdated = 0;
   let status = 200;
 
   const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
     teamName = team.TeamName;
     const p1 = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((doc) => {
-      updatePerformanceChartData(doc.LastUpdated, orgDomain, teamId, assignee, sprintRange);
       const responseData = [];
       if (doc == undefined) {
+        updatePerformanceChartData(0, orgDomain, teamId, assignee, sprintRange);
         result = {data: {status: "ERROR", data: undefined}};
       } else {
+        if (doc.LastUpdated != undefined) {
+          lastUpdated = doc.LastUpdated;
+        }
+        updatePerformanceChartData(lastUpdated, orgDomain, teamId, assignee, sprintRange);
         for (const i in doc) {
           if (i!="LastUpdated") {
             responseData.push([i, doc[i]]);
