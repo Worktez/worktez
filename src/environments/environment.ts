@@ -5,13 +5,7 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyBCSUWLkVpB2VF-Kh7PKDcqTwXIp7ssA5o",
-  authDomain: "thanvi-f14d4.firebaseapp.com",
-  projectId: "thanvi-f14d4",
-  storageBucket: "thanvi-f14d4.appspot.com",
-  messagingSenderId: "492096144317",
-  appId: "1:492096144317:web:43378faa6ba53e2893c8d4",
-  measurementId: "G-DP3J3MXCMJ"
+   
   },
   useEmulators: true,
   gitApiUrl: "https://api.github.com/repos/Worktez/worktez"

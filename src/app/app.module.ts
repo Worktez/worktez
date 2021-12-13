@@ -180,23 +180,15 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
-<<<<<<< HEAD
     CopyrightComponent,
     Patch8Component,
     NotificationCenterComponent,
     Patch7Component,
-    CopyrightComponent,
-=======
     PrivacyComponent,
->>>>>>> 217863f6aff586fb71e9132646cb117a7b5a941e
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,
-    EditSkillsComponent,
-    CopyrightComponent,
-    NotificationCenterComponent,
-    Patch7Component,
-    CopyrightComponent
+    EditSkillsComponent
   ],
   imports: [
     BrowserModule,

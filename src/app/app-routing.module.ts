@@ -22,12 +22,9 @@ import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluati
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
-<<<<<<< HEAD
 import { CopyrightComponent } from './body/copyright/copyright.component';
 import { Patch8Component } from './patches/patch8/patch8.component';
-=======
 import { PrivacyComponent} from './body/privacy/privacy.component';
->>>>>>> 217863f6aff586fb71e9132646cb117a7b5a941e
 import { Patch7Component } from './patches/patch7/patch7.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
