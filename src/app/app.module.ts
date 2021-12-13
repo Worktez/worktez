@@ -102,6 +102,7 @@ import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.comp
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
+import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 
 @NgModule({
   declarations: [
@@ -188,6 +189,7 @@ import { CopyrightComponent } from './body/copyright/copyright.component';
     NotificationCenterComponent,
     Patch7Component,
     CopyrightComponent,
+    TermsAndConditionComponent,
   ],
   imports: [
     BrowserModule,
