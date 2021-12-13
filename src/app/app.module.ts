@@ -94,6 +94,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+import { PrivacyComponent } from './body/privacy/privacy.component';
 import { EditEducationComponent } from './body/profile/edit-education/edit-education.component';
 import { EditWorkexperienceComponent } from './body/profile/edit-workexperience/edit-workexperience.component';
 import { EditProjectsComponent } from './body/profile/edit-projects/edit-projects.component';
@@ -179,11 +180,15 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
+<<<<<<< HEAD
     CopyrightComponent,
     Patch8Component,
     NotificationCenterComponent,
     Patch7Component,
     CopyrightComponent,
+=======
+    PrivacyComponent,
+>>>>>>> 217863f6aff586fb71e9132646cb117a7b5a941e
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,

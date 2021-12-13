@@ -10,7 +10,7 @@
 const { createSprintName, checkUpdateTime } = require("../application/lib");
 const { getSprint } = require("../sprints/lib");
 const { getTeamUseTeamId } = require("../teams/lib");
-const { updateChart } = require("./lib");
+const { updateChart, setOrganizationsChart } = require("./lib");
 
 exports.updateSprintEvaluationGraphData = function(lastUpdated, orgDomain, teamId, sprintRange) {
     const result = checkUpdateTime(lastUpdated);
@@ -35,11 +35,14 @@ exports.updateSprintEvaluationGraphData = function(lastUpdated, orgDomain, teamI
                 return Promise.resolve(getSprintPromise);
             }
         }).catch((error) => {
-            status = 500;
             console.log(error);
         });
         return Promise.resolve(sprintEvaluationGraphPromise).then(() => {
-            updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+            if (lastUpdated == 0) {
+                setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+            } else {
+                updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+            }
             return;
             })
             .catch((error) => {

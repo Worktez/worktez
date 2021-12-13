@@ -41,7 +41,6 @@ exports.updatePerformanceChartData = function(lastUpdated, orgDomain, teamId, as
         });
         return Promise.resolve(promise1);
     }).catch((error) => {
-        status = 500;
         console.log("Error:", error);
     });
     return Promise.resolve(performanceChartDataPromise).then(() => {

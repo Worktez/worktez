@@ -14,32 +14,30 @@ exports.getUserPerformanceChartData = function(request, response) {
   const assignee = data.Assignee;
   const uid=data.Uid;
   let result;
+  let lastUpdated = 0;
   let status = 200;
   
-  const userPerformanceChartPromise = getUserPerformanceChart(orgDomain, uid).then((doc) => {
-    updatedUserPerformanceChartData(doc.LastUpdated, orgDomain, assignee, uid, sprintRange);
+  getUserPerformanceChart(orgDomain, uid).then((doc) => {
     const responseData = [];
-    for (const i in doc) {
-      if (i!="LastUpdated") {
-        responseData.push([i, doc[i]]);
-      }
-    }
     if (doc == undefined) {
+      updatedUserPerformanceChartData(0, orgDomain, assignee, uid, sprintRange);
       result = {data: {status: "ERROR", data: undefined}};
     } else {
+      if (doc.LastUpdated != undefined) {
+        lastUpdated = doc.LastUpdated;
+      }
+      updatedUserPerformanceChartData(lastUpdated, orgDomain, assignee, uid, sprintRange);
+      for (const i in doc) {
+        if (i!="LastUpdated") {
+          responseData.push([i, doc[i]]);
+        }
+      }
       result = { data: { status: "OK", data: responseData } };
     }
     return response.status(status).send(result);
   }).catch((error) => {
     status = 500;
     console.log("Error:", error);
-    return response.status(status).send(result);
-  });
-  return Promise.resolve(userPerformanceChartPromise).then(() => {
-    console.log("Fetched User Performance Chart Data Successfully");
-    return response.status(status).send(result);
-  }).catch((error) => {
-    console.error("Error Fetching User Performance Chart Data", error);
     return response.status(status).send(result);
   });
 };

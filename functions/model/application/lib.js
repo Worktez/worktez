@@ -60,10 +60,12 @@ exports.createSprintName = function(sprintId) {
 };
 
 exports.checkUpdateTime = function(lastUpdated) {
-    const currentTimeStamp = Date.now();
+      // const d = new Date();
+    // const currentTimeStamp = d.getMilliseconds();
     // for 1 minute difference - 60000
     // for 1 hour difference - 3600000
     // for 1 day difference - 86400000
+    const currentTimeStamp = Date.now();
     const diff = currentTimeStamp - lastUpdated;
     console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
     if (diff >= 3600000) {

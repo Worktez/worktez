@@ -33,7 +33,6 @@ exports.updatedUserPerformanceChartData =function(lastUpdated, orgDomain, assign
             inputJson["S"+i]=storyPoint;
         }
     }).catch((error) => {
-        status = 500;
         console.log("Error:", error);
     });
 

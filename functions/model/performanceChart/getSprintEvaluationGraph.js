@@ -15,24 +15,29 @@ exports.getSprintEvaluationGraph = function(request, response) {
   const sprintRange = data.SprintNumberRange;
   let result;
   let teamName;
+  let lastUpdated = 0;
   let status = 200;
   
   const sprintEvaluationGraphPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
     teamName = team.TeamName;
     const p1 = getOrganizationsChartDetails(orgDomain, teamName, "SprintEvaluationGraph").then((doc) => {
-      updateSprintEvaluationGraphData(doc.LastUpdated, orgDomain, teamId, sprintRange);
       const responseData = [];
-      for (const i in doc) {
-        if (i!="LastUpdated") {
-          const start = doc[i][0];
-          const mid = doc[i][1];
-          const end = doc[i][2];
-          responseData.push([i, start, mid, end]);
-        }
-      }
       if (doc == undefined) {
+        updateSprintEvaluationGraphData(0, orgDomain, teamId, sprintRange);
         result = {data: {status: "ERROR", data: undefined}};
       } else {
+        if (doc.LastUpdated != undefined) {
+          lastUpdated = doc.LastUpdated;
+        }
+        updateSprintEvaluationGraphData(lastUpdated, orgDomain, teamId, sprintRange);
+        for (const i in doc) {
+          if (i!="LastUpdated") {
+            const start = doc[i][0];
+            const mid = doc[i][1];
+            const end = doc[i][2];
+            responseData.push([i, start, mid, end]);
+          }
+        }
         result = { data: { status: "OK", data: responseData } };
       }
     });
