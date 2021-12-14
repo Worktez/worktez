@@ -16,6 +16,7 @@ const { patchModerator } = require("./patchModerator");
 const { editPatch } = require("./editPatch");
 const { patch6 } = require("./patch6");
 const { patch7 } = require("./patch7");
+const { patch9 } = require("./patch9");
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -42,6 +43,9 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch7") {
             // To add a new field to the organization
             return patch7(request, response);
+        } else if (mode == "patch9") {
+            // To add a new field to the organization
+            return patch9(request, response);
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {
