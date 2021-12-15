@@ -227,5 +227,15 @@ export class SetupComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+
+    try {
+      const result = await callable({ mode: "patchModerator", Patch: "Patch8", PatchName: "Patch-8", PatchDescription: "This patch allows the user to add new fields in team", CreationDate: "11/12/2021", UpdatedOn: "13/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch8 document");
+      this.showLoader = false;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

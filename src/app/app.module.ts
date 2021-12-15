@@ -102,6 +102,7 @@ import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.comp
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
+import { Patch8Component } from './patches/patch8/patch8.component';
 
 @NgModule({
   declarations: [
@@ -179,15 +180,15 @@ import { CopyrightComponent } from './body/copyright/copyright.component';
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
+    CopyrightComponent,
+    Patch8Component,
+    NotificationCenterComponent,
+    Patch7Component,
     PrivacyComponent,
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,
-    EditSkillsComponent,
-    CopyrightComponent,
-    NotificationCenterComponent,
-    Patch7Component,
-    CopyrightComponent,
+    EditSkillsComponent
   ],
   imports: [
     BrowserModule,
