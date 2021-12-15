@@ -7,7 +7,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getUser } = require("./lib");
+const { getUser } = require("../lib");
 
 exports.getUserAppSettings = function(request, response) {
     const user = request.body.data;

@@ -47,6 +47,7 @@ export class AuthService {
   async createUserData(user: User) {
     const callable = this.functions.httpsCallable('users');
     try {
+      console.log("create new user from ui");
       const result = await callable({ mode: "create", uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
 
     } catch (error) {
@@ -70,10 +71,11 @@ export class AuthService {
   }
 
   getUserSettings() {
+    console.log("get User app Settings from ui");
     const uid = this.getLoggedInUser(); 
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/getUserAppSettings');
 
-    this.userAppSettingObservable = callable({ mode: "getUserAppSettings", uid: uid }).pipe(map(res => {
+    this.userAppSettingObservable = callable({ uid: uid }).pipe(map(res => {
       const data = res.userData as UserAppSetting;
       this.userAppSetting = data;
       if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
