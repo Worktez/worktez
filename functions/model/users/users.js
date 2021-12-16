@@ -6,28 +6,80 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
-const { updateUser } = require("./updateUser");
-const { updateTheme } = require("./updateTheme");
-const { verifyUser } = require("./verifyUser");
-const { checkAvailableUsername } = require("./checkAvailableUsername");
-const { getMyOrgList } = require("./getMyOrgList");
-const { getMyTeamsList } = require("./getMyTeamsList");
-const { setMyOrganization } = require("./setMyOrganization");
-const { updateSelectedTeam } = require("./updateSelectedTeam");
-const { getUserByEmail } = require("./getUserByEmail");
-const { getPhotoURLList } = require("./getPhotoURLList");
-const { getMyOrgCollectionDocs } = require("./getMyOrgCollectionDoc");
-const { createNewUser } = require("./microservices/createNewUser");
-const { getUserAppSettings } = require("./microservices/getUserAppSettings");
+const { updateUser } = require("./tark/updateUser");
+const { updateTheme } = require("./tark/updateTheme");
+const { verifyUser } = require("./tark/verifyUser");
+const { checkAvailableUsername } = require("./tark/checkAvailableUsername");
+const { getMyOrgList } = require("./tark/getMyOrgList");
+const { getMyTeamsList } = require("./tark/getMyTeamsList");
+const { setMyOrganization } = require("./tark/setMyOrganization");
+const { updateSelectedTeam } = require("./tark/updateSelectedTeam");
+const { getUserByEmail } = require("./tark/getUserByEmail");
+const { getPhotoURLList } = require("./tark/getPhotoURLList");
+const { getMyOrgCollectionDocs } = require("./tark/getMyOrgCollectionDoc");
+const { createNewUser } = require("./tark/createNewUser");
+const { getUserAppSettings } = require("./tark/getUserAppSettings");
 
 
 fastify.post("/", (req, res) => {
+  // createNewUser(req, res);
+  // status:ok ,200, api is running
+  return response.status(200).send("API is running");
+});
+
+fastify.post("/createNewUser", (req, res) => {
   createNewUser(req, res);
 });
 
 fastify.post("/getUserAppSettings", (req, res) => {
   getUserAppSettings(req, res);
 });
+
+fastify.post("/checkAvailableUsername", (req, res) => {
+  checkAvailableUsername(req, res);
+});
+
+fastify.post("/getMyOrgCollectionDocs", (req, res) => {
+  getMyOrgCollectionDocs(req, res);
+});
+
+fastify.post("/getMyOrgList", (req, res) => {
+  getMyOrgList(req, res);
+});
+
+fastify.post("/getMyTeamsList", (req, res) => {
+  getMyTeamsList(req, res);
+});
+
+fastify.post("/getPhotoURLList", (req, res) => {
+  getPhotoURLList(req, res);
+});
+
+fastify.post("/getUserByEmail", (req, res) => {
+  getUserByEmail(req, res);
+});
+
+fastify.post("/setMyOrganization", (req, res) => {
+  setMyOrganization(req, res);
+});
+
+fastify.post("/updateSelectedTeam", (req, res) => {
+  updateSelectedTeam(req, res);
+});
+
+fastify.post("/updateUser", (req, res) => {
+  updateUser(req, res);
+});
+
+fastify.post("/updateTheme", (req, res) => {
+  updateTheme(req, res);
+});
+
+fastify.post("/verifyUser", (req, res) => {
+  verifyUser(req, res);
+});
+
+
 
 
 exports.users = functions.https.onRequest((req, res) => {

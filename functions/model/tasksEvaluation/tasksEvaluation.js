@@ -5,14 +5,24 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { functions, cors } = require("../application/lib");
-const { readTasksEvaluationData } = require("./readTasksEvalulationData");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { readTasksEvaluationData } = require("./tark/readTasksEvalulationData");
 
-exports.tasksEvaluation = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        const mode = request.body.data.mode;
-        if (mode == "readTasksEvaluationData") {
-            return readTasksEvaluationData(request, response);
-        }
-    });
-});
+fastify.post("/", (req, res) => {
+    // createNewUser(req, res);
+    // status:ok ,200, api is running
+    return response.status(200).send("API is running");
+  });
+  
+  fastify.post("/readTasksEvaluationData", (req, res) => {
+    readTasksEvaluationData(req, res);
+  });
+
+// exports.tasksEvaluation = functions.https.onRequest((request, response) => {
+//     cors(request, response, () => {
+//         const mode = request.body.data.mode;
+//         if (mode == "readTasksEvaluationData") {
+//             return readTasksEvaluationData(request, response);
+//         }
+//     });
+// });
