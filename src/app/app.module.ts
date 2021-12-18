@@ -102,7 +102,11 @@ import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.comp
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
+<<<<<<< HEAD
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
+=======
+import { Patch8Component } from './patches/patch8/patch8.component';
+>>>>>>> aaa16e06be9d2ee3a3083000fbddaffe1e7f2b11
 
 @NgModule({
   declarations: [
@@ -180,16 +184,24 @@ import { TermsAndConditionComponent } from './terms-and-condition/terms-and-cond
     TeamsCardComponent,
     OrgDocumentsComponent,
     Patch6Component,
+    CopyrightComponent,
+    Patch8Component,
+    NotificationCenterComponent,
+    Patch7Component,
     PrivacyComponent,
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,
+<<<<<<< HEAD
     EditSkillsComponent,
     CopyrightComponent,
     NotificationCenterComponent,
     Patch7Component,
     CopyrightComponent,
     TermsAndConditionComponent,
+=======
+    EditSkillsComponent
+>>>>>>> aaa16e06be9d2ee3a3083000fbddaffe1e7f2b11
   ],
   imports: [
     BrowserModule,
