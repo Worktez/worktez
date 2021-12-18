@@ -1,3 +1,4 @@
+import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -34,5 +35,8 @@ export class FooterComponent implements OnInit {
 
   copyright(){
     this.router.navigate(['/copyright']);
+  }
+  termsandcondition(){
+    this.router.navigate(['/termsandcondition'])
   }
 }
