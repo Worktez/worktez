@@ -18,12 +18,7 @@ a {
     background-color: #26272E !important;
     padding-left: 50px;
     padding-right: 50px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 100px;
     width: 100%;
-    overflow: hidden;
 }
 .footer-headings{
     font-weight: bold;

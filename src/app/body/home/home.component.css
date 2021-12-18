@@ -1,3 +1,8 @@
+#homePage{
+    
+    margin-left: 20px;
+    margin-right: 20px;
+}
 #home nav{
     background-color: transparent !important;    
 }
@@ -29,7 +34,7 @@ h4{
 }
 #home{
     background-image: url(../../../assets/dots.svg), url(../../../assets/purple_circle.jpg), url(../../../assets/dots.svg), url(../../../assets/dots.svg);
-    background-position: -10% 15%, -30% 90% , 90% 75%, 105% 14%;
+    background-position: -5% 15%, -38% 90% , 90% 75%, 105% 14%;
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
     background-size: 150px, 900px, 180px, 150px;
     height: 700px;
@@ -96,6 +101,7 @@ h4{
 #aboutUsText{
     float: right;
     max-width: 50%;
+    padding-right: 5%;
 }
 p, span {
     color: var(--text);
@@ -187,13 +193,11 @@ p, span {
     display: flex;
 }
 #updatesText{
-    min-width: 50% !important;
-    align-content: right;
+    min-width: 30% !important;
     display: inline-block;
 }
 #updatesForm{
-    min-width: 50% !important;
-    align-content: left;
+    min-width: 70% !important;
     display: inline-block;
 }
 #updates p, #updates h1 {
