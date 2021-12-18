@@ -1,76 +1,112 @@
 <div class="headerBox">
-    <nav class="navbar navbar-expand-lg sticky-top header">
-        <a class="navbar-brand text-white px-1" (click)="home()">
-            <img src="../../assets/logo.png" width="50" height="30"> 
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
-        </button>
-        <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
-            <ng-container *ngIf="(backendService.organizationsData | async)">
-                    <ul class="navbar-nav">
-                        <ng-container *ngIf="authService.myOrgCollectionsData | async">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                        corporate_fare
-                                    </mat-icon>
-                                    {{backendService.organizationDetails.OrganizationName}}
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
-                                        expand_more
-                                    </mat-icon>
+    <ng-container *ngIf="!isHomePage">
+        <nav class="navbar navbar-expand-lg sticky-top header">
+            <a class="navbar-brand text-white px-1" (click)="home()">
+                <img src="../../assets/logo.png" width="50" height="30"> 
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
+            </button>
+            <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
+                <ng-container *ngIf="(backendService.organizationsData | async)">
+                        <ul class="navbar-nav">
+                            <ng-container *ngIf="authService.myOrgCollectionsData | async">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                            corporate_fare
+                                        </mat-icon>
+                                        {{backendService.organizationDetails.OrganizationName}}
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                            expand_more
+                                        </mat-icon>
+                                    </a>
+                                    <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                                        <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
+                                            <a class="dropdown-item" *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
+                                        </ng-container>
+                                    </div>
+                                </li>
+                            </ng-container>
+                        </ul>
+                </ng-container>
+                <ul class="navbar-nav ml-auto">
+                    <ng-container *ngIf="(backendService.organizationsData | async)">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    add_box
+                                </mat-icon>
+                                Create
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                    expand_more
+                                </mat-icon>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                                <a class="dropdown-item" (click)="createNewTask()"data-toggle="modal" data-target="#createNewTask">Create New Task</a>
+                                <a class="dropdown-item" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</a>
+                            </div>
+                        </li>
+    
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    dashboard
+                                </mat-icon>
+                                Boards
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                    expand_more
+                                </mat-icon>
+                            </a>
+                            <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards">
+                                <a class="dropdown-item " (click)="Board() ">Board</a>
+                                <a class="dropdown-item " (click)="myDashBoard() ">My Dashboard</a>
+                                <a class="dropdown-item " (click)="tasksEvaluation() ">Tasks Evaluation</a>
+                            </div>
+                        </li>
+                        <ng-container *ngIf="(authService.organizationAvailable) && authService.afauth.user | async">
+                            <li class="nav-item px-1">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="organizationDetails()">
+                                    <label>My Organization</label>
                                 </a>
-                                <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                                    <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
-                                        <a class="dropdown-item" *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
-                                    </ng-container>
-                                </div>
                             </li>
                         </ng-container>
-                    </ul>
-            </ng-container>
-            <ul class="navbar-nav ml-auto">
-                <ng-container *ngIf="(backendService.organizationsData | async)">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                add_box
-                            </mat-icon>
-                            Create
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
-                                expand_more
-                            </mat-icon>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                            <a class="dropdown-item" (click)="createNewTask()"data-toggle="modal" data-target="#createNewTask">Create New Task</a>
-                            <a class="dropdown-item" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                dashboard
-                            </mat-icon>
-                            Boards
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
-                                expand_more
-                            </mat-icon>
-                        </a>
-                        <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards">
-                            <a class="dropdown-item " (click)="Board() ">Board</a>
-                            <a class="dropdown-item " (click)="myDashBoard() ">My Dashboard</a>
-                            <a class="dropdown-item " (click)="tasksEvaluation() ">Tasks Evaluation</a>
-                        </div>
-                    </li>
-                    <ng-container *ngIf="(authService.organizationAvailable) && authService.afauth.user | async">
+                    </ng-container>
+                    <ng-container *ngIf="!(authService.organizationAvailable) && authService.afauth.user | async">
                         <li class="nav-item px-1">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="organizationDetails()">
-                                <label>My Organization</label>
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
+                                <label>Create New Organization</label>
                             </a>
                         </li>
                     </ng-container>
-                </ng-container>
+                    <li class="nav-item">
+                        <app-login-handler></app-login-handler>
+                    </li>
+                </ul>
+            </div>
+        </nav>    
+    </ng-container>
+    <ng-container *ngIf="isHomePage">
+        <nav id="navbar" class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img id="brand_img" src="../../assets/worktezLogo.jpg" alt="Worktez">
+            </a>
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#aboutUs">About Us</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#testimonial">Testimonials</a>
+                </li>
                 <ng-container *ngIf="!(authService.organizationAvailable) && authService.afauth.user | async">
                     <li class="nav-item px-1">
                         <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
@@ -78,10 +114,13 @@
                         </a>
                     </li>
                 </ng-container>
-                <li class="nav-item">
+                <li class="nav-item">          
                     <app-login-handler></app-login-handler>
                 </li>
+                <li class="nav-item">
+                <button class="btn nav-btn">Signup</button>
+                </li>
             </ul>
-        </div>
-    </nav>
+        </nav>    </ng-container>
+    
 </div>

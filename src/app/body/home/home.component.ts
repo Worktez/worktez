@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/internal/operators/map'
 
 @Component({
   selector: 'app-home',

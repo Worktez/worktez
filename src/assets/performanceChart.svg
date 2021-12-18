@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="921" height="762" viewBox="0 0 921 762">
+  <defs>
+    <filter id="Rectangle_214" x="0" y="0" width="921" height="762" filterUnits="userSpaceOnUse">
+      <feOffset dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="22.5" result="blur"/>
+      <feFlood flood-opacity="0.031"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_320" data-name="Group 320" transform="translate(-868.5 -2669.5)">
+    <g transform="matrix(1, 0, 0, 1, 868.5, 2669.5)" filter="url(#Rectangle_214)">
+      <rect id="Rectangle_214-2" data-name="Rectangle 214" width="786" height="627" rx="15" transform="translate(67.5 57.5)" fill="#fff"/>
+    </g>
+    <g id="Group_31" data-name="Group 31" transform="translate(963 2841)">
+      <path id="Path_61" data-name="Path 61" d="M6.77,0H725.32a6.7,6.7,0,0,1,6.77,6.619V393.381A6.7,6.7,0,0,1,725.32,400H6.77A6.7,6.7,0,0,1,0,393.381V6.619A6.7,6.7,0,0,1,6.77,0Z" transform="translate(0 0)" fill="#fff"/>
+      <text id="Performance_Chart" data-name="Performance Chart" transform="translate(62.375 36)" fill="#545454" font-size="21" font-family="Poppins-Medium, Poppins" font-weight="500"><tspan x="0" y="0">Performance Chart</tspan></text>
+      <g id="filter_1_" data-name="filter (1)" transform="translate(667.254 20.412)">
+        <path id="Path_40" data-name="Path 40" d="M16.321,10.9H3.952a.952.952,0,1,1,0-1.9h12.37a.952.952,0,0,1,0,1.9Zm8.564,0H21.079a.952.952,0,0,1,0-1.9h3.806a.952.952,0,0,1,0,1.9Z" transform="translate(-3 -6.621)" fill="#545454"/>
+        <path id="Path_41" data-name="Path 41" d="M18.7,13.161a3.33,3.33,0,1,1,3.33-3.33A3.33,3.33,0,0,1,18.7,13.161Zm0-4.758A1.427,1.427,0,1,0,20.127,9.83,1.427,1.427,0,0,0,18.7,8.4ZM24.885,20.3H12.515a.952.952,0,1,1,0-1.9h12.37a.952.952,0,1,1,0,1.9Zm-17.127,0H3.952a.952.952,0,1,1,0-1.9H7.758a.952.952,0,1,1,0,1.9Z" transform="translate(-3 -6.5)" fill="#545454"/>
+        <path id="Path_42" data-name="Path 42" d="M10.33,23.161a3.33,3.33,0,1,1,3.33-3.33,3.33,3.33,0,0,1-3.33,3.33Zm0-4.758a1.427,1.427,0,1,0,1.427,1.427A1.427,1.427,0,0,0,10.33,18.4Z" transform="translate(-3.194 -6.985)" fill="#545454"/>
+      </g>
+      <path id="Path_43" data-name="Path 43" d="M618,421.5h604.218" transform="translate(-532.128 -282.049)" fill="none" stroke="#545454" stroke-width="0.8" opacity="0.34"/>
+      <path id="Path_48" data-name="Path 48" d="M618,421.5h604.218" transform="translate(-532.128 -198.834)" fill="none" stroke="#545454" stroke-width="0.8" opacity="0.34"/>
+      <path id="Path_44" data-name="Path 44" d="M618,421.5l285.193-67.406L1222.218,421.5" transform="translate(-532.128 -200.457)" fill="none" stroke="#67cb45" stroke-width="3"/>
+      <path id="Path_45" data-name="Path 45" d="M618,421.5h604.218" transform="translate(-532.128 -122.809)" fill="none" stroke="#545454" stroke-width="0.8" opacity="0.34"/>
+      <text id="_1" data-name="1" transform="translate(66.375 145.133)" fill="#545454" font-size="15" font-family="Poppins-Regular, Poppins"><tspan x="0" y="0">1</tspan></text>
+      <text id="_0" data-name="0" transform="translate(64.375 224.514)" fill="#545454" font-size="15" font-family="Poppins-Regular, Poppins"><tspan x="0" y="0">0</tspan></text>
+      <text id="_-1" data-name="-1" transform="translate(62.375 303.895)" fill="#545454" font-size="15" font-family="Poppins-Regular, Poppins"><tspan x="0" y="0">-1</tspan></text>
+      <text id="S0" transform="translate(102.375 323.694)" fill="#545454" font-size="15" font-family="Poppins-Regular, Poppins"><tspan x="0" y="0">S0</tspan></text>
+      <text id="S1" transform="translate(363.473 323.694)" fill="#545454" font-size="15" font-family="Poppins-Regular, Poppins"><tspan x="0" y="0">S1</tspan></text>
+    </g>
+  </g>
+</svg>
