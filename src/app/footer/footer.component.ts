@@ -35,4 +35,8 @@ export class FooterComponent implements OnInit {
   copyright(){
     this.router.navigate(['/copyright']);
   }
+
+  contributors() {
+    this.router.navigate(['/contributors']);
+  }
 }
