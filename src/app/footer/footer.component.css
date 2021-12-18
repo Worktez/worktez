@@ -11,6 +11,35 @@ span {
     color: var(--text);
 }
 
+a {
+    color: white;
+}
+#page-footer {
+    background-color: #26272E !important;
+    padding-left: 50px;
+    padding-right: 50px;
+    width: 100%;
+}
+.footer-headings{
+    font-weight: bold;
+    color: #545454 !important;
+}
+.company-text p, .company-text h3{
+    color: white !important;
+    max-width: 150px;
+}
+.company-text p{
+    font-size: x-small;
+    overflow-wrap: break-word;
+    line-height: 20px;
+}
+.company-text h3{
+    font-style: italic;
+    font-weight: bold;
+    font-size: large !important;
+    margin-bottom: 0px !important;
+}
+
 @media only screen and (max-width: 600px) {
     span {
         font-size: 11px;

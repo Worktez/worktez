@@ -22,9 +22,12 @@ import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluati
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { Patch5Component } from './patches/patch5/patch5.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
+import { Patch8Component } from './patches/patch8/patch8.component';
 import { PrivacyComponent} from './body/privacy/privacy.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component'
+import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
+import { Patch9Component } from './patches/patch9/patch9.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -39,12 +42,14 @@ const routes: Routes = [
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
-  { path: 'Patch2', component:Patch2Component},
+  { path: 'Patch2', component: Patch2Component },
   { path: 'Patch3', component: Patch3Component },
   { path: 'Patch4', component: Patch4Component },
   { path: 'Patch5', component: Patch5Component },
   { path: 'Patch6', component: Patch6Component },
   { path: 'Patch7', component: Patch7Component },
+  { path: 'Patch9', component: Patch9Component },
+  { path: 'Patch8', component: Patch8Component },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard]},
@@ -53,6 +58,7 @@ const routes: Routes = [
   { path: 'ListPatches', component: ListPatchesComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'copyright', component: CopyrightComponent },
+  { path: 'termsandcondition', component: TermsAndConditionComponent},
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];
 
