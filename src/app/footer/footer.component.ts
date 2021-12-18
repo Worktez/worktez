@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GitData } from '../Interface/githubReleaseData';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -11,16 +12,10 @@ import { GitData } from '../Interface/githubReleaseData';
 })
 export class FooterComponent implements OnInit {
   tag_name: string
-  isHomePage: boolean = false;
 
-  constructor(private httpService: HttpServiceService, public router: Router) { }
+  constructor(public authService: AuthService, private httpService: HttpServiceService, public router: Router) { }
 
   ngOnInit(): void {
-    if (this.router.url == "/")  {
-      this.isHomePage = true;
-    } else {
-      this.isHomePage =  false;
-    }
       try {
         this.httpService.getReleaseDetails().pipe(map(data => {
           const objData = data[0] as GitData;

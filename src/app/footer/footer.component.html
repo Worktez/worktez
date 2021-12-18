@@ -1,5 +1,5 @@
 <div class="footerbox ">
-    <ng-container *ngIf="!isHomePage">
+    <ng-container *ngIf="authService.afauth.user | async; else homePageHeader">
     <div class="py-4 px-2 d-flex justify-content-end">
         <span class="p-2">Build: {{tag_name}}</span>
         <span class="p-2">GitHub</span>
@@ -9,7 +9,7 @@
         <span class="p-2" (click)="copyright()">Copyright</span>
     </div>
     </ng-container>
-    <ng-container *ngIf="isHomePage">
+    <ng-template #homePageHeader>
         <footer class="font-small pt-4" id="page-footer">
             <div class="container-fluid text-center text-md-left">
             <div class="row">
@@ -70,5 +70,5 @@
             <div class="col-md-3 text-light text-right pr-0" style="max-width: fit-content; white-space: nowrap; overflow: hidden;">Copyright 2021 Worktez All Rights Reserved</div>
             </div>
         </footer>
-    </ng-container>
+    </ng-template>
 </div>

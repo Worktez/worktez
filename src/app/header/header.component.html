@@ -1,5 +1,5 @@
 <div class="headerBox">
-    <ng-container *ngIf="!isHomePage">
+    <ng-container *ngIf="authService.afauth.user | async; else homePageHeader">
         <nav class="navbar navbar-expand-lg sticky-top header">
             <a class="navbar-brand text-white px-1" (click)="home()">
                 <img src="../../assets/logo.png" width="50" height="30"> 
@@ -86,7 +86,7 @@
             </div>
         </nav>    
     </ng-container>
-    <ng-container *ngIf="isHomePage">
+    <ng-template #homePageHeader>
         <nav id="navbar" class="navbar navbar-light bg-light">
             <a class="navbar-brand" href="#">
                 <img id="brand_img" src="../../assets/worktezLogo.jpg" alt="Worktez">
@@ -121,6 +121,6 @@
                 <button class="btn nav-btn">Signup</button>
                 </li>
             </ul>
-        </nav>    </ng-container>
-    
+        </nav>
+    </ng-template>
 </div>

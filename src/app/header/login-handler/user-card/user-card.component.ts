@@ -20,9 +20,9 @@ export class UserCardComponent implements OnInit {
   }
   onLogout() {
     this.authService.logout();
-    window.location.reload()
+    this.router.navigate(['/']);
   }
-  profile(){
+  profile() {
     this.router.navigate(['/profile', this.authService.userAppSetting.Username]);
   }
 }
