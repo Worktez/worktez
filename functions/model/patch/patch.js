@@ -16,11 +16,8 @@ const { patchModerator } = require("./patchModerator");
 const { editPatch } = require("./editPatch");
 const { patch6 } = require("./patch6");
 const { patch7 } = require("./patch7");
-<<<<<<< HEAD
 const { patch9 } = require("./patch9");
-=======
 const { patch8 } = require("./patch8");
->>>>>>> aaa16e06be9d2ee3a3083000fbddaffe1e7f2b11
 
 exports.patch = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -47,15 +44,12 @@ exports.patch = functions.https.onRequest((request, response) => {
         } else if (mode == "patch7") {
             // To add a new field to the organization
             return patch7(request, response);
-<<<<<<< HEAD
         } else if (mode == "patch9") {
             // To add a new field to the organization
             return patch9(request, response);
-=======
         } else if (mode == "patch8") {
             // To add a new field and value to teams
             return patch8(request, response);
->>>>>>> aaa16e06be9d2ee3a3083000fbddaffe1e7f2b11
         } else if (mode == "patchModerator") {
             return patchModerator(request, response);
         } else if (mode == "edit") {
