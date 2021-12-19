@@ -14,11 +14,11 @@ const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/addMember", (req, res) => {
     addMember(req, res);
@@ -45,21 +45,32 @@ fastify.post("/", (req, res) => {
   });
   
 
-// exports.teams = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
-//         if (mode == "create") {
-//             return createTeam(request, response);
-//         } else if (mode == "update") {
-//             return updateTeam(request, response);
-//         } else if (mode == "add-member") {
-//             return addMember(request, response);
-//         } else if (mode == "remove-member") {
-//             return removeMember(request, response);
-//         } else if (mode == "getTeamData") {
-//             return getTeamData(request, response);
-//         } else if (mode == "delete") {
-//             return deleteTeam(request, response);
-//         }
-//     });
-// });
+  exports.teams = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "create") {
+        //     return createOrg(request, response);
+        // } else if (mode == "getOrgData") {
+        //     return getOrgData(request, response);
+        // }
+    });
+});
+        // const mode = request.body.data.mode;
+        // if (mode == "create") {
+        //     return createTeam(request, response);
+        // } else if (mode == "update") {
+        //     return updateTeam(request, response);
+        // } else if (mode == "add-member") {
+        //     return addMember(request, response);
+        // } else if (mode == "remove-member") {
+        //     return removeMember(request, response);
+        // } else if (mode == "getTeamData") {
+        //     return getTeamData(request, response);
+        // } else if (mode == "delete") {
+        //     return deleteTeam(request, response);
+        // }

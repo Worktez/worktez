@@ -28,10 +28,10 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   async changeSprintStatus(sprintStatus: string) {
-    const callable = this.functions.httpsCallable('sprints');
+    const callable = this.functions.httpsCallable('sprints/update');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ mode: "update", AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
+      const result = await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     }

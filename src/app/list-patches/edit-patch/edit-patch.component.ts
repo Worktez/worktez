@@ -33,10 +33,10 @@ export class EditPatchComponent implements OnInit {
   }
   
   async submit(){
-    const callable = this.functions.httpsCallable('patch');
+    const callable = this.functions.httpsCallable('patch/edit');
     this.enableLoader = true;
     try{
-      const result = await callable({mode: "edit",Id: this.patch,Name:this.editPatch.Name, Description:this.editPatch.Description, UpdatedOn:this.date}).toPromise();
+      const result = await callable({Id: this.patch,Name:this.editPatch.Name, Description:this.editPatch.Description, UpdatedOn:this.date}).toPromise();
 
       this.enableLoader = false;
       this.showClose = true;

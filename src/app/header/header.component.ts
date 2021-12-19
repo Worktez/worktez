@@ -30,8 +30,8 @@ export class HeaderComponent implements OnInit {
   }
 
   async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
-    const callable = this.functions.httpsCallable("users");
-    await callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
+    const callable = this.functions.httpsCallable("users/setMyOrganization");
+    await callable({Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
     window.location.reload()
   }
 

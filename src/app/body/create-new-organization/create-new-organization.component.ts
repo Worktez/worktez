@@ -60,8 +60,8 @@ export class CreateNewOrganizationComponent implements OnInit {
 
   async createNewOrganization() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('organization');
-    await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise().then(result => {
+    const callable = this.functions.httpsCallable('organization/createOrg');
+    await callable({OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise().then(result => {
       this.orgId = result[2];
       this.uploadLogo();
       this.enableLoader = false;

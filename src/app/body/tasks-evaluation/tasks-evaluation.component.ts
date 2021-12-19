@@ -58,9 +58,9 @@ export class TasksEvaluationComponent implements OnInit {
     this.disable_next = true;
     this.disable_prev = true;
     const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('tasksEvaluation');
+    const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
     try {
-      const result = await callable({ mode: 'readTasksEvaluationData', OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.filterSprintNumber }).toPromise();
+      const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.filterSprintNumber }).toPromise();
       this.tasks = result.Tasks;
       this.firstInResultTaskId = result.Tasks[0].Id;
       this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
@@ -85,9 +85,9 @@ export class TasksEvaluationComponent implements OnInit {
       this.disable_next = true;
       this.showLoader = true;
       const orgDomain = this.backendService.getOrganizationDomain();
-      const callable = this.functions.httpsCallable('tasksEvaluation');
+      const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
       try {
-        const result = await callable({ mode: 'readTasksEvaluationData', OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'next', LastInResultTaskId: this.lastInResultTaskId, SprintNumber: this.filterSprintNumber }).toPromise();
+        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'next', LastInResultTaskId: this.lastInResultTaskId, SprintNumber: this.filterSprintNumber }).toPromise();
         this.tasks = result.Tasks;
 
         if (!this.tasks.length) {
@@ -113,9 +113,9 @@ export class TasksEvaluationComponent implements OnInit {
       this.disable_prev = true;
       this.showLoader = true;
       const orgDomain = this.backendService.getOrganizationDomain();
-      const callable = this.functions.httpsCallable('tasksEvaluation');
+      const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
       try {
-        const result = await callable({ mode: 'readTasksEvaluationData', OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'previous', FirstInResultTaskId: this.firstInResultTaskId, StartAt: this.get_prev_startAt(), SprintNumber: this.filterSprintNumber }).toPromise();
+        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'previous', FirstInResultTaskId: this.firstInResultTaskId, StartAt: this.get_prev_startAt(), SprintNumber: this.filterSprintNumber }).toPromise();
         this.tasks = result.Tasks;
         
         this.firstInResultTaskId = result.Tasks[0].Id;
@@ -154,12 +154,12 @@ export class TasksEvaluationComponent implements OnInit {
   async moveToCurrentSprint(task: Tasks) {
     this.showLoader = true;
     this.showModalLoader = true;
-    const callable = this.functions.httpsCallable('tasks');
+    const callable = this.functions.httpsCallable('tasks/edit');
     // Move to Current Sprint
     try {
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(task.Status === "Completed") && this.teamCurrentSprint != task.SprintNumber) {
-        const result = await callable({ mode: "edit", AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).toPromise();
+        const result = await callable({AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).toPromise();
 
         this.readTasks();
         this.showModalLoader = false;

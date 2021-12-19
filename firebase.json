@@ -1,17 +1,10 @@
 {
   "hosting": {
-    "public": "./dist/worktrolly-ui",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html",
-        "function": "app"
-      }
     ]
   },
   "firestore": {

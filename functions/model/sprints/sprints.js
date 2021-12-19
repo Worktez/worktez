@@ -11,11 +11,11 @@ const { updateSprintStatus } = require("../sprints/tark/updateSprintStatus");
 const { getSprintDetails } = require("../sprints/tark/getSprintDetails");
 
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/createNewSprint", (req, res) => {
     createNewSprint(req, res);
@@ -29,15 +29,28 @@ fastify.post("/", (req, res) => {
     updateSprintStatus(req, res);
   });
 
-// exports.sprints = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
-//         if (mode == "create") {
-//             return createNewSprint(request, response);
-//         } else if (mode == "update") {
-//             return updateSprintStatus(request, response);
-//         } else if (mode == "getSprintDetails") {
-//             return getSprintDetails(request, response);
-//         }
-//     });
-// });
+  exports.sprints = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "create") {
+        //     return createOrg(request, response);
+        // } else if (mode == "getOrgData") {
+        //     return getOrgData(request, response);
+        // }
+    });
+});
+    // cors(request, response, () => {
+    //     const mode = request.body.data.mode;
+    //     if (mode == "create") {
+    //         return createNewSprint(request, response);
+    //     } else if (mode == "update") {
+    //         return updateSprintStatus(request, response);
+    //     } else if (mode == "getSprintDetails") {
+    //         return getSprintDetails(request, response);
+    //     }
+    // });

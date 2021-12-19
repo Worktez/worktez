@@ -8,11 +8,11 @@
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getActivity } = require("./tark/getActivity");
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/addActivity", (req, res) => {
     addActivity(req, res);
@@ -22,12 +22,17 @@ fastify.post("/", (req, res) => {
     getActivity(req, res);
   });
 
-// exports.activity = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
+exports.activity = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
 
-//         if (mode == "getActivity") {
-//             return getActivity(request, response);
-//         }
-//     });
-// });
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "getActivity") {
+        //     return getActivity(request, response);
+        // }
+    });
+});

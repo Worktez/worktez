@@ -36,9 +36,9 @@ export class SprintEvaluationGraphComponent implements OnInit {
 
   async getData() {
     let orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('performanceChart');
+    const callable = this.functions.httpsCallable('performanceChart/sprintEvaluationGraph');
     try {
-      this.data = await callable({ mode: "sprintEvaluationGraph", OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
+      this.data = await callable({OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
         map(actions => {
           console.log(actions.data);
           return actions.data as [];

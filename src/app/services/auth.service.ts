@@ -45,10 +45,10 @@ export class AuthService {
   }
 
   async createUserData(user: User) {
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/createNewUser');
     try {
       console.log("create new user from ui");
-      const result = await callable({ mode: "create", uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
+      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
 
     } catch (error) {
       console.error("Error", error);
@@ -93,24 +93,24 @@ export class AuthService {
   }
 
   getListedOrganizationData(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: uid}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyOrgList");
+    this.myOrgCollectionsData = callable({Uid: uid}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData[];
     }));
   }
 
   getMyOrgCollectionDocs(uid, appKey) {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionDocData = callable({mode: "getMyOrgCollectionDocs", Uid: uid, OrgAppKey: appKey}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
+    this.myOrgCollectionDocData = callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData;
     }));
   }
 
   getListedTeams(uid: string, appKey: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.myTeamsListObservable = callable({mode: "getMyTeamsList", Uid: uid, OrgAppKey: appKey}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyTeamsList");
+    this.myTeamsListObservable = callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as string[];
     }));  

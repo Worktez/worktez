@@ -9,22 +9,27 @@
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/getNotificationsList", (req, res) => {
     getNotificationsList(req, res);
   });
 
-// exports.notifications = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
+exports.notifications = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
 
-//         if (mode == "getNotifications") {
-//             return getNotificationsList(request, response);
-//         }
-//     });
-// });
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "getNotifications") {
+        //     return getNotificationsList(request, response);
+        // }
+    });
+});

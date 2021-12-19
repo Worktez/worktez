@@ -46,10 +46,10 @@ export class WarningComponent implements OnInit {
 
   async deleteTask() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('tasks');
+    const callable = this.functions.httpsCallable('tasks/delete');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
+      const result = await callable({AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
       this.router.navigate(['/']);
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");

@@ -19,11 +19,11 @@ const { patch7 } = require("./tark/patch7");
 const { patch9 } = require("./tark/patch9");
 
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/editPatch", (req, res) => {
     editPatch(req, res);
@@ -69,38 +69,51 @@ fastify.post("/", (req, res) => {
     setPatches(req, res);
   });
 
-// exports.patch = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
+  exports.patch = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
 
-//         if (mode == "patch1") {
-//             // To fix counters of all sprints
-//             return patch1(request, response);
-//         } else if (mode == "patch2") {
-//             // To add a new field and value to all tasks
-//             return patch2(request, response);
-//         } else if (mode == "patch3") {
-//             // To change a particular field in relevent tasks
-//             return patch3(request, response);
-//         } else if (mode == "patch4") {
-//             // To update the uid for previous activities
-//             return patch4(request, response);
-//         } else if (mode == "patch5") {
-//             // To update the userDoc for all Users to change Organization structure
-//             return patch5(request, response);
-//         } else if (mode == "patch6") {
-//             // To update the Sprints collections with new field values
-//             return patch6(request, response);
-//         } else if (mode == "patch7") {
-//             // To add a new field to the organization
-//             return patch7(request, response);
-//         } else if (mode == "patch9") {
-//             // To add a new field to the organization
-//             return patch9(request, response);
-//         } else if (mode == "patchModerator") {
-//             return patchModerator(request, response);
-//         } else if (mode == "edit") {
-//             return editPatch(request, response);
-//         }
-//     });
-// });
+        // if (mode == "create") {
+        //     return createOrg(request, response);
+        // } else if (mode == "getOrgData") {
+        //     return getOrgData(request, response);
+        // }
+    });
+});
+    // cors(request, response, () => {
+    //     const mode = request.body.data.mode;
+
+    //     if (mode == "patch1") {
+    //         // To fix counters of all sprints
+    //         return patch1(request, response);
+    //     } else if (mode == "patch2") {
+    //         // To add a new field and value to all tasks
+    //         return patch2(request, response);
+    //     } else if (mode == "patch3") {
+    //         // To change a particular field in relevent tasks
+    //         return patch3(request, response);
+    //     } else if (mode == "patch4") {
+    //         // To update the uid for previous activities
+    //         return patch4(request, response);
+    //     } else if (mode == "patch5") {
+    //         // To update the userDoc for all Users to change Organization structure
+    //         return patch5(request, response);
+    //     } else if (mode == "patch6") {
+    //         // To update the Sprints collections with new field values
+    //         return patch6(request, response);
+    //     } else if (mode == "patch7") {
+    //         // To add a new field to the organization
+    //         return patch7(request, response);
+    //     } else if (mode == "patch9") {
+    //         // To add a new field to the organization
+    //         return patch9(request, response);
+    //     } else if (mode == "patchModerator") {
+    //         return patchModerator(request, response);
+    //     } else if (mode == "edit") {
+    //         return editPatch(request, response);
+    //     }
+    // });

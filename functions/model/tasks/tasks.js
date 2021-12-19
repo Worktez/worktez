@@ -20,18 +20,18 @@ const { setLinkDetails } = require("./tark/setLinkDetails");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/addComment", (req, res) => {
     addComment(req, res);
   });
   
   fastify.post("/createNewTask", (req, res) => {
-    createNewTask(req, res);
+    createTask(req, res);
   });
   
   fastify.post("/deleteTask", (req, res) => {
@@ -66,30 +66,41 @@ fastify.post("/", (req, res) => {
     setLinkDetails(req, res);
   });
 
-// exports.tasks = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
+  exports.tasks = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
 
-//         if (mode == "create") {
-//             return createNewTask(request, response);
-//         } else if (mode == "edit") {
-//             return editTask(request, response);
-//         } else if (mode == "log") {
-//             return logWork(request, response);
-//         } else if (mode == "delete") {
-//             return deleteTask(request, response);
-//         } else if (mode == "comment") {
-//             return addComment(request, response);
-//         } else if (mode == "getTaskDetails") {
-//             return getTaskDetails(request, response);
-//         } else if (mode == "getLink") {
-//             return getLinkDetails(request, response);
-//         } else if (mode == "setLink") {
-//             return setLinkDetails(request, response);
-//         } else if (mode == "getAllTasks") {
-//             return getTasks(request, response);
-//         } else if (mode == "getTasksForDashboard") {
-//             return getTasksForDashboard(request, response);
-//         }
-//     });
-// });
+        // if (mode == "create") {
+        //     return createOrg(request, response);
+        // } else if (mode == "getOrgData") {
+        //     return getOrgData(request, response);
+        // }
+    });
+});
+        // const mode = request.body.data.mode;
+
+        // if (mode == "create") {
+        //     return createNewTask(request, response);
+        // } else if (mode == "edit") {
+        //     return editTask(request, response);
+        // } else if (mode == "log") {
+        //     return logWork(request, response);
+        // } else if (mode == "delete") {
+        //     return deleteTask(request, response);
+        // } else if (mode == "comment") {
+        //     return addComment(request, response);
+        // } else if (mode == "getTaskDetails") {
+        //     return getTaskDetails(request, response);
+        // } else if (mode == "getLink") {
+        //     return getLinkDetails(request, response);
+        // } else if (mode == "setLink") {
+        //     return setLinkDetails(request, response);
+        // } else if (mode == "getAllTasks") {
+        //     return getTasks(request, response);
+        // } else if (mode == "getTasksForDashboard") {
+        //     return getTasksForDashboard(request, response);
+        // }

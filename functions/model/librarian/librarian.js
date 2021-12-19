@@ -15,11 +15,11 @@ const { uploadLogoFile } = require("./tark/uploadLogoFile");
 const { uploadFileToOrgDocuments } = require("./tark/uploadFileToOrgDocuments");
 const { getFilesInOrgDocument } = require("./tark/getFilesInOrgDocuments");
 
-fastify.post("/", (req, res) => {
-    // createNewUser(req, res);
-    // status:ok ,200, api is running
-    return response.status(200).send("API is running");
-  });
+// fastify.post("/", (req, res) => {
+//     // createNewUser(req, res);
+//     // status:ok ,200, api is running
+//     return response.status(200).send("API is running");
+//   });
   
   fastify.post("/deleteFilesInTask", (req, res) => {
     deleteFilesInTask(req, res);
@@ -45,22 +45,27 @@ fastify.post("/", (req, res) => {
     uploadLogoFile(req, res);
   });
 
-// exports.librarian = functions.https.onRequest((request, response) => {
-//     cors(request, response, () => {
-//         const mode = request.body.data.mode;
+exports.librarian = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
 
-//         if (mode == "UploadFileToTask") {
-//             return uploadFileToTask(request, response);
-//         } else if (mode == "GetFilesInTask") {
-//             return getFilesInTask(request, response);
-//         } else if (mode == "DeleteFilesInTask") {
-//             return deleteFilesInTask(request, response);
-//         } else if (mode == "UploadLogoFile") {
-//             return uploadLogoFile(request, response);
-//         } else if (mode == "UploadFileToOrgDocuments") {
-//             return uploadFileToOrgDocuments(request, response);
-//         } else if (mode == "GetFilesInOrgDocument") {
-//             return getFilesInOrgDocument(request, response);
-//         }
-//     });
-// });
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "UploadFileToTask") {
+        //     return uploadFileToTask(request, response);
+        // } else if (mode == "GetFilesInTask") {
+        //     return getFilesInTask(request, response);
+        // } else if (mode == "DeleteFilesInTask") {
+        //     return deleteFilesInTask(request, response);
+        // } else if (mode == "UploadLogoFile") {
+        //     return uploadLogoFile(request, response);
+        // } else if (mode == "UploadFileToOrgDocuments") {
+        //     return uploadFileToOrgDocuments(request, response);
+        // } else if (mode == "GetFilesInOrgDocument") {
+        //     return getFilesInOrgDocument(request, response);
+        // }
+    });
+});
