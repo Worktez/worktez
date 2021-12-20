@@ -25,6 +25,7 @@ export class AuthService {
 
   user: User;
   userAppSetting: UserAppSetting;
+  public homeToDashboard: boolean = false;
 
   constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private backendService: BackendService, private themeService: ThemeService) { }
 
@@ -72,6 +73,7 @@ export class AuthService {
 
   getUserSettings() {
     console.log("get User app Settings from ui");
+    this.homeToDashboard = false;
     const uid = this.getLoggedInUser(); 
     const callable = this.functions.httpsCallable('users/getUserAppSettings');
 

@@ -77,7 +77,7 @@ export class BoardComponent implements OnInit {
       if (this.teamData.TeamId == this.selectedTeamId) {
         if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
           this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
-          this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
+          this.currentSprintNumber = this.teamData.CurrentSprintId;
         } else {
           this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
           this.currentSprintNumber = this.teamData.CurrentSprintId;

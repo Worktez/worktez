@@ -56,6 +56,10 @@ const { patch9 } = require("./tark/patch9");
   fastify.post("/patch7", (req, res) => {
     patch7(req, res);
   });
+
+  fastify.post("/patch8", (req, res) => {
+    patch8(req, res);
+  });
   
   fastify.post("/patch9", (req, res) => {
     patch9(req, res);
