@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "./dist/worktrolly-ui",
     "ignore": [
       "firebase.json",
       "**/.*",
