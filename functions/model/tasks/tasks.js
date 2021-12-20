@@ -26,7 +26,7 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 //     return response.status(200).send("API is running");
 //   });
   
-  fastify.post("/addComment", (req, res) => {
+  fastify.post("/comment", (req, res) => {
     addComment(req, res);
   });
   
@@ -42,7 +42,7 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
     editTask(req, res);
   });
 
-  fastify.post("/getLinkDetails", (req, res) => {
+  fastify.post("/getLink", (req, res) => {
     getLinkDetails(req, res);
   });
   
@@ -50,7 +50,7 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
     getTaskDetails(req, res);
   });
   
-  fastify.post("/getTasks", (req, res) => {
+  fastify.post("/getAllTasks", (req, res) => {
     getTasks(req, res);
   });
   
@@ -58,11 +58,11 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
     getTasksForDashboard(req, res);
   });
 
-  fastify.post("/logWork", (req, res) => {
+  fastify.post("/log", (req, res) => {
     logWork(req, res);
   });
   
-  fastify.post("/setLinkDetails", (req, res) => {
+  fastify.post("/setLink", (req, res) => {
     setLinkDetails(req, res);
   });
 

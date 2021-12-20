@@ -154,7 +154,7 @@ export class TasksEvaluationComponent implements OnInit {
   async moveToCurrentSprint(task: Tasks) {
     this.showLoader = true;
     this.showModalLoader = true;
-    const callable = this.functions.httpsCallable('tasks/edit');
+    const callable = this.functions.httpsCallable('tasks/editTask');
     // Move to Current Sprint
     try {
       const appKey = this.backendService.getOrganizationAppKey();

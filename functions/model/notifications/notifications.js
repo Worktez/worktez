@@ -15,7 +15,7 @@ const { getNotificationsList } = require("../notifications/tark/getNotifications
 //     return response.status(200).send("API is running");
 //   });
   
-  fastify.post("/getNotificationsList", (req, res) => {
+  fastify.post("/getNotifications", (req, res) => {
     getNotificationsList(req, res);
   });
 

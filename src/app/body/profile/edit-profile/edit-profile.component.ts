@@ -39,7 +39,7 @@ export class EditProfileComponent implements OnInit {
   async editProfile() {
     if(this.userAvailable == true) {
       this.enableLoader = true
-      const callable = this.functions.httpsCallable('users/update');
+      const callable = this.functions.httpsCallable('users/updateUser');
       try {
         await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).toPromise();
         console.log("Successful");

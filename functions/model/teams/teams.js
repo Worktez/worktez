@@ -20,7 +20,7 @@ const { deleteTeam } = require("./tark/deleteTeam");
 //     return response.status(200).send("API is running");
 //   });
   
-  fastify.post("/addMember", (req, res) => {
+  fastify.post("/add-member", (req, res) => {
     addMember(req, res);
   });
   
@@ -33,10 +33,11 @@ const { deleteTeam } = require("./tark/deleteTeam");
   });
   
   fastify.post("/getTeamData", (req, res) => {
+    console.log("calling gettingTeamData api")
     getTeamData(req, res);
   });
 
-  fastify.post("/removeMember", (req, res) => {
+  fastify.post("/remove-member", (req, res) => {
     removeMember(req, res);
   });
   

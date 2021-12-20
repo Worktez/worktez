@@ -41,6 +41,7 @@ exports.getTeam = function(orgDomain, teamName) {
 };
 
 exports.getTeamUseTeamId = function(orgDomain, teamId) {
+    console.log("inside getTeamUseTeamId")
     const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").where("TeamId", "==", teamId).get().then((doc) => {
         let data;
         doc.forEach((team) => {

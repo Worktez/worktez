@@ -28,7 +28,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   async changeSprintStatus(sprintStatus: string) {
-    const callable = this.functions.httpsCallable('sprints/update');
+    const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
       const result = await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();

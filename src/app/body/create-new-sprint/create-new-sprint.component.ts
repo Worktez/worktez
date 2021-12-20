@@ -106,7 +106,7 @@ export class CreateNewSprintComponent implements OnInit {
   async createNewSprint() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
-    const callable = this.functions.httpsCallable('sprints/create');
+    const callable = this.functions.httpsCallable('sprints/createNewSprint');
 
     try {
       const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();

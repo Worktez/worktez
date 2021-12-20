@@ -89,8 +89,8 @@ export class SetupComponent implements OnInit {
     try {
       if (modeTo == "create")
       {
-        const callable = this.functions.httpsCallable('teams/createOrg');
-        const result = await callable({ mode: modeTo, OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
+        const callable = this.functions.httpsCallable('teams/createTeam');
+        const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
         console.log(result);
         this.createNewSprint(teamName, teamId, organizationAppKey);
       }
@@ -102,7 +102,7 @@ export class SetupComponent implements OnInit {
 
 
   async createNewSprint(project: string, teamId: string, organizationAppKey: string) {
-    const callable = this.functions.httpsCallable('sprints/create');
+    const callable = this.functions.httpsCallable('sprints/createNewSprint');
 
     try {
       const result = await callable({AppKey: organizationAppKey, StartDate: "2021-10-09", EndDate: "2021-10-18", Status: "Under Progress", NewSprintId: 1, TeamId: teamId }).toPromise();
@@ -118,7 +118,7 @@ export class SetupComponent implements OnInit {
   }
 
   async createNewSession(project: string, teamId: string, organizationAppKey: string) {
-    const callable = this.functions.httpsCallable('tasks/create');
+    const callable = this.functions.httpsCallable('tasks/createNewTask');
 
     try {
       const result = await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();

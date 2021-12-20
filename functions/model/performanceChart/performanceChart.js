@@ -11,15 +11,15 @@ const { getUserPerformanceChartData } = require("./tark/getUserPerformanceChartD
 const { getSprintEvaluationGraph } = require("./tark/getSprintEvaluationGraph");
 
 
-fastify.post("/getPerformanceChartData", (req, res) => {
+fastify.post("/performanceChartData", (req, res) => {
     getPerformanceChartData(req, res);
   });
   
-  fastify.post("/getUserPerformanceChartData", (req, res) => {
+  fastify.post("/userPerformanceChartData", (req, res) => {
     getUserPerformanceChartData(req, res);
   });
 
-  fastify.post("/getSprintEvaluationGraph", (req, res) => {
+  fastify.post("/SprintEvaluationGraph", (req, res) => {
     getSprintEvaluationGraph(req, res);
   });
 

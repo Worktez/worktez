@@ -187,7 +187,7 @@ export class CreateNewTeamComponent implements OnInit {
   async createNewTeamWithLabels() {
     this.enableLoader = true;
     // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams/create');
+    const callable = this.functions.httpsCallable('teams/createTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
@@ -207,7 +207,7 @@ export class CreateNewTeamComponent implements OnInit {
   async updateExistingTeam() {
     this.enableLoader = true;
     // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams/update');
+    const callable = this.functions.httpsCallable('teams/updateTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }

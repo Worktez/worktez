@@ -28,7 +28,7 @@ export class TeamsCardComponent implements OnInit {
 
   async deleteTeam() {
     const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/delete');
+    const callable = this.functions.httpsCallable('teams/deleteTeam');
     try {
       const result = await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).toPromise();
       this.team.TeamStatus = -1;
