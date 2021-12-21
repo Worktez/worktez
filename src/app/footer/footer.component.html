@@ -1,10 +1,74 @@
-<div class="footerbox d-flex justify-content-end">
-    <div class="py-4 px-2">
-        <span class="p-2">Build: {{tag_name}}</span>
-        <span class="p-2">GitHub</span>
-        <span class="p-2">Teams</span>
-        <span class="p-2" (click)='contributors()'>Contributors</span>
-        <span class="p-2" (click)='privacy()'>Privacy</span>
-        <span class="p-2" (click)="copyright()">Copyright</span>
+<ng-container *ngIf="authService.afauth.user | async; else homePageHeader">
+    <div class="footerbox ">
+        <div class="py-4 px-2 d-flex justify-content-end">
+            <span class="p-2">Build: {{tag_name}}</span>
+            <span class="p-2">GitHub</span>
+            <span class="p-2" (click)='termsandcondition()'>Terms</span>
+            <span class="p-2" (click)='contributors()'>Contributors</span>
+            <span class="p-2" (click)='privacy()'>Privacy</span>
+            <span class="p-2" (click)="copyright()">Copyright</span>
+        </div>
     </div>
-</div>
+</ng-container>
+<ng-template #homePageHeader>
+    <footer class="font-small pt-4" id="page-footer">
+        <div class="container-fluid text-center text-md-left">
+        <div class="row">
+            <div class="col-sm-8 col-md-3 col-3 mt-3 company-text justify-content-center" style="width: auto;">
+            <h3>WorkTez</h3>
+            <p>a quicker and agile alternative to the tedious project management process.</p>
+            </div>
+            <div class="ol-sm-8 col-md-3 col-3">
+            <h3 class="footer-headings">Company</h3>
+            <ul class="list-unstyled">
+                <li>
+                <a href="#!">Home</a>
+                </li>
+                <li>
+                <a href="#!">About</a>
+                </li>
+                <li>
+                <a href="#!">Features</a>
+                </li>
+                <li>
+                <a href="#!">Testimonials</a>
+                </li>
+                <li>
+                <a href="#!">Signup</a>
+                </li>
+            </ul>
+            </div>
+            <div class="ol-sm-8 col-md-3 col-3">
+            <h3 class="footer-headings"> OtherLinks</h3>
+            <ul class="list-unstyled">
+                <li>
+                <a href="#!">Contributers</a>
+                </li>
+                <li>
+                <a href="#!">Newsletter</a>
+                </li>
+                <li>
+                <a href="#!">Help</a>
+                </li>
+            </ul>
+            </div>
+            <div class="ol-sm-8 col-md-3 col-3">
+            <h3 class="footer-headings">Reach Out to Us</h3>
+            <ul class="list-unstyled">
+                <li>
+                <a href="#!">info@worktez.in</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </div>
+        <hr style="background-color: white">
+        <div class="row footer-copyright pb-3">
+        <div class="col-md-2 text-light ml-3" style="max-width: fit-content;">Terms & Conditions</div>
+        <div class="col-md-1 text-light" style="max-width: fit-content;">|</div>
+        <div class="col-md-2 text-light" style="max-width: fit-content;">Privacy Policy</div>
+        <div class="col-md-4"></div>
+        <div class="col-md-3 text-light text-right pr-0" style="max-width: fit-content; white-space: nowrap; overflow: hidden;">Copyright 2021 Worktez All Rights Reserved</div>
+        </div>
+    </footer>
+</ng-template>
