@@ -30,18 +30,20 @@ export class EditProfileComponent implements OnInit {
   enableLoader: boolean = false
   showClose: boolean = false
   public userAvailable: boolean = false;
+  oldUserName: string
 
   constructor(private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
+    this.oldUserName = this.userName;
   }
 
   async editProfile() {
-    if(this.userAvailable == true) {
+    if(this.userAvailable == true || this.oldUserName == this.userName) {
       this.enableLoader = true
       const callable = this.functions.httpsCallable('users');
       try {
-        await callable({ mode: "update", Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).toPromise();
+        await callable({ mode: "update", Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Website: this.website, Username: this.userName }).toPromise();
         console.log("Successful");
         this.showClose = true
       } catch (error) {

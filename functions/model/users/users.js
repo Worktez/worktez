@@ -19,6 +19,16 @@ const { updateSelectedTeam } = require("./updateSelectedTeam");
 const { getUserByEmail } = require("./getUserByEmail");
 const { getPhotoURLList } = require("./getPhotoURLList");
 const { getMyOrgCollectionDocs } = require("./getMyOrgCollectionDoc");
+const { addEducation } = require("./addEducation");
+const { getEducationList } = require("./getEducationList");
+const { updateEducation } = require("./updateEducation");
+const { getExperienceList } = require("./getExperienceList");
+const { updateExperience } = require("./updateExperience");
+const { addExperience } = require("./addExperience");
+const { getProjectList } = require("./getProjectList");
+const { updateProject } = require("./updateProject");
+const { addProject } = require("./addProject");
+const { updateUserSkill } = require("./updateSkills");
 
 exports.users = functions.https.onRequest((request, response) => {
     cors(request, response, () => {
@@ -50,6 +60,26 @@ exports.users = functions.https.onRequest((request, response) => {
             return getPhotoURLList(request, response);
         } else if (mode == "getMyOrgCollectionDocs") {
             return getMyOrgCollectionDocs(request, response);
+        } else if (mode == "addEducation") {
+            return addEducation(request, response);
+        } else if (mode == "updateEducation") {
+            return updateEducation(request, response);
+        } else if (mode == "getAllEducation") {
+            return getEducationList(request, response);
+        } else if (mode == "addExperience") {
+            return addExperience(request, response);
+        } else if (mode == "updateExperience") {
+            return updateExperience(request, response);
+        } else if (mode == "getAllExperience") {
+            return getExperienceList(request, response);
+        } else if (mode == "addProject") {
+            return addProject(request, response);
+        } else if (mode == "updateProject") {
+            return updateProject(request, response);
+        } else if (mode == "getAllProject") {
+            return getProjectList(request, response);
+        } else if (mode == "updateSkill") {
+            return updateUserSkill(request, response);
         }
     });
 });
