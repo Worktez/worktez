@@ -19,7 +19,7 @@ fastify.post("/performanceChartData", (req, res) => {
     getUserPerformanceChartData(req, res);
   });
 
-  fastify.post("/SprintEvaluationGraph", (req, res) => {
+  fastify.post("/sprintEvaluationGraph", (req, res) => {
     getSprintEvaluationGraph(req, res);
   });
 

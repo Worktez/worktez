@@ -21,8 +21,8 @@ export class BackendService {
   constructor(private functions: AngularFireFunctions) { }
 
   getOrgDetails(AppKey: string) {
-    const callable = this.functions.httpsCallable("organization/getOrgData");
-    this.organizationsData = callable({ AppKey: AppKey}).pipe(
+    const callableOrgData = this.functions.httpsCallable("organization/getOrgData");
+    this.organizationsData = callableOrgData({ AppKey: AppKey}).pipe(
       map(actions => {
         this.organizationDetails = actions.resultData as Organizations
         return actions.resultData as Organizations;

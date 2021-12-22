@@ -40,8 +40,10 @@ export class SprintEvaluationGraphComponent implements OnInit {
     try {
       this.data = await callable({OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
         map(actions => {
-          console.log(actions.data);
-          return actions.data as [];
+          if (actions.data != undefined) {
+            console.log(actions.data);
+            return actions.data as [];
+          }
         }));
       this.showLoader = false;
     } catch(error) {

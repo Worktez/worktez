@@ -92,13 +92,13 @@ export class FileUploadService {
     if (id != "Logo") {
       
       if(id == "Documents") {
-        const callable = this.functions.httpsCallable("librarian/GetFilesInOrgDocument");
+        const callable = this.functions.httpsCallable("librarian/getFilesInOrgDocument");
         this.filesData = callable({OrgDomain: orgDomain}).pipe(
           map(actions => {
             return actions.data as FileData[];
         }));
       } else {
-        const callable = this.functions.httpsCallable("librarian/GetFilesInTask");
+        const callable = this.functions.httpsCallable("librarian/getFilesInTask");
         this.filesData = callable({OrgDomain: orgDomain, Id: id }).pipe(
           map(actions => {
             return actions.data as FileData[];
