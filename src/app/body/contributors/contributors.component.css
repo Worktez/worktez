@@ -1,0 +1,16 @@
+.imageProp {
+    width: 120px;
+    height: 120px;
+}
+
+mat-icon {
+    cursor: pointer;
+    color: var(--text);
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    width: 18rem;
+    height: 18rem;
+}

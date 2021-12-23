@@ -14,6 +14,7 @@ const { deleteFilesInTask } = require("./deleteFilesInTask");
 const { uploadLogoFile } = require("./uploadLogoFile");
 const { uploadFileToOrgDocuments } = require("./uploadFileToOrgDocuments");
 const { getFilesInOrgDocument } = require("./getFilesInOrgDocuments");
+const { uploadFileToContributorsDocuments } = require("./uploadFileToContributorsDocuments");
 
 
 exports.librarian = functions.https.onRequest((request, response) => {
@@ -32,6 +33,8 @@ exports.librarian = functions.https.onRequest((request, response) => {
             return uploadFileToOrgDocuments(request, response);
         } else if (mode == "GetFilesInOrgDocument") {
             return getFilesInOrgDocument(request, response);
+        } else if (mode == "uploadFileToContributorsDocuments") {
+            return uploadFileToContributorsDocuments(request, response);
         }
     });
 });

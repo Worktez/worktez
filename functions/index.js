@@ -21,6 +21,7 @@ const { performanceChart } = require("./model/performanceChart/performanceChart"
 const { activity } = require("./model/activity/activity");
 const { librarian } = require("./model/librarian/librarian");
 const { notifications } = require("./model/notifications/notifications");
+const { contributors } = require("./model/contributors/contributors");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -33,3 +34,4 @@ exports.performanceChart = performanceChart;
 exports.activity = activity;
 exports.librarian = librarian;
 exports.notifications = notifications;
+exports.contributors = contributors;

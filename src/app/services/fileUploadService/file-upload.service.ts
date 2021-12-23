@@ -42,7 +42,7 @@ export class FileUploadService {
   }
 
   async saveFileData(fileUpload: FileUpload, basePath: string, folderName: string) {
-    const appKey = this.backendService.getOrganizationAppKey();
+    const callable = this.functions.httpsCallable( 'librarian' );
 
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -52,14 +52,17 @@ export class FileUploadService {
     const lastModified = fileUpload.file.lastModified;
     const size = fileUpload.file.size;
 
-    const callable = this.functions.httpsCallable( 'librarian' );
-    if ( folderName == "Logo") {
-      await callable( { mode: "UploadLogoFile", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    } else if(folderName == "Documents") {
-      await callable( { mode: "UploadFileToOrgDocuments", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    }
-     else {
-      await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    if(folderName == "ContributorsDocuments") {
+      await callable( { mode: "uploadFileToContributorsDocuments", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Date: todayDate, Time: time } ).toPromise();
+    } else {
+      const appKey = this.backendService.getOrganizationAppKey();
+      if ( folderName == "Logo") {
+        await callable( { mode: "UploadLogoFile", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      } else if(folderName == "Documents") {
+        await callable( { mode: "UploadFileToOrgDocuments", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      } else {
+        await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      }
     }
     this.fileUploadStatus = false;
   }
