@@ -25,8 +25,6 @@ exports.createNewUser = function(request, response) {
     let status = 200;
 
     const promise1 = getUser(Uid, "").then((data) => {
-        console.log("Getting User Data custom1");
-        console.log(data);
         if (data == undefined) {
             setUser(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, Username);
         }

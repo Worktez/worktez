@@ -15,11 +15,6 @@ const { uploadLogoFile } = require("./tark/uploadLogoFile");
 const { uploadFileToOrgDocuments } = require("./tark/uploadFileToOrgDocuments");
 const { getFilesInOrgDocument } = require("./tark/getFilesInOrgDocuments");
 
-// fastify.post("/", (req, res) => {
-//     // createNewUser(req, res);
-//     // status:ok ,200, api is running
-//     return response.status(200).send("API is running");
-//   });
   
   fastify.post("/deleteFilesInTask", (req, res) => {
     deleteFilesInTask(req, res);

@@ -21,19 +21,11 @@ const { createNewUser } = require("./tark/createNewUser");
 const { getUserAppSettings } = require("./tark/getUserAppSettings");
 
 
-// fastify.post("/", (req, res) => {
-//   // createNewUser(req, res);
-//   // status:ok ,200, api is running
-//   return response.status(200).send("API is running");
-// });
-
 fastify.post("/createNewUser", (req, res) => {
-  console.log("coming to create new user")
   createNewUser(req, res);
 });
 
 fastify.post("/getUserAppSettings", (req, res) => {
-  console.log("coming here")
   getUserAppSettings(req, res);
 });
 

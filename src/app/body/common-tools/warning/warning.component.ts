@@ -46,7 +46,7 @@ export class WarningComponent implements OnInit {
 
   async deleteTask() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('tasksTask');
+    const callable = this.functions.httpsCallable('deleteTask');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
       const result = await callable({AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();

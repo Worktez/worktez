@@ -72,7 +72,6 @@ export class AuthService {
   }
 
   getUserSettings() {
-    console.log("get User app Settings from ui");
     this.homeToDashboard = false;
     const uid = this.getLoggedInUser(); 
     const callable = this.functions.httpsCallable('users/getUserAppSettings');

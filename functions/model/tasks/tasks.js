@@ -19,12 +19,6 @@ const { getLinkDetails } = require("./tark/getLinkDetails");
 const { setLinkDetails } = require("./tark/setLinkDetails");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 
-
-// fastify.post("/", (req, res) => {
-//     // createNewUser(req, res);
-//     // status:ok ,200, api is running
-//     return response.status(200).send("API is running");
-//   });
   
   fastify.post("/comment", (req, res) => {
     addComment(req, res);

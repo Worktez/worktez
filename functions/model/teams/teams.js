@@ -13,12 +13,6 @@ const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 
-
-// fastify.post("/", (req, res) => {
-//     // createNewUser(req, res);
-//     // status:ok ,200, api is running
-//     return response.status(200).send("API is running");
-//   });
   
   fastify.post("/add-member", (req, res) => {
     addMember(req, res);

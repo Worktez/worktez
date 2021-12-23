@@ -8,12 +8,6 @@
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
-
-// fastify.post("/", (req, res) => {
-//     // createNewUser(req, res);
-//     // status:ok ,200, api is running
-//     return response.status(200).send("API is running");
-//   });
   
   fastify.post("/getNotifications", (req, res) => {
     getNotificationsList(req, res);

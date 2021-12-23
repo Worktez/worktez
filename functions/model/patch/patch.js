@@ -17,13 +17,6 @@ const { editPatch } = require("./tark/editPatch");
 const { patch6 } = require("./tark/patch6");
 const { patch7 } = require("./tark/patch7");
 const { patch9 } = require("./tark/patch9");
-
-
-// fastify.post("/", (req, res) => {
-//     // createNewUser(req, res);
-//     // status:ok ,200, api is running
-//     return response.status(200).send("API is running");
-//   });
   
   fastify.post("/editPatch", (req, res) => {
     editPatch(req, res);

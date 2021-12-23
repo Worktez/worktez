@@ -14,7 +14,6 @@ exports.getTeamData = function(request, response) {
 
     let status = 200;
     let result;
-    console.log("getting team data")
 
     getTeamUseTeamId(orgDomain, teamId).then((team) => {
         if (team) {

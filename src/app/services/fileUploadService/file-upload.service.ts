@@ -54,14 +54,14 @@ export class FileUploadService {
 
     
     if ( folderName == "Logo") {
-      const callable = this.functions.httpsCallable( 'librarian/UploadLogoFile' );
+      const callable = this.functions.httpsCallable( 'librarian/uploadLogoFile' );
       await callable( {BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
     } else if(folderName == "Documents") {
-      const callable = this.functions.httpsCallable( 'librarian/UploadFileToOrgDocuments' );
+      const callable = this.functions.httpsCallable( 'librarian/uploadFileToOrgDocuments' );
       await callable( {BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
     }
      else {
-      const callable = this.functions.httpsCallable( 'librarian/UploadFileToTask' );
+      const callable = this.functions.httpsCallable( 'librarian/uploadFileToTask' );
       await callable( {BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
     }
     this.fileUploadStatus = false;
@@ -72,7 +72,7 @@ export class FileUploadService {
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
 
-    const callable = this.functions.httpsCallable( 'librarian/DeleteFilesInTask' );
+    const callable = this.functions.httpsCallable( 'librarian/deleteFilesInTask' );
     return await callable( {FileName: fileName, TaskId: taskId, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time, TaskFileDocumentName:  taskFileDocumentName} ).toPromise();
   }
 

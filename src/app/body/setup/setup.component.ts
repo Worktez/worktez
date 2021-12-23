@@ -48,7 +48,6 @@ export class SetupComponent implements OnInit {
   async createNewOrg() {
     var condition = true;
     if (condition) {
-      console.log("Inputs are valid");
       this.createNewOrganization("create", "Worktrolly", "worktrolly@gmail.com", "worktrolly.web.app", "dev setup", this.email, this.uid, "this.orgLogoURL");
       this.createNewOrganization("create", "TestOrg", "testOrgabc@gmail.com", "testOrg.web.app", "dev setup", this.email, this.uid, "this.orgLogoURL");
     }
@@ -60,14 +59,10 @@ export class SetupComponent implements OnInit {
   async createNewOrganization(modeTo: string , organizationName: string, organizationEmail: string, organizationDomain: string, organizationDescription: string, organizationAdmin: string, organizationAdminUid: string, organizationLogoURL: string) {
     
     try {
-      console.log(modeTo)
       if (modeTo == "create")
       {
         const callable = this.functions.httpsCallable('organization/createOrg');
         const result = await callable({OrganizationName: organizationName, OrganizationEmail: organizationEmail, OrganizationDomain: organizationDomain, OrganizationDescription: organizationDescription, OrganizationAdmin: organizationAdmin, OrganizationAdminUid: organizationAdminUid, OrganizationLogoURL: organizationLogoURL }).toPromise();
-        console.log("Successfully created the Organization");
-        console.log(result[0]);
-        console.log("APPKEY: ", result[1]);
         this.appKey = result[1];
   
         const orgAppKey = result[1];
@@ -91,7 +86,6 @@ export class SetupComponent implements OnInit {
       {
         const callable = this.functions.httpsCallable('teams/createTeam');
         const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
-        console.log(result);
         this.createNewSprint(teamName, teamId, organizationAppKey);
       }
       
@@ -106,9 +100,6 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({AppKey: organizationAppKey, StartDate: "2021-10-09", EndDate: "2021-10-18", Status: "Under Progress", NewSprintId: 1, TeamId: teamId }).toPromise();
-
-      console.log("Successfully created a new sprint");
-      console.log(result);
       this.createNewSession(project, teamId, organizationAppKey);
     } catch (error) {
       console.log(error);
