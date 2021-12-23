@@ -9,7 +9,7 @@ export class ChartComponent implements OnInit {
   @Input("data") data: []
 
   constructor(private themeService: ThemeService) { }
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   myChartType: string = "AreaChart"
   chartColumns = ["Sprint Number", "StoryPoint"]

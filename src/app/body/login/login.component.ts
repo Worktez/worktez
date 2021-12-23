@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   onLogOut() {
     this.authService.logout().then(() => {
-      this.navigateToDashboard();
+      this.navigateToHome();
     });
   }
 
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
   onSignUpWithEmail() {
     this.authService.createUser(this.email, this.password, this.username).then(() => {
-      this.navigateToDashboard();
+      this.navigateToHome();
     }).catch((err) => {
       console.log(err.message);
     });
@@ -71,8 +71,12 @@ export class LoginComponent implements OnInit {
     });;
   }
 
-  navigateToDashboard() {
+  navigateToHome() {
     this.router.navigate(['']);
+  }
+
+  navigateToDashboard() {
+    this.router.navigate(['MyDashboard']);
   }
 
   navigateToVerification(path) {

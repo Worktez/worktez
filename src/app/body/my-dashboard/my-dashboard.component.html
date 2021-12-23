@@ -3,7 +3,7 @@
         <h3>You are not a part of any team. Please create a new team.</h3>
         <button type="submit" class="btn" id="button" (click)=createNewTeam()>Create Team</button>
     </ng-container>
-    <ng-container *ngIf="applicationSettingsService.teamData|async">
+    <ng-container *ngIf="applicationSettingsService.teamData|async; else loader">
         <div class="row pt-2">
             <div class="col col-md-5">
                 <app-performance-chart [userEmail]="userEmail" [uid]="user.uid" [currentSprint]="teamCurrentSprintNumber"></app-performance-chart>

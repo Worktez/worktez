@@ -25,7 +25,7 @@ exports.getPerformanceChartData = function(request, response) {
       const responseData = [];
       if (doc == undefined) {
         updatePerformanceChartData(0, orgDomain, teamId, assignee, sprintRange);
-        result = {data: {status: "ERROR", data: undefined}};
+        result = {data: {status: "ERROR", data: "undefined"}};
       } else {
         if (doc.LastUpdated != undefined) {
           lastUpdated = doc.LastUpdated;
