@@ -31,7 +31,7 @@ const { deleteTeam } = require("./tark/deleteTeam");
     getTeamData(req, res);
   });
 
-  fastify.post("/remove-member", (req, res) => {
+  fastify.post("/removeMember", (req, res) => {
     removeMember(req, res);
   });
   

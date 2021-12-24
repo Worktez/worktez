@@ -171,7 +171,7 @@ export class CreateNewTeamComponent implements OnInit {
 
   async removeMemberDB(remove: string) {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('teams/remove-member');
+    const callable = this.functions.httpsCallable('teams/removeMember');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
