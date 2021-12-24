@@ -36,8 +36,8 @@ export class Patch6Component implements OnInit {
     this.showLoader = true;
     console.log("Patch6 function running");
     console.log(this.orgDomain);
-    const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch6", OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
+    const callable = this.functions.httpsCallable('patch/patch6');
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);

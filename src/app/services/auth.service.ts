@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { MyOrganizationData, User, UserAppSetting } from "../Interface/UserInterface";
+import { MyEducationData, MyExperienceData, MyOrganizationData, MyProjectData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend/backend.service';
@@ -25,6 +25,16 @@ export class AuthService {
 
   user: User;
   userAppSetting: UserAppSetting;
+  public homeToDashboard: boolean = false;
+
+  educations: MyEducationData;
+  public educationCollectionData: Observable<MyEducationData>
+
+  experiences: MyExperienceData;
+  public experienceCollectionData: Observable<MyExperienceData>
+
+  projects: MyProjectData;
+  public projectCollectionData: Observable<MyProjectData>
 
   constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private backendService: BackendService, private themeService: ThemeService) { }
 
@@ -45,10 +55,10 @@ export class AuthService {
   }
 
   async createUserData(user: User) {
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/createNewUser');
     try {
       console.log("create new user from ui");
-      const result = await callable({ mode: "create", uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
+      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
 
     } catch (error) {
       console.error("Error", error);
@@ -71,7 +81,7 @@ export class AuthService {
   }
 
   getUserSettings() {
-    console.log("get User app Settings from ui");
+    this.homeToDashboard = false;
     const uid = this.getLoggedInUser(); 
     const callable = this.functions.httpsCallable('users/getUserAppSettings');
 
@@ -93,27 +103,57 @@ export class AuthService {
   }
 
   getListedOrganizationData(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: uid}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyOrgList");
+    this.myOrgCollectionsData = callable({Uid: uid}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData[];
     }));
   }
 
   getMyOrgCollectionDocs(uid, appKey) {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionDocData = callable({mode: "getMyOrgCollectionDocs", Uid: uid, OrgAppKey: appKey}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
+    this.myOrgCollectionDocData = callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData;
     }));
   }
 
   getListedTeams(uid: string, appKey: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.myTeamsListObservable = callable({mode: "getMyTeamsList", Uid: uid, OrgAppKey: appKey}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyTeamsList");
+    this.myTeamsListObservable = callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as string[];
     }));  
+  }
+
+  getUserEducation(uid: string) {
+    const callable = this.functions.httpsCallable("users/getAllEducation");
+    this.educationCollectionData = callable({Uid: uid }).pipe(
+      map(actions => {
+        this.educations = actions.data as MyEducationData;
+        return this.educations;
+      }));
+      return this.educationCollectionData;
+  }
+
+  getUserExperience(uid: string) {
+    const callable = this.functions.httpsCallable("users/getAllExperience");
+    this.experienceCollectionData = callable({Uid: uid }).pipe(
+      map(actions => {
+        this.experiences = actions.data as MyExperienceData;
+        return this.experiences;
+      }));
+      return this.experienceCollectionData;
+  }
+  
+  getUserProject(uid: string) {
+    const callable = this.functions.httpsCallable("users/getAllProject");
+    this.projectCollectionData = callable({Uid: uid }).pipe(
+      map(actions => {
+        this.projects = actions.data as MyProjectData;
+        return this.projects;
+      }));
+      return this.projectCollectionData;
   }
 
   getAppKey() {

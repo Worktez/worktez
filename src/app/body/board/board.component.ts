@@ -77,7 +77,7 @@ export class BoardComponent implements OnInit {
       if (this.teamData.TeamId == this.selectedTeamId) {
         if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
           this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
-          this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
+          this.currentSprintNumber = this.teamData.CurrentSprintId;
         } else {
           this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
           this.currentSprintNumber = this.teamData.CurrentSprintId;
@@ -97,9 +97,9 @@ export class BoardComponent implements OnInit {
     this.selectedTeamId = teamId;
     this.changeTeam = true;
     this.readApplicationData();
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/updateSelectedTeam');
     try {
-      const result = await callable({ mode: "updateSelectedTeam", Uid: this.uid , SelectedTeam: this.selectedTeamId}).toPromise();
+      const result = await callable({Uid: this.uid , SelectedTeam: this.selectedTeamId}).toPromise();
       console.log("Successful updated Selected Team in db");
     } catch (error) {
       console.log(error);

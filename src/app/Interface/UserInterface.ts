@@ -32,6 +32,30 @@ export interface MyOrganizationData {
     ActiveNotifications: number;
 }
 
+export interface MyEducationData {
+    InstituteName: string;
+    Degree: string;
+    Start: string;
+    End: string;
+    EducationId: string;
+}
+
+export interface MyExperienceData {
+    OrganizationName: string;
+    Position: string;
+    Start: string;
+    End: string;
+    ExperienceId: string;
+}
+
+export interface MyProjectData {
+    ProjectName: string;
+    Description: string;
+    Start: string;
+    End: string;
+    ProjectId: string;
+}
+
 export const defaultUser = {
     uid: "defaultUser",
     photoURL: "../../../assets/defaultavatar.jpg",

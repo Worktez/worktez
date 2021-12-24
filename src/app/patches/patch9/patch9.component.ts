@@ -52,8 +52,8 @@ export class Patch9Component implements OnInit {
     this.showLoader = true;
     console.log("Patch9 function running");
     console.log(this.newfield, this.newFieldValue);
-    const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch9", newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
+    const callable = this.functions.httpsCallable('patch/patch9');
+    await callable({newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);

@@ -14,11 +14,18 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 })
 export class HeaderComponent implements OnInit {
 
-  uid: string
+  uid: string;
+  isHomePage: boolean = false;
 
   constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    console.log(this.router.url);
+    if (this.router.url == '/')  {
+      this.isHomePage = true;
+    } else { 
+      this.isHomePage = false;
+    }
     this.authService.afauth.user.subscribe((action) => {
       const data = action as User;
       if(data) {
@@ -30,8 +37,8 @@ export class HeaderComponent implements OnInit {
   }
 
   async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
-    const callable = this.functions.httpsCallable("users");
-    await callable({mode: "setMyOrganization", Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
+    const callable = this.functions.httpsCallable("users/setMyOrganization");
+    await callable({Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
     window.location.reload()
   }
 

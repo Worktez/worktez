@@ -1,15 +1,15 @@
 <div class="px-5" id="profileTheme" *ngIf="authService.userAppSettingObservable && backendService.organizationsData | async">
-   <div class="row">
-       <div class="col-3">
-           <h2>Profile Page</h2>
-       </div>
-       <div class="col"></div>
+    <div class="row">
+        <div class="col-3">
+            <h2>Profile Page</h2>
+        </div>
+        <div class="col"></div>
         <div class="col-6">
             <ul class="navbar-nav float-right">
                 <app-theme [appTheme]="appTheme" [uid]="uid" *ngIf="appTheme"></app-theme>
             </ul>
         </div>
-   </div>
+    </div>
     <div class="row">
         <div class="col-4">
             <div class="card p-2">
@@ -20,12 +20,10 @@
                             <h2 class="card-title" style="color: var(--primary-color);">{{displayName}}</h2>
                             <h4 class="card-title">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h4>
                             <h4 class="card-title">
-                                <span class="material-icons">call</span>
-                            {{phoneNumber}}
+                                <span class="material-icons">call</span> {{phoneNumber}}
                             </h4>
                             <h4 class="card-title mt-2">
-                                <span class="material-icons">email</span>
-                                {{email}}
+                                <span class="material-icons">email</span> {{email}}
                             </h4>
                             <h4 class="card-title">
                                 <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
@@ -49,7 +47,7 @@
                 <div class="col" type="button" style="text-align: center;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" (click)="editProfile()">
                     <div class="card p-2">
                         <span class="float-right"><span class="material-icons" style="font-size: 18px;">edit</span>Edit Profile</span>
-                        
+
                     </div>
                 </div>
             </div>
@@ -59,19 +57,31 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right">add</span>
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">add</span>
                             <h2>Education</h2>
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
-                            <!-- <h4 class="card-title">{{education}}</h4> -->
-                            <h3>Lorem University,India</h3>
-                            <div class="row">
-                                <div class="col-4">
-                                    <h3 style="font-size: 14px;">B.Tech CSE</h3>
+                            <ng-container *ngIf="(educations)?.length == 0">
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <h3>Add your Education Qualifications</h3>
+                                    </div>
                                 </div>
-                                <div class="col-8">
-                                    <ul><li>2019</li></ul>
+                            </ng-container>
+                            <ng-container *ngFor="let education of educations; let i = index">
+                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)" style="font-size: 16px;">edit</span>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>{{ education.InstituteName }}</h3>
+                                    </div>
+                                    <div class="col-4 text-muted">
+                                        <h3 style="font-size: 14px;">{{ education.Degree }}</h3>
+                                    </div>
+                                    <div class="col-8 text-muted">
+                                        <ul>
+                                            <li>{{ education.Start }} - {{ education.End }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -80,19 +90,29 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right">add</span>
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">add</span>
                             <h2>Work Experience</h2>
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
-                            <h3>Random Position</h3>
-                            <div class="row">
-                                <div class="col-6">
-                                    <h3 style="font-size: 14px;">Random Company</h3>
+                            <ng-container *ngIf="(experiences)?.length == 0">
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <h3>Add your Work Experience</h3>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <ul><li>2019-present</li></ul>
+                            </ng-container>
+                            <ng-container *ngFor="let experience of experiences; let i = index">
+                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
+                                <h3>{{ experience.Position }}</h3>
+                                <div class="row text-muted">
+                                    <div class="col-5">
+                                        <h3 style="font-size: 14px;">{{ experience.OrganizationName }}</h3>
+                                    </div>
+                                    <div class="col-7" style="text-align: left;">
+                                        <ul>
+                                            <li>{{ experience.Start }} - {{ experience.End }}</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- <h4 class="card-title">{{experience}}</h4> -->
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -101,27 +121,50 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right">add</span>
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">add</span>
                             <h2>Projects</h2>
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
-                            <h3>Random Project Name</h3>
-                            <h3>2019-present</h3>
-                            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h3>
-                            <!-- <h4 class="card-title">{{projects}}</h4> -->
+                            <ng-container *ngIf="(projects)?.length == 0">
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <h3>Add your Projects</h3>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngFor="let project of projects; let i = index">
+                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" style="font-size: 16px;">edit</span>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h3>{{ project.ProjectName }}</h3>
+                                    </div>
+                                    <div class="col-12">
+                                        <h4 class="text-muted">{{ project.Start }} - {{ project.End }}</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <h4 class="text-muted">{{ project.Description }}</h4>
+                                    </div>
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
         <div class="col-4">
             <div class="row-my-5 pb-4">
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="font-size: 16px;">edit</span>
+                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()" style="font-size: 16px;">edit</span>
                             <h2>Skills</h2>
                             <div class="row">
                                 <div class="col-7">
+                                    <ul>
+                                        <ng-container *ngFor="let skill of skills">
+                                            <li>{{ skill }}</li>
+                                        </ng-container>
+                                    </ul>
+                                </div>
+                                <!-- <div class="col-7">
                                     <ul>
                                         <li>Marketing</li>
                                         <li>UI/UX</li>
@@ -134,17 +177,32 @@
                                         <li>Video Editing</li>
                                         <li>Graphic designing</li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
-                            <!-- <h4 class="card-title">{{skills}}</h4> -->
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 </div>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
-    <app-edit-profile [aboutMe]="aboutMe" [email]="email" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills" [education]="education"
-        [experience]="experience" [projects]="projects" [website]="website" [userName]="username"></app-edit-profile>
+    <app-edit-profile [aboutMe]="aboutMe" [email]="email" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills"
+        [education]="education" [experience]="experience" [projects]="projects" [website]="website" [userName]="username"></app-edit-profile>
+</ng-container>
+
+<ng-container *ngIf="editEducationEnabled" id="edueModal">
+    <app-edit-education [uid]="uid" [displayName]="displayName" [email]="email" [educationModalData]="educationModalData" [educationModalMode]="educationModalMode" (editEducationCompleted)="editEducationCompleted($event)"></app-edit-education>
+</ng-container>
+
+<ng-container *ngIf="editProjectEnabled" id="projectModal">
+    <app-edit-projects [uid]="uid" [displayName]="displayName" [email]="email" [projectModalData]="projectModalData" [projectModalMode]="projectModalMode" (editProjectCompleted)="editProjectCompleted($event)"></app-edit-projects>
+</ng-container>
+
+<ng-container *ngIf="editSkillsEnabled" id="skillsModal">
+    <app-edit-skills [uid]="uid" [displayName]="displayName" [email]="email" [skills]="skills" (editSkillsCompleted)="editSkillsCompleted($event)"></app-edit-skills>
+</ng-container>
+
+<ng-container *ngIf=" editWorkEnabled " id="workModal ">
+    <app-edit-workexperience [uid]="uid " [displayName]="displayName " [email]="email " [workModalData]="workModalData " [workModalMode]="workModalMode " (editWorkCompleted)="editWorkCompleted($event) "></app-edit-workexperience>
 </ng-container>

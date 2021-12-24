@@ -6,16 +6,24 @@
 // eslint-disable-next-line no-dupe-else-if
 
 
-const { functions, cors } = require("../application/lib");
-const { getNotificationsList } = require("./getNotificationsList");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
+  
+  fastify.post("/getNotifications", (req, res) => {
+    getNotificationsList(req, res);
+  });
 
+exports.notifications = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
 
-exports.notifications = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        const mode = request.body.data.mode;
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
 
-        if (mode == "getNotifications") {
-            return getNotificationsList(request, response);
-        }
+        // if (mode == "getNotifications") {
+        //     return getNotificationsList(request, response);
+        // }
     });
 });

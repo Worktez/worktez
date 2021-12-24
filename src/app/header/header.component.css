@@ -27,6 +27,23 @@
     cursor: pointer;
 }
 
+.nav-link {
+    color: var(--primary-color);
+    font-size: medium;
+}
+.nav-btn{
+    background-color: var(--hover) !important;
+    color: white;
+    margin-right: 20px;
+}
+.btn{
+    background-color: var(--secondary-color);
+}
+#brand_img{
+    width:125px;
+    height:45px;
+    margin-left: 55%;
+}
 #navbarDropdownBoards,
 #navbarDropdownTeam,
 #navbarDropdownCreate {

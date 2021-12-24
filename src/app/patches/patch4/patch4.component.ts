@@ -26,8 +26,8 @@ export class Patch4Component implements OnInit {
   async submitOperation() {
     this.showLoader = true;
     console.log("Patch4 function running");
-    const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch4", OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
+    const callable = this.functions.httpsCallable('patch/patch4');
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
       this.showLoader = false;
       console.log(result);
       alert(result);

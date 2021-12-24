@@ -1,1 +1,40 @@
-<p>edit-skills works!</p>
+<div class="modal fade" id="skillsModal" tabindex="-1" role="dialog" aria-labelledby="skillsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content p-4">
+            <div class="modal-header p-4">
+                <h2 class="modal-title" id="exampleModalLabel">Your Skills</h2>
+                <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editSkillCompleted()" style="color: var(--secondary-color);">close</span>
+            </div>
+            <div class="modal-body">
+                <form *ngIf="!enableLoader">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group mb-4">
+                                <!-- <label for="recipient-name" class="col-form-label">Display Name</label> -->
+                                <input type="text" [(ngModel)]="skill" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Skill">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="ml-auto col-md-12 btn" (click)="addSkill()">Add Skill</button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row px-4 py-4">
+                        <button type="button" class="ml-auto col-md-12 btn" data-dismiss="modal" (click)="editSkillCompleted()">Save Changes</button>
+                    </div> -->
+                </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row mb-3">
+                        <div class="col">Successfully Updated!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 pb-2 px-4">
+                            <button class="btn btn-secondary col-md-12" type="button" data-dismiss="modal" (click)="editSkillCompleted()">Save Changes</button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<app-loader *ngIf="enableLoader && !showClose"></app-loader> -->
