@@ -10,6 +10,7 @@ const { getOrg } = require("../../organization/lib");
 const { getTeam } = require("../../teams/lib");
 const { getUserUseEmail, updateUser } = require("../lib");
 const { myOrganizations } = require("../tark/myOrganizations");
+
 exports.verifyUser = function(request, response) {
     const organizationDomain = request.body.data.OrganizationDomain;
     const teamId = request.body.data.TeamId;

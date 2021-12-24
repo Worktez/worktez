@@ -19,6 +19,16 @@ const { getPhotoURLList } = require("./tark/getPhotoURLList");
 const { getMyOrgCollectionDocs } = require("./tark/getMyOrgCollectionDoc");
 const { createNewUser } = require("./tark/createNewUser");
 const { getUserAppSettings } = require("./tark/getUserAppSettings");
+const { getEducationList } = require("./tark/getEducationList");
+const { getExperienceList } = require("./tark/getExperienceList");
+const { getProjectList } = require("./tark/getProjectList");
+const { updateEducation } = require("./tark/updateEducation");
+const { updateExperience } = require("./tark/updateExperience");
+const { updateProject } = require("./tark/updateProject");
+const { addEducation } = require("./tark/addEducation");
+const { addExperience } = require("./tark/addExperience");
+const { addProject } = require("./tark/addProject");
+const { updateUserSkill } = require("./tark/updateSkills");
 
 
 fastify.post("/createNewUser", (req, res) => {
@@ -82,7 +92,7 @@ fastify.post("/updateEducation", (req, res) => {
 });
 
 fastify.post("/getAllEducation", (req, res) => {
-  getAllUserEducation(req, res);
+  getEducationList(req, res);
 });
 
 fastify.post("/addExperience", (req, res) => {
@@ -94,7 +104,7 @@ fastify.post("/updateExperience", (req, res) => {
 });
 
 fastify.post("/getAllExperience", (req, res) => {
-  getAllUserExperience(req, res);
+  getExperienceList(req, res);
 });
 
 fastify.post("/addProject", (req, res) => {
@@ -106,7 +116,7 @@ fastify.post("/updateProject", (req, res) => {
 });
 
 fastify.post("/getAllProject", (req, res) => {
-  getAllUserProject(req, res);
+  getProjectList(req, res);
 });
 
 fastify.post("/updateSkill", (req, res) => {
