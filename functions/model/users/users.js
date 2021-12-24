@@ -65,7 +65,7 @@ fastify.post("/updateUser", (req, res) => {
   updateUser(req, res);
 });
 
-fastify.post("/update-theme", (req, res) => {
+fastify.post("/updateTheme", (req, res) => {
   updateTheme(req, res);
 });
 
@@ -75,15 +75,6 @@ fastify.post("/verifyUser", (req, res) => {
 
 
 
-
-exports.users = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
-    });
-});
 
 exports.users = functions.https.onRequest((req, res) => {
   cors(req, res, () => {

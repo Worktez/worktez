@@ -42,7 +42,7 @@ export class AddMemberComponent implements OnInit {
 async addUpdateTeam() {
   this.organizationDomain = this.backendService.getOrganizationDomain();
   this.enableLoader = true;
-  const callable = this.functions.httpsCallable('teams/add-member');
+  const callable = this.functions.httpsCallable('teams/addMember');
   try {
     const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription, TeamId: this.teamId }).toPromise();
     this.enableLoader = false;

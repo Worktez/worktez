@@ -7,7 +7,6 @@
 const { db } = require("../application/lib");
 
 exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, Username, AppKey = "", TeamId = "", AboutMe = "", AppTheme = "theme-light") {
-    console.log("setting user data");
     const userData = db.collection("Users").doc(Uid).set({
         SelectedOrgAppKey: AppKey,
         SelectedTeamId: TeamId,

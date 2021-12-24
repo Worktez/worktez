@@ -14,7 +14,7 @@ const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 
   
-  fastify.post("/add-member", (req, res) => {
+  fastify.post("/addMember", (req, res) => {
     addMember(req, res);
   });
   

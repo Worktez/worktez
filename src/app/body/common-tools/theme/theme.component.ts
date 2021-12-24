@@ -34,7 +34,7 @@ export class ThemeComponent implements OnInit {
   }
 
   async updateTheme(appTheme: string) {
-    const callable = this.functions.httpsCallable('users/update-theme');
+    const callable = this.functions.httpsCallable('users/updateTheme');
     this.showloader = true;
     this.themeService.changeTheme(appTheme);
 

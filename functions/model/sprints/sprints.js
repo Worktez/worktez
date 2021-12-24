@@ -10,12 +10,6 @@ const { createNewSprint } = require("../sprints/tark/createNewSprint");
 const { updateSprintStatus } = require("../sprints/tark/updateSprintStatus");
 const { getSprintDetails } = require("../sprints/tark/getSprintDetails");
 
-
-// fastify.post("/", (req, res) => {
-//     // createNewUser(req, res);
-//     // status:ok ,200, api is running
-//     return response.status(200).send("API is running");
-//   });
   
   fastify.post("/createNewSprint", (req, res) => {
     createNewSprint(req, res);
