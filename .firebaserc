@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "dummy-fdfc5"
+    "default": "worktrolly"
   },
   "targets": {
     "worktrolly": {
