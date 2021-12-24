@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { MyOrganizationData, User, UserAppSetting } from "../Interface/UserInterface";
+import { MyEducationData, MyExperienceData, MyOrganizationData, MyProjectData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend/backend.service';
@@ -26,6 +26,15 @@ export class AuthService {
   user: User;
   userAppSetting: UserAppSetting;
   public homeToDashboard: boolean = false;
+
+  educations: MyEducationData;
+  public educationCollectionData: Observable<MyEducationData>
+
+  experiences: MyExperienceData;
+  public experienceCollectionData: Observable<MyExperienceData>
+
+  projects: MyProjectData;
+  public projectCollectionData: Observable<MyProjectData>
 
   constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private backendService: BackendService, private themeService: ThemeService) { }
 
@@ -115,6 +124,36 @@ export class AuthService {
       map(actions => {
         return actions.data as string[];
     }));  
+  }
+
+  getUserEducation(uid: string) {
+    const callable = this.functions.httpsCallable("users");
+    this.educationCollectionData = callable({ mode: "getAllEducation", Uid: uid }).pipe(
+      map(actions => {
+        this.educations = actions.data as MyEducationData;
+        return this.educations;
+      }));
+      return this.educationCollectionData;
+  }
+
+  getUserExperience(uid: string) {
+    const callable = this.functions.httpsCallable("users");
+    this.experienceCollectionData = callable({ mode: "getAllExperience", Uid: uid }).pipe(
+      map(actions => {
+        this.experiences = actions.data as MyExperienceData;
+        return this.experiences;
+      }));
+      return this.experienceCollectionData;
+  }
+  
+  getUserProject(uid: string) {
+    const callable = this.functions.httpsCallable("users");
+    this.projectCollectionData = callable({ mode: "getAllProject", Uid: uid }).pipe(
+      map(actions => {
+        this.projects = actions.data as MyProjectData;
+        return this.projects;
+      }));
+      return this.projectCollectionData;
   }
 
   getAppKey() {
