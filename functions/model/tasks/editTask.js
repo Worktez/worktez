@@ -16,11 +16,13 @@ const { sendMail } = require("../email/lib");
 
 exports.editTask = function(request, response) {
     const appKey = request.body.data.AppKey;
+    const title = request.body.data.Title;
     const description = request.body.data.Description;
     const priority = request.body.data.Priority;
     const difficulty = request.body.data.Difficulty;
     const assignee = request.body.data.Assignee;
     const estimatedTime = request.body.data.EstimatedTime;
+    const taskStatus = request.body.data.Status;
     const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
     const oldStoryPointNumber = parseInt(request.body.data.OldStoryPointNumber);
     const editedSprintNumber = request.body.data.SprintNumber;
@@ -176,6 +178,7 @@ exports.editTask = function(request, response) {
         }
 
         const updateTaskJson = {
+            Title: title,
             Description: description,
             CreationDate: creationDate,
             Priority: priority,
@@ -185,6 +188,7 @@ exports.editTask = function(request, response) {
             SprintNumber: editedSprintNumber,
             StoryPointNumber: storyPointNumber,
             Type: type,
+            Status: taskStatus,
         };
         updateTask(updateTaskJson, orgDomain, taskId);
         sendMail(assignee, subjectMessage, htmlMessage);

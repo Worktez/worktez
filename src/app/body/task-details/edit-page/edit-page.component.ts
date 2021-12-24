@@ -45,7 +45,7 @@ export class EditPageComponent implements OnInit {
 
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
-    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type];
+    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type, this.task.Status, this.task.Title];
   }
   readTeamMembers(teamId :string){
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
@@ -69,7 +69,7 @@ export class EditPageComponent implements OnInit {
       return res;
     });
     if (condition) {
-      this.newVal = [this.editTask.Description, this.editTask.Assignee, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber, this.editTask.Type];
+      this.newVal = [this.editTask.Description, this.editTask.Assignee, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber, this.editTask.Type, this.editTask.Status, this.editTask.Title];
       this.generateChanges();
       console.log("Inputs are valid");
       this.editPage();
@@ -93,6 +93,10 @@ export class EditPageComponent implements OnInit {
       this.changedData = this.changedData + " story-point,";
     if (this.prevVal[6] != this.newVal[6])
       this.changedData = this.changedData + " type,";
+    if (this.prevVal[7] != this.newVal[7])
+      this.changedData = this.changedData + " status,";
+    if (this.prevVal[8] != this.newVal[8])
+      this.changedData = this.changedData + " title,";
     if (this.changedData != "")
       this.changedData = "Edited-" + this.changedData;
     this.changedData = this.changedData.substring(0, this.changedData.length - 1) + "."
@@ -105,7 +109,7 @@ export class EditPageComponent implements OnInit {
     try {
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(this.task.Status === "Completed")) {
-        const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, OldStoryPointNumber: this.prevVal[5], PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type}).toPromise();
+        const result = await callable({ mode: "edit", AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.editTask.Assignee, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, Status: this.editTask.Status, Title: this.editTask.Title, OldStoryPointNumber: this.prevVal[5], PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type}).toPromise();
         this.enableLoader = false;
         this.showClose = true;
       } else {
