@@ -6,24 +6,25 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getAllUserExperience } = require("./lib");
+const { getAllUserProject } = require("../lib");
 
-exports.getExperienceList = function(request, response) {
+exports.getProjectList = function(request, response) {
+    console.log("coming to getting project list")
     const uid = request.body.data.Uid;
 
     let status = 200;
     const resultData = [];
     let result;
 
-    console.log("Reading Data of experience");
+    console.log("Reading Data of Project");
 
-    getAllUserExperience(uid).then((snapshot) => {
+    getAllUserProject(uid).then((snapshot) => {
         if (snapshot == undefined) {
-            result = { data: { status: "Not Found", data: "No Experience Listed" } };
+            result = { data: { status: "Not Found", data: "No Projects Listed" } };
         } else {
             snapshot.forEach((element) => {
                 data = element.data();
-                data["ExperienceId"] = element.id;
+                data["ProjectId"] = element.id;
                 resultData.push(data);
             });
             result = { data: { status: "Ok", data: resultData } };
@@ -32,7 +33,7 @@ exports.getExperienceList = function(request, response) {
     }).catch((error) => {
         status = 500;
         console.log("Error: ", error);
-        result = { data: { status: "Error", data: "No Experiences Listed" } };
+        result = { data: { status: "Error", data: "No Projects Listed" } };
         return response.status(status).send(result);
     });
 };

@@ -43,9 +43,9 @@ export class EditEducationComponent implements OnInit {
     if (this.endDate == undefined || this.endDate == "") {
       this.endDate = "Present";
     }
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/addEducation');
     try {
-      await callable({ mode: "addEducation", Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate }).toPromise();
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate }).toPromise();
       console.log("Successful");
       this.showClose = true;
     } catch (error) {
@@ -60,9 +60,9 @@ export class EditEducationComponent implements OnInit {
       this.endDate = "Present";
     }
     console.log("Edit");
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/updateEducation');
     try {
-      await callable({ mode: "updateEducation", Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).toPromise();
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).toPromise();
       console.log("Successful");
       this.showClose = true;
     } catch (error) {

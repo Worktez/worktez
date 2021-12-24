@@ -6,24 +6,25 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getAllUserProject } = require("./lib");
+const { getAllUserEducation } = require("../lib");
 
-exports.getProjectList = function(request, response) {
+exports.getEducationList = function(request, response) {
+    console.log("coming to getting education list")
     const uid = request.body.data.Uid;
 
     let status = 200;
     const resultData = [];
     let result;
 
-    console.log("Reading Data of Project");
+    console.log("Reading Data of education");
 
-    getAllUserProject(uid).then((snapshot) => {
+    getAllUserEducation(uid).then((snapshot) => {
         if (snapshot == undefined) {
-            result = { data: { status: "Not Found", data: "No Projects Listed" } };
+            result = { data: { status: "Not Found", data: "No Education Listed" } };
         } else {
             snapshot.forEach((element) => {
                 data = element.data();
-                data["ProjectId"] = element.id;
+                data["EducationId"] = element.id;
                 resultData.push(data);
             });
             result = { data: { status: "Ok", data: resultData } };
@@ -32,7 +33,7 @@ exports.getProjectList = function(request, response) {
     }).catch((error) => {
         status = 500;
         console.log("Error: ", error);
-        result = { data: { status: "Error", data: "No Projects Listed" } };
+        result = { data: { status: "Error", data: "No Educations Listed" } };
         return response.status(status).send(result);
     });
 };

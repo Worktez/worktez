@@ -127,8 +127,8 @@ export class AuthService {
   }
 
   getUserEducation(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.educationCollectionData = callable({ mode: "getAllEducation", Uid: uid }).pipe(
+    const callable = this.functions.httpsCallable("users/getAllEducation");
+    this.educationCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
         this.educations = actions.data as MyEducationData;
         return this.educations;
@@ -137,8 +137,8 @@ export class AuthService {
   }
 
   getUserExperience(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.experienceCollectionData = callable({ mode: "getAllExperience", Uid: uid }).pipe(
+    const callable = this.functions.httpsCallable("users/getAllExperience");
+    this.experienceCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
         this.experiences = actions.data as MyExperienceData;
         return this.experiences;
@@ -147,8 +147,8 @@ export class AuthService {
   }
   
   getUserProject(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.projectCollectionData = callable({ mode: "getAllProject", Uid: uid }).pipe(
+    const callable = this.functions.httpsCallable("users/getAllProject");
+    this.projectCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
         this.projects = actions.data as MyProjectData;
         return this.projects;

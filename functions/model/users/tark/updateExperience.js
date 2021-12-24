@@ -7,14 +7,14 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { updateUserEducation } = require("./lib");
-const { sendMail } = require("../email/lib");
+const { updateUserExperience } = require("../lib");
+const { sendMail } = require("../../email/lib");
 
-exports.updateEducation = function(request, response) {
-    const educationDoc = request.body.data.EducationId;
+exports.updateExperience = function(request, response) {
+    const experienceDoc = request.body.data.ExperienceId;
     const uid = request.body.data.Uid;
-    const instituteName = request.body.data.InstituteName;
-    const degree = request.body.data.Degree;
+    const organizationName = request.body.data.OrganizationName;
+    const position = request.body.data.Position;
     const start = request.body.data.Start;
     const end = request.body.data.End;
     const displayName = request.body.data.DisplayName;
@@ -27,13 +27,13 @@ exports.updateEducation = function(request, response) {
     const inputJson = {
         Start: start,
         End: end,
-        InstituteName: instituteName,
-        Degree: degree,
+        OrganizationName: organizationName,
+        Position: position,
     }
-    updateUserEducation(uid, educationDoc, inputJson).then(() => {
+    updateUserExperience(uid, experienceDoc, inputJson).then(() => {
         sendMail(email, subjectMessage, htmlMessage);
         console.log("Mail worked");
-        result = { data: "User Education updated successfully" };
+        result = { data: "User Experience updated successfully" };
         console.log("Successful");
         return response.status(200).send(result);
     }).catch((error) => {

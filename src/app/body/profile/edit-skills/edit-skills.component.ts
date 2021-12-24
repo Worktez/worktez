@@ -28,9 +28,9 @@ export class EditSkillsComponent implements OnInit {
 
   async addSkill() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/updateSkill');
     try {
-      await callable({ mode: "updateSkill", Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).toPromise();
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).toPromise();
       console.log("Successful");
       this.skill = "";
       this.showClose = true;

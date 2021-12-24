@@ -5,7 +5,6 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-<<<<<<< HEAD
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { updateUser } = require("./tark/updateUser");
 const { updateTheme } = require("./tark/updateTheme");
@@ -74,6 +73,47 @@ fastify.post("/verifyUser", (req, res) => {
   verifyUser(req, res);
 });
 
+fastify.post("/addEducation", (req, res) => {
+  addEducation(req, res);
+});
+
+fastify.post("/updateEducation", (req, res) => {
+  updateEducation(req, res);
+});
+
+fastify.post("/getAllEducation", (req, res) => {
+  getAllUserEducation(req, res);
+});
+
+fastify.post("/addExperience", (req, res) => {
+  addExperience(req, res);
+});
+
+fastify.post("/updateExperience", (req, res) => {
+  updateExperience(req, res);
+});
+
+fastify.post("/getAllExperience", (req, res) => {
+  getAllUserExperience(req, res);
+});
+
+fastify.post("/addProject", (req, res) => {
+  addProject(req, res);
+});
+
+fastify.post("/updateProject", (req, res) => {
+  updateProject(req, res);
+});
+
+fastify.post("/getAllProject", (req, res) => {
+  getAllUserProject(req, res);
+});
+
+fastify.post("/updateSkill", (req, res) => {
+  updateUserSkill(req, res);
+});
+
+
 
 
 
@@ -83,15 +123,9 @@ exports.users = functions.https.onRequest((req, res) => {
       if (err) throw err;
           requestHandler(req, res);
       });
-      // const mode = request.body.data.mode;
-
-      // if (mode == "create") {
-      //     return createOrg(request, response);
-      // } else if (mode == "getOrgData") {
-      //     return getOrgData(request, response);
-      // }
   });
 });
+
 
         // if (mode == "create") {
         //     return createNewUser(request, response);
@@ -119,84 +153,24 @@ exports.users = functions.https.onRequest((req, res) => {
         //     return getPhotoURLList(request, response);
         // } else if (mode == "getMyOrgCollectionDocs") {
         //     return getMyOrgCollectionDocs(request, response);
+        // } else if (mode == "addEducation") {
+        //     return addEducation(request, response);
+        // } else if (mode == "updateEducation") {
+        //     return updateEducation(request, response);
+        // } else if (mode == "getAllEducation") {
+        //     return getEducationList(request, response);
+        // } else if (mode == "addExperience") {
+        //     return addExperience(request, response);
+        // } else if (mode == "updateExperience") {
+        //     return updateExperience(request, response);
+        // } else if (mode == "getAllExperience") {
+        //     return getExperienceList(request, response);
+        // } else if (mode == "addProject") {
+        //     return addProject(request, response);
+        // } else if (mode == "updateProject") {
+        //     return updateProject(request, response);
+        // } else if (mode == "getAllProject") {
+        //     return getProjectList(request, response);
+        // } else if (mode == "updateSkill") {
+        //     return updateUserSkill(request, response);
         // }
-=======
-const { functions, cors } = require("../application/lib");
-const { createNewUser } = require("./createNewUser");
-const { updateUser } = require("./updateUser");
-const { updateTheme } = require("./updateTheme");
-const { verifyUser } = require("./verifyUser");
-const { getUserAppSettings } = require("./getUserAppSettings");
-const { checkAvailableUsername } = require("./checkAvailableUsername");
-const { getMyOrgList } = require("./getMyOrgList");
-const { getMyTeamsList } = require("./getMyTeamsList");
-const { setMyOrganization } = require("./setMyOrganization");
-const { updateSelectedTeam } = require("./updateSelectedTeam");
-const { getUserByEmail } = require("./getUserByEmail");
-const { getPhotoURLList } = require("./getPhotoURLList");
-const { getMyOrgCollectionDocs } = require("./getMyOrgCollectionDoc");
-const { addEducation } = require("./addEducation");
-const { getEducationList } = require("./getEducationList");
-const { updateEducation } = require("./updateEducation");
-const { getExperienceList } = require("./getExperienceList");
-const { updateExperience } = require("./updateExperience");
-const { addExperience } = require("./addExperience");
-const { getProjectList } = require("./getProjectList");
-const { updateProject } = require("./updateProject");
-const { addProject } = require("./addProject");
-const { updateUserSkill } = require("./updateSkills");
-
-exports.users = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        const mode = request.body.data.mode;
-
-        if (mode == "create") {
-            return createNewUser(request, response);
-        } else if (mode == "update") {
-            return updateUser(request, response);
-        } else if (mode == "update-theme") {
-            return updateTheme(request, response);
-        } else if (mode == "verify") {
-            return verifyUser(request, response);
-        } else if (mode == "getUserAppSettings") {
-            return getUserAppSettings(request, response);
-        } else if (mode == "getUserByEmail") {
-            return getUserByEmail(request, response);
-        } else if (mode == "CheckAvailableUsername") {
-            return checkAvailableUsername(request, response);
-        } else if (mode == "getMyOrgList") {
-            return getMyOrgList(request, response);
-        } else if (mode == "getMyTeamsList") {
-            return getMyTeamsList(request, response);
-        } else if (mode == "setMyOrganization") {
-            return setMyOrganization(request, response);
-        } else if (mode == "updateSelectedTeam") {
-            return updateSelectedTeam(request, response);
-        } else if (mode == "getPhotoURLList") {
-            return getPhotoURLList(request, response);
-        } else if (mode == "getMyOrgCollectionDocs") {
-            return getMyOrgCollectionDocs(request, response);
-        } else if (mode == "addEducation") {
-            return addEducation(request, response);
-        } else if (mode == "updateEducation") {
-            return updateEducation(request, response);
-        } else if (mode == "getAllEducation") {
-            return getEducationList(request, response);
-        } else if (mode == "addExperience") {
-            return addExperience(request, response);
-        } else if (mode == "updateExperience") {
-            return updateExperience(request, response);
-        } else if (mode == "getAllExperience") {
-            return getExperienceList(request, response);
-        } else if (mode == "addProject") {
-            return addProject(request, response);
-        } else if (mode == "updateProject") {
-            return updateProject(request, response);
-        } else if (mode == "getAllProject") {
-            return getProjectList(request, response);
-        } else if (mode == "updateSkill") {
-            return updateUserSkill(request, response);
-        }
-    });
-});
->>>>>>> f7701dc2d3ff2601f092e0b0135001580c16e847
