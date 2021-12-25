@@ -6,18 +6,30 @@
 // eslint-disable-next-line no-dupe-else-if
 
 
-const { functions, cors } = require("../application/lib");
-const { addContributor } = require("./addContributor");
-const { getContributorsList } = require("./getContributorsList");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { addContributor } = require("./tark/addContributor");
+const { getContributorsList } = require("./tark/getContributorsList");
 
-exports.contributors = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        const mode = request.body.data.mode;
+fastify.post("/getContributorsData", (req, res) => {
+    getContributorsList(req, res);
+});
 
-        if (mode == "getContributorsData") {
-            return getContributorsList(request, response);
-        } else if (mode == "addContributor") {
-            return addContributor(request, response);
-        }
+fastify.post("/addContributor", (req, res) => {
+    addContributor(req, res);
+});
+
+exports.contributors = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        fastify.ready((err) => {
+            if (err) throw err;
+                requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "getContributorsData") {
+        //     return getContributorsList(request, response);
+        // } else if (mode == "addContributor") {
+        //     return addContributor(request, response);
+        // }
     });
 });

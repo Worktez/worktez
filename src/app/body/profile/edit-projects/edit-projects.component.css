@@ -1,0 +1,64 @@
+.modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+    padding-bottom: 0 !important;
+}
+
+.btn {
+    background-color: var(--secondary-color);
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px;
+    min-height: 350px;
+    justify-content: space-evenly;
+    padding-top: 0 !important;
+}
+
+.close {
+    color: var(--text);
+}
+
+.form-row {
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+#button {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    outline: none;
+    box-shadow: none;
+    background-color: var(--primary-color);
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}

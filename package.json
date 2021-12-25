@@ -25,6 +25,7 @@
     "angular-google-charts": "^2.2.2",
     "bootstrap": "^4.6.1",
     "cors": "^2.8.5",
+    "fastify": "^3.25.2",
     "firebase": "^9.4.0",
     "firebase-functions": "^3.6.0",
     "jquery": "^3.5.1",

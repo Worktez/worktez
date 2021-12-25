@@ -37,8 +37,8 @@ export class ApplicationSettingsService {
   getTeamDetails(teamId: string) {
     if(this.team == undefined || this.team.TeamId != teamId) {
       const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
-      const callable = this.functions.httpsCallable("teams");
-      this.teamData = callable({mode: "getTeamData", OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
+      const callable = this.functions.httpsCallable("teams/getTeamData");
+      this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
         map(actions => {
           this.team = actions.resultData as Team
           this.status = this.team.StatusLabels;
@@ -55,8 +55,8 @@ export class ApplicationSettingsService {
   getSprintsDetails(SprintNumber: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
     const teamName = this.team.TeamName;
-    const callable = this.functions.httpsCallable("sprints");
-    this.sprintDataObservable = callable({mode: "getSprintDetails", OrgDomain: orgDomain, TeamName: teamName, SprintNumber: SprintNumber}).pipe(map(actions => {
+    const callable = this.functions.httpsCallable("sprints/getSprintDetails");
+    this.sprintDataObservable = callable({OrgDomain: orgDomain, TeamName: teamName, SprintNumber: SprintNumber}).pipe(map(actions => {
         return actions.sprintData as Sprint;
     }));
     return this.sprintDataObservable;
@@ -64,8 +64,8 @@ export class ApplicationSettingsService {
 
   getNotificationsList() {
     const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("notifications");
-    this.notificationListObservable = callable({mode: "getNotifications", Uid: this.authService.user.uid, OrgDomain: orgDomain}).pipe(map(actions => {
+    const callable = this.functions.httpsCallable("notifications/getNotifications");
+    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain}).pipe(map(actions => {
         return actions as Notification[];
     }));
     return this.notificationListObservable;
