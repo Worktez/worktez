@@ -29,7 +29,7 @@ exports.updateProject = function(request, response) {
         End: end,
         ProjectName: projectName,
         Description: description,
-    }
+    };
     updateUserProject(uid, projectDoc, inputJson).then(() => {
         sendMail(email, subjectMessage, htmlMessage);
         console.log("Mail worked");

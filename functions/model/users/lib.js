@@ -152,7 +152,7 @@ exports.updateUserEducation = function(uid, educationDoc, inputJson) {
     const updateEducationPromise = db.collection("Users").doc(uid).collection("Education").doc(educationDoc).update(inputJson);
 
     return Promise.resolve(updateEducationPromise);
-}
+};
 
 exports.getAllUserEducation = function(uid) {
     const getEducationPromise = db.collection("Users").doc(uid).collection("Education").get().then((educations) => {
@@ -175,7 +175,7 @@ exports.updateUserExperience = function(uid, experienceDoc, inputJson) {
     const updateExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc(experienceDoc).update(inputJson);
 
     return Promise.resolve(updateExperiencePromise);
-}
+};
 
 exports.getAllUserExperience = function(uid) {
     const getExperiencePromise = db.collection("Users").doc(uid).collection("Experience").get().then((experiences) => {
@@ -198,7 +198,7 @@ exports.updateUserProject = function(uid, projectDoc, inputJson) {
     const updateProjectPromise = db.collection("Users").doc(uid).collection("Project").doc(projectDoc).update(inputJson);
 
     return Promise.resolve(updateProjectPromise);
-}
+};
 
 exports.getAllUserProject = function(uid) {
     const getProjectPromise = db.collection("Users").doc(uid).collection("Project").get().then((projects) => {
