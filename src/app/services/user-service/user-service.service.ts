@@ -12,9 +12,9 @@ export class UserServiceService {
   constructor(private functions: AngularFireFunctions) { }
 
   async getUserData (email) {
-    const callable = this.functions.httpsCallable("users");
+    const callable = this.functions.httpsCallable("users/getUserByEmail");
     try {
-      const result =  await callable({mode: "getUserByEmail", Email: email }).toPromise();
+      const result =  await callable({Email: email }).toPromise();
       return result.userData;
     } catch(error) {
       console.log(error);
@@ -22,8 +22,8 @@ export class UserServiceService {
   }
 
   getPhotoList(emailList: string[]) {
-    const callable = this.functions.httpsCallable("users");
-    this.photoUrlObservable = callable({mode: "getPhotoURLList", Email: emailList}).pipe(map(res => {
+    const callable = this.functions.httpsCallable("users/getPhotoURLList");
+    this.photoUrlObservable = callable({Email: emailList}).pipe(map(res => {
         return res.data as string[];
     }));  
   }

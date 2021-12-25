@@ -55,9 +55,10 @@ export class AuthService {
   }
 
   async createUserData(user: User) {
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/createNewUser');
     try {
-      const result = await callable({ mode: "create", uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
+      console.log("create new user from ui");
+      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
 
     } catch (error) {
       console.error("Error", error);
@@ -82,9 +83,9 @@ export class AuthService {
   getUserSettings() {
     this.homeToDashboard = false;
     const uid = this.getLoggedInUser(); 
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/getUserAppSettings');
 
-    this.userAppSettingObservable = callable({ mode: "getUserAppSettings", uid: uid }).pipe(map(res => {
+    this.userAppSettingObservable = callable({ uid: uid }).pipe(map(res => {
       const data = res.userData as UserAppSetting;
       this.userAppSetting = data;
       if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
@@ -102,32 +103,32 @@ export class AuthService {
   }
 
   getListedOrganizationData(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionsData = callable({mode: "getMyOrgList", Uid: uid}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyOrgList");
+    this.myOrgCollectionsData = callable({Uid: uid}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData[];
     }));
   }
 
   getMyOrgCollectionDocs(uid, appKey) {
-    const callable = this.functions.httpsCallable("users");
-    this.myOrgCollectionDocData = callable({mode: "getMyOrgCollectionDocs", Uid: uid, OrgAppKey: appKey}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
+    this.myOrgCollectionDocData = callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData;
     }));
   }
 
   getListedTeams(uid: string, appKey: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.myTeamsListObservable = callable({mode: "getMyTeamsList", Uid: uid, OrgAppKey: appKey}).pipe(
+    const callable = this.functions.httpsCallable("users/getMyTeamsList");
+    this.myTeamsListObservable = callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as string[];
     }));  
   }
 
   getUserEducation(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.educationCollectionData = callable({ mode: "getAllEducation", Uid: uid }).pipe(
+    const callable = this.functions.httpsCallable("users/getAllEducation");
+    this.educationCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
         this.educations = actions.data as MyEducationData;
         return this.educations;
@@ -136,8 +137,8 @@ export class AuthService {
   }
 
   getUserExperience(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.experienceCollectionData = callable({ mode: "getAllExperience", Uid: uid }).pipe(
+    const callable = this.functions.httpsCallable("users/getAllExperience");
+    this.experienceCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
         this.experiences = actions.data as MyExperienceData;
         return this.experiences;
@@ -146,8 +147,8 @@ export class AuthService {
   }
   
   getUserProject(uid: string) {
-    const callable = this.functions.httpsCallable("users");
-    this.projectCollectionData = callable({ mode: "getAllProject", Uid: uid }).pipe(
+    const callable = this.functions.httpsCallable("users/getAllProject");
+    this.projectCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
         this.projects = actions.data as MyProjectData;
         return this.projects;

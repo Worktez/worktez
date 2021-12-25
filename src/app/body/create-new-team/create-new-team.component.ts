@@ -171,12 +171,12 @@ export class CreateNewTeamComponent implements OnInit {
 
   async removeMemberDB(remove: string) {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('teams');
+    const callable = this.functions.httpsCallable('teams/removeMember');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
     try {
-      const result = await callable({ mode: "remove-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
       this.enableLoader = false;
     } catch (error) {
       this.enableLoader = false;
@@ -187,13 +187,13 @@ export class CreateNewTeamComponent implements OnInit {
   async createNewTeamWithLabels() {
     this.enableLoader = true;
     // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams');
+    const callable = this.functions.httpsCallable('teams/createTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
     try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
@@ -207,13 +207,13 @@ export class CreateNewTeamComponent implements OnInit {
   async updateExistingTeam() {
     this.enableLoader = true;
     // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams');
+    const callable = this.functions.httpsCallable('teams/updateTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
     try {
-      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);

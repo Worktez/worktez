@@ -36,9 +36,9 @@ export class PerformanceChartComponent implements OnInit {
   }
   async createData() {
     let orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('performanceChart');
+    const callable = this.functions.httpsCallable('performanceChart/userPerformanceChartData');
     try {
-      this.data = await callable({ mode: "userPerformanceChartData", OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
+      this.data = await callable({OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
         map(actions => {
           return actions.data as [];
         }));

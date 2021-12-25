@@ -43,9 +43,9 @@ export class EditProjectsComponent implements OnInit {
     if(this.endDate == undefined){
       this.endDate = "Present";
     }
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/addProject');
     try {
-      await callable({ mode: "addProject", Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate }).toPromise();
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate }).toPromise();
       console.log("Successful");
       this.showClose = true;
     } catch (error) {
@@ -60,9 +60,9 @@ export class EditProjectsComponent implements OnInit {
     }
     this.enableLoader = true
     console.log("Edit");
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/updateProject');
     try {
-      await callable({ mode: "updateProject", Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate, ProjectId: this.projectModalData.ProjectId }).toPromise();
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate, ProjectId: this.projectModalData.ProjectId }).toPromise();
       console.log("Successful");
       this.showClose = true;
     } catch (error) {

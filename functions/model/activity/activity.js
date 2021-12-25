@@ -5,15 +5,29 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { functions, cors } = require("../application/lib");
-const { getActivity } = require("./getActivity");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { getActivity } = require("./tark/getActivity");
 
-exports.activity = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        const mode = request.body.data.mode;
+  
+  fastify.post("/addActivity", (req, res) => {
+    addActivity(req, res);
+  });
+  
+  fastify.post("/getActivity", (req, res) => {
+    getActivity(req, res);
+  });
 
-        if (mode == "getActivity") {
-            return getActivity(request, response);
-        }
+exports.activity = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
+        // const mode = request.body.data.mode;
+
+        // if (mode == "getActivity") {
+        //     return getActivity(request, response);
+        // }
     });
 });

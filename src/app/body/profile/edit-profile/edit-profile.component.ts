@@ -41,9 +41,9 @@ export class EditProfileComponent implements OnInit {
   async editProfile() {
     if(this.userAvailable == true || this.oldUserName == this.userName) {
       this.enableLoader = true
-      const callable = this.functions.httpsCallable('users');
+      const callable = this.functions.httpsCallable('users/updateUser');
       try {
-        await callable({ mode: "update", Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Website: this.website, Username: this.userName }).toPromise();
+        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).toPromise();
         console.log("Successful");
         this.showClose = true
       } catch (error) {
@@ -60,9 +60,9 @@ export class EditProfileComponent implements OnInit {
   }
 
   async checkAvailability() {
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/checkAvailableUsername');
     try {
-      const result = await callable({ mode: "CheckAvailableUsername", Username: this.userName }).toPromise();
+      const result = await callable({Username: this.userName }).toPromise();
       if(result == "User Already Available"){
         this.userAvailable = false;
       } else {
