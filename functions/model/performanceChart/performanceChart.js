@@ -14,7 +14,7 @@ const { getSprintEvaluationGraph } = require("./tark/getSprintEvaluationGraph");
 fastify.post("/performanceChartData", (req, res) => {
     getPerformanceChartData(req, res);
   });
-  
+
   fastify.post("/userPerformanceChartData", (req, res) => {
     getUserPerformanceChartData(req, res);
   });
@@ -22,8 +22,6 @@ fastify.post("/performanceChartData", (req, res) => {
   fastify.post("/sprintEvaluationGraph", (req, res) => {
     getSprintEvaluationGraph(req, res);
   });
-
-
 
   exports.performanceChart = functions.https.onRequest((req, res) => {
     cors(req, res, () => {

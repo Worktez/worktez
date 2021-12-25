@@ -10,11 +10,11 @@ const { createNewSprint } = require("../sprints/tark/createNewSprint");
 const { updateSprintStatus } = require("../sprints/tark/updateSprintStatus");
 const { getSprintDetails } = require("../sprints/tark/getSprintDetails");
 
-  
+
   fastify.post("/createNewSprint", (req, res) => {
     createNewSprint(req, res);
   });
-  
+
   fastify.post("/getSprintDetails", (req, res) => {
     getSprintDetails(req, res);
   });

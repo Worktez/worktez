@@ -36,6 +36,11 @@ exports.setFileToOrgDocument = function(inputJson, orgDomain, orgFileDocumentNam
     return Promise.resolve(setFileToOrgPromise);
 };
 
+exports.setFileToContributorsDocument = function(inputJson, orgFileDocumentName) {
+    const setFileToContributorsPromise = db.collection("ContributorsDocuments").doc(orgFileDocumentName).set(inputJson);
+    return Promise.resolve(setFileToContributorsPromise);
+};
+
 exports.getFileInOrgDocument = function(orgDomain) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Documents");
     query = query.where("FileStatus", "==", "OK");
@@ -44,3 +49,4 @@ exports.getFileInOrgDocument = function(orgDomain) {
 
     return Promise.resolve(getFilesPromise);
 };
+

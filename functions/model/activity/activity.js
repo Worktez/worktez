@@ -7,19 +7,19 @@
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getActivity } = require("./tark/getActivity");
+const { addActivity } = require("./tark/addActivity");
 
-  
+
   fastify.post("/addActivity", (req, res) => {
     addActivity(req, res);
   });
-  
+
   fastify.post("/getActivity", (req, res) => {
     getActivity(req, res);
   });
 
 exports.activity = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-
       fastify.ready((err) => {
         if (err) throw err;
             requestHandler(req, res);

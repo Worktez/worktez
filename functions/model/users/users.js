@@ -124,9 +124,6 @@ fastify.post("/updateSkill", (req, res) => {
 });
 
 
-
-
-
 exports.users = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {

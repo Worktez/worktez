@@ -19,19 +19,19 @@ const { getLinkDetails } = require("./tark/getLinkDetails");
 const { setLinkDetails } = require("./tark/setLinkDetails");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 
-  
+
   fastify.post("/comment", (req, res) => {
     addComment(req, res);
   });
-  
+
   fastify.post("/createNewTask", (req, res) => {
     createNewTask(req, res);
   });
-  
+
   fastify.post("/deleteTask", (req, res) => {
     deleteTask(req, res);
   });
-  
+
   fastify.post("/editTask", (req, res) => {
     editTask(req, res);
   });
@@ -39,15 +39,15 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
   fastify.post("/getLink", (req, res) => {
     getLinkDetails(req, res);
   });
-  
+
   fastify.post("/getTaskDetails", (req, res) => {
     getTaskDetails(req, res);
   });
-  
+
   fastify.post("/getAllTasks", (req, res) => {
     getTasks(req, res);
   });
-  
+
   fastify.post("/getTasksForDashboard", (req, res) => {
     getTasksForDashboard(req, res);
   });
@@ -55,7 +55,7 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
   fastify.post("/log", (req, res) => {
     logWork(req, res);
   });
-  
+
   fastify.post("/setLink", (req, res) => {
     setLinkDetails(req, res);
   });

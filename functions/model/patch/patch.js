@@ -17,19 +17,19 @@ const { editPatch } = require("./tark/editPatch");
 const { patch6 } = require("./tark/patch6");
 const { patch7 } = require("./tark/patch7");
 const { patch9 } = require("./tark/patch9");
-  
+
   fastify.post("/editPatch", (req, res) => {
     editPatch(req, res);
   });
-  
+
   fastify.post("/patch1", (req, res) => {
     patch1(req, res);
   });
-  
+
   fastify.post("/patch2", (req, res) => {
     patch2(req, res);
   });
-  
+
   fastify.post("/patch3", (req, res) => {
     patch3(req, res);
   });
@@ -37,11 +37,11 @@ const { patch9 } = require("./tark/patch9");
   fastify.post("/patch4", (req, res) => {
     patch4(req, res);
   });
-  
+
   fastify.post("/patch5", (req, res) => {
     patch5(req, res);
   });
-  
+
   fastify.post("/patch6", (req, res) => {
     patch6(req, res);
   });
@@ -53,11 +53,11 @@ const { patch9 } = require("./tark/patch9");
   fastify.post("/patch8", (req, res) => {
     patch8(req, res);
   });
-  
+
   fastify.post("/patch9", (req, res) => {
     patch9(req, res);
   });
-  
+
   fastify.post("/patchModerator", (req, res) => {
     patchModerator(req, res);
   });

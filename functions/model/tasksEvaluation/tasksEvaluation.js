@@ -8,7 +8,6 @@
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { readTasksEvaluationData } = require("./tark/readTasksEvalulationData");
 
-  
   fastify.post("/readTasksEvaluationData", (req, res) => {
     readTasksEvaluationData(req, res);
   });

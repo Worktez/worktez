@@ -13,34 +13,33 @@ const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 
-  
-  fastify.post("/addMember", (req, res) => {
-    addMember(req, res);
-  });
-  
-  fastify.post("/createTeam", (req, res) => {
-    createTeam(req, res);
-  });
-  
-  fastify.post("/deleteTeam", (req, res) => {
-    deleteTeam(req, res);
-  });
-  
-  fastify.post("/getTeamData", (req, res) => {
-    console.log("calling gettingTeamData api")
-    getTeamData(req, res);
-  });
+fastify.post("/addMember", (req, res) => {
+  addMember(req, res);
+});
 
-  fastify.post("/removeMember", (req, res) => {
-    removeMember(req, res);
-  });
-  
-  fastify.post("/updateTeam", (req, res) => {
-    updateTeam(req, res);
-  });
-  
+fastify.post("/createTeam", (req, res) => {
+  createTeam(req, res);
+});
 
-  exports.teams = functions.https.onRequest((req, res) => {
+fastify.post("/deleteTeam", (req, res) => {
+  deleteTeam(req, res);
+});
+
+fastify.post("/getTeamData", (req, res) => {
+  console.log("calling gettingTeamData api");
+  getTeamData(req, res);
+});
+
+fastify.post("/removeMember", (req, res) => {
+  removeMember(req, res);
+});
+
+fastify.post("/updateTeam", (req, res) => {
+  updateTeam(req, res);
+});
+
+
+exports.teams = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
       fastify.ready((err) => {
         if (err) throw err;

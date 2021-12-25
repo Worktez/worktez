@@ -42,7 +42,6 @@ export class FileUploadService {
   }
 
   async saveFileData(fileUpload: FileUpload, basePath: string, folderName: string) {
-    const appKey = this.backendService.getOrganizationAppKey();
 
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -52,17 +51,21 @@ export class FileUploadService {
     const lastModified = fileUpload.file.lastModified;
     const size = fileUpload.file.size;
 
-    
-    if ( folderName == "Logo") {
-      const callable = this.functions.httpsCallable( 'librarian/uploadLogoFile' );
-      await callable( {BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    } else if(folderName == "Documents") {
-      const callable = this.functions.httpsCallable( 'librarian/uploadFileToOrgDocuments' );
-      await callable( {BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    }
-     else {
-      const callable = this.functions.httpsCallable( 'librarian/uploadFileToTask' );
-      await callable( {BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    if(folderName == "ContributorsDocuments") {
+      const callable = this.functions.httpsCallable( 'librarian/uploadFileToContributorsDocuments' );
+      await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Date: todayDate, Time: time } ).toPromise();
+    } else {
+      const appKey = this.backendService.getOrganizationAppKey();
+      if ( folderName == "Logo") {
+        const callable = this.functions.httpsCallable( 'librarian/uploadLogoFile' );
+        await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      } else if(folderName == "Documents") {
+        const callable = this.functions.httpsCallable( 'librarian/uploadFileToOrgDocuments' );
+        await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      } else {
+        const callable = this.functions.httpsCallable( 'librarian/uploadFileToTask' );
+        await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      }
     }
     this.fileUploadStatus = false;
   }

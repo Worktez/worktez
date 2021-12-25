@@ -46,7 +46,8 @@ exports.setApplication = function() {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: 0,
-        TotalNumberOfPatch: 3,
+        TotalNumberOfPatch: 9,
+        TotalNumberOfContributors: 0,
     });
     return Promise.resolve(P1);
 };
