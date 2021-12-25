@@ -31,22 +31,21 @@
                         </ng-container>
                     </div>
                     <div class="col-md-8 pb-2">
+                        <ng-container *ngIf="sprintNotExist == false && currentSprintNumber != 0">
+                            <app-sprint-evaluation-graph [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-sprint-evaluation-graph>
+                        </ng-container>
+                        
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row">
+                <ng-container *ngIf="showContent">  
+                    <div class="col-md-12 col-12">
                         <ng-container *ngIf="sprintNotExist == false">
                             <app-performance-column-chart [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-performance-column-chart>
                         </ng-container>
                     </div>
                 </ng-container>
-            </div>
-            <div class="row">
-                <div class="col-md-10 col-12">
-                    <ng-container *ngIf="sprintNotExist == false && currentSprintNumber != 0">
-                        <div class="row my-2">
-                            <div class="col">
-                                <app-sprint-evaluation-graph [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-sprint-evaluation-graph>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
             </div>
         </div>
         <ng-template #loader>

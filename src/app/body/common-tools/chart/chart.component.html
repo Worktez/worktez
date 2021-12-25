@@ -1,2 +1,7 @@
-<google-chart id="chart" [dynamicResize]="dynamicResizable" [options]="myOptions" [type]="myChartType" [data]="data" [columns]="chartColumns">
-</google-chart>
+<ng-container *ngIf="data != undefined; else noDataAvailable">
+    <google-chart id="chart" [dynamicResize]="dynamicResizable" [options]="myOptions" [type]="myChartType" [data]="data" [columns]="chartColumns">
+    </google-chart>
+</ng-container>
+<ng-template #noDataAvailable>
+    No data Available
+</ng-template>

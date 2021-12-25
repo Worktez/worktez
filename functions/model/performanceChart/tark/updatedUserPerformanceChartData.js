@@ -15,33 +15,26 @@ const { checkUpdateTime } = require("../../application/lib");
 exports.updatedUserPerformanceChartData =function(lastUpdated, orgDomain, assignee, uid, sprintRange) {
     const result = checkUpdateTime(lastUpdated);
     if (result) {
-    let inputJson = {};
-    inputJson["LastUpdated"] = result;
-    let responseData = [];
+        let inputJson = {};
+        inputJson["LastUpdated"] = result;
+        let responseData = [];
 
-    const userPerformanceChartDataPromise = getAllTasks(orgDomain, "", "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
-        let i; let storyPoint; let data;
-        for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
-            storyPoint = 0;
-            snapshot.docs.forEach((taskDoc) => {
-                data = taskDoc.data();
-                if (data.SprintNumber == i) {
-                    storyPoint += data.StoryPointNumber;
-                }
-            });
-            responseData.push(["S" + i, storyPoint]);
-            inputJson["S"+i]=storyPoint;
-        }
-    }).catch((error) => {
-        console.log("Error:", error);
-    });
-
-    return Promise.resolve(userPerformanceChartDataPromise).then(() => {
-        setUserChart(orgDomain, uid, inputJson);
-        return;
-    })
-    .catch((error) => {
-            return error;
+        getAllTasks(orgDomain, "", "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
+            let i; let storyPoint; let data;
+            for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
+                storyPoint = 0;
+                snapshot.docs.forEach((taskDoc) => {
+                    data = taskDoc.data();
+                    if (data.SprintNumber == i) {
+                        storyPoint += data.StoryPointNumber;
+                    }
+                });
+                responseData.push(["S" + i, storyPoint]);
+                inputJson["S"+i]=storyPoint;
+            }
+            setUserChart(orgDomain, uid, inputJson);
+        }).catch((error) => {
+            console.log("Error:", error);
         });
     }
 };

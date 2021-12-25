@@ -4,7 +4,7 @@
 }
 
 .card {
-    border: var(--primary-border);
+    color: var(--text);
     background-color: var(--secondary-bg);
     box-shadow: var(--box-shadow-bottom);
 }

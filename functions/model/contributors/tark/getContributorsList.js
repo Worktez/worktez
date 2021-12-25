@@ -7,7 +7,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getContributors } = require("./lib");
+const { getContributors } = require("../lib");
 
 exports.getContributorsList = function(request, response) {
     let status = 200;

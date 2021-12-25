@@ -24,8 +24,6 @@ export class PerformanceChartComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
   data: Observable<[]>;
-  sprintNumber: number;
-  tasksData: Observable<Tasks[]>
 
   constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
@@ -40,9 +38,9 @@ export class PerformanceChartComponent implements OnInit {
     try {
       this.data = await callable({OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
         map(actions => {
-          return actions.data as [];
+            return actions.data as [];
         }));
-      this.showLoader = false;
+        this.showLoader = false;
     } catch(error) {
       console.log(error);
     }
