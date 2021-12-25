@@ -27,9 +27,9 @@ export class LinkComponent implements OnInit {
 
   async submit() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('tasks');
+    const callable = this.functions.httpsCallable('tasks/setLink');
     try {
-      const result = await callable({ mode: "setLink", OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).toPromise();
+      const result = await callable({OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).toPromise();
       console.log("Set Link Successfully");
       console.log(result);
       this.enableLoader = false;

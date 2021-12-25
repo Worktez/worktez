@@ -9,6 +9,24 @@ const firestore = admin.firestore();
 const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
 
+const http = require("http");
+let requestHandler = null;
+
+const fastify = require("fastify")({
+  logger: false,
+  serverFactory: (handler) => {
+    requestHandler = handler;
+    return http.createServer();
+  },
+});
+
+fastify.addContentTypeParser("application/json", {}, (req, body, done) => {
+  done(null, body.body);
+});
+
+exports.requestHandler = requestHandler;
+exports.fastify = fastify;
+
 exports.db = firestore;
 exports.functions = functions;
 exports.cors = cors;
@@ -28,7 +46,8 @@ exports.setApplication = function() {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: 0,
-        TotalNumberOfPatch: 3,
+        TotalNumberOfPatch: 9,
+        TotalNumberOfContributors: 0,
     });
     return Promise.resolve(P1);
 };

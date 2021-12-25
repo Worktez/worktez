@@ -102,8 +102,10 @@ import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.comp
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
+import { ContributorsComponent } from './body/contributors/contributors.component';
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 import { Patch8Component } from './patches/patch8/patch8.component';
+import { AddContributorsComponent } from './body/contributors/add-contributors/add-contributors.component';
 
 @NgModule({
   declarations: [
@@ -194,7 +196,9 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     NotificationCenterComponent,
     Patch7Component,
     CopyrightComponent,
+    ContributorsComponent,
     TermsAndConditionComponent,
+    AddContributorsComponent,
   ],
   imports: [
     BrowserModule,

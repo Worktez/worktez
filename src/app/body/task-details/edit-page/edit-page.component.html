@@ -78,7 +78,11 @@
                             <div class="row pt-3">
                                 <div class="col-md-4 px-2">
                                     <span id="label">Task Status</span>
-                                    <input type="text" readonly class="form-control" id="non-editable" value={{this.editTask.Status}} [(ngModel)]="editTask.Status" [ngModelOptions]="{standalone: true}">
+                                    <select class="custom-select form-control" value={{this.editTask.Status}} [(ngModel)]="editTask.Status" [ngModelOptions]="{standalone: true}">
+                                        <ng-container *ngFor="let item of applicationSetting.status">
+                                            <option>{{item}}</option>
+                                        </ng-container>
+                                    </select>
                                 </div>
                                 <div class="col-md-4 px-2" id="estimatedTimeTaskDescription">
                                     <span id="label">Estimated Time</span>

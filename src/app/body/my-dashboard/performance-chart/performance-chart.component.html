@@ -9,9 +9,11 @@
             </div>
         </div>
     </div>
-    <div class="card-body pb-4" *ngIf="!showLoader && (data|async)?.length != 0">
-        <app-chart [data]="data | async"></app-chart>
-    </div>
+    <ng-container *ngIf="data|async">
+        <div class="card-body pb-4" *ngIf="!showLoader && (data|async)?.length != 0">
+            <app-chart [data]="data | async"></app-chart>
+        </div>
+    </ng-container>
     <div class="card-body" *ngIf="showLoader">
         <app-loader></app-loader>
     </div>

@@ -23,10 +23,10 @@ export class AddPatchComponent implements OnInit {
   }
   async createNewPatch(data) {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('patch');
+    const callable = this.functions.httpsCallable('patch/patchModerator');
 
     try {
-      const result = await callable({mode: "patchModerator",Patch: data.name,PatchName: data.name, PatchDescription: data.description, CreationDate: this.date, UpdatedOn: this.date, LastUsedByOrg:"", LastUsedByUid:""}).toPromise();
+      const result = await callable({Patch: data.name,PatchName: data.name, PatchDescription: data.description, CreationDate: this.date, UpdatedOn: this.date, LastUsedByOrg:"", LastUsedByUid:""}).toPromise();
 
       this.enableLoader = false;
       this.showClose = true;

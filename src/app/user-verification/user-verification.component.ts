@@ -26,9 +26,9 @@ export class UserVerificationComponent implements OnInit {
   }
 
   async verifyUser() {
-    const callable = this.functions.httpsCallable('users');
+    const callable = this.functions.httpsCallable('users/verify');
     try {
-      const result = await callable({ mode: "verify", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
 
       this.router.navigate(['/']);
     } catch (error) {

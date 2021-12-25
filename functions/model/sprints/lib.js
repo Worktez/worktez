@@ -56,3 +56,27 @@ exports.getSprints = function(orgDomain, teamName) {
     });
     return Promise.resolve(getSrpintDetails);
 };
+
+exports.getAllSprints = function(orgDomain, teamName, sprintRange1 = "", sprintRange2 = "") {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints");
+
+    if (sprintRange1 != "") {
+        query = query.where("SprintNumber", ">=", sprintRange1);
+    }
+
+    if (sprintRange2 != "") {
+        query = query.where("SprintNumber", "<=", sprintRange2);
+    }
+
+    const getSprintDetails = query.get().then((sprintsData) => {
+        const sprints = [];
+        sprintsData.forEach((element) => {
+            if (element.exists) {
+                sprints.push(element.data());
+            }
+        });
+        return sprints;
+    });
+
+    return Promise.resolve(getSprintDetails);
+};

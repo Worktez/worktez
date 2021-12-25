@@ -24,8 +24,6 @@ export class PerformanceChartComponent implements OnInit {
   sprintRange1: number
   sprintRange2: number
   data: Observable<[]>;
-  sprintNumber: number;
-  tasksData: Observable<Tasks[]>
 
   constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
@@ -36,13 +34,13 @@ export class PerformanceChartComponent implements OnInit {
   }
   async createData() {
     let orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('performanceChart');
+    const callable = this.functions.httpsCallable('performanceChart/userPerformanceChartData');
     try {
-      this.data = await callable({ mode: "userPerformanceChartData", OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
+      this.data = await callable({OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
         map(actions => {
-          return actions.data as [];
+            return actions.data as [];
         }));
-      this.showLoader = false;
+        this.showLoader = false;
     } catch(error) {
       console.log(error);
     }

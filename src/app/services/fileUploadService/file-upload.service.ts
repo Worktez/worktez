@@ -42,7 +42,6 @@ export class FileUploadService {
   }
 
   async saveFileData(fileUpload: FileUpload, basePath: string, folderName: string) {
-    const appKey = this.backendService.getOrganizationAppKey();
 
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -52,14 +51,21 @@ export class FileUploadService {
     const lastModified = fileUpload.file.lastModified;
     const size = fileUpload.file.size;
 
-    const callable = this.functions.httpsCallable( 'librarian' );
-    if ( folderName == "Logo") {
-      await callable( { mode: "UploadLogoFile", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    } else if(folderName == "Documents") {
-      await callable( { mode: "UploadFileToOrgDocuments", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    }
-     else {
-      await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    if(folderName == "ContributorsDocuments") {
+      const callable = this.functions.httpsCallable( 'librarian/uploadFileToContributorsDocuments' );
+      await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Date: todayDate, Time: time } ).toPromise();
+    } else {
+      const appKey = this.backendService.getOrganizationAppKey();
+      if ( folderName == "Logo") {
+        const callable = this.functions.httpsCallable( 'librarian/uploadLogoFile' );
+        await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      } else if(folderName == "Documents") {
+        const callable = this.functions.httpsCallable( 'librarian/uploadFileToOrgDocuments' );
+        await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      } else {
+        const callable = this.functions.httpsCallable( 'librarian/uploadFileToTask' );
+        await callable( { BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+      }
     }
     this.fileUploadStatus = false;
   }
@@ -69,8 +75,8 @@ export class FileUploadService {
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
 
-    const callable = this.functions.httpsCallable( 'librarian' );
-    return await callable( { mode: "DeleteFilesInTask", FileName: fileName, TaskId: taskId, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time, TaskFileDocumentName:  taskFileDocumentName} ).toPromise();
+    const callable = this.functions.httpsCallable( 'librarian/deleteFilesInTask' );
+    return await callable( {FileName: fileName, TaskId: taskId, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time, TaskFileDocumentName:  taskFileDocumentName} ).toPromise();
   }
 
   private deleteFileStorage(name: string, basePath:string): void {
@@ -87,14 +93,16 @@ export class FileUploadService {
 
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
-      const callable = this.functions.httpsCallable("librarian");
+      
       if(id == "Documents") {
-        this.filesData = callable({ mode: "GetFilesInOrgDocument", OrgDomain: orgDomain}).pipe(
+        const callable = this.functions.httpsCallable("librarian/getFilesInOrgDocument");
+        this.filesData = callable({OrgDomain: orgDomain}).pipe(
           map(actions => {
             return actions.data as FileData[];
         }));
       } else {
-        this.filesData = callable({ mode: "GetFilesInTask", OrgDomain: orgDomain, Id: id }).pipe(
+        const callable = this.functions.httpsCallable("librarian/getFilesInTask");
+        this.filesData = callable({OrgDomain: orgDomain, Id: id }).pipe(
           map(actions => {
             return actions.data as FileData[];
         })); 

@@ -78,8 +78,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getTaskDetail () {
-    const callable = this.functions.httpsCallable('tasks');
-    this.taskDataObservable = callable({ mode: "getTaskDetails", Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
+    const callable = this.functions.httpsCallable('tasks/getTaskDetails');
+    this.taskDataObservable = callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
         this.task = data;
         this.getName(data.Assignee, "Assignee");
@@ -104,27 +104,27 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async getActivityData () {
-    const callable = this.functions.httpsCallable("activity");
-    this.activityData = callable({mode: "getActivity", OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
+    const callable = this.functions.httpsCallable("activity/getActivity");
+    this.activityData = callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
         return actions.data as Activity[];
     }));
   }
 
   async getLinkData() {
-    const callable = this.functions.httpsCallable("tasks");
-    this.linkData = callable({mode: "getLink", OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
+    const callable = this.functions.httpsCallable("tasks/getLink");
+    this.linkData = callable({OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
       map(actions => {
         return actions.data as Link[];
     }));
   }
 
   async addComment() {
-    const callable = this.functions.httpsCallable('tasks');
+    const callable = this.functions.httpsCallable('tasks/comment');
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable({ mode: "comment", AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+      const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
 
       this.comment = "";
       return;
@@ -171,11 +171,11 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async reopenTask () {
-    const callable = this.functions.httpsCallable( 'tasks' );
+    const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
     try {
-      const result = await callable( { mode: "log", AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
+      const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
       return;
     } catch ( error ) {
       this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );
