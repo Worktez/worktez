@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       if (path.startsWith('/verifyUser')) {
         this.navigateToVerification(path);
       } else {
-        this.navigateToDashboard();
+        this.navigateToHome();
       }
     }).catch((err) => {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       if (path.startsWith('/verifyUser')) {
         this.navigateToVerification(path);
       } else {
-        this.navigateToDashboard();
+        this.navigateToHome();
       }
     }).catch((err) => {
       console.log(err.message);
