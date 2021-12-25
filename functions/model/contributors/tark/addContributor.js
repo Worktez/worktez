@@ -7,8 +7,8 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getApplicationData, updateApplication } = require("../application/lib");
-const { setContributors } = require("./lib");
+const { getApplicationData, updateApplication } = require("../../application/lib");
+const { setContributors } = require("../lib");
 
 exports.addContributor = function(request, response) {
     const email = request.body.data.email;
