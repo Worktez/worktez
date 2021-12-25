@@ -20,6 +20,7 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
         TeamsId: [],
         TeamsName: [],
         LogoCounter: 0,
+        FilesCounter: 0
     });
     return Promise.resolve(orgData);
 };
