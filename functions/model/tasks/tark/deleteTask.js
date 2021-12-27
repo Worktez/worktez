@@ -12,9 +12,9 @@ const { addActivity } = require("../../activity/tark/addActivity");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getSprint, updateSprint, setSprint } = require("../../sprints/lib");
 const { updateTask, getTask } = require("../lib");
-const { getUserUseEmail, getUser } = require("../users/lib");
-const { sendMail } = require("../email/lib");
-const { sendNotification } = require("../notifications/lib");
+const { getUserUseEmail, getUser } = require("../../users/lib");
+const { sendMail } = require("../../email/lib");
+const { sendNotification } = require("../../notifications/lib");
 
 exports.deleteTask = function(request, response) {
     const appKey = request.body.data.AppKey;

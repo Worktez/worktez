@@ -16,8 +16,8 @@ const { getSprint, updateSprint, setSprint } = require("../../sprints/lib");
 const { updateTeamDetails, getTeam } = require("../../teams/lib");
 const { setTask } = require("../lib");
 const { sendMail } = require("../../email/lib");
-const { getUserUseEmail } = require("../users/lib");
-const { sendNotification } = require("../notifications/lib");
+const { getUserUseEmail } = require("../../users/lib");
+const { sendNotification } = require("../../notifications/lib");
 
 exports.createNewTask = function(request, response) {
     const appKey = request.body.data.AppKey;

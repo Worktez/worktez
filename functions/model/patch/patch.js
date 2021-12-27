@@ -19,7 +19,6 @@ const { patch6 } = require("./tark/patch6");
 const { patch7 } = require("./tark/patch7");
 const { patch8 } = require("./tark/patch8");
 const { patch9 } = require("./tark/patch9");
-const { setPatches } = require("./tark/setPatches");
 
   fastify.post("/editPatch", (req, res) => {
     editPatch(req, res);
