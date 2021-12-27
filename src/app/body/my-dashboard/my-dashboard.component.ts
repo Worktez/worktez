@@ -28,6 +28,8 @@ export class MyDashBoardComponent implements OnInit {
   teamCurrentSprintNumber: number;
   teamIdExists: boolean = true;
 
+  loadingCurrentSprintStatus: boolean = false
+
   constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
@@ -39,8 +41,11 @@ export class MyDashBoardComponent implements OnInit {
 
   readApplicationData() {
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(team => {
-          this.teamCurrentSprintNumber = team.CurrentSprintId;
-          this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+      if(team != undefined) {
+        this.loadingCurrentSprintStatus = true;
+        this.teamCurrentSprintNumber = team.CurrentSprintId;
+        this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+      }
     });
   }
   
