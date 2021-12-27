@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { UserAppSetting } from 'src/app/Interface/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class UserServiceService {
     const callable = this.functions.httpsCallable("users/getUserByEmail");
     try {
       const result =  await callable({Email: email }).toPromise();
-      return result.userData;
+      return result.userData as UserAppSetting;
     } catch(error) {
       console.log(error);
     }

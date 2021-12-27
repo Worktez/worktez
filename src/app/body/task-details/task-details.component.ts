@@ -77,31 +77,35 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
+  selectedAssignee(item) {
+    console.log(item);
+  }
+
   getTaskDetail () {
     const callable = this.functions.httpsCallable('tasks/getTaskDetails');
     this.taskDataObservable = callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
         this.task = data;
-        this.getName(data.Assignee, "Assignee");
-        this.getName(data.Creator, "Creator");
+        // this.getName(data.Assignee, "Assignee");
+        // this.getName(data.Creator, "Creator");
         this.applicationSettingService.getTeamDetails(data.TeamId);
         return { ...data }
     }));
   }
 
-  getName (email, value) {
-    let name="";
-    this.userService.getUserData(email).then(data => {
-      if(data) {
-        name = data.displayName;
-        if (value == "Assignee") {
-          this.assignee = name.split(' ')[0];
-        } else if (value == "Creator") {
-          this.creator = name.split(' ')[0];
-        }
-      }
-    });
-  }
+  // getName (email, value) {
+  //   let name="";
+  //   this.userService.getUserData(email).then(data => {
+  //     if(data) {
+  //       name = data.displayName;
+  //       if (value == "Assignee") {
+  //         this.assignee = name.split(' ')[0];
+  //       } else if (value == "Creator") {
+  //         this.creator = name.split(' ')[0];
+  //       }
+  //     }
+  //   });
+  // }
 
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity/getActivity");

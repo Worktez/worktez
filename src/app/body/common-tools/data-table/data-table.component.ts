@@ -45,4 +45,8 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   openTaskDetails(id: string) {
     this.router.navigate(['/TaskDetails', id]);
   }
+
+  selectedAssignee(item) {
+    console.log(item)
+  }
 }

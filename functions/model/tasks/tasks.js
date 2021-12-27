@@ -24,7 +24,7 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
     addComment(req, res);
   });
 
-  fastify.post("/createNewTask", (req, res) => {
+  fastify.post("/create", (req, res) => {
     createNewTask(req, res);
   });
 
@@ -32,7 +32,7 @@ const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
     deleteTask(req, res);
   });
 
-  fastify.post("/editTask", (req, res) => {
+  fastify.post("/edit", (req, res) => {
     editTask(req, res);
   });
 

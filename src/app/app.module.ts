@@ -86,11 +86,15 @@ import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-g
 import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-images.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTableComponent } from './body/common-tools/data-table/data-table.component';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
@@ -106,6 +110,7 @@ import { ContributorsComponent } from './body/contributors/contributors.componen
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 import { Patch8Component } from './patches/patch8/patch8.component';
 import { AddContributorsComponent } from './body/contributors/add-contributors/add-contributors.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -216,10 +221,13 @@ import { AddContributorsComponent } from './body/contributors/add-contributors/a
     MatPaginatorModule,
     MatIconModule,
     MatBadgeModule,
-    MatSortModule
+    MatSortModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   providers: [
     AuthService,
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },
     { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', '7002'] : undefined },
     { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', '7001'] : undefined }

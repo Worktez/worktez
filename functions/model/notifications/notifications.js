@@ -8,14 +8,13 @@
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
-  
+
   fastify.post("/getNotifications", (req, res) => {
     getNotificationsList(req, res);
   });
 
 exports.notifications = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-
       fastify.ready((err) => {
         if (err) throw err;
             requestHandler(req, res);

@@ -79,7 +79,7 @@ fastify.post("/updateTheme", (req, res) => {
   updateTheme(req, res);
 });
 
-fastify.post("/verifyUser", (req, res) => {
+fastify.post("/verify", (req, res) => {
   verifyUser(req, res);
 });
 

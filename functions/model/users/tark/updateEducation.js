@@ -29,7 +29,7 @@ exports.updateEducation = function(request, response) {
         End: end,
         InstituteName: instituteName,
         Degree: degree,
-    }
+    };
     updateUserEducation(uid, educationDoc, inputJson).then(() => {
         sendMail(email, subjectMessage, htmlMessage);
         console.log("Mail worked");

@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {  map } from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserAppSetting } from 'src/app/Interface/UserInterface';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 
 @Component({
@@ -12,23 +12,34 @@ import { UserAppSetting } from 'src/app/Interface/UserInterface';
 export class SuggestionBucketComponent implements OnInit {
 
   @Input("email") email: string;
+  @Output() selectedEmail = new EventEmitter<{ selected: boolean, data: string }>();
 
   userName: string;
+  photoUrl: string;
+  user: UserAppSetting;
+
+  showMoreDetail: boolean = false;
   
-  constructor(private db:AngularFirestore) { }
+  constructor(private userService: UserServiceService,  public router: Router) { }
 
   ngOnInit(): void {
     this.readTeamMemberName();
   }
 
   readTeamMemberName(){
-    this.db.collection<UserAppSetting>('Users',ref => ref.where('email','==',this.email)).snapshotChanges().pipe(
-      map(actions => actions.map(a=>{
-        const data = a.payload.doc.data() as UserAppSetting;
-        const id = a.payload.doc.id
-        return {id,...data};
-    }))).subscribe(user=>{
-          this.userName= user[0].displayName;
-        });
+    this.userService.getUserData(this.email).then((data) => {
+      this.userName = data.displayName;
+      this.photoUrl = data.photoURL;
+      this.user = data
+    });
+  }
+
+  selectedOption(value: boolean) {
+    this.selectedEmail.emit({ selected: value, data: this.email });
+  }
+
+  showUserProfile() {
+    this.router.navigate(['/profile', this.user.Username]);
+    this.selectedOption(false)
   }
 }

@@ -9,16 +9,15 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 
 const { createOrg } = require("./tark/createOrg");
 const { getOrgData } = require("./tark/getOrganizationData");
-  
+
   fastify.post("/createOrg", (req, res) => {
     createOrg(req, res);
   });
-  
+
   fastify.post("/getOrgData", (req, res) => {
     getOrgData(req, res);
   });
 
-  
 
 exports.organization = functions.https.onRequest((req, res) => {
     cors(req, res, () => {

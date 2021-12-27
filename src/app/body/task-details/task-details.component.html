@@ -62,28 +62,30 @@
             </div>
             <div class="col-md-6 part">
                 <div class="row">
-                    <div class="col-3 creationDate">
+                    <div class="col-2 creationDate">
                         <span id="headerLabel">Creation Date</span>
                         <h5 class="pt-1">{{task.CreationDate}}</h5>
                     </div>
-                    <div class="col-3 assignee">
+                    <div class="col-4 assignee">
                         <span id="headerLabel">Assignee</span>
-                        <h5 class="pt-1">{{assignee}}</h5>
+                        <app-suggestion-bucket [email]="task.Assignee" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                        <!-- <h5 class="pt-1">{{assignee}}</h5> -->
                     </div>
-                    <div class="col-3 creator">
+                    <div class="col-4 creator">
                         <span id="headerLabel">Creator</span>
-                        <h5 class="pt-1">{{creator}}</h5>
+                        <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                        <!-- <h5 class="pt-1">{{creator}}</h5> -->
                     </div>
                     <ng-container *ngFor="let item of watchList">
                         <span class="avatar">
                             <img [src]='item' width="50" height="50"/>
                         </span>
                     </ng-container>
-                    <div class="col-3 watchers">
+                    <div class="col-2 watchers">
                         <span id="headerLabel">Watchers</span>
                         <div class="avatars">
                             <app-speed-images [emails]="task.Watcher"></app-speed-images>
-                          </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@
 const { getAllUserEducation } = require("../lib");
 
 exports.getEducationList = function(request, response) {
-    console.log("coming to getting education list")
+    console.log("coming to getting education list");
     const uid = request.body.data.Uid;
 
     let status = 200;

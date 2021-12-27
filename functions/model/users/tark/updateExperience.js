@@ -29,7 +29,7 @@ exports.updateExperience = function(request, response) {
         End: end,
         OrganizationName: organizationName,
         Position: position,
-    }
+    };
     updateUserExperience(uid, experienceDoc, inputJson).then(() => {
         sendMail(email, subjectMessage, htmlMessage);
         console.log("Mail worked");

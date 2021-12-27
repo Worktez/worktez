@@ -5,6 +5,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { MyEducationData, MyExperienceData, MyProjectData } from 'src/app/Interface/UserInterface';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-profile',
@@ -50,9 +51,10 @@ export class ProfileComponent implements OnInit {
   experiences: MyExperienceData;
   projects: MyProjectData;
 
-  constructor(public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(private popupHandler:PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
+    // this.popupHandler.resetPopUps();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
