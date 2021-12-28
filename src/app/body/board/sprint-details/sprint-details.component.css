@@ -30,6 +30,18 @@
     color: var(--button-text-hover); 
 }
 
+.completedIcon {
+    color: var(--secondary-color);
+}
+
+#sprintStatus {
+    flex-wrap: nowrap;
+}
+
+#statusHeading {
+    display:inline-flex;
+}
+
 #button{
     background-color: var(--button-hover-bg);
     color: var(--button-text);
