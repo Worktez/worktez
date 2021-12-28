@@ -109,7 +109,7 @@ export class SetupComponent implements OnInit {
   }
 
   async createNewSession(project: string, teamId: string, organizationAppKey: string) {
-    const callable = this.functions.httpsCallable('tasks/createNewTask');
+    const callable = this.functions.httpsCallable('tasks/create');
 
     try {
       const result = await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();

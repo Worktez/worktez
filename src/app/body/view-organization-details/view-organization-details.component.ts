@@ -6,6 +6,7 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-view-organization-details',
@@ -20,16 +21,29 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
 
-  constructor(public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService) { }
+  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        this.getOrganizationDetails();
+
+    if(this.startService.showTeams) {
+      this.getOrganizationDetails();
+    } else {
+      this.startService.startApplication();
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.getOrganizationDetails();
+        }
       });
-    });
+    }
+
+
+    // this.authService.afauth.user.subscribe(data => {
+    //   this.authService.userAppSettingObservable.subscribe(data => {
+    //     this.getOrganizationDetails();
+    //   });
+    // });
   }
 
   getOrganizationDetails() {
