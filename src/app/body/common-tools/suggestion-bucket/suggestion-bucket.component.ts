@@ -28,9 +28,11 @@ export class SuggestionBucketComponent implements OnInit {
 
   readTeamMemberName(){
     this.userService.getUserData(this.email).then((data) => {
-      this.userName = data.displayName;
-      this.photoUrl = data.photoURL;
-      this.user = data
+      if(data) {
+        this.userName = data.displayName;
+        this.photoUrl = data.photoURL;
+        this.user = data
+      }
     });
   }
 

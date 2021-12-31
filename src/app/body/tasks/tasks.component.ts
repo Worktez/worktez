@@ -10,6 +10,7 @@ import { Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { DataTableService } from 'src/app/services/dataTable/data-table.service';
 import { FilterTaskService } from 'src/app/services/filter-task/filter-task.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-tasks',
@@ -39,7 +40,7 @@ export class TasksComponent implements OnInit {
   displayColoumns: string[] = []
   showLoader: boolean = true;
 
-  constructor(public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
+  constructor(public startService: StartServiceService, public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -55,15 +56,26 @@ export class TasksComponent implements OnInit {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
     }
 
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.backendService.organizationsData.subscribe(data => {
-            this.getFilterData();
-          });
+    if(this.startService.showTeams) {
+      this.getFilterData();
+    } else {
+      this.startService.startApplication();
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.getFilterData();
         }
       });
-    });
+    }
+
+    // this.authService.afauth.user.subscribe(data => {
+    //   this.authService.userAppSettingObservable.subscribe(data => {
+    //     if (data.SelectedOrgAppKey) {
+    //       this.backendService.organizationsData.subscribe(data => {
+    //         this.getFilterData();
+    //       });
+    //     }
+    //   });
+    // });
   }
 
   backToDashboard() {
