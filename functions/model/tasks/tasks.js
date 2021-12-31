@@ -24,7 +24,7 @@ fastify.post("/comment", (req, res) => {
   addComment(req, res);
 });
 
-fastify.post("/create", (req, res) => {
+fastify.post("/createNewTask", (req, res) => {
   createNewTask(req, res);
 });
 
