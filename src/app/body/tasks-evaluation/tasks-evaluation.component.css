@@ -101,3 +101,8 @@ select option {
 .btn-secondary:hover {
     background-color: var(--button-bg);
 }
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+}

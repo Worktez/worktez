@@ -18,6 +18,12 @@
     background-color: var(--primary-color);
 }
 
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+
+}
+
 .clr {
     background-color: white;
 }

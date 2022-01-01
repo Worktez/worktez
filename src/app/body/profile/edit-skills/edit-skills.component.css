@@ -62,3 +62,8 @@ input:focus {
     outline: 0 none;
     border-color: var(--primary-color);
 }
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+}
