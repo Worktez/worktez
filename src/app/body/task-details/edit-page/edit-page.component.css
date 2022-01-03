@@ -17,6 +17,12 @@
     box-shadow: none;
 }
 
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+
+}
+
 .clr {
     border: none;
     color: var(--text);
