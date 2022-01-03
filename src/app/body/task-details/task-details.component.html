@@ -76,11 +76,11 @@
                         <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
                         <!-- <h5 class="pt-1">{{creator}}</h5> -->
                     </div>
-                    <ng-container *ngFor="let item of watchList">
+                    <!-- <ng-container *ngFor="let item of watchList">
                         <span class="avatar">
                             <img [src]='item' width="50" height="50"/>
                         </span>
-                    </ng-container>
+                    </ng-container> -->
                     <div class="col-2 watchers">
                         <span id="headerLabel">Watchers</span>
                         <div class="avatars">
