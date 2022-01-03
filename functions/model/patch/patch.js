@@ -19,6 +19,7 @@ const { patch6 } = require("./tark/patch6");
 const { patch7 } = require("./tark/patch7");
 const { patch8 } = require("./tark/patch8");
 const { patch9 } = require("./tark/patch9");
+const { patch10 } = require("./tark/patch10");
 
   fastify.post("/editPatch", (req, res) => {
     editPatch(req, res);
@@ -58,6 +59,10 @@ const { patch9 } = require("./tark/patch9");
 
   fastify.post("/patch9", (req, res) => {
     patch9(req, res);
+  });
+
+  fastify.post("/patch10", (req, res) => {
+    patch10(req, res);
   });
 
   fastify.post("/patchModerator", (req, res) => {

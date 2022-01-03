@@ -61,3 +61,20 @@ input:focus {
     outline: 0 none;
     border-color: var(--primary-color);
 }
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.dropdown-menu  {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}

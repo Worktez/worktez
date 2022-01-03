@@ -6,6 +6,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { AuthService } from 'src/app/services/auth.service';
 import { FeatureCardComponent } from './feature-card/feature-card.component';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-board',
@@ -17,89 +18,53 @@ export class BoardComponent implements OnInit {
   @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
   componentName: string = "BOARD";
-  currentSprintNumber: number = 0;
   showContent: boolean = false;
-  uid: string;
-  teamData: Team;
-  selectedTeamId: string;
-  teamCurrentSprintNumber: number = -100;
   sprintData: Sprint;
   currentSprintName: string;
-  accessLevel: number;
-  showTeams: boolean = false;
-  teams: string[];
   sprintNotExist: boolean = false;
-  teamMembers: string[];
-  changeTeam: boolean = false;
   DaysUp: any;
   workPercentCalc: any;
   workPercentage: number;
   today: any = new Date();
   EDate: any;
   SDate: any;
-  
 
-  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
-    this.accessLevel = 0;
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        this.uid= data.uid;
-        this.selectedTeamId= data.SelectedTeamId;
-        if (data.SelectedOrgAppKey) {
-          this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
-          this.accessLevel = 1;
-          if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
-            this.selectedTeamId = this.applicationSettingsService.editedTeamId;
-          } else {
-            this.selectedTeamId = data.SelectedTeamId;
-            this.applicationSettingsService.editedTeamId = this.selectedTeamId;
-          }
-          this.backendService.organizationsData.subscribe(data => {
-            this.authService.myTeamsListObservable.subscribe(data => {
-              this.teams = data;
-              this.showTeams = true;
-              this.readApplicationData();
-            });
+    if(this.startService.showTeamsData) {
+      this.readSprintData();
+    } else {
+      this.startService.startApplication();
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.startService.applicationDataStateObservable.subscribe((data) => {
+            if(data) {
+              this.applicationSettingsService.teamData.subscribe((data) => {
+                if(data) {
+                  this.readSprintData();
+                }
+              });
+            }
           });
         }
       });
-    });
-  }
-
-  readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-      this.teamData = teams;
-      if (this.teamData.TeamId == this.selectedTeamId) {
-        if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
-          this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
-          this.currentSprintNumber = this.teamData.CurrentSprintId;
-        } else {
-          this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
-          this.currentSprintNumber = this.teamData.CurrentSprintId;
-          this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
-          this.changeTeam = false;
-        }
-        this.teamMembers = this.teamData.TeamMembers;
-      }
-      this.readSprintData();
-    });
+    }
   }
 
   async getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
     this.applicationSettingsService.editedTeamId = teamId;
-    this.selectedTeamId = teamId;
-    this.changeTeam = true;
-    this.readApplicationData();
+    this.startService.selectedTeamId = teamId;
+    this.startService.changeTeam = true;
+    this.startService.readApplicationData();
     const callable = this.functions.httpsCallable('users/updateSelectedTeam');
     try {
-      const result = await callable({Uid: this.uid , SelectedTeam: this.selectedTeamId}).toPromise();
+      const result = await callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).toPromise();
       console.log("Successful updated Selected Team in db");
     } catch (error) {
       console.log(error);
@@ -108,11 +73,11 @@ export class BoardComponent implements OnInit {
 
   readSprintData() {
     this.showContent = false;
-    this.child.forEach(child => {
-      child.highlightSelectedTeam(this.selectedTeamId);
-    })
-    if (this.teamCurrentSprintNumber != 0) {
-      this.applicationSettingsService.getSprintsDetails(this.teamCurrentSprintNumber).subscribe(sprints => {
+    if (this.startService.teamCurrentSprintNumber != 0) {
+      this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
+        this.child.forEach(child => {
+          child.highlightSelectedTeam(this.startService.selectedTeamId);
+        });
         if (sprints) {
           this.sprintData = sprints;
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
@@ -141,8 +106,8 @@ export class BoardComponent implements OnInit {
   }
 
   changeSprintNumber(filterSprintNumber: any) {
-    this.teamCurrentSprintNumber = filterSprintNumber;
-    this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+    this.startService.teamCurrentSprintNumber = filterSprintNumber;
+    this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }

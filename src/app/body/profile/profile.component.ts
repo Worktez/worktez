@@ -5,6 +5,8 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { MyEducationData, MyExperienceData, MyProjectData } from 'src/app/Interface/UserInterface';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -50,32 +52,54 @@ export class ProfileComponent implements OnInit {
   experiences: MyExperienceData;
   projects: MyProjectData;
 
-  constructor(public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
+    // this.popupHandler.resetPopUps();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
 
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.backendService.organizationsData.subscribe(data => {
-            this.readUser();
-            this.organizationName = this.backendService.getOrganizationName();
-            this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(team => {
-              this.teamName = team.TeamName;
-              this.managerEmail = team.TeamManagerEmail;
-              if (team.TeamManagerEmail == this.email) {
-                this.role = "Manager";
-              } else {
-                this.role = "Member";
-              }
-            });
+    if(this.startService.showTeams) {
+      this.readUser();
+      this.organizationName = this.backendService.getOrganizationName();
+      this.teamName = this.startService.teamName;
+      this.managerEmail = this.startService.managerEmail;
+      this.role = this.startService.role;
+    } else {
+      this.startService.startApplication();
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.readUser();
+          this.organizationName = this.backendService.getOrganizationName();
+          this.startService.applicationDataStateObservable.subscribe((data)=> {
+            this.teamName = this.startService.teamName;
+            this.managerEmail = this.startService.managerEmail;
+            this.role = this.startService.role;
           });
         }
       });
-    });
+    }
+
+    // this.authService.afauth.user.subscribe(data => {
+    //   this.authService.userAppSettingObservable.subscribe(data => {
+    //     if (data.SelectedOrgAppKey) {
+    //       this.backendService.organizationsData.subscribe(data => {
+    //         this.readUser();
+    //         this.organizationName = this.backendService.getOrganizationName();
+    //         this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(team => {
+    //           this.teamName = team.TeamName;
+    //           this.managerEmail = team.TeamManagerEmail;
+    //           if (team.TeamManagerEmail == this.email) {
+    //             this.role = "Manager";
+    //           } else {
+    //             this.role = "Member";
+    //           }
+    //         });
+    //       });
+    //     }
+    //   });
+    // });
 
   }
 

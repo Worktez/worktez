@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ToolsService } from '../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -9,6 +9,8 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { map, Observable, startWith } from 'rxjs';
+
 
 declare var jQuery:any;
 
@@ -19,6 +21,12 @@ declare var jQuery:any;
 })
 export class CreateNewTaskComponent implements OnInit {
 
+  assigneeName = new FormControl();
+  filteredOptionsAssignee: Observable<string[]>;
+
+  reporterName = new FormControl();
+  filteredOptionsReporter: Observable<string[]>;
+
   @ViewChild('form') form: NgForm;
   @Output() taskCreated = new EventEmitter<{ completed: boolean }>();
 
@@ -27,8 +35,8 @@ export class CreateNewTaskComponent implements OnInit {
   title: string
   todayDate: string
   description: string
-  assigneeName: string
-  reporterName: string
+  // assigneeName: string
+  // reporterName: string
   watcherName: string[]
   creatorName : string
   estimatedTime: number
@@ -43,7 +51,7 @@ export class CreateNewTaskComponent implements OnInit {
   valid: boolean = true
   task: Tasks
   teamIds: string[]
-  teamMembers: string[]
+  teamMembers: string[] = []
   teamName: string
   statusLabels: string[]
   priorityLabels: string[]
@@ -61,6 +69,11 @@ export class CreateNewTaskComponent implements OnInit {
     this.time = this.toolsService.time();
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   readTeamData(teamId :string){
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.priorityLabels = team.PriorityLabels;
@@ -70,11 +83,43 @@ export class CreateNewTaskComponent implements OnInit {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
+
+          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+            startWith(''),
+            map((value) => {
+              console.log("change");
+              return this._filter(value)
+            }),
+          );
+
+          this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value)),
+          );
     }); 
   }
+  
+  selectedAssignee(item) {
+    if(item.selected == false) {
+      this.assigneeName.setValue("");
+      this.close();
+    } else {
+      this.assigneeName.setValue(item.data);
+    }
+  }
+
+  selectedReporter(item) {
+    if(item.selected == false) {
+      this.reporterName.setValue("");
+      this.close();
+    } else {
+      this.reporterName.setValue(item.data);
+    }
+  }
+
   async submit() {
-    this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
-    this.reporterName = this.toolsService.getEmailString(this.reporterName);
+    // this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
+    // this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },

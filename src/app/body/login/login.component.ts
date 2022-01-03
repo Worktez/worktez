@@ -74,11 +74,7 @@ export class LoginComponent implements OnInit {
   navigateToHome() {
     this.router.navigate(['']);
   }
-
-  navigateToDashboard() {
-    this.router.navigate(['MyDashboard']);
-  }
-
+  
   navigateToVerification(path) {
     this.router.navigate([path]);
   }

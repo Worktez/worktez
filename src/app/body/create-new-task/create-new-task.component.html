@@ -31,30 +31,30 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-6 col ml-auto">                       
-                                <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion" placeholder="Enter Assignee's Name">
-                                <datalist id="assigneeSuggestion">
-                                    <ng-container *ngFor='let item of teamMembers'>
-                                        <option>
-                                            <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
-                                        </option>
-                                    </ng-container>
-                                </datalist>
+                            <div class="col-md-6 col ml-auto">
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName" placeholder="Enter Assignee's Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                            <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                        </ng-container>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6 col ml-auto">                        
                                 <input type="text" readonly class="form-control" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}" placeholder="Enter Creater's Name">
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-6 col ml-auto">     
-                                <input type="text" class="form-control" [(ngModel)]="reporterName" [ngModelOptions]="{standalone: true}" list="reporterSuggestion" placeholder="Enter Reporter's Name">
-                                <datalist id="reporterSuggestion">
-                                <ng-container *ngFor='let item of teamMembers'>
-                                    <option>
-                                        <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
-                                    </option>
-                                </ng-container>
-                                </datalist>                  
+                            <div class="col-md-6 col ml-auto">
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control" [formControl]="reporterName" placeholder="Enter Reporter's Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsReporter | async'>
+                                            <app-suggestion-bucket [email]="item" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
+                                        </ng-container>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6 col ml-auto">                        
                                 <input type="text" class="form-control" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" list="typeSuggestion" placeholder="Enter Task Type">

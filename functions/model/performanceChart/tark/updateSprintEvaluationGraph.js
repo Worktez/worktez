@@ -7,10 +7,10 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { createSprintName, checkUpdateTime } = require("../application/lib");
-const { getAllSprints } = require("../sprints/lib");
-const { getTeamUseTeamId } = require("../teams/lib");
-const { updateChart, setOrganizationsChart } = require("./lib");
+const { createSprintName, checkUpdateTime } = require("../../application/lib");
+const { getAllSprints } = require("../../sprints/lib");
+const { getTeamUseTeamId } = require("../../teams/lib");
+const { updateChart, setOrganizationsChart } = require("../lib");
 
 exports.updateSprintEvaluationGraphData = function(lastUpdated, orgDomain, teamId, sprintRange) {
     const result = checkUpdateTime(lastUpdated);

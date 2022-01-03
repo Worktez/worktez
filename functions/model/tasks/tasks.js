@@ -20,60 +20,60 @@ const { setLinkDetails } = require("./tark/setLinkDetails");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 
 
-  fastify.post("/comment", (req, res) => {
-    addComment(req, res);
+fastify.post("/comment", (req, res) => {
+  addComment(req, res);
+});
+
+fastify.post("/createNewTask", (req, res) => {
+  createNewTask(req, res);
+});
+
+fastify.post("/deleteTask", (req, res) => {
+  deleteTask(req, res);
+});
+
+fastify.post("/editTask", (req, res) => {
+  editTask(req, res);
+});
+
+fastify.post("/getLink", (req, res) => {
+  getLinkDetails(req, res);
+});
+
+fastify.post("/getTaskDetails", (req, res) => {
+  getTaskDetails(req, res);
+});
+
+fastify.post("/getAllTasks", (req, res) => {
+  getTasks(req, res);
+});
+
+fastify.post("/getTasksForDashboard", (req, res) => {
+  getTasksForDashboard(req, res);
+});
+
+fastify.post("/log", (req, res) => {
+  logWork(req, res);
+});
+
+fastify.post("/setLink", (req, res) => {
+  setLinkDetails(req, res);
+});
+
+exports.tasks = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+          requestHandler(req, res);
+      });
+      // const mode = request.body.data.mode;
+
+      // if (mode == "create") {
+      //     return createOrg(request, response);
+      // } else if (mode == "getOrgData") {
+      //     return getOrgData(request, response);
+      // }
   });
-
-  fastify.post("/createNewTask", (req, res) => {
-    createNewTask(req, res);
-  });
-
-  fastify.post("/deleteTask", (req, res) => {
-    deleteTask(req, res);
-  });
-
-  fastify.post("/editTask", (req, res) => {
-    editTask(req, res);
-  });
-
-  fastify.post("/getLink", (req, res) => {
-    getLinkDetails(req, res);
-  });
-
-  fastify.post("/getTaskDetails", (req, res) => {
-    getTaskDetails(req, res);
-  });
-
-  fastify.post("/getAllTasks", (req, res) => {
-    getTasks(req, res);
-  });
-
-  fastify.post("/getTasksForDashboard", (req, res) => {
-    getTasksForDashboard(req, res);
-  });
-
-  fastify.post("/log", (req, res) => {
-    logWork(req, res);
-  });
-
-  fastify.post("/setLink", (req, res) => {
-    setLinkDetails(req, res);
-  });
-
-  exports.tasks = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createOrg(request, response);
-        // } else if (mode == "getOrgData") {
-        //     return getOrgData(request, response);
-        // }
-    });
 });
         // const mode = request.body.data.mode;
 

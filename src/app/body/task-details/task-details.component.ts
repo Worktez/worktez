@@ -14,6 +14,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { Activity } from 'src/app/Interface/ActivityInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -50,7 +51,7 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
+  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
@@ -62,19 +63,41 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
 
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.backendService.organizationsData.subscribe(data => {
-            this.orgDomain = this.backendService.getOrganizationDomain();
-            this.getTaskDetail();
-            this.getActivityData();
-            this.getLinkData();
-            this.activeAllBtn = true;
-          });
+    if(this.startService.showTeams) {
+      this.orgDomain = this.backendService.getOrganizationDomain();
+      this.getTaskDetail();
+      this.getActivityData();
+      this.getLinkData();
+      this.activeAllBtn = true;
+    } else {
+      this.startService.startApplication();
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.orgDomain = this.backendService.getOrganizationDomain();
+          this.getTaskDetail();
+          this.getActivityData();
+          this.getLinkData();
+          this.activeAllBtn = true;
         }
       });
-    });
+    }
+    // this.authService.afauth.user.subscribe(data => {
+    //   this.authService.userAppSettingObservable.subscribe(data => {
+    //     if (data.SelectedOrgAppKey) {
+    //       this.backendService.organizationsData.subscribe(data => {
+    //         this.orgDomain = this.backendService.getOrganizationDomain();
+    //         this.getTaskDetail();
+    //         this.getActivityData();
+    //         this.getLinkData();
+    //         this.activeAllBtn = true;
+    //       });
+    //     }
+    //   });
+    // });
+  }
+
+  selectedAssignee(item) {
+    console.log(item);
   }
 
   getTaskDetail () {
@@ -82,26 +105,26 @@ export class TaskDetailsComponent implements OnInit {
     this.taskDataObservable = callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
         this.task = data;
-        this.getName(data.Assignee, "Assignee");
-        this.getName(data.Creator, "Creator");
+        // this.getName(data.Assignee, "Assignee");
+        // this.getName(data.Creator, "Creator");
         this.applicationSettingService.getTeamDetails(data.TeamId);
         return { ...data }
     }));
   }
 
-  getName (email, value) {
-    let name="";
-    this.userService.getUserData(email).then(data => {
-      if(data) {
-        name = data.displayName;
-        if (value == "Assignee") {
-          this.assignee = name.split(' ')[0];
-        } else if (value == "Creator") {
-          this.creator = name.split(' ')[0];
-        }
-      }
-    });
-  }
+  // getName (email, value) {
+  //   let name="";
+  //   this.userService.getUserData(email).then(data => {
+  //     if(data) {
+  //       name = data.displayName;
+  //       if (value == "Assignee") {
+  //         this.assignee = name.split(' ')[0];
+  //       } else if (value == "Creator") {
+  //         this.creator = name.split(' ')[0];
+  //       }
+  //     }
+  //   });
+  // }
 
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity/getActivity");

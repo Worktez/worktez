@@ -32,6 +32,7 @@ export class PerformanceChartComponent implements OnInit {
     this.sprintRange1 = this.sprintRange2 - 2
     this.createData();
   }
+
   async createData() {
     let orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('performanceChart/userPerformanceChartData');

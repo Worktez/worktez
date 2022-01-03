@@ -1,0 +1,13 @@
+.option:hover { 
+    background-color: var(--primary-bg);
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+#username {
+    font-size: 12px;
+}
+
+#email {
+    font-size: 11px;
+}

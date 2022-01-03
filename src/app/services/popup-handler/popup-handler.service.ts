@@ -11,4 +11,10 @@ export class PopupHandlerService {
   
   constructor() { }
 
+  resetPopUps() {
+    this.createNewSprintEnabled = false
+    this.createNewTaskEnabled = false
+    this.addNewContributorEnabled = false
+  }
+
 }
