@@ -26,4 +26,10 @@ exports.setPatches = function() {
       setPatch("Patch7", "Patch7", "This patch allows the user to add new fields for Organization", "09/12/2021", "09/12/2021", "", "");
     }
   });
+
+  getPatchData("Patch10").then((patch) => {
+    if (patch == undefined) {
+      setPatch("Patch10", "Patch10", "This patch allows the user to add new fields for my Organization", "31/12/2021", "31/12/2021", "", "");
+    }
+  });
 };
