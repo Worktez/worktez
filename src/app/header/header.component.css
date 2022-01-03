@@ -26,7 +26,9 @@
     background-color: var(--button-hover-bg);
     cursor: pointer;
 }
-
+.nav-item {
+    display: inline-flex;
+}
 .nav-link {
     color: var(--primary-color);
     font-size: medium;

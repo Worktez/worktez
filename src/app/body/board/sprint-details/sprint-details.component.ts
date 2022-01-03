@@ -5,6 +5,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-sprint-details',
@@ -22,7 +23,7 @@ export class SprintDetailsComponent implements OnInit {
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
 
-  constructor(public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -39,6 +40,10 @@ export class SprintDetailsComponent implements OnInit {
 
   changeSprintNumber() {
     this.currentSprint.emit(this.filterSprintNumber);
+  }
+
+  startNewSprint() {
+    this.popupHandlerService.createNewSprintEnabled= true;
   }
 
   showTasks() {
