@@ -35,6 +35,10 @@ exports.editTask = function(request, response) {
     const type = request.body.data.Type;
     let result;
     let status = 200;
+
+    console.log(title);
+    console.log(taskStatus);
+
     const date = request.body.data.Date;
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
