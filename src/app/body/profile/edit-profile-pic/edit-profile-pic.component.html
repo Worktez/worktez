@@ -1,0 +1,42 @@
+<div class="modal fade" id="profilePicModal" tabindex="-1" role="dialog" aria-labelledby="profilePicModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content p-4">
+
+            <ng-container *ngIf="choosePhoto">
+                <div class="modal-header p-4">
+                    <h2 class="modal-title" id="exampleModalLabel">Edit Profile Pic</h2>
+                    <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" style="color: var(--secondary-color);">close</span>
+                </div>
+                <div class="modal-body">
+                    <form *ngIf="!enableLoader">
+                        <div class="form-group mb-4">
+                            <label type="button" for="image" class="col-form-label btn btn-primary col-12">Choose Photo</label>
+                            <input type="file" id="image" style="display: none;" #image (change)="detectImage($event)">
+                        </div>
+                    </form>
+
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="enableCropper">
+                <app-update-image [uid]="uid" [imageUrl]="imageUrl"></app-update-image>
+
+                <button class="btn btn-primary col-12" (click)="cancel()">Cancel</button>
+            </ng-container>
+
+            <ng-container *ngIf="showClose">
+                <div class="row">
+                    <div class="col">Successfully Updated!</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3 pb-2 px-4">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</div>
+<app-loader *ngIf="enableLoader && !showClose"></app-loader>

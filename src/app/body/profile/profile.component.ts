@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 
   componentName: string = "PROFILE"
   
+  editProfilePicEnabled: boolean = false
   editProfileEnabled: boolean = false
   editEducationEnabled: boolean = false
   editProjectEnabled: boolean = false
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit {
   skills: string;
   website: string;
   username: string;
-  
+
   educations: MyEducationData;
   experiences: MyExperienceData;
   projects: MyProjectData;
@@ -105,6 +106,10 @@ export class ProfileComponent implements OnInit {
 
   editProfile() {
     this.editProfileEnabled = true;
+  }
+
+  editProfilePic() {
+    this.editProfilePicEnabled = true;
   }
 
   editEducation(mode: string, educationId: number) {
