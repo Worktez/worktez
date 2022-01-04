@@ -109,7 +109,7 @@ export class SetupComponent implements OnInit {
   }
 
   async createNewSession(project: string, teamId: string, organizationAppKey: string) {
-    const callable = this.functions.httpsCallable('tasks/create');
+    const callable = this.functions.httpsCallable('tasks/createNewTask');
 
     try {
       const result = await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
@@ -243,6 +243,16 @@ export class SetupComponent implements OnInit {
       const result = await callable({Patch: "Patch9", PatchName: "Patch-9", PatchDescription: "This patch allows the user to add new fields for Users", CreationDate: "09/12/2021", UpdatedOn: "09/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
 
       console.log("Created Patch9 document");
+      this.showLoader = false;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const result = await callable({Patch: "Patch10", PatchName: "Patch-10", PatchDescription: "This patch allows the user to add new fields for my organization", CreationDate: "31/12/2021", UpdatedOn: "31/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
+
+      console.log("Created Patch10 document");
       this.showLoader = false;
       console.log(result);
     } catch (error) {

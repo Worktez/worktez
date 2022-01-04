@@ -18,9 +18,9 @@
                     <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
                 </div>
             </div>
-            <span class="material-icons align-middle" *ngIf="sprintData.Status === 'Completed' ">
-                check_circle
-            </span>
+            <div class="completionBtn" *ngIf="sprintData.Status === 'Completed' ">
+                <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</button>
+            </div>
         </li>
         <li class="active flex-item">
             <button class="btn px-4" type="button" id="button" (click)="showTasks()">Tasks</button>
@@ -61,19 +61,28 @@
                 </div>
             </div>
             <div class="row my-4">
-                <ng-container *ngIf = "sprintData.SprintNumber > 0">
-                    <div class="row">
-                        <span class="material-icons ml-3" style="font-size: 18px;">donut_large</span>          
-                        <h6>&nbsp;&nbsp;Status</h6>         
-                    </div>
-                    <div id="Progressgraph">
-                        <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress"></app-progress-graph>
-                        <div class="row mt-1">
-                            <h6 class="col-md-7 col" id="sprintStatus" style="font-size: 13px;">{{sprintData.Status}}</h6>
-                            <h6 class="col-md-5 col text-right" style="font-size: 13px;">{{workPercentage}}%</h6>
-                        </div>      
-                    </div>
-                </ng-container>
+                <div class="col-12">
+                    <ng-container *ngIf = "sprintData.SprintNumber > 0">
+                        <div class="row" id="sprintStatus">
+                            <div class="col-10" id="statusHeading">
+                                <span class="material-icons ml-3" style="font-size: 18px; padding-left: 0;">donut_large</span>
+                                <h5>&nbsp;&nbsp;Status</h5>         
+                            </div>
+                            <div class="col-2">
+                                <span class="material-icons align-middle completedIcon" *ngIf="sprintData.Status === 'Completed' ">
+                                    check_circle
+                                </span>
+                            </div>
+                        </div>
+                        <div id="Progressgraph">
+                            <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress"></app-progress-graph>
+                            <div class="row mt-1">
+                                <h6 class="col-md-7 col" id="sprintStatus" style="font-size: 13px;">{{sprintData.Status}}</h6>
+                                <h6 class="col-md-5 col text-right" style="font-size: 13px;">{{workPercentage}}%</h6>
+                            </div>      
+                        </div>
+                    </ng-container>
+                </div>
             </div>
             <div class="row my-2">
                 <div class="col-md-7 col">
