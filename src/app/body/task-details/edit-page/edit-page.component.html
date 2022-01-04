@@ -31,20 +31,23 @@
                             </div>
                             <div class="col ml-auto px-2">
                                 <span id="label">Assignee Name</span>
-                                <input type="text" class="form-control" [(ngModel)]="editTask.Assignee" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion">
-                                <datalist id="assigneeSuggestion">
-                                <ng-container *ngFor='let item of teamMembers'>
-                                    <option>
-                                        <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
-                                    </option>
-                                </ng-container>
-                                </datalist>
+                                <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                        <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                    </ng-container>
+                                </div>
                             </div>
                             </div>
                             <div class="row pt-3">
                                 <div class="col-md-6 ml-auto px-2">  
                                     <span id="label">Reporter Name</span>                      
-                                    <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Reporter}} [(ngModel)]="task.Reporter" [ngModelOptions]="{standalone: true}">
+                                    <input type="text" autocomplete="off" class="form-control" [formControl]="reporterName" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsReporter | async'>
+                                            <app-suggestion-bucket [email]="item" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
+                                        </ng-container>
+                                    </div>
                                 </div>
                                 <div class="col px-2 ml-auto px-2" id="creatorEditPageTask">
                                     <span id="label">Task Type</span>
