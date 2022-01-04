@@ -50,6 +50,8 @@ export class EditPageComponent implements OnInit {
     this.readTeamMembers(this.task.TeamId);
     this.previousAssignee = this.task.Assignee;
 
+    this.assigneeName.setValue(this.task.Assignee);
+    this.reporterName.setValue(this.task.Reporter);
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
     this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type, this.task.Status, this.task.Title, this.task.Reporter];
