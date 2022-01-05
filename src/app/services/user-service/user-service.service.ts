@@ -17,14 +17,17 @@ export class UserServiceService {
   constructor(private functions: AngularFireFunctions) { }
 
   getUserData (email) {
-    const newArray = this.users.filter((data)=>{
-      if(data.email == email) {
-        return data
+    if(this.users.length) {
+      const newArray = this.users.filter((data)=>{
+        if(data.email == email) {
+          return data
+        }
+      });
+      if(newArray.length) {
+        return newArray[0];
       }
-    });
-    if(newArray.length) {
-      return newArray[0];
     }
+    
   }
 
   fetchUserData() {
