@@ -1,25 +1,40 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Observable } from 'rxjs';
+import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserAppSetting } from 'src/app/Interface/UserInterface';
+import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
   public photoUrlObservable: Observable<string[]>
+  public usersObservable: Observable<UserAppSetting[]>
+
+  public users: UserAppSetting[]
+  public emails: string[] = []
 
   constructor(private functions: AngularFireFunctions) { }
 
-  async getUserData (email) {
-    const callable = this.functions.httpsCallable("users/getUserByEmail");
-    try {
-      const result =  await callable({Email: email }).toPromise();
-      return result.userData as UserAppSetting;
-    } catch(error) {
-      console.log(error);
+  getUserData (email) {
+    const newArray = this.users.filter((data)=>{
+      if(data.email == email) {
+        return data
+      }
+    });
+    if(newArray.length) {
+      return newArray[0];
     }
+  }
+
+  fetchUserData() {
+    const callable = this.functions.httpsCallable("users/getUserByEmail");
+    this.usersObservable =  callable({Email: this.emails }).pipe(map(res=>{
+      const data = res.userData as UserAppSetting[];
+      this.users = data;
+      return data
+    }));
+    return this.usersObservable;
   }
 
   getPhotoList(emailList: string[]) {

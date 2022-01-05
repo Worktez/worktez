@@ -73,6 +73,17 @@ exports.getAllPhotos = function(emails) {
     return Promise.resolve(promise);
 };
 
+exports.getAllUsersInEmail = function(emails) {
+    const data = [];
+    const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
+        doc.forEach((user) => {
+            data.push(user.data());
+        });
+        return data;
+    });
+    return Promise.resolve(promise);
+};
+
 exports.getUserUseEmail = function(email) {
     const promise = db.collection("Users").where("email", "==", email).get().then((doc) => {
         let data;
