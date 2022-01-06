@@ -29,7 +29,7 @@ export class BarChartComponent implements OnInit {
         italic: false
       }
     },
-    colors: ['blue', '#FBAA1A', '#10BE65'],
+    colors: ['#F3941F', '#D91D5C', '#5C60EC'],
     is3D: true,
     titleTextStyle: {
       color: this.themeService.fontColor
