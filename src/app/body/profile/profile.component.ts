@@ -166,6 +166,10 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = false;
     this.readUser();
   }
+  
+  editProfilePicCompleted(data: { completed: boolean }) {
+    this.readUser();
+  }
 
   readUser() {
     this.displayName = this.authService.userAppSetting.displayName;
@@ -179,9 +183,6 @@ export class ProfileComponent implements OnInit {
     this.githubProfile = this.authService.userAppSetting.GithubProfile;
     this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
     this.skills = this.authService.userAppSetting.Skills;
-    // this.education = this.authService.userAppSetting.Education;
-    // this.experience = this.authService.userAppSetting.Experience;
-    // this.projects = this.authService.userAppSetting.Projects;
     this.website = this.authService.userAppSetting.Website;
     if (this.website.includes("https://") == false) {
       this.website = "https://" + this.website;

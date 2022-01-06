@@ -19,7 +19,7 @@
             </ng-container>
 
             <ng-container *ngIf="enableCropper">
-                <app-update-image [uid]="uid" [imageUrl]="imageUrl"></app-update-image>
+                <app-update-image [uid]="uid" [imageUrl]="imageUrl" [email]="email" [displayName]="displayName" (cropPhotoCompleted)="cropPhotoCompleted($event)"></app-update-image>
 
                 <button class="btn btn-primary col-12" (click)="cancel()">Cancel</button>
             </ng-container>
@@ -31,7 +31,8 @@
                 <div class="row">
                     <div class="col-md-9"></div>
                     <div class="col-md-3 pb-2 px-4">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-secondary" type="button" (click)="closeModal()">Close</button>
+                        <button class="btn btn-secondary" type="button" style="display: none;" data-dismiss="modal" #closeBtn>Close</button>
                     </div>
                 </div>
             </ng-container>
