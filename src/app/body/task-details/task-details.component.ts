@@ -62,7 +62,24 @@ export class TaskDetailsComponent implements OnInit {
     this.backendService.selectedTaskId = this.Id;
 
     this.navbarHandler.addToNavbar( this.Id );
+    this.getTaskPageData();
+    
+    // this.authService.afauth.user.subscribe(data => {
+    //   this.authService.userAppSettingObservable.subscribe(data => {
+    //     if (data.SelectedOrgAppKey) {
+    //       this.backendService.organizationsData.subscribe(data => {
+    //         this.orgDomain = this.backendService.getOrganizationDomain();
+    //         this.getTaskDetail();
+    //         this.getActivityData();
+    //         this.getLinkData();
+    //         this.activeAllBtn = true;
+    //       });
+    //     }
+    //   });
+    // });
+  }
 
+  getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
       this.getTaskDetail();
@@ -81,19 +98,6 @@ export class TaskDetailsComponent implements OnInit {
         }
       });
     }
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.orgDomain = this.backendService.getOrganizationDomain();
-    //         this.getTaskDetail();
-    //         this.getActivityData();
-    //         this.getLinkData();
-    //         this.activeAllBtn = true;
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   selectedAssignee(item) {
@@ -178,6 +182,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   logWorkCompleted ( data: { completed: boolean } ) {
+    this.getTaskPageData();
     this.logWorkEnabled = false;
   }
 
