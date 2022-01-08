@@ -28,6 +28,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         EducationCounter: 0,
         ExperienceCounter: 0,
         ProjectCounter: 0,
+        TotalPhotoCounter: 0,
     });
     return Promise.resolve(userData);
 };
