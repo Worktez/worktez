@@ -30,7 +30,6 @@ export class EditWorkexperienceComponent implements OnInit {
   ngOnInit(): void {
     // this.todayDate = this.toolsService.date();
     if (this.workModalMode == "edit") {
-      console.log(this.workModalData);
       this.organizationName = this.workModalData.OrganizationName;
       this.position = this.workModalData.Position;
       this.startDate = this.workModalData.Start
