@@ -7,17 +7,17 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getUserUseEmail } = require("../lib");
+const { getAllUsersInEmail } = require("../lib");
 
 exports.getUserByEmail = function(request, response) {
-    const email = request.body.data.Email;
+    const emails = request.body.data.Email;
     let userData;
     let status = 200;
     let result;
 
-    const promise1 = getUserUseEmail(email).then((data) => {
+    const promise1 = getAllUsersInEmail(emails).then((data) => {
         if (data == undefined) {
-            console.log("User doesn't exist");
+            console.log("Users doesn't exist");
             result = { data: { status: "Ok", userData: undefined } };
         } else {
             userData = data;
