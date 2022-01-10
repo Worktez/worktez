@@ -1,5 +1,5 @@
 <ng-container *ngIf="(taskDataObservable | async)" class="task-position">
-    <div class="container-fluid">
+    <div class="container-fluid" *ngIf="dataReady">
         <div class="row header">
             <div class="col-10"><h4>Task Details</h4></div>
             <div class="col-2">
