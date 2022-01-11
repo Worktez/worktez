@@ -148,7 +148,7 @@ export class TaskDetailsComponent implements OnInit {
 
     try {
       const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-
+      
       this.comment = "";
       return;
     } catch (error) {

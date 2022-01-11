@@ -13,6 +13,10 @@
     color: var(--text);
     background-color: var(--secondary-bg);
 }
+.pt-4, .py-4{
+    padding-top: 1.5rem !important;
+
+}
 
 .dropdown-item {
     color: var(--text);
@@ -26,6 +30,7 @@
 .activity-card {
     background-color: var(--secondary-bg);
     color: var(--text);
+
 }
 
 #headerLabel{
@@ -45,13 +50,15 @@
 .part {
     padding: 2px 30px 2px 30px;
     border-color: var(--dropdown-hover);
-    border-style: solid;
+    border-style: ridge;
+    border-width: medium;
+    
 }
 
 .btn {
     padding: 2px;
     font-size: 30px;
-    color: var(--text);
+    color: #5559d9;
 }
 
 a.active.nav-link{
@@ -75,7 +82,7 @@ a.nav-link{
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color); 
+    background: rgba(128, 128, 128, 0.795); 
     border-radius: 10px;
 }
 

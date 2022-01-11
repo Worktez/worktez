@@ -1,13 +1,15 @@
 <ng-container *ngIf="(taskDataObservable | async)" class="task-position">
-    <div class="container-fluid">
+    <div class="container-fluid" >
         <div class="row header">
-            <div class="col-10"><h4>Task Details</h4></div>
+            <div class="col-10">
+                <h2 style="color: black;">Task Details</h2>
+            </div>
             <div class="col-2">
                 <span class="btn material-icons float-right" (click)="backToTasks()">close</span>
             </div>
         </div>
-        <div class="row pt-1">
-            <div class="col-md-6 part">
+        <div class="row pt-1" style="background-color: #f6f7f9">
+            <div class="col-md-6 part " >
                 <div class="row">
                     <div class="col-md-8 col-9">
                         <div class="row">
@@ -17,63 +19,78 @@
                             </div>
                             <div class="priority labels mx-2">
                                 <span id="headerLabel">Priority &nbsp;&nbsp;</span>
-                                    <app-priority-icons [Priority]="task.Priority" [Border]="true"></app-priority-icons>
+                                <app-priority-icons [Priority]="task.Priority" [Border]="true"></app-priority-icons>
                             </div>
                             <div class="difficulty labels mx-2">
                                 <span id="headerLabel">Difficulty</span>
-                                    <app-difficulty-icons [Difficulty]="task.Difficulty" [Border]="true"></app-difficulty-icons>
+                                <app-difficulty-icons [Difficulty]="task.Difficulty" [Border]="true">
+                                </app-difficulty-icons>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="col-md-4 col-3">
-                        <div class="row float-right" >
-                            <div class="logWork mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                                <button class="material-icons btn" type="button" data-toggle="modal" data-target="#Modal" (click)="logWorkPage()">post_add</button>
+                        <div class="row float-right">
+                            <div class="logWork mt-4"
+                                *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                <button class="material-icons btn" type="button" data-toggle="modal"
+                                    data-target="#Modal" (click)="logWorkPage()">post_add</button>
                             </div>
                             <div class="menu mt-3">
                                 <div class="dropdown">
-                                        <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"> 
-                                            <span class="material-icons">more_horiz</span>
-                                        </button>
+                                    <button role="button" type="button" class="btn dropdown" data-toggle="dropdown">
+                                        <span class="material-icons">more_horiz</span>
+                                    </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                        <div class="reopenTask mt-4" *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
-                                            <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen Task</button>
+                                        <div class="reopenTask mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
+                                            <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
+                                                Task</button>
                                         </div>
-                                        <div class="editTask mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
-                                            <button class="dropdown-item" type="button"data-toggle="modal" data-target="#exampleModalCenter" (click)="editTask()">Edit Task</button>
-                                        </div>
-                                        <div class="cloneTask mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                                            <button class="dropdown-item" type="button" data-toggle="modal" (click)="CloneTaskPage()">Clone Task</button>
-                                        </div>
-                                        <div class="addLink mt-4" *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                                            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#linkModal" (click)="addLink()" >Add Link</button>
-                                        </div>
-                                        <div class="delete mt-4" *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
+                                        <div class="editTask mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
-                                            data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
+                                                data-target="#exampleModalCenter" (click)="editTask()">Edit
+                                                Task</button>
+                                        </div>
+                                        <div class="cloneTask mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                                (click)="CloneTaskPage()">Clone Task</button>
+                                        </div>
+                                        <div class="addLink mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                                data-target="#linkModal" (click)="addLink()">Add Link</button>
+                                        </div>
+                                        <div class="delete mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
+                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                                data-target="#exampleModalDel" (click)="deleteTask()">Delete
+                                                Task</button>
                                         </div>
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 part">
-                <div class="row">
+            <div class="col-md-6 part" >
+                <div class="row" >
                     <div class="col-2 creationDate">
-                        <span id="headerLabel">Creation Date</span>
                         <h5 class="pt-1">{{task.CreationDate}}</h5>
                     </div>
                     <div class="col-4 assignee">
-                        <span id="headerLabel">Assignee</span>
-                        <app-suggestion-bucket [email]="task.Assignee" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                        <span id="headerLabel" style="cursor: default;">Assignee</span>
+                        <app-suggestion-bucket [email]="task.Assignee" (selectedEmail)="selectedAssignee($event)">
+                        </app-suggestion-bucket>
                         <!-- <h5 class="pt-1">{{assignee}}</h5> -->
                     </div>
                     <div class="col-4 creator">
-                        <span id="headerLabel">Creator</span>
-                        <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                        <span id="headerLabel" style="cursor: default;">Creator</span>
+                        <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)">
+                        </app-suggestion-bucket>
                         <!-- <h5 class="pt-1">{{creator}}</h5> -->
                     </div>
                     <!-- <ng-container *ngFor="let item of watchList">
@@ -82,7 +99,7 @@
                         </span>
                     </ng-container> -->
                     <div class="col-2 watchers">
-                        <span id="headerLabel">Watchers</span>
+                        <span id="headerLabel" style="cursor: default;">Watchers</span>
                         <div class="avatars">
                             <app-speed-images [emails]="task.Watcher"></app-speed-images>
                         </div>
@@ -91,7 +108,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 500px;">
+            <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;background-color: #f6f7f9;">
                 <h5 id="label">{{task.Id}}</h5>
                 <h4 id="value">{{task.Title}}</h4>
                 <div class="row mt-2">
@@ -108,14 +125,15 @@
                         <span id="value">{{task.EstimatedTime}}</span>
                     </div>
                 </div>
-                
+
                 <div class="row mt-4">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-4">
                                 <span id="label">RT</span>
                                 <br>
-                                <span id="value">{{task.EstimatedTime - task.LogWorkTotalTime}}</span></div>
+                                <span id="value">{{task.EstimatedTime - task.LogWorkTotalTime}}</span>
+                            </div>
                             <div class="col-4">
                                 <span id="label">LT</span>
                                 <br>
@@ -129,20 +147,22 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col" id="TimeChart">
-                                <app-time-chart [loggedTime]="task.LogWorkTotalTime" [estimatedTime]="task.EstimatedTime"></app-time-chart>
+                                <app-time-chart [loggedTime]="task.LogWorkTotalTime"
+                                    [estimatedTime]="task.EstimatedTime"></app-time-chart>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
                     <div class="col-md-4 float-right">
                         <span id="label">Work Done:</span>
-                        <span id="value">{{task.WorkDone}}</span>  
-                        <app-work-completion [workDone]="task.WorkDone"></app-work-completion>                      
+                        <span id="value">{{task.WorkDone}}</span>
+                        <app-work-completion [workDone]="task.WorkDone" ></app-work-completion>
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="uploadContainer col-12 p-0">
-                        <app-upload-files [taskId]="task.Id" [teamId]="task.TeamId" [organizationId]="task.OrganizationId" [orgDomain]="orgDomain"></app-upload-files>
+                        <app-upload-files [taskId]="task.Id" [teamId]="task.TeamId"
+                            [organizationId]="task.OrganizationId" [orgDomain]="orgDomain"></app-upload-files>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -152,7 +172,7 @@
                             <div class="card-body">
                                 <div id="descriptionTaskDescription">{{task.Description}}</div>
                             </div>
-                          </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -166,6 +186,11 @@
                                         <th colspan="3">Link Type</th>
                                         <th colspan="6">Link URL</th>
                                     </tr>
+                                    <style>
+                                        th {
+                                            cursor: default;
+                                        }
+                                    </style>
                                 </thead>
                                 <tbody>
                                     <ng-container *ngIf="(linkData|async)?.length==0">
@@ -175,7 +200,8 @@
                                     </ng-container>
                                     <ng-container *ngFor="let link of linkData|async">
                                         <tr>
-                                            <td colspan="3"><span data-toggle="tooltip" data-placement="top" title="task.id">{{link.LinkID}}</span></td>
+                                            <td colspan="3"><span data-toggle="tooltip" data-placement="top"
+                                                    title="task.id">{{link.LinkID}}</span></td>
                                             <td colspan="3">{{link.LinkType}}</td>
                                             <td colspan="6"><a href={{link.LinkURL}}>{{link.LinkURL}}</a></td>
                                         </tr>
@@ -183,57 +209,76 @@
                                 </tbody>
                             </table>
                         </ng-container>
-                    </div> 
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 part" style="overflow-y:auto; max-height: 500px;">
-                <div class="activity-card my-4 pb-3">
+            <div class="col-md-6 part" style="background-color:#f6f7f9;height: 602px;" >
+                <div class="activity-card my-4 pb-3" style="height: 46vh; background-color:white;" >
                     <nav class="px-2" id="navbarMenu">
-                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" style="background-color:  #f6f7f9">
                             <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab"
                                 role="tab" aria-controls="All" aria-selected="true" (click)="changeType('All')">All</a>
-                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}" data-toggle="tab"
-                                role="tab" aria-controls="Logs" aria-selected="false"
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}"
+                                data-toggle="tab" role="tab" aria-controls="Logs" aria-selected="false"
                                 (click)="changeType('LOGWORK_COMMENT')">Log Work</a>
-                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}" data-toggle="tab"
-                                role="tab" aria-controls="Edits" aria-selected="false"
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeEditBtn}"
+                                data-toggle="tab" role="tab" aria-controls="Edits" aria-selected="false"
                                 (click)="changeType('EDITED')">Edits</a>
-                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}" data-toggle="tab"
-                                role="tab" aria-controls="Comments" aria-selected="false"
+                            <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}"
+                                data-toggle="tab" role="tab" aria-controls="Comments" aria-selected="false"
                                 (click)="changeType('COMMENT')">Comments</a>
+                            <style>
+                                a {
+                                    cursor: pointer;
+                                }
+                            </style>
                         </div>
                     </nav>
-                    <ng-container *ngIf="activityData | async; else loader">
-                        <div class="tab-content" id="myTabContent">
+                    <ng-container *ngIf="activityData | async; else loader" style="background-color: white">
+                        <div class="tab-content" id="myTabContent" style="background-color: white;">
                             <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
-                                aria-labelledby="all-activities-tab">
+                             aria-labelledby="all-activities-tab" style="overflow-y:auto;max-height: 45vh;" >
                                 <ng-container *ngIf="(activityData|async)?.length==0">
                                     <div class="row">
-                                        <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.</div>
+                                        <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.
+                                        </div>
                                     </div>
                                 </ng-container>
                                 <ng-container *ngFor="let activity of activityData | async">
                                     <app-activity [activity]="activity"></app-activity>
                                 </ng-container>
                             </div>
+                        </div>
+                    </ng-container>
+            </div>
+            
+        
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
-                                <form>
-                                    <div class="form-row px-4 pt-4">
-                                        <div class="form-group col-11">
+                                <form >
+
+
+                                    <div class="form-row px-4 pt-4" style="position: relative;width: 108%;overflow-y: auto;color: white;
+                                     height: 30vh;">
+                                        <div class="form-group col-11" style="color: white;">
+
                                             <textarea type="text" class="form-control form-control-sm card" rows="2"
-                                                [(ngModel)]="comment" [ngModelOptions]="{standalone: true}" placeholder="Enter comment" style="background-color: var(--input-field);"></textarea>
+                                                [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"
+                                                placeholder="Enter comment"
+                                                style="background-color: var(--input-field);border-width: thick;"></textarea>
                                         </div>
-                                        <div class="form-group col-1">
-                                            <button type="submit" class="btn pt-2" (click)="addComment()"><span class="material-icons">send</span></button>
+                                        <div class="form-group col-1"  >
+                                            <button type="submit" class="btn pt-2" (click)="addComment()"><span
+                                                    class="material-icons">send</span></button>
+
                                         </div>
                                     </div>
+
+
                                 </form>
                             </ng-container>
                         </div>
-                    </ng-container>
-                </div>
-            </div>
-        </div>
+                        </div>
+                        
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>
