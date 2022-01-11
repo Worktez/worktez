@@ -3,12 +3,19 @@
             <div class="pl-4 pt-1"><h4>My Tasks</h4></div>
     </div>
     <div class="card-body pt-0">
-        <ng-container *ngIf="!showLoader; else loader">
+        <ng-container *ngIf="!showLoader && !noData">
             <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
             <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="5"></app-data-table>
         </ng-container>
-        <ng-template #loader>
+
+        <ng-container *ngIf="showLoader">
             <app-loader></app-loader>
-        </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="noData">
+            <p class="pt-4">
+                No Data Found
+            </p>
+        </ng-container>
     </div>
 </div>

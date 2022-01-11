@@ -47,6 +47,8 @@ export class TaskDetailsComponent implements OnInit {
   actionType: string = "All"
   comment: string;
 
+  dataReady: boolean = false
+
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
@@ -62,7 +64,24 @@ export class TaskDetailsComponent implements OnInit {
     this.backendService.selectedTaskId = this.Id;
 
     this.navbarHandler.addToNavbar( this.Id );
+    this.getTaskPageData();
+    
+    // this.authService.afauth.user.subscribe(data => {
+    //   this.authService.userAppSettingObservable.subscribe(data => {
+    //     if (data.SelectedOrgAppKey) {
+    //       this.backendService.organizationsData.subscribe(data => {
+    //         this.orgDomain = this.backendService.getOrganizationDomain();
+    //         this.getTaskDetail();
+    //         this.getActivityData();
+    //         this.getLinkData();
+    //         this.activeAllBtn = true;
+    //       });
+    //     }
+    //   });
+    // });
+  }
 
+  getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
       this.getTaskDetail();
@@ -81,19 +100,6 @@ export class TaskDetailsComponent implements OnInit {
         }
       });
     }
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.orgDomain = this.backendService.getOrganizationDomain();
-    //         this.getTaskDetail();
-    //         this.getActivityData();
-    //         this.getLinkData();
-    //         this.activeAllBtn = true;
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   selectedAssignee(item) {
@@ -105,26 +111,29 @@ export class TaskDetailsComponent implements OnInit {
     this.taskDataObservable = callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
         this.task = data;
-        // this.getName(data.Assignee, "Assignee");
-        // this.getName(data.Creator, "Creator");
+
+        if(this.userService.emails.indexOf(this.task.Assignee) == -1) {
+          this.userService.emails.push(this.task.Assignee);
+          this.userService.userReady = false;
+        }
+        if(this.userService.emails.indexOf(this.task.Reporter) == -1) {
+          this.userService.emails.push(this.task.Reporter);
+          this.userService.userReady = false;
+        }
+        if(this.userService.emails.indexOf(this.task.Creator) == -1) {
+          this.userService.emails.push(this.task.Creator);
+          this.userService.userReady = false;
+        }
+
+        this.userService.fetchUserData().subscribe(()=>{
+          this.dataReady = true;
+        });
+
         this.applicationSettingService.getTeamDetails(data.TeamId);
+
         return { ...data }
     }));
   }
-
-  // getName (email, value) {
-  //   let name="";
-  //   this.userService.getUserData(email).then(data => {
-  //     if(data) {
-  //       name = data.displayName;
-  //       if (value == "Assignee") {
-  //         this.assignee = name.split(' ')[0];
-  //       } else if (value == "Creator") {
-  //         this.creator = name.split(' ')[0];
-  //       }
-  //     }
-  //   });
-  // }
 
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity/getActivity");
@@ -178,6 +187,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   logWorkCompleted ( data: { completed: boolean } ) {
+    this.getTaskPageData();
     this.logWorkEnabled = false;
   }
 
