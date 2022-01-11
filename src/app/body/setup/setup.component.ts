@@ -85,7 +85,7 @@ export class SetupComponent implements OnInit {
       if (modeTo == "create")
       {
         const callable = this.functions.httpsCallable('teams/createTeam');
-        const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
+        const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, TypeLabels: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
         this.createNewSprint(teamName, teamId, organizationAppKey);
       }
       
