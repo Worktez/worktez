@@ -11,13 +11,14 @@ const { getUser } = require("../lib");
 
 exports.getUserAppSettings = function(request, response) {
     const user = request.body.data;
-    const Uid = user.uid;
+    const uid = user.Uid;
+    const username = user.Username;
 
     let userData;
     let status = 200;
     let result;
 
-    const promise1 = getUser(Uid, "").then((data) => {
+    const promise1 = getUser(uid, username).then((data) => {
         console.log("Getting User Data");
         if (data == undefined) {
             console.log("User doesn't exist");
