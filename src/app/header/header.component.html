@@ -32,22 +32,14 @@
                 </ng-container>
                 <ul class="navbar-nav ml-auto">
                     <ng-container *ngIf="(backendService.organizationsData | async)">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                    add_box
-                                </mat-icon>
-                                Create
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
-                                    expand_more
-                                </mat-icon>
+                        <li class="nav-item px-1">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle pt-2">
+                                add_box
+                            </mat-icon>
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()" data-toggle="modal" data-target="#createNewTask">
+                                <label>Create</label>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                                <a class="dropdown-item" (click)="createNewTask()"data-toggle="modal" data-target="#createNewTask">Create New Task</a>
-                                <a class="dropdown-item" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</a>
-                            </div>
                         </li>
-    
                         <li class="nav-item dropdown">
                             <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">

@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 
   componentName: string = "PROFILE"
   
+  editProfilePicEnabled: boolean = false
   editProfileEnabled: boolean = false
   editEducationEnabled: boolean = false
   editProjectEnabled: boolean = false
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit {
   skills: string;
   website: string;
   username: string;
-  
+
   educations: MyEducationData;
   experiences: MyExperienceData;
   projects: MyProjectData;
@@ -59,7 +60,7 @@ export class ProfileComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
-
+    this.authService.userName =  this.username;
     if(this.startService.showTeams) {
       this.readUser();
       this.organizationName = this.backendService.getOrganizationName();
@@ -105,6 +106,10 @@ export class ProfileComponent implements OnInit {
 
   editProfile() {
     this.editProfileEnabled = true;
+  }
+
+  editProfilePic() {
+    this.editProfilePicEnabled = true;
   }
 
   editEducation(mode: string, educationId: number) {
@@ -161,6 +166,10 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = false;
     this.readUser();
   }
+  
+  editProfilePicCompleted(data: { completed: boolean }) {
+    this.readUser();
+  }
 
   readUser() {
     this.displayName = this.authService.userAppSetting.displayName;
@@ -174,9 +183,6 @@ export class ProfileComponent implements OnInit {
     this.githubProfile = this.authService.userAppSetting.GithubProfile;
     this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
     this.skills = this.authService.userAppSetting.Skills;
-    // this.education = this.authService.userAppSetting.Education;
-    // this.experience = this.authService.userAppSetting.Experience;
-    // this.projects = this.authService.userAppSetting.Projects;
     this.website = this.authService.userAppSetting.Website;
     if (this.website.includes("https://") == false) {
       this.website = "https://" + this.website;

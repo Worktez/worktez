@@ -8,8 +8,11 @@
 // const { updatedUserPerformanceChartData } = require("./updatedUserPerformanceChartData");
 
 const { functions } = require("../application/lib");
+const { updatedUserPerformanceChartData } = require("../performanceChart/tark/updatedUserPerformanceChartData");
 
 exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
-  console.log("This will be run every 1 minutes!");
+  console.log("This is scheduled funtion running everyday at scheduled time.!");
+  console.log("Reading organizations data!");
+  // updatedUserPerformanceChartData(lastUpdated, orgDomain, assignee, uid, sprintRange);
   return null;
 });

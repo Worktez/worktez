@@ -14,40 +14,45 @@ const { uploadLogoFile } = require("./tark/uploadLogoFile");
 const { uploadFileToOrgDocuments } = require("./tark/uploadFileToOrgDocuments");
 const { getFilesInOrgDocument } = require("./tark/getFilesInOrgDocuments");
 const { uploadFileToContributorsDocuments } = require("./tark/uploadFileToContributorsDocuments");
+const { uploadProfilePicToUserDoc } = require("./tark/uploadUserProfilePic");
 
 
-  fastify.post("/deleteFilesInTask", (req, res) => {
+fastify.post("/deleteFilesInTask", (req, res) => {
     deleteFilesInTask(req, res);
-  });
+});
 
-  fastify.post("/uploadFileToContributorsDocuments", (req, res) => {
+fastify.post("/uploadFileToContributorsDocuments", (req, res) => {
     uploadFileToContributorsDocuments(req, res);
-  });
+});
 
-  fastify.post("/getFilesInOrgDocument", (req, res) => {
+fastify.post("/getFilesInOrgDocument", (req, res) => {
     getFilesInOrgDocument(req, res);
-  });
+});
 
-  fastify.post("/getFilesInTask", (req, res) => {
+fastify.post("/getFilesInTask", (req, res) => {
     getFilesInTask(req, res);
-  });
+});
 
-  fastify.post("/uploadFileToOrgDocuments", (req, res) => {
+fastify.post("/uploadFileToOrgDocuments", (req, res) => {
     uploadFileToOrgDocuments(req, res);
-  });
+});
 
-  fastify.post("/uploadFileToTask", (req, res) => {
+fastify.post("/uploadFileToTask", (req, res) => {
     uploadFileToTask(req, res);
-  });
+});
 
-  fastify.post("/uploadLogoFile", (req, res) => {
+fastify.post("/uploadLogoFile", (req, res) => {
     uploadLogoFile(req, res);
-  });
+});
+
+fastify.post("/uploadUserProfilePic", (req, res) => {
+    uploadProfilePicToUserDoc(req, res);
+});
 
 exports.librarian = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
+        fastify.ready((err) => {
+            if (err) throw err;
             requestHandler(req, res);
         });
         // const mode = request.body.data.mode;

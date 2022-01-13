@@ -56,14 +56,15 @@
     background-color: var(--primary-color);
 }
 
+button {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+}
+
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
-}
-
-#SuccessIcon{
-    color: var(--secondary-color);
-    font-size: 48px;
 }
