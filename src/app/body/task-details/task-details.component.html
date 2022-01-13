@@ -2,14 +2,14 @@
     <div class="container-fluid" *ngIf="dataReady">
         <div class="row header">
             <div class="col-10">
-                <h2 style="color: black;">Task Details</h2>
+                <h2>Task Details</h2>
             </div>
             <div class="col-2">
                 <span class="btn material-icons float-right" (click)="backToTasks()">close</span>
             </div>
         </div>
-        <div class="row pt-1" style="background-color: #f6f7f9">
-            <div class="col-md-6 part " >
+        <div class="row pt-1">
+            <div class="col-md-6 part ">
                 <div class="row">
                     <div class="col-md-8 col-9">
                         <div class="row">
@@ -76,8 +76,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 part" >
-                <div class="row" >
+            <div class="col-md-6 part">
+                <div class="row">
                     <div class="col-2 creationDate">
                         <h5 class="pt-1">{{task.CreationDate}}</h5>
                     </div>
@@ -108,7 +108,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;background-color: #f6f7f9;">
+            <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <h5 id="label">{{task.Id}}</h5>
                 <h4 id="value">{{task.Title}}</h4>
                 <div class="row mt-2">
@@ -156,7 +156,7 @@
                     <div class="col-md-4 float-right">
                         <span id="label">Work Done:</span>
                         <span id="value">{{task.WorkDone}}</span>
-                        <app-work-completion [workDone]="task.WorkDone" ></app-work-completion>
+                        <app-work-completion [workDone]="task.WorkDone"></app-work-completion>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -186,11 +186,6 @@
                                         <th colspan="3">Link Type</th>
                                         <th colspan="6">Link URL</th>
                                     </tr>
-                                    <style>
-                                        th {
-                                            cursor: default;
-                                        }
-                                    </style>
                                 </thead>
                                 <tbody>
                                     <ng-container *ngIf="(linkData|async)?.length==0">
@@ -212,10 +207,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 part" style="background-color:#f6f7f9;height: 602px;" >
-                <div class="activity-card my-4 pb-3" style="height: 46vh; background-color:white;" >
+            <div class="col-md-6 part" style="max-height: 610px;">
+                <div class="activity-card my-4 pb-3" style="height: 55vh;">
                     <nav class="px-2" id="navbarMenu">
-                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist" style="background-color:  #f6f7f9">
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a [ngClass]="{'nav-item nav-link options': true, 'active': activeAllBtn}" data-toggle="tab"
                                 role="tab" aria-controls="All" aria-selected="true" (click)="changeType('All')">All</a>
                             <a [ngClass]="{'nav-item nav-link options': true, 'active': activeLogWorkBtn}"
@@ -227,17 +222,14 @@
                             <a [ngClass]="{'nav-item nav-link options': true, 'active': activeCommentBtn}"
                                 data-toggle="tab" role="tab" aria-controls="Comments" aria-selected="false"
                                 (click)="changeType('COMMENT')">Comments</a>
-                            <style>
-                                a {
-                                    cursor: pointer;
-                                }
-                            </style>
+
                         </div>
                     </nav>
-                    <ng-container *ngIf="activityData | async; else loader" style="background-color: white">
-                        <div class="tab-content" id="myTabContent" style="background-color: white;">
+                    <ng-container *ngIf="activityData | async; else loader">
+                        <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
-                             aria-labelledby="all-activities-tab" style="overflow-y:auto;max-height: 45vh;" >
+                                aria-labelledby="all-activities-tab"
+                                style="overflow-y:auto;overflow-x: hidden;height: 40vh;">
                                 <ng-container *ngIf="(activityData|async)?.length==0">
                                     <div class="row">
                                         <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.
@@ -246,27 +238,25 @@
                                 </ng-container>
                                 <ng-container *ngFor="let activity of activityData | async">
                                     <app-activity [activity]="activity"></app-activity>
+
+
                                 </ng-container>
                             </div>
-                        </div>
-                    </ng-container>
-            </div>
-            
-        
+
+
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
-                                <form >
+                                <form>
 
 
-                                    <div class="form-row px-4 pt-4" style="position: relative;width: 108%;overflow-y: auto;color: white;
-                                     height: 30vh;">
-                                        <div class="form-group col-11" style="color: white;">
+                                    <div class="form-row px-4 pt-4">
+                                        <div class="form-group col-11">
 
                                             <textarea type="text" class="form-control form-control-sm card" rows="2"
                                                 [(ngModel)]="comment" [ngModelOptions]="{standalone: true}"
                                                 placeholder="Enter comment"
-                                                style="background-color: var(--input-field);border-width: thick;"></textarea>
+                                                style="background-color: var(--input-field);"></textarea>
                                         </div>
-                                        <div class="form-group col-1"  >
+                                        <div class="form-group col-1">
                                             <button type="submit" class="btn pt-2" (click)="addComment()"><span
                                                     class="material-icons">send</span></button>
 
@@ -277,8 +267,10 @@
                                 </form>
                             </ng-container>
                         </div>
-                        </div>
-                        
+                    </ng-container>
+                </div>
+            </div>
+        </div>
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>

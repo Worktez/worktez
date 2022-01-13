@@ -32,6 +32,20 @@
     color: var(--text);
 
 }
+form-row px-4 pt-4{ 
+    overflow-y:auto;
+    overflow-x: hidden; 
+    width: 106%;
+    height: 15vh;
+    position: static;
+}
+nav nav-tabs nav-fil:a {
+    cursor: pointer;
+}
+       
+.navbarMenu:th {
+    cursor: default;
+}
 
 #headerLabel{
     font-size: 12px;
@@ -50,7 +64,7 @@
 .part {
     padding: 2px 30px 2px 30px;
     border-color: var(--dropdown-hover);
-    border-style: ridge;
+    border-style: solid;
     border-width: medium;
     
 }
@@ -58,7 +72,7 @@
 .btn {
     padding: 2px;
     font-size: 30px;
-    color: #5559d9;
+    color: var(--text);
 }
 
 a.active.nav-link{
@@ -82,7 +96,7 @@ a.nav-link{
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(128, 128, 128, 0.795); 
+    background: var(--scrollbar-color); 
     border-radius: 10px;
 }
 
