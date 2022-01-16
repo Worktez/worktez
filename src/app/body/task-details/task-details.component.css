@@ -13,6 +13,10 @@
     color: var(--text);
     background-color: var(--secondary-bg);
 }
+.pt-4, .py-4{
+    padding-top: 1.5rem !important;
+
+}
 
 .dropdown-item {
     color: var(--text);
@@ -26,6 +30,21 @@
 .activity-card {
     background-color: var(--secondary-bg);
     color: var(--text);
+
+}
+form-row px-4 pt-4{ 
+    overflow-y:auto;
+    overflow-x: hidden; 
+    width: 106%;
+    height: 15vh;
+    position: static;
+}
+nav nav-tabs nav-fil:a {
+    cursor: pointer;
+}
+       
+.navbarMenu:th {
+    cursor: default;
 }
 
 #headerLabel{
@@ -46,6 +65,8 @@
     padding: 2px 30px 2px 30px;
     border-color: var(--dropdown-hover);
     border-style: solid;
+    border-width: medium;
+    
 }
 
 .btn {

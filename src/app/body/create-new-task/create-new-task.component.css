@@ -24,12 +24,18 @@
 }
 
 .form-row {
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    position: fixed;
+    margin-left: -5px;
+    padding: 100px 20px 75px 100px;
+    
 }
 
 .form-group {
     margin-bottom: 0;
+    position: fixed;
 }
 
 .form-control {
@@ -40,6 +46,7 @@
     border-radius: 6px;
     opacity: 1;
     margin: 5px !important;
+    position: fixed;
 }
 
 #button {

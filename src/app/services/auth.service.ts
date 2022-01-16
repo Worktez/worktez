@@ -25,6 +25,7 @@ export class AuthService {
 
   user: User;
   userAppSetting: UserAppSetting;
+  public userName:string = "";
   public homeToDashboard: boolean = false;
 
   educations: MyEducationData;
@@ -82,10 +83,13 @@ export class AuthService {
 
   getUserSettings() {
     this.homeToDashboard = false;
-    const uid = this.getLoggedInUser(); 
+    let uid="";
+    if(this.userName == ""){
+      uid = this.getLoggedInUser(); 
+    }
     const callable = this.functions.httpsCallable('users/getUserAppSettings');
 
-    this.userAppSettingObservable = callable({ uid: uid }).pipe(map(res => {
+    this.userAppSettingObservable = callable({ Uid: uid, Username: this.userName }).pipe(map(res => {
       const data = res.userData as UserAppSetting;
       this.userAppSetting = data;
       if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {

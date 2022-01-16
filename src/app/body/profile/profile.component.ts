@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
-
+    this.authService.userName =  this.username;
     if(this.startService.showTeams) {
       this.readUser();
       this.organizationName = this.backendService.getOrganizationName();

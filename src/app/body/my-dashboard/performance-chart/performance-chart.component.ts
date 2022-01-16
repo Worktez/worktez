@@ -39,7 +39,7 @@ export class PerformanceChartComponent implements OnInit {
     try {
       this.data = await callable({OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
         map(actions => {
-            return actions.data as [];
+            return actions.data.sort() as [];
         }));
         this.showLoader = false;
     } catch(error) {
