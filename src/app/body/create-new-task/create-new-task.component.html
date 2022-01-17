@@ -4,22 +4,20 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title " id="createNewTaskTitle"><strong>Create New Task</strong></h2>
-                    <button type="button" class="close" (click)= "close()" aria-label="Close">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true" class="material-icons">close</span>
                     </button>
                 </div>
-                <div class="modal-body container-fluid pt-0 mt-n4">
+                <div class="modal-body container-fluid pt-0 mt-4">
                     <div class="medium ml-1">{{ todayDate }}</div>
-                    <br>
-                    <br>
                     <form #form="ngForm">
-                        <div class="form-row mb-2">
+                        <div class="form-row my-2">
                             <div class="form-group col-md-6 col">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span> 
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
                                 <input type="text" class="form-control form-control-sm" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
                             </div>
                             <div class="form-group col-md-6 col ml-auto">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project</span> 
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project</span>
                                 <select class="form-control form-control-sm" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (change)="readTeamData(project)">
                                     <option [ngValue]="null" [disabled]="true">Select Project Name</option>
                                     <ng-container *ngFor='let id of teamIds'>
@@ -30,13 +28,13 @@
                         </div>
                         <div class="form-row mb-2">
                             <div class="form-group col-md-12 col">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span> 
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                                 <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" placeholder="Write a Task Description..."></textarea>
                             </div>
                         </div>
                         <div class="form-row mb-2">
                             <div class="col-md-6 col ml-auto">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Assignee</span> 
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Assignee</span>
                                 <div class="dropdown">
                                     <input type="text" autocomplete="off" class="form-control form-control-sm" [formControl]="assigneeName" placeholder="Enter Assignee's Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -46,15 +44,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col ml-auto">    
-                                <span class="ml-2 text-secondary" style="font-size:0.8rem;" id="label">Creator</span>                     
+                            <div class="col-md-6 col ml-auto">
+                                <span class="ml-2 text-secondary" style="font-size:0.8rem;" id="label">Creator</span>
                                 <input type="text" readonly class="form-control form-control-sm" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}" placeholder="Enter Creator's Name">
                             </div>
                         </div>
                         <div class="form-row mb-2">
                             <div class="col-md-6 col ml-auto">
                                 <div class="dropdown">
-                                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Reporter</span> 
+                                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Reporter</span>
                                     <input type="text" autocomplete="off" class="form-control form-control-sm" [formControl]="reporterName" placeholder="Enter Reporter's Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <ng-container *ngFor='let item of filteredOptionsReporter | async'>
@@ -63,64 +61,64 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 col ml-auto">  
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Type</span>                       
+                            <div class="col-md-6 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Type</span>
                                 <input type="text" class="form-control form-control-sm" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" list="typeSuggestion" placeholder="Enter Task Type">
                                 <datalist id="typeSuggestion">
                                     <ng-container *ngFor='let item of type'>
                                         <option>{{ item }}</option>
                                     </ng-container>
-                                </datalist>                           
-                             </div>
+                                </datalist>
+                            </div>
                         </div>
                         <div class="form-row mb-2">
-                            <div class="col-md-4 col-4 ml-auto">  
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Sprint Number</span>                      
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Sprint Number</span>
                                 <input type="number" class="form-control form-control-sm" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}" placeholder="Sprint Number">
                             </div>
-                            <div class="col-md-4 ml-auto"> 
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Priority</span>                       
+                            <div class="col-md-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Priority</span>
                                 <select class="form-control form-control-sm" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Priority</option>
                                     <ng-container *ngFor='let label of priorityLabels'>
                                         <option>{{ label }}</option>
                                     </ng-container>
-                                </select>                           
-                            </div> 
-                            <div class="col-md-4 col-4 ml-auto"> 
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Story Point</span>                       
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Story Point</span>
                                 <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}" placeholder="Story Point">
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-4 col-4 ml-auto"> 
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>                       
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
                                 <select class="form-control form-control-sm" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Status</option>
                                     <ng-container *ngFor='let label of statusLabels'>
                                         <option>{{ label }}</option>
                                     </ng-container>
-                                </select>     
-                           </div>
-                            <div class="col-md-4 col-4 ml-auto">  
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Est Time</span>                      
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Est Time</span>
                                 <input type="number" class="form-control form-control-sm" [(ngModel)]="estimatedTime" [ngModelOptions]="{standalone: true}" placeholder="Enter Est Time">
-                            </div> 
-                            <div class="col-md-4 col-4 ml-auto">  
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Difficulty</span>                      
+                            </div>
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Difficulty</span>
                                 <select class="form-control form-control-sm" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
                                     <ng-container *ngFor='let label of difficultyLabels'>
                                         <option>{{ label }}</option>
                                     </ng-container>
-                                </select>                           
+                                </select>
                             </div>
                         </div>
                         <app-loader *ngIf="enableLoader"></app-loader>
                     </form>
                 </div>
                 <div class="modal-footer mt-n1">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "submit()">Create New Task</button>
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
                 </div>
             </div>
         </div>
