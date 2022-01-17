@@ -10,10 +10,12 @@
 _At **Worktez**, we are envisioned to give milestones to your dreams._
 
 ## About our Product :speech_balloon:
-```
-- Worktez is a Web App, developed to help the firms in solving issues concerning task allocations and monitoring.
-- From just another basic Agile Tool to even more visually appealing and functionally progressive solution to all your Project Management related work.
-```
+
+Worktez is a Web App developed by a team of fresh and enthusiastic minds to help the firms in solving issues concerning task allocations and monitoring.
+From just another basic Agile Tool to even more visually appealing and functionally progressive solution to all your Project Management related work.
+WorkTez promotes a happy workFromHome environment because a happy employee is way more productive in comparison to an employee burdened with loads of work!
+With an agile platform like WorkTez, you can be affirmed by a more organised remote team management.You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore! 
+
 
 
 # Technologies used
@@ -21,8 +23,8 @@ _At **Worktez**, we are envisioned to give milestones to your dreams._
 | FRAMEWORK | DETAILS |
 | ------ | ------ |
 | AngularJs | [the frontend framework used - HTML enhanced for web apps!][angular] |
-| Firebase | [firebase functions, firestore and hosting services are incorporated into our product][firebase] |
-| FastifyJs | [rest API implementation][fastify] |
+| Firebase | [firebase functions, storage, firestore and hosting services are incorporated into our product][firebase] |
+| FastifyJs | [backend framework used - rest API implementation][fastify] |
 | Node | [the backend engine  used][node] |
 
 
@@ -32,36 +34,42 @@ The creation of the components and the end-to-end functionality, without depende
 
 
 # Features
-- [x] Performance inspection of individual and team with comprehensible charts 
-- [x] Easy to create, delete, update and view sprints and tasks
-- [x] Notification system to integrate easy reminders
-- [x] Github integrations
-- [x] Quick Notes to jot down key points from meetings
-- [x] Automatic mail system to notify updates to all the members of an organisation
+:heavy_check_mark: Performance inspection of individual and team with comprehensible charts <br>
+:heavy_check_mark: Easy to create, delete, update and view sprints and tasks <br>
+:heavy_check_mark: Notification system to integrate easy reminders <br>
+:heavy_check_mark: Github integrations <br>
+:heavy_check_mark: Quick Notes to jot down key points from meetings <br>
+:heavy_check_mark: Automatic mail system to notify updates to all the members of an organisation <br>
 
 # Want to work on our project too?
 
 ## How to install and use our project
 You can check our [wiki] section to get a detailed step by step guide.
-- [Step 1]
-- [Step 2]
-- [Step 3]
+- [Step 1 - How to clone the project]
+- [Step 2 - How to setup firebase]
+- [Step 3 - How to run the firebase emulator on your localhosts]
 
 ## How to contribute to our project
 We welcome all bug reports, feature suggestions, code contributions and documentation improvements. You can check our [wiki] section for more!
 
 
 ## Code of Conduct
-Help us keep our product open and inclusive.
-Love Worktez? Give our repo a star to appreciate! :star2:
+Visit [Code Of Conduct] section of our repository <br>
+Help us keep our product open and inclusive. <br>
+<b>Love Worktez?</b> Give our repo a star to appreciate! :star2:
 
-> This project was generated with [Angular CLI](https://github.com/angular/angular-cli) 11.0.4, Node version 10.19.0 and OS version linux x64
+> This project was generated with [Angular CLI](https://github.com/angular/angular-cli) (10,11,12,13,14), Node version (11,12,13,14) and OS version linux x64 (Ubuntu 18.04 - 21.10) and Mac OS
 
-[Step 1]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#how-to-clone>
-[Step 2]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#firebase-setup>
-[Step 3]: <https://github.com/Worktez/worktez/wiki/WorktrollyUi-Setup>
+## License
+Worktez is licensed under the MIT license. <br>
+_Copyright 2021 Worktez All Rights Reserved_
+
+[Step 1 - How to clone the project]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#how-to-clone>
+[Step 2 - How to setup firebase]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#firebase-setup>
+[Step 3 - How to run the firebase emulator on your localhosts]: <https://github.com/Worktez/worktez/wiki/WorktrollyUi-Setup>
 [angular]: <https://angular.io/docs>
 [firebase]: <https://firebase.google.com/docs/web/setup>
 [node]: <https://nodejs.org/en/docs/>
 [fastify]: <https://www.fastify.io/docs/latest/>
 [wiki]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#how-to-contribute>
+[Code Of Conduct]: <https://github.com/Worktez/worktez/blob/master/CODE_OF_CONDUCT.md>
