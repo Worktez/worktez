@@ -12,7 +12,7 @@
 .modal-content {
     background-color: var(--secondary-bg);
     color: var(--text);
-    border-radius: 6px; 
+    border-radius: 6px;
     min-height: 350px;
     padding: 1.1rem;
     justify-content: space-evenly;
@@ -23,19 +23,8 @@
     color: var(--text);
 }
 
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -5px;
-    position: fixed;
-    margin-left: -5px;
-    padding: 100px 20px 75px 100px;
-    
-}
-
 .form-group {
     margin-bottom: 0;
-    position: fixed;
 }
 
 .form-control {
@@ -46,7 +35,6 @@
     border-radius: 6px;
     opacity: 1;
     margin: 5px !important;
-    position: fixed;
 }
 
 #button {
@@ -75,7 +63,7 @@ input:focus {
     align-items: flex-start;
 }
 
-.dropdown-menu  {
+.dropdown-menu {
     width: 300px;
     height: auto;
     max-height: 300px;
