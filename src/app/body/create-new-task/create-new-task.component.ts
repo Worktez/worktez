@@ -57,7 +57,7 @@ export class CreateNewTaskComponent implements OnInit {
   priorityLabels: string[]
   difficultyLabels: string[]
   type: string[]
-  taskType: string
+  taskType: string = null
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
