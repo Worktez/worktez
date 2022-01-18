@@ -30,6 +30,7 @@ import { PrivacyComponent} from './body/privacy/privacy.component';
 import { CopyrightComponent } from './body/copyright/copyright.component'
 import { ContributorsComponent } from './body/contributors/contributors.component';
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
+import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -63,6 +64,7 @@ const routes: Routes = [
   { path: 'copyright', component: CopyrightComponent },
   { path: 'contributors', component: ContributorsComponent },
   { path: 'termsandcondition', component: TermsAndConditionComponent},
+  { path: 'releasenotes', component: ReleaseNotesComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
 ];
 

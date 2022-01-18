@@ -114,6 +114,8 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { EditProfilePicComponent } from './body/profile/edit-profile-pic/edit-profile-pic.component';
 import { UpdateImageComponent } from './body/common-tools/update-image/update-image.component';
 import { Patch10Component } from './patches/patch10/patch10.component';
+import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
+import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
 
 @NgModule({
   declarations: [
@@ -210,6 +212,8 @@ import { Patch10Component } from './patches/patch10/patch10.component';
     EditProfilePicComponent,
     UpdateImageComponent,
     Patch10Component,
+    ReleaseNotesComponent,
+    ReleaseNotesBodyComponent,
   ],
   imports: [
     BrowserModule,
