@@ -79,25 +79,19 @@
             <div class="col-md-6 part">
                 <div class="row">
                     <div class="col-2 creationDate">
+                        <span id="headerLabel" style="cursor: default;">Creation Date</span>
                         <h5 class="pt-1">{{task.CreationDate}}</h5>
                     </div>
                     <div class="col-4 assignee">
                         <span id="headerLabel" style="cursor: default;">Assignee</span>
                         <app-suggestion-bucket [email]="task.Assignee" (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
-                        <!-- <h5 class="pt-1">{{assignee}}</h5> -->
                     </div>
                     <div class="col-4 creator">
                         <span id="headerLabel" style="cursor: default;">Creator</span>
                         <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
-                        <!-- <h5 class="pt-1">{{creator}}</h5> -->
                     </div>
-                    <!-- <ng-container *ngFor="let item of watchList">
-                        <span class="avatar">
-                            <img [src]='item' width="50" height="50"/>
-                        </span>
-                    </ng-container> -->
                     <div class="col-2 watchers">
                         <span id="headerLabel" style="cursor: default;">Watchers</span>
                         <div class="avatars">
@@ -238,16 +232,11 @@
                                 </ng-container>
                                 <ng-container *ngFor="let activity of activityData | async">
                                     <app-activity [activity]="activity"></app-activity>
-
-
                                 </ng-container>
                             </div>
 
-
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
                                 <form>
-
-
                                     <div class="form-row px-4 pt-4">
                                         <div class="form-group col-11">
 
