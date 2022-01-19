@@ -1,0 +1,13 @@
+<div class="card" style="width: 36rem;">
+    <div class="card-header">
+        <input type="text" class="form-control form-control-sm" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Note Title">
+    </div>
+    <div class="card-body">
+        <textarea type="text" class="form-control form-control-sm" rows="8" [(ngModel)]="notesContent" [ngModelOptions]="{standalone: true}" placeholder="Write a note..."></textarea>
+        <div class="row ml-auto">
+            <div class="col">
+                <button class="btn btn-success" (click)="addNote()">save</button>
+            </div>
+        </div>
+    </div>
+</div>

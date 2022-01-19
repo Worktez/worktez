@@ -23,6 +23,7 @@ const { librarian } = require("./model/librarian/librarian");
 const { notifications } = require("./model/notifications/notifications");
 const { contributors } = require("./model/contributors/contributors");
 const { scheduledFn } = require("./model/scheduledFunctions/scheduledFn");
+const { quickNotes } = require("./model/quickNotes/quickNotes");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -37,3 +38,4 @@ exports.librarian = librarian;
 exports.notifications = notifications;
 exports.contributors = contributors;
 exports.scheduledFn = scheduledFn;
+exports.quickNotes = quickNotes;
