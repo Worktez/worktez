@@ -6,7 +6,7 @@
             </div>
             <div class="col-md">
                 <span class="material-icons mr-2 float-right trash p-2" type="button" (click)="deleteTeam()" title="delete Team" data-bs-toggle="tooltip">delete</span>
-                <span class="material-icons mr-2 p-2 float-right" type="button" (click)="updateTeam(team.TeamId)">manage_accounts</span>
+                <span class="material-icons mr-2 p-2 float-right" type="button" data-toggle="modal" data-target="#createNewTeam" (click)="updateTeam(team.TeamId)">manage_accounts</span>
                 <div class="mr-4 float-right p-2 add-member" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="enableAddMember(team)">
                     <span class="material-icons">person_add</span>
                     <span class="pl-2 pb-2">Add Member</span>

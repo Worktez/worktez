@@ -7,6 +7,9 @@ export class PopupHandlerService {
 
   createNewSprintEnabled: boolean = false
   createNewTaskEnabled: boolean = false
+  createNewTeamEnabled: boolean = false
+  updateTeamEnabled: boolean = false
+  updateTeamId: string
   addNewContributorEnabled: boolean = false
   
   constructor() { }
@@ -14,6 +17,7 @@ export class PopupHandlerService {
   resetPopUps() {
     this.createNewSprintEnabled = false
     this.createNewTaskEnabled = false
+    this.createNewTeamEnabled = false
     this.addNewContributorEnabled = false
   }
 
