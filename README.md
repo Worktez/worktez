@@ -30,7 +30,7 @@ With an agile platform like WorkTez, you can be affirmed by a more organised rem
 
 # Basic architecture
 The creation of the components and the end-to-end functionality, without dependency on other components, follows the architecture flow given below: 
-![image](https://user-images.githubusercontent.com/67370801/149736181-dd88e05d-0171-4eaf-8dd5-d3e72b4b590f.png)
+![image](https://github.com/Worktez/worktez/blob/0d145c02519b283a0b2317ec57bfa8cfea320cb1/WorktezArchitecture.png)
 
 
 # Features
