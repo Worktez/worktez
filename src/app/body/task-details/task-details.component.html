@@ -291,9 +291,9 @@
     <ng-container *ngIf="linkEnabled" id="linkModalLabel">
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
-    <ng-container *ngIf="subtaskEnabled" id="exampleModalCenterLabel">
-        <app-create-new-task [Id]="task.Id" ></app-create-new-task>
-        <!-- <app-sub-task [task]="task" (addedSubtask)=" addedSubtask($event)"></app-sub-task> -->
-    </ng-container>
+    <!-- <ng-container *ngIf="subtaskEnabled" id="exampleModalCenterLabel">
+        <app--new-task [Id]="task.Id" ></app-create-new-task>
+        <app-sub-task [task]="task" (addedSubtask)=" addedSubtask($event)"></app-sub-task> 
+    </ng-container> -->
 </ng-container>
 <app-loader *ngIf="!(taskDataObservable | async)"></app-loader>

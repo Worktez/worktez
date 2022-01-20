@@ -27,8 +27,6 @@ export class CreateNewTaskComponent implements OnInit {
   reporterName = new FormControl();
   filteredOptionsReporter: Observable<string[]>;
 
-  @Input('Id') parentTaskId: string; 
-
   @ViewChild('form') form: NgForm;
   @Output() taskCreated = new EventEmitter<{ completed: boolean }>();
 
@@ -61,6 +59,7 @@ export class CreateNewTaskComponent implements OnInit {
   difficultyLabels: string[]
   type: string[]
   taskType: string
+  parentTaskId: string
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -70,7 +69,8 @@ export class CreateNewTaskComponent implements OnInit {
     this.readTeamData(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-    console.log(this.parentTaskId)
+    this.parentTaskId = this.popupHandlerService.parentTaskId;
+    console.log("parent id:", this.parentTaskId);
   }
 
   private _filter(value: string): string[] {
@@ -175,6 +175,8 @@ export class CreateNewTaskComponent implements OnInit {
     else {
       const callable = this.functions.httpsCallable('link/setLinkDetails');
       try {
+        console.log("see:parent",this.parentTaskId)
+        console.log("see:child",this.childTaskId)
         const orgDomain = this.backendService.getOrganizationDomain();
         const linkURL = "http://127.0.0.1:4200/TaskDetails/" + this.childTaskId;
         await callable({OrgDomain: orgDomain, TaskID: this.parentTaskId, LinkType: "child", linkURL: linkURL}).toPromise();

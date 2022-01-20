@@ -192,7 +192,7 @@ export class TaskDetailsComponent implements OnInit {
 
   addSubtask(){
     this.popupHandlerService.createNewTaskEnabled= true;  
-    console.log(this.task.Id, this.Id);
+    this.popupHandlerService.parentTaskId = this.Id;
     // this.createNewTaskEnabled = true;
     // this.subtaskEnabled = true;
     // this.popupHandlerService.createNewTaskEnabled= true;
