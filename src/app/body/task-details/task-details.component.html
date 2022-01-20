@@ -63,6 +63,10 @@
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#linkModal" (click)="addLink()">Add Link</button>
                                         </div>
+                                        <div class="addSubtask mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                                            <button class="dropdown-item" type="button"(click)="addSubtask()" data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
+                                        </div>
                                         <div class="delete mt-4"
                                             *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
@@ -286,6 +290,10 @@
     </ng-container>
     <ng-container *ngIf="linkEnabled" id="linkModalLabel">
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
+    </ng-container>
+    <ng-container *ngIf="subtaskEnabled" id="exampleModalCenterLabel">
+        <app-create-new-task [Id]="task.Id" ></app-create-new-task>
+        <!-- <app-sub-task [task]="task" (addedSubtask)=" addedSubtask($event)"></app-sub-task> -->
     </ng-container>
 </ng-container>
 <app-loader *ngIf="!(taskDataObservable | async)"></app-loader>

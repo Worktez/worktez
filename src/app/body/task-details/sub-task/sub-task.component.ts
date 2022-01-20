@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { FormControl, NgForm } from '@angular/forms';
-import { ValidationService } from '../../services/validation/validation.service';
-import { ToolsService } from '../../services/tool/tools.service';
+import { ValidationService } from '../../../services/validation/validation.service';
+import { ToolsService } from '../../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -11,15 +11,14 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
 
-
 declare var jQuery:any;
 
 @Component({
-  selector: 'app-create-new-task',
-  templateUrl: './create-new-task.component.html',
-  styleUrls: ['./create-new-task.component.css']
+  selector: 'app-sub-task',
+  templateUrl: './sub-task.component.html',
+  styleUrls: ['./sub-task.component.css']
 })
-export class CreateNewTaskComponent implements OnInit {
+export class SubTaskComponent implements OnInit {
 
   assigneeName = new FormControl();
   filteredOptionsAssignee: Observable<string[]>;
@@ -27,14 +26,11 @@ export class CreateNewTaskComponent implements OnInit {
   reporterName = new FormControl();
   filteredOptionsReporter: Observable<string[]>;
 
-  @Input('Id') parentTaskId: string; 
-
   @ViewChild('form') form: NgForm;
   @Output() taskCreated = new EventEmitter<{ completed: boolean }>();
 
   componentName: string = "CREATE-NEW-TASK";
 
-  childTaskId: string
   title: string
   todayDate: string
   description: string
@@ -70,7 +66,6 @@ export class CreateNewTaskComponent implements OnInit {
     this.readTeamData(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
-    console.log(this.parentTaskId)
   }
 
   private _filter(value: string): string[] {
@@ -136,8 +131,6 @@ export class CreateNewTaskComponent implements OnInit {
     { label: "creationDate", value: this.todayDate },
     { label: "sprintNumber", value: this.sprintNumber },
     { label: "storyPoint", value: this.storyPoint }];
-
-    
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
@@ -149,7 +142,6 @@ export class CreateNewTaskComponent implements OnInit {
       console.log("Task not created! Validation error");
   }
 
-  
   async createNewTask() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
@@ -158,40 +150,11 @@ export class CreateNewTaskComponent implements OnInit {
 
     try {
       const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType }).toPromise();
-      this.childTaskId = result.childTaskId;
-      this.addLinks();
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
     }
     this.close();
-  }
-
-  async addLinks() {
-    console.log("adding links");
-    if (this.parentTaskId == '' || this.parentTaskId == undefined) {
-      console.log("normal task");
-    }
-    else {
-      const callable = this.functions.httpsCallable('link/setLinkDetails');
-      try {
-        const orgDomain = this.backendService.getOrganizationDomain();
-        const linkURL = "http://127.0.0.1:4200/TaskDetails/" + this.childTaskId;
-        await callable({OrgDomain: orgDomain, TaskID: this.parentTaskId, LinkType: "child", linkURL: linkURL}).toPromise();
-      }
-      catch {
-          console.log("subtask could not be created!");
-      } 
-
-      try{
-        const orgDomain = this.backendService.getOrganizationDomain();
-        const linkURL = "http://127.0.0.1:4200/TaskDetails/" + this.parentTaskId;
-        await callable({OrgDomain: orgDomain, TaskID: this.childTaskId, LinkType: "child", linkURL: linkURL}).toPromise();
-      }
-      catch {
-
-      }
-    }
   }
 
   close() {
@@ -201,3 +164,4 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
 }
+

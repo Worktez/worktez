@@ -36,9 +36,9 @@ fastify.post("/editTask", (req, res) => {
   editTask(req, res);
 });
 
-fastify.post("/getLink", (req, res) => {
-  getLinkDetails(req, res);
-});
+// fastify.post("/getLink", (req, res) => {
+//   getLinkDetails(req, res);
+// });
 
 fastify.post("/getTaskDetails", (req, res) => {
   getTaskDetails(req, res);
@@ -56,9 +56,9 @@ fastify.post("/log", (req, res) => {
   logWork(req, res);
 });
 
-fastify.post("/setLink", (req, res) => {
-  setLinkDetails(req, res);
-});
+// fastify.post("/setLink", (req, res) => {
+//   setLinkDetails(req, res);
+// });
 
 exports.tasks = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
