@@ -77,3 +77,12 @@ export const defaultUser = {
     Website: "",
     Username: "",
 };
+
+export interface QuickNote {
+    DocId: string;
+    LastUpdatedDate: string;
+    LastUpdatedTime: string;
+    Note: string;
+    Status: string;
+    Title: string;
+}

@@ -1,0 +1,26 @@
+/* .btn{
+    position:fixed;
+	bottom:80px;
+	right:40px;
+} */
+
+#quickNotesButton{
+    border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px  #999;
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+}
+
+.card {
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+}
+/* 
+.dropdown-menu{
+	height: 20vh;
+	width: 150%;
+
+} */

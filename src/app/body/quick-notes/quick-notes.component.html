@@ -1,0 +1,35 @@
+<button class="btn btn-success" id="quickNotesButton" (click)="showList()">
+    QuickNotes
+</button>
+<ng-container *ngIf="showNotesList">
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Notes
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <ng-container *ngIf="quickNoteObservable|async; else loader">
+                    <ng-container *ngFor="let item of notes">
+                        <li class="list-group-item" (click)="openNote()">{{item.Title}}</li>
+                    </ng-container>
+                </ng-container>
+                <ng-template #loader>
+                    <app-loader></app-loader>
+                </ng-template>
+                <li class="list-group-item ml-auto">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="openAddNote()">
+                        add
+                    </mat-icon>
+                </li>
+            </ul>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="showAddNote">
+    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)"></app-addnew-note>
+</ng-container>
+
+<ng-container *ngIf="openEditNote">
+    Open Note
+</ng-container>

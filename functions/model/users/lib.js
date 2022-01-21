@@ -85,6 +85,18 @@ exports.getAllUsersInEmail = function(emails) {
     return Promise.resolve(promise);
 };
 
+
+exports.getAllUsersInUids = function(uids) {
+    const data = [];
+    const promise = db.collection("Users").where("uid", "in", uids).get().then((doc) => {
+        doc.forEach((user) => {
+            data.push(user.data());
+        });
+        return data;
+    });
+    return Promise.resolve(promise);
+};
+
 exports.getUserUseEmail = function(email) {
     const promise = db.collection("Users").where("email", "==", email).get().then((doc) => {
         let data;
