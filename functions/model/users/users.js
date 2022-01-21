@@ -30,6 +30,7 @@ const { addExperience } = require("./tark/addExperience");
 const { addProject } = require("./tark/addProject");
 const { updateUserSkill } = require("./tark/updateSkills");
 const { updateProfilePic } = require("./tark/updateProfilePic");
+const { getUserByUid } = require("./tark/getUserByUid");
 
 
 fastify.post("/createNewUser", (req, res) => {
@@ -62,6 +63,10 @@ fastify.post("/getPhotoURLList", (req, res) => {
 
 fastify.post("/getUserByEmail", (req, res) => {
     getUserByEmail(req, res);
+});
+
+fastify.post("/getUserByUid", (req, res) => {
+    getUserByUid(req, res);
 });
 
 fastify.post("/setMyOrganization", (req, res) => {

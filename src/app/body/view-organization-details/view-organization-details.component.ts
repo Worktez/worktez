@@ -6,6 +6,7 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
 
-  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService) { }
+  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -66,7 +67,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   createTeam() {
-    this.router.navigate(['/CreateNewTeam']);
+    this.popupHandlerService.createNewTeamEnabled = true;
   }
 
   updatedDetails(data) {

@@ -15,6 +15,8 @@ export class SetupComponent implements OnInit {
   user: User;
   userAppSetting: UserAppSetting;
 
+  progressPercentage: number = 0
+
   public userObservable: Observable<User>
 
   appKey: string;
@@ -41,8 +43,8 @@ export class SetupComponent implements OnInit {
     );
     this.email = (await this.authService.afauth.currentUser).email;
     this.uid = (await this.authService.afauth.currentUser).uid;
+    this.progressPercentage = 2;
     this.createNewOrg();
-
   }
 
   async createNewOrg() {
@@ -50,6 +52,7 @@ export class SetupComponent implements OnInit {
     if (condition) {
       this.createNewOrganization("create", "Worktrolly", "worktrolly@gmail.com", "worktrolly.web.app", "dev setup", this.email, this.uid, "this.orgLogoURL");
       this.createNewOrganization("create", "TestOrg", "testOrgabc@gmail.com", "testOrg.web.app", "dev setup", this.email, this.uid, "this.orgLogoURL");
+      this.progressPercentage = 10;
     }
     else {
       console.log("Organization not created! Validation error");
@@ -70,6 +73,7 @@ export class SetupComponent implements OnInit {
         const type = ["Bug", "Story", "Sub Task"];
         const status = ["Ice Box", "Ready to Start", "Under Progress", "Blocked", "Completed"];
         const difficulty = ["High", "Medium", "Low"];
+        this.progressPercentage = 15;
   
         this.createNewTeamWithLabels("create", organizationDomain, "Development", "Dev", "test", organizationAdmin, ["member1@gmail.com"], this.email, type, status, priority, difficulty, orgAppKey);
         this.createNewTeamWithLabels("create", organizationDomain, "Marketing", "Mar", "test2", organizationAdmin, ["member2@gmail.com"], this.email, type, status, priority, difficulty, orgAppKey)
@@ -85,7 +89,8 @@ export class SetupComponent implements OnInit {
       if (modeTo == "create")
       {
         const callable = this.functions.httpsCallable('teams/createTeam');
-        const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
+        const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, TypeLabels: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).toPromise();
+        this.progressPercentage = 20;
         this.createNewSprint(teamName, teamId, organizationAppKey);
       }
       
@@ -100,6 +105,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({AppKey: organizationAppKey, StartDate: "2021-10-09", EndDate: "2021-10-18", Status: "Under Progress", NewSprintId: 1, TeamId: teamId }).toPromise();
+      this.progressPercentage = 25;
       this.createNewSession(project, teamId, organizationAppKey);
     } catch (error) {
       console.log(error);
@@ -113,7 +119,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
-
+      this.progressPercentage = 30;
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -122,7 +128,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid }).toPromise();
-
+      this.progressPercentage = 32;
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -131,7 +137,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task", Uid: this.authService.userAppSetting.uid  }).toPromise();
-
+      this.progressPercentage = 33;
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -140,7 +146,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid }).toPromise();
-
+      this.progressPercentage = 38;
       console.log("Successfully created the task");
       console.log(result);
     } catch (error) {
@@ -149,7 +155,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
-
+      this.progressPercentage = 39;
       console.log("Successfully created the task");
       console.log(result);
       this.createPatchesCollection();
@@ -163,7 +169,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch1", PatchName: "Counter Fix", PatchDescription: "This patch Fixes all the counters for the team", CreationDate: "16/06/2021", UpdatedOn: "06/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 40;
       console.log("Created Patch1 document");
       console.log(result);
     } catch (error) {
@@ -172,7 +178,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch2", PatchName: "Patch-2", PatchDescription: "This patch adds a new field to all the tasks with a default value.", CreationDate: "18/07/2021", UpdatedOn: "06/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 42;
       console.log("Created Patch2 document");
       console.log(result);
     } catch (error) {
@@ -181,7 +187,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch3", PatchName: "Patch-3", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 50;
       console.log("Created Patch3 document");
       this.showLoader = false;
       console.log(result);
@@ -191,7 +197,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch4", PatchName: "Patch-4", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 60;
       console.log("Created Patch4 document");
       this.showLoader = false;
       console.log(result);
@@ -201,7 +207,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch5", PatchName: "Patch-5", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 70;
       console.log("Created Patch5 document");
       this.showLoader = false;
       console.log(result);
@@ -211,7 +217,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch6", PatchName: "Patch-6", PatchDescription: "This patch allows the user to change a particular field in relevent tasks, enter field name and field value to get the task details", CreationDate: "07/07/2021", UpdatedOn: "12/08/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 75;
       console.log("Created Patch6 document");
       this.showLoader = false;
       console.log(result);
@@ -221,7 +227,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch7", PatchName: "Patch-7", PatchDescription: "This patch allows the user to add new fields for Organization", CreationDate: "09/12/2021", UpdatedOn: "09/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 80;
       console.log("Created Patch7 document");
       this.showLoader = false;
       console.log(result);
@@ -231,7 +237,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch8", PatchName: "Patch-8", PatchDescription: "This patch allows the user to add new fields in team", CreationDate: "11/12/2021", UpdatedOn: "13/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 85;
       console.log("Created Patch8 document");
       this.showLoader = false;
       console.log(result);
@@ -241,7 +247,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch9", PatchName: "Patch-9", PatchDescription: "This patch allows the user to add new fields for Users", CreationDate: "09/12/2021", UpdatedOn: "09/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 88;
       console.log("Created Patch9 document");
       this.showLoader = false;
       console.log(result);
@@ -251,7 +257,7 @@ export class SetupComponent implements OnInit {
 
     try {
       const result = await callable({Patch: "Patch10", PatchName: "Patch-10", PatchDescription: "This patch allows the user to add new fields for my organization", CreationDate: "31/12/2021", UpdatedOn: "31/12/2021", LastUsedByOrg: "", LastUsedByUid: ""}).toPromise();
-
+      this.progressPercentage = 100;
       console.log("Created Patch10 document");
       this.showLoader = false;
       console.log(result);

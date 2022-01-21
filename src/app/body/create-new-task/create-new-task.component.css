@@ -12,7 +12,7 @@
 .modal-content {
     background-color: var(--secondary-bg);
     color: var(--text);
-    border-radius: 6px; 
+    border-radius: 6px;
     min-height: 350px;
     padding: 1.1rem;
     justify-content: space-evenly;
@@ -21,11 +21,6 @@
 
 .close {
     color: var(--text);
-}
-
-.form-row {
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
 }
 
 .form-group {
@@ -68,7 +63,7 @@ input:focus {
     align-items: flex-start;
 }
 
-.dropdown-menu  {
+.dropdown-menu {
     width: 300px;
     height: auto;
     max-height: 300px;
