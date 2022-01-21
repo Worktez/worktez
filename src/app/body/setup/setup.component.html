@@ -1,4 +1,11 @@
-<button class="btn btn-primary" [disabled]="showLoader" (click)="start()">Auto Setup</button>
-<ng-container *ngIf="showLoader">
-    <app-loader></app-loader>
-</ng-container>
+<div class="row">
+    <div class="col">
+        <button class="btn btn-primary" [disabled]="showLoader" (click)="start()">Auto Setup</button>
+        <div class="progress" style="height: 10px; margin-top: 10px;">
+            <div class="progress-bar bg-success" role="progressbar"  [ngStyle]="{'width': progressPercentage + '%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <ng-container *ngIf="showLoader">
+            <app-loader></app-loader>
+        </ng-container>
+    </div>
+</div>

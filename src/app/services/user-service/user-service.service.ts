@@ -12,8 +12,10 @@ export class UserServiceService {
   public usersObservable: Observable<UserAppSetting[]>
 
   public users: UserAppSetting[] = []
-  public emails: string[] = []
+  public newEmails: string[] = []
   userReady: boolean = false
+
+  public newUids: string[] = []
 
   constructor(private functions: AngularFireFunctions) { }
 
@@ -28,18 +30,43 @@ export class UserServiceService {
         return newArray[0];
       } else {
         this.userReady = false;
+        return newArray[0]
       }
     } else {
       this.userReady = false;
+      return undefined
     }
   }
 
   fetchUserData() {
     if(!this.userReady) {
       const callable = this.functions.httpsCallable("users/getUserByEmail");
-      this.usersObservable =  callable({Email: this.emails }).pipe(map(res=>{
+      this.usersObservable =  callable({Email: this.newEmails }).pipe(map(res=>{
         const data = res.userData as UserAppSetting[];
-        this.users = data;
+        if(this.users.length == 0) {
+          this.users = data
+        } else {
+          this.users.concat(data)
+        }
+        this.newEmails = []
+        this.userReady = true
+        return data
+      }));
+    }
+    return this.usersObservable;
+  }
+
+  fetchUserDataUsingUID() {
+    if(!this.userReady) {
+      const callable = this.functions.httpsCallable("users/getUserByUid");
+      this.usersObservable =  callable({Uid: this.newUids }).pipe(map(res=>{
+        const data = res.userData as UserAppSetting[];
+        if(this.users.length == 0) {
+          this.users = data
+        } else {
+          this.users.concat(data)
+        }
+        this.newUids = []
         this.userReady = true
         return data
       }));

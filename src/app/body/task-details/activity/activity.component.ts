@@ -4,6 +4,7 @@ import { User, UserAppSetting, defaultUser} from "../../../Interface/UserInterfa
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
   selector: 'app-activity',
@@ -15,11 +16,11 @@ export class ActivityComponent implements OnInit {
   @Input('activity') activity: Activity
 
   public userObservable: Observable<UserAppSetting>;
-  public userDocument: AngularFirestoreDocument<UserAppSetting>;
+  // public userDocument: AngularFirestoreDocument<UserAppSetting>;
 
   user: UserAppSetting;
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private userService: UserServiceService) { }
 
   ngOnInit(): void {
     this.getUserDetail();
@@ -30,14 +31,17 @@ export class ActivityComponent implements OnInit {
       this.user = defaultUser;
     }
     else {
-      var documentName = "Users/"+this.activity.Uid;
-      this.userDocument = this.db.doc<UserAppSetting>(documentName);
-      this.userObservable = this.userDocument.snapshotChanges().pipe(
-        map(actions => {
-          const data = actions.payload.data() as UserAppSetting;
-          this.user = data;
-          return { ...data }
-        }));
+      this.user = this.userService.users.filter((obj) => {
+        return obj.uid == this.activity.Uid
+      })[0];
+      // var documentName = "Users/"+this.activity.Uid;
+      // this.userDocument = this.db.doc<UserAppSetting>(documentName);
+      // this.userObservable = this.userDocument.snapshotChanges().pipe(
+      //   map(actions => {
+      //     const data = actions.payload.data() as UserAppSetting;
+      //     this.user = data;
+      //     return { ...data }
+      //   }));
     }
 
   }
