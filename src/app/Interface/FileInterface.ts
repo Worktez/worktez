@@ -20,5 +20,6 @@ export class FileUpload {
     TaskId: string;
     OrgId: string;
     TaskFileDocumentName: string;
+    OrgFileDocumentName: string;
     BasePath: string;
   }

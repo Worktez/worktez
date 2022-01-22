@@ -11,18 +11,19 @@ export class OrgDocumentsComponent implements OnInit {
 
   @Input('organizationId') organizationId: string
   @Input('orgDomain') orgDomain: string
-
+  @Input('fileUrl') fileUrl: string
+  @Input('id') id: string
   private currentFileUpload: FileUpload;
   private selectedFile: FileList;
   percentage: number = 0;
   public fileName: string;
 
   private basePath: string;
-
+  
   constructor(public uploadService: FileUploadService) { }
 
   ngOnInit(): void {
-    this.basePath = '/Organizations/'+this.organizationId+'/Documents';
+    this.basePath = '/Organizations/'+this.organizationId+'/Documents'+'/'+this.fileUrl;
     this.uploadService.readFiles(this.orgDomain, "Documents");
   }
 
@@ -45,7 +46,7 @@ export class OrgDocumentsComponent implements OnInit {
 
   changeFileStatus(data: {changeStatus: string, file: FileData} ) {
     if(data.changeStatus == "delete") {
-      this.uploadService.deleteFile(data.file);
+      this.uploadService.deleteFileOrg(data.file);
     }
   }
 }

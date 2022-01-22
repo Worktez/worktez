@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
+import { OrgDocumentsComponent } from 'src/app/body/view-organization-details/org-documents/org-documents.component';
 import { FileData, FileUpload } from 'src/app/Interface/FileInterface';
 import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
@@ -15,6 +16,7 @@ export class FileUploadService {
 
   public fileUploadStatus: boolean = false;
   taskId: string = "";
+  fileUrl: string =""; 
 
   filesData: Observable<FileData[]>
 
@@ -45,7 +47,6 @@ export class FileUploadService {
 
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
-
     const fileName = fileUpload.name;
     const fileUrl = fileUpload.url;
     const lastModified = fileUpload.file.lastModified;
@@ -70,7 +71,7 @@ export class FileUploadService {
     this.fileUploadStatus = false;
   }
 
-  private async deleteFileFromDB(fileName, taskId, taskFileDocumentName) {
+  private async deleteFileFromDB(fileName: string, taskId: string, taskFileDocumentName: string) {
     const appKey = this.backendService.getOrganizationAppKey();
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -90,6 +91,20 @@ export class FileUploadService {
       this.readFiles(this.backendService.getOrganizationDomain(), file.TaskId);
     });
   }
+    private async deleteFileFromDBOrg(fileName: string, fileUrl: string, orgFileDocumentName: string) {
+    const appKey = this.backendService.getOrganizationAppKey();
+    const todayDate = this.toolsService.date();
+    const time = this.toolsService.time();  
+    const callable = this.functions.httpsCallable('librarian/deleteFilesInOrg');
+    return await callable({ FileName: fileName, FileUrl: fileUrl, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time, OrgFileDocumentName: orgFileDocumentName }).toPromise();
+    }
+    async deleteFileOrg(file: FileData) {
+    this.deleteFileStorage(file.FileName, file.BasePath);
+    this.deleteFileFromDBOrg(file.FileName, file.FileUrl, file.OrgFileDocumentName, ).then((data) => {
+    this.readFiles(this.backendService.getOrganizationDomain(), "Documents");
+    });
+    }
+    
 
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
