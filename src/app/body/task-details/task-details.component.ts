@@ -16,7 +16,6 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { Condition } from 'selenium-webdriver';
 
 @Component( {
   selector: 'app-task-details',
