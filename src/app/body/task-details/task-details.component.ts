@@ -15,6 +15,7 @@ import { Activity } from 'src/app/Interface/ActivityInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -45,7 +46,7 @@ export class TaskDetailsComponent implements OnInit {
   watcherList: string[] =[]
   orgDomain: string
   actionType: string = "All"
-  comment: string;
+  comment: string = "";
 
   dataReady: boolean = false
 
@@ -53,7 +54,7 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
+  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
@@ -190,17 +191,22 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async addComment() {
-    const callable = this.functions.httpsCallable('tasks/comment');
-    const appKey = this.backendService.getOrganizationAppKey();
+    var condition=await (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
+      return res;
+    });
+    if(condition){
+      const callable = this.functions.httpsCallable('tasks/comment');
+      const appKey = this.backendService.getOrganizationAppKey();
 
-    try {
-      const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-      
-      this.comment = "";
-      return;
-    } catch (error) {
-      this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
-      console.log("Error", error);
+      try {
+        const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+        
+        this.comment = "";
+        return;
+      } catch (error) {
+        this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
+        console.log("Error", error);
+      }
     }
   }
 
