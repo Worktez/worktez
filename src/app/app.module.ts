@@ -114,8 +114,14 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { EditProfilePicComponent } from './body/profile/edit-profile-pic/edit-profile-pic.component';
 import { UpdateImageComponent } from './body/common-tools/update-image/update-image.component';
 import { Patch10Component } from './patches/patch10/patch10.component';
+<<<<<<< HEAD
+import { QuickNotesComponent } from './body/quick-notes/quick-notes.component';
+import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.component';
+import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
+=======
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
+>>>>>>> c8038f2d0f10f164a3a4b7f96c1847c6ce057833
 
 @NgModule({
   declarations: [
@@ -212,8 +218,14 @@ import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-bo
     EditProfilePicComponent,
     UpdateImageComponent,
     Patch10Component,
+<<<<<<< HEAD
+    QuickNotesComponent,
+    AddnewNoteComponent,
+    EditNoteComponent,
+=======
     ReleaseNotesComponent,
     ReleaseNotesBodyComponent,
+>>>>>>> c8038f2d0f10f164a3a4b7f96c1847c6ce057833
   ],
   imports: [
     BrowserModule,

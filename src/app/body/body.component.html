@@ -22,6 +22,7 @@
     
     <ng-container *ngIf="authService.completedLoadingApplication; else loader">
         <router-outlet></router-outlet>
+        <app-quick-notes></app-quick-notes>
     </ng-container>
 
     <ng-template #loader>
