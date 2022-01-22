@@ -15,6 +15,8 @@ import { Activity } from 'src/app/Interface/ActivityInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
+
 import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component( {
@@ -47,6 +49,7 @@ export class TaskDetailsComponent implements OnInit {
   orgDomain: string
   actionType: string = "All"
   comment: string = "";
+  url: string;
 
   dataReady: boolean = false
 
@@ -54,32 +57,20 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService, public validationService: ValidationService ) { }
+  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
     this.Id = this.route.snapshot.params[ 'taskId' ];
+    this.url = window.location.href;
 
     this.backendService.selectedTaskId = this.Id;
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
     
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.orgDomain = this.backendService.getOrganizationDomain();
-    //         this.getTaskDetail();
-    //         this.getActivityData();
-    //         this.getLinkData();
-    //         this.activeAllBtn = true;
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   getTaskPageData(){
@@ -183,7 +174,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async getLinkData() {
-    const callable = this.functions.httpsCallable("tasks/getLink");
+    const callable = this.functions.httpsCallable("linker/getLink");
     this.linkData = callable({OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
       map(actions => {
         return actions.data as Link[];
@@ -228,6 +219,12 @@ export class TaskDetailsComponent implements OnInit {
 
   addLink() {
     this.linkEnabled = true;
+  }
+
+  addSubtask(){
+    this.popupHandlerService.createNewTaskEnabled= true;  
+    this.popupHandlerService.parentTaskId = this.Id;
+    this.popupHandlerService.parentTaskUrl = this.url;
   }
 
   logWorkCompleted ( data: { completed: boolean } ) {

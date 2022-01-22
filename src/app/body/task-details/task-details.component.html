@@ -63,6 +63,10 @@
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#linkModal" (click)="addLink()">Add Link</button>
                                         </div>
+                                        <div class="addSubtask mt-4"
+                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                                            <button class="dropdown-item" type="button"(click)="addSubtask()" data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
+                                        </div>
                                         <div class="delete mt-4"
                                             *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
