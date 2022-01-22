@@ -17,10 +17,6 @@ exports.addNote = function(request, response) {
     const lastUpdatedDate = request.body.data.LastUpdatedDate;
     const lastUpdatedTime = request.body.data.LastUpdatedTime;
 
-    // const displayName = request.body.data.DisplayName;
-    // const email = request.body.data.Email;
-
-
     let result;
     let status = 200;
 
@@ -38,7 +34,7 @@ exports.addNote = function(request, response) {
             updateUser(updateUserInputJson, uid);
 
             addUserNote(uid, title, note, docId, lastUpdatedDate, lastUpdatedTime).then((notesData) => {
-                console.log("Successful");
+                console.log("note added Successfully");
             }).catch((error) => {
                 result = { data: error };
                 status = 500;
@@ -49,7 +45,7 @@ exports.addNote = function(request, response) {
 
     const Promises = [promise1];
     return Promise.all(Promises).then(() => {
-        result = { data: "User Note updated successfully" };
+        result = { data: "User Note Added successfully" };
         return response.status(status).send(result);
     }).catch((error) => {
         result = { data: error };

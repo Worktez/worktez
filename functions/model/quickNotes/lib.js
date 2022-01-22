@@ -23,6 +23,25 @@ exports.getNotes = function(Uid) {
 
     return Promise.resolve(promise);
 };
+
+exports.getNote = function(Uid, docId) {
+    let query = db.collection("Users").doc(Uid).collection("QuickNotes");
+
+    query = query.where("DocId", "==", docId);
+
+    const promise = query.get().then((doc) => {
+        let data;
+        doc.forEach((element) => {
+            if (element.exists) {
+                data = element.data();
+            }
+        });
+        return data;
+    });
+
+    return Promise.resolve(promise);
+};
+
 exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpdatedTime) {
     const addNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).set({
         Title: title,
@@ -34,10 +53,13 @@ exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpd
     });
     return Promise.resolve(addNotePromise);
 };
-exports.deleteUserNote = function(uid, docId) {
-    const updateNoteToJson = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).set({
-        DocId: docId,
-        Status: "OK",
-    });
-    return Promise.resolve(updateNoteToJson);
+
+exports.deleteUserNote = function(updateNoteToJson, uid, docId) {
+    const deleteNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(updateNoteToJson);
+    return Promise.resolve(deleteNotePromise);
+};
+
+exports.updateNote = function(inputJson, uid, docId) {
+    const editNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(inputJson);
+    return Promise.resolve(editNotePromise);
 };

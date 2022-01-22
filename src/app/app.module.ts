@@ -116,6 +116,7 @@ import { UpdateImageComponent } from './body/common-tools/update-image/update-im
 import { Patch10Component } from './patches/patch10/patch10.component';
 import { QuickNotesComponent } from './body/quick-notes/quick-notes.component';
 import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.component';
+import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
 
 @NgModule({
   declarations: [
@@ -214,6 +215,7 @@ import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.
     Patch10Component,
     QuickNotesComponent,
     AddnewNoteComponent,
+    EditNoteComponent,
   ],
   imports: [
     BrowserModule,

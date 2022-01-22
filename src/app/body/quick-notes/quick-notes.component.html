@@ -1,23 +1,46 @@
 <button class="btn btn-success" id="quickNotesButton" (click)="showList()">
+    <mat-icon fontSet="material-icons" class="align-middle">
+        notes
+    </mat-icon>
     QuickNotes
 </button>
 <ng-container *ngIf="showNotesList">
     <div class="card" style="width: 18rem;">
         <div class="card-header">
-            Notes
+            <div class="row">
+                <div class="col-8">
+                    Notes
+                </div>
+                <div class="col ml-auto">
+                    <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
+                        close
+                    </mat-icon>
+                </div>
+            </div>
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
                 <ng-container *ngIf="quickNoteObservable|async; else loader">
                     <ng-container *ngFor="let item of notes">
-                        <li class="list-group-item" (click)="openNote()">{{item.Title}}</li>
+                        <li class="list-group-item" id="note">
+                            <div class="row">
+                                <div class="col-8" (click)="openNote(item)">
+                                    {{item.Title}}
+                                </div>
+                                <div class="col">
+                                    <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
+                                        delete
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </li>
                     </ng-container>
                 </ng-container>
                 <ng-template #loader>
                     <app-loader></app-loader>
                 </ng-template>
                 <li class="list-group-item ml-auto">
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="openAddNote()">
+                    <mat-icon fontSet="material-icons" class="align-middle" (click)="openAddNote()">
                         add
                     </mat-icon>
                 </li>
@@ -31,5 +54,5 @@
 </ng-container>
 
 <ng-container *ngIf="openEditNote">
-    Open Note
+    <app-edit-note [note]="selectedNote" (editNoteCompleted)="editNoteCompleted($event)"></app-edit-note>
 </ng-container>
