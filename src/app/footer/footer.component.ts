@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit {
           return objData;
         })).subscribe(data => {
           this.tag_name = data.tag_name;
-          
+
         });
       } catch (error) {      
       }
@@ -42,5 +42,8 @@ export class FooterComponent implements OnInit {
 
   termsandcondition() {
     this.router.navigate(['/termsandcondition'])
+  }
+  build(){
+    this.router.navigate(['/releasenotes']);
   }
 }
