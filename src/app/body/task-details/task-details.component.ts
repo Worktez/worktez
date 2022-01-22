@@ -200,10 +200,6 @@ export class TaskDetailsComponent implements OnInit {
     this.linkEnabled = false;
   }
 
-  // addedSubtask( data: { completed: boolean } ) {
-  //   this.subtaskEnabled = false;
-  // }
-
   async reopenTask () {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();

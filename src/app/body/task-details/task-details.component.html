@@ -89,19 +89,12 @@
                         <span id="headerLabel" style="cursor: default;">Assignee</span>
                         <app-suggestion-bucket [email]="task.Assignee" (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
-                        <!-- <h5 class="pt-1">{{assignee}}</h5> -->
                     </div>
                     <div class="col-4 creator">
                         <span id="headerLabel" style="cursor: default;">Creator</span>
                         <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
-                        <!-- <h5 class="pt-1">{{creator}}</h5> -->
                     </div>
-                    <!-- <ng-container *ngFor="let item of watchList">
-                        <span class="avatar">
-                            <img [src]='item' width="50" height="50"/>
-                        </span>
-                    </ng-container> -->
                     <div class="col-2 watchers">
                         <span id="headerLabel" style="cursor: default;">Watchers</span>
                         <div class="avatars">
@@ -291,9 +284,5 @@
     <ng-container *ngIf="linkEnabled" id="linkModalLabel">
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
-    <!-- <ng-container *ngIf="subtaskEnabled" id="exampleModalCenterLabel">
-        <app--new-task [Id]="task.Id" ></app-create-new-task>
-        <app-sub-task [task]="task" (addedSubtask)=" addedSubtask($event)"></app-sub-task> 
-    </ng-container> -->
 </ng-container>
 <app-loader *ngIf="!(taskDataObservable | async)"></app-loader>
