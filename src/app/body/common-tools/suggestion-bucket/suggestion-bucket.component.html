@@ -1,14 +1,16 @@
 <div class="row option p-1" *ngIf="userService.usersObservable|async">
-    <div class="col-2 pt-2" (click)="showUserProfile()" >
-        <img src="{{photoUrl}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle" width="30" height="30">
-    </div>
-    <div class="col pl-2" (click)="selectedOption(true)">
-        <span id="username">
-            {{userName}}
-        </span>
-        <br>
-        <span id="email">
-            {{email}}
-        </span>
-    </div>
+    <ng-container *ngIf="showUser">
+        <div class="col-2 pt-2" (click)="showUserProfile()" >
+            <img src="{{photoUrl}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle" width="30" height="30">
+        </div>
+        <div class="col pl-2" (click)="selectedOption(true)">
+            <span id="username">
+                {{userName}}
+            </span>
+            <br>
+            <span id="email">
+                {{email}}
+            </span>
+        </div>
+    </ng-container>
 </div>

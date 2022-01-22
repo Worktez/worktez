@@ -32,11 +32,13 @@ export class AddMemberComponent implements OnInit {
   }
 
   submit() {
-    if (this.isUpdateTeam == true) {
-      this.addUpdateTeam();
-    } else {
-      this.addCreateTeam();
-    }
+    if (this.memberEmail) {
+      if (this.isUpdateTeam == true) {
+        this.addUpdateTeam();
+      } else {
+        this.addCreateTeam();
+      }
+    } 
   }
 
 async addUpdateTeam() {
@@ -59,10 +61,6 @@ addCreateTeam() {
 }
 
   added() {
-    if (this.add == true) {
-      this.addedMember.emit({ completed: true, memberEmail: this.memberEmail});
-    } else {
-      this.addedMember.emit({ completed: true, memberEmail: ""});
-    }
+    this.addedMember.emit({ completed: true, memberEmail: this.memberEmail});
   }
 }

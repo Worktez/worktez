@@ -19,6 +19,7 @@ export class SuggestionBucketComponent implements OnInit {
   user: UserAppSetting;
 
   showMoreDetail: boolean = false;
+  showUser: boolean = false
   
   constructor(public userService: UserServiceService,  public router: Router) { }
 
@@ -28,11 +29,12 @@ export class SuggestionBucketComponent implements OnInit {
 
   readTeamMemberName(){
     const data = this.userService.getUserData(this.email);
-    
-    if(data) {
+
+    if(data != undefined) {
       this.userName = data.displayName;
       this.photoUrl = data.photoURL;
       this.user = data
+      this.showUser = true
     }
   }
 

@@ -63,12 +63,12 @@
                             </div>
                             <div class="col-md-6 col ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Type</span>
-                                <input type="text" class="form-control form-control-sm" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" list="typeSuggestion" placeholder="Enter Task Type">
-                                <datalist id="typeSuggestion">
+                                <select class="form-select form-control form-control-sm p-0" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Type">
+                                    <option [ngValue]="null" [disabled]="true">Select Task Type</option>
                                     <ng-container *ngFor='let item of type'>
                                         <option>{{ item }}</option>
                                     </ng-container>
-                                </datalist>
+                                </select>
                             </div>
                         </div>
                         <div class="form-row mb-2">

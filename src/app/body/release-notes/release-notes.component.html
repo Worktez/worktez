@@ -1,0 +1,8 @@
+<ng-container *ngIf="releaseData">
+    
+<ng-container *ngFor="let data of releaseData">
+    <app-release-notes-body [body]="data.body"></app-release-notes-body>
+    <hr>
+    <br>
+</ng-container>
+</ng-container>>
