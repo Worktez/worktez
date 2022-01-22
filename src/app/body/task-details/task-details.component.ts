@@ -33,8 +33,6 @@ export class TaskDetailsComponent implements OnInit {
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
   linkEnabled: boolean = false
-  createNewTaskEnabled: boolean = false;
-  // subtaskEnabled: boolean = false;
   userLoggedIn: boolean = false
   showContent: boolean = false;
   activeAllBtn: boolean = false
@@ -72,19 +70,6 @@ export class TaskDetailsComponent implements OnInit {
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
     
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.orgDomain = this.backendService.getOrganizationDomain();
-    //         this.getTaskDetail();
-    //         this.getActivityData();
-    //         this.getLinkData();
-    //         this.activeAllBtn = true;
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   getTaskPageData(){
@@ -196,9 +181,6 @@ export class TaskDetailsComponent implements OnInit {
     this.popupHandlerService.createNewTaskEnabled= true;  
     this.popupHandlerService.parentTaskId = this.Id;
     this.popupHandlerService.parentTaskUrl = this.url;
-    // this.createNewTaskEnabled = true;
-    // this.subtaskEnabled = true;
-    // this.popupHandlerService.createNewTaskEnabled= true;
   }
 
   logWorkCompleted ( data: { completed: boolean } ) {

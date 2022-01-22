@@ -167,35 +167,6 @@ export class CreateNewTaskComponent implements OnInit {
     this.close();
   }
 
-  async addLinks() {
-    console.log("adding links");
-    if (this.parentTaskId == '' || this.parentTaskId == undefined) {
-      console.log("normal task");
-    }
-    else {
-      const callable = this.functions.httpsCallable('link/setLinkDetails');
-      try {
-        console.log("see:parent",this.parentTaskId)
-        console.log("see:child",this.childTaskId)
-        const orgDomain = this.backendService.getOrganizationDomain();
-        const linkURL = "http://127.0.0.1:4200/TaskDetails/" + this.childTaskId;
-        await callable({OrgDomain: orgDomain, TaskID: this.parentTaskId, LinkType: "child", linkURL: linkURL}).toPromise();
-      }
-      catch {
-          console.log("subtask could not be created!");
-      } 
-
-      try{
-        const orgDomain = this.backendService.getOrganizationDomain();
-        const linkURL = "http://127.0.0.1:4200/TaskDetails/" + this.parentTaskId;
-        await callable({OrgDomain: orgDomain, TaskID: this.childTaskId, LinkType: "child", linkURL: linkURL}).toPromise();
-      }
-      catch {
-
-      }
-    }
-  }
-
   close() {
     jQuery('#createNewTask').modal('hide');
     jQuery('#form').trigger("reset");
