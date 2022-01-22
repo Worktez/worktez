@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth.service';
 import { Location } from '@angular/common';
+import { PatchService } from 'src/app/services/patch/patch.service';
+import { Patch } from 'src/app/Interface/PatchInterface';
 
 @Component({
   selector: 'app-patch6',
@@ -14,10 +16,12 @@ export class Patch6Component implements OnInit {
   orgDomain: string;
   showLoader: boolean = true;
   uid: string;
-  fieldName: string;
-  fieldValue: string;
+  newfield: string;
+  newFieldValue: any;
+  newFieldValueType: string;
+  patch: Patch;
 
-  constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService) { }
+  constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
   ngOnInit(): void {
     this.showLoader = false;
@@ -25,6 +29,7 @@ export class Patch6Component implements OnInit {
       this.authService.userAppSettingObservable.subscribe(data => {
         if (data.SelectedOrgAppKey) {
           this.uid = this.authService.userAppSetting.uid;
+          this.getPatchData();
           this.showLoader = false;
         }
       });
@@ -46,6 +51,12 @@ export class Patch6Component implements OnInit {
 
   backToDashboard() {
     this.location.back();
+  }
+
+  getPatchData() {
+    this.patchService.getPatchData("Patch6").subscribe(data => {
+      this.patch = data;
+    });
   }
 
 }
