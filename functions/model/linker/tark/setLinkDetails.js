@@ -6,7 +6,8 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getTask, setLinkDoc} = require("../lib");
+const { getTask } = require("../../tasks/lib");
+const { setLinkDoc } = require("../lib")
 const { updateTask } = require("../../tasks/lib");
 
 
@@ -15,6 +16,7 @@ exports.setLinkDetails = function(request, response) {
     const taskId = request.body.data.TaskID;
     const linkType = request.body.data.LinkType;
     const linkURL = request.body.data.LinkURL;
+
 
     let status = 200;
     let result;
@@ -25,6 +27,7 @@ exports.setLinkDetails = function(request, response) {
         } else {
             const linkCounter = taskDetail.LinkCounter + 1;
             const linkId= "Link"+(linkCounter);
+            console.log("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             setLinkDoc(orgDomain, taskId, linkType, linkURL, linkId);
             const inputJson = {
                 LinkCounter: linkCounter,
