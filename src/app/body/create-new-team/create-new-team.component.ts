@@ -151,22 +151,21 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   addedMember(data: { completed: boolean, memberEmail: string}) {
-    if (this.isUpdateTeam === false && data.memberEmail!="") {
+    if (data.memberEmail) {
       this.teamMembers.push(data.memberEmail);
     }
     this.addMemberEnabled = false;
   }
 
-  removeMember(remove: string) {
-    if (this.isUpdateTeam === false) {
-      const index = this.teamMembers.indexOf(remove);
-      if (index != -1) {
-        this.teamMembers.splice(index, 1);
-      } else {
-        console.log("Error- Cannot remove member. Member not found");
-      }
+  async removeMember(remove: string) {
+    if (this.isUpdateTeam === true) {
+      await this.removeMemberDB(remove);
+    }
+    const index = this.teamMembers.indexOf(remove);
+    if (index != -1) {
+      this.teamMembers.splice(index, 1);
     } else {
-      this.removeMemberDB(remove)
+      console.log("Error- Cannot remove member. Member not found");
     }
   }
 
@@ -217,7 +216,7 @@ export class CreateNewTeamComponent implements OnInit {
     }
 
     try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       jQuery('#createNewTeam').modal('hide');

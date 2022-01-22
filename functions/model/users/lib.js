@@ -29,6 +29,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         ExperienceCounter: 0,
         ProjectCounter: 0,
         TotalPhotoCounter: 0,
+        NoteCounter: 0,
     });
     return Promise.resolve(userData);
 };
@@ -77,6 +78,18 @@ exports.getAllPhotos = function(emails) {
 exports.getAllUsersInEmail = function(emails) {
     const data = [];
     const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
+        doc.forEach((user) => {
+            data.push(user.data());
+        });
+        return data;
+    });
+    return Promise.resolve(promise);
+};
+
+
+exports.getAllUsersInUids = function(uids) {
+    const data = [];
+    const promise = db.collection("Users").where("uid", "in", uids).get().then((doc) => {
         doc.forEach((user) => {
             data.push(user.data());
         });

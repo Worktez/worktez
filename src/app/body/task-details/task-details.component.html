@@ -83,6 +83,7 @@
             <div class="col-md-6 part">
                 <div class="row">
                     <div class="col-2 creationDate">
+                        <span id="headerLabel" style="cursor: default;">Creation Date</span>
                         <h5 class="pt-1">{{task.CreationDate}}</h5>
                     </div>
                     <div class="col-4 assignee">
@@ -235,16 +236,11 @@
                                 </ng-container>
                                 <ng-container *ngFor="let activity of activityData | async">
                                     <app-activity [activity]="activity"></app-activity>
-
-
                                 </ng-container>
                             </div>
 
-
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true">
                                 <form>
-
-
                                     <div class="form-row px-4 pt-4">
                                         <div class="form-group col-11">
 

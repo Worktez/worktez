@@ -80,3 +80,13 @@ input:focus {
 #date {
     color: var(--text);
 }
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}
