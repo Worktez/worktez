@@ -16,7 +16,7 @@ export class AddnewNoteComponent implements OnInit {
   title: string = ""
   notesContent: string = ""
 
-  showloader: boolean = false
+  enableLoader: boolean = false
 
   constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService) { }
 
@@ -27,16 +27,21 @@ export class AddnewNoteComponent implements OnInit {
     const uid = this.authService.getLoggedInUser();
     const date = this.toolService.date();
     const time = this.toolService.time();
-    this.showloader = true
+    this.enableLoader = true
 
-    const callable = this.functions.httpsCallable("quickNotes/addNote");
-    callable({Uid: uid, Title: this.title, Note: this.notesContent, LastUpdatedDate: date, LastUpdatedTime: time }).pipe(map(res=>{
-      return res
-    })).subscribe((data) => {
-      console.log(data);
-      this.showloader = false
-      this.addNoteCompleted.emit(true);
-    });
+    if(this.title != "" && this.notesContent != "" ) {
+      const callable = this.functions.httpsCallable("quickNotes/addNote");
+      callable({Uid: uid, Title: this.title, Note: this.notesContent, LastUpdatedDate: date, LastUpdatedTime: time }).pipe(map(res=>{
+        return res
+      })).subscribe((data) => {
+        this.enableLoader = false
+        this.addNoteCompleted.emit(true);
+      });
+    }
+  }
+
+  close() {
+    this.addNoteCompleted.emit(true);
   }
 
 }

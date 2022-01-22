@@ -117,6 +117,10 @@ import { Patch10Component } from './patches/patch10/patch10.component';
 <<<<<<< HEAD
 import { QuickNotesComponent } from './body/quick-notes/quick-notes.component';
 import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.component';
+<<<<<<< HEAD
+=======
+import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
+>>>>>>> a88c41286795da83f1a9d5033a95ea23d2d27fc8
 =======
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
@@ -220,6 +224,10 @@ import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-bo
 <<<<<<< HEAD
     QuickNotesComponent,
     AddnewNoteComponent,
+<<<<<<< HEAD
+=======
+    EditNoteComponent,
+>>>>>>> a88c41286795da83f1a9d5033a95ea23d2d27fc8
 =======
     ReleaseNotesComponent,
     ReleaseNotesBodyComponent,

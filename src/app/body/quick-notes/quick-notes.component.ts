@@ -18,6 +18,7 @@ export class QuickNotesComponent implements OnInit {
   showloader: boolean = false
   showAddNote: boolean = false
   openEditNote: boolean = false
+  selectedNote: QuickNote;
 
   constructor(private functions: AngularFireFunctions, public authService: AuthService) { }
 
@@ -52,8 +53,33 @@ export class QuickNotesComponent implements OnInit {
     }
   }
 
-  openNote() {
+  openNote(item: QuickNote) {
+    this.selectedNote = item;
     this.showNotesList = false
     this.openEditNote = true
+  }
+
+  editNoteCompleted(data) {
+    if(data) {
+      this.showNotesList = true
+      this.openEditNote = false
+    }
+  }
+
+  async deleteNote(docId: string) {
+    const uid = this.authService.getLoggedInUser();
+    const callable = this.functions.httpsCallable("quickNotes/deleteNote");
+    try {
+    const result = await callable({Uid: uid, DocId: docId}).toPromise();
+    this.showList();
+    } catch(error) {
+      console.log("Error", error);
+    }
+  }
+
+  close() {
+    this.showNotesList = false;
+    this.showAddNote = false;
+    this.openEditNote = false;
   }
 }
