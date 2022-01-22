@@ -6,7 +6,8 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getTask, setLinkDoc, updateTask } = require("../lib");
+const { getTask, setLinkDoc} = require("../lib");
+const { updateTask } = require("../../tasks/lib");
 
 
 exports.setLinkDetails = function(request, response) {

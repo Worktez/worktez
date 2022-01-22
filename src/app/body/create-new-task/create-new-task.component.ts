@@ -147,10 +147,12 @@ export class CreateNewTaskComponent implements OnInit {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
+    const parentTaskId = this.popupHandlerService.parentTaskId;
+    const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
 
     try {
-      const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType }).toPromise();
+      const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
