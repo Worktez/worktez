@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -7,11 +8,10 @@
 
 
 const { updateTask, getTask } = require("../../tasks/lib");
-const { setLinkDoc } = require("../lib")
+const { setLinkDoc } = require("../lib");
 
 exports.linkSubtask = function(parentTaskId, childTaskId, orgDomain, relationship, parentTaskUrl, childTaskUrl) {
-
-    let status = 200
+    let status = 200;
 
     const promise1 = getTask(parentTaskId, orgDomain).then((taskDetail) => {
         if (taskDetail == undefined) {
@@ -49,11 +49,9 @@ exports.linkSubtask = function(parentTaskId, childTaskId, orgDomain, relationshi
 
     const promises = [promise1, promise2];
         return Promise.all(promises).then(()=>{
-            console.log("Links set successfully!")
+            console.log("Links set successfully!");
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
         });
-
-   
-}
+};

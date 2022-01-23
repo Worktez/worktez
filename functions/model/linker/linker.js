@@ -26,6 +26,5 @@ exports.linker = functions.https.onRequest((req, res) => {
       if (err) throw err;
           requestHandler(req, res);
       });
-
   });
 });
