@@ -38,6 +38,32 @@ export class UserServiceService {
     }
   }
 
+  checkAndAddToUsersUsingEmail(email) {
+    if(this.newEmails.indexOf(email) == -1) {
+      const checkUser = this.users.filter((obj) => {
+        return (obj.email == email)
+      });
+
+      if(checkUser.length <= 0) {
+        this.newEmails.push(email);
+        this.userReady = false;
+      }
+    }
+  }
+
+  checkAndAddToUsersUsingUid(Uid) {
+    if(this.newUids.indexOf(Uid) == -1) {
+      const checkUser = this.users.filter((obj) => {
+        return (obj.uid == Uid)
+      });
+
+      if(checkUser.length <= 0) {
+        this.newUids.push(Uid);
+        this.userReady = false;
+      }
+    }
+  }
+
   fetchUserData() {
     if(!this.userReady) {
       const callable = this.functions.httpsCallable("users/getUserByEmail");

@@ -104,36 +104,9 @@ export class TaskDetailsComponent implements OnInit {
         const data = res.taskData as Tasks;
         this.task = data;
 
-        if(this.userService.newEmails.indexOf(this.task.Assignee) == -1) {
-          const checkUser = this.userService.users.filter((obj) => {
-            return (obj.uid == this.task.Assignee)
-          });
-
-          if(checkUser.length <= 0) {
-            this.userService.newUids.push(this.task.Assignee);
-            this.userService.userReady = false;
-          }
-        }
-        if(this.userService.newEmails.indexOf(this.task.Reporter) == -1) {
-          const checkUser = this.userService.users.filter((obj) => {
-            return (obj.uid == this.task.Reporter)
-          });
-
-          if(checkUser.length <= 0) {
-            this.userService.newEmails.push(this.task.Reporter);
-            this.userService.userReady = false;
-          }
-        }
-        if(this.userService.newEmails.indexOf(this.task.Creator) == -1) {
-          const checkUser = this.userService.users.filter((obj) => {
-            return (obj.uid == this.task.Creator)
-          });
-
-          if(checkUser.length <= 0) {
-            this.userService.newEmails.push(this.task.Creator);
-            this.userService.userReady = false;
-          }
-        }
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Assignee);
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Reporter);
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Creator);
 
         this.userService.fetchUserData().subscribe(()=>{
           this.dataReady = true;
@@ -151,20 +124,11 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => {
         const data = actions.data as Activity[];
         data.forEach(element => {
-          if(this.userService.newUids.indexOf(this.task.Creator) == -1) {
-            const checkUser = this.userService.users.filter((obj) => {
-              return (obj.uid == element.Uid)
-            });
-
-            if(checkUser.length <= 0) {
-              this.userService.newUids.push(element.Uid);
-              this.userService.userReady = false;
-            }
-          }
+          this.userService.checkAndAddToUsersUsingUid(element.Uid);
         });
 
         if(!this.userService.userReady) {
-          this.userService.fetchUserData().subscribe(()=>{
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
             this.dataReady = true;
           });
         }

@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 
 declare var jQuery:any;
@@ -70,7 +71,6 @@ export class CreateNewTaskComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.parentTaskId = this.popupHandlerService.parentTaskId;
-    console.log("parent id:", this.parentTaskId);
   }
 
   private _filter(value: string): string[] {
@@ -79,12 +79,23 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   readTeamData(teamId :string){
+    console.log(this.applicationSetting.teamDataReady);
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.priorityLabels = team.PriorityLabels;
           this.statusLabels = team.StatusLabels;
           this.type = team.Type;
           this.difficultyLabels = team.DifficultyLabels;
           this.teamMembers=team.TeamMembers;
+          // this.teamMembers.forEach(element => {
+          //   this.userService.checkAndAddToUsersUsingEmail(element);
+          // });
+
+          // if(!this.userService.userReady) {
+          //   this.userService.fetchUserData().subscribe(()=>{
+          //     this.dataReady = true;
+          //   });
+          // }
+
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
 
