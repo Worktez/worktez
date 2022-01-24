@@ -64,7 +64,6 @@ export class AddContributorsComponent implements OnInit {
   async submit() {
     this.enableLoader = true
     const callable = this.functions.httpsCallable('contributors');
-    console.log(this.aboutme);
     try {
       const result = await callable({mode: "addContributor", email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name }).toPromise();
     } catch (error) {

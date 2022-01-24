@@ -29,7 +29,8 @@ export class UserServiceService {
       if(newArray.length) {
         return newArray[0];
       } else {
-        this.userReady = false;
+        console.log("User Not Found Loading empty User")
+        // this.userReady = false;
         return newArray[0]
       }
     } else {
