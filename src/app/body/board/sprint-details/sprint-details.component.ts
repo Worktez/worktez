@@ -22,17 +22,28 @@ export class SprintDetailsComponent implements OnInit {
 
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
+  sprintStatus: string;
 
   constructor(public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }
 
-  async changeSprintStatus(sprintStatus: string) {
+  async changeSprintStatus(workPercentage: number) {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      const result = await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
+      if( workPercentage == 100 )
+      {
+        this.sprintStatus = "Completed";
+        console.log(this.sprintStatus)
+      }
+      else 
+      {
+        this.sprintStatus = "Under Progress";
+        console.log(this.sprintStatus)
+      }
+      const result = await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     }

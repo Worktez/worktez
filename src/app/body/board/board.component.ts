@@ -111,4 +111,13 @@ export class BoardComponent implements OnInit {
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }
+
+  // getSprintStatus() {
+  //   this.workPercentage = this.workPercentage;
+  //   if(this.workPercentage == 100)
+  //   {
+  //     console.log(this.workPercentage);
+  //   }
+  //   console.log(this.workPercentage);
+  // }
 }
