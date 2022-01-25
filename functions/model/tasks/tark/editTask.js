@@ -33,8 +33,13 @@ exports.editTask = function(request, response) {
     const taskId = request.body.data.Id;
     const editedSprintName = createSprintName(editedSprintNumber);
     const type = request.body.data.Type;
+    const reporter = request.body.data.Reporter;
     let result;
     let status = 200;
+
+    console.log(title);
+    console.log(taskStatus);
+
     const date = request.body.data.Date;
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
@@ -189,6 +194,7 @@ exports.editTask = function(request, response) {
             StoryPointNumber: storyPointNumber,
             Type: type,
             Status: taskStatus,
+            Reporter: reporter,
         };
         updateTask(updateTaskJson, orgDomain, taskId);
         sendMail(assignee, subjectMessage, htmlMessage);

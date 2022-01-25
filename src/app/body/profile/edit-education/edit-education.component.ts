@@ -59,7 +59,6 @@ export class EditEducationComponent implements OnInit {
     if (this.endDate == undefined || this.endDate == "") {
       this.endDate = "Present";
     }
-    console.log("Edit");
     const callable = this.functions.httpsCallable('users/updateEducation');
     try {
       await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).toPromise();

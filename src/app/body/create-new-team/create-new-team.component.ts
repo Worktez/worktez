@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
@@ -8,6 +8,9 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'app-create-new-team',
@@ -23,7 +26,6 @@ export class CreateNewTeamComponent implements OnInit {
   teamAdmin: string
   uid: string
   teamData: TeamDataId[] = [];
-  selectedTeamId: string;
   isUpdateTeam: boolean = false;
   addMemberEnabled: boolean = false;
   teamName: string;
@@ -32,8 +34,11 @@ export class CreateNewTeamComponent implements OnInit {
   teamManagerEmail: string;
   teamMembers: string[] = [];
   enableLoader: boolean = false;
+  @Input('teamId') selectedTeamId: string;
+  @Output() teamCreated = new EventEmitter<{ completed: boolean }>();
+  @Output() teamUpdated = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
@@ -45,8 +50,6 @@ export class CreateNewTeamComponent implements OnInit {
         }
       });
     });
-  
-    this.selectedTeamId = this.route.snapshot.params['teamId'];
   }
 
   loadData() {
@@ -57,9 +60,7 @@ export class CreateNewTeamComponent implements OnInit {
     this.uid = this.authService.getLoggedInUser();
 
     if (this.selectedTeamId != undefined) {
-      if (this.router.url.startsWith('/UpdateTeam')) {
-        this.isUpdateTeam = true;
-      }
+      this.isUpdateTeam = true;
       this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(team => {
         this.teamName = team.TeamName;
         this.teamId = team.TeamId;
@@ -150,22 +151,21 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   addedMember(data: { completed: boolean, memberEmail: string}) {
-    if (this.isUpdateTeam === false && data.memberEmail!="") {
+    if (data.memberEmail) {
       this.teamMembers.push(data.memberEmail);
     }
     this.addMemberEnabled = false;
   }
 
-  removeMember(remove: string) {
-    if (this.isUpdateTeam === false) {
-      const index = this.teamMembers.indexOf(remove);
-      if (index != -1) {
-        this.teamMembers.splice(index, 1);
-      } else {
-        console.log("Error- Cannot remove member. Member not found");
-      }
+  async removeMember(remove: string) {
+    if (this.isUpdateTeam === true) {
+      await this.removeMemberDB(remove);
+    }
+    const index = this.teamMembers.indexOf(remove);
+    if (index != -1) {
+      this.teamMembers.splice(index, 1);
     } else {
-      this.removeMemberDB(remove)
+      console.log("Error- Cannot remove member. Member not found");
     }
   }
 
@@ -196,6 +196,9 @@ export class CreateNewTeamComponent implements OnInit {
       const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
+      jQuery('#createNewTeam').modal('hide');
+      jQuery('#form').trigger("reset");
+      this.teamCreated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
 
@@ -213,9 +216,12 @@ export class CreateNewTeamComponent implements OnInit {
     }
 
     try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
+      jQuery('#createNewTeam').modal('hide');
+      jQuery('#form').trigger("reset");
+      this.teamUpdated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
 
@@ -225,7 +231,9 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   close() {
-    // this.location.back();
-    this.router.navigate(["MyDashboard"]);
+    jQuery('#createNewTeam').modal('hide');
+    jQuery('#form').trigger("reset");
+    this.teamCreated.emit({ completed: true });
+    this.teamUpdated.emit({ completed: true });
   }
 }

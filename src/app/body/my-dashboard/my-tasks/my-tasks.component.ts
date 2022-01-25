@@ -15,6 +15,7 @@ export class MyTasksComponent implements OnInit {
   parentComponent: string = "MyDashboard"
   tasksData: Tasks[]
   showLoader: boolean = false;
+  noData: boolean = false;
 
   displayColoumns = [];
 
@@ -27,6 +28,10 @@ export class MyTasksComponent implements OnInit {
         this.tasksData = data;
         this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
         this.showLoader = false;
+        this.noData = false;
+      } else {
+        this.showLoader = false;
+        this.noData = true;
       }
     });
   }

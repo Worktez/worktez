@@ -12,9 +12,17 @@
     <ng-container *ngIf="popupHandlerService.createNewTaskEnabled">
         <app-create-new-task (taskCreated)="taskCreated($event)"></app-create-new-task>
     </ng-container>
+    <ng-container *ngIf="popupHandlerService.createNewTeamEnabled">
+        <app-create-new-team (teamCreated)="teamCreated($event)"></app-create-new-team>
+    </ng-container>
+    <ng-container *ngIf="popupHandlerService.updateTeamEnabled">
+        <app-create-new-team (teamUpdated)="teamUpdated($event)" [teamId]="popupHandlerService.updateTeamId"></app-create-new-team>
+    </ng-container>
+
     
     <ng-container *ngIf="authService.completedLoadingApplication; else loader">
         <router-outlet></router-outlet>
+        <app-quick-notes></app-quick-notes>
     </ng-container>
 
     <ng-template #loader>

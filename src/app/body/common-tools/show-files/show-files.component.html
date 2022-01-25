@@ -1,4 +1,4 @@
-<div class="card" style="width: 10rem;">
+<div class="card" style="width: 10rem;" >
     <div class="dropdown text-right py-0">
         <button role="button" type="button" class="btn dropdown" data-toggle="dropdown"> 
             <span class="material-icons">more_vert</span>
@@ -11,9 +11,11 @@
     <div class="card-body py-0">
         <div class="row">
             <div class="col text-center">
-                <span id="files" class="material-icons">
-                    description
-                </span>
+                <a [href]="file.FileUrl"  target="_blank">
+                    <span id="files" class="material-icons">
+                        description
+                    </span>
+                </a>
                 <label>{{shortName}}</label>
             </div>
         </div>

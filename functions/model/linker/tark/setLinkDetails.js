@@ -6,7 +6,8 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getTask, setLinkDoc, updateTask } = require("../lib");
+const { getTask, updateTask } = require("../../tasks/lib");
+const { setLinkDoc } = require("../lib");
 
 
 exports.setLinkDetails = function(request, response) {
@@ -14,6 +15,7 @@ exports.setLinkDetails = function(request, response) {
     const taskId = request.body.data.TaskID;
     const linkType = request.body.data.LinkType;
     const linkURL = request.body.data.LinkURL;
+
 
     let status = 200;
     let result;

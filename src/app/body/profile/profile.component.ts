@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 
   componentName: string = "PROFILE"
   
+  editProfilePicEnabled: boolean = false
   editProfileEnabled: boolean = false
   editEducationEnabled: boolean = false
   editProjectEnabled: boolean = false
@@ -47,7 +48,7 @@ export class ProfileComponent implements OnInit {
   skills: string;
   website: string;
   username: string;
-  
+
   educations: MyEducationData;
   experiences: MyExperienceData;
   projects: MyProjectData;
@@ -59,7 +60,7 @@ export class ProfileComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
-
+    this.authService.userName =  this.username;
     if(this.startService.showTeams) {
       this.readUser();
       this.organizationName = this.backendService.getOrganizationName();
@@ -107,11 +108,14 @@ export class ProfileComponent implements OnInit {
     this.editProfileEnabled = true;
   }
 
+  editProfilePic() {
+    this.editProfilePicEnabled = true;
+  }
+
   editEducation(mode: string, educationId: number) {
     this.educationModalMode = mode;
     if(educationId >= 0){
       this.educationModalData = this.educations[educationId];
-      console.log(this.educationModalData);
     } else {
       this.educationModalData = null;
     }
@@ -161,6 +165,10 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = false;
     this.readUser();
   }
+  
+  editProfilePicCompleted(data: { completed: boolean }) {
+    this.readUser();
+  }
 
   readUser() {
     this.displayName = this.authService.userAppSetting.displayName;
@@ -174,9 +182,6 @@ export class ProfileComponent implements OnInit {
     this.githubProfile = this.authService.userAppSetting.GithubProfile;
     this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
     this.skills = this.authService.userAppSetting.Skills;
-    // this.education = this.authService.userAppSetting.Education;
-    // this.experience = this.authService.userAppSetting.Experience;
-    // this.projects = this.authService.userAppSetting.Projects;
     this.website = this.authService.userAppSetting.Website;
     if (this.website.includes("https://") == false) {
       this.website = "https://" + this.website;
@@ -187,21 +192,18 @@ export class ProfileComponent implements OnInit {
   }
 
   readUserEducation(uid: string) {
-    console.log("Reading education data");
     this.authService.getUserEducation(uid).subscribe(eduData => {
       this.educations = eduData;
     });
   }
   
   readUserExperience(uid: string) {
-    console.log("Reading experience data");
     this.authService.getUserExperience(uid).subscribe(expData => {
       this.experiences = expData;
     });
   }
   
   readUserProject(uid: string) {
-    console.log("Reading Project data");
     this.authService.getUserProject(uid).subscribe(projData => {
       this.projects = projData;
     });

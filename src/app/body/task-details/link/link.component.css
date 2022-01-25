@@ -10,6 +10,11 @@
     color: var(--text);
 }
 
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+}
+
 .head {
     font-weight: bolder;
 }

@@ -31,20 +31,25 @@
                             </div>
                             <div class="col ml-auto px-2">
                                 <span id="label">Assignee Name</span>
-                                <input type="text" class="form-control" [(ngModel)]="editTask.Assignee" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion">
-                                <datalist id="assigneeSuggestion">
-                                <ng-container *ngFor='let item of teamMembers'>
-                                    <option>
-                                        <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
-                                    </option>
-                                </ng-container>
-                                </datalist>
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                            <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                        </ng-container>
+                                    </div>
+                                </div>
                             </div>
                             </div>
                             <div class="row pt-3">
                                 <div class="col-md-6 ml-auto px-2">  
                                     <span id="label">Reporter Name</span>                      
-                                    <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Reporter}} [(ngModel)]="task.Reporter" [ngModelOptions]="{standalone: true}">
+                                    <input type="text" autocomplete="off" class="form-control" [formControl]="reporterName" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsReporter | async'>
+                                            <app-suggestion-bucket [email]="item" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
+                                        </ng-container>
+                                    </div>
                                 </div>
                                 <div class="col px-2 ml-auto px-2" id="creatorEditPageTask">
                                     <span id="label">Task Type</span>
@@ -110,14 +115,26 @@
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="showClose">
-                    <div class="row">
-                        <div class="col">Successfully Updated!</div>
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-secondary" id="button" type="button" data-dismiss="modal" (click)="editTaskDone()">Close</button>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="col">Task Edited Successfully !</div>
                         </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editTaskDone()">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </ng-container>
             </div>

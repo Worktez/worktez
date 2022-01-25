@@ -19,21 +19,23 @@ export class SuggestionBucketComponent implements OnInit {
   user: UserAppSetting;
 
   showMoreDetail: boolean = false;
+  showUser: boolean = false
   
-  constructor(private userService: UserServiceService,  public router: Router) { }
+  constructor(public userService: UserServiceService,  public router: Router) { }
 
   ngOnInit(): void {
     this.readTeamMemberName();
   }
 
   readTeamMemberName(){
-    this.userService.getUserData(this.email).then((data) => {
-      if(data) {
-        this.userName = data.displayName;
-        this.photoUrl = data.photoURL;
-        this.user = data
-      }
-    });
+    const data = this.userService.getUserData(this.email);
+
+    if(data != undefined) {
+      this.userName = data.displayName;
+      this.photoUrl = data.photoURL;
+      this.user = data
+      this.showUser = true
+    }
   }
 
   selectedOption(value: boolean) {

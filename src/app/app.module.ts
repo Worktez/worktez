@@ -111,7 +111,15 @@ import { TermsAndConditionComponent } from './terms-and-condition/terms-and-cond
 import { Patch8Component } from './patches/patch8/patch8.component';
 import { AddContributorsComponent } from './body/contributors/add-contributors/add-contributors.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { EditProfilePicComponent } from './body/profile/edit-profile-pic/edit-profile-pic.component';
+import { UpdateImageComponent } from './body/common-tools/update-image/update-image.component';
 import { Patch10Component } from './patches/patch10/patch10.component';
+import { QuickNotesComponent } from './body/quick-notes/quick-notes.component';
+import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.component';
+import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
+import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
+import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
+
 
 @NgModule({
   declarations: [
@@ -205,7 +213,14 @@ import { Patch10Component } from './patches/patch10/patch10.component';
     ContributorsComponent,
     TermsAndConditionComponent,
     AddContributorsComponent,
+    EditProfilePicComponent,
+    UpdateImageComponent,
     Patch10Component,
+    QuickNotesComponent,
+    AddnewNoteComponent,
+    EditNoteComponent,
+    ReleaseNotesComponent,
+    ReleaseNotesBodyComponent,
   ],
   imports: [
     BrowserModule,
