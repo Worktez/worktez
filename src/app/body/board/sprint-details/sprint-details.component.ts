@@ -27,13 +27,14 @@ export class SprintDetailsComponent implements OnInit {
   constructor(public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.changeSprintStatus();
   }
 
-  async changeSprintStatus(workPercentage: number) {
+   changeSprintStatus() {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      if( workPercentage == 100 )
+      if( this.workPercentage == 100 )
       {
         this.sprintStatus = "Completed";
         console.log(this.sprintStatus)
@@ -43,7 +44,17 @@ export class SprintDetailsComponent implements OnInit {
         this.sprintStatus = "Under Progress";
         console.log(this.sprintStatus)
       }
-      const result = await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
+      const result = callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
+    } catch (error) {
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+    }
+  }
+
+  forceChangeSprintStatus(sprintStatus:string) {
+    const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
+    const appKey = this.backendService.getOrganizationAppKey();
+    try {
+      const result = callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
     }

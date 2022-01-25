@@ -65,7 +65,8 @@
                                         </div>
                                         <div class="addSubtask mt-4"
                                             *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
-                                            <button class="dropdown-item" type="button"(click)="addSubtask()" data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
+                                            <button class="dropdown-item" type="button" (click)="addSubtask()"
+                                                data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
                                         <div class="delete mt-4"
                                             *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
@@ -234,8 +235,10 @@
                                         </div>
                                     </div>
                                 </ng-container>
+                                <!-- <input [(ngModel)]="fullName" /> <br /><br />
+                                <p> {{fullName}} </p> -->
                                 <ng-container *ngFor="let activity of activityData | async">
-                                    <app-activity [activity]="activity"></app-activity>
+                                    <app-activity [activity]="activity" ></app-activity>
                                 </ng-container>
                             </div>
 

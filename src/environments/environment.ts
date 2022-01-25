@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   firebase: {
-
   },
   useEmulators: true,
   gitApiUrl: "https://api.github.com/repos/Worktez/worktez"

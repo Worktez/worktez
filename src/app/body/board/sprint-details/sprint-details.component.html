@@ -11,13 +11,13 @@
             </div>
         </li>
         <li class="active flex-item">
-            <!-- <div class="btn-group" *ngIf="sprintData.Status != 'Completed' ">
+            <div class="btn-group" *ngIf="sprintData.Status != 'Completed' ">
                 <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status&nbsp;&nbsp;</button>
                 <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                    <button *ngIf="Status !== 'Under Progress'" class="dropdown-item" type="button" (click)="changeSprintStatus('Under Progress')">Under Progress</button>
-                    <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">Completed</button>
+                    <button *ngIf="Status !== 'Under Progress'" class="dropdown-item" type="button" (click)="forceChangeSprintStatus('Under Progress')">Under Progress</button>
+                    <button class="dropdown-item" type="button" (click)="forceChangeSprintStatus('Completed')">Completed</button>
                 </div>
-            </div> -->
+            </div>
             <div class="completionBtn" *ngIf="sprintData.Status === 'Completed' ">
                 <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal" data-target="#createNewSprint">Start New Sprint</button>
             </div>
@@ -64,18 +64,18 @@
                 <div class="col-12">
                     <ng-container *ngIf = "sprintData.SprintNumber > 0">
                         <div class="row" id="sprintStatus">
-                            <!-- <div class="col-10" id="statusHeading">
+                            <div class="col-10" id="statusHeading">
                                 <span class="material-icons ml-3" style="font-size: 18px; padding-left: 0;">donut_large</span>
                                 <h5>&nbsp;&nbsp;Status</h5> 
-                            </div> -->
-                            <!-- <div class="col-2"> -->
-                                <!-- <span class="material-icons align-middle completedIcon" *ngIf="sprintData.Status === 'Completed' ">
+                            </div> 
+                             <div class="col-2"> 
+                                <span class="material-icons align-middle completedIcon" *ngIf="sprintData.Status === 'Completed' ">
                                     check_circle
-                                </span> -->
+                                </span>
 
-                            <!-- </div> -->
+                             </div> 
                         </div>
-                        <button class="dropdown-item" type="button" (click)="changeSprintStatus(workPercentage)">Check status</button><br>
+                       
                         <div id="Progressgraph">
                             
                             <app-progress-graph [ngStyle]="{'width': workPercentage + '%'}" class="progress"></app-progress-graph>

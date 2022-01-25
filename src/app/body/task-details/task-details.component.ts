@@ -72,7 +72,6 @@ export class TaskDetailsComponent implements OnInit {
     this.getTaskPageData();
     
   }
-
   getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
@@ -155,7 +154,7 @@ export class TaskDetailsComponent implements OnInit {
 
       try {
         const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-        
+        this.getActivityData();
         this.comment = "";
         return;
       } catch (error) {
