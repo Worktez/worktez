@@ -11,6 +11,8 @@ export class PopupHandlerService {
   updateTeamEnabled: boolean = false
   updateTeamId: string
   addNewContributorEnabled: boolean = false
+  parentTaskId: string = "default"
+  parentTaskUrl: string = "default"
   
   constructor() { }
 
@@ -19,6 +21,11 @@ export class PopupHandlerService {
     this.createNewTaskEnabled = false
     this.createNewTeamEnabled = false
     this.addNewContributorEnabled = false
+  }
+
+  resetTaskIds() {
+    this.parentTaskId = "default"
+    this.parentTaskUrl = "default"
   }
 
 }

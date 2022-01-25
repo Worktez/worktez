@@ -116,7 +116,6 @@ export class ProfileComponent implements OnInit {
     this.educationModalMode = mode;
     if(educationId >= 0){
       this.educationModalData = this.educations[educationId];
-      console.log(this.educationModalData);
     } else {
       this.educationModalData = null;
     }
@@ -193,21 +192,18 @@ export class ProfileComponent implements OnInit {
   }
 
   readUserEducation(uid: string) {
-    console.log("Reading education data");
     this.authService.getUserEducation(uid).subscribe(eduData => {
       this.educations = eduData;
     });
   }
   
   readUserExperience(uid: string) {
-    console.log("Reading experience data");
     this.authService.getUserExperience(uid).subscribe(expData => {
       this.experiences = expData;
     });
   }
   
   readUserProject(uid: string) {
-    console.log("Reading Project data");
     this.authService.getUserProject(uid).subscribe(projData => {
       this.projects = projData;
     });

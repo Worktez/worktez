@@ -130,36 +130,9 @@ export class TasksComponent implements OnInit {
       if(data.length) {
         this.tasksData = data;
         data.forEach(element => {
-          if(this.userService.newEmails.indexOf(element.Assignee) == -1) {
-            const checkUser = this.userService.users.filter((obj) => {
-              return (obj.uid == element.Assignee)
-            });
-  
-            if(checkUser.length <= 0) {
-              this.userService.newEmails.push(element.Assignee);
-              this.userService.userReady = false;
-            }
-          }
-          if(this.userService.newEmails.indexOf(element.Assignee) == -1) {
-            const checkUser = this.userService.users.filter((obj) => {
-              return (obj.uid == element.Reporter)
-            });
-  
-            if(checkUser.length <= 0) {
-              this.userService.newEmails.push(element.Reporter);
-              this.userService.userReady = false;
-            }
-          }
-          if(this.userService.newEmails.indexOf(element.Assignee) == -1) {
-            const checkUser = this.userService.users.filter((obj) => {
-              return (obj.uid == element.Creator)
-            });
-  
-            if(checkUser.length <= 0) {
-              this.userService.newEmails.push(element.Creator);
-              this.userService.userReady = false;
-            }
-          }
+          this.userService.checkAndAddToUsersUsingEmail(element.Assignee);
+          this.userService.checkAndAddToUsersUsingEmail(element.Reporter);
+          this.userService.checkAndAddToUsersUsingEmail(element.Creator);
         });
         this.userService.fetchUserData().subscribe(()=>{
           this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];

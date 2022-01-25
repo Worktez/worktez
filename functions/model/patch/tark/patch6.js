@@ -26,11 +26,6 @@ exports.patch6 = function(request, response) {
                 getSprints(orgDomain, teamName).then((sprint) => {
                     sprint.forEach((element) => {
                         const sprintName = createSprintName(element.SprintNumber);
-                        const inputJson = {
-                            MidStoryPoint: 0,
-                            EndStoryPoint: 0,
-                            CompletedStoryPoint: 0,
-                        };
                         data = {};
                         if (newFieldValueType == "Array") {
                           data[newfield] = [];
@@ -39,7 +34,7 @@ exports.patch6 = function(request, response) {
                         } else if (newFieldValueType == "Number") {
                           data[newfield] = Number(newFieldValue);
                         }
-                        updateSprint(inputJson, orgDomain, teamName, sprintName);
+                        updateSprint(data, orgDomain, teamName, sprintName);
                     });
                 });
             });
