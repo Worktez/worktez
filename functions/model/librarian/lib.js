@@ -17,6 +17,11 @@ exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocume
     return Promise.resolve(updateFileToTaskPromise);
 };
 
+exports.updateFileToOrg = function(inputJson, orgDomain, OrgFileDocumentName) {
+    const updateFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(OrgFileDocumentName).update(inputJson);
+    return Promise.resolve(updateFileToOrgPromise);
+};
+
 exports.getFileInTask = function(orgDomain, taskId) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files");
     query = query.where("FileStatus", "==", "OK");
