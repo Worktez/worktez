@@ -116,14 +116,7 @@ import { UpdateImageComponent } from './body/common-tools/update-image/update-im
 import { Patch10Component } from './patches/patch10/patch10.component';
 import { QuickNotesComponent } from './body/quick-notes/quick-notes.component';
 import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.component';
-<<<<<<< HEAD
-=======
 import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
-<<<<<<< HEAD
->>>>>>> a88c41286795da83f1a9d5033a95ea23d2d27fc8
-=======
-=======
->>>>>>> 0ef9f3de0740f83ad21ddb2889178c26c0a650bf
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
 
@@ -225,14 +218,7 @@ import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-bo
     Patch10Component,
     QuickNotesComponent,
     AddnewNoteComponent,
-<<<<<<< HEAD
-=======
     EditNoteComponent,
-<<<<<<< HEAD
->>>>>>> a88c41286795da83f1a9d5033a95ea23d2d27fc8
-=======
-=======
->>>>>>> 0ef9f3de0740f83ad21ddb2889178c26c0a650bf
     ReleaseNotesComponent,
     ReleaseNotesBodyComponent,
   ],
