@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-performance-column-chart',
@@ -11,7 +12,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 })
 export class PerformanceColumnChartComponent implements OnInit {
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions) { }
+  constructor(public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   showLoader: boolean = false;
   @Input("userEmail") userEmail: string;
@@ -19,6 +20,7 @@ export class PerformanceColumnChartComponent implements OnInit {
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
   data: Observable<[]>;
+  componentName: string = "PERFORMANCE-COLUMN-CHART";
   columnNames: string[];
   teamMember: string;
   sprintRange1: number;
@@ -43,6 +45,8 @@ export class PerformanceColumnChartComponent implements OnInit {
         }));
       this.showLoader = false;
     } catch(error) {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log(error);
     }
   }

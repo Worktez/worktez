@@ -14,7 +14,7 @@ export class LinkComponent implements OnInit {
   @Input('taskId') taskId: string;
   @Input('orgDomain') orgDomain: string;
   @Output() addedLink = new EventEmitter<{ completed: boolean }>();
-
+  componentName:string = "LINK"
   linkURL: string;
   linkType: string;
   enableLoader: boolean = false;
@@ -36,8 +36,9 @@ export class LinkComponent implements OnInit {
       this.showClose = true;
       return;
     } catch (error) {
-      this.errorHandlerService.getErrorCode("LINK", "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
   }

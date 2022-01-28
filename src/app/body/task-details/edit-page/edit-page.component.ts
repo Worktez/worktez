@@ -161,7 +161,8 @@ export class EditPageComponent implements OnInit {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       this.enableLoader = false;
     }
   }
