@@ -7,19 +7,16 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { createSprintName, checkUpdateTime } = require("../../application/lib");
+const { createSprintName } = require("../../application/lib");
 const { getAllSprints } = require("../../sprints/lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
-const { updateChart, setOrganizationsChart } = require("../lib");
+const { updateChart, setOrganizationsChart, getOrganizationsChartDetails } = require("../lib");
 
-exports.updateSprintEvaluationGraphData = function(lastUpdated, orgDomain, teamId, sprintRange) {
-    const result = checkUpdateTime(lastUpdated);
-    if (result) {
+exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintRange) {
         let fullSprintName;
         let teamName;
         let storyPointArray=[];
         const inputJson = {};
-        inputJson["LastUpdated"] = result;
 
         getTeamUseTeamId(orgDomain, teamId).then((team) => {
             teamName = team.TeamName;
@@ -32,14 +29,23 @@ exports.updateSprintEvaluationGraphData = function(lastUpdated, orgDomain, teamI
                     storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
                     inputJson[fullSprintName] = storyPointArray;
                 });
-                if (lastUpdated == 0) {
-                    setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
-                } else {
-                    updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
-                }
+
+                getOrganizationsChartDetails(orgDomain, teamId, "SprintEvaluationGraph").then((data) => {
+                    if (data != undefined) {
+                        updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+                    } else {
+                        setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+                    }
+                    return null;
+                }).catch((err) => {
+                    console.log(err);
+                });
+                return null;
+            }).catch((err) => {
+                console.log(err);
             });
+            return null;
         }).catch((error) => {
             console.log(error);
         });
-    }
 };

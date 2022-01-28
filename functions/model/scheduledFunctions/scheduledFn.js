@@ -7,11 +7,12 @@
 // const { getUserPerformanceChart } = require("./lib");
 // const { updatedUserPerformanceChartData } = require("./updatedUserPerformanceChartData");
 
-const { functions } = require("../application/lib");
+const { functions, cors } = require("../application/lib");
+const { startSchedular } = require("./tark/startSchedular");
 
+// exports.scheduledFn = functions.https.onRequest((req, res) => {
+//   cors(req, res, () => {
 exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
-  console.log("Running Scheduled Functions!");
-
-  // updatedUserPerformanceChartData(lastUpdated, orgDomain, assignee, uid, sprintRange);
-  return null;
+  startSchedular();
 });
+// });
