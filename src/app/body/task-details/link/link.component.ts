@@ -14,7 +14,7 @@ export class LinkComponent implements OnInit {
   @Input('taskId') taskId: string;
   @Input('orgDomain') orgDomain: string;
   @Output() addedLink = new EventEmitter<{ completed: boolean }>();
-
+  componentName:string = "LINK"
   linkURL: string;
   linkType: string;
   enableLoader: boolean = false;
@@ -27,17 +27,16 @@ export class LinkComponent implements OnInit {
 
   async submit() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('tasks/setLink');
+    const callable = this.functions.httpsCallable('linker/setLink');
     try {
       const result = await callable({OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).toPromise();
-      console.log("Set Link Successfully");
-      console.log(result);
       this.enableLoader = false;
       this.showClose = true;
       return;
     } catch (error) {
-      this.errorHandlerService.getErrorCode("LINK", "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
   }

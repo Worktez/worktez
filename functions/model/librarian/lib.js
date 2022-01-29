@@ -17,6 +17,11 @@ exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocume
     return Promise.resolve(updateFileToTaskPromise);
 };
 
+exports.updateFileToOrg = function(inputJson, orgDomain, OrgFileDocumentName) {
+    const updateFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(OrgFileDocumentName).update(inputJson);
+    return Promise.resolve(updateFileToOrgPromise);
+};
+
 exports.getFileInTask = function(orgDomain, taskId) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files");
     query = query.where("FileStatus", "==", "OK");
@@ -41,6 +46,11 @@ exports.setFileToContributorsDocument = function(inputJson, orgFileDocumentName)
     return Promise.resolve(setFileToContributorsPromise);
 };
 
+exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentName) {
+    const setProfilePicToUserDocumentPromise = db.collection("Users").doc(uid).collection("ProfilePic").doc(orgFileDocumentName).set(inputJson);
+    return Promise.resolve(setProfilePicToUserDocumentPromise);
+};
+
 exports.getFileInOrgDocument = function(orgDomain) {
     let query = db.collection("Organizations").doc(orgDomain).collection("Documents");
     query = query.where("FileStatus", "==", "OK");
@@ -49,4 +59,3 @@ exports.getFileInOrgDocument = function(orgDomain) {
 
     return Promise.resolve(getFilesPromise);
 };
-

@@ -18,6 +18,7 @@ const { setTask } = require("../lib");
 const { sendMail } = require("../../email/lib");
 const { getUserUseEmail } = require("../../users/lib");
 const { sendNotification } = require("../../notifications/lib");
+const { linkSubtask } = require("../../linker/tark/linkSubTask");
 
 exports.createNewTask = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -36,6 +37,8 @@ exports.createNewTask = function(request, response) {
     const creationDate = request.body.data.CreationDate;
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
+    const parentTaskId = request.body.data.ParentTaskId;
+    const parentTaskUrl = request.body.data.ParentTaskUrl;
     const fullSprintName = createSprintName(sprintNumber);
     const type = request.body.data.Type;
     const loggedWorkTotalTime = 0;
@@ -70,7 +73,6 @@ exports.createNewTask = function(request, response) {
         const promise1 = getTeam(orgDomain, project).then((team) => {
             const totalTeamTasks = team.TotalTeamTasks + 1;
             taskId = team.TeamId + totalTeamTasks.toString();
-
             const updateTeamJson = {
                 TotalTeamTasks: totalTeamTasks,
             };
@@ -159,13 +161,22 @@ exports.createNewTask = function(request, response) {
             sendNotification(notificationMessage, uid, creationDate, time, orgDomain, link);
             
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
+
+            if (parentTaskId != "default") {
+                linkSubtask(parentTaskId, taskId, orgDomain, "PC", parentTaskUrl, link);
+            }
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
         });
     });
+<<<<<<< HEAD
    return Promise.resolve(promise1).then(() => {
             result = { data: "Task Created Successfully" };
+=======
+    return Promise.resolve(promise1).then(() => {
+            result = { data: "Task Created Successfully", childTaskId: taskId};
+>>>>>>> c27e4b579a37847619e6f845c892d2af4f623f5e
             console.log("Task Created Successfully");
             return response.status(status).send(result);
         })

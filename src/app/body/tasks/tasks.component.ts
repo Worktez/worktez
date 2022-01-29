@@ -11,6 +11,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { DataTableService } from 'src/app/services/dataTable/data-table.service';
 import { FilterTaskService } from 'src/app/services/filter-task/filter-task.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
   selector: 'app-tasks',
@@ -40,7 +41,7 @@ export class TasksComponent implements OnInit {
   displayColoumns: string[] = []
   showLoader: boolean = true;
 
-  constructor(public startService: StartServiceService, public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
+  constructor(public userService: UserServiceService, public startService: StartServiceService, public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -128,8 +129,15 @@ export class TasksComponent implements OnInit {
     this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
       if(data.length) {
         this.tasksData = data;
-        this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
-        this.showLoader = false;
+        data.forEach(element => {
+          this.userService.checkAndAddToUsersUsingEmail(element.Assignee);
+          this.userService.checkAndAddToUsersUsingEmail(element.Reporter);
+          this.userService.checkAndAddToUsersUsingEmail(element.Creator);
+        });
+        this.userService.fetchUserData().subscribe(()=>{
+          this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
+          this.showLoader = false;
+        });
       }
     });
 

@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -14,7 +15,7 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 })
 export class TasksEvaluationComponent implements OnInit {
 
-  constructor(public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService) { }
+  constructor(public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
   componentName: string = "TASKS-EVALUATION";
   tasks: Tasks[] = [];
   showLoader: boolean;
@@ -76,7 +77,8 @@ export class TasksEvaluationComponent implements OnInit {
         this.showLoader = false;
       });
     } catch (error) {
-      
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 
@@ -103,6 +105,8 @@ export class TasksEvaluationComponent implements OnInit {
         this.disable_prev = false;
         this.showLoader = false;
       } catch (error) {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.log(error);
       }
     }
@@ -130,6 +134,8 @@ export class TasksEvaluationComponent implements OnInit {
         this.disable_next = false;
         this.showLoader = false;
       } catch (error) {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.log(error);
       }
     }
@@ -170,6 +176,8 @@ export class TasksEvaluationComponent implements OnInit {
       }
     } catch (error) {
       this.showLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 }

@@ -31,11 +31,13 @@
                             </div>
                             <div class="col ml-auto px-2">
                                 <span id="label">Assignee Name</span>
-                                <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
-                                        <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
-                                    </ng-container>
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                            <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                        </ng-container>
+                                    </div>
                                 </div>
                             </div>
                             </div>

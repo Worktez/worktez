@@ -14,7 +14,7 @@ export class UpdateFieldComponent implements OnInit {
   @Input('fieldValue') fieldValue: string;
   @Input('uid') uid: string;
   @Output() updateFieldCompleted = new EventEmitter<{ completed: boolean }>();
-
+  componentName:string = "PATCHES"
   QueryShowLoader: boolean = false;
   newfieldName: string;
   newfieldValue: string;
@@ -37,8 +37,9 @@ export class UpdateFieldComponent implements OnInit {
         console.log(result);
       });
     } catch (error) {
-      this.errorHandlerService.getErrorCode("Update-data", "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
   }

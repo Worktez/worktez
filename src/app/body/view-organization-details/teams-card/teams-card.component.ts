@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-teams-card',
@@ -17,13 +19,14 @@ export class TeamsCardComponent implements OnInit {
 
   addMemberEnabled: boolean = false
   teamToAddMember: Team
-
-  constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService) { }
+  componentName:string ="ORGANIZATION-DETAILS"
+  constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {}
 
   updateTeam(TeamId: string) {
-    this.router.navigate(['/UpdateTeam', TeamId]);
+    this.popupHandlerService.updateTeamId = TeamId;
+    this.popupHandlerService.updateTeamEnabled = true;
   }
 
   async deleteTeam() {
@@ -34,6 +37,8 @@ export class TeamsCardComponent implements OnInit {
       this.team.TeamStatus = -1;
     } catch (error) {
       console.error("Error", error);
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 

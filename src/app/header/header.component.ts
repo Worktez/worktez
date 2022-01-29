@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit {
 
   createNewTask() {
     this.popupHandlerService.createNewTaskEnabled= true;
+    this.popupHandlerService.resetTaskIds();
   }
 
   Board() {

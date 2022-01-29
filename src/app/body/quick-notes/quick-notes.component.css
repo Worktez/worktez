@@ -1,0 +1,36 @@
+#quickNotesButton{
+    display: block;
+    border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px  #999;
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+    color: var(--text);
+}
+
+#note {
+    background-color: var(--secondary-bg);
+}
+
+#note:hover {
+    background-color: var(--primary-bg);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+    #quickNotesButton {
+        display: none;
+    }   
+}
+
+li {
+    background-color: var(--secondary-bg);
+}

@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./user-verification.component.css']
 })
 export class UserVerificationComponent implements OnInit {
-  componentName: string = "Verify User"
+  componentName: string = "USER-VERIFICATION"
   teamName: string
   organizationDomain: string
   userEmail: string
@@ -29,10 +29,10 @@ export class UserVerificationComponent implements OnInit {
     const callable = this.functions.httpsCallable('users/verify');
     try {
       const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
-
       this.router.navigate(['/']);
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 

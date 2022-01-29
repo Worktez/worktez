@@ -15,6 +15,9 @@ import { Activity } from 'src/app/Interface/ActivityInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
+
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -45,24 +48,32 @@ export class TaskDetailsComponent implements OnInit {
   watcherList: string[] =[]
   orgDomain: string
   actionType: string = "All"
-  comment: string;
+  comment: string = "";
+  url: string;
+
+  dataReady: boolean = false
 
   public taskDataObservable: Observable<Tasks>
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService ) { }
+  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
     this.Id = this.route.snapshot.params[ 'taskId' ];
+    this.url = window.location.href;
 
     this.backendService.selectedTaskId = this.Id;
 
     this.navbarHandler.addToNavbar( this.Id );
+    this.getTaskPageData();
+    
+  }
 
+  getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
       this.getTaskDetail();
@@ -81,19 +92,6 @@ export class TaskDetailsComponent implements OnInit {
         }
       });
     }
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.orgDomain = this.backendService.getOrganizationDomain();
-    //         this.getTaskDetail();
-    //         this.getActivityData();
-    //         this.getLinkData();
-    //         this.activeAllBtn = true;
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   selectedAssignee(item) {
@@ -105,37 +103,42 @@ export class TaskDetailsComponent implements OnInit {
     this.taskDataObservable = callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
         this.task = data;
-        // this.getName(data.Assignee, "Assignee");
-        // this.getName(data.Creator, "Creator");
+
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Assignee);
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Reporter);
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Creator);
+
+        this.userService.fetchUserData().subscribe(()=>{
+          this.dataReady = true;
+        });
+
         this.applicationSettingService.getTeamDetails(data.TeamId);
+
         return { ...data }
     }));
   }
-
-  // getName (email, value) {
-  //   let name="";
-  //   this.userService.getUserData(email).then(data => {
-  //     if(data) {
-  //       name = data.displayName;
-  //       if (value == "Assignee") {
-  //         this.assignee = name.split(' ')[0];
-  //       } else if (value == "Creator") {
-  //         this.creator = name.split(' ')[0];
-  //       }
-  //     }
-  //   });
-  // }
 
   async getActivityData () {
     const callable = this.functions.httpsCallable("activity/getActivity");
     this.activityData = callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
-        return actions.data as Activity[];
+        const data = actions.data as Activity[];
+        data.forEach(element => {
+          this.userService.checkAndAddToUsersUsingUid(element.Uid);
+        });
+
+        if(!this.userService.userReady) {
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
+            this.dataReady = true;
+          });
+        }
+        
+        return data
     }));
   }
 
   async getLinkData() {
-    const callable = this.functions.httpsCallable("tasks/getLink");
+    const callable = this.functions.httpsCallable("linker/getLink");
     this.linkData = callable({OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
       map(actions => {
         return actions.data as Link[];
@@ -143,17 +146,22 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async addComment() {
-    const callable = this.functions.httpsCallable('tasks/comment');
-    const appKey = this.backendService.getOrganizationAppKey();
+    var condition=await (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
+      return res;
+    });
+    if(condition){
+      const callable = this.functions.httpsCallable('tasks/comment');
+      const appKey = this.backendService.getOrganizationAppKey();
 
-    try {
-      const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-
-      this.comment = "";
-      return;
-    } catch (error) {
-      this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
-      console.log("Error", error);
+      try {
+        const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
+        this.comment = "";
+        return;
+      } catch (error) {
+        this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.log("Error", error);
+      }
     }
   }
 
@@ -177,7 +185,14 @@ export class TaskDetailsComponent implements OnInit {
     this.linkEnabled = true;
   }
 
+  addSubtask(){
+    this.popupHandlerService.createNewTaskEnabled= true;  
+    this.popupHandlerService.parentTaskId = this.Id;
+    this.popupHandlerService.parentTaskUrl = this.url;
+  }
+
   logWorkCompleted ( data: { completed: boolean } ) {
+    this.getTaskPageData();
     this.logWorkEnabled = false;
   }
 
@@ -201,7 +216,8 @@ export class TaskDetailsComponent implements OnInit {
       const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
       return;
     } catch ( error ) {
-      this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log( "Error", error );
     }
   }

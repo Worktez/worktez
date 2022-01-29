@@ -1,0 +1,30 @@
+.card {
+  position: fixed;
+  bottom: 70px;
+  right: 30px;
+  background-color: var(--secondary-bg);
+}
+
+input {
+  background-color: var(--secondary-bg);
+  border: none;
+  color: var(--text);
+}
+
+textarea,
+textarea:focus {
+    background-color: var(--primary-bg);
+    border: none;
+    color: var(--text);
+}
+
+input:hover,
+input:focus {
+  background-color: var(--primary-bg);
+  color: var(--text);
+}
+
+#icon {
+    color: var(--text);
+    cursor: pointer;
+}
