@@ -4,9 +4,11 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-unused-vars */
+const { getOrg } = require("../../organization/lib");
+const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { getOrganizationsChartDetails } = require("../lib");
-const { updatePerformanceChartData } = require("../tark/updatePerformanceChartData");
 
 exports.getPerformanceChartData = function(request, response) {
   const data = request.body.data;
@@ -16,7 +18,6 @@ exports.getPerformanceChartData = function(request, response) {
   const sprintRange = data.SprintNumberRange;
   let teamName;
   let result;
-  let lastUpdated = 0;
   let status = 200;
 
   const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
@@ -24,17 +25,15 @@ exports.getPerformanceChartData = function(request, response) {
     const p1 = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((doc) => {
       const responseData = [];
       if (doc == undefined) {
-        updatePerformanceChartData(0, orgDomain, teamId, assignee, sprintRange);
+        getOrg(orgDomain).then((data) => {
+          const orgAppKey = data.AppKey;
+          setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
+          startSchedular();
+        });
         result = {data: {status: "ERROR", data: "undefined"}};
       } else {
-        if (doc.LastUpdated != undefined) {
-          lastUpdated = doc.LastUpdated;
-        }
-        updatePerformanceChartData(lastUpdated, orgDomain, teamId, assignee, sprintRange);
         for (const i in doc) {
-          if (i!="LastUpdated") {
-            responseData.push([i, doc[i]]);
-          }
+          responseData.push([i, doc[i]]);
         }
         result = { data: { status: "OK", data: responseData } };
       }

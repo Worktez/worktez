@@ -45,7 +45,7 @@ export class OrgDocumentsComponent implements OnInit {
 
   changeFileStatus(data: {changeStatus: string, file: FileData} ) {
     if(data.changeStatus == "delete") {
-      this.uploadService.deleteFile(data.file);
+      this.uploadService.deleteFileOrg(data.file);
     }
   }
 }
