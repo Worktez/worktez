@@ -11,23 +11,23 @@ const { getUserPerformanceChartData } = require("./tark/getUserPerformanceChartD
 const { getSprintEvaluationGraph } = require("./tark/getSprintEvaluationGraph");
 
 fastify.post("/performanceChartData", (req, res) => {
-    getPerformanceChartData(req, res);
-  });
+  getPerformanceChartData(req, res);
+});
 
-  fastify.post("/userPerformanceChartData", (req, res) => {
-    getUserPerformanceChartData(req, res);
-  });
+fastify.post("/userPerformanceChartData", (req, res) => {
+  getUserPerformanceChartData(req, res);
+});
 
-  fastify.post("/sprintEvaluationGraph", (req, res) => {
-    getSprintEvaluationGraph(req, res);
-  });
+fastify.post("/sprintEvaluationGraph", (req, res) => {
+  getSprintEvaluationGraph(req, res);
+});
 
-  exports.performanceChart = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
+exports.performanceChart = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+          requestHandler(req, res);
+      });
         // const mode = request.body.data.mode;
 
         // if (mode == "create") {
@@ -35,7 +35,7 @@ fastify.post("/performanceChartData", (req, res) => {
         // } else if (mode == "getOrgData") {
         //     return getOrgData(request, response);
         // }
-    });
+  });
 });
     // cors(request, response, () => {
     //     const mode = request.body.data.mode;

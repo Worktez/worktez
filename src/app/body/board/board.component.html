@@ -38,7 +38,7 @@
                 </ng-container>
             </div>
             <div class="row">
-                <ng-container *ngIf="showContent">  
+                <ng-container *ngIf="showContent">
                     <div class="col-md-12 col-12">
                         <ng-container *ngIf="sprintNotExist == false">
                             <app-performance-column-chart [currentSprint]="startService.currentSprintNumber" [teamMembers]="startService.teamMembers" [teamId]="startService.selectedTeamId"></app-performance-column-chart>

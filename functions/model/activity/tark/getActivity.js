@@ -15,23 +15,23 @@ exports.getActivity = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
     const resultData = [];
 
-    if (actionType=="All") {
+    if (actionType == "All") {
         actionType = "";
     }
 
     const promise1 = getAction(orgDomain, taskId, actionType).then((snapshot) => {
         snapshot.forEach((element) => {
-            resultData.push(element.data());
+            resultData.unshift(element.data());
         });
     });
 
     return Promise.resolve(promise1).then(() => {
-        result={data: {status: "Ok", data: resultData}};
-        return response.status(status).send(result);
+            result = { data: { status: "Ok", data: resultData } };
+            return response.status(status).send(result);
         })
         .catch((error) => {
             console.error(error);
-            result= {data: {status: "Error", data: undefined}};
+            result = { data: { status: "Error", data: undefined } };
             return response.status(status).send(result);
         });
 };
