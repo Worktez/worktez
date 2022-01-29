@@ -2,11 +2,8 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-<<<<<<< HEAD
 import { AuthService } from 'src/app/services/auth.service';
-=======
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
->>>>>>> c27e4b579a37847619e6f845c892d2af4f623f5e
 
 @Component({
   selector: 'app-add-member',
@@ -30,13 +27,8 @@ export class AddMemberComponent implements OnInit {
   enableLoader: boolean = false;
   showClose: boolean = false;
   add: boolean = false;
-<<<<<<< HEAD
-  
- constructor(public backendService: BackendService,private functions: AngularFireFunctions,public authservice:AuthService) { }
-=======
 
-  constructor(public backendService: BackendService,private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
->>>>>>> c27e4b579a37847619e6f845c892d2af4f623f5e
+  constructor(public backendService: BackendService,private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,public authservice:AuthService) { }
 
   ngOnInit(): void {
   }
