@@ -32,7 +32,7 @@ exports.patch6 = function(request, response) {
                         } else if (newFieldValueType == "String") {
                           data[newfield] = newFieldValue;
                         } else if (newFieldValueType == "Number") {
-                          data[newfield] = Number(newFieldValue);
+                          data[newfield] = parseInt(newFieldValue);
                         }
                         updateSprint(data, orgDomain, teamName, sprintName);
                     });
