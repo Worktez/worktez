@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 
 @Component({
@@ -17,11 +18,11 @@ export class EditNoteComponent implements OnInit {
   @Output() editNoteCompleted = new EventEmitter<boolean>();
   @Input('note') note: QuickNote;
   public quickNoteObservable: Observable<QuickNote>
-
+  componentName:string = "QUICK-NOTES"
   editNote: QuickNote
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     
@@ -38,6 +39,8 @@ export class EditNoteComponent implements OnInit {
     const result = await callable({Uid: uid, Title: this.note.Title, Note: this.note.Note, LastUpdatedDate: date, LastUpdatedTime: time, DocId: this.note.DocId }).toPromise();
     console.log("Note edited succesfully");
     } catch(error) {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.error("Error", error);
     }
     this.editNoteCompleted.emit(true);

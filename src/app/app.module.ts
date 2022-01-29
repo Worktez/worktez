@@ -120,7 +120,6 @@ import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.compon
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -6,6 +6,7 @@ import { Notification } from 'src/app/Interface/NotificationInterface';
 import { Team, Sprint } from '../../Interface/TeamInterface';
 import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
+import { UserServiceService } from '../user-service/user-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +33,13 @@ export class ApplicationSettingsService {
 
   public notificationListObservable: Observable<Notification[]>;
 
-  constructor(private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
+  teamDataReady: boolean = false;
+
+  constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
   getTeamDetails(teamId: string) {
     if(this.team == undefined || this.team.TeamId != teamId) {
+      this.teamDataReady = false;
       const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
       const callable = this.functions.httpsCallable("teams/getTeamData");
       this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
@@ -46,6 +50,17 @@ export class ApplicationSettingsService {
           this.difficulty = this.team.DifficultyLabels;
           this.type = this.team.Type;
           this.project = this.backendService.organizationDetails.TeamsId;
+          this.team.TeamMembers.forEach(element => {
+            this.userService.checkAndAddToUsersUsingEmail(element);
+          });
+
+          if(!this.userService.userReady) {
+            this.userService.fetchUserData().subscribe(()=>{
+              this.teamDataReady = true;
+              console.log("teamDataReady : ", this.teamDataReady);
+            });
+          }
+
           return this.team;
       }));
     }

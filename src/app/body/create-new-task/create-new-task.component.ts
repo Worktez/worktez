@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 
 declare var jQuery:any;
@@ -70,7 +71,6 @@ export class CreateNewTaskComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.parentTaskId = this.popupHandlerService.parentTaskId;
-    console.log("parent id:", this.parentTaskId);
   }
 
   private _filter(value: string): string[] {
@@ -85,6 +85,16 @@ export class CreateNewTaskComponent implements OnInit {
           this.type = team.Type;
           this.difficultyLabels = team.DifficultyLabels;
           this.teamMembers=team.TeamMembers;
+          // this.teamMembers.forEach(element => {
+          //   this.userService.checkAndAddToUsersUsingEmail(element);
+          // });
+
+          // if(!this.userService.userReady) {
+          //   this.userService.fetchUserData().subscribe(()=>{
+          //     this.dataReady = true;
+          //   });
+          // }
+
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
 
@@ -161,8 +171,9 @@ export class CreateNewTaskComponent implements OnInit {
     try {
       const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api"); 
     }
     this.close();
   }

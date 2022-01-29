@@ -104,36 +104,9 @@ export class TaskDetailsComponent implements OnInit {
         const data = res.taskData as Tasks;
         this.task = data;
 
-        if(this.userService.newEmails.indexOf(this.task.Assignee) == -1) {
-          const checkUser = this.userService.users.filter((obj) => {
-            return (obj.uid == this.task.Assignee)
-          });
-
-          if(checkUser.length <= 0) {
-            this.userService.newUids.push(this.task.Assignee);
-            this.userService.userReady = false;
-          }
-        }
-        if(this.userService.newEmails.indexOf(this.task.Reporter) == -1) {
-          const checkUser = this.userService.users.filter((obj) => {
-            return (obj.uid == this.task.Reporter)
-          });
-
-          if(checkUser.length <= 0) {
-            this.userService.newEmails.push(this.task.Reporter);
-            this.userService.userReady = false;
-          }
-        }
-        if(this.userService.newEmails.indexOf(this.task.Creator) == -1) {
-          const checkUser = this.userService.users.filter((obj) => {
-            return (obj.uid == this.task.Creator)
-          });
-
-          if(checkUser.length <= 0) {
-            this.userService.newEmails.push(this.task.Creator);
-            this.userService.userReady = false;
-          }
-        }
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Assignee);
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Reporter);
+        this.userService.checkAndAddToUsersUsingEmail(this.task.Creator);
 
         this.userService.fetchUserData().subscribe(()=>{
           this.dataReady = true;
@@ -151,20 +124,11 @@ export class TaskDetailsComponent implements OnInit {
       map(actions => {
         const data = actions.data as Activity[];
         data.forEach(element => {
-          if(this.userService.newUids.indexOf(this.task.Creator) == -1) {
-            const checkUser = this.userService.users.filter((obj) => {
-              return (obj.uid == element.Uid)
-            });
-
-            if(checkUser.length <= 0) {
-              this.userService.newUids.push(element.Uid);
-              this.userService.userReady = false;
-            }
-          }
+          this.userService.checkAndAddToUsersUsingUid(element.Uid);
         });
 
         if(!this.userService.userReady) {
-          this.userService.fetchUserData().subscribe(()=>{
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
             this.dataReady = true;
           });
         }
@@ -191,11 +155,11 @@ export class TaskDetailsComponent implements OnInit {
 
       try {
         const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-        
         this.comment = "";
         return;
       } catch (error) {
-        this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
+        this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.log("Error", error);
       }
     }
@@ -252,7 +216,8 @@ export class TaskDetailsComponent implements OnInit {
       const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
       return;
     } catch ( error ) {
-      this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log( "Error", error );
     }
   }

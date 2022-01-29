@@ -94,6 +94,21 @@ export class FileUploadService {
     });
   }
 
+  private async deleteFileFromDBOrg(fileName: string, fileUrl: string, orgFileDocumentName: string) {
+    const appKey = this.backendService.getOrganizationAppKey();
+    const todayDate = this.toolsService.date();
+    const time = this.toolsService.time();  
+    const callable = this.functions.httpsCallable('librarian/deleteFilesInOrg');
+    return await callable({ FileName: fileName, FileUrl: fileUrl, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time, OrgFileDocumentName: orgFileDocumentName }).toPromise();
+    }
+
+  async deleteFileOrg(file: FileData) {
+    this.deleteFileStorage(file.FileName, file.BasePath);
+    this.deleteFileFromDBOrg(file.FileName, file.FileUrl, file.OrgFileDocumentName, ).then((data) => {
+    this.readFiles(this.backendService.getOrganizationDomain(), "Documents");
+    });
+    }
+
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
 

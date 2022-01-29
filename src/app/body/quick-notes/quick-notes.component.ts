@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map, Observable } from 'rxjs';
 import { QuickNote } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-quick-notes',
@@ -14,13 +15,13 @@ export class QuickNotesComponent implements OnInit {
   showNotesList: boolean = false
   public quickNoteObservable: Observable<QuickNote[]>
   public notes: QuickNote[]
-
+  componentName:string = "QUICK-NOTES"
   showloader: boolean = false
   showAddNote: boolean = false
   openEditNote: boolean = false
   selectedNote: QuickNote;
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -74,6 +75,8 @@ export class QuickNotesComponent implements OnInit {
     this.showList();
     } catch(error) {
       console.log("Error", error);
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 

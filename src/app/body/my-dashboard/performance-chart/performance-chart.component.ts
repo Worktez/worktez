@@ -43,6 +43,8 @@ export class PerformanceChartComponent implements OnInit {
         }));
         this.showLoader = false;
     } catch(error) {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log(error);
     }
   }

@@ -29,12 +29,39 @@ export class UserServiceService {
       if(newArray.length) {
         return newArray[0];
       } else {
-        this.userReady = false;
+        console.log("User Not Found Loading empty User")
+        // this.userReady = false;
         return newArray[0]
       }
     } else {
       this.userReady = false;
       return undefined
+    }
+  }
+
+  checkAndAddToUsersUsingEmail(email) {
+    if(this.newEmails.indexOf(email) == -1) {
+      const checkUser = this.users.filter((obj) => {
+        return (obj.email == email)
+      });
+
+      if(checkUser.length <= 0) {
+        this.newEmails.push(email);
+        this.userReady = false;
+      }
+    }
+  }
+
+  checkAndAddToUsersUsingUid(Uid) {
+    if(this.newUids.indexOf(Uid) == -1) {
+      const checkUser = this.users.filter((obj) => {
+        return (obj.uid == Uid)
+      });
+
+      if(checkUser.length <= 0) {
+        this.newUids.push(Uid);
+        this.userReady = false;
+      }
     }
   }
 
