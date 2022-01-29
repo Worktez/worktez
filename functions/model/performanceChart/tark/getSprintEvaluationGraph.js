@@ -15,6 +15,8 @@ exports.getSprintEvaluationGraph = function(request, response) {
   const orgDomain = data.OrganizationDomain;
   const teamId = data.TeamId;
   const sprintRange = data.SprintNumberRange;
+  const sprintRange1 = sprintRange["SprintRange1"];
+  const sprintRange2 = sprintRange["SprintRange2"];
   let result;
   let teamName;
   let status = 200;
@@ -32,10 +34,13 @@ exports.getSprintEvaluationGraph = function(request, response) {
         result = {data: {status: "ERROR", data: "undefined"}};
       } else {
         for (const i in doc) {
+          const j=i.slice(1);
+          if(j>=sprintRange1  && j<=sprintRange2){
           const start = doc[i][0];
           const mid = doc[i][1];
           const end = doc[i][2];
           responseData.push([i, start, mid, end]);
+          }
         }
         result = { data: { status: "OK", data: responseData } };
       }
