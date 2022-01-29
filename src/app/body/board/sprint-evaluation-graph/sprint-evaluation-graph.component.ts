@@ -4,6 +4,7 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-sprint-evaluation-graph',
@@ -12,7 +13,7 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class SprintEvaluationGraphComponent implements OnInit {
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions) { }
+  constructor(public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   showLoader: boolean = false;
   @Input("userEmail") userEmail: string;
@@ -20,6 +21,7 @@ export class SprintEvaluationGraphComponent implements OnInit {
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
   data: Observable<[]>;
+  componentName:string = "SPRINT-EVALUATION-GRAPH";
   columnNames: string[] = ["Sprints", "Start", "Mid", "End"];
   teamMember: string;
   sprintRange1: number;
@@ -46,6 +48,8 @@ export class SprintEvaluationGraphComponent implements OnInit {
         }));
       this.showLoader = false;
     } catch(error) {
+      this.errorHandlerService.showError = true;
+    this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log(error);
     }
   }

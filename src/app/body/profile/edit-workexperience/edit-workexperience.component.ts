@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { MyEducationData, MyExperienceData } from 'src/app/Interface/UserInterface';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-edit-workexperience',
@@ -22,10 +23,10 @@ export class EditWorkexperienceComponent implements OnInit {
   startDate: string
   endDate: string
   todayDate: string
-
+  componentName:string = "PROFILE"
   @Output() editWorkCompleted = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     // this.todayDate = this.toolsService.date();
@@ -50,6 +51,8 @@ export class EditWorkexperienceComponent implements OnInit {
     } catch (error) {
       console.log("error");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
   
@@ -67,6 +70,8 @@ export class EditWorkexperienceComponent implements OnInit {
     } catch (error) {
       console.log("error");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 
