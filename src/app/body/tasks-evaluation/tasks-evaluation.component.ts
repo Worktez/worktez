@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -17,22 +18,18 @@ export class TasksEvaluationComponent implements OnInit {
   constructor(public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService) { }
   componentName: string = "TASKS-EVALUATION";
   tasks: Tasks[] = [];
+  sprints: Sprint[] = [];
   showLoader: boolean;
   selectedTeamId: string;
+  selectedTeamName: string;
   todayDate: string;
   time: string;
   teamIds: string[];
   teamCurrentSprint: number;
-  filterSprintNumber: number;
-  showModalLoader: boolean;
+  sprintRange2: number;
+  sprintRange1: number;
 
-  firstInResultTaskId: string;
-  lastInResultTaskId: string;
-  prev_strt_at = [];
-  pagination_clicked_count = 0;
-
-  disable_next: boolean = false;
-  disable_prev: boolean = false;
+  lastInResultSprintId: number;
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -46,7 +43,12 @@ export class TasksEvaluationComponent implements OnInit {
           this.backendService.organizationsData.subscribe(data => {
               this.teamIds = this.backendService.getOrganizationTeamIds();
               this.selectedTeamId = this.authService.getTeamId();
-              this.readTasks();   
+              this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
+                this.teamCurrentSprint = data.CurrentSprintId;
+                this.selectedTeamName = data.TeamName;
+                this.getAllSprints();
+                this.readTasks(); 
+              });
           });
         }
       });
@@ -55,83 +57,15 @@ export class TasksEvaluationComponent implements OnInit {
 
   async readTasks() {
     this.showLoader = true;
-    this.disable_next = true;
-    this.disable_prev = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
     try {
-      const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.filterSprintNumber }).toPromise();
+      const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintRange1: this.sprintRange1, SprintRange2: this.sprintRange2 }).toPromise();
       this.tasks = result.Tasks;
-      this.firstInResultTaskId = result.Tasks[0].Id;
-      this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
+      console.log(this.tasks);
 
-      this.prev_strt_at = [];
-      this.pagination_clicked_count = 0;
-      this.disable_next = false;
-      this.disable_prev = true;
-
-      this.prev_strt_at.push(this.firstInResultTaskId);
-      this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
-        this.teamCurrentSprint = data.CurrentSprintId;
-        this.showLoader = false;
-      });
     } catch (error) {
       
-    }
-  }
-
-  async nextPage() {
-    if(!this.disable_next) {
-      this.disable_next = true;
-      this.showLoader = true;
-      const orgDomain = this.backendService.getOrganizationDomain();
-      const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
-      try {
-        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'next', LastInResultTaskId: this.lastInResultTaskId, SprintNumber: this.filterSprintNumber }).toPromise();
-        this.tasks = result.Tasks;
-
-        if (!this.tasks.length) {
-          this.disable_next = true;
-          return;
-        }
-        this.firstInResultTaskId = result.Tasks[0].Id;
-        this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
-
-        this.pagination_clicked_count++;
-        this.prev_strt_at.push(this.firstInResultTaskId);
-        this.disable_next = result.DisableNext;
-        this.disable_prev = false;
-        this.showLoader = false;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }
-
-  async prevPage() {
-    if(!this.disable_prev) {
-      this.disable_prev = true;
-      this.showLoader = true;
-      const orgDomain = this.backendService.getOrganizationDomain();
-      const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
-      try {
-        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'previous', FirstInResultTaskId: this.firstInResultTaskId, StartAt: this.get_prev_startAt(), SprintNumber: this.filterSprintNumber }).toPromise();
-        this.tasks = result.Tasks;
-        
-        this.firstInResultTaskId = result.Tasks[0].Id;
-        this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
-        this.pagination_clicked_count--;
-        this.prev_strt_at.forEach(element => {
-          if (this.firstInResultTaskId == element) {
-            element = null;
-          }
-        });
-        this.disable_prev = result.DisablePrev;
-        this.disable_next = false;
-        this.showLoader = false;
-      } catch (error) {
-        console.log(error);
-      }
     }
   }
 
@@ -145,15 +79,31 @@ export class TasksEvaluationComponent implements OnInit {
     }
   }
 
-  get_prev_startAt() {
-    if (this.prev_strt_at.length > (this.pagination_clicked_count + 1))
-      this.prev_strt_at.splice(this.prev_strt_at.length - 2, this.prev_strt_at.length - 1);
-    return this.prev_strt_at[this.pagination_clicked_count - 1];
+  async getAllSprints() {
+    const callable = this.functions.httpsCallable('sprints/getAllSprints');
+    const orgDomain = this.backendService.getOrganizationDomain();
+    try {
+      const result = await callable({OrgDomain: orgDomain, TeamName: this.selectedTeamName}).toPromise();
+      const data = result.sprints as Sprint[];
+      this.sprints = data;
+      this.sprints.sort((a, b) => {
+        return b.SprintNumber - a.SprintNumber;
+      });
+      this.sprintRange2 = this.sprints[0].SprintNumber
+      if (this.sprintRange2 < 4) {
+        this.sprintRange1 = 1;
+      } else {
+        this.sprintRange1 = this.sprintRange2 - 3
+      }
+      console.log(this.sprintRange1);
+      console.log(this.sprintRange2);
+    } catch (error) {
+
+    }
   }
 
   async moveToCurrentSprint(task: Tasks) {
     this.showLoader = true;
-    this.showModalLoader = true;
     const callable = this.functions.httpsCallable('tasks/editTask');
     // Move to Current Sprint
     try {
@@ -162,7 +112,6 @@ export class TasksEvaluationComponent implements OnInit {
         const result = await callable({AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).toPromise();
 
         this.readTasks();
-        this.showModalLoader = false;
         this.showLoader = false;
       }
       else {

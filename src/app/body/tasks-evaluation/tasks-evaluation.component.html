@@ -1,4 +1,18 @@
 <div class="container">
+    <ng-container *ngFor="let sprint of sprints">
+        <ng-container *ngIf="sprint.SprintNumber != -1 && sprint.SprintNumber != -2">
+            <div class="row">
+                <div class="col">
+                    {{ getSprintName(sprint.SprintNumber) }}
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>
+
+
+
+<!-- <div class="container">
     <div class="row align-items-center py-2" id="navbarMenu">
         <div class="col-8">
             <h3 style="font-weight:bolder">Tasks</h3>
@@ -148,4 +162,4 @@
             </ng-container>
         </div>
     </div>
-</div>
+</div> -->

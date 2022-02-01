@@ -9,66 +9,45 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { db } = require("../../application/lib");
+const { getAllTasks } = require("../../tasks/lib");
 
 exports.readTasksEvaluationData = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
     const teamId = request.body.data.TeamId;
-    const sprintNumber = request.body.data.SprintNumber;
+    const sprintRange1 = request.body.data.SprintRange1;
+    const sprintRange2 = request.body.data.SprintRange2;
     const pageToLoad = request.body.data.PageToLoad;
-    const lastInResultTaskId = request.body.data.LastInResultTaskId;
-    const firstInResultTaskId = request.body.data.FirstInResultTaskId;
-    const startAt = request.body.data.StartAt;
     const tasks = [];
     let status = 200;
-    let disableNext = false;
-    let disablePrev = false;
-    let promise;
-    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).orderBy("Id", "desc");
+    let disableLoadMore = false;
 
-    if (sprintNumber) {
-        query = query.where("SprintNumber", "==", sprintNumber);
-    }
+    let p1;
 
     if (pageToLoad == "initial") {
-        query = query.limit(20);
-    } else if (pageToLoad == "next") {
-        query = query.startAfter(lastInResultTaskId).limit(20);
-    } else if (pageToLoad == "previous") {
-        query = query.startAt(startAt).endBefore(firstInResultTaskId).limit(20);
-    }
-
-    promise = query.get().then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-            tasks.push(doc.data());
+        p1 = getAllTasks(orgDomain, teamId, -1, "", "", "", "", "", "", "").then(taskCol => {
+            taskCol.forEach((taskDoc) => {
+                tasks.push(taskDoc.data());
+            });
         });
-        let p1;
-        if (pageToLoad == "next") {
-            p1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).orderBy("Id", "desc").startAfter(tasks[tasks.length - 1].Id).get().then((docs) => {
-                if (docs.empty) {
-                    disableNext = true;
-                }
-            });
-        } else if (pageToLoad == "previous") {
-            p1 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).orderBy("Id", "desc").endBefore(tasks[0].Id).get().then((docs) => {
-                if (docs.empty) {
-                    disablePrev = true;
-                }
-            });
-        }
-        return Promise.resolve(p1);
+    } 
+
+    const p2 = getAllTasks(orgDomain, teamId, "", "", "", "", "", "", sprintRange1, sprintRange2).then((taskCol) => {
+        taskCol.forEach((taskDoc) => {
+            tasks.push(taskDoc.data());
+        });
     }).catch((error) => {
-        console.log(error);
         status = 500;
+        console.log("Error:", error);
     });
+    
 
     return Promise.resolve(promise).then(() => {
-        result = { data: {Tasks: tasks, DisableNext: disableNext, DisablePrev: disablePrev} };
+        result = { data: {Tasks: tasks} };
         console.log("Read Task Evaluation Page Data Successfully");
         return response.status(status).send(result);
     }).catch((err) => {
         result = { data: err };
-        console.log("Error occured");
+        console.log("Error occured in reading task evaluation page data");
         return response.status(status).send(result);
     });
 };
