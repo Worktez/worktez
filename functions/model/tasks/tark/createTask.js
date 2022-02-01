@@ -166,6 +166,7 @@ exports.createNewTask = function(request, response) {
     });
    return Promise.resolve(promise1).then(() => {
             result = { data: "Task Created Successfully" };
+            console.log(assignee);
             console.log("Task Created Successfully");
             return response.status(status).send(result);
         })
