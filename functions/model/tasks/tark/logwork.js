@@ -63,7 +63,7 @@ exports.logWork = function(request, response) {
                 CompletionDate: completiondate,
             };
             updateTask(logWorkInputJson, orgDomain, taskId);
-            sendMail(assigneeName, subjectMessage, htmlMessage);
+            sendMail(assignee, subjectMessage, htmlMessage);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
