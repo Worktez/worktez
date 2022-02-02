@@ -41,6 +41,8 @@ export class ApplicationSettingsService {
     if(this.team == undefined || this.team.TeamId != teamId) {
       this.teamDataReady = false;
       const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
+      console.log(teamId);
+      console.log(orgDomain);
       const callable = this.functions.httpsCallable("teams/getTeamData");
       this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
         map(actions => {

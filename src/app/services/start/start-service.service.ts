@@ -47,7 +47,8 @@ export class StartServiceService {
           if(data.SelectedTeamId != "") {
             this.selectedTeamId = data.SelectedTeamId;
             this.teamIdExists = true;
-            
+            console.log(this.uid);
+            console.log(data.SelectedOrgAppKey);
             this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
             this.accessLevel = 1;
             if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {

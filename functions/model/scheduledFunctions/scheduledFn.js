@@ -10,9 +10,10 @@
 const { functions, cors } = require("../application/lib");
 const { startSchedular } = require("./tark/startSchedular");
 
-// exports.scheduledFn = functions.https.onRequest((req, res) => {
-//   cors(req, res, () => {
-exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
+ exports.scheduledFn = functions.https.onRequest((req, res) => {
+   cors(req, res, () => {
+     console.log("inside new controller")
+// exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
   startSchedular();
 });
-// });
+});

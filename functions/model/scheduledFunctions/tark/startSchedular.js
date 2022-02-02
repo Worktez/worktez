@@ -12,6 +12,7 @@ const { getTeamUseTeamId } = require("../../teams/lib");
 const { getAllSchedular } = require("../lib");
 
 exports.startSchedular = function() {
+  console.log(sched);
   getAllSchedular().then((sched) => {
     if (sched) {
       sched.forEach((schDoc) => {
