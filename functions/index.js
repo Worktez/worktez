@@ -22,7 +22,7 @@ const { activity } = require("./model/activity/activity");
 const { librarian } = require("./model/librarian/librarian");
 const { notifications } = require("./model/notifications/notifications");
 const { contributors } = require("./model/contributors/contributors");
-const { scheduledFn } = require("./model/scheduledFunctions/scheduledFn");
+const { scheduledFn, scheduledFnManually } = require("./model/scheduledFunctions/scheduledFn");
 const { linker } = require("./model/linker/linker");
 const { quickNotes } = require("./model/quickNotes/quickNotes");
 
@@ -41,3 +41,4 @@ exports.contributors = contributors;
 exports.scheduledFn = scheduledFn;
 exports.linker = linker;
 exports.quickNotes = quickNotes;
+exports.scheduledFnManually = scheduledFnManually;
