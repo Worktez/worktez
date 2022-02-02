@@ -25,7 +25,7 @@ exports.getUserPerformanceChartData = function(request, response) {
       getAllUsersInUids([uid]).then((data)=>{
         const orgAppKey = data[0].SelectedOrgAppKey;
         const teamId = data[0].SelectedTeamId;
-        setSchedularUnit("UserPerformanceChart", orgAppKey, assignee, teamId, orgDomain);
+        setSchedularUnit("UserPerformanceChart", orgAppKey, assignee, teamId, orgDomain,"","");
         startSchedular();
       });
       result = {data: {status: "ERROR", data: "undefined"}};

@@ -10,9 +10,12 @@ const { updatePerformanceChartData } = require("../../performanceChart/tark/upda
 const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { getAllSchedular } = require("../lib");
+const { updateSprintStatus } = require(".././../sprints/tark/updateSprintStatus");
+
+var today = new Date();
+var currentDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
 exports.startSchedular = function() {
-  console.log(sched);
   getAllSchedular().then((sched) => {
     if (sched) {
       sched.forEach((schDoc) => {
@@ -31,6 +34,16 @@ exports.startSchedular = function() {
             updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange);
           } else if (type == "PerformanceChart") {
             updatePerformanceChartData(schDoc.data().OrgDomain, schDoc.data().TeamId, schDoc.data().Assignee, sprintRange);
+          } else if(type == "SprintAutoCompletion") {
+            console.log(schDoc.data().EndDate)
+            console.log(currentDate)
+            if (schDoc.data().EndDate <= currentDate)
+            {
+              console.log("yess")
+              // schDoc.data().SprintStatus = "Completed";
+              // console.log(schDoc.data().SprintStatus)
+              updateSprintStatus("Completed", schDoc.data().SprintName, schDoc.data().OrgAppKey, schDoc.data().TeamId);
+            }
           }
         }).catch((error)=>{
           console.log("Error:", error);

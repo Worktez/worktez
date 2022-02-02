@@ -34,16 +34,16 @@ export class SprintDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     try {
-      if( this.workPercentage == 100 )
-      {
-        this.sprintStatus = "Completed";
-        console.log(this.sprintStatus)
-      }
-      else 
-      {
-        this.sprintStatus = "Under Progress";
-        console.log(this.sprintStatus)
-      }
+      // if( this.workPercentage == 100 )
+      // {
+      //   this.sprintStatus = "Completed";
+      //   console.log(this.sprintStatus)
+      // }
+      // else 
+      // {
+      //   this.sprintStatus = "Under Progress";
+      //   console.log(this.sprintStatus)
+      // }
       const result = callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: this.sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
     } catch (error) {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");

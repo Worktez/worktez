@@ -12,14 +12,18 @@ const { getTeamUseTeamId } = require("../../teams/lib");
 const { updateSprint, getSprint } = require("../lib");
 
 
-exports.updateSprintStatus = function(request, response) {
-    const sprintStatus = request.body.data.SprintStatus;
-    const currentSprintName = request.body.data.CurrentSprintName;
-    const appKey = request.body.data.AppKey;
-    const teamId = request.body.data.TeamId;
+exports.updateSprintStatus = function(sprintStatus, currentSprintName, appKey, teamId) {
+    // const sprintStatus = request.body.data.SprintStatus;
+    // const currentSprintName = request.body.data.CurrentSprintName;
+    // const appKey = request.body.data.AppKey;
+    // const teamId = request.body.data.TeamId;
     let orgDomain;
     let result;
     let status = 200;
+    console.log("the sprint status:",sprintStatus)
+    // console.log(currentSprintName)
+    // console.log(appKey)
+    // console.log(teamId)
 
     const updateSprintPromise = getOrgUseAppKey(appKey).then((orgDoc) => {
         orgDomain = orgDoc.OrganizationDomain;
@@ -29,6 +33,7 @@ exports.updateSprintStatus = function(request, response) {
 
             let updateSprintStatusInputJson;
             const getSprintPromise = getSprint(orgDomain, teamName, currentSprintName).then((sprintDoc) => {
+
                 if (sprintStatus == "Under Progress") {
                     const startStoryPointNumber = sprintDoc.StartStoryPoint;
                     updateSprintStatusInputJson = {
@@ -41,6 +46,8 @@ exports.updateSprintStatus = function(request, response) {
                         Status: sprintStatus,
                         EndStoryPoint: sprintDoc.CompletedStoryPoint,
                     };
+                    console.log("after clicking completed button in forceful sprint completion")
+                    console.log(updateSprintStatusInputJson)
                     updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
                 }
             });

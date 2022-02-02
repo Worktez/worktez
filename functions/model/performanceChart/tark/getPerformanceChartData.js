@@ -27,7 +27,7 @@ exports.getPerformanceChartData = function(request, response) {
       if (doc == undefined) {
         getOrg(orgDomain).then((data) => {
           const orgAppKey = data.AppKey;
-          setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
+          setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain, "","");
           startSchedular();
         });
         result = {data: {status: "ERROR", data: "undefined"}};

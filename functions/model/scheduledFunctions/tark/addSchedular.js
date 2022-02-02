@@ -27,7 +27,7 @@ exports.addSchedularOrg = functions.https.onRequest((request, response) => {
 
             const schedularDocId = "so" + totalNumberOfSchedularOrg;
 
-            setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
+            setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain, "","",0,0);
 
             updateApplication(appDetailsUpdateJson);
         }).catch((error) => {

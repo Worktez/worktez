@@ -8,16 +8,38 @@
 // const db = admin.firestore();
 
 const { db } = require("../application/lib");
-exports.setSchedular = function(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain) {
-    const inputJson = {
-        Type: type,
-        OrgAppKey: orgAppKey,
-        TeamId: teamId,
-        OrgDomain: orgDomain,
-        Assignee: assignee,
-    };
-    const setSchedularDoc = db.collection("SchedularOrg").doc(schedularDocId).set(inputJson);
-    return Promise.resolve(setSchedularDoc);
+exports.setSchedular = function(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain, sprintStatus, newSprintIdString, startDate, endDate) {
+    console.log("inside lib of scheduledFunctions")
+    console.log(type)
+    if (type == "SprintAutoCompletion") {
+        const inputJson = {
+            Type: type,
+            OrgAppKey: orgAppKey,
+            TeamId: teamId,
+            OrgDomain: orgDomain,
+            Assignee: assignee,
+            SprintStatus: sprintStatus,
+            SprintName: newSprintIdString,
+            StartDate: startDate,
+            EndDate: endDate
+        };
+        const setSchedularDoc = db.collection("SchedularOrg").doc(schedularDocId).set(inputJson);
+        return Promise.resolve(setSchedularDoc);
+    }
+    else {
+        const inputJson = {
+            Type: type,
+            OrgAppKey: orgAppKey,
+            TeamId: teamId,
+            OrgDomain: orgDomain,
+            Assignee: assignee,
+        };
+        const setSchedularDoc = db.collection("SchedularOrg").doc(schedularDocId).set(inputJson);
+        return Promise.resolve(setSchedularDoc);
+    }
+    
+   
+    
 };
 
 exports.getSchedular = function(schedularDocId) {

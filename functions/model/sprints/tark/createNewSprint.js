@@ -11,6 +11,8 @@ const { createSprintName } = require("../../application/lib");
 const { getSprint, setSprint, updateSprint } = require("../lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId, updateTeamDetails } = require("../../teams/lib");
+const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 
 exports.createNewSprint = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -37,6 +39,9 @@ exports.createNewSprint = function(request, response) {
             const createSprint = getSprint(orgDomain, teamName, newSprintIdString).then((sprint) => {
                 if (sprint == undefined) {
                     setSprint(orgDomain, teamName, newSprintIdString, orgId, teamId, newSprintId, sprintStatus, 0, 0, 0, 0, startDate, endDate);
+                    console.log("sprint status:", sprintStatus)
+                    setSchedularUnit("SprintAutoCompletion", appKey, "Team", teamId, orgDomain, sprintStatus, newSprintIdString, startDate, endDate);
+                    startSchedular();
                 } else {
                     const inputJson = {
                         EndDate: endDate,
@@ -57,6 +62,8 @@ exports.createNewSprint = function(request, response) {
                         inputJson[value] = startStoryPointNumber;
                     }
                     updateSprint(inputJson, orgDomain, teamName, newSprintIdString);
+                    setSchedularUnit("SprintAutoCompletion", appKey, "Team", teamId, orgDomain,sprintStatus, newSprintIdString );
+                    startSchedular();
                 }
             }).catch((error) => {
                 status = 500;

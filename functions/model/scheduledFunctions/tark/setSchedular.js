@@ -10,7 +10,7 @@
 const { getApplicationData, updateApplication } = require("../../application/lib");
 const { setSchedular, getAllSchedular } = require("../lib");
 
-exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain) {
+exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain, sprintStatus, newSprintIdString, startDate, endDate) {
     getApplicationData().then((appData) => {
         const totalNumberOfSchedularOrg = appData.TotalNumberSchedularOrg + 1;
         const appDetailsUpdateJson = {
@@ -28,11 +28,11 @@ exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain
                     if (type == element.data().Type && orgAppKey == element.data().OrgAppKey && assignee == element.data().Assignee && teamId == element.data().TeamId && orgDomain == element.data().OrgDomain) {
                         console.log("Already exsisting result");
                     } else {
-                        setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
+                        setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain, sprintStatus, newSprintIdString, startDate, endDate);
                     }
                 });
             } else {
-                setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
+                setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain, sprintStatus, newSprintIdString,startDate, endDate);
             }
         });
 
