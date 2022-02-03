@@ -20,7 +20,6 @@ export class UserServiceService {
   constructor(private functions: AngularFireFunctions) { }
 
   getUserData (email) {
-    console.log(email);
     if(this.users.length) {
       const newArray = this.users.filter((data)=>{
         if(data.email == email) {

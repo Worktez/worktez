@@ -103,7 +103,6 @@ exports.getUserUseEmail = function(email) {
         let data;
         doc.forEach((user) => {
             data = user.data();
-            console.log(data);
         });
         return data;
     });
