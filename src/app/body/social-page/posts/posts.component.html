@@ -1,0 +1,27 @@
+<div class="card ">
+    <div class="card-header">
+        <div class="row p-2">
+            <img src="{{user.photoURL}}" onerror="this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="ml-3 col">
+                <h3>{{user.displayName}} <br><span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer at Random Company</span></h3>
+
+            </div>
+        </div>
+    </div>
+    <div class="card-body mt-5">
+        <p>{{post.Post}}</p>
+        <hr>
+        <div class="row pl-2">
+            <button class="btn mt-3 px-4 py-1" (click)="onReact(post.PostId)"  id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">
+            thumb_up
+        </mat-icon>Like</button> 
+        <input type="text" class="form-control form-control-sm" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
+            <button class="btn mt-3 px-4 py-1" id="commentButton" (click)="openAddComment(post.PostId)">Send</button>
+            <!-- <app-add-comment [post]="post"></app-add-comment> -->
+
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="showAddComment">
+    <app-add-comment (addCommentCompleted)="addCommentCompleted($event)"></app-add-comment>
+</ng-container> 

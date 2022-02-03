@@ -13,6 +13,7 @@ export class PopupHandlerService {
   addNewContributorEnabled: boolean = false
   parentTaskId: string = "default"
   parentTaskUrl: string = "default"
+  createPostEnabled: boolean = false
   
   constructor() { }
 

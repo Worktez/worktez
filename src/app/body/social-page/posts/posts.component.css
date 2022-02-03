@@ -1,0 +1,39 @@
+.card-header {
+  background-color: var(--secondary-bg);
+  color: var(--text);
+  border: none;
+  height: 30px;
+}
+
+.card {
+  background-color: var(--secondary-bg);
+  color: var(--text);
+  border: none;
+  width:34rem;
+  margin-left:9rem;
+}
+hr {
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid var(--scrollbar-color);
+}
+h3 {
+  color:#5C60EC;
+}
+#likeButton {
+  display: block;
+  border-radius:50px;
+text-align:center;
+  background-color: var(--primary-bg);
+  color: var(--text);
+  font-size:1rem;
+}
+#commentButton {
+  display: block;
+  text-align:center;
+  color: var(--text);
+  font-size:1rem;
+}
+#commentButton:hover{
+  color:#5C60EC;
+} 
