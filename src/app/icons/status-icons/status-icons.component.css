@@ -11,26 +11,26 @@
     padding-top: 4px;  
 }
 .Ready {
-    color: #ff0080; 
+    color: #673ab7; 
     padding-right:20px;
 }
 .ReadyBorder {
-    color: #ff0080; 
+    color: #673ab7; 
     text-align: center;
     border-style: dashed;
-    border-color: #ff0080;
+    border-color: #673ab7;
     border-width: 1px;
     padding-top: 4px;    
 }
 .blocked {
-    color: #808080; 
+    color: #f44336; 
     padding-right:20px;
 }
 .blockedBorder {
-    color: #808080; 
+    color: #f44336; 
     text-align: center;
     border-style: dashed;
-    border-color: #808080;
+    border-color: #f44336;
     border-width: 1px;  
     padding-top: 4px;  
 }
@@ -47,14 +47,14 @@
     padding-top: 4px;  
 }
 .Ice {
-    color: #87ceeb; 
+    color: #42a5f5; 
     padding-right:20px;
 }
 .IceBorder {
-    color: #87ceeb; 
+    color: #42a5f5; 
     text-align: center;
     border-style: dashed;
-    border-color: #87ceeb;
+    border-color: #42a5f5;
     border-width: 1px;  
     padding-top: 4px;  
 }
