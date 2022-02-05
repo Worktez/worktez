@@ -1,0 +1,63 @@
+.card-header {
+  background-color: var(--secondary-bg);
+  color: var(--text);
+  border: none;
+  height: 30px;
+}
+
+.card {
+  background-color: var(--secondary-bg);
+  color: var(--text);
+  border: none;
+  width:34rem;
+  margin-left:9rem;
+}
+hr {
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid var(--scrollbar-color);
+}
+h3 {
+  color:#5C60EC;
+}
+#likeButton {
+  display: block;
+  margin-bottom: 10px;
+  border-radius:50px;
+text-align:center;
+  background-color: var(--primary-bg);
+  color: var(--text);
+  font-size:1rem;
+}
+
+.commentBox {
+  margin-left: 23%;
+  display: inline-block;
+  width: 40%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+#commentButton1 {
+  margin-bottom: 10px;
+  margin-left: 6px;
+  display: block;
+  border-radius:50px;
+text-align:center;
+  background-color: var(--primary-bg);
+  color: var(--text);
+  font-size:1rem;
+}
+#commentButton {
+  display: block;
+  text-align:center;
+  color: var(--text);
+  font-size:1rem;
+  background-color: var(--primary-bg);
+  border-radius: 13px;
+}
+#commentButton:hover{
+  color:#5C60EC;
+  cursor: pointer;
+
+} 

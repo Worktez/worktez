@@ -49,6 +49,7 @@ exports.setApplication = function() {
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
+        PostCounter: 0,
     });
     return Promise.resolve(P1);
 };

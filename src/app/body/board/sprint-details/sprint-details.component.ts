@@ -6,6 +6,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-sprint-details',
@@ -23,7 +24,7 @@ export class SprintDetailsComponent implements OnInit {
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
 
-  constructor(public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
+  constructor(private authService: AuthService , public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -61,5 +62,19 @@ export class SprintDetailsComponent implements OnInit {
 
   showDeleted() {
     this.currentSprint.emit(-2);
+  }
+
+
+    // const orgDomain = data.OrgDomain;
+  async autoSchedule() {
+    const orgAppKey = this.backendService.getOrganizationAppKey();
+    const assignee = this.authService.getUserEmail();
+    const callable = this.functions.httpsCallable('scheduledFnManually/addScheduler');
+    try {
+      const result = await callable({Type: "AutoSprintCompletion", OrgAppKey: orgAppKey, Assignee: assignee, TeamId: this.sprintData.TeamId, OrgDomain: this.backendService.getOrganizationDomain()}).toPromise();
+    } catch (error) {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+    }
   }
 }

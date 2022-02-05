@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
@@ -27,7 +28,7 @@ export class AddMemberComponent implements OnInit {
   showClose: boolean = false;
   add: boolean = false;
 
-  constructor(public backendService: BackendService,private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public backendService: BackendService,private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,public authservice:AuthService) { }
 
   ngOnInit(): void {
   }
@@ -47,7 +48,7 @@ async addUpdateTeam() {
   this.enableLoader = true;
   const callable = this.functions.httpsCallable('teams/addMember');
   try {
-    const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.teamManager , TeamDescription: this.teamDescription, TeamId: this.teamId }).toPromise();
+    const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.authservice.user.email, TeamDescription: this.teamDescription, TeamId: this.teamId }).toPromise();
     this.enableLoader = false;
     this.showClose = true;
   } catch (error) {

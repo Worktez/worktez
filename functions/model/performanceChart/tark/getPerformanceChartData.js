@@ -8,7 +8,9 @@ const { getOrg } = require("../../organization/lib");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 const { getTeamUseTeamId } = require("../../teams/lib");
-const { getOrganizationsChartDetails } = require("../lib");
+const { getOrganizationsChartDetails, getUserPerformanceChart } = require("../lib");
+const { getUserPerformanceChartData } = require("./getUserPerformanceChartData");
+const { getUserUseEmail} = require("../../users/lib");
 
 exports.getPerformanceChartData = function(request, response) {
   const data = request.body.data;
@@ -20,6 +22,7 @@ exports.getPerformanceChartData = function(request, response) {
   let result;
   let status = 200;
 
+  if(assignee=="Team"){
   const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
     teamName = team.TeamName;
     const p1 = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((doc) => {
@@ -50,4 +53,13 @@ exports.getPerformanceChartData = function(request, response) {
     console.error("Error Fetching Performance Chart Data", error);
     return response.status(status).send(result);
   });
+  } else {
+    getUserUseEmail(assignee).then((data)=>{
+      if (data!=undefined){
+        const uid=data.uid
+        request.body.data.Uid = uid
+        getUserPerformanceChartData(request, response)
+      }
+    });  
+  }
 };

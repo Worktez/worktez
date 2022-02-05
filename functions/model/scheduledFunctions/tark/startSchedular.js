@@ -10,6 +10,7 @@ const { updatePerformanceChartData } = require("../../performanceChart/tark/upda
 const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { getAllSchedular } = require("../lib");
+const { updateAutoSprintStatus } = require("../../sprints/tark/updateAutoSprintStatus");
 
 exports.startSchedular = function() {
   getAllSchedular().then((sched) => {
@@ -30,6 +31,8 @@ exports.startSchedular = function() {
             updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange);
           } else if (type == "PerformanceChart") {
             updatePerformanceChartData(schDoc.data().OrgDomain, schDoc.data().TeamId, schDoc.data().Assignee, sprintRange);
+          } else if (type == "AutoSprintCompletion") {
+            updateAutoSprintStatus(schDoc.data().OrgAppKey, schDoc.data().TeamId);
           }
         }).catch((error)=>{
           console.log("Error:", error);

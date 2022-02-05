@@ -9,7 +9,6 @@
 }
 
 .dropdown-menu {
-    border-color: var(--primary-color) ;
     color: var(--text);
     background-color: var(--secondary-bg);
 }
@@ -18,12 +17,15 @@
 
 }
 
+span{
+    cursor: pointer;
+}
 .dropdown-item {
     color: var(--text);
+    font-size: 12px;
 }
-
 .dropdown-item:hover {
-    background-color: var(--dropdown-hover);
+    background-color: var(--secondary-bg);
     color: var(--button-text-hover); 
 }
 
