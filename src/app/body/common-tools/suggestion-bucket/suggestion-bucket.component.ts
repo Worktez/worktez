@@ -24,6 +24,7 @@ export class SuggestionBucketComponent implements OnInit {
   constructor(public userService: UserServiceService,  public router: Router) { }
 
   ngOnInit(): void {
+   
     this.readTeamMemberName();
   }
 
