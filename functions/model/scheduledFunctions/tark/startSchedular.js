@@ -1,3 +1,16 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
 /* eslint-disable guard-for-in */
@@ -10,6 +23,7 @@ const { updatePerformanceChartData } = require("../../performanceChart/tark/upda
 const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { getAllSchedular } = require("../lib");
+const { updateAutoSprintStatus } = require("../../sprints/tark/updateAutoSprintStatus");
 
 exports.startSchedular = function() {
   getAllSchedular().then((sched) => {
@@ -30,6 +44,8 @@ exports.startSchedular = function() {
             updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange);
           } else if (type == "PerformanceChart") {
             updatePerformanceChartData(schDoc.data().OrgDomain, schDoc.data().TeamId, schDoc.data().Assignee, sprintRange);
+          } else if (type == "AutoSprintCompletion") {
+            updateAutoSprintStatus(schDoc.data().OrgAppKey, schDoc.data().TeamId);
           }
         }).catch((error)=>{
           console.log("Error:", error);
