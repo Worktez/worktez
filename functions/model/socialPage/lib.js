@@ -13,6 +13,7 @@ exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) 
         PostId: postId,
         Reach: 0,
         Reactions: 0,
+        // ReactionCounter: 0,
         CommentCounter: 0,
         LastUpdatedDate: lastUpdatedDate,
         LastUpdatedTime: lastUpdatedTime,
@@ -46,12 +47,13 @@ exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDa
     return Promise.resolve(addCommentPromise);
 }; 
 
-exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid) {
+exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid, reactStatus) {
     const setReactDetails = db.collection("Social").doc(postId).collection("Reactions").doc(reactId).set({
         CreationDate: creationDate,
         CreationTime: creationTime,
         Type: type,
-        Uid: uid
+        Uid: uid,
+        // Status: reactStatus
     });
     return Promise.resolve(setReactDetails);
 };

@@ -33,19 +33,18 @@
                 <ul class="navbar-nav ml-auto">
                     <ng-container *ngIf="(backendService.organizationsData | async)">
                         <li class="nav-item px-1">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle pt-2">
-                                account_circle
-                            </mat-icon>
                             <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="socialPage()">
-                                <label>Social</label>
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    public
+                                </mat-icon> Social
                             </a>
                         </li>
                         <li class="nav-item px-1">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle pt-2">
-                                add_box
-                            </mat-icon>
                             <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()" data-toggle="modal" data-target="#createNewTask">
-                                <label>Create</label>
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    add_box
+                                </mat-icon>
+                                Create
                             </a>
                         </li>
                         <li class="nav-item dropdown">

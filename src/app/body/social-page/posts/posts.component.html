@@ -1,3 +1,18 @@
+<!-- ***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * Author : Twinkle Chatterjee <ctwinkle2812@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
 <div class="card ">
     <div class="card-header">
         <div class="row p-2">
@@ -15,13 +30,16 @@
             <button class="btn mt-3 px-4 py-1" (click)="onReact(post.PostId)"  id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">
             thumb_up
         </mat-icon>Like</button> 
-        <input type="text" class="form-control form-control-sm" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
-            <button class="btn mt-3 px-4 py-1" id="commentButton" (click)="openAddComment(post.PostId)">Send</button>
-            <!-- <app-add-comment [post]="post"></app-add-comment> -->
+        <button class="btn mt-3 px-4 py-1" (click)="showCommentBox()" id="commentButton1"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat_bubble_outline</mat-icon>Comment</button>
+        <ng-container *ngIf="showAddComment">
+            <input type="text" class="form-control form-control-sm commentBox" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
+            <button class="btn ml-3 px-4 py-1" id="commentButton" (click)="openAddComment(post.PostId)">Send</button>
+        </ng-container>
 
         </div>
     </div>
 </div>
-<ng-container *ngIf="showAddComment">
-    <app-add-comment (addCommentCompleted)="addCommentCompleted($event)"></app-add-comment>
-</ng-container> 
+
+
+<!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
+            <button class="btn mt-3 px-4 py-1" id="commentButton" (click)="openAddComment(post.PostId)">Send</button> -->

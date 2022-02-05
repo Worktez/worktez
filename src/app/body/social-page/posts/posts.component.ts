@@ -1,3 +1,18 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * Author : Twinkle Chatterjee <ctwinkle2812@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
@@ -15,7 +30,7 @@ import { map } from 'rxjs';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  //showCommentList: boolean = false
+  showCommentList: boolean = false
   public CommentObservable: Observable<Comment[]>
   showAddComment: boolean = false
   user : User
@@ -23,6 +38,7 @@ export class PostsComponent implements OnInit {
   todayDate: string;
   time: string;
   content: string = ""
+  reactionStatus : boolean = false;
   
   @Input('post') post : Post;
   @Output() addCommentCompleted = new EventEmitter<boolean>();
@@ -33,10 +49,12 @@ export class PostsComponent implements OnInit {
     this.getUserDetails();
   }
 
+  showCommentBox() {
+    this.showCommentList = true;
+    this.showAddComment = true
+  }
+
   openAddComment(postId: string) {
-    //this.showCommentsList = false
-    // this.showAddComment = true
-    console.log("hereeeeeeeeeeeeeeeeeeee")
     const uid = this.authService.getLoggedInUser();
     const date = this.toolService.date();
     const time = this.toolService.time();
@@ -62,6 +80,7 @@ export class PostsComponent implements OnInit {
   async onReact(postId: string) {
     this.enableLoader = true;
     const uid = this.authService.getLoggedInUser();
+
     const callable = this.functions.httpsCallable('socialPage/addReaction');
     try {
       this.todayDate = this.toolService.date();

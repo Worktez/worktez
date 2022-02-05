@@ -123,7 +123,6 @@ import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
-import { AddCommentComponent } from './body/social-page/posts/add-comment/add-comment.component';
 
 @NgModule({
   declarations: [
@@ -229,7 +228,6 @@ import { AddCommentComponent } from './body/social-page/posts/add-comment/add-co
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
-    AddCommentComponent,
   ],
   imports: [
     BrowserModule,
