@@ -25,6 +25,7 @@ const { contributors } = require("./model/contributors/contributors");
 const { scheduledFn, scheduledFnManually } = require("./model/scheduledFunctions/scheduledFn");
 const { linker } = require("./model/linker/linker");
 const { quickNotes } = require("./model/quickNotes/quickNotes");
+const {socialPage} = require("./model/socialPage/socialPage");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -41,4 +42,5 @@ exports.contributors = contributors;
 exports.scheduledFn = scheduledFn;
 exports.linker = linker;
 exports.quickNotes = quickNotes;
+exports.socialPage = socialPage;
 exports.scheduledFnManually = scheduledFnManually;

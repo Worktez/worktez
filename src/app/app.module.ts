@@ -119,6 +119,10 @@ import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.
 import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
+import { SocialPageComponent } from './body/social-page/social-page.component';
+import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
+import { PostsComponent } from './body/social-page/posts/posts.component';
+import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
 
 @NgModule({
   declarations: [
@@ -220,6 +224,10 @@ import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-bo
     EditNoteComponent,
     ReleaseNotesComponent,
     ReleaseNotesBodyComponent,
+    SocialPageComponent,
+    CreatePostComponent,
+    PostsComponent,
+    WhatsNewComponent,
   ],
   imports: [
     BrowserModule,
