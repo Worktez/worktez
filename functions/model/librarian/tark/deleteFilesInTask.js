@@ -1,4 +1,9 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-unused-vars */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,11 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
 
 const { updateFileToTask } = require("../lib");
 const { getTask } = require("../../tasks/lib");

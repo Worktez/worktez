@@ -1,4 +1,13 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable prefer-const */
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,15 +20,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable prefer-const */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 
 const { setUserChart } = require("../lib");
 const { getAllTasks } = require("../../tasks/lib");

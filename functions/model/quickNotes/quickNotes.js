@@ -1,4 +1,10 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,12 +17,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { addNote } = require("./tark/addNote");

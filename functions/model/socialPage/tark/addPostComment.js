@@ -7,6 +7,20 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 const { addUserComment } = require("../lib");
 const { getUser, updateUser } = require("../../users/lib");
 
@@ -25,13 +39,13 @@ exports.addPostComment = function(request, response) {
     const promise1 = getUser(uid, "").then((userData) => {
         if (userData) {
             let Commentcounter=userData.CommentCounter;
-            if(isNaN(Commentcounter)) {
+            if (isNaN(Commentcounter)) {
                 Commentcounter = 0;
             }
             Commentcounter = Commentcounter+1;
-            let commentId= "C" + Commentcounter;
-            console.log(commentId)
-            console.log(content)
+            const commentId= "C" + Commentcounter;
+            console.log(commentId);
+            console.log(content);
 
 
             addUserComment(uid, postId, content, commentId, lastUpdatedDate, lastUpdatedTime).then((commentData) => {
@@ -46,9 +60,7 @@ exports.addPostComment = function(request, response) {
                 CommentCounter: Commentcounter,
             };
             updateUser(updateUserInputJson, uid);
-
         }
-
 });
 
     const Promises = [promise1];
@@ -60,4 +72,4 @@ exports.addPostComment = function(request, response) {
         console.error("Error adding Note", error);
         return response.status(status).send(result);
     });
-}; 
+};
