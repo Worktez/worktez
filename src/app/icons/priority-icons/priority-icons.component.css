@@ -12,26 +12,26 @@
 * See the MIT License for more details. 
 ***********************************************************/
 .low {
-    color: #ffff00; 
+    color: #42a5f5; 
     padding: right 16px;
 }
 .lowBorder {
-    color: #ffff00; 
+    color: #42a5f5; 
     text-align: center;
     border-style: dashed;
-    border-color:#ffff00; 
+    border-color:#42a5f5; 
     border-width: 1px;  
     padding-top: 4px;    
 }
 .medium {
-    color: #ee82ee; 
+    color: #EF6C00; 
     padding: right 16px;
 }
 .mediumBorder {
-    color: #ee82ee; 
+    color: #EF6C00; 
     text-align: center;
     border-style: dashed;
-    border-color:#ee82ee;  
+    border-color:#EF6C00;  
     border-width: 1px; 
     padding-top: 4px;    
 }
