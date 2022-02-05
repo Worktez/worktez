@@ -1,4 +1,7 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
+/* eslint-disable object-curly-spacing */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,9 +14,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
-/* eslint-disable object-curly-spacing */
 const { getSprint } = require("../lib");
 const { createSprintName } = require("../../application/lib");
 

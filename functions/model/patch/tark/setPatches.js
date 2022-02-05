@@ -1,4 +1,6 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,8 +13,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable max-len */
+
 const {setPatch, getPatchData} = require("../lib");
 
 exports.setPatches = function() {

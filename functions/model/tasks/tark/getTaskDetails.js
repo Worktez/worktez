@@ -1,4 +1,8 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-unused-vars */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,10 +15,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
 const { getTask } = require("../lib");
 
 exports.getTaskDetails = function(request, response) {

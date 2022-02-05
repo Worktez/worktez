@@ -1,4 +1,12 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
+/* eslint-disable require-jsdoc */
+/* eslint-disable object-curly-spacing */
+// /* eslint-disable no-undef */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,14 +19,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
-/* eslint-disable object-curly-spacing */
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
+
 const { functions, getApplicationData, updateApplication } = require("../../application/lib");
 const { setSchedular } = require("../lib");
 

@@ -7,6 +7,20 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 const { getAllPosts } = require("../lib");
 
 exports.getPosts = function(request, response) {
@@ -15,7 +29,7 @@ exports.getPosts = function(request, response) {
     let result;
 
     const getPostsPromise = getAllPosts().then((postData) => {
-        console.log("postData:",postData);
+        console.log("postData:", postData);
         postData.forEach((postDoc) => {
             postsData.push(postDoc.data());
         });
@@ -28,7 +42,7 @@ exports.getPosts = function(request, response) {
     Promise.all(promises).then(() => {
             result = { data: { status: "OK", data: postsData } };
             console.log("Got Posts Sucessfully");
-            console.log(result)
+            console.log(result);
             return response.status(status).send(result);
         })
         .catch((error) => {

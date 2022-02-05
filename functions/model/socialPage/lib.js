@@ -4,6 +4,20 @@
 /* eslint-disable indent */
 /* eslint-disable max-len */
 
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 const { db } = require("../application/lib");
 
 exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) {
@@ -23,7 +37,7 @@ exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) 
 };
 
 exports.getAllPosts = function() {
-    let query = db.collection("Social");
+    const query = db.collection("Social");
     const getAllPosts = query.get();
     return Promise.resolve(getAllPosts);
 };
@@ -45,7 +59,7 @@ exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDa
         Status: "OK",
     });
     return Promise.resolve(addCommentPromise);
-}; 
+};
 
 exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid, reactStatus) {
     const setReactDetails = db.collection("Social").doc(postId).collection("Reactions").doc(reactId).set({

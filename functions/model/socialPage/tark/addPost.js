@@ -7,6 +7,20 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 const { setPost } = require("../lib");
 
 const { getApplicationData, updateApplication } = require("../../application/lib");
@@ -26,7 +40,7 @@ exports.addPost = function(request, response) {
         if (rawData) {
             let postcounter = rawData.PostCounter;
             postcounter = postcounter + 1;
-            let postId = "P" + postcounter;
+            const postId = "P" + postcounter;
 
             setPost(uid, post, postId, lastUpdatedDate, lastUpdatedTime).then((postData) => {
                 console.log("Post added Successfully");
@@ -38,10 +52,9 @@ exports.addPost = function(request, response) {
 
             const inputJson = {
                 PostCounter: postcounter,
-            }
+            };
             updateApplication(inputJson);
         }
-
     });
 
     const Promises = [promise1];
@@ -53,4 +66,4 @@ exports.addPost = function(request, response) {
         console.error("Error adding Note", error);
         return response.status(status).send(result);
     });
-}; 
+};

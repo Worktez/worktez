@@ -1,4 +1,5 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,7 +12,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
 
 const {updatePatchData, getPatchData} = require("../lib");
 

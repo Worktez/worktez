@@ -1,4 +1,8 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,10 +15,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-undef */
-/* eslint-disable object-curly-spacing */
+
 const { getMyOrgCollection, updateMyOrgCollection } = require("../../users/lib");
 const { updatePatchData } = require("../lib");
 

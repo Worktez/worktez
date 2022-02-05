@@ -1,4 +1,7 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
+/* eslint-disable max-len */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,9 +14,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-/* eslint-disable max-len */
+
 const {getPatchData, setPatch} = require("../lib");
 
 exports.patchModerator = function(request, response) {

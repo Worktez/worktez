@@ -1,4 +1,9 @@
-/***********************************************************
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable no-undef */
+/** *********************************************************
  * Copyright (C) 2022
  * Worktez
  *
@@ -11,11 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
-/* eslint-disable linebreak-style */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
 
 const { getAllUsers, updateUser } = require("../../users/lib");
 const { updatePatchData } = require("../lib");
