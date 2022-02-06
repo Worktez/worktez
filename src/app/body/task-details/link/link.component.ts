@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
@@ -14,7 +27,7 @@ export class LinkComponent implements OnInit {
   @Input('taskId') taskId: string;
   @Input('orgDomain') orgDomain: string;
   @Output() addedLink = new EventEmitter<{ completed: boolean }>();
-
+  componentName:string = "LINK"
   linkURL: string;
   linkType: string;
   enableLoader: boolean = false;
@@ -34,8 +47,9 @@ export class LinkComponent implements OnInit {
       this.showClose = true;
       return;
     } catch (error) {
-      this.errorHandlerService.getErrorCode("LINK", "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
   }

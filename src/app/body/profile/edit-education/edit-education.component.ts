@@ -1,7 +1,21 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { MyEducationData } from 'src/app/Interface/UserInterface';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-edit-education',
@@ -15,7 +29,7 @@ export class EditEducationComponent implements OnInit {
   @Input('email') email: string;
   @Input('educationModalData') educationModalData: MyEducationData;
   @Input('educationModalMode') educationModalMode: string;
-
+  componentName: string = "PROFILE"
   enableLoader: boolean = false
   showClose: boolean = false
   instituteName: string
@@ -26,7 +40,7 @@ export class EditEducationComponent implements OnInit {
 
   @Output() editEducationCompleted = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private functions: AngularFireFunctions, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
@@ -51,6 +65,8 @@ export class EditEducationComponent implements OnInit {
     } catch (error) {
       console.log("error");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 
@@ -67,6 +83,8 @@ export class EditEducationComponent implements OnInit {
     } catch (error) {
       console.log("error");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 

@@ -1,6 +1,20 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-edit-skills',
@@ -18,10 +32,10 @@ export class EditSkillsComponent implements OnInit {
   @Input('skills') skills: string;
 
   @Output() editSkillsCompleted = new EventEmitter<{ completed: boolean }>();
-  
+  componentName:string = "PROFILE"
   skill: string
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -37,6 +51,8 @@ export class EditSkillsComponent implements OnInit {
     } catch (error) {
       console.log("error");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
   

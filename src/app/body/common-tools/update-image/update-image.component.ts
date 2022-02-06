@@ -1,7 +1,21 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import Cropper from 'cropperjs';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-update-image',
@@ -20,12 +34,12 @@ export class UpdateImageComponent implements OnInit {
   @Output() cropPhotoCompleted = new EventEmitter<{ completed: boolean }>();
 
   cropper: Cropper;
-
+  componentName:string = "UPDATE-IMAGE"
   croppedImage: string;
   percentage: number;
   basePath: string;
 
-  constructor(public uploadService: FileUploadService, private functions: AngularFireFunctions) { }
+  constructor(public uploadService: FileUploadService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void { }
 
@@ -47,6 +61,8 @@ export class UpdateImageComponent implements OnInit {
       await callable({Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).toPromise();
       console.log("Successful");
     } catch (error) {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("error");
     }
     this.cropPhotoDone();

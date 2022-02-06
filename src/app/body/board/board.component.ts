@@ -1,3 +1,16 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Sprint, SprintDataId, Team, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -7,6 +20,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FeatureCardComponent } from './feature-card/feature-card.component';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-board',
@@ -29,7 +43,7 @@ export class BoardComponent implements OnInit {
   EDate: any;
   SDate: any;
 
-  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -67,6 +81,8 @@ export class BoardComponent implements OnInit {
       const result = await callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).toPromise();
       console.log("Successful updated Selected Team in db");
     } catch (error) {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log(error);
     }
   }
@@ -74,7 +90,8 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
+      if(this.authService.userAppSetting.SelectedTeamId==this.applicationSettingsService.team.TeamId){
+        this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
         });
@@ -99,7 +116,12 @@ export class BoardComponent implements OnInit {
           this.sprintNotExist = true;
         }
       });
-    } else {
+    } else{
+      this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe(data => {
+        this.readSprintData();
+      });
+    }
+  }else {
       this.showContent = true
       this.changeSprintNumber(-1);
     }

@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -14,7 +27,7 @@ export class UpdateFieldComponent implements OnInit {
   @Input('fieldValue') fieldValue: string;
   @Input('uid') uid: string;
   @Output() updateFieldCompleted = new EventEmitter<{ completed: boolean }>();
-
+  componentName:string = "PATCHES"
   QueryShowLoader: boolean = false;
   newfieldName: string;
   newfieldValue: string;
@@ -37,8 +50,9 @@ export class UpdateFieldComponent implements OnInit {
         console.log(result);
       });
     } catch (error) {
-      this.errorHandlerService.getErrorCode("Update-data", "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
   }

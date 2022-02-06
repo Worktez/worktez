@@ -1,9 +1,23 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -26,13 +40,13 @@ export class EditProfileComponent implements OnInit {
   @Input('email') email: string
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
-
+  componentName: string = "PROFILE"
   enableLoader: boolean = false
   showClose: boolean = false
   public userAvailable: boolean = false;
   oldUserName: string
 
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.oldUserName = this.userName;
@@ -49,6 +63,8 @@ export class EditProfileComponent implements OnInit {
       } catch (error) {
         console.log("error");
         this.enableLoader = false
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       }
     } else {
       console.log("User Not Available");
@@ -70,6 +86,8 @@ export class EditProfileComponent implements OnInit {
       }
     } catch (error) {
       console.log(error);
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 

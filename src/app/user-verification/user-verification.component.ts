@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +23,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./user-verification.component.css']
 })
 export class UserVerificationComponent implements OnInit {
-  componentName: string = "Verify User"
+  componentName: string = "USER-VERIFICATION"
   teamName: string
   organizationDomain: string
   userEmail: string
@@ -29,10 +42,10 @@ export class UserVerificationComponent implements OnInit {
     const callable = this.functions.httpsCallable('users/verify');
     try {
       const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
-
       this.router.navigate(['/']);
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 

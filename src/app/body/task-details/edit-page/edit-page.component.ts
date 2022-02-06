@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { FormControl, NgForm } from '@angular/forms';
@@ -162,7 +175,8 @@ export class EditPageComponent implements OnInit {
         console.log("Task is Completed , Cannot Update");
       }
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       this.enableLoader = false;
     }
   }
