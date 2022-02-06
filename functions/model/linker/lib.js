@@ -34,6 +34,5 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
         LinkID: linkID,
         OrgDomain: orgDomain,
     });
-    console.log("link set in firestore")
     return Promise.resolve(setLinkDetails);
 };
