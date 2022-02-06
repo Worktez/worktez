@@ -35,22 +35,6 @@ exports.getPerformanceChartData = function(request, response) {
   let result;
   let status = 200;
 
-<<<<<<< HEAD
-  const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
-    teamName = team.TeamName;
-    const p1 = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((doc) => {
-      const responseData = [];
-      if (doc == undefined) {
-        getOrg(orgDomain).then((data) => {
-          const orgAppKey = data.AppKey;
-          setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain, "","");
-          startSchedular();
-        });
-        result = {data: {status: "ERROR", data: "undefined"}};
-      } else {
-        for (const i in doc) {
-          responseData.push([i, doc[i]]);
-=======
   if (assignee=="Team") {
     const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
       teamName = team.TeamName;
@@ -68,7 +52,6 @@ exports.getPerformanceChartData = function(request, response) {
             responseData.push([i, doc[i]]);
           }
           result = { data: { status: "OK", data: responseData } };
->>>>>>> 6838a2b9e36cf3f3e643a735c439f7bc895a2bb0
         }
       });
       return Promise.resolve(p1);

@@ -15,6 +15,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-link',

@@ -39,7 +39,9 @@ exports.setLinkDetails = function(request, response) {
         } else {
             const linkCounter = taskDetail.LinkCounter + 1;
             const linkId= "Link"+(linkCounter);
+            console.log("the link id", linkId);
             setLinkDoc(orgDomain, taskId, linkType, linkURL, linkId);
+            console.log("link doc set");
             const inputJson = {
                 LinkCounter: linkCounter,
             };

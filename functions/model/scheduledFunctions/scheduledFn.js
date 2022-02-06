@@ -29,9 +29,7 @@ const { startSchedular } = require("./tark/startSchedular");
 // exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
   startSchedular();
 });
-<<<<<<< HEAD
-});
-=======
+ });
 //  });
 // });
 
@@ -47,4 +45,3 @@ exports.scheduledFnManually = functions.https.onRequest((req, res) => {
     });
   });
 });
->>>>>>> 6838a2b9e36cf3f3e643a735c439f7bc895a2bb0

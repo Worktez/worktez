@@ -28,7 +28,7 @@ import { Activity } from 'src/app/Interface/ActivityInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
-import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
 
@@ -70,7 +70,7 @@ export class TaskDetailsComponent implements OnInit {
   activityData: Observable<Activity[]>
   linkData: Observable<Link[]>
 
-  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor (public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.todayDate = this.toolsService.date();
@@ -202,6 +202,8 @@ export class TaskDetailsComponent implements OnInit {
     this.popupHandlerService.createNewTaskEnabled= true;  
     this.popupHandlerService.parentTaskId = this.Id;
     this.popupHandlerService.parentTaskUrl = this.url;
+    console.log("parent id", this.Id);
+    console.log("parent url",this.url)
   }
 
   logWorkCompleted ( data: { completed: boolean } ) {

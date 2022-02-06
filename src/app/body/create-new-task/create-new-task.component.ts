@@ -179,6 +179,8 @@ export class CreateNewTaskComponent implements OnInit {
     const teamId = this.authService.getTeamId();
     const parentTaskId = this.popupHandlerService.parentTaskId;
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
+    console.log("inside create new task:id->", parentTaskId)
+    console.log("inside create new task:url->", parentTaskUrl)
     const callable = this.functions.httpsCallable('tasks/createNewTask');
 
     try {

@@ -30,6 +30,7 @@ fastify.post("/getLink", (req, res) => {
 });
 
 fastify.post("/setLink", (req, res) => {
+  console.log("inside controller of set link")
   setLinkDetails(req, res);
 });
 
