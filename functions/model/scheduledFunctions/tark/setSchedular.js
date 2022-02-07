@@ -33,21 +33,17 @@ exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain
         getAllSchedular().then((data)=>{
             if (data.docs.length != 0) {
                 data.docs.forEach((element) => {
-                    console.log(element.data());
-                    console.log(type, orgAppKey, assignee, teamId, orgDomain);
-                    console.log(assignee, "==", element.data().Assignee);
                     if (type == element.data().Type && orgAppKey == element.data().OrgAppKey && assignee == element.data().Assignee && teamId == element.data().TeamId && orgDomain == element.data().OrgDomain) {
                         console.log("Already exsisting result");
                     } else {
                         setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
+                        updateApplication(appDetailsUpdateJson);
                     }
                 });
             } else {
                 setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
             }
         });
-
-        updateApplication(appDetailsUpdateJson);
     }).catch((error) => {
         console.log("Error:", error);
     });
