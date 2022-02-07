@@ -227,6 +227,7 @@ export class TaskDetailsComponent implements OnInit {
 
     try {
       const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
+      this.getTaskPageData();
       return;
     } catch ( error ) {
       this.errorHandlerService.showError = true;
