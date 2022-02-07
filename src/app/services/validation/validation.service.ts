@@ -103,6 +103,26 @@ export class ValidationService {
             case 'teamMemberEmails': {
                 return (this.checkTeamMemberEmails(value));
             }
+            case 'instituteName': {
+                return (this.checkinstituteName(value));
+            }
+            case 'degree': {
+                return (this.checkdegree(value));
+            }
+            case 'projectName': {
+                return (this.checkprojectName(value));
+            }
+            case 'description': {
+                return (this.checkdescription(value));
+            }
+            case 'skill': {
+                return (this.checkskill(value));
+            }
+            case 'position': {
+                return (this.checkposition(value));
+            }
+
+
         }
     }
 
@@ -448,7 +468,77 @@ export class ValidationService {
             this.errorHandlerService.addError(errorType, "Team Manager field is required")
             return (false);
         }
+    
     }
+
+    async checkinstituteName(value: String) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "Institute Name field is required")
+            return (false);
+        }
+    }
+
+    async checkdegree(value: String) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "degree field is required")
+            return (false);
+        }
+    }
+     
+    async checkprojectName(value: String) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "projectName field is required")
+            return (false);
+        }
+    }
+
+    async checkdescription(value: String) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "description field is required")
+            return (false);
+        }
+    }
+
+    async checkskill(value: String) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "skill field is required")
+            return (false);
+        }
+    }
+
+    async checkposition(value: String) {
+        const control = new FormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "position field is required")
+            return (false);
+        }
+    }
+
+
+
     async checkTeamMemberEmails(value: string[]) {
         let hasNoError;
         let errorType = this.componentName + "_VALIDATION_TEAM_MEMBER_EMAILS";

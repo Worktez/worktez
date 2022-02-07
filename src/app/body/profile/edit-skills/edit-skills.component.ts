@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-edit-skills',
@@ -22,12 +23,30 @@ export class EditSkillsComponent implements OnInit {
   componentName:string = "PROFILE"
   skill: string
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService,public validationService:ValidationService) { }
 
   ngOnInit(): void {
   }
-
+  
   async addSkill() {
+    let labels = ['skill'];
+    let values = [this.skill];
+    let data = [{ label: "skill", value: this.skill }];
+   
+    
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      console.log("edit");
+      console.log(this.componentName);
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.submitaddedskill();
+    }
+    else
+      console.log("Log-Work failed due to validation error");
+  }
+  async submitaddedskill() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('users/updateSkill');
     try {

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { MyProjectData } from 'src/app/Interface/UserInterface';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-edit-projects',
@@ -15,6 +16,7 @@ export class EditProjectsComponent implements OnInit {
   @Input('email') email: string;
   @Input('projectModalData') projectModalData: MyProjectData;
   @Input('projectModalMode') projectModalMode: string;
+
   componentName:string = "PROFILE"
   enableLoader: boolean = false
   showClose: boolean = false
@@ -25,8 +27,9 @@ export class EditProjectsComponent implements OnInit {
   description: string
   
   @Output() editProjectCompleted = new EventEmitter<{ completed: boolean }>();
+  
 
-  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,public validationService:ValidationService) { }
 
   ngOnInit(): void {
     // this.todayDate = this.toolsService.date();
@@ -38,8 +41,51 @@ export class EditProjectsComponent implements OnInit {
       this.endDate = this.projectModalData.End
     }
   }
-
+ 
   async addProject() {
+    let labels = ['projectName', 'description', 'startDate', 'endDate'];
+    let values = [this.projectName, this.description, this.startDate, this.endDate];
+    let data = [{ label: "projectName", value: this.projectName },
+    { label: "description", value: this.description },
+    { label: "startDate", value: this.startDate },
+    { label: "endDate", value: this.endDate }];
+    
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      console.log("edit");
+      console.log(this.componentName);
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.submitaddProject();
+    }
+    else
+      console.log("Log-Work failed due to validation error");
+  }
+
+
+  async updateProject() {
+    let labels = ['projectName', 'description', 'startDate', 'endDate'];
+    let values = [this.projectName, this.description, this.startDate, this.endDate];
+    let data = [{ label: "projectName", value: this.projectName },
+    { label: "description", value: this.description },
+    { label: "startDate", value: this.startDate },
+    { label: "endDate", value: this.endDate }];
+ 
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      console.log("edit");
+      console.log(this.componentName);
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.submiteditProject();
+    }
+    else
+      console.log("Log-Work failed due to validation error");
+  }
+
+  async submitaddProject() {
     this.enableLoader = true
     if(this.endDate == undefined){
       this.endDate = "Present";
@@ -57,7 +103,7 @@ export class EditProjectsComponent implements OnInit {
     }
   }
   
-  async updateProject() {
+  async submiteditProject() {
     if(this.endDate == undefined || this.endDate == ""){
       this.endDate = "Present";
     }
