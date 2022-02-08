@@ -4,7 +4,6 @@ import { map, Observable } from 'rxjs';
 import { QuickNote } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-quick-notes',
@@ -20,17 +19,15 @@ export class QuickNotesComponent implements OnInit {
   showloader: boolean = false
   showAddNote: boolean = false
   openEditNote: boolean = false
-  noNotes: boolean = true
   selectedNote: QuickNote;
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
   }
 
   showList() {
     this.showNotesList = true
-    this.showAddNote = false
     this.showloader = true
     const uid = this.authService.getLoggedInUser();
 
@@ -40,12 +37,6 @@ export class QuickNotesComponent implements OnInit {
       if(data) {
         this.notes = data;
       }
-      if(this.notes.length>0){
-        this.noNotes = false
-      }
-      else{
-        this.noNotes = true;
-      }
       this.showloader = false
       return data
     }));
@@ -53,7 +44,6 @@ export class QuickNotesComponent implements OnInit {
 
   openAddNote() {
     this.showNotesList = false
-    this.openEditNote= false;
     this.showAddNote = true
   }
 

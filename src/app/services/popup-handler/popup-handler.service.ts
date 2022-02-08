@@ -13,8 +13,6 @@ export class PopupHandlerService {
   addNewContributorEnabled: boolean = false
   parentTaskId: string = "default"
   parentTaskUrl: string = "default"
-  quickNotesTitle: string = ""
-  quickNotesDescription: string = ""
   
   constructor() { }
 
@@ -28,8 +26,6 @@ export class PopupHandlerService {
   resetTaskIds() {
     this.parentTaskId = "default"
     this.parentTaskUrl = "default"
-    this.quickNotesDescription = ""
-    this.quickNotesTitle = ""
   }
 
 }
