@@ -37,9 +37,14 @@ export class SprintDetailsComponent implements OnInit {
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
 
+  sprintDataReady: boolean = false
+
   constructor(private authService: AuthService , public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
+      this.sprintDataReady = true;
+    });
   }
 
   async changeSprintStatus(sprintStatus: string) {
