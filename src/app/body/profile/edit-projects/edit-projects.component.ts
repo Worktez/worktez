@@ -51,8 +51,7 @@ export class EditProjectsComponent implements OnInit {
     { label: "endDate", value: this.endDate }];
     
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      console.log("edit");
-      console.log(this.componentName);
+   
       return res;
     });
     if (condition) {
@@ -73,8 +72,7 @@ export class EditProjectsComponent implements OnInit {
     { label: "endDate", value: this.endDate }];
  
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      console.log("edit");
-      console.log(this.componentName);
+  
       return res;
     });
     if (condition) {

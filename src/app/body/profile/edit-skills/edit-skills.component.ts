@@ -35,8 +35,7 @@ export class EditSkillsComponent implements OnInit {
    
     
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      console.log("edit");
-      console.log(this.componentName);
+      
       return res;
     });
     if (condition) {
