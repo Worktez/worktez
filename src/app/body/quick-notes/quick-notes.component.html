@@ -12,7 +12,7 @@
                     Notes
                 </div>
                 <div class="col ml-auto">
-                    <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
+                    <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()"> 
                         close
                     </mat-icon>
                 </div>
@@ -21,6 +21,7 @@
           <div class="card-body">
             <ul class="list-group list-group-flush">
                 <ng-container *ngIf="quickNoteObservable|async; else loader">
+                    <div *ngIf="noNotes;" class="noNotes">No notes Added</div>
                     <ng-container *ngFor="let item of notes">
                         <li class="list-group-item" id="note">
                             <div class="row">
@@ -50,9 +51,9 @@
 </ng-container>
 
 <ng-container *ngIf="showAddNote">
-    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)"></app-addnew-note>
+    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)" ></app-addnew-note>
 </ng-container>
 
 <ng-container *ngIf="openEditNote">
-    <app-edit-note [note]="selectedNote" (editNoteCompleted)="editNoteCompleted($event)"></app-edit-note>
+    <app-edit-note [note]="selectedNote" (addNewNote)="openAddNote()" (editNoteCompleted)="editNoteCompleted($event)"></app-edit-note>
 </ng-container>
