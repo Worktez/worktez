@@ -1,9 +1,22 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <div class="container-fluid" *ngIf="startService.uid != undefined; else loader ">
     <ng-container *ngIf=!teamIdExists>
         <h3>You are not a part of any team. Please create a new team.</h3>
         <button type="submit" class="btn" id="button" (click)=createNewTeam()>Create Team</button>
     </ng-container>
-    <ng-container *ngIf="applicationSettingsService.teamData|async; else loader">
+    <ng-container *ngIf="loadingCurrentSprintStatus; else loader">
         <div class="row pt-2">
             <div class="col col-md-5" *ngIf="loadingCurrentSprintStatus">
                 <app-performance-chart [userEmail]="startService.userEmail" [uid]="startService.uid" [currentSprint]="startService.teamCurrentSprintNumber"></app-performance-chart>

@@ -1,4 +1,18 @@
 /* eslint-disable linebreak-style */
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 /* eslint-disable  object-curly-spacing*/
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
@@ -11,6 +25,9 @@ const { getTeamUseTeamId } = require("../lib");
 exports.getTeamData = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
     const teamId = request.body.data.TeamId;
+
+
+    console.log("checking get Team Data...");
 
     let status = 200;
     let result;

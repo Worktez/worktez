@@ -1,4 +1,18 @@
 /* eslint-disable linebreak-style */
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 /* eslint-disable require-jsdoc */
 /* eslint-disable  object-curly-spacing*/
 // /* eslint-disable no-undef */
@@ -52,7 +66,7 @@ exports.deleteTask = function(request, response) {
                 console.error(error);
                 return error;
             });
-           
+
             const p2 = getUser(uid, "").then((data) => {
                 senderName = data.displayName;
                 return senderName;
@@ -60,7 +74,7 @@ exports.deleteTask = function(request, response) {
                 console.error(error);
                 return error;
             });
-            
+
             const p3 = getSprint(orgDomain, teamName, fullSprintId).then((sprintDoc) => {
                 if (sprintDoc != undefined) {
                     let totalCompletedTask = sprintDoc.TotalCompletedTask;
@@ -106,9 +120,9 @@ exports.deleteTask = function(request, response) {
             });
 
             const promises = [p1, p2, p3, p4];
-            Promise.all(promises).then(() => {      
+            Promise.all(promises).then(() => {
                 const notificationMessage = senderName + " deleted task " + taskId;
-                const subjectMessage = senderName + " deleted task";    
+                const subjectMessage = senderName + " deleted task";
                 const link = "https://worktez.com/TaskDetails/" + taskId;
 
                 const htmlMessage = "<div style=\"background-color:#E9ECEF;margin:auto;width:80%;padding-top: 30px;height:100%;\">"+
@@ -120,7 +134,7 @@ exports.deleteTask = function(request, response) {
 
                 addActivity("DELETED", "Deleted Task", taskId, date, time, orgDomain, uid);
 
-                    result = { data: "OK" };               
+                    result = { data: "OK" };
                     console.log("Deleted Task Sucessfully");
                     return response.status(status).send(result);
                 })

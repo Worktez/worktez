@@ -1,3 +1,16 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <ng-container *ngIf="(taskDataObservable | async)" class="task-position">
     <div class="container-fluid" *ngIf="dataReady">
         <div class="row header">
@@ -15,7 +28,7 @@
                         <div class="row">
                             <div class="status labels mx-2">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <app-status-icons [Status]="task.Status" [Border]="true"></app-status-icons>
+                                <app-status-icons [getTaskDetail]="task.Status" [Border]="true"></app-status-icons>
                             </div>
                             <div class="priority labels mx-2">
                                 <span id="headerLabel">Priority &nbsp;&nbsp;</span>
@@ -27,47 +40,44 @@
                                 </app-difficulty-icons>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-md-4 col-3">
                         <div class="row float-right">
-                            <div class="logWork mt-4"
+                            <div class="logWork pt-3 pr-2"
                                 *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
-                                <button class="material-icons btn" type="button" data-toggle="modal"
-                                    data-target="#Modal" (click)="logWorkPage()">post_add</button>
+                                <span class="material-icons" data-toggle="modal" title="Log Work"
+                                    data-target="#Modal" (click)="logWorkPage()">post_add</span>
                             </div>
-                            <div class="menu mt-3">
+                            <div class="menu pt-3">
                                 <div class="dropdown">
-                                    <button role="button" type="button" class="btn dropdown" data-toggle="dropdown">
-                                        <span class="material-icons">more_horiz</span>
-                                    </button>
+                                    <span class="material-icons dropdown" data-toggle="dropdown" title="Menu">more_horiz</span>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                        <div class="reopenTask mt-4"
+                                        <div class="reopenTask "
                                             *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
                                             <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
                                                 Task</button>
                                         </div>
-                                        <div class="editTask mt-4"
+                                        <div class="editTask"
                                             *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalCenter" (click)="editTask()">Edit
                                                 Task</button>
                                         </div>
-                                        <div class="cloneTask mt-4"
+                                        <div class="cloneTask "
                                             *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 (click)="CloneTaskPage()">Clone Task</button>
                                         </div>
-                                        <div class="addLink mt-4"
+                                        <div class="addLink "
                                             *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#linkModal" (click)="addLink()">Add Link</button>
                                         </div>
-                                        <div class="addSubtask mt-4"
+                                        <div class="addSubtask "
                                             *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button"(click)="addSubtask()" data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
-                                        <div class="delete mt-4"
+                                        <div class="delete "
                                             *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalDel" (click)="deleteTask()">Delete

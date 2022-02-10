@@ -1,4 +1,18 @@
 /* eslint-disable linebreak-style */
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 /* eslint-disable no-unused-vars */
 /* eslint-disable require-jsdoc */
 /* eslint-disable object-curly-spacing */
@@ -52,7 +66,7 @@ exports.createNewTask = function(request, response) {
     let senderName = "";
 
     let status = 200;
-    
+
     const promise1 = getOrgUseAppKey(appKey).then((orgDetail) => {
         orgDomain = orgDetail.OrganizationDomain;
         orgId = orgDetail.OrganizationId;
@@ -148,13 +162,13 @@ exports.createNewTask = function(request, response) {
 
             updateOrgRawData(updateRawDataInputJson, orgDomain);
         });
-       
 
-        const promises = [p1,p2, promise1, promise2, promise3];
+
+        const promises = [p1, p2, promise1, promise2, promise3];
         return Promise.all(promises).then(()=>{
             const notificationMessage = senderName + " created a task for you " + taskId;
             const subjectMessage = senderName + " created a task for you";
-          
+
             const link = "https://worktez.com/TaskDetails/" + taskId;
 
             const htmlMessage = "<div style=\"background-color:#E9ECEF;margin:auto;width:80%;padding-top: 30px;height:100%;\">"+
@@ -163,7 +177,7 @@ exports.createNewTask = function(request, response) {
 
             sendMail(assignee, subjectMessage, htmlMessage);
             sendNotification(notificationMessage, uid, creationDate, time, orgDomain, link);
-            
+
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
         }).catch((error) => {
             status = 500;

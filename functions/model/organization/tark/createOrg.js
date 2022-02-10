@@ -6,6 +6,20 @@
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 const { functions, getApplicationData, updateApplication, generateBase64String } = require("../../application/lib");
 const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("../lib");
 const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = require("../../users/lib");

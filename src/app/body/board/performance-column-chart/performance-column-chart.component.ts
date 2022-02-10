@@ -1,3 +1,16 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
@@ -19,7 +32,7 @@ export class PerformanceColumnChartComponent implements OnInit {
   @Input("currentSprint") currentSprintNumber: number;
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
-  data: Observable<[]>;
+  data: [];
   componentName: string = "PERFORMANCE-COLUMN-CHART";
   columnNames: string[];
   teamMember: string;
@@ -39,11 +52,13 @@ export class PerformanceColumnChartComponent implements OnInit {
     this.columnNames = this.teamMember == "Team" ? ["Sprints", this.teamId] : ["Sprints", this.teamMember];
     const callable = this.functions.httpsCallable('performanceChart/performanceChartData');
     try {
-      this.data = await callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
+      await callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
         map(actions => {
           return actions.data.sort() as [];
-        }));
-      this.showLoader = false;
+        })).subscribe((data)=>{
+          this.data = data
+          this.showLoader = false;
+        });
     } catch(error) {
       this.errorHandlerService.showError = true;
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
