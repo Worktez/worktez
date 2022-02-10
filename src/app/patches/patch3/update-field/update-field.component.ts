@@ -42,19 +42,24 @@ export class UpdateFieldComponent implements OnInit {
   async query() {
     this.QueryShowLoader = true;
     console.log("Querying in Patch3");
-    try {
+  
       const callable = this.functions.httpsCallable('patch/patch3');
-      await callable({OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue, Uid: this.uid}).toPromise().then(result => {
-        this.QueryShowLoader = false;
-        this.showClose = true;
-        console.log(result);
+      await callable({OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue, Uid: this.uid}).subscribe({
+        next: (result) => {
+          this.QueryShowLoader = false;
+          this.showClose = true;
+          console.log(result);
+        },
+        error: (error) => {
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.log("Error", error);
+        },
+        complete: () => console.info('Getting team data successful')
+        
       });
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log("Error", error);
-    }
+  
   }
 
   workDone() {

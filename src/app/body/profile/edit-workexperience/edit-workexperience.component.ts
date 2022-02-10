@@ -57,16 +57,21 @@ export class EditWorkexperienceComponent implements OnInit {
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/addExperience');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate }).toPromise();
-      console.log("Successful");
-      this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          console.log("error");
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
   }
   
   async updateWork() {
@@ -76,16 +81,21 @@ export class EditWorkexperienceComponent implements OnInit {
     this.enableLoader = true
     console.log("Edit");
     const callable = this.functions.httpsCallable('users/updateExperience');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate, ExperienceId: this.workModalData.ExperienceId }).toPromise();
-      console.log("Successful");
-      this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate, ExperienceId: this.workModalData.ExperienceId }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          console.log("error");
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
   }
 
   editWorkDone() {

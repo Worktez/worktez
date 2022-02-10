@@ -54,10 +54,17 @@ export class Patch2Component implements OnInit {
     console.log("Patch2 function running");
     console.log(this.orgDomain, this.newfield, this.newFieldValue);
     const callable = this.functions.httpsCallable('patch/patch2');
-    await callable({OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        
+      },
+      complete: () => console.info('successful')
+  
     });
   }
 
