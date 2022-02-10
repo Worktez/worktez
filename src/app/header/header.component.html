@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="headerBox">
-    <ng-container *ngIf="authService.afauth.user | async; else homePageHeader">
+    <ng-container *ngIf="userReady ; else homePageHeader">
         <nav class="navbar navbar-expand-lg sticky-top header">
             <a class="navbar-brand text-white px-1" (click)="home()">
                 <img src="../../assets/logo.png" width="50" height="30"> 
@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
                 <ng-container *ngIf="(backendService.organizationsData | async)">
                         <ul class="navbar-nav">
-                            <ng-container *ngIf="authService.myOrgCollectionsData | async">
+                            <ng-container *ngIf="myorgDataCollected">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -35,7 +35,7 @@
                                         </mat-icon>
                                     </a>
                                     <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                                        <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
+                                        <ng-container *ngFor="let item of myOrgCollData">
                                             <a class="dropdown-item" *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
                                         </ng-container>
                                     </div>
@@ -76,7 +76,7 @@
                                 <a class="dropdown-item " (click)="tasksEvaluation() ">Tasks Evaluation</a>
                             </div>
                         </li>
-                        <ng-container *ngIf="(authService.organizationAvailable) && authService.afauth.user | async">
+                        <ng-container *ngIf="(authService.organizationAvailable) && userReady">
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="organizationDetails()">
                                     <label>My Organization</label>
@@ -84,7 +84,7 @@
                             </li>
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngIf="!(authService.organizationAvailable) && authService.afauth.user | async">
+                    <ng-container *ngIf="!(authService.organizationAvailable) && userReady ">
                         <li class="nav-item px-1">
                             <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
                                 <label>Create New Organization</label>
@@ -119,7 +119,7 @@
                 <li class="nav-item">
                 <a class="nav-link" href="#testimonial">Testimonials</a>
                 </li>
-                <ng-container *ngIf="!(authService.organizationAvailable) && authService.afauth.user | async">
+                <ng-container *ngIf="!(authService.organizationAvailable) && userReady">
                     <li class="nav-item px-1">
                         <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
                             <label>Create New Organization</label>

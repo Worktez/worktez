@@ -33,7 +33,7 @@
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
-                <ng-container *ngIf="quickNoteObservable|async; else loader">
+                <ng-container *ngIf="gotQuickNotes; else loader">
                     <ng-container *ngFor="let item of notes">
                         <li class="list-group-item" id="note">
                             <div class="row">

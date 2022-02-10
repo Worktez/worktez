@@ -48,13 +48,16 @@ export class UploadFilesComponent implements OnInit {
     this.fileName = this.currentFileUpload.file.name;
 
     this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, this.taskId)
-    .subscribe(percentage => {
+    .subscribe({
+      next: (percentage) =>{
         this.percentage = Math.round(percentage);
       },
-      error => {
-        console.log(error);
-      }
-    );;
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.log("Getting Percentage Data Complete")
+    }
+    );
   }
 
   changeFileStatus(data: {changeStatus: string, file: FileData} ) {

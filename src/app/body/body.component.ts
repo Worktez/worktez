@@ -26,10 +26,15 @@ export class BodyComponent implements OnInit {
  
   showLoader: boolean = true;
   showlogin: boolean = false;
+  teamDataChecked: boolean= false;
+  userDataReady: boolean = false;
 
   constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.authService.afauth.user.subscribe((data) => {
+      this.userDataReady = true;
+    });
   }
 
   sprintCreated( completed: boolean ) {

@@ -31,10 +31,10 @@ import { map, Observable, startWith } from 'rxjs';
 export class EditPageComponent implements OnInit {
 
   assigneeName = new FormControl();
-  filteredOptionsAssignee: Observable<string[]>;
+  filteredOptionsAssignee: string[];
 
   reporterName = new FormControl();
-  filteredOptionsReporter: Observable<string[]>;
+  filteredOptionsReporter: string[];
 
   componentName: string = "EDIT-TASK";
 
@@ -80,17 +80,34 @@ export class EditPageComponent implements OnInit {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
 
-          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+          this.assigneeName.valueChanges.pipe(
             startWith(''),
             map((value) => {
               return this._filter(value)
             }),
-          );
+          ).subscribe({
+            next :(data) => {
+              this.filteredOptionsAssignee = data
+            },
+            error:(error) => {
+              console.error(error)
+            },
+            complete:() => console.info("Getting filtered options Assignee was successfull")
+          });
 
-          this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
+          this.reporterName.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value)),
-          );
+          ).subscribe({
+            
+            next :(data) => {
+              this.filteredOptionsReporter = data
+            },
+            error:(error) => {
+              console.error(error)
+            },
+            complete:() => console.info("Getting filtered options Assignee was successfull")
+          });
     }); 
   }
 

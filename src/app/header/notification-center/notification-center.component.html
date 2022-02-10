@@ -11,8 +11,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="btn-group">
-    <mat-icon fontSet="material-icons-outlined" matBadge="{{activeNotifications}}" matBadgeColor="warn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="loadNotifications()">notifications</mat-icon>
+<div class="btn-group" *ngIf="authService.myOrgCollectionDocData">
+    <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}" matBadgeColor="warn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="loadNotifications()">notifications</mat-icon>
     <div class="dropdown-menu dropdown-menu-right" id="dropdownUserCard">
         <ng-container *ngIf="!showLoader; else loader">
             <div class="notificationCenter px-1 py-1">

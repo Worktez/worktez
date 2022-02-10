@@ -22,6 +22,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 export class SpeedImagesComponent implements OnInit {
 
   @Input('emails') emails: string[]
+  photoUrlReady: boolean = false
 
   constructor(public userService: UserServiceService) { }
 
@@ -32,6 +33,7 @@ export class SpeedImagesComponent implements OnInit {
       this.userService.getPhotoList(this.emails);
       this.userService.photoUrlObservable.subscribe(data => {
       this.watcherList = data;
+      this.photoUrlReady = true;
       }); 
     }
   }

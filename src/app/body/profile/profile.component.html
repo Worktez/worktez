@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="px-5" id="profileTheme" *ngIf="authService.userAppSettingObservable && backendService.organizationsData | async">
+<div class="px-5" id="profileTheme" *ngIf="startService.showTeams">
     <div class="row">
         <div class="col-3">
             <h2>Profile Page</h2>
