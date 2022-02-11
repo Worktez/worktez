@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-setup',
@@ -24,7 +25,7 @@ export class SetupComponent implements OnInit {
   uid: string;
   public showLoader: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public router: Router, public authService: AuthService) { }
+  constructor(private popupHandlerService: PopupHandlerService, private functions: AngularFireFunctions, public router: Router, public authService: AuthService) { }
 
   ngOnInit(): void { }
 
@@ -116,9 +117,11 @@ export class SetupComponent implements OnInit {
 
   async createNewSession(project: string, teamId: string, organizationAppKey: string) {
     const callable = this.functions.httpsCallable('tasks/createNewTask');
+    const parentTaskId = this.popupHandlerService.parentTaskId;
+    const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
 
     try {
-      const result = await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
+      const result = await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
       this.progressPercentage = 30;
       console.log("Successfully created the task");
       console.log(result);
@@ -127,7 +130,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid }).toPromise();
+      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
       this.progressPercentage = 32;
       console.log("Successfully created the task");
       console.log(result);
@@ -136,7 +139,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task", Uid: this.authService.userAppSetting.uid  }).toPromise();
+      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl  }).toPromise();
       this.progressPercentage = 33;
       console.log("Successfully created the task");
       console.log(result);
@@ -145,7 +148,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid }).toPromise();
+      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
       this.progressPercentage = 38;
       console.log("Successfully created the task");
       console.log(result);
@@ -154,7 +157,7 @@ export class SetupComponent implements OnInit {
     }
 
     try {
-      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story", Uid: this.authService.userAppSetting.uid }).toPromise();
+      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
       this.progressPercentage = 39;
       console.log("Successfully created the task");
       console.log(result);

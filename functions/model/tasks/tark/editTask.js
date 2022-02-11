@@ -195,6 +195,7 @@ exports.editTask = function(request, response) {
             Type: type,
             Status: taskStatus,
             Reporter: reporter,
+            LastUpdatedDate: date,
         };
         updateTask(updateTaskJson, orgDomain, taskId);
         sendMail(assignee, subjectMessage, htmlMessage);

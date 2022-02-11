@@ -155,11 +155,11 @@ export class TaskDetailsComponent implements OnInit {
 
       try {
         const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-        
         this.comment = "";
         return;
       } catch (error) {
-        this.errorHandlerService.getErrorCode("COMMENT", "InternalError");
+        this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.log("Error", error);
       }
     }
@@ -216,7 +216,8 @@ export class TaskDetailsComponent implements OnInit {
       const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
       return;
     } catch ( error ) {
-      this.errorHandlerService.getErrorCode( "LOGWORK", "InternalError" );
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log( "Error", error );
     }
   }

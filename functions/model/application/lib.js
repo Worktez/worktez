@@ -48,6 +48,7 @@ exports.setApplication = function() {
         TotalNumberOfOrganizations: 0,
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
+        TotalNumberSchedularOrg: 0,
     });
     return Promise.resolve(P1);
 };
@@ -87,7 +88,7 @@ exports.checkUpdateTime = function(lastUpdated) {
     const currentTimeStamp = Date.now();
     const diff = currentTimeStamp - lastUpdated;
     console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
-    if (diff >= 3600000) {
+    if (diff >= 60) {
         return currentTimeStamp;
     }
     return 0;

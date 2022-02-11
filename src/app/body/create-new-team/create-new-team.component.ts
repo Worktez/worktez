@@ -9,6 +9,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 declare var jQuery:any;
 
@@ -38,7 +39,7 @@ export class CreateNewTeamComponent implements OnInit {
   @Output() teamCreated = new EventEmitter<{ completed: boolean }>();
   @Output() teamUpdated = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
@@ -180,6 +181,8 @@ export class CreateNewTeamComponent implements OnInit {
       this.enableLoader = false;
     } catch (error) {
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.error("Error", error);
     }  
   }
@@ -201,8 +204,9 @@ export class CreateNewTeamComponent implements OnInit {
       this.teamCreated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
-
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.error("Error", error);
     }
   }
@@ -224,8 +228,9 @@ export class CreateNewTeamComponent implements OnInit {
       this.teamUpdated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
     } catch (error) {
-
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.error("Error", error);
     }
   }

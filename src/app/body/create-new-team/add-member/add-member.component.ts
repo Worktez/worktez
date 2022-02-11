@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-add-member',
@@ -26,7 +27,7 @@ export class AddMemberComponent implements OnInit {
   showClose: boolean = false;
   add: boolean = false;
 
-  constructor(public backendService: BackendService,private functions: AngularFireFunctions) { }
+  constructor(public backendService: BackendService,private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -51,6 +52,8 @@ async addUpdateTeam() {
     this.showClose = true;
   } catch (error) {
     this.enableLoader = false;
+    this.errorHandlerService.showError = true;
+    this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     console.error("Error", error);
   }
 }

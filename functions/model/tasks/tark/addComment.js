@@ -48,6 +48,11 @@ exports.addComment = function(request, response) {
             return error;
         });
 
+        const updateTaskJson = {
+            LastUpdatedDate: date,
+        };
+        updateTask(updateTaskJson, orgDomain, taskId);
+
         const promises = [promise1, promise2];
 
         Promise.all(promises).then(() => {

@@ -46,7 +46,8 @@ export class WarningComponent implements OnInit {
       const result = await callable({AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Uid: this.uid }).toPromise();
       this.router.navigate(['/']);
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
     location.reload();

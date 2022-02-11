@@ -66,14 +66,14 @@ export class LogWorkComponent implements OnInit {
 
     try {
       const result = await callable({AppKey: appKey, Assignee:this.task.Assignee, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-
       this.enableLoader = false;
       this.showClose = true;
       // this.workDone();
       return;
     } catch (error) {
-      this.errorHandlerService.getErrorCode("LOGWORK", "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       console.log("Error", error);
     }
   }

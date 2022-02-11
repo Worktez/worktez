@@ -14,24 +14,15 @@ const { getAllTasks } = require("../../tasks/lib");
 exports.readTasksEvaluationData = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
     const teamId = request.body.data.TeamId;
-    const sprintRange1 = request.body.data.SprintRange1;
-    const sprintRange2 = request.body.data.SprintRange2;
+    const sprintNumber = request.body.data.SprintNumber;
     const pageToLoad = request.body.data.PageToLoad;
     const tasks = [];
+    const backlogTasks = [];
     let status = 200;
-    let disableLoadMore = false;
 
-    let p1;
+    let promises; 
 
-    if (pageToLoad == "initial") {
-        p1 = getAllTasks(orgDomain, teamId, -1, "", "", "", "", "", "", "").then(taskCol => {
-            taskCol.forEach((taskDoc) => {
-                tasks.push(taskDoc.data());
-            });
-        });
-    } 
-
-    const p2 = getAllTasks(orgDomain, teamId, "", "", "", "", "", "", sprintRange1, sprintRange2).then((taskCol) => {
+    const p1 = getAllTasks(orgDomain, teamId, sprintNumber, "", "", "", "", "", "", "").then((taskCol) => {
         taskCol.forEach((taskDoc) => {
             tasks.push(taskDoc.data());
         });
@@ -39,10 +30,21 @@ exports.readTasksEvaluationData = function(request, response) {
         status = 500;
         console.log("Error:", error);
     });
+
+    if (pageToLoad == "initial") {
+        const p2 = getAllTasks(orgDomain, teamId, -1, "", "", "", "", "", "", "").then(taskCol => {
+            taskCol.forEach((taskDoc) => {
+                backlogTasks.push(taskDoc.data());
+            });
+        });
+        promises = [p1, p2];
+    } else {
+        promises = [p1];
+    }
     
 
-    return Promise.resolve(promise).then(() => {
-        result = { data: {Tasks: tasks} };
+    return Promise.all(promises).then(() => {
+        result = { data: {Tasks: tasks, BacklogTasks: backlogTasks} };
         console.log("Read Task Evaluation Page Data Successfully");
         return response.status(status).send(result);
     }).catch((err) => {

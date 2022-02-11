@@ -4,6 +4,9 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-unused-vars */
+const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
+const { getAllUsersInUids } = require("../../users/lib");
 const { getUserPerformanceChart } = require("../lib");
 const { updatedUserPerformanceChartData } = require("../tark/updatedUserPerformanceChartData");
 
@@ -14,23 +17,21 @@ exports.getUserPerformanceChartData = function(request, response) {
   const assignee = data.Assignee;
   const uid=data.Uid;
   let result;
-  let lastUpdated = 0;
   let status = 200;
   
   getUserPerformanceChart(orgDomain, uid).then((doc) => {
     const responseData = [];
     if (doc == undefined) {
-      updatedUserPerformanceChartData(0, orgDomain, assignee, uid, sprintRange);
+      getAllUsersInUids([uid]).then((data)=>{
+        const orgAppKey = data[0].SelectedOrgAppKey;
+        const teamId = data[0].SelectedTeamId;
+        setSchedularUnit("UserPerformanceChart", orgAppKey, assignee, teamId, orgDomain);
+        startSchedular();
+      });
       result = {data: {status: "ERROR", data: "undefined"}};
     } else {
-      if (doc.LastUpdated != undefined) {
-        lastUpdated = doc.LastUpdated;
-      }
-      updatedUserPerformanceChartData(lastUpdated, orgDomain, assignee, uid, sprintRange);
       for (const i in doc) {
-        if (i!="LastUpdated") {
-          responseData.push([i, doc[i]]);
-        }
+        responseData.push([i, doc[i]]);
       }
       result = { data: { status: "OK", data: responseData } };
     }

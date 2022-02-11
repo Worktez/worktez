@@ -9,7 +9,6 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 const { createNewSprint } = require("../sprints/tark/createNewSprint");
 const { updateSprintStatus } = require("../sprints/tark/updateSprintStatus");
 const { getSprintDetails } = require("../sprints/tark/getSprintDetails");
-const { getAllSprints } = require("../sprints/tark/getAllSprints");
 
 
   fastify.post("/createNewSprint", (req, res) => {
@@ -22,10 +21,6 @@ const { getAllSprints } = require("../sprints/tark/getAllSprints");
 
   fastify.post("/updateSprintStatus", (req, res) => {
     updateSprintStatus(req, res);
-  });
-
-  fastify.post("/getAllSprints", (req, res) => {
-    getAllSprints(req, res);
   });
 
   exports.sprints = functions.https.onRequest((req, res) => {

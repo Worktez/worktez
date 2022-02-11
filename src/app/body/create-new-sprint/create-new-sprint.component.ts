@@ -111,8 +111,9 @@ export class CreateNewSprintComponent implements OnInit {
     try {
       const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
     } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
       this.enableLoader = false;
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
     this.close();
   }

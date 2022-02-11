@@ -15,10 +15,14 @@ const { uploadFileToOrgDocuments } = require("./tark/uploadFileToOrgDocuments");
 const { getFilesInOrgDocument } = require("./tark/getFilesInOrgDocuments");
 const { uploadFileToContributorsDocuments } = require("./tark/uploadFileToContributorsDocuments");
 const { uploadProfilePicToUserDoc } = require("./tark/uploadUserProfilePic");
-
+const { deleteFilesInOrg } = require("./tark/deleteFilesInOrg");
 
 fastify.post("/deleteFilesInTask", (req, res) => {
     deleteFilesInTask(req, res);
+});
+
+fastify.post("/deleteFilesInOrg", (req, res) => {
+    deleteFilesInOrg(req, res);
 });
 
 fastify.post("/uploadFileToContributorsDocuments", (req, res) => {

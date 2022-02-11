@@ -7,6 +7,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { FormControl } from '@angular/forms';
+import { Observable, startWith, map } from 'rxjs';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -15,21 +19,29 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 })
 export class TasksEvaluationComponent implements OnInit {
 
-  constructor(public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService) { }
+  constructor(public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
   componentName: string = "TASKS-EVALUATION";
-  tasks: Tasks[] = [];
-  sprints: Sprint[] = [];
+  tasks = [];
+  sprints: Sprint[] = []
   showLoader: boolean;
   selectedTeamId: string;
   selectedTeamName: string;
   todayDate: string;
   time: string;
   teamIds: string[];
+  statusLabels: string[];
+  priorityLabels: string[];
+  difficultyLabels: string[];
+  teamMembers: string[];
   teamCurrentSprint: number;
-  sprintRange2: number;
-  sprintRange1: number;
+  disableLoadMore: boolean = false;
+  taskIdToEdit: string = "";
+  fieldToEdit: string = "";
 
-  lastInResultSprintId: number;
+  assigneeName = new FormControl();
+  filteredOptionsAssignee: Observable<string[]>;
+
+  nextSprintTasksToFetch: number;
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -45,8 +57,19 @@ export class TasksEvaluationComponent implements OnInit {
               this.selectedTeamId = this.authService.getTeamId();
               this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
                 this.teamCurrentSprint = data.CurrentSprintId;
+                this.nextSprintTasksToFetch = this.teamCurrentSprint;
                 this.selectedTeamName = data.TeamName;
-                this.getAllSprints();
+                this.statusLabels = data.StatusLabels;
+                this.priorityLabels = data.PriorityLabels;
+                this.difficultyLabels = data.DifficultyLabels;
+                this.teamMembers = data.TeamMembers;
+
+                this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+                  startWith(''),
+                  map((value) => {
+                    return this._filter(value)
+                  }),
+                );
                 this.readTasks(); 
               });
           });
@@ -55,17 +78,36 @@ export class TasksEvaluationComponent implements OnInit {
     });
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   async readTasks() {
+    console.log(this.nextSprintTasksToFetch)
     this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
     try {
-      const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintRange1: this.sprintRange1, SprintRange2: this.sprintRange2 }).toPromise();
-      this.tasks = result.Tasks;
-      console.log(this.tasks);
-
+      let result;
+      if (this.nextSprintTasksToFetch == this.teamCurrentSprint) {
+        result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.teamCurrentSprint }).toPromise();
+      } else {
+        result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'loadMore', SprintNumber: this.nextSprintTasksToFetch }).toPromise();
+      }
+      if (result.BacklogTasks.length > 0) {
+        this.tasks.push(result.BacklogTasks);
+      }
+      this.tasks.push(result.Tasks);
+      this.nextSprintTasksToFetch -= 1;
+      if (this.nextSprintTasksToFetch < 1) {
+        // disable load more
+        this.disableLoadMore = true;
+      }
+      this.showLoader = false;
     } catch (error) {
-      
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
     }
   }
 
@@ -75,50 +117,61 @@ export class TasksEvaluationComponent implements OnInit {
     } else if (sprintNumber == -1) {
       return "Backlog";
     } else {
-      return "S" + sprintNumber;
+      return "Sprint " + sprintNumber;
     }
   }
 
-  async getAllSprints() {
-    const callable = this.functions.httpsCallable('sprints/getAllSprints');
-    const orgDomain = this.backendService.getOrganizationDomain();
-    try {
-      const result = await callable({OrgDomain: orgDomain, TeamName: this.selectedTeamName}).toPromise();
-      const data = result.sprints as Sprint[];
-      this.sprints = data;
-      this.sprints.sort((a, b) => {
-        return b.SprintNumber - a.SprintNumber;
-      });
-      this.sprintRange2 = this.sprints[0].SprintNumber
-      if (this.sprintRange2 < 4) {
-        this.sprintRange1 = 1;
-      } else {
-        this.sprintRange1 = this.sprintRange2 - 3
-      }
-      console.log(this.sprintRange1);
-      console.log(this.sprintRange2);
-    } catch (error) {
-
-    }
-  }
-
-  async moveToCurrentSprint(task: Tasks) {
+  async editTask(task: Tasks, sprintNumber: number) {
     this.showLoader = true;
-    const callable = this.functions.httpsCallable('tasks/editTask');
-    // Move to Current Sprint
+    if (sprintNumber == null) {
+      sprintNumber = task.SprintNumber;
+    }
     try {
-      const appKey = this.backendService.getOrganizationAppKey();
-      if (!(task.Status === "Completed") && this.teamCurrentSprint != task.SprintNumber) {
-        const result = await callable({AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).toPromise();
-
-        this.readTasks();
+        const appKey = this.backendService.getOrganizationAppKey();
+        const callable = this.functions.httpsCallable('tasks/editTask');
+        const result = await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter}).toPromise();
+        if (result == "OK") {
+          this.taskIdToEdit = "";
+          task.LastUpdatedDate = this.todayDate;
+          task.SprintNumber = sprintNumber;
+          this.showLoader = false;
+        }
+      } catch (error) {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         this.showLoader = false;
       }
-      else {
-        console.log("Task is Completed , Cannot Update");
-      }
-    } catch (error) {
+  } 
+
+  onDrop(event: CdkDragDrop<Tasks[]>) {
+    this.showLoader = true;
+    console.log(event.previousContainer === event.container);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.showLoader = false;
+    } else {
+      // move to the dragged sprint
+      this.editTask(event.previousContainer.data[event.previousIndex], event.container.data[0].SprintNumber).then(() => {
+        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+          this.tasks = this.tasks.filter(arr => arr.length > 0);
+          this.showLoader = false;
+      });
+    }
+  }
+
+  showEditTask(taskId: string, fieldToEdit: string) {
+    this.taskIdToEdit = taskId;
+    this.fieldToEdit = fieldToEdit;
+  }
+
+  selectedAssignee(item, task: Tasks) {
+    if(item.selected == false) {
+      this.assigneeName.setValue("");
+      this.taskIdToEdit = "";
+    } else {
+      this.assigneeName.setValue(item.data);
+      task.Assignee = this.assigneeName.value;
+      this.editTask(task, null);
     }
   }
 }

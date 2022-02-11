@@ -21,6 +21,7 @@ export interface Tasks {
   TeamId: string;
   Type: string;
   LinkCounter: number;
+  LastUpdatedDate: string;
 }
 
 export interface TasksId extends Tasks {id: string;}

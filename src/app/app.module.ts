@@ -94,6 +94,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
@@ -119,7 +120,6 @@ import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.
 import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
-
 
 @NgModule({
   declarations: [
@@ -240,7 +240,8 @@ import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-bo
     MatBadgeModule,
     MatSortModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    DragDropModule
   ],
   providers: [
     AuthService,

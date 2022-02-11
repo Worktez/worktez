@@ -1,108 +1,60 @@
-#navbarMenu {
-    background-color: var(--primary-color);
-    color: var(--button-text);
+#sprintName {
+    background-color: var(--hover);
+    border-radius: 18px;
+    width: max-content;
 }
 
-.container {
-    background-color: var(--secondary-bg);
-    box-shadow: var(--box-shadow-bottom);
+h6 {
+    font-size: smaller;
+}
+
+.label {
+    color: var(--primary-color);
+}
+
+.value {
     color: var(--text);
 }
 
-.table th {
-    color: var(--text);
+.card {
+    background-color: var(--card-bg);
 }
 
-.table td:not(:last-child){
-    color: var(--text);
-    cursor: pointer;
+#sprintContainer {
+    background-color: var(--primary-bg);
 }
 
-#moveBtn, #dropdownButton {
-    background-color: var(--secondary-color);
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}
+
+.cdk-drag-preview {
+box-sizing: border-box;
+border-radius: 4px;
+box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+opacity: 0;
+}
+
+.cdk-drag-animating {
+transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+#sprintContainer.cdk-drop-list-dragging {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.btn {
     color: var(--button-text);
 }
 
-#moveBtn:hover:disabled {
-    background-color: var(--secondary-color);
-    color: var(--button-text);
-}
 
-#moveBtn:hover {
-    background-color: var(--primary-color);
-    color: var(--button-text);
-}
-
-.dropdown #button {
-    color: var(--button-text);
-}
-
-.dropdown #button:hover {
-    background-color: var(--secondary-color);
-}
-
-select {
-    background: none;
-    border: none;
-    color: var(--button-text);
-}
-
-select:hover {
-    background-color: var(--secondary-color);
-}
-
-select option {
-    background-color: var(--secondary-color);
-}
-
-.pagination li a:hover {
-    cursor: pointer;
-    background-color: var(--secondary-bg);
-}
-
-.pagination li a:focus {
-    box-shadow: none;
-    outline: none 0;
-}
-
-.pagination li a {
-    color: var(--secondary-color);
-    background-color: var(--secondary-bg);
-}
-
-.pagination .disabled a {
-    color: var(--text);
-}
-
-#filterMenu {
-    background-color: var(--secondary-bg);
-    padding-right: 35px;
-    padding-left: 5px;
-}
-
-.modal-header {
-    background-color: var(--primary-color);
-}
-
-.modal-content {
-    background-color: var(--secondary-bg);
-    border: var(--primary-border);
-    color: var(--text);
-}
-
-.head {
-    font-weight: bolder;
-}
-
-.btn-secondary {
-    background-color: var(--button-hover-bg);
-}
-
-.btn-secondary:hover {
-    background-color: var(--button-bg);
-}
-
-#SuccessIcon{
-    color: var(--secondary-color);
-    font-size: 48px;
-}
