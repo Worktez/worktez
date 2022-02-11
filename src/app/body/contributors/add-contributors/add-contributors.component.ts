@@ -78,13 +78,17 @@ export class AddContributorsComponent implements OnInit {
   async submit() {
     this.enableLoader = true
     const callable = this.functions.httpsCallable('contributors/addContributor');
-    try {
-      const result = await callable({ email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name }).toPromise();
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+      const result = await callable({ email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name }).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+        },
+        error: (error) => {
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful ')
+    })
     this.close();
   }
 }

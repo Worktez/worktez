@@ -50,10 +50,16 @@ export class Patch5Component implements OnInit {
     console.log("Patch5 function running");
     console.log(this.orgDomain);
     const callable = this.functions.httpsCallable('patch/patch5');
-    await callable({OrgDomain: this.orgDomain, Uid: this.uid, Key: this.fieldName, Value: this.fieldValue}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid, Key: this.fieldName, Value: this.fieldValue}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        
+      },
+      complete: () => console.info('successful')
     });
   }
 

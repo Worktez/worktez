@@ -44,10 +44,16 @@ export class Patch4Component implements OnInit {
     this.showLoader = true;
     console.log("Patch4 function running");
     const callable = this.functions.httpsCallable('patch/patch4');
-    await callable({OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => console.info(' successful')
     });
   }
 

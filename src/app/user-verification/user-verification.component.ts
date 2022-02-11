@@ -45,13 +45,18 @@ export class UserVerificationComponent implements OnInit {
 
   async verifyUser() {
     const callable = this.functions.httpsCallable('users/verify');
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).toPromise();
-      this.router.navigate(['/']);
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+      await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
+        next: (data) => {
+          this.router.navigate(['/']);
+          console.log("Successful ");
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful')
+    });
+      
   }
 
 }

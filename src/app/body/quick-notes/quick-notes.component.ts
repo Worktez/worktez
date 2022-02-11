@@ -94,14 +94,21 @@ export class QuickNotesComponent implements OnInit {
   async deleteNote(docId: string) {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
-    try {
-    const result = await callable({Uid: uid, DocId: docId}).toPromise();
-    this.showList();
-    } catch(error) {
-      console.log("Error", error);
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+    await callable({Uid: uid, DocId: docId}).subscribe({
+      next: (data) => {
+        this.showList();
+        console.log("Successfull");
+      },
+      error: (error) => {
+        console.log("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful updated Selected Team in db')
+  });
+  
   }
 
   close() {

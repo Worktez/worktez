@@ -45,14 +45,18 @@ export class TeamsCardComponent implements OnInit {
   async deleteTeam() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/deleteTeam');
-    try {
-      const result = await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).toPromise();
-      this.team.TeamStatus = -1;
-    } catch (error) {
-      console.error("Error", error);
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+      next: (data) => {
+        this.team.TeamStatus = -1;
+      },
+      error: (error) => {
+        console.error("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful ')
+  });
+
   }
 
   enableAddMember(team: Team) {

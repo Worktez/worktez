@@ -201,15 +201,19 @@ export class TaskDetailsComponent implements OnInit {
       const callable = this.functions.httpsCallable('tasks/comment');
       const appKey = this.backendService.getOrganizationAppKey();
 
-      try {
-        const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-        this.comment = "";
-        return;
-      } catch (error) {
-        this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.log("Error", error);
-      }
+      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+        next: (data) => {
+          this.comment = "";
+          return;
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.log("Error", error);
+        },
+        complete: () => console.info('Successful ')
+    });
+
     }
   }
 
@@ -260,14 +264,19 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    try {
-      const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
-      return;
-    } catch ( error ) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log( "Error", error );
-    }
+    await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.log( "Error", error );
+      },
+      complete: () => console.info('Successful')
+  });
+      
   }
 
   backToTasks () {

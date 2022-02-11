@@ -59,8 +59,17 @@ export class HeaderComponent implements OnInit {
 
   async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
     const callable = this.functions.httpsCallable("users/setMyOrganization");
-    await callable({Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
-    window.location.reload()
+    await callable({Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+        window.location.reload()
+      },
+      error: (error) => {
+       
+      },
+      complete: () => console.info('Successful ')
+  });
+
   }
 
   startNewSprint() {

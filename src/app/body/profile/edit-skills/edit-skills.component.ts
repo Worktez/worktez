@@ -43,17 +43,22 @@ export class EditSkillsComponent implements OnInit {
   async addSkill() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('users/updateSkill');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).toPromise();
-      console.log("Successful");
-      this.skill = "";
-      this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.skill = "";
+          this.showClose = true;
+        },
+        error: (error) => {
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful edited skills')
+    });
+  
   }
   
   editSkillCompleted() {

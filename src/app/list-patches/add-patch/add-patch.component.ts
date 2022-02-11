@@ -40,17 +40,20 @@ export class AddPatchComponent implements OnInit {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('patch/patchModerator');
 
-    try {
-      const result = await callable({Patch: data.name,PatchName: data.name, PatchDescription: data.description, CreationDate: this.date, UpdatedOn: this.date, LastUsedByOrg:"", LastUsedByUid:""}).toPromise();
-
-      this.enableLoader = false;
-      this.showClose = true;
-    } catch (error) {
-      console.log(error);
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    await callable({Patch: data.name,PatchName: data.name, PatchDescription: data.description, CreationDate: this.date, UpdatedOn: this.date, LastUsedByOrg:"", LastUsedByUid:""}).subscribe({
+      next: (data) => {
+        this.enableLoader = false;
+        this.showClose = true;
+      },
+      error: (error) => {
+       console.log(error);
+       this.enableLoader = false;
+       this.errorHandlerService.showError = true;
+       this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful ')
+  });
+  
   }
 
 }

@@ -32,6 +32,7 @@ const { setTask } = require("../lib");
 const { sendMail } = require("../../email/lib");
 const { getUserUseEmail } = require("../../users/lib");
 const { sendNotification } = require("../../notifications/lib");
+const { linkSubtask } = require("../../linker/tark/linkSubTask")
 
 exports.createNewTask = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -54,6 +55,8 @@ exports.createNewTask = function(request, response) {
     const type = request.body.data.Type;
     const loggedWorkTotalTime = 0;
     const workDone = 0;
+    const parentTaskId = request.body.data.ParentTaskId;
+    const parentTaskUrl = request.body.data.ParentTaskUrl;
     let taskId;
     let totalNumberOfTask;
     let result;
@@ -179,13 +182,17 @@ exports.createNewTask = function(request, response) {
             sendNotification(notificationMessage, uid, creationDate, time, orgDomain, link);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
+
+            if (parentTaskId != "default") {
+                linkSubtask(parentTaskId, taskId, orgDomain, "PC", parentTaskUrl, link)
+            }
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
         });
     });
    return Promise.resolve(promise1).then(() => {
-            result = { data: "Task Created Successfully" };
+            result = { data: "Task Created Successfully", childTaskId: taskId};
             console.log("Task Created Successfully");
             return response.status(status).send(result);
         })
