@@ -47,7 +47,7 @@
                                 <div class="dropdown">
                                     <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                        <ng-container *ngFor='let item of filteredOptionsAssignee'>
                                             <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
                                         </ng-container>
                                     </div>
@@ -59,7 +59,7 @@
                                     <span id="label">Reporter Name</span>                      
                                     <input type="text" autocomplete="off" class="form-control" [formControl]="reporterName" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <ng-container *ngFor='let item of filteredOptionsReporter | async'>
+                                        <ng-container *ngFor='let item of filteredOptionsReporter'>
                                             <app-suggestion-bucket [email]="item" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
                                         </ng-container>
                                     </div>

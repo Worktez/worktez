@@ -28,6 +28,7 @@ export class UserVerificationComponent implements OnInit {
   organizationDomain: string
   userEmail: string
   teamId: string
+  userDataReady: boolean = false;
 
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -36,6 +37,10 @@ export class UserVerificationComponent implements OnInit {
     this.teamName = this.route.snapshot.params['teamName'];
     this.userEmail = this.route.snapshot.params['userEmail'];
     this.teamId = this.route.snapshot.params['teamId'];
+
+    this.authService.afauth.user.subscribe((data) => {
+      this.userDataReady = true;
+    });
   }
 
   async verifyUser() {

@@ -27,9 +27,14 @@ export class ThemeComponent implements OnInit {
   showloader: boolean = false;
   componentName:string ="THEME";
   enableDarkTheme: boolean
+  presentThemeReady: boolean=false;
   constructor(public themeService: ThemeService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
+    this.themeService.presentTheme$.subscribe((data) => {
+      this.presentThemeReady = true;
+    });
+    
     if (this.appTheme == 'theme-dark') {
       this.enableDarkTheme = true;
     } else {

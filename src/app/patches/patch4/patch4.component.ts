@@ -30,10 +30,14 @@ export class Patch4Component implements OnInit {
   patch: Patch;
   orgDomain: string;
   showLoader:boolean = false;
+  patchObservableReady: boolean = false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
   ngOnInit(): void {
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
+    });
   }
 
   async submitOperation() {

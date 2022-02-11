@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { BackendService } from '../services/backend/backend.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
-import { User } from '../Interface/UserInterface';
+import { MyOrganizationData, User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 
@@ -29,24 +29,32 @@ export class HeaderComponent implements OnInit {
 
   uid: string;
   isHomePage: boolean = false;
+  userReady: boolean= false;
+  myOrgCollData: MyOrganizationData[];
+  myorgDataCollected: boolean = false;
 
   constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    console.log(this.router.url);
     if (this.router.url == '/')  {
       this.isHomePage = true;
     } else { 
       this.isHomePage = false;
     }
-    this.authService.afauth.user.subscribe((action) => {
-      const data = action as User;
+    this.authService.afauth.user.subscribe({
+      next: (action) =>{
+        const data = action as User;
       if(data) {
         this.uid = data.uid;
       }
-    }, (error) => {
-      console.log(error);
+      this.userReady = true;
+    },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.log("Getting User Data Complete")
     });
+  
   }
 
   async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {

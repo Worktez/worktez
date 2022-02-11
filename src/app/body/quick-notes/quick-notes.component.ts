@@ -26,13 +26,14 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 export class QuickNotesComponent implements OnInit {
 
   showNotesList: boolean = false
-  public quickNoteObservable: Observable<QuickNote[]>
+  public quickNoteObservable: QuickNote[]
   public notes: QuickNote[]
   componentName:string = "QUICK-NOTES"
   showloader: boolean = false
   showAddNote: boolean = false
   openEditNote: boolean = false
   selectedNote: QuickNote;
+  gotQuickNotes: boolean=false;
 
   constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService) { }
 
@@ -45,14 +46,22 @@ export class QuickNotesComponent implements OnInit {
     const uid = this.authService.getLoggedInUser();
 
     const callable = this.functions.httpsCallable("quickNotes/getMyNotesList");
-    this.quickNoteObservable =  callable({Uid: uid }).pipe(map(res=>{
+    callable({Uid: uid }).pipe(map(res=>{
       const data = res.data as QuickNote[];
-      if(data) {
-        this.notes = data;
-      }
-      this.showloader = false
-      return data
-    }));
+      return data;
+    })).subscribe({
+      next: (data) => {
+        this.notes=data;
+        this.showloader = false;
+        this.gotQuickNotes=true;
+        this.quickNoteObservable=data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info('Getting Notes List successful')}
+    });
   }
 
   openAddNote() {
@@ -62,15 +71,17 @@ export class QuickNotesComponent implements OnInit {
 
   addNoteCompleted(data) {
     if(data) {
-      this.showNotesList = true
       this.showAddNote = false
+      return this.showList()
     }
   }
 
   openNote(item: QuickNote) {
+    this.showList();
     this.selectedNote = item;
     this.showNotesList = false
     this.openEditNote = true
+
   }
 
   editNoteCompleted(data) {

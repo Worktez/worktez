@@ -25,20 +25,27 @@ import { AuthService } from '../services/auth.service';
 })
 export class FooterComponent implements OnInit {
   tag_name: string
+  userDataReady: boolean = false;
 
   constructor(public authService: AuthService, private httpService: HttpServiceService, public router: Router) { }
 
   ngOnInit(): void {
-      try {
         this.httpService.getReleaseDetails().pipe(map(data => {
           const objData = data[0] as GitData;
           return objData;
-        })).subscribe(data => {
-          this.tag_name = data.tag_name;
-
+        })).subscribe({
+          next: (data) => {
+            this.tag_name = data.tag_name;
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => console.info('Getting Release data successful')
         });
-      } catch (error) {      
-      }
+
+        this.authService.afauth.user.subscribe((data) => {
+          this.userDataReady = true;
+        });
   }
   privacy(){
     this.router.navigate(['/privacy']);

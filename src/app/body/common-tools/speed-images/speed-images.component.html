@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/-->
-<ng-container *ngIf="userService.photoUrlObservable|async">
+<ng-container *ngIf="photoUrlReady">
     <ng-container *ngFor="let item of watcherList">
         <span class="avatar">
             <img [src]='item' width="40" height="40"/>

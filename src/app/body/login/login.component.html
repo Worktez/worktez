@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container" *ngIf="!(authService.afauth.user | async)">
+<div class="container" *ngIf="userExistChecked">
     <div class="row align-middle">
         <div class="col-md-4"></div>
         <div class="col-12 col-sm-6 col-md-4" id="loginContainer">

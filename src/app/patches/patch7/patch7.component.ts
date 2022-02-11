@@ -33,6 +33,7 @@ export class Patch7Component implements OnInit {
   showLoader: boolean = false;
   uid: string;
   patch: Patch;
+  patchObservableReady: boolean = false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -46,6 +47,9 @@ export class Patch7Component implements OnInit {
           this.showLoader = false;
         }
       });
+    });
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
     });
     console.log("patch running");
   }

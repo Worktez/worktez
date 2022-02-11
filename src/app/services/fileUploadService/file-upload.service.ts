@@ -29,7 +29,7 @@ export class FileUploadService {
   public fileUploadStatus: boolean = false;
   taskId: string = "";
 
-  filesData: Observable<FileData[]>
+  filesData: FileData[]
 
   constructor(private storage: AngularFireStorage, private functions: AngularFireFunctions, private backendService: BackendService, private authService: AuthService, private toolsService: ToolsService) { }
 
@@ -184,16 +184,34 @@ export class FileUploadService {
 
       if (id == "Documents") {
         const callable = this.functions.httpsCallable("librarian/getFilesInOrgDocument");
-        this.filesData = callable({ OrgDomain: orgDomain }).pipe(
+        callable({ OrgDomain: orgDomain }).pipe(
           map(actions => {
             return actions.data as FileData[];
-          }));
+          })).subscribe({
+            next: (data) =>{
+              this.filesData=data;
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.log("Getting Organisation Files Data Complete")
+          }
+          );
       } else {
         const callable = this.functions.httpsCallable("librarian/getFilesInTask");
-        this.filesData = callable({ OrgDomain: orgDomain, Id: id }).pipe(
+        callable({ OrgDomain: orgDomain, Id: id }).pipe(
           map(actions => {
             return actions.data as FileData[];
-          }));
+          })).subscribe({
+            next: (data) =>{
+              this.filesData=data;
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.log("Getting Task Details Page Files Data Complete")
+          }
+          );
       }
     }
   }
