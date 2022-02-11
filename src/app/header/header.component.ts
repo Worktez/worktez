@@ -46,8 +46,8 @@ export class HeaderComponent implements OnInit {
         const data = action as User;
       if(data) {
         this.uid = data.uid;
+        this.userReady = true;
       }
-      this.userReady = true;
     },
       error: (error) => {
         console.error(error);

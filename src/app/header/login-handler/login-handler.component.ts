@@ -38,10 +38,11 @@ export class LoginHandlerComponent implements OnInit {
         this.user = data
         this.authService.user = data;
         this.authService.getUserSettings(); 
+        this.authserviceUserChecked =true;
       } else {
         this.authService.completedLoadingApplication = true;
       }
-      this.authserviceUserChecked =true;
+ 
       },
       error: (error) => {
         this.authService.completedLoadingApplication = true;
