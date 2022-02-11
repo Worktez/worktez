@@ -34,6 +34,7 @@
           <div class="card-body">
             <ul class="list-group list-group-flush">
                 <ng-container *ngIf="quickNoteObservable|async; else loader">
+                    <div *ngIf="noNotes;" class="noNotes">No notes Added</div>
                     <ng-container *ngFor="let item of notes">
                         <li class="list-group-item" id="note">
                             <div class="row">
@@ -63,7 +64,7 @@
 </ng-container>
 
 <ng-container *ngIf="showAddNote">
-    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)"></app-addnew-note>
+    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)" ></app-addnew-note>
 </ng-container>
 
 <ng-container *ngIf="openEditNote">
