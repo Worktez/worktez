@@ -94,7 +94,7 @@ export class EditWorkexperienceComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: () => console.info('Successful edited work experience')
     });
   }
 

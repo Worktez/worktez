@@ -40,7 +40,7 @@ export class UserVerificationComponent implements OnInit {
 
   async verifyUser() {
     const callable = this.functions.httpsCallable('users/verify');
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
+      await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
         next: (data) => {
           this.router.navigate(['/']);
           console.log("Successful ");
