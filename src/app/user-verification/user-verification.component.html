@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container py-5" *ngIf="authService.afauth.user | async; else showText">
+<div class="container py-5" *ngIf="userDataReady; else showText">
     <h1 class="py-4">Worktrolly</h1>
     <div class="card text-center">
         <div class="card-body">

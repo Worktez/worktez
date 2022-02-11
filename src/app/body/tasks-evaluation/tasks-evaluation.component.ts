@@ -73,26 +73,31 @@ export class TasksEvaluationComponent implements OnInit {
     this.disable_prev = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
-    try {
-      const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.filterSprintNumber }).toPromise();
-      this.tasks = result.Tasks;
-      this.firstInResultTaskId = result.Tasks[0].Id;
-      this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
 
-      this.prev_strt_at = [];
-      this.pagination_clicked_count = 0;
-      this.disable_next = false;
-      this.disable_prev = true;
+      const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.filterSprintNumber }).subscribe({
+        next: (result) => {
+          this.tasks = result.Tasks;
+          this.firstInResultTaskId = result.Tasks[0].Id;
+          this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
 
-      this.prev_strt_at.push(this.firstInResultTaskId);
-      this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
-        this.teamCurrentSprint = data.CurrentSprintId;
-        this.showLoader = false;
-      });
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+          this.prev_strt_at = [];
+          this.pagination_clicked_count = 0;
+          this.disable_next = false;
+          this.disable_prev = true;
+
+          this.prev_strt_at.push(this.firstInResultTaskId);
+          this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
+          this.teamCurrentSprint = data.CurrentSprintId;
+          this.showLoader = false;
+        });
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful ')
+    });
+
   }
 
   async nextPage() {
@@ -101,27 +106,31 @@ export class TasksEvaluationComponent implements OnInit {
       this.showLoader = true;
       const orgDomain = this.backendService.getOrganizationDomain();
       const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
-      try {
-        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'next', LastInResultTaskId: this.lastInResultTaskId, SprintNumber: this.filterSprintNumber }).toPromise();
-        this.tasks = result.Tasks;
+     
+        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'next', LastInResultTaskId: this.lastInResultTaskId, SprintNumber: this.filterSprintNumber }).subscribe({
+          next: (result) => {
+            this.tasks = result.Tasks;
 
-        if (!this.tasks.length) {
-          this.disable_next = true;
-          return;
-        }
-        this.firstInResultTaskId = result.Tasks[0].Id;
-        this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
+            if (!this.tasks.length) {
+            this.disable_next = true;
+            return;
+            }
+           this.firstInResultTaskId = result.Tasks[0].Id;
+           this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
 
-        this.pagination_clicked_count++;
-        this.prev_strt_at.push(this.firstInResultTaskId);
-        this.disable_next = result.DisableNext;
-        this.disable_prev = false;
-        this.showLoader = false;
-      } catch (error) {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.log(error);
-      }
+           this.pagination_clicked_count++;
+           this.prev_strt_at.push(this.firstInResultTaskId);
+           this.disable_next = result.DisableNext;
+           this.disable_prev = false;
+           this.showLoader = false;
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            console.log(error);
+          },
+          complete: () => console.info('Successful ')
+      });
     }
   }
 
@@ -131,14 +140,15 @@ export class TasksEvaluationComponent implements OnInit {
       this.showLoader = true;
       const orgDomain = this.backendService.getOrganizationDomain();
       const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
-      try {
-        const result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'previous', FirstInResultTaskId: this.firstInResultTaskId, StartAt: this.get_prev_startAt(), SprintNumber: this.filterSprintNumber }).toPromise();
-        this.tasks = result.Tasks;
+      
+        await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'previous', FirstInResultTaskId: this.firstInResultTaskId, StartAt: this.get_prev_startAt(), SprintNumber: this.filterSprintNumber }).subscribe({
+          next: (result) => {
+            this.tasks = result.Tasks;
         
-        this.firstInResultTaskId = result.Tasks[0].Id;
-        this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
-        this.pagination_clicked_count--;
-        this.prev_strt_at.forEach(element => {
+            this.firstInResultTaskId = result.Tasks[0].Id;
+            this.lastInResultTaskId = result.Tasks[result.Tasks.length - 1].Id;
+            this.pagination_clicked_count--;
+            this.prev_strt_at.forEach(element => {
           if (this.firstInResultTaskId == element) {
             element = null;
           }
@@ -146,11 +156,14 @@ export class TasksEvaluationComponent implements OnInit {
         this.disable_prev = result.DisablePrev;
         this.disable_next = false;
         this.showLoader = false;
-      } catch (error) {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.log(error);
-      }
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            console.log(error);
+          },
+          complete: () => console.info('Successful ')
+      });
     }
   }
 
@@ -175,22 +188,31 @@ export class TasksEvaluationComponent implements OnInit {
     this.showModalLoader = true;
     const callable = this.functions.httpsCallable('tasks/editTask');
     // Move to Current Sprint
-    try {
+    
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(task.Status === "Completed") && this.teamCurrentSprint != task.SprintNumber) {
-        const result = await callable({AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).toPromise();
+       await callable({AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: this.teamCurrentSprint, StoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid }).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+          this.readTasks();
+          this.showModalLoader = false;
+          this.showLoader = false;
+          
+    
+        },
+        error: (error) => {
+          this.showLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful')
+    });
 
-        this.readTasks();
-        this.showModalLoader = false;
-        this.showLoader = false;
-      }
-      else {
-        console.log("Task is Completed , Cannot Update");
-      }
-    } catch (error) {
-      this.showLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+     
+
+  }
+  else {
+    console.log("Task is Completed , Cannot Update");
+  }
   }
 }

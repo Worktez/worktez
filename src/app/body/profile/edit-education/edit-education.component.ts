@@ -102,16 +102,22 @@ export class EditEducationComponent implements OnInit {
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/addEducation');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate }).toPromise();
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful ')
+    });
       console.log("Successful");
       this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
   }
 
   async editEducation() {
@@ -120,16 +126,22 @@ export class EditEducationComponent implements OnInit {
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/updateEducation');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).toPromise();
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successfully edited education')
+    });
       console.log("Successful");
       this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
   }
 
   editEducationDone() {

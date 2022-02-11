@@ -31,10 +31,10 @@ import { map, Observable, startWith } from 'rxjs';
 export class EditPageComponent implements OnInit {
 
   assigneeName = new FormControl();
-  filteredOptionsAssignee: Observable<string[]>;
+  filteredOptionsAssignee: string[];
 
   reporterName = new FormControl();
-  filteredOptionsReporter: Observable<string[]>;
+  filteredOptionsReporter: string[];
 
   componentName: string = "EDIT-TASK";
 
@@ -80,17 +80,34 @@ export class EditPageComponent implements OnInit {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
 
-          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+          this.assigneeName.valueChanges.pipe(
             startWith(''),
             map((value) => {
               return this._filter(value)
             }),
-          );
+          ).subscribe({
+            next :(data) => {
+              this.filteredOptionsAssignee = data
+            },
+            error:(error) => {
+              console.error(error)
+            },
+            complete:() => console.info("Getting filtered options Assignee was successfull")
+          });
 
-          this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
+          this.reporterName.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value)),
-          );
+          ).subscribe({
+            
+            next :(data) => {
+              this.filteredOptionsReporter = data
+            },
+            error:(error) => {
+              console.error(error)
+            },
+            complete:() => console.info("Getting filtered options Assignee was successfull")
+          });
     }); 
   }
 
@@ -163,21 +180,25 @@ export class EditPageComponent implements OnInit {
     this.enableLoader = true
     
 
-    try {
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(this.task.Status === "Completed")) {
         const callable = this.functions.httpsCallable('tasks/editTask');
-        const result = await callable({Title: this.editTask.Title, Status: this.editTask.Status, AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.assigneeName.value, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, OldStoryPointNumber: this.prevVal[5], PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type, Reporter: this.reporterName.value}).toPromise();
-        this.enableLoader = false;
-        this.showClose = true;
+        await callable({Title: this.editTask.Title, Status: this.editTask.Status, AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.assigneeName.value, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, OldStoryPointNumber: this.prevVal[5], PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type, Reporter: this.reporterName.value}).subscribe({
+          next: (data) => {
+            this.enableLoader = false;
+            this.showClose = true;
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            this.enableLoader = false;
+            console.error(error);
+          },
+          complete: () => console.info('Successful ')
+      });
       } else {
         console.log("Task is Completed , Cannot Update");
       }
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      this.enableLoader = false;
-    }
   }
 
   editTaskDone() {

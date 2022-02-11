@@ -56,17 +56,26 @@ export class EditProfileComponent implements OnInit {
     if(this.userAvailable == true || this.oldUserName == this.userName) {
       this.enableLoader = true
       const callable = this.functions.httpsCallable('users/updateUser');
-      try {
-        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).toPromise();
+
+        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).subscribe({
+          next: (data) => {
+            console.log("Successful");
+            this.showClose = true
+          },
+          error: (error) => {
+            console.log("error");
+            this.enableLoader = false
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            console.error(error);
+          },
+          complete: () => console.info('Successfully edited profile')
+      });
         console.log("Successful");
         this.showClose = true
-      } catch (error) {
-        console.log("error");
-        this.enableLoader = false
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       }
-    } else {
+
+      else {
       console.log("User Not Available");
     }
   }
@@ -77,18 +86,21 @@ export class EditProfileComponent implements OnInit {
 
   async checkAvailability() {
     const callable = this.functions.httpsCallable('users/checkAvailableUsername');
-    try {
-      const result = await callable({Username: this.userName }).toPromise();
-      if(result == "User Already Available"){
-        this.userAvailable = false;
-      } else {
-        this.userAvailable = true;
-      }
-    } catch (error) {
-      console.log(error);
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+      await callable({Username: this.userName }).subscribe({
+        next: (result) => {
+          if(result == "User Already Available"){
+            this.userAvailable = false;
+          } else {
+            this.userAvailable = true;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful ')
+    });
   }
 
 }
