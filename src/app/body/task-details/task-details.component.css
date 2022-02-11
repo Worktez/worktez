@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 .container-fluid{
     padding: 20px 110px 0px 110px;
     color: var(--text);
@@ -9,7 +22,6 @@
 }
 
 .dropdown-menu {
-    border-color: var(--primary-color) ;
     color: var(--text);
     background-color: var(--secondary-bg);
 }
@@ -18,12 +30,15 @@
 
 }
 
+span{
+    cursor: pointer;
+}
 .dropdown-item {
     color: var(--text);
+    font-size: 12px;
 }
-
 .dropdown-item:hover {
-    background-color: var(--dropdown-hover);
+    background-color: var(--secondary-bg);
     color: var(--button-text-hover); 
 }
 

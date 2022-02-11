@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -120,6 +133,10 @@ import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.
 import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
+import { SocialPageComponent } from './body/social-page/social-page.component';
+import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
+import { PostsComponent } from './body/social-page/posts/posts.component';
+import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
 
 @NgModule({
   declarations: [
@@ -221,6 +238,10 @@ import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-bo
     EditNoteComponent,
     ReleaseNotesComponent,
     ReleaseNotesBodyComponent,
+    SocialPageComponent,
+    CreatePostComponent,
+    PostsComponent,
+    WhatsNewComponent,
   ],
   imports: [
     BrowserModule,

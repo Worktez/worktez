@@ -4,8 +4,19 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-// const admin = require("firebase-admin");
-// const db = admin.firestore();
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 
 const { getApplicationData, updateApplication } = require("../../application/lib");
 const { setSchedular, getAllSchedular } = require("../lib");
@@ -22,21 +33,17 @@ exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain
         getAllSchedular().then((data)=>{
             if (data.docs.length != 0) {
                 data.docs.forEach((element) => {
-                    console.log(element.data());
-                    console.log(type, orgAppKey, assignee, teamId, orgDomain);
-                    console.log(assignee, "==", element.data().Assignee);
                     if (type == element.data().Type && orgAppKey == element.data().OrgAppKey && assignee == element.data().Assignee && teamId == element.data().TeamId && orgDomain == element.data().OrgDomain) {
                         console.log("Already exsisting result");
                     } else {
                         setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
+                        updateApplication(appDetailsUpdateJson);
                     }
                 });
             } else {
                 setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
             }
         });
-
-        updateApplication(appDetailsUpdateJson);
     }).catch((error) => {
         console.log("Error:", error);
     });
