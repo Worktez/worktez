@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="row py-2">
-    <ng-container *ngFor="let item of uploadService.filesData | async">
+    <ng-container *ngFor="let item of uploadService.filesData">
         <div class="col px-1 text-center">
             <app-show-files [file]="item"  (changeFileStatus)="changeFileStatus($event)"></app-show-files>
         </div>

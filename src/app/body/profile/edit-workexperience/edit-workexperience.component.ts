@@ -15,6 +15,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { MyEducationData, MyExperienceData } from 'src/app/Interface/UserInterface';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-edit-workexperience',
@@ -39,7 +40,7 @@ export class EditWorkexperienceComponent implements OnInit {
   componentName:string = "PROFILE"
   @Output() editWorkCompleted = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,public validationService:ValidationService) { }
 
   ngOnInit(): void {
     // this.todayDate = this.toolsService.date();
@@ -50,42 +51,91 @@ export class EditWorkexperienceComponent implements OnInit {
       this.endDate = this.workModalData.End
     }
   }
-
+  
   async addWork() {
+    let labels = ['organizationName', 'position', 'startDate', 'endDate'];
+    let values = [this.organizationName, this.position, this.startDate, this.endDate];
+    let data = [{ label: "organizationName", value: this.organizationName },
+    { label: "position", value: this.position },
+    { label: "startDate", value: this.startDate },
+    { label: "endDate", value: this.endDate }];
+    
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.submitaddWork();
+    }
+    else
+      console.log("Log-Work failed due to validation error");
+  }
+
+  async updateWork() {
+    let labels = ['organizationName', 'position', 'startDate', 'endDate'];
+    let values = [this.organizationName, this.position, this.startDate, this.endDate];
+    let data = [{ label: "organizationName", value: this.organizationName },
+    { label: "position", value: this.position },
+    { label: "startDate", value: this.startDate },
+    { label: "endDate", value: this.endDate }];
+    
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.submitupdatedWork();
+    }
+    else
+      console.log("Log-Work failed due to validation error");
+  }
+  async submitaddWork() {
     this.enableLoader = true
     if(this.endDate == undefined){
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/addExperience');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate }).toPromise();
-      console.log("Successful");
-      this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          console.log("error");
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
   }
   
-  async updateWork() {
+  async submitupdatedWork() {
     if(this.endDate == undefined || this.endDate == ""){
       this.endDate = "Present";
     }
     this.enableLoader = true
     console.log("Edit");
     const callable = this.functions.httpsCallable('users/updateExperience');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate, ExperienceId: this.workModalData.ExperienceId }).toPromise();
-      console.log("Successful");
-      this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, OrganizationName: this.organizationName, Position: this.position, Start: this.startDate, End: this.endDate, ExperienceId: this.workModalData.ExperienceId }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          console.log("error");
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful edited work experience')
+    });
   }
 
   editWorkDone() {

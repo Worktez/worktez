@@ -32,7 +32,7 @@ export class PerformanceColumnChartComponent implements OnInit {
   @Input("currentSprint") currentSprintNumber: number;
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
-  data: Observable<[]>;
+  data: [];
   componentName: string = "PERFORMANCE-COLUMN-CHART";
   columnNames: string[];
   teamMember: string;
@@ -52,11 +52,13 @@ export class PerformanceColumnChartComponent implements OnInit {
     this.columnNames = this.teamMember == "Team" ? ["Sprints", this.teamId] : ["Sprints", this.teamMember];
     const callable = this.functions.httpsCallable('performanceChart/performanceChartData');
     try {
-      this.data = await callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
+      await callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
         map(actions => {
           return actions.data.sort() as [];
-        }));
-      this.showLoader = false;
+        })).subscribe((data)=>{
+          this.data = data
+          this.showLoader = false;
+        });
     } catch(error) {
       this.errorHandlerService.showError = true;
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");

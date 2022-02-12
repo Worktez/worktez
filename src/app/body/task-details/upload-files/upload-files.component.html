@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div *ngIf="(uploadService.filesData | async)?.length != 0; else upload">
+<div *ngIf="(uploadService.filesData )?.length != 0; else upload">
     <div class="row" style="max-height: 40px;">
         <h6 class="col-md-11 col-10 pt-2 mb-0">Upload Files</h6>
         <div class="col-md-1 col-2 pt-1">
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="row">
-        <ng-container *ngFor="let item of uploadService.filesData | async">
+        <ng-container *ngFor="let item of uploadService.filesData ">
             <div class="col px-1 text-center">
                 <app-show-files [file]="item"  (changeFileStatus)="changeFileStatus($event)"></app-show-files>
             </div>

@@ -47,14 +47,17 @@ export class EditPatchComponent implements OnInit {
   async submit(){
     const callable = this.functions.httpsCallable('patch/editPatch');
     this.enableLoader = true;
-    try{
-      const result = await callable({Id: this.patch,Name:this.editPatch.Name, Description:this.editPatch.Description, UpdatedOn:this.date}).toPromise();
+    await callable({Id: this.patch,Name:this.editPatch.Name, Description:this.editPatch.Description, UpdatedOn:this.date}).subscribe({
+      next: (data) => {
+        this.enableLoader = false;
+        this.showClose = true;
+  
+      },
+      error: (error) => {
+        console.log("Error: "+error);
+      },
+      complete: () => console.info('Successful ')
+  });
 
-      this.enableLoader = false;
-      this.showClose = true;
-    }
-    catch(error){
-      console.log("Error: "+error);
-    }
   }
 }

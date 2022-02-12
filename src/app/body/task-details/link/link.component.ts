@@ -41,17 +41,23 @@ export class LinkComponent implements OnInit {
   async submit() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('linker/setLink');
-    try {
-      const result = await callable({OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).toPromise();
-      this.enableLoader = false;
-      this.showClose = true;
-      return;
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log("Error", error);
-    }
+    await callable({OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+        this.enableLoader = false;
+        this.showClose = true;
+        return;
+      },
+      error: (error) => {
+        this.enableLoader = false
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.log("Error", error);
+        console.error(error);
+      },
+      complete: () => console.info('Successful ')
+  });
+  
   }
 
   close() {

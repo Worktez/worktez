@@ -84,6 +84,8 @@ export class CreateNewTaskComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.parentTaskId = this.popupHandlerService.parentTaskId;
+    this.title = this.popupHandlerService.quickNotesTitle;		
+    this.description = this.popupHandlerService.quickNotesDescription;
   }
 
   private _filter(value: string): string[] {
@@ -181,13 +183,18 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
 
-    try {
-      const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api"); 
-    }
+    await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+      next: (data) => {
+        console.log("Successful created task");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully created task')
+  });
+
     this.close();
   }
 

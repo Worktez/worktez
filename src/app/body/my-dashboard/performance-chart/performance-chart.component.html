@@ -22,9 +22,9 @@
             </div>
         </div>
     </div>
-    <ng-container *ngIf="data|async">
-        <div class="card-body pb-4" *ngIf="!showLoader && (data|async)?.length != 0">
-            <app-chart [data]="data | async"></app-chart>
+    <ng-container *ngIf="data">
+        <div class="card-body pb-4" *ngIf="!showLoader && (data)?.length != 0">
+            <app-chart [data]="data "></app-chart>
         </div>
     </ng-container>
     <div class="card-body" *ngIf="showLoader">

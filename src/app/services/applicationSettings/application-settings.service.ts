@@ -70,7 +70,6 @@ export class ApplicationSettingsService {
           if(!this.userService.userReady) {
             this.userService.fetchUserData().subscribe(()=>{
               this.teamDataReady = true;
-              console.log("teamDataReady : ", this.teamDataReady);
             });
           }
 

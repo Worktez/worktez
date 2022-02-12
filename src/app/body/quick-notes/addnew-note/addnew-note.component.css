@@ -40,4 +40,12 @@
   #icon {
       color: var(--text);
       cursor: pointer;
+      flex-grow: 0 !important;
   }
+  
+#create{
+  padding: 5px 0px 0px 0px;
+  cursor: pointer;
+  text-align: center;
+ }
+  
