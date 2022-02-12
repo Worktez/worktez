@@ -98,7 +98,7 @@ exports.createNewTask = function(request, response) {
                 TotalTeamTasks: totalTeamTasks,
             };
             updateTeamDetails(updateTeamJson, orgDomain, project);
-            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0);
+            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0, 0, creationDate);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
