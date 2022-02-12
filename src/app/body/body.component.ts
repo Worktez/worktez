@@ -12,6 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
+import { User } from '../Interface/UserInterface';
 import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
@@ -32,8 +33,21 @@ export class BodyComponent implements OnInit {
   constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    this.authService.afauth.user.subscribe((data) => {
-      this.userDataReady = true;
+    this.authService.afauth.user.subscribe({
+      next: (action) => {
+        const data = action as User;
+        if (data) {
+          this.userDataReady = true;
+        } else {
+          this.userDataReady = false;
+        }
+
+      },
+      error: (error) => {
+        console.error(error);
+        this.userDataReady = false;
+      },
+      complete: () => console.log("Getting User Data Complete")
     });
   }
 
