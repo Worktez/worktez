@@ -34,7 +34,7 @@ exports.readTasksEvaluationData = function(request, response) {
     const backlogTasks = [];
     let status = 200;
 
-    let promises; 
+    let promises;
 
     const p1 = getAllTasks(orgDomain, teamId, sprintNumber, "", "", "", "", "", "", "").then((taskCol) => {
         taskCol.forEach((taskDoc) => {
@@ -46,7 +46,7 @@ exports.readTasksEvaluationData = function(request, response) {
     });
 
     if (pageToLoad == "initial") {
-        const p2 = getAllTasks(orgDomain, teamId, -1, "", "", "", "", "", "", "").then(taskCol => {
+        const p2 = getAllTasks(orgDomain, teamId, -1, "", "", "", "", "", "", "").then((taskCol) => {
             taskCol.forEach((taskDoc) => {
                 backlogTasks.push(taskDoc.data());
             });
@@ -55,7 +55,7 @@ exports.readTasksEvaluationData = function(request, response) {
     } else {
         promises = [p1];
     }
-    
+
 
     return Promise.all(promises).then(() => {
         result = { data: {Tasks: tasks, BacklogTasks: backlogTasks} };
