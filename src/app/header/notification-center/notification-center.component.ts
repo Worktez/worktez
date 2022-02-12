@@ -26,22 +26,11 @@ export class NotificationCenterComponent implements OnInit {
 
   notificationsList: Notification[] = []
   showLoader: boolean = false;
-  activeNotifications: number = 0;
 
   constructor(public backendService: BackendService, public authService: AuthService, public applicationSettingService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.authService.myOrgCollectionDocData.subscribe(data => {
-            if(data.ActiveNotifications) {
-              this.activeNotifications = data.ActiveNotifications;
-            }
-          });
-        }
-      });
-    });
+    
   }
 
   loadNotifications() {

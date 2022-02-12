@@ -59,14 +59,18 @@ export class EditNoteComponent implements OnInit {
     this.enableLoader = true
 
     const callable = this.functions.httpsCallable("quickNotes/editNote");
-    try {
-    const result = await callable({Uid: uid, Title: this.note.Title, Note: this.note.Note, LastUpdatedDate: date, LastUpdatedTime: time, DocId: this.note.DocId }).toPromise();
-    console.log("Note edited succesfully");
-    } catch(error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }
+    
+    const result = await callable({Uid: uid, Title: this.note.Title, Note: this.note.Note, LastUpdatedDate: date, LastUpdatedTime: time, DocId: this.note.DocId }).subscribe({
+      next: (data) => {
+        console.log("Note edited succesfully");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successfully edited note')
+  });
     this.editNoteCompleted.emit(true);
   }
 

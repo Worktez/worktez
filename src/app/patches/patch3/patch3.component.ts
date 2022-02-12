@@ -39,7 +39,8 @@ export class Patch3Component implements OnInit {
   showLoader: boolean = false;
 
   tasksCollection: AngularFirestoreCollectionGroup<Tasks>
-  tasksData: Observable<TasksId[]>;
+  tasksData: TasksId[];
+  patchObservableReady: boolean = false;
 
   constructor(private location: Location, public db: AngularFirestore, public authService: AuthService,  public patchService: PatchService) { }
 
@@ -53,6 +54,9 @@ export class Patch3Component implements OnInit {
           this.PatchshowLoader = false;
         }
       });
+    });
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
     });
     console.log("patch running");
   }
@@ -70,13 +74,22 @@ export class Patch3Component implements OnInit {
       queryRef = queryRef.where(this.fieldName, '==', this.fieldValue);
       return queryRef;
     });
-    this.tasksData = this.tasksCollection.snapshotChanges().pipe(
+    
+    this.tasksCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as Tasks;
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
-    );
+    ).subscribe({
+      next: (data) =>{
+        this.tasksData= data;
+      },
+      error: (error) => {
+        console.error(error)
+      },
+      complete: () => console.info("Getting Taska Data Successful")
+    });
     this.PatchshowLoader=false;
     }
   }

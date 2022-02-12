@@ -66,9 +66,12 @@ export class TaskDetailsComponent implements OnInit {
 
   dataReady: boolean = false
 
-  public taskDataObservable: Observable<Tasks>
-  activityData: Observable<Activity[]>
-  linkData: Observable<Link[]>
+  authServiceUserDataReady: boolean=false
+  gotTaskData: boolean=false;
+
+  public taskDataObservable: Tasks
+  activityData: Activity[]
+  linkData: Link[]
 
   constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
@@ -83,6 +86,10 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
+
+    this.authService.afauth.user.subscribe((data) => {
+      this.authServiceUserDataReady = true;
+    });
     
   }
 
@@ -113,8 +120,13 @@ export class TaskDetailsComponent implements OnInit {
 
   getTaskDetail () {
     const callable = this.functions.httpsCallable('tasks/getTaskDetails');
-    this.taskDataObservable = callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
+    callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
+        
+
+        return { ...data }
+    })).subscribe({
+      next: (data) => {
         this.task = data;
 
         this.userService.checkAndAddToUsersUsingEmail(this.task.Assignee);
@@ -126,16 +138,27 @@ export class TaskDetailsComponent implements OnInit {
         });
 
         this.applicationSettingService.getTeamDetails(data.TeamId);
-
-        return { ...data }
-    }));
+        this.gotTaskData=true;
+        this.taskDataObservable=data;
+        console.log("Saved Task Data")
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Getting Task successful')
+    });
   }
 
-  async getActivityData () {
+  getActivityData () {
     const callable = this.functions.httpsCallable("activity/getActivity");
-    this.activityData = callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
+     callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
         const data = actions.data as Activity[];
+        return data
+    })).subscribe({
+      next: (data) => {
         data.forEach(element => {
           this.userService.checkAndAddToUsersUsingUid(element.Uid);
         });
@@ -145,17 +168,29 @@ export class TaskDetailsComponent implements OnInit {
             this.dataReady = true;
           });
         }
-        
-        return data
-    }));
+        this.activityData=data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.info('Getting Sprint Evaluation data successful')
+    });
   }
 
-  async getLinkData() {
+  getLinkData() {
     const callable = this.functions.httpsCallable("linker/getLink");
-    this.linkData = callable({OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
+    callable({OrgDomain: this.orgDomain, TaskId: this.Id }).pipe(
       map(actions => {
         return actions.data as Link[];
-    }));
+    })).subscribe({
+      next: (data) => {
+        this.linkData=data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.info('Getting Sprint Evaluation data successful')
+    });
   }
 
   async addComment() {
@@ -166,15 +201,19 @@ export class TaskDetailsComponent implements OnInit {
       const callable = this.functions.httpsCallable('tasks/comment');
       const appKey = this.backendService.getOrganizationAppKey();
 
-      try {
-        const result = await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).toPromise();
-        this.comment = "";
-        return;
-      } catch (error) {
-        this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.log("Error", error);
-      }
+      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+        next: (data) => {
+          this.comment = "";
+          return;
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.log("Error", error);
+        },
+        complete: () => console.info('Successful ')
+    });
+
     }
   }
 
@@ -225,15 +264,20 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    try {
-      const result = await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).toPromise();
-      this.getTaskPageData();
-      return;
-    } catch ( error ) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log( "Error", error );
-    }
+    await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        this.getTaskPageData();
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.log( "Error", error );
+      },
+      complete: () => console.info('Successful')
+  });
+      
   }
 
   backToTasks () {

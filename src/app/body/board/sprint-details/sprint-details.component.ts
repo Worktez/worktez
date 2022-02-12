@@ -37,22 +37,33 @@ export class SprintDetailsComponent implements OnInit {
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
 
+  sprintDataReady: boolean = false
+
   constructor(private authService: AuthService , public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
+      this.sprintDataReady = true;
+    });
   }
 
   async changeSprintStatus(sprintStatus: string) {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
-    try {
-      const result = await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).toPromise();
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+    await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).subscribe({
+        next: (data) => {
+          console.log("Successful updated ");
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated sprint Details')
+    });
   }
-
+    
   changeSprintNumber() {
     this.currentSprint.emit(this.filterSprintNumber);
   }
@@ -83,11 +94,16 @@ export class SprintDetailsComponent implements OnInit {
     const orgAppKey = this.backendService.getOrganizationAppKey();
     const assignee = this.authService.getUserEmail();
     const callable = this.functions.httpsCallable('scheduledFnManually/addScheduler');
-    try {
-      const result = await callable({Type: "AutoSprintCompletion", OrgAppKey: orgAppKey, Assignee: assignee, TeamId: this.sprintData.TeamId, OrgDomain: this.backendService.getOrganizationDomain()}).toPromise();
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+      const result = await callable({Type: "AutoSprintCompletion", OrgAppKey: orgAppKey, Assignee: assignee, TeamId: this.sprintData.TeamId, OrgDomain: this.backendService.getOrganizationDomain()}).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful')
+    });
   }
 }

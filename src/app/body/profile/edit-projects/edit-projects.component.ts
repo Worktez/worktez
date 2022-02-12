@@ -102,16 +102,23 @@ export class EditProjectsComponent implements OnInit {
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/addProject');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate }).toPromise();
+    
+    await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate }).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.log("error");
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful edited')
+  });
       console.log("Successful");
       this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
   }
   
   async submiteditProject() {
@@ -121,16 +128,22 @@ export class EditProjectsComponent implements OnInit {
     this.enableLoader = true
     console.log("Edit");
     const callable = this.functions.httpsCallable('users/updateProject');
-    try {
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate, ProjectId: this.projectModalData.ProjectId }).toPromise();
-      console.log("Successful");
-      this.showClose = true;
-    } catch (error) {
-      console.log("error");
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+  
+      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate, ProjectId: this.projectModalData.ProjectId }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+          this.showClose = true;
+        },
+        error: (error) => {
+          console.log("error");
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successfully edited')
+    });
+  
   }
 
   editProjectDone() {

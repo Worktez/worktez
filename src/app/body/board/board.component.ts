@@ -77,14 +77,18 @@ export class BoardComponent implements OnInit {
     this.startService.changeTeam = true;
     this.startService.readApplicationData();
     const callable = this.functions.httpsCallable('users/updateSelectedTeam');
-    try {
-      const result = await callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).toPromise();
-      console.log("Successful updated Selected Team in db");
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log(error);
-    }
+
+    await callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
+        next: (data) => {
+          console.log("Successful updated Selected Team in db");
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
   }
 
   readSprintData() {
@@ -117,8 +121,14 @@ export class BoardComponent implements OnInit {
         }
       });
     } else{
-      this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe(data => {
-        this.readSprintData();
+      this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe({
+        next: (data) => {
+          this.readSprintData();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => console.info('Getting team data successful')
       });
     }
   }else {

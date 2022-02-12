@@ -32,6 +32,7 @@ export class Patch8Component implements OnInit {
   showLoader: boolean = false;
   uid: string;
   patch: Patch;
+  patchObservableReady: boolean=false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -46,6 +47,9 @@ export class Patch8Component implements OnInit {
         }
       });
     });
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
+    });
     console.log("patch running");
   }
 
@@ -54,10 +58,16 @@ export class Patch8Component implements OnInit {
     console.log("Patch8 function running");
     console.log(this.orgDomain, this.newfield, this.newFieldValue);
     const callable = this.functions.httpsCallable('patch/patch8');
-    await callable({OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+      
+      },
+      complete: () => console.info('successful')
     });
   }
 

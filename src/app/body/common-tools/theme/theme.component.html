@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/-->
-<div class="custom-control custom-switch custom-switch-md" *ngIf="(themeService.presentTheme$ | async)">
+<div class="custom-control custom-switch custom-switch-md" *ngIf="presentThemeReady">
   <div class="row">
     <div class="col-3 pl-5">
       <span class="material-icons">dark_mode</span>

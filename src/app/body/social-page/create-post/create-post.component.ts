@@ -51,13 +51,18 @@ export class CreatePostComponent implements OnInit {
     const time = this.toolService.time();
 
     const callable = this.functions.httpsCallable('socialPage/addPost');
-    try {
-      const result = await callable({Uid:uid, Post: this.post, LastUpdatedDate: date, LastUpdatedTime: time  }).toPromise();
-      console.log("done2");
-    } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-      this.enableLoader = false;
-    }
+    await callable({Uid:uid, Post: this.post, LastUpdatedDate: date, LastUpdatedTime: time  }).subscribe({
+      next: (data) => {
+        console.log("Successfully");
+      },
+      error: (error) => {
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+        this.enableLoader = false;
+        console.error(error);
+      },
+      complete: () => console.info('Successfully added post')
+  });
+  
     this.close();
     // if(this.description != "" ) {
     //   const callable = this.functions.httpsCallable("socialPage/addPost");

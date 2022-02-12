@@ -31,7 +31,7 @@ export class AuthService {
   public myOrgCollectionsData: Observable<MyOrganizationData[]>
   public myTeamsListObservable: Observable<string[]>
 
-  public myOrgCollectionDocData: Observable<MyOrganizationData>
+  public myOrgCollectionDocData: MyOrganizationData
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -70,13 +70,17 @@ export class AuthService {
 
   async createUserData(user: User) {
     const callable = this.functions.httpsCallable('users/createNewUser');
-    try {
       console.log("create new user from ui");
-      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).toPromise();
+      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+        },
+        error: (error) => {
+          console.error("Error", error);
+        },
+        complete: () => console.info('Successful ')
+    });
 
-    } catch (error) {
-      console.error("Error", error);
-    }
   }
 
   async googleSignIn() {
@@ -129,10 +133,19 @@ export class AuthService {
 
   getMyOrgCollectionDocs(uid, appKey) {
     const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
-    this.myOrgCollectionDocData = callable({Uid: uid, OrgAppKey: appKey}).pipe(
+     callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
         return actions.data as MyOrganizationData;
-    }));
+    })).subscribe({
+      next: (data) =>{
+        this.myOrgCollectionDocData = data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.log("Getting My Organisation Data Complete")
+    })
+      
   }
 
   getListedTeams(uid: string, appKey: string) {

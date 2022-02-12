@@ -32,11 +32,15 @@ export class LoginComponent implements OnInit {
   componentName: string = "LOGIN"
 
   activeLogin: boolean = true
+  userExistChecked=false;
 
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
+    this.authService.afauth.user.subscribe((data) => {
+      this.userExistChecked=true;
+    })
   }
 
   onSignInWithGoogle() {
@@ -81,7 +85,7 @@ export class LoginComponent implements OnInit {
       }
     }).catch((err) => {
       console.log(err.message);
-    });;
+    });
   }
 
   navigateToHome() {

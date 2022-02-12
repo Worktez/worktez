@@ -189,15 +189,19 @@ export class CreateNewTeamComponent implements OnInit {
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
-      this.enableLoader = false;
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }  
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).subscribe({
+      next: (data) => {
+        this.enableLoader = false;
+        console.log("Successful removed member");
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        
+      },
+      complete: () => console.info('Successful ')
+  });
   }
 
   async createNewTeamWithLabels() {
@@ -208,20 +212,23 @@ export class CreateNewTeamComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
+      next: (data) => {
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       jQuery('#createNewTeam').modal('hide');
       jQuery('#form').trigger("reset");
       this.teamCreated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }
+      console.log("Successful created new team");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful ')
+  });
   }
 
   async updateExistingTeam() {
@@ -232,20 +239,23 @@ export class CreateNewTeamComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).subscribe({
+      next: (data) => {
       this.enableLoader = false;
       // this.teamFormSubmitted.emit({ submitted: false });
       jQuery('#createNewTeam').modal('hide');
       jQuery('#form').trigger("reset");
       this.teamUpdated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }
+        console.log("Successful ");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successful ')
+  });
   }
 
   close() {

@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { BackendService } from '../services/backend/backend.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
-import { User } from '../Interface/UserInterface';
+import { MyOrganizationData, User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 
@@ -29,38 +29,55 @@ export class HeaderComponent implements OnInit {
 
   uid: string;
   isHomePage: boolean = false;
+  userReady: boolean = false;
 
   constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    console.log(this.router.url);
-    if (this.router.url == '/')  {
+    if (this.router.url == '/') {
       this.isHomePage = true;
-    } else { 
+    } else {
       this.isHomePage = false;
     }
-    this.authService.afauth.user.subscribe((action) => {
-      const data = action as User;
-      if(data) {
-        this.uid = data.uid;
-      }
-    }, (error) => {
-      console.log(error);
+    this.authService.afauth.user.subscribe({
+      next: (action) => {
+        const data = action as User;
+        if (data) {
+          this.userReady = true;
+          this.uid = data.uid;
+        }
+
+      },
+      error: (error) => {
+        console.error(error);
+        this.userReady = false;
+      },
+      complete: () => console.log("Getting User Data Complete")
     });
+
   }
 
   async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
     const callable = this.functions.httpsCallable("users/setMyOrganization");
-    await callable({Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
-    window.location.reload()
+    await callable({ Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam }).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+        window.location.reload()
+      },
+      error: (error) => {
+
+      },
+      complete: () => console.info('Successful ')
+    });
+
   }
 
   startNewSprint() {
-    this.popupHandlerService.createNewSprintEnabled= true;
+    this.popupHandlerService.createNewSprintEnabled = true;
   }
 
   createNewTask() {
-    this.popupHandlerService.createNewTaskEnabled= true;
+    this.popupHandlerService.createNewTaskEnabled = true;
     this.popupHandlerService.resetTaskIds();
   }
 

@@ -101,27 +101,33 @@ export class TasksEvaluationComponent implements OnInit {
     this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
-    try {
       let result;
+      let pageToLoad = "";
       if (this.nextSprintTasksToFetch == this.teamCurrentSprint) {
-        result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'initial', SprintNumber: this.teamCurrentSprint }).toPromise();
+        pageToLoad = "initial";
       } else {
-        result = await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: 'loadMore', SprintNumber: this.nextSprintTasksToFetch }).toPromise();
+        pageToLoad = "loadMore";
       }
-      if (result.BacklogTasks.length > 0) {
-        this.tasks.push(result.BacklogTasks);
-      }
-      this.tasks.push(result.Tasks);
-      this.nextSprintTasksToFetch -= 1;
-      if (this.nextSprintTasksToFetch < 1) {
-        // disable load more
-        this.disableLoadMore = true;
-      }
-      this.showLoader = false;
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+      await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.teamCurrentSprint }).subscribe ({
+        next: (data) => {
+          result = data;
+          if (result.BacklogTasks.length > 0) {
+            this.tasks.push(result.BacklogTasks);
+          }
+          this.tasks.push(result.Tasks);
+          this.nextSprintTasksToFetch -= 1;
+          if (this.nextSprintTasksToFetch < 1) {
+            this.disableLoadMore = true;
+          }
+          this.showLoader = false;
+          console.log("read tasks successfully!")
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info("tasks read successfully")   
+      }) 
   }
 
   getSprintName(sprintNumber: number) {
@@ -136,24 +142,29 @@ export class TasksEvaluationComponent implements OnInit {
 
   async editTask(task: Tasks, sprintNumber: number) {
     this.showLoader = true;
+    let result;
     if (sprintNumber == null) {
       sprintNumber = task.SprintNumber;
     }
-    try {
         const appKey = this.backendService.getOrganizationAppKey();
         const callable = this.functions.httpsCallable('tasks/editTask');
-        const result = await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter}).toPromise();
-        if (result == "OK") {
-          this.taskIdToEdit = "";
-          task.LastUpdatedDate = this.todayDate;
-          task.SprintNumber = sprintNumber;
-          this.showLoader = false;
-        }
-      } catch (error) {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        this.showLoader = false;
-      }
+        await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter}).subscribe({
+          next: (data) => {
+            result = data;
+            if (result == "OK") {
+              this.taskIdToEdit = "";
+              task.LastUpdatedDate = this.todayDate;
+              task.SprintNumber = sprintNumber;
+              this.showLoader = false;
+            }
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            this.showLoader = false;
+          },
+          complete: () => console.info("task edited successfully!")
+        })
   } 
 
   onDrop(event: CdkDragDrop<Tasks[]>) {
