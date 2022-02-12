@@ -86,7 +86,7 @@ export class SetupComponent implements OnInit {
             const orgAppKey = result[1];
             const priority = ["High", "Medium", "Low"];
             const type = ["Bug", "Story", "Sub Task"];
-            const status = ["Ice Box", "Ready to Start", "Under Progress", "Blocked", "Completed"];
+            const status = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
             const difficulty = ["High", "Medium", "Low"];
             this.progressPercentage = 15;
   
@@ -149,7 +149,7 @@ export class SetupComponent implements OnInit {
     const parentTaskId = this.popupHandlerService.parentTaskId;
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
 
-    await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to Start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+    await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
       next: (result) => {
         console.log("Successful");
         this.progressPercentage = 30;
