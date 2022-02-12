@@ -12,6 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #quickNotesButton{
+    background:#5c60ec;
     display: block;
     border-radius:50px;
 	text-align:center;
@@ -28,9 +29,20 @@
     right: 30px;
     color: var(--text);
 }
+.card-body{
+    padding: 0.75rem 0.25rem !important;
+}
+.col{
+    flex-grow: 0 !important;
+}
+.noNotes{
+padding: auto;
+margin: auto;
+}
 
 #note {
     background-color: var(--secondary-bg);
+    border: none;
 }
 
 #note:hover {

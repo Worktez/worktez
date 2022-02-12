@@ -84,6 +84,8 @@ export class CreateNewTaskComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.parentTaskId = this.popupHandlerService.parentTaskId;
+    this.title = this.popupHandlerService.quickNotesTitle;		
+    this.description = this.popupHandlerService.quickNotesDescription;
   }
 
   private _filter(value: string): string[] {

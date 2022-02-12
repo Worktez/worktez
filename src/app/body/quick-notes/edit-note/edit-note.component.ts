@@ -19,6 +19,7 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 
 @Component({
@@ -29,17 +30,27 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 export class EditNoteComponent implements OnInit {
 
   @Output() editNoteCompleted = new EventEmitter<boolean>();
+  @Output() addNewNote = new EventEmitter();
   @Input('note') note: QuickNote;
   public quickNoteObservable: Observable<QuickNote>
   componentName:string = "QUICK-NOTES"
   editNote: QuickNote
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     
   }
+
+  createTask(){
+    this.popupHandlerService.createNewTaskEnabled= true;
+    this.popupHandlerService.resetTaskIds();
+    this.popupHandlerService.quickNotesTitle = this.note.Title;
+    this.popupHandlerService.quickNotesDescription = this.note.Note;
+    this.saveNote();
+    }
+
 
   async saveNote() {
     const uid = this.authService.getLoggedInUser();
@@ -57,6 +68,10 @@ export class EditNoteComponent implements OnInit {
       console.error("Error", error);
     }
     this.editNoteCompleted.emit(true);
+  }
+
+  addNote(){
+    this.addNewNote.emit();
   }
 
   close() {
