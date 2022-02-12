@@ -26,7 +26,6 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 export class AddnewNoteComponent implements OnInit {
 
   @Output() addNoteCompleted = new EventEmitter<boolean>();
-  @Output() showList = new EventEmitter();
 
   title: string = ""
   notesContent: string = ""
