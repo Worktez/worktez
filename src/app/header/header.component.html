@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
                 <ng-container *ngIf="(backendService.organizationsData | async)">
                         <ul class="navbar-nav">
-                            <ng-container *ngIf="myorgDataCollected">
+                            <ng-container *ngIf="authService.myOrgCollectionsData| async">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -35,7 +35,7 @@
                                         </mat-icon>
                                     </a>
                                     <div class="btn dropdown-menu" aria-labelledby="navbarDropdownCreate">
-                                        <ng-container *ngFor="let item of myOrgCollData">
+                                        <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
                                             <a class="dropdown-item" *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
                                         </ng-container>
                                     </div>

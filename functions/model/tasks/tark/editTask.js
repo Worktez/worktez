@@ -212,6 +212,7 @@ exports.editTask = function(request, response) {
             Type: type,
             Status: taskStatus,
             Reporter: reporter,
+            LastUpdatedDate: date,
         };
 
         const p3 = getUser(uid, "").then((data) => {

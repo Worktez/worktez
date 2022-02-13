@@ -23,7 +23,7 @@
 const { getOrg } = require("../../organization/lib");
 const { getTeam } = require("../../teams/lib");
 const { getUserUseEmail, updateUser } = require("../lib");
-const { myOrganizations } = require("../tark/myOrganizations");
+const { updateTeamInOrganizations } = require("./updateTeamInOrganizations");
 
 exports.verifyUser = function(request, response) {
     const organizationDomain = request.body.data.OrganizationDomain;
@@ -49,7 +49,7 @@ exports.verifyUser = function(request, response) {
                         SelectedOrgAppKey: appKey,
                     };
                     updateUser(updateUserInputJson, userID);
-                    myOrganizations(userID, organizationDomain, appKey, teamId);
+                    updateTeamInOrganizations(userID, organizationDomain, appKey, teamId);
                 }).catch((error) => {
                     status = 500;
                     console.log("Error:", error);

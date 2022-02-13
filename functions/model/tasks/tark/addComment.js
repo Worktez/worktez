@@ -26,6 +26,7 @@ const { getOrgUseAppKey } = require("../../organization/lib");
 const { sendMail } = require("../../email/lib");
 const { sendNotification } = require("../../notifications/lib");
 const { getUserUseEmail, getUser } = require("../../users/lib");
+const { updateTask } = require("../lib");
 
 exports.addComment = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -61,6 +62,11 @@ exports.addComment = function(request, response) {
             console.error(error);
             return error;
         });
+
+        const updateTaskJson = {
+            LastUpdatedDate: date,
+        };
+        updateTask(updateTaskJson, orgDomain, taskId);
 
         const promises = [promise1, promise2];
 
