@@ -26,6 +26,7 @@ const { getOrgUseAppKey } = require("../../organization/lib");
 const { sendMail } = require("../../email/lib");
 const { sendNotification } = require("../../notifications/lib");
 const { getUserUseEmail, getUser } = require("../../users/lib");
+const { updateTask } = require("../lib");
 
 exports.addComment = function(request, response) {
     const appKey = request.body.data.AppKey;
