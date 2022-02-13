@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToHome() {
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
   }
   
   navigateToVerification(path) {
