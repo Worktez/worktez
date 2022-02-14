@@ -69,7 +69,7 @@ export class ProfileComponent implements OnInit {
   constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
-    // this.popupHandler.resetPopUps();
+    this.popupHandler.resetPopUps();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
@@ -93,27 +93,6 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
-
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.readUser();
-    //         this.organizationName = this.backendService.getOrganizationName();
-    //         this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(team => {
-    //           this.teamName = team.TeamName;
-    //           this.managerEmail = team.TeamManagerEmail;
-    //           if (team.TeamManagerEmail == this.email) {
-    //             this.role = "Manager";
-    //           } else {
-    //             this.role = "Member";
-    //           }
-    //         });
-    //       });
-    //     }
-    //   });
-    // });
-
   }
 
   editProfile() {

@@ -73,7 +73,6 @@ export class PostsComponent implements OnInit {
     console.log("done");
   }
   close() {
-    //this.showCommentsList = false;
     this.showAddComment = false;
   }
 

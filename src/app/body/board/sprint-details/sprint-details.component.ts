@@ -88,8 +88,6 @@ export class SprintDetailsComponent implements OnInit {
     this.currentSprint.emit(-2);
   }
 
-
-    // const orgDomain = data.OrgDomain;
   async autoSchedule() {
     const orgAppKey = this.backendService.getOrganizationAppKey();
     const assignee = this.authService.getUserEmail();

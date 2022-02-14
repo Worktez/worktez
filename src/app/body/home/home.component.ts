@@ -31,20 +31,5 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
-
-    // this.authService.afauth.user.subscribe((data)=>{
-    //   if(data!=null){
-    //     this.authService.userAppSettingObservable.subscribe((data)=> {
-    //       // if(data.SelectedOrgAppKey) {
-    //       //   // if(this.router.url === '/') {
-    //       //     if(!this.authService.homeToDashboard) {
-    //       //       this.authService.homeToDashboard = true;
-    //       //       this.router.navigate(['/MyDashboard']);
-    //       //     }
-    //       //   // }
-    //       //   }
-    //     });
-    //   }
-    // });
   }
 }

@@ -43,7 +43,6 @@ export class EditWorkexperienceComponent implements OnInit {
   constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,public validationService:ValidationService) { }
 
   ngOnInit(): void {
-    // this.todayDate = this.toolsService.date();
     if (this.workModalMode == "edit") {
       this.organizationName = this.workModalData.OrganizationName;
       this.position = this.workModalData.Position;

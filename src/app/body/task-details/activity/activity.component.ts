@@ -13,10 +13,8 @@
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { Activity } from 'src/app/Interface/ActivityInterface';
-import { User, UserAppSetting, defaultUser} from "../../../Interface/UserInterface";
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { UserAppSetting, defaultUser} from "../../../Interface/UserInterface";
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
@@ -29,7 +27,6 @@ export class ActivityComponent implements OnInit {
   @Input('activity') activity: Activity
 
   public userObservable: Observable<UserAppSetting>;
-  // public userDocument: AngularFirestoreDocument<UserAppSetting>;
 
   user: UserAppSetting;
 
@@ -47,14 +44,6 @@ export class ActivityComponent implements OnInit {
       this.user = this.userService.users.filter((obj) => {
         return obj.uid == this.activity.Uid
       })[0];
-      // var documentName = "Users/"+this.activity.Uid;
-      // this.userDocument = this.db.doc<UserAppSetting>(documentName);
-      // this.userObservable = this.userDocument.snapshotChanges().pipe(
-      //   map(actions => {
-      //     const data = actions.payload.data() as UserAppSetting;
-      //     this.user = data;
-      //     return { ...data }
-      //   }));
     }
 
   }

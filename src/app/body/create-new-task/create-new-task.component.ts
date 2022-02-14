@@ -50,8 +50,6 @@ export class CreateNewTaskComponent implements OnInit {
   title: string
   todayDate: string
   description: string
-  // assigneeName: string
-  // reporterName: string
   watcherName: string[]
   creatorName : string
   estimatedTime: number
@@ -100,16 +98,6 @@ export class CreateNewTaskComponent implements OnInit {
           this.type = team.Type;
           this.difficultyLabels = team.DifficultyLabels;
           this.teamMembers=team.TeamMembers;
-          // this.teamMembers.forEach(element => {
-          //   this.userService.checkAndAddToUsersUsingEmail(element);
-          // });
-
-          // if(!this.userService.userReady) {
-          //   this.userService.fetchUserData().subscribe(()=>{
-          //     this.dataReady = true;
-          //   });
-          // }
-
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
 
@@ -146,8 +134,6 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   async submit() {
-    // this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
-    // this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },

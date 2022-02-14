@@ -43,7 +43,6 @@ export class UserServiceService {
         return newArray[0];
       } else {
         console.log("User Not Found Loading empty User")
-        // this.userReady = false;
         return newArray[0]
       }
     } else {

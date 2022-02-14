@@ -68,7 +68,6 @@ export class TasksEvaluationComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.getData();
     } else {
-      // this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
