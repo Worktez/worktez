@@ -190,6 +190,7 @@ export class ProfileComponent implements OnInit {
     this.aboutMe = this.authService.userAppSetting.AboutMe;
     this.appTheme = this.authService.userAppSetting.AppTheme;
     this.photoURL = this.authService.userAppSetting.photoURL;
+    console.log("profile url",this.photoURL)
     this.phoneNumber = this.authService.userAppSetting.phoneNumber;
     this.linkedInProfile = this.authService.userAppSetting.LinkedInProfile;
     this.githubProfile = this.authService.userAppSetting.GithubProfile;

@@ -12,33 +12,43 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="btn-group" *ngIf="authService.myOrgCollectionDocData">
-    <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}" matBadgeColor="warn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="loadNotifications()">notifications</mat-icon>
-    <div class="dropdown-menu dropdown-menu-right" id="dropdownUserCard">
-        <ng-container *ngIf="!showLoader; else loader">
-            <div class="notificationCenter px-1 py-1">
-                <ng-container *ngIf="notificationsList.length == 0">
-                    <div class="text-center">
+    <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}"
+        matBadgeColor="warn" (click)="loadNotifications(1)">notifications</mat-icon>
+    <ng-container *ngIf="showNotificationsList">
+        <div class="card-body" style="width: 20rem; position:absolute; right: 1rem; top: 3rem; height:15rem; background-color: whitesmoke ; overflow-y: scroll; overflow-x: hidden;">
+            <!-- <div class="card-body"> -->
+                <ng-container *ngIf="!showLoader; else loader">
+                    <!-- <div class="notificationCenter"> -->
+                    <ng-container *ngIf="notificationsList.length == 0">
+                        <!-- <div class="text-center"> -->
                         No New Notification
-                    </div>
-                </ng-container>
-                <ng-container *ngFor="let item of notificationsList">
-                    <a href="{{item.Link}}">
-                        <div class="row text-center py-2 mx-1" id="notificationBox">
-                            <div class="col-9" id="message">
-                                {{item.Message}}
+                        <!-- </div> -->
+
+                    </ng-container>
+                    <ng-container *ngFor="let item of notificationsList">
+                        <a href="{{item.Link}}">
+                            <div class="row text-center" id="notificationBox">
+                                <div class="col-9" id="message">
+                                    {{item.Message}}
+                                    {{item.CreationDate}}
+                                    {{item.CreationTime}}
+                                </div>
+                                <!-- <div class="col" id="date">
+                                    
+                                    <br>
+                                    
+                                </div> -->
                             </div>
-                            <div class="col" id="date">
-                                {{item.CreationDate}}
-                                <br>
-                                {{item.CreationTime}}
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </ng-container>
+                    
+                    <button (click)="showOlderNotifications()" class="btn btn-success">Show older notifications</button>
+                    <!-- </div> -->
                 </ng-container>
-            </div>
-        </ng-container>
-        <ng-template #loader>
-            <app-loader></app-loader>
-        </ng-template>
-    </div>
+                <ng-template #loader>
+                    <app-loader></app-loader>
+                </ng-template>
+            <!-- </div> -->
+        </div>
+    </ng-container>
 </div>

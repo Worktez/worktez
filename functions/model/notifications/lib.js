@@ -39,6 +39,7 @@ exports.sendNotification = function(notificationMessage, uid, date, time, orgDom
                 Status: status,
                 NotificationId: notificationId,
                 Link: link,
+                LastSeen: "",
             });
             return Promise.resolve(addNotificationPromise);
         }
@@ -71,10 +72,11 @@ exports.sendNotification = function(notificationMessage, uid, date, time, orgDom
     });
 };
 
-exports.getNotifications = function(Uid, orgDomain, startId, endId) {
+exports.getNotifications = function(Uid, orgDomain, status, startId, endId) {
     let query = db.collection("Users").doc(Uid).collection("Notifications");
 
     query = query.where("OrgDomain", "==", orgDomain);
+    query = query.where("Status", "==", status);
 
     if (startId != "") {
         query = query.where("NotificationId", ">=", startId);
@@ -95,6 +97,11 @@ exports.getNotifications = function(Uid, orgDomain, startId, endId) {
     });
 
     return Promise.resolve(promise);
+};
+
+exports.updateNotifications = function(inputJson, uid, notificationId) {
+    const updateNotificationPromise = db.collection("Users").doc(uid).collection("Notifications").doc(notificationId.toString()).update(inputJson);
+    return Promise.resolve(updateNotificationPromise);
 };
 
 exports.emptyActiveNotification = function(uid, orgDomain) {

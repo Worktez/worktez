@@ -21,9 +21,15 @@
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
+const { emptyNotificationCount } = require("../notifications/tark/emptyNotificationCount");
 
   fastify.post("/getNotifications", (req, res) => {
     getNotificationsList(req, res);
+  });
+
+  fastify.post("/emptyNotifications", (req, res) => {
+    console.log("inside controller")
+    emptyNotificationCount(req, res);
   });
 
 exports.notifications = functions.https.onRequest((req, res) => {
@@ -32,10 +38,5 @@ exports.notifications = functions.https.onRequest((req, res) => {
         if (err) throw err;
             requestHandler(req, res);
         });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "getNotifications") {
-        //     return getNotificationsList(request, response);
-        // }
     });
 });

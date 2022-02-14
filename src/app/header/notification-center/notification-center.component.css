@@ -45,18 +45,22 @@ a {
     font-size: 14px;
 }
 
-#notificationBox:focus,
+
 #notificationBox:hover {
     border: 1px solid var(--button-text-hover);
 }
 
+
+
 #message {
     font-size: 14px;
+    text-align: justify;
+    margin: 10px;
 }
 
-#date {
+/* #date {
     font-size: 12px;
-}
+} */
 
 .notificationCenter {
     width: 400px;
@@ -68,3 +72,4 @@ a {
     border-radius: 2%;
     box-shadow: var(--box-shadow-bottom);
 }
+
