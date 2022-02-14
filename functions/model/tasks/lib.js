@@ -21,7 +21,35 @@
 
 const { db } = require("../application/lib");
 
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0) {
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} taskId
+ * @param {any} title
+ * @param {any} des
+ * @param {any} priority
+ * @param {any} difficulty
+ * @param {any} creator
+ * @param {any} assignee
+ * @param {any} reporter
+ * @param {any} estimatedTime
+ * @param {any} status
+ * @param {any} project
+ * @param {any} loggedWorkTotalTime
+ * @param {any} workDone
+ * @param {any} sprintNumber
+ * @param {any} storyPointNumber
+ * @param {any} creationDate
+ * @param {any} completiondate
+ * @param {any} orgId
+ * @param {any} teamId
+ * @param {any} type
+ * @param {any} taskFileCounter
+ * @param {any} linkCounter=0
+ * @param {any} lastUpdatedDate
+ * @return {any}
+ */
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -46,15 +74,29 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         Type: type,
         TaskFilesCounter: taskFileCounter,
         LinkCounter: linkCounter,
+        LastUpdatedDate: lastUpdatedDate,
     });
     return Promise.resolve(createTask);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} orgDomain
+ * @param {any} taskId
+ * @return {any}
+ */
 exports.updateTask = function(inputJson, orgDomain, taskId) {
     const updateTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(inputJson);
     return Promise.resolve(updateTaskPromise);
 };
 
+/**
+ * Description
+ * @param {any} taskId
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.getTask = function(taskId, orgDomain) {
     const getTaskDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).get().then((taskDoc) => {
         return taskDoc.data();
@@ -62,6 +104,20 @@ exports.getTask = function(taskId, orgDomain) {
     return Promise.resolve(getTaskDetails);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamId=""
+ * @param {any} sprintNumber=""
+ * @param {any} filterAssignee=""
+ * @param {any} filterPriority=""
+ * @param {any} filterDifficulty=""
+ * @param {any} filterStatus=""
+ * @param {any} filterProject=""
+ * @param {any} sprintRange1=""
+ * @param {any} sprintRange2=""
+ * @return {any}
+ */
 exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filterAssignee = "", filterPriority = "", filterDifficulty = "", filterStatus = "", filterProject = "", sprintRange1 = "", sprintRange2 = "") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
     if (sprintNumber != "") {

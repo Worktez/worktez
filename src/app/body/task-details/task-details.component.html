@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<ng-container *ngIf="(taskDataObservable | async)" class="task-position">
+<ng-container *ngIf="(gotTaskData)" class="task-position">
     <div class="container-fluid" *ngIf="dataReady">
         <div class="row header">
             <div class="col-10">
@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="status labels mx-2">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <app-status-icons [getTaskDetail]="task.Status" [Border]="true"></app-status-icons>
+                                <app-status-icons [Status]="task.Status" [Border]="true"></app-status-icons>
                             </div>
                             <div class="priority labels mx-2">
                                 <span id="headerLabel">Priority &nbsp;&nbsp;</span>
@@ -44,7 +44,7 @@
                     <div class="col-md-4 col-3">
                         <div class="row float-right">
                             <div class="logWork pt-3 pr-2"
-                                *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                 <span class="material-icons" data-toggle="modal" title="Log Work"
                                     data-target="#Modal" (click)="logWorkPage()">post_add</span>
                             </div>
@@ -53,32 +53,32 @@
                                     <span class="material-icons dropdown" data-toggle="dropdown" title="Menu">more_horiz</span>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                         <div class="reopenTask "
-                                            *ngIf="(authService.afauth.user | async) && task.Status=='Completed'">
+                                            *ngIf="startService.userReady && task.Status=='Completed'">
                                             <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
                                                 Task</button>
                                         </div>
                                         <div class="editTask"
-                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                                            *ngIf="startService.userReady && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalCenter" (click)="editTask()">Edit
                                                 Task</button>
                                         </div>
                                         <div class="cloneTask "
-                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 (click)="CloneTaskPage()">Clone Task</button>
                                         </div>
                                         <div class="addLink "
-                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#linkModal" (click)="addLink()">Add Link</button>
                                         </div>
                                         <div class="addSubtask "
-                                            *ngIf="(authService.afauth.user | async) && task.Status!=='Completed'">
+                                            *ngIf="startService.userReady && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button"(click)="addSubtask()" data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
                                         <div class="delete "
-                                            *ngIf="(authService.afauth.user | async) && task.SprintNumber !== -2">
+                                            *ngIf="startService.userReady && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalDel" (click)="deleteTask()">Delete
                                                 Task</button>
@@ -186,7 +186,7 @@
                 <div class="row p-2">
                     <span id="label ">Link</span>
                     <div class="table-responsive card">
-                        <ng-container *ngIf="linkData | async; else loader">
+                        <ng-container *ngIf="linkData; else loader">
                             <table class="table table-hover">
                                 <thead id="navbarMenu">
                                     <tr>
@@ -196,12 +196,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <ng-container *ngIf="(linkData|async)?.length==0">
+                                    <ng-container *ngIf="(linkData)?.length==0">
                                         <tr>
                                             <td colspan="9" class="text-center">No links available</td>
                                         </tr>
                                     </ng-container>
-                                    <ng-container *ngFor="let link of linkData|async">
+                                    <ng-container *ngFor="let link of linkData">
                                         <tr>
                                             <td colspan="3"><span data-toggle="tooltip" data-placement="top"
                                                     title="task.id">{{link.LinkID}}</span></td>
@@ -233,18 +233,18 @@
 
                         </div>
                     </nav>
-                    <ng-container *ngIf="activityData | async; else loader">
+                    <ng-container *ngIf="activityData; else loader">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
                                 aria-labelledby="all-activities-tab"
                                 style="overflow-y:auto;overflow-x: hidden;height: 40vh;">
-                                <ng-container *ngIf="(activityData|async)?.length==0">
+                                <ng-container *ngIf="(activityData)?.length==0">
                                     <div class="row">
                                         <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.
                                         </div>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngFor="let activity of activityData | async">
+                                <ng-container *ngFor="let activity of activityData">
                                     <app-activity [activity]="activity"></app-activity>
                                 </ng-container>
                             </div>
@@ -291,4 +291,4 @@
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
 </ng-container>
-<app-loader *ngIf="!(taskDataObservable | async)"></app-loader>
+<app-loader *ngIf="!(gotTaskData)"></app-loader>

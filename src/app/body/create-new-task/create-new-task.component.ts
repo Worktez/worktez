@@ -50,8 +50,6 @@ export class CreateNewTaskComponent implements OnInit {
   title: string
   todayDate: string
   description: string
-  // assigneeName: string
-  // reporterName: string
   watcherName: string[]
   creatorName : string
   estimatedTime: number
@@ -100,16 +98,6 @@ export class CreateNewTaskComponent implements OnInit {
           this.type = team.Type;
           this.difficultyLabels = team.DifficultyLabels;
           this.teamMembers=team.TeamMembers;
-          // this.teamMembers.forEach(element => {
-          //   this.userService.checkAndAddToUsersUsingEmail(element);
-          // });
-
-          // if(!this.userService.userReady) {
-          //   this.userService.fetchUserData().subscribe(()=>{
-          //     this.dataReady = true;
-          //   });
-          // }
-
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
 
@@ -146,8 +134,6 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   async submit() {
-    // this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
-    // this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
@@ -174,8 +160,7 @@ export class CreateNewTaskComponent implements OnInit {
       console.log("Task not created! Validation error");
   }
 
-  
-  async createNewTask() {
+  createNewTask() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
@@ -183,13 +168,18 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
 
-    try {
-      const result = await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).toPromise();
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api"); 
-    }
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+      next: (data) => {
+        console.log("Successful created task");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully created task')
+    });
+
     this.close();
   }
 

@@ -22,20 +22,28 @@
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
 
-  fastify.post("/getNotifications", (req, res) => {
-    getNotificationsList(req, res);
-  });
+/**
+ * Description
+ * @param {any} "/getNotifications"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getNotifications", (req, res) => {
+  getNotificationsList(req, res);
+});
 
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.notifications = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
       fastify.ready((err) => {
         if (err) throw err;
             requestHandler(req, res);
         });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "getNotifications") {
-        //     return getNotificationsList(request, response);
-        // }
     });
 });

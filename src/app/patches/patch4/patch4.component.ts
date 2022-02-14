@@ -24,26 +24,34 @@ import { Patch } from 'src/app/Interface/PatchInterface';
   styleUrls: ['./patch4.component.css']
 })
 export class Patch4Component implements OnInit {
-  
-  // @ViewChild('form') form: NgForm;
   uid: string;
   patch: Patch;
   orgDomain: string;
   showLoader:boolean = false;
+  patchObservableReady: boolean = false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
   ngOnInit(): void {
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
+    });
   }
 
   async submitOperation() {
     this.showLoader = true;
     console.log("Patch4 function running");
     const callable = this.functions.httpsCallable('patch/patch4');
-    await callable({OrgDomain: this.orgDomain, Uid: this.uid}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => console.info(' successful')
     });
   }
 

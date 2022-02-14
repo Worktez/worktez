@@ -27,14 +27,15 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 export class QuickNotesComponent implements OnInit {
 
   showNotesList: boolean = false
-  public quickNoteObservable: Observable<QuickNote[]>
+  public quickNoteObservable: QuickNote[]
   public notes: QuickNote[]
   componentName:string = "QUICK-NOTES"
   showloader: boolean = false
   showAddNote: boolean = false
   openEditNote: boolean = false
   selectedNote: QuickNote;
-  noNotes: boolean = true
+  gotQuickNotes: boolean=false;
+  noNotes: boolean = true;
 
   constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
 
@@ -48,20 +49,31 @@ export class QuickNotesComponent implements OnInit {
     const uid = this.authService.getLoggedInUser();
 
     const callable = this.functions.httpsCallable("quickNotes/getMyNotesList");
-    this.quickNoteObservable =  callable({Uid: uid }).pipe(map(res=>{
+    callable({Uid: uid }).pipe(map(res=>{
       const data = res.data as QuickNote[];
-      if(data) {
-        this.notes = data;
-      }
-      if(this.notes.length>0){
-        this.noNotes = false
-      }
-      else{
-        this.noNotes = true;
-      }
-      this.showloader = false
-      return data
-    }));
+      return data;
+    })).subscribe({
+      next: (data) => {
+        if(data) {
+          this.notes = data;
+        }
+        if(this.notes.length>0){
+          this.noNotes = false
+        }
+        else{
+          this.noNotes = true;
+        }
+        this.showloader = false
+        
+        this.gotQuickNotes=true;
+        this.quickNoteObservable=data;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info('Getting Notes List successful')}
+    });
   }
 
   openAddNote() {
@@ -72,15 +84,17 @@ export class QuickNotesComponent implements OnInit {
 
   addNoteCompleted(data) {
     if(data) {
-      this.showNotesList = true
       this.showAddNote = false
+      return this.showList()
     }
   }
 
   openNote(item: QuickNote) {
+    this.showList();
     this.selectedNote = item;
     this.showNotesList = false
     this.openEditNote = true
+
   }
 
   editNoteCompleted(data) {
@@ -93,14 +107,21 @@ export class QuickNotesComponent implements OnInit {
   async deleteNote(docId: string) {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
-    try {
-    const result = await callable({Uid: uid, DocId: docId}).toPromise();
-    this.showList();
-    } catch(error) {
-      console.log("Error", error);
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    
+    await callable({Uid: uid, DocId: docId}).subscribe({
+      next: (data) => {
+        this.showList();
+        console.log("Successfull");
+      },
+      error: (error) => {
+        console.log("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful updated Selected Team in db')
+  });
+  
   }
 
   close() {

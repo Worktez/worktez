@@ -121,13 +121,18 @@ export class CreateNewSprintComponent implements OnInit {
     const appKey = this.backendService.getOrganizationAppKey();
     const callable = this.functions.httpsCallable('sprints/createNewSprint');
 
-    try {
-      const result = await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).subscribe({
+      next: (data) => {
+        console.log("Successfully created sprint");
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully created sprint ')
+  });
     this.close();
   }
 

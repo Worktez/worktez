@@ -19,6 +19,17 @@
  ***********************************************************/
 
 const { db } = require("../application/lib");
+
+/**
+ * Description
+ * @param {any} schedularDocId
+ * @param {any} type
+ * @param {any} orgAppKey
+ * @param {any} assignee
+ * @param {any} teamId
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.setSchedular = function(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain) {
     const inputJson = {
         Type: type,
@@ -31,6 +42,11 @@ exports.setSchedular = function(schedularDocId, type, orgAppKey, assignee, teamI
     return Promise.resolve(setSchedularDoc);
 };
 
+/**
+ * Description
+ * @param {any} schedularDocId
+ * @return {any}
+ */
 exports.getSchedular = function(schedularDocId) {
     const getSchedularPromise = db.collection("SchedularOrg").doc(schedularDocId).get().then((doc) => {
         return doc.data();
@@ -38,6 +54,10 @@ exports.getSchedular = function(schedularDocId) {
     return Promise.resolve(getSchedularPromise);
 };
 
+/**
+ * Description
+ * @return {any}
+ */
 exports.getAllSchedular = function() {
     const query = db.collection("SchedularOrg");
     const getAllScheduledPromises = query.get();

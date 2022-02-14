@@ -20,6 +20,23 @@
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} fullSprintName
+ * @param {any} orgId
+ * @param {any} teamId
+ * @param {any} newSprintId
+ * @param {any} status
+ * @param {any} totalNumberOfTask=0
+ * @param {any} totalUnCompletedTask=0
+ * @param {any} startStoryPoint=0
+ * @param {any} midStoryPoint=0
+ * @param {any} startDate="xxxx-xx-xx"
+ * @param {any} endDate="xxxx-xx-xx"
+ * @return {any}
+ */
 exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId, newSprintId, status, totalNumberOfTask = 0, totalUnCompletedTask = 0, startStoryPoint = 0, midStoryPoint = 0, startDate = "xxxx-xx-xx", endDate = "xxxx-xx-xx") {
     const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).set({
         OrganizationId: orgId,
@@ -39,12 +56,27 @@ exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId,
     return Promise.resolve(setSprint);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} fullSprintName
+ * @return {any}
+ */
 exports.updateSprint = function(inputJson, orgDomain, teamName, fullSprintName) {
     const updateSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).update(inputJson);
 
     return Promise.resolve(updateSprint);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} fullSprintName
+ * @return {any}
+ */
 exports.getSprint = function(orgDomain, teamName, fullSprintName) {
     console.log(orgDomain, teamName, fullSprintName);
     const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).get().then((sprint) => {
@@ -55,6 +87,12 @@ exports.getSprint = function(orgDomain, teamName, fullSprintName) {
     return Promise.resolve(getSrpintDetails);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @return {any}
+ */
 exports.getSprints = function(orgDomain, teamName) {
     const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").get().then((sprintsData) => {
         const sprints = [];
@@ -68,6 +106,14 @@ exports.getSprints = function(orgDomain, teamName) {
     return Promise.resolve(getSrpintDetails);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} sprintRange1=""
+ * @param {any} sprintRange2=""
+ * @return {any}
+ */
 exports.getAllSprints = function(orgDomain, teamName, sprintRange1 = "", sprintRange2 = "") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints");
 

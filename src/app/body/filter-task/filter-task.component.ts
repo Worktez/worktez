@@ -45,7 +45,6 @@ export class FilterTaskComponent implements OnInit {
   ngOnInit(): void {
     this.project = this.defaultProject
     this.onProjectChange();
-    //this.isProjectChecked = true
   }
 
   onProjectChange() {

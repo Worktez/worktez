@@ -25,7 +25,6 @@ import { PatchService } from 'src/app/services/patch/patch.service';
 })
 export class Patch9Component implements OnInit {
 
-  // Update user information
   orgId: string;
   orgDomain: string;
   newfield: string;
@@ -34,6 +33,7 @@ export class Patch9Component implements OnInit {
   showLoader: boolean = false;
   uid: string;
   patch: Patch;
+  patchObservableReady: boolean=false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -47,6 +47,9 @@ export class Patch9Component implements OnInit {
           this.showLoader = false;
         }
       });
+    });
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
     });
     console.log("patch running");
   }
@@ -66,10 +69,17 @@ export class Patch9Component implements OnInit {
     console.log("Patch9 function running");
     console.log(this.newfield, this.newFieldValue);
     const callable = this.functions.httpsCallable('patch/patch9');
-    await callable({newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+       
+      },
+      complete: () => console.info('successful')
+
     });
   }
 

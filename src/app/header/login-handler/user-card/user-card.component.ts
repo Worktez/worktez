@@ -15,6 +15,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-user-card',
@@ -24,7 +25,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserCardComponent implements OnInit {
   @Input('user') user: User
   showCard: boolean = false
-  constructor(public authService: AuthService, public router: Router) { }
+  constructor(private startService: StartServiceService, public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -32,8 +33,10 @@ export class UserCardComponent implements OnInit {
     this.showCard = !this.showCard
   }
   onLogout() {
-    this.authService.logout();
-    this.router.navigate(['/']);
+    this.authService.logout().then(()=>{
+      this.startService.stopApplication();
+      this.router.navigate(['/']);
+    });
   }
   profile() {
     this.router.navigate(['/profile', this.authService.userAppSetting.Username]);

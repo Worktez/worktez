@@ -57,13 +57,18 @@ export class ApplicationSettingsService {
       const callable = this.functions.httpsCallable("teams/getTeamData");
       this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
         map(actions => {
-          this.team = actions.resultData as Team
-          this.status = this.team.StatusLabels;
-          this.priority = this.team.PriorityLabels;
-          this.difficulty = this.team.DifficultyLabels;
-          this.type = this.team.Type;
-          this.project = this.backendService.organizationDetails.TeamsId;
-          this.team.TeamMembers.forEach(element => {
+          const data = actions.resultData as Team
+
+          if(this.team == undefined) {
+            this.team = data
+            this.status = this.team.StatusLabels;
+            this.priority = this.team.PriorityLabels;
+            this.difficulty = this.team.DifficultyLabels;
+            this.type = this.team.Type;
+            this.project = this.backendService.organizationDetails.TeamsId;
+          }
+          
+          data.TeamMembers.forEach(element => {
             this.userService.checkAndAddToUsersUsingEmail(element);
           });
 
@@ -73,7 +78,7 @@ export class ApplicationSettingsService {
             });
           }
 
-          return this.team;
+          return data;
       }));
     }
     return this.teamData;

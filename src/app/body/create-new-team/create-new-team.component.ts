@@ -48,11 +48,8 @@ export class CreateNewTeamComponent implements OnInit {
   teamManagerEmail: string;
   teamMembers: string[] = [];
   enableLoader: boolean = false;
-  @Input('teamId') selectedTeamId: string;
-  @Output() teamCreated = new EventEmitter<{ completed: boolean }>();
-  @Output() teamUpdated = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
@@ -72,17 +69,6 @@ export class CreateNewTeamComponent implements OnInit {
     this.organizationDomain = this.backendService.getOrganizationDomain();
     this.teamAdmin = this.authService.getUserEmail();
     this.uid = this.authService.getLoggedInUser();
-
-    if (this.selectedTeamId != undefined) {
-      this.isUpdateTeam = true;
-      this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(team => {
-        this.teamName = team.TeamName;
-        this.teamId = team.TeamId;
-        this.teamDescription = team.TeamDescription;
-        this.teamManagerEmail = team.TeamManagerEmail;
-        this.teamMembers = team.TeamMembers;
-      });
-    }
   }
 
   handleIdInput() {
@@ -152,13 +138,8 @@ export class CreateNewTeamComponent implements OnInit {
 
   submit() {
     //Functionality to Show Error When none of the option is checked in Particular labelName can be added
-    if (this.isUpdateTeam === false) {
-      this.createNewTeamWithLabels()
-    } else {
-      this.updateExistingTeam()
-    }
+    this.createNewTeamWithLabels()
   }
-
 
   addMember() {
     this.addMemberEnabled = true;
@@ -172,9 +153,6 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   async removeMember(remove: string) {
-    if (this.isUpdateTeam === true) {
-      await this.removeMemberDB(remove);
-    }
     const index = this.teamMembers.indexOf(remove);
     if (index != -1) {
       this.teamMembers.splice(index, 1);
@@ -183,75 +161,29 @@ export class CreateNewTeamComponent implements OnInit {
     }
   }
 
-  async removeMemberDB(remove: string) {
+  createNewTeamWithLabels() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('teams/removeMember');
-    if (this.organizationDomain == undefined) {
-      this.organizationDomain = this.backendService.getOrganizationDomain();
-    }
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
-      this.enableLoader = false;
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }  
-  }
-
-  async createNewTeamWithLabels() {
-    this.enableLoader = true;
-    // this.teamFormSubmitted.emit({ submitted: true })
     const callable = this.functions.httpsCallable('teams/createTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
+      next: (data) => {
       this.enableLoader = false;
-      // this.teamFormSubmitted.emit({ submitted: false });
-      jQuery('#createNewTeam').modal('hide');
-      jQuery('#form').trigger("reset");
-      this.teamCreated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }
-  }
-
-  async updateExistingTeam() {
-    this.enableLoader = true;
-    // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams/updateTeam');
-    if (this.organizationDomain == undefined) {
-      this.organizationDomain = this.backendService.getOrganizationDomain();
-    }
-
-    try {
-      const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
-      this.enableLoader = false;
-      // this.teamFormSubmitted.emit({ submitted: false });
-      jQuery('#createNewTeam').modal('hide');
-      jQuery('#form').trigger("reset");
-      this.teamUpdated.emit({ completed: true });
-      this.router.navigate(['MyDashboard']);
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }
+      console.log("Successful created new team");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful ')
+    });
   }
 
   close() {
-    jQuery('#createNewTeam').modal('hide');
-    jQuery('#form').trigger("reset");
-    this.teamCreated.emit({ completed: true });
-    this.teamUpdated.emit({ completed: true });
+    this.router.navigate(['MyDashboard']);
   }
 }

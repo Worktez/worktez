@@ -26,7 +26,7 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 export class ContributorsComponent implements OnInit {
   ComponentName: string = "Contributors"
 
-  contributorsData: Observable<Contributors>
+  contributorsData: Contributors[]
 
   constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService) { }
 
@@ -38,12 +38,21 @@ export class ContributorsComponent implements OnInit {
   }
 
   getContributors() {
-    const callable = this.functions.httpsCallable("contributors");
-    this.contributorsData = callable({mode: "getContributorsData"}).pipe(
+    const callable = this.functions.httpsCallable("contributors/getContributorsData");
+    callable({}).pipe(
       map(actions => {
-        return actions as Contributors;
-    }));
-    return this.contributorsData;
+        console.log(actions)
+        return actions as Contributors[];
+    })).subscribe({
+      next: (data) => {
+        this.contributorsData=data;
+        console.log("Saved Contributors Data")
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.info('Getting Contributors data successful')
+    });
   }
 
   openAddMember() {

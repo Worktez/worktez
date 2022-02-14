@@ -55,10 +55,16 @@ export class Patch6Component implements OnInit {
     console.log("Patch6 function running");
     console.log(this.orgDomain);
     const callable = this.functions.httpsCallable('patch/patch6');
-    await callable({OrgDomain: this.orgDomain, Uid: this.uid, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        
+      },
+      complete: () => console.info('successful')
     });
   }
 

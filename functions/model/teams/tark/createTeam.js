@@ -24,7 +24,7 @@ const admin = require("firebase-admin");
 const { setTeam, getTeam } = require("../lib");
 const { getOrg, updateOrg } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
-const { myOrganizations} = require("../../users/tark/myOrganizations");
+const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
 
 
 exports.createTeam = function(request, response) {
@@ -61,10 +61,8 @@ exports.createTeam = function(request, response) {
 
         const prom2 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
-                console.log(orgId);
-
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus);
-                myOrganizations(uid, orgDomain, orgAppKey, teamId);
+                updateTeamInOrganizations(uid, orgDomain, orgAppKey, teamId);
             } else {
                 status = 500;
                 result = { data: "Error: Team Exists! Use update team" };

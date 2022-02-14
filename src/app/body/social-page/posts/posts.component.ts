@@ -73,7 +73,6 @@ export class PostsComponent implements OnInit {
     console.log("done");
   }
   close() {
-    //this.showCommentsList = false;
     this.showAddComment = false;
   }
 
@@ -82,15 +81,22 @@ export class PostsComponent implements OnInit {
     const uid = this.authService.getLoggedInUser();
 
     const callable = this.functions.httpsCallable('socialPage/addReaction');
-    try {
+   
       this.todayDate = this.toolService.date();
       this.time = this.toolService.time();
 
-      const result = await callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).toPromise();
-      } catch(error) {
-        console.log("Error", error);
-        this.errorHandlerService.showError = true;
-      }
+      await callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+        },
+        error: (error) => {
+          console.log("Error", error);
+          this.errorHandlerService.showError = true;
+          console.error(error);
+        },
+        complete: () => console.info('Successful')
+    });
+     
   }
 
   getUserDetails() {

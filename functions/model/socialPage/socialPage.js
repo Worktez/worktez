@@ -24,24 +24,56 @@ const { addPostComment } = require("./tark/addPostComment");
 const { getPosts } = require("./tark/getPosts");
 const { addReaction } = require("./tark/addReaction");
 
-
+/**
+ * Description
+ * @param {any} "/addPost"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addPost", (req, res) => {
     addPost(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/addPostComment"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addPostComment", (req, res) => {
     addPostComment(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getAllPosts"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getAllPosts", (req, res) => {
     getPosts(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/addReaction"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addReaction", (req, res) => {
     addReaction(req, res);
 });
 
-
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.socialPage = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
         fastify.ready((err) => {
