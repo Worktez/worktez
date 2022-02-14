@@ -27,7 +27,7 @@
 }
 
 .dropdown-menu {
-    background-color: var(--button-bg);
+    background-color: var(--secondary-bg);
 }
 
 .dropdown-item {

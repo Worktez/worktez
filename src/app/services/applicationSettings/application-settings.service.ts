@@ -71,7 +71,6 @@ export class ApplicationSettingsService {
           data.TeamMembers.forEach(element => {
             this.userService.checkAndAddToUsersUsingEmail(element);
           });
-
           if(!this.userService.userReady) {
             this.userService.fetchUserData().subscribe(()=>{
               this.teamDataReady = true;
