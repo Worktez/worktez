@@ -22,26 +22,28 @@
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { readTasksEvaluationData } = require("./tark/readTasksEvalulationData");
 
-  fastify.post("/readTasksEvaluationData", (req, res) => {
-    readTasksEvaluationData(req, res);
-  });
-
-  exports.tasksEvaluation = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createOrg(request, response);
-        // } else if (mode == "getOrgData") {
-        //     return getOrgData(request, response);
-        // }
-    });
+/**
+ * Description
+ * @param {any} "/readTasksEvaluationData"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/readTasksEvaluationData", (req, res) => {
+  readTasksEvaluationData(req, res);
 });
-        // const mode = request.body.data.mode;
-        // if (mode == "readTasksEvaluationData") {
-        //     return readTasksEvaluationData(request, response);
-        // }
+
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+exports.tasksEvaluation = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+          requestHandler(req, res);
+    });
+  });
+});

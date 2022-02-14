@@ -19,6 +19,13 @@
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} userEmail
+ * @param {any} subjectMessage
+ * @param {any} htmlMessage
+ * @return {any}
+ */
 exports.sendMail = function(userEmail, subjectMessage, htmlMessage) {
     const sendEmailPromise = db.collection("mail").add({
         to: userEmail,

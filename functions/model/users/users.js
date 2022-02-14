@@ -19,6 +19,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
+
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { updateUser } = require("./tark/updateUser");
 const { updateTheme } = require("./tark/updateTheme");
@@ -47,107 +48,287 @@ const { updateProfilePic } = require("./tark/updateProfilePic");
 const { getUserByUid } = require("./tark/getUserByUid");
 
 
+/**
+ * Description
+ * @param {any} "/createNewUser"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/createNewUser", (req, res) => {
     createNewUser(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getUserAppSettings"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getUserAppSettings", (req, res) => {
     getUserAppSettings(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/checkAvailableUsername"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/checkAvailableUsername", (req, res) => {
     checkAvailableUsername(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getMyOrgCollectionDocs"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getMyOrgCollectionDocs", (req, res) => {
     getMyOrgCollectionDocs(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getMyOrgList"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getMyOrgList", (req, res) => {
     getMyOrgList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getMyTeamsList"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getMyTeamsList", (req, res) => {
     getMyTeamsList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getPhotoURLList"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getPhotoURLList", (req, res) => {
     getPhotoURLList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getUserByEmail"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getUserByEmail", (req, res) => {
     getUserByEmail(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getUserByUid"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getUserByUid", (req, res) => {
     getUserByUid(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/setMyOrganization"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/setMyOrganization", (req, res) => {
     setMyOrganization(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateSelectedTeam"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateSelectedTeam", (req, res) => {
     updateSelectedTeam(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateUser"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateUser", (req, res) => {
     updateUser(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateTheme"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateTheme", (req, res) => {
     updateTheme(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/verify"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/verify", (req, res) => {
     verifyUser(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/addEducation"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addEducation", (req, res) => {
     addEducation(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateEducation"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateEducation", (req, res) => {
     updateEducation(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getAllEducation"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getAllEducation", (req, res) => {
     getEducationList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/addExperience"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addExperience", (req, res) => {
     addExperience(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateExperience"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateExperience", (req, res) => {
     updateExperience(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getAllExperience"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getAllExperience", (req, res) => {
     getExperienceList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/addProject"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addProject", (req, res) => {
     addProject(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateProject"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateProject", (req, res) => {
     updateProject(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getAllProject"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getAllProject", (req, res) => {
     getProjectList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateSkill"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateSkill", (req, res) => {
     updateUserSkill(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateProfilePic"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateProfilePic", (req, res) => {
     updateProfilePic(req, res);
 });
 
-
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.users = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
         fastify.ready((err) => {
@@ -156,52 +337,3 @@ exports.users = functions.https.onRequest((req, res) => {
         });
     });
 });
-
-
-// if (mode == "create") {
-//     return createNewUser(request, response);
-// } else if (mode == "update") {
-//     return updateUser(request, response);
-// } else if (mode == "update-theme") {
-//     return updateTheme(request, response);
-// } else if (mode == "verify") {
-//     return verifyUser(request, response);
-// } else if (mode == "getUserAppSettings") {
-//     return getUserAppSettings(request, response);
-// } else if (mode == "getUserByEmail") {
-//     return getUserByEmail(request, response);
-// } else if (mode == "CheckAvailableUsername") {
-//     return checkAvailableUsername(request, response);
-// } else if (mode == "getMyOrgList") {
-//     return getMyOrgList(request, response);
-// } else if (mode == "getMyTeamsList") {
-//     return getMyTeamsList(request, response);
-// } else if (mode == "setMyOrganization") {
-//     return setMyOrganization(request, response);
-// } else if (mode == "updateSelectedTeam") {
-//     return updateSelectedTeam(request, response);
-// } else if (mode == "getPhotoURLList") {
-//     return getPhotoURLList(request, response);
-// } else if (mode == "getMyOrgCollectionDocs") {
-//     return getMyOrgCollectionDocs(request, response);
-// } else if (mode == "addEducation") {
-//     return addEducation(request, response);
-// } else if (mode == "updateEducation") {
-//     return updateEducation(request, response);
-// } else if (mode == "getAllEducation") {
-//     return getEducationList(request, response);
-// } else if (mode == "addExperience") {
-//     return addExperience(request, response);
-// } else if (mode == "updateExperience") {
-//     return updateExperience(request, response);
-// } else if (mode == "getAllExperience") {
-//     return getExperienceList(request, response);
-// } else if (mode == "addProject") {
-//     return addProject(request, response);
-// } else if (mode == "updateProject") {
-//     return updateProject(request, response);
-// } else if (mode == "getAllProject") {
-//     return getProjectList(request, response);
-// } else if (mode == "updateSkill") {
-//     return updateUserSkill(request, response);
-// }

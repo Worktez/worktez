@@ -28,58 +28,84 @@ const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 
+/**
+ * Description
+ * @param {any} "/addMember"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addMember", (req, res) => {
   addMember(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/createTeam"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/createTeam", (req, res) => {
   createTeam(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/deleteTeam"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/deleteTeam", (req, res) => {
   deleteTeam(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getTeamData"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getTeamData", (req, res) => {
   console.log("calling gettingTeamData api");
   getTeamData(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/removeMember"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/removeMember", (req, res) => {
   removeMember(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/updateTeam"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
 });
 
-
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.teams = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
       fastify.ready((err) => {
         if (err) throw err;
             requestHandler(req, res);
         });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createOrg(request, response);
-        // } else if (mode == "getOrgData") {
-        //     return getOrgData(request, response);
-        // }
     });
 });
-        // const mode = request.body.data.mode;
-        // if (mode == "create") {
-        //     return createTeam(request, response);
-        // } else if (mode == "update") {
-        //     return updateTeam(request, response);
-        // } else if (mode == "add-member") {
-        //     return addMember(request, response);
-        // } else if (mode == "remove-member") {
-        //     return removeMember(request, response);
-        // } else if (mode == "getTeamData") {
-        //     return getTeamData(request, response);
-        // } else if (mode == "delete") {
-        //     return deleteTeam(request, response);
-        // }

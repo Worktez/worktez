@@ -32,75 +32,105 @@ const { getTasks } = require("./tark/getTasks");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 
 
+/**
+ * Description
+ * @param {any} "/comment"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/comment", (req, res) => {
   addComment(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/createNewTask"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/createNewTask", (req, res) => {
   createNewTask(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/deleteTask"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/deleteTask", (req, res) => {
   deleteTask(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/editTask"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/editTask", (req, res) => {
   editTask(req, res);
 });
 
-
+/**
+ * Description
+ * @param {any} "/getTaskDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getTaskDetails", (req, res) => {
   getTaskDetails(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getAllTasks"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getAllTasks", (req, res) => {
   getTasks(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getTasksForDashboard"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getTasksForDashboard", (req, res) => {
   getTasksForDashboard(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/log"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/log", (req, res) => {
   logWork(req, res);
 });
 
-
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.tasks = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {
       if (err) throw err;
           requestHandler(req, res);
       });
-      // const mode = request.body.data.mode;
-
-      // if (mode == "create") {
-      //     return createOrg(request, response);
-      // } else if (mode == "getOrgData") {
-      //     return getOrgData(request, response);
-      // }
   });
 });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createNewTask(request, response);
-        // } else if (mode == "edit") {
-        //     return editTask(request, response);
-        // } else if (mode == "log") {
-        //     return logWork(request, response);
-        // } else if (mode == "delete") {
-        //     return deleteTask(request, response);
-        // } else if (mode == "comment") {
-        //     return addComment(request, response);
-        // } else if (mode == "getTaskDetails") {
-        //     return getTaskDetails(request, response);
-        // } else if (mode == "getLink") {
-        //     return getLinkDetails(request, response);
-        // } else if (mode == "setLink") {
-        //     return setLinkDetails(request, response);
-        // } else if (mode == "getAllTasks") {
-        //     return getTasks(request, response);
-        // } else if (mode == "getTasksForDashboard") {
-        //     return getTasksForDashboard(request, response);
-        // }

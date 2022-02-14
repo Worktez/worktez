@@ -20,16 +20,39 @@
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamId
+ * @param {any} chartName
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.setOrganizationsChart = function(orgDomain, teamId, chartName, inputJson) {
     const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).set(inputJson);
     return Promise.resolve(setChart);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamId
+ * @param {any} chartName
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.updateChart = function(orgDomain, teamId, chartName, inputJson) {
     const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).update(inputJson);
     return Promise.resolve(setChart);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamId
+ * @param {any} chartName
+ * @return {any}
+ */
 exports.getOrganizationsChartDetails = function(orgDomain, teamId, chartName) {
     const getDetailsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).get().then((doc) => {
         return doc.data();
@@ -37,11 +60,24 @@ exports.getOrganizationsChartDetails = function(orgDomain, teamId, chartName) {
     return Promise.resolve(getDetailsPromise);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} uid
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.setUserChart = function(orgDomain, uid, inputJson) {
     const setChart = db.collection("Users").doc(uid).collection("PerformanceChart").doc(orgDomain).set(inputJson);
     return Promise.resolve(setChart);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} uid
+ * @return {any}
+ */
 exports.getUserPerformanceChart = function(orgDomain, uid) {
     const getUserPerformanceChartPromise = db.collection("Users").doc(uid).collection("PerformanceChart").doc(orgDomain).get().then((doc) => {
         return doc.data();

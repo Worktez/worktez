@@ -22,8 +22,8 @@ import { StartServiceService } from '../services/start/start-service.service';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.css']
 })
-export class BodyComponent implements OnInit {
 
+export class BodyComponent implements OnInit {
  
   showLoader: boolean = true;
   showlogin: boolean = false;
