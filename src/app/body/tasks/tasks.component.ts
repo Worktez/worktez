@@ -73,23 +73,12 @@ export class TasksComponent implements OnInit {
     if(this.startService.showTeams) {
       this.getFilterData();
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.getFilterData();
         }
       });
     }
-
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.getFilterData();
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   backToDashboard() {

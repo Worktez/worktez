@@ -39,7 +39,7 @@ export class AuthService {
   user: User;
   userAppSetting: UserAppSetting;
   public userName:string = "";
-  public homeToDashboard: boolean = false;
+  public landingToSocial: boolean = false;
 
   educations: MyEducationData;
   public educationCollectionData: Observable<MyEducationData>
@@ -99,7 +99,7 @@ export class AuthService {
   }
 
   getUserSettings() {
-    this.homeToDashboard = false;
+    this.landingToSocial = false;
     let uid="";
     if(this.userName == ""){
       uid = this.getLoggedInUser(); 

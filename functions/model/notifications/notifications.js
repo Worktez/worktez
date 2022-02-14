@@ -23,15 +23,28 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
 const { emptyNotificationCount } = require("../notifications/tark/emptyNotificationCount");
 
-  fastify.post("/getNotifications", (req, res) => {
-    getNotificationsList(req, res);
-  });
+/**
+ * Description
+ * @param {any} "/getNotifications"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getNotifications", (req, res) => {
+  getNotificationsList(req, res);
+});
 
   fastify.post("/emptyNotifications", (req, res) => {
     console.log("inside controller")
     emptyNotificationCount(req, res);
   });
 
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.notifications = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
       fastify.ready((err) => {

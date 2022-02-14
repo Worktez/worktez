@@ -27,6 +27,8 @@ export class PopupHandlerService {
   parentTaskId: string = "default"
   parentTaskUrl: string = "default"
   createPostEnabled: boolean = false
+  quickNotesTitle: string = ""
+  quickNotesDescription: string = ""
   
   constructor() { }
 
@@ -40,6 +42,8 @@ export class PopupHandlerService {
   resetTaskIds() {
     this.parentTaskId = "default"
     this.parentTaskUrl = "default"
+    this.quickNotesDescription = ""
+    this.quickNotesTitle = ""
   }
 
 }

@@ -11,18 +11,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-.modal-header {
-    border-bottom: none !important;
-    padding: 1.1rem;
-}
 
-.modal-footer {
-    border-top: none !important;
-    padding: 1.1rem;
-    padding-bottom: 0 !important;
-}
-
-.modal-content {
+.container {
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 6px; 
@@ -30,10 +20,6 @@
     padding: 1.1rem;
     justify-content: space-evenly;
     padding-top: 0 !important;
-}
-
-.modal-title {
-    color: var(--text);
 }
 
 .close {

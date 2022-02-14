@@ -25,7 +25,6 @@ import { PatchService } from 'src/app/services/patch/patch.service';
 })
 export class Patch9Component implements OnInit {
 
-  // Update user information
   orgId: string;
   orgDomain: string;
   newfield: string;

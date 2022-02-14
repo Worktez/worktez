@@ -37,32 +37,11 @@ export class MyDashBoardComponent implements OnInit {
 
   loadingCurrentSprintStatus: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public startService: StartServiceService, public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
+  constructor(public startService: StartServiceService, public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-
-    if(this.startService.showTeamsData) {
-      this.loadingCurrentSprintStatus = true;
-    } else {
-      this.startService.startApplication();
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  // this.readSprintData();
-                  this.loadingCurrentSprintStatus = true;
-                }
-              });
-            }
-          });
-        }
-      });
-    }
-    // this.readUser();
   }
 
   createNewTeam() {

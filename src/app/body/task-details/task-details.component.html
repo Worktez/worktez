@@ -44,7 +44,7 @@
                     <div class="col-md-4 col-3">
                         <div class="row float-right">
                             <div class="logWork pt-3 pr-2"
-                                *ngIf="authServiceUserDataReady && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                 <span class="material-icons" data-toggle="modal" title="Log Work"
                                     data-target="#Modal" (click)="logWorkPage()">post_add</span>
                             </div>
@@ -53,32 +53,32 @@
                                     <span class="material-icons dropdown" data-toggle="dropdown" title="Menu">more_horiz</span>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                         <div class="reopenTask "
-                                            *ngIf="authServiceUserDataReady && task.Status=='Completed'">
+                                            *ngIf="startService.userReady && task.Status=='Completed'">
                                             <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
                                                 Task</button>
                                         </div>
                                         <div class="editTask"
-                                            *ngIf="authServiceUserDataReady && task.Status!=='Completed'">
+                                            *ngIf="startService.userReady && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalCenter" (click)="editTask()">Edit
                                                 Task</button>
                                         </div>
                                         <div class="cloneTask "
-                                            *ngIf="authServiceUserDataReady && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 (click)="CloneTaskPage()">Clone Task</button>
                                         </div>
                                         <div class="addLink "
-                                            *ngIf="authServiceUserDataReady && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                            *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#linkModal" (click)="addLink()">Add Link</button>
                                         </div>
                                         <div class="addSubtask "
-                                            *ngIf="authServiceUserDataReady && task.Status!=='Completed'">
+                                            *ngIf="startService.userReady && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button"(click)="addSubtask()" data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
                                         <div class="delete "
-                                            *ngIf="authServiceUserDataReady && task.SprintNumber !== -2">
+                                            *ngIf="startService.userReady && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalDel" (click)="deleteTask()">Delete
                                                 Task</button>

@@ -24,40 +24,50 @@ const { updateSprintStatus } = require("../sprints/tark/updateSprintStatus");
 const { getSprintDetails } = require("../sprints/tark/getSprintDetails");
 
 
-  fastify.post("/createNewSprint", (req, res) => {
-    createNewSprint(req, res);
-  });
-
-  fastify.post("/getSprintDetails", (req, res) => {
-    getSprintDetails(req, res);
-  });
-
-  fastify.post("/updateSprintStatus", (req, res) => {
-    updateSprintStatus(req, res);
-  });
-
-  exports.sprints = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createOrg(request, response);
-        // } else if (mode == "getOrgData") {
-        //     return getOrgData(request, response);
-        // }
-    });
+/**
+ * Description
+ * @param {any} "/createNewSprint"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/createNewSprint", (req, res) => {
+  createNewSprint(req, res);
 });
-    // cors(request, response, () => {
-    //     const mode = request.body.data.mode;
-    //     if (mode == "create") {
-    //         return createNewSprint(request, response);
-    //     } else if (mode == "update") {
-    //         return updateSprintStatus(request, response);
-    //     } else if (mode == "getSprintDetails") {
-    //         return getSprintDetails(request, response);
-    //     }
-    // });
+
+/**
+ * Description
+ * @param {any} "/getSprintDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getSprintDetails", (req, res) => {
+  getSprintDetails(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/updateSprintStatus"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/updateSprintStatus", (req, res) => {
+  updateSprintStatus(req, res);
+});
+
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+exports.sprints = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+          requestHandler(req, res);
+      });
+  });
+});

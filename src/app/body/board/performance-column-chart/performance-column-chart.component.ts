@@ -54,9 +54,9 @@ export class PerformanceColumnChartComponent implements OnInit {
     try {
       await callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
         map(actions => {
-          return actions.data.sort() as [];
+            return actions.data as [];
         })).subscribe((data)=>{
-          this.data = data
+          this.data = data.sort()
           this.showLoader = false;
         });
     } catch(error) {

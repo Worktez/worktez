@@ -45,7 +45,6 @@ export class EditProjectsComponent implements OnInit {
   constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,public validationService:ValidationService) { }
 
   ngOnInit(): void {
-    // this.todayDate = this.toolsService.date();
     if (this.projectModalMode == "edit") {
       console.log(this.projectModalData);
       this.projectName = this.projectModalData.ProjectName;

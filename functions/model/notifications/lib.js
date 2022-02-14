@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -20,6 +21,16 @@
 const { db } = require("../application/lib");
 const { getUser, updateUser, getMyOrgCollectionDoc, updateMyOrgCollection } = require("../users/lib");
 
+/**
+ * Description
+ * @param {any} notificationMessage
+ * @param {any} uid
+ * @param {any} date
+ * @param {any} time
+ * @param {any} orgDomain
+ * @param {any} link
+ * @return {any}
+ */
 exports.sendNotification = function(notificationMessage, uid, date, time, orgDomain, link) {
     const status = 1;
     let notificationId = 0;
@@ -72,6 +83,14 @@ exports.sendNotification = function(notificationMessage, uid, date, time, orgDom
     });
 };
 
+/**
+ * Description
+ * @param {any} Uid
+ * @param {any} orgDomain
+ * @param {any} startId
+ * @param {any} endId
+ * @return {any}
+ */
 exports.getNotifications = function(Uid, orgDomain, status, startId, endId) {
     let query = db.collection("Users").doc(Uid).collection("Notifications");
 
@@ -104,6 +123,12 @@ exports.updateNotifications = function(inputJson, uid, notificationId) {
     return Promise.resolve(updateNotificationPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.emptyActiveNotification = function(uid, orgDomain) {
     getMyOrgCollectionDoc(uid, orgDomain).then((data) => {
         if (data != undefined) {

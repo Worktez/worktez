@@ -19,6 +19,11 @@
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} Uid
+ * @return {any}
+ */
 exports.getNotes = function(Uid) {
     let query = db.collection("Users").doc(Uid).collection("QuickNotes");
 
@@ -37,6 +42,12 @@ exports.getNotes = function(Uid) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} Uid
+ * @param {any} docId
+ * @return {any}
+ */
 exports.getNote = function(Uid, docId) {
     let query = db.collection("Users").doc(Uid).collection("QuickNotes");
 
@@ -55,6 +66,16 @@ exports.getNote = function(Uid, docId) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} title
+ * @param {any} note
+ * @param {any} docId
+ * @param {any} lastUpdatedDate
+ * @param {any} lastUpdatedTime
+ * @return {any}
+ */
 exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpdatedTime) {
     const addNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).set({
         Title: title,
@@ -67,11 +88,25 @@ exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpd
     return Promise.resolve(addNotePromise);
 };
 
+/**
+ * Description
+ * @param {any} updateNoteToJson
+ * @param {any} uid
+ * @param {any} docId
+ * @return {any}
+ */
 exports.deleteUserNote = function(updateNoteToJson, uid, docId) {
     const deleteNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(updateNoteToJson);
     return Promise.resolve(deleteNotePromise);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} uid
+ * @param {any} docId
+ * @return {any}
+ */
 exports.updateNote = function(inputJson, uid, docId) {
     const editNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(inputJson);
     return Promise.resolve(editNotePromise);
