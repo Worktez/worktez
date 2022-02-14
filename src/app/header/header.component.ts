@@ -16,8 +16,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { BackendService } from '../services/backend/backend.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
-import { MyOrganizationData, User } from '../Interface/UserInterface';
+import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { StartServiceService } from '../services/start/start-service.service';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class HeaderComponent implements OnInit {
   isHomePage: boolean = false;
   userReady: boolean = false;
 
-  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     if (this.router.url == '/') {
@@ -39,37 +40,20 @@ export class HeaderComponent implements OnInit {
     } else {
       this.isHomePage = false;
     }
-    this.authService.afauth.user.subscribe({
-      next: (action) => {
-        const data = action as User;
-        if (data) {
-          this.userReady = true;
-          this.uid = data.uid;
-        }
-
-      },
-      error: (error) => {
-        console.error(error);
-        this.userReady = false;
-      },
-      complete: () => console.log("Getting User Data Complete")
-    });
-
   }
 
-  async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
+  setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
+    this.uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("users/setMyOrganization");
-    await callable({ Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam }).subscribe({
+    callable({ Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam }).subscribe({
       next: (data) => {
-        console.log("Successful ");
         window.location.reload()
       },
       error: (error) => {
-
+        console.error(error)
       },
-      complete: () => console.info('Successful ')
+      complete: () => console.info('Successful')
     });
-
   }
 
   startNewSprint() {
@@ -94,7 +78,7 @@ export class HeaderComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/Home']);
   }
 
   organizationDetails() {
@@ -106,7 +90,7 @@ export class HeaderComponent implements OnInit {
   }
 
   socialPage() {
-    this.router.navigate(['/SocialPage']);
+    this.router.navigate(['/']);
   }
 
 }

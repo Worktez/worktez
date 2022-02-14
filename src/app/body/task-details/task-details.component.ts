@@ -14,7 +14,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks, Link } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
@@ -66,7 +65,6 @@ export class TaskDetailsComponent implements OnInit {
 
   dataReady: boolean = false
 
-  authServiceUserDataReady: boolean=false
   gotTaskData: boolean=false;
 
   public taskDataObservable: Tasks
@@ -86,11 +84,6 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
-
-    this.authService.afauth.user.subscribe((data) => {
-      this.authServiceUserDataReady = true;
-    });
-    
   }
 
   getTaskPageData(){
@@ -101,7 +94,6 @@ export class TaskDetailsComponent implements OnInit {
       this.getLinkData();
       this.activeAllBtn = true;
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();

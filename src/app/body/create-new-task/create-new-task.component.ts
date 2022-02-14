@@ -174,8 +174,7 @@ export class CreateNewTaskComponent implements OnInit {
       console.log("Task not created! Validation error");
   }
 
-  
-  async createNewTask() {
+  createNewTask() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
@@ -183,7 +182,7 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
 
-    await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
       next: (data) => {
         console.log("Successful created task");
       },
@@ -193,7 +192,7 @@ export class CreateNewTaskComponent implements OnInit {
         console.error(error);
       },
       complete: () => console.info('Successfully created task')
-  });
+    });
 
     this.close();
   }

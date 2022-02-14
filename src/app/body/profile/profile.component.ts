@@ -81,7 +81,6 @@ export class ProfileComponent implements OnInit {
       this.managerEmail = this.startService.managerEmail;
       this.role = this.startService.role;
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.readUser();

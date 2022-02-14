@@ -52,14 +52,12 @@ export class PerformanceChartComponent implements OnInit {
     
       callable({OrganizationDomain: orgDomain, Assignee: this.userEmail, Uid:this.uid, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}}).pipe(
         map(actions => {
-            const data= actions.data.sort() as [];
+            const data= actions.data as [];
             return data
-          
         })).subscribe({
           next: (data) => {
-            this.data=data;
+            this.data=data.sort();
             this.showLoader = false;
-            console.log("Saved performance Data")
           },
           error: (error) => {
             this.errorHandlerService.showError = true;
