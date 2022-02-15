@@ -25,6 +25,7 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 export class UserCardComponent implements OnInit {
   @Input('user') user: User
   showCard: boolean = false
+  photoUrl: string = ""
   constructor(private startService: StartServiceService, public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
@@ -32,7 +33,7 @@ export class UserCardComponent implements OnInit {
   }
 
   readProfileDetails(){
-    console.log("1",this.user.photoURL)
+    // this.photoUrl = this.authService.userAppSetting.photoURL
     // const data = this.userService.getUserData(this.user.email);
     // console.log("111",data)
 

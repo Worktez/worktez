@@ -21,7 +21,7 @@
                     <!-- <div class="notificationCenter"> -->
                     <ng-container *ngIf="notificationsList.length == 0">
                         <!-- <div class="text-center"> -->
-                        No New Notification
+                        No New Notification!!
                         <!-- </div> -->
 
                     </ng-container>
@@ -42,7 +42,10 @@
                         </a>
                     </ng-container>
                     
-                    <button (click)="showOlderNotifications()" class="btn btn-success">Show older notifications</button>
+                    <ng-container *ngIf="!showOldNotificationsList">
+                    <a class="btn btn-outline-secondary" (click)="showOlderNotifications()" style="margin-top: 2rem;">Show older notifications</a>
+                    <!-- <button (click)="showOlderNotifications()" class="btn btn-success">Show older notifications</button> -->
+                    </ng-container>
                     <!-- </div> -->
                 </ng-container>
                 <ng-template #loader>

@@ -48,6 +48,7 @@ a {
 
 #notificationBox:hover {
     border: 1px solid var(--button-text-hover);
+    background-color: rgb(208, 212, 238);
 }
 
 

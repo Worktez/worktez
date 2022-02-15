@@ -42,12 +42,18 @@ export class NotificationCenterComponent implements OnInit {
 
   loadNotifications(notificationStatus) {
     this.showLoader = true;
+    console.log(this.showNotificationsList)
     this.showNotificationsList = !(this.showNotificationsList);
+    this.showOldNotificationsList = false;
     if (this.showNotificationsList) 
     {
       this.applicationSettingService.getNotificationsList(notificationStatus).subscribe((data) => {
         this.notificationsList = data;
         this.showLoader = false;
+        if (this.notificationsList.length != 0) 
+        {
+          this.showOldNotificationsList = true;
+        }
         if (notificationStatus == 1)
           this.resetActiveNotificationCounter();
       });
@@ -71,7 +77,11 @@ export class NotificationCenterComponent implements OnInit {
   }
 
   showOlderNotifications() {
+    console.log("1")
+    this.showNotificationsList = !(this.showNotificationsList);
     this.loadNotifications(0);
+    console.log("2")
     this.showOldNotificationsList = true;
+    console.log("3")
   }
 } 
