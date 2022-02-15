@@ -50,6 +50,7 @@ export class CreateNewTaskComponent implements OnInit {
   title: string
   todayDate: string
   description: string
+
   // assigneeName: string
   // reporterName: string
   watcherName: string[]
@@ -74,6 +75,7 @@ export class CreateNewTaskComponent implements OnInit {
   type: string[]
   taskType: string
   parentTaskId: string
+  showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -186,6 +188,8 @@ export class CreateNewTaskComponent implements OnInit {
     await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
       next: (data) => {
         console.log("Successful created task");
+        this.enableLoader=false;
+        this.showClose=true;
       },
       error: (error) => {
         this.errorHandlerService.showError = true;
@@ -195,11 +199,10 @@ export class CreateNewTaskComponent implements OnInit {
       complete: () => console.info('Successfully created task')
   });
 
-    this.close();
-  }
+}
 
   close() {
-    jQuery('#createNewTask').modal('hide');
+    jQuery('#createNewTask');
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
   }
