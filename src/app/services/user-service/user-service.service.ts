@@ -15,7 +15,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
+import { UserAppSetting } from 'src/app/Interface/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +85,7 @@ export class UserServiceService {
         if(this.users.length == 0) {
           this.users = data
         } else {
-          this.users.concat(data)
+          this.users = this.users.concat(data)
         }
         this.newEmails = []
         this.userReady = true
@@ -103,7 +103,7 @@ export class UserServiceService {
         if(this.users.length == 0) {
           this.users = data
         } else {
-          this.users.concat(data)
+          this.users = this.users.concat(data)
         }
         this.newUids = []
         this.userReady = true
