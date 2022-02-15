@@ -105,7 +105,7 @@ exports.getNotifications = function(Uid, orgDomain, status, startId, endId) {
         query = query.where("NotificationId", "<=", endId);
     }
 
-    const promise = query.get().then((docs) => {
+    const promise = query.orderBy("CreationTime", "desc").get().then((docs) => {
         const notifications = [];
         docs.forEach((element) => {
             if (element.exists) {
