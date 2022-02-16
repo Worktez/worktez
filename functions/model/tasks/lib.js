@@ -49,7 +49,7 @@ const { db } = require("../application/lib");
  * @param {any} lastUpdatedDate
  * @return {any}
  */
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -59,7 +59,7 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         Creator: creator,
         Assignee: assignee,
         Reporter: reporter,
-        Watcher: [],
+        Watcher: watchers,
         EstimatedTime: estimatedTime,
         Status: status,
         Project: project,

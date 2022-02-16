@@ -114,7 +114,6 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks/getTaskDetails');
     callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
-        
 
         return { ...data }
     })).subscribe({
@@ -300,5 +299,23 @@ export class TaskDetailsComponent implements OnInit {
       this.activeEditBtn = false;
       this.activeCommentBtn = true;
     }
+  }
+
+  async addWatcher() {
+    const newWatcher = this.authService.getUserEmail();
+    const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
+    await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: newWatcher}).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        this.getTaskPageData();
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.log( "Error", error );
+      },
+      complete: () => console.info('Successful')
+  });
   }
 }
