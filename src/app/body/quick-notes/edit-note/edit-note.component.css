@@ -47,4 +47,5 @@ input:focus {
  padding: 5px 0px 0px 0px;
  cursor: pointer;
  text-align: center;
+ color: var(--text);
 }
