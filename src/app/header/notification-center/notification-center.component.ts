@@ -50,10 +50,6 @@ export class NotificationCenterComponent implements OnInit {
       this.applicationSettingService.getNotificationsList(notificationStatus).subscribe((data) => {
         this.notificationsList = data;
         this.showLoader = false;
-        if (this.notificationsList.length != 0) 
-        {
-          this.showOldNotificationsList = true;
-        }
         if (notificationStatus == 1)
           this.resetActiveNotificationCounter();
       });
