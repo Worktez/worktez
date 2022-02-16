@@ -33,13 +33,9 @@ export class UserServiceService {
   constructor(private functions: AngularFireFunctions) { }
 
   getUserData (email) {
-    console.log("getting in", this.users.length)
     if(this.users.length) {
-      console.log("in:",this.users.length);
       const newArray = this.users.filter((data)=>{
         if(data.email == email) {
-          console.log("one",data.email)
-          console.log("two",email)
           return data
         }
       });

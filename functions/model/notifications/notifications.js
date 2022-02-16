@@ -35,7 +35,6 @@ fastify.post("/getNotifications", (req, res) => {
 });
 
   fastify.post("/emptyNotifications", (req, res) => {
-    console.log("inside controller")
     emptyNotificationCount(req, res);
   });
 
