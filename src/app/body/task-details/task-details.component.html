@@ -111,8 +111,13 @@
                         <div class="avatars">
                             <app-speed-images [emails]="task.Watcher"></app-speed-images>
                         </div>
-                        <mat-icon fontSet="material-icons-outlined" (click)="addWatcher()">remove_red_eye</mat-icon>
-                        <!-- <mat-icon fontSet="material-icons-outlined" (click)="loadNotifications(1)">panorama_fish_eye</mat-icon> -->
+                        <ng-container *ngIf="!addedWatcher">
+                            <mat-icon fontSet="material-icons-outlined" (click)="addWatcher()">remove_red_eye</mat-icon>
+                        </ng-container>
+                        <ng-container *ngIf="addedWatcher">
+                            <mat-icon fontSet="material-icons-outlined" >panorama_fish_eye</mat-icon>
+                        </ng-container>
+                        
                     </div>
                 </div>
             </div>
