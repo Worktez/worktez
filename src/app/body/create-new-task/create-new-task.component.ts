@@ -50,9 +50,6 @@ export class CreateNewTaskComponent implements OnInit {
   title: string
   todayDate: string
   description: string
-
-  // assigneeName: string
-  // reporterName: string
   watcherName: string[]
   creatorName : string
   estimatedTime: number
