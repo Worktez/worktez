@@ -15,8 +15,11 @@
  ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Post, User } from 'src/app/Interface/UserInterface';
+import { AuthService } from 'src/app/services/auth.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
@@ -35,9 +38,14 @@ export class SocialPageComponent implements OnInit {
   PostId: string
 
 
-  constructor(private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public userService:UserServiceService) { }
+  constructor(private router: Router, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public userService:UserServiceService) { }
 
   ngOnInit(): void {
+    this.navbarHandler.resetNavbar();
+    this.loadSocialPageData();
+  }
+
+  loadSocialPageData() {
     const callable = this.functions.httpsCallable("socialPage/getAllPosts");
     callable({}).pipe(map(res=>{
       const data = res.data as Post[];
@@ -55,6 +63,7 @@ export class SocialPageComponent implements OnInit {
       this.showloader = false
     });
   }
+
   createPost() {
     this.popupHandlerService.createPostEnabled = true;
   }

@@ -20,6 +20,15 @@
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} post
+ * @param {any} postId
+ * @param {any} lastUpdatedDate
+ * @param {any} lastUpdatedTime
+ * @return {any}
+ */
 exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) {
     const addPostPromise = db.collection("Social").doc(postId).set({
         Uid: uid,
@@ -36,12 +45,21 @@ exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) 
     return Promise.resolve(addPostPromise);
 };
 
+/**
+ * Description
+ * @return {any}
+ */
 exports.getAllPosts = function() {
     const query = db.collection("Social");
     const getAllPosts = query.get();
     return Promise.resolve(getAllPosts);
 };
 
+/**
+ * Description
+ * @param {any} postId
+ * @return {any}
+ */
 exports.getPost = function(postId) {
     const getPostDetails = db.collection("Social").doc(postId).get().then((taskDoc) => {
         return taskDoc.data();
@@ -49,6 +67,16 @@ exports.getPost = function(postId) {
     return Promise.resolve(getPostDetails);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} postId
+ * @param {any} content
+ * @param {any} commentId
+ * @param {any} lastUpdatedDate
+ * @param {any} lastUpdatedTime
+ * @return {any}
+ */
 exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDate, lastUpdatedTime) {
     const addCommentPromise = db.collection("Social").doc(postId).collection("Comment").doc(commentId).set({
         Content: content,
@@ -61,6 +89,17 @@ exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDa
     return Promise.resolve(addCommentPromise);
 };
 
+/**
+ * Description
+ * @param {any} postId
+ * @param {any} reactId
+ * @param {any} creationDate
+ * @param {any} creationTime
+ * @param {any} type
+ * @param {any} uid
+ * @param {any} reactStatus
+ * @return {any}
+ */
 exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid, reactStatus) {
     const setReactDetails = db.collection("Social").doc(postId).collection("Reactions").doc(reactId).set({
         CreationDate: creationDate,
@@ -72,6 +111,12 @@ exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type
     return Promise.resolve(setReactDetails);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} postID
+ * @return {any}
+ */
 exports.updatePost = function(inputJson, postID) {
     const updatePostPromise = db.collection("Social").doc(postID).update(inputJson);
     return Promise.resolve(updatePostPromise);

@@ -20,12 +20,27 @@
 const admin = require("firebase-admin");
 const firestore = admin.firestore();
 
+/**
+ * Description
+ * @param {any} "firebase-functions"
+ * @returns {any}
+ */
 const functions = require("firebase-functions");
+/**
+ * Description
+ * @param {any} "cors"
+ * @returns {any}
+ */
 const cors = require("cors")({ origin: true });
 
 const http = require("http");
 let requestHandler = null;
 
+/**
+ * Description
+ * @param {any} "fastify"
+ * @returns {any}
+ */
 const fastify = require("fastify")({
   logger: false,
   serverFactory: (handler) => {
@@ -34,6 +49,15 @@ const fastify = require("fastify")({
   },
 });
 
+/**
+ * Description
+ * @param {any} "application/json"
+ * @param {any} {}
+ * @param {any} req
+ * @param {any} body
+ * @param {any} done
+ * @returns {any}
+ */
 fastify.addContentTypeParser("application/json", {}, (req, body, done) => {
   done(null, body.body);
 });
@@ -45,10 +69,19 @@ exports.db = firestore;
 exports.functions = functions;
 exports.cors = cors;
 
+/**
+ * Description
+ * @param {any} temp
+ * @return {any}
+ */
 exports.generateBase64String = function(temp) {
     return Buffer.from(temp).toString("base64");
 };
 
+/**
+ * Description
+ * @return {any}
+ */
 exports.setApplication = function() {
     const P1 = firestore.collection("RawData").doc("AppDetails").set({
         CurrentSprintId: 0,
@@ -68,11 +101,20 @@ exports.setApplication = function() {
     return Promise.resolve(P1);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.updateApplication = function(inputJson) {
     const P1 = firestore.collection("RawData").doc("AppDetails").update(inputJson);
     return Promise.resolve(P1);
 };
 
+/**
+ * Description
+ * @return {any}
+ */
 exports.getApplicationData = function() {
     const promise = firestore.collection("RawData").doc("AppDetails").get().then((doc) => {
         if (doc.exists) {
@@ -84,6 +126,11 @@ exports.getApplicationData = function() {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} sprintId
+ * @return {any}
+ */
 exports.createSprintName = function(sprintId) {
     if (sprintId == -1) {
         return "Backlog";
@@ -94,6 +141,11 @@ exports.createSprintName = function(sprintId) {
     }
 };
 
+/**
+ * Description
+ * @param {any} lastUpdated
+ * @return {any}
+ */
 exports.checkUpdateTime = function(lastUpdated) {
       // const d = new Date();
     // const currentTimeStamp = d.getMilliseconds();

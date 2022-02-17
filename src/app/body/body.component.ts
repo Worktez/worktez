@@ -12,43 +12,27 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
-import { User } from '../Interface/UserInterface';
 import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
+import { StartServiceService } from '../services/start/start-service.service';
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.css']
 })
-export class BodyComponent implements OnInit {
 
+export class BodyComponent implements OnInit {
  
   showLoader: boolean = true;
   showlogin: boolean = false;
   teamDataChecked: boolean= false;
   userDataReady: boolean = false;
 
-  constructor(public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    this.authService.afauth.user.subscribe({
-      next: (action) => {
-        const data = action as User;
-        if (data) {
-          this.userDataReady = true;
-        } else {
-          this.userDataReady = false;
-        }
-
-      },
-      error: (error) => {
-        console.error(error);
-        this.userDataReady = false;
-      },
-      complete: () => console.log("Getting User Data Complete")
-    });
   }
 
   sprintCreated( completed: boolean ) {
