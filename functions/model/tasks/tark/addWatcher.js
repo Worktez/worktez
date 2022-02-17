@@ -43,7 +43,6 @@ exports.addWatcher = function (request, response) {
     console.log(taskId)
     console.log(orgDomain)
     const addWatcherPromise = getTask(taskId, orgDomain).then((taskDoc) => {
-        //    console.log("here is the task doc",taskDoc.Watcher);
         taskDoc.Watcher.forEach(element => {
             watchers.push(element);
         });
@@ -53,7 +52,6 @@ exports.addWatcher = function (request, response) {
         const updateTaskJson = {
             Watcher: watchers,
         };
-        console.log("check this:", updateTaskJson)
         updateTask(updateTaskJson, orgDomain, taskId);
         console.log(":actuallu updated task")
 
