@@ -29,18 +29,6 @@ export class UserCardComponent implements OnInit {
   constructor(private startService: StartServiceService, public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
-    this.readProfileDetails();
-  }
-
-  readProfileDetails(){
-    // this.photoUrl = this.authService.userAppSetting.photoURL
-    // const data = this.userService.getUserData(this.user.email);
-    // console.log("111",data)
-
-    // if(data != undefined) {
-    //   this.photoUrl = data.photoURL;
-    //   console.log("hereee:",this.photoUrl)
-    // }
   }
    
 

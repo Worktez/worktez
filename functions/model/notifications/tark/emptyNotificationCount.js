@@ -23,7 +23,6 @@
  const { emptyActiveNotification, getNotifications, updateNotifications } = require("../lib");
 
  exports.emptyNotificationCount = function(request, response) {
-     console.log("inside empty notifications!!!!")
      const orgDomain = request.body.data.OrgDomain;
      const lastSeenDate = request.body.data.LastSeenDate;
      const uid = request.body.data.Uid;
