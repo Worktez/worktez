@@ -197,7 +197,7 @@
                                 </thead>
                                 <tbody>
                                     <ng-container *ngIf="(linkData)?.length==0">
-                                        <tr>
+                                        <tr (click)="addLink()">
                                             <td colspan="9" class="text-center">No links available</td>
                                         </tr>
                                     </ng-container>
@@ -206,7 +206,7 @@
                                             <td colspan="3"><span data-toggle="tooltip" data-placement="top"
                                                     title="task.id">{{link.LinkID}}</span></td>
                                             <td colspan="3">{{link.LinkType}}</td>
-                                            <td colspan="6"><a href={{link.LinkURL}}>{{link.LinkURL}}</a></td>
+                                            <td colspan="6"><a href={{link.LinkURL}} target="_blank">{{link.LinkURL}}</a></td>
                                         </tr>
                                     </ng-container>
                                 </tbody>

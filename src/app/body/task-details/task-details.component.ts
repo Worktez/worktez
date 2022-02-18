@@ -250,6 +250,7 @@ export class TaskDetailsComponent implements OnInit {
 
   addedLink( data: { completed: boolean } ) {
     this.linkEnabled = false;
+    this.getLinkData();
   }
 
   async reopenTask () {
