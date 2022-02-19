@@ -18,6 +18,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -46,10 +48,11 @@ export class EditProfileComponent implements OnInit {
   public userAvailable: boolean = false;
   oldUserName: string
 
-  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,  public authService: AuthService) { }
 
   ngOnInit(): void {
     this.oldUserName = this.userName;
+    this.email = this.authService.userAppSetting.email;
   }
 
   async editProfile() {
