@@ -139,6 +139,8 @@ import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
 
+import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -243,6 +245,8 @@ import { UpdateTeamComponent } from './body/update-team/update-team.component';
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
+    SchedularPatchComponent,
+    
     UpdateTeamComponent,
   ],
   imports: [
