@@ -127,6 +127,7 @@ export class StartServiceService {
   readApplicationData() {
     this.applicationDataState.next(false);
     this.applicationSettingsService.team = undefined;
+    this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
       

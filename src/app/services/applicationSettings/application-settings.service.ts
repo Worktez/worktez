@@ -47,6 +47,7 @@ export class ApplicationSettingsService {
   public notificationListObservable: Observable<Notification[]>;
 
   teamDataReady: boolean = false;
+  teamAvailable: boolean=false;
 
   constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
@@ -61,6 +62,7 @@ export class ApplicationSettingsService {
 
           if(this.team == undefined) {
             this.team = data
+            this.teamAvailable = true;
             this.status = this.team.StatusLabels;
             this.priority = this.team.PriorityLabels;
             this.difficulty = this.team.DifficultyLabels;
