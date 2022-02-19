@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GitData } from '../Interface/githubReleaseData';
 import { AuthService } from '../services/auth.service';
+import { StartServiceService } from '../services/start/start-service.service';
 
 @Component({
   selector: 'app-footer',
@@ -27,7 +28,7 @@ export class FooterComponent implements OnInit {
   tag_name: string
   userDataReady: boolean = false;
 
-  constructor(public authService: AuthService, private httpService: HttpServiceService, public router: Router) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, private httpService: HttpServiceService, public router: Router) { }
 
   ngOnInit(): void {
         this.httpService.getReleaseDetails().pipe(map(data => {
@@ -41,10 +42,6 @@ export class FooterComponent implements OnInit {
             console.error(error);
           },
           complete: () => console.info('Getting Release data successful')
-        });
-
-        this.authService.afauth.user.subscribe((data) => {
-          this.userDataReady = true;
         });
   }
   privacy(){

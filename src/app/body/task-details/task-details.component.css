@@ -11,6 +11,16 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+
+.watcherAdded {
+    color: var(--primary-color);
+    font-size: medium;
+}
+.watcherNotAdded {
+    color: var(--secondary-color);
+    font-size: medium;
+}
+
 .container-fluid{
     padding: 20px 110px 0px 110px;
     color: var(--text);
@@ -104,6 +114,10 @@ a.nav-link{
 
 #noActivityDesc {
     color: var(--text);
+}
+
+#descriptionTaskDescription {
+    white-space: pre-wrap;
 }
 
 ::-webkit-scrollbar {

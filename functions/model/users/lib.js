@@ -18,8 +18,28 @@
 /* eslint-disable indent */
 /* eslint-disable max-len */
 
+/**
+ * Description
+ * @param {any} "../application/lib"
+ * @returns {any}
+ */
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} Uid
+ * @param {any} PhotoURL
+ * @param {any} DisplayName
+ * @param {any} Email
+ * @param {any} PhoneNumber
+ * @param {any} ProviderId
+ * @param {any} Username
+ * @param {any} AppKey=""
+ * @param {any} TeamId=""
+ * @param {any} AboutMe=""
+ * @param {any} AppTheme="theme-light"
+ * @return {any}
+ */
 exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, Username, AppKey = "", TeamId = "", AboutMe = "", AppTheme = "theme-light") {
     const userData = db.collection("Users").doc(Uid).set({
         SelectedOrgAppKey: AppKey,
@@ -48,12 +68,23 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     return Promise.resolve(userData);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} Uid
+ * @return {any}
+ */
 exports.updateUser = function(inputJson, Uid) {
     const promise = db.collection("Users").doc(Uid).update(inputJson);
-
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} Uid
+ * @param {any} username
+ * @return {any}
+ */
 exports.getUser = function(Uid, username) {
     let query = db.collection("Users");
 
@@ -78,6 +109,11 @@ exports.getUser = function(Uid, username) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} emails
+ * @return {any}
+ */
 exports.getAllPhotos = function(emails) {
     const data = [];
     const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
@@ -89,6 +125,11 @@ exports.getAllPhotos = function(emails) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} emails
+ * @return {any}
+ */
 exports.getAllUsersInEmail = function(emails) {
     const data = [];
     const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
@@ -100,7 +141,11 @@ exports.getAllUsersInEmail = function(emails) {
     return Promise.resolve(promise);
 };
 
-
+/**
+ * Description
+ * @param {any} uids
+ * @return {any}
+ */
 exports.getAllUsersInUids = function(uids) {
     const data = [];
     const promise = db.collection("Users").where("uid", "in", uids).get().then((doc) => {
@@ -112,6 +157,11 @@ exports.getAllUsersInUids = function(uids) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} email
+ * @return {any}
+ */
 exports.getUserUseEmail = function(email) {
     const promise = db.collection("Users").where("email", "==", email).get().then((doc) => {
         let data;
@@ -124,6 +174,10 @@ exports.getUserUseEmail = function(email) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @return {any}
+ */
 exports.getAllUsers = function() {
     const promise = db.collection("Users").get().then((users) => {
         return users;
@@ -132,6 +186,15 @@ exports.getAllUsers = function() {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} Uid
+ * @param {any} orgDomain
+ * @param {any} orgAppKey
+ * @param {any} teams=[]
+ * @param {any} defaultTeam=""
+ * @return {any}
+ */
 exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], defaultTeam = "") {
     const setMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).set({
         Uid: Uid,
@@ -144,6 +207,12 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
     return Promise.resolve(setMyOrgPromise);
 };
 
+/**
+ * Description
+ * @param {any} Uid
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
     const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
         if (doc.exists) {
@@ -155,17 +224,34 @@ exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
     return Promise.resolve(getMyOrgPromise);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} Uid
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
     const promise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).update(inputJson);
-
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @return {any}
+ */
 exports.getMyOrgCollection = function(uid) {
     const getMyOrgPromise = db.collection("Users").doc(uid).collection("MyOrganizations").get();
     return Promise.resolve(getMyOrgPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} orgAppKey
+ * @return {any}
+ */
 exports.getMyTeamCollection = function(uid, orgAppKey) {
     const promise = db.collection("Users").doc(uid).collection("MyOrganizations").where("OrgAppKey", "==", orgAppKey).get().then((doc) => {
         let data;
@@ -177,6 +263,15 @@ exports.getMyTeamCollection = function(uid, orgAppKey) {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} instituteName
+ * @param {any} degree
+ * @param {any} start
+ * @param {any} end
+ * @return {any}
+ */
 exports.addUserEducation = function(uid, instituteName, degree, start, end) {
     const addEducationPromise = db.collection("Users").doc(uid).collection("Education").doc().set({
         Start: start,
@@ -187,12 +282,24 @@ exports.addUserEducation = function(uid, instituteName, degree, start, end) {
     return Promise.resolve(addEducationPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} educationDoc
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.updateUserEducation = function(uid, educationDoc, inputJson) {
     const updateEducationPromise = db.collection("Users").doc(uid).collection("Education").doc(educationDoc).update(inputJson);
 
     return Promise.resolve(updateEducationPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @return {any}
+ */
 exports.getAllUserEducation = function(uid) {
     const getEducationPromise = db.collection("Users").doc(uid).collection("Education").get().then((educations) => {
         return educations;
@@ -200,6 +307,15 @@ exports.getAllUserEducation = function(uid) {
     return Promise.resolve(getEducationPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} organizationName
+ * @param {any} position
+ * @param {any} start
+ * @param {any} end
+ * @return {any}
+ */
 exports.addUserExperience = function(uid, organizationName, position, start, end) {
     const addExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc().set({
         Start: start,
@@ -210,12 +326,24 @@ exports.addUserExperience = function(uid, organizationName, position, start, end
     return Promise.resolve(addExperiencePromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} experienceDoc
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.updateUserExperience = function(uid, experienceDoc, inputJson) {
     const updateExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc(experienceDoc).update(inputJson);
 
     return Promise.resolve(updateExperiencePromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @return {any}
+ */
 exports.getAllUserExperience = function(uid) {
     const getExperiencePromise = db.collection("Users").doc(uid).collection("Experience").get().then((experiences) => {
         return experiences;
@@ -223,6 +351,15 @@ exports.getAllUserExperience = function(uid) {
     return Promise.resolve(getExperiencePromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} projectName
+ * @param {any} description
+ * @param {any} start
+ * @param {any} end
+ * @return {any}
+ */
 exports.addUserProject = function(uid, projectName, description, start, end) {
     const addProjectPromise = db.collection("Users").doc(uid).collection("Project").doc().set({
         Start: start,
@@ -233,12 +370,24 @@ exports.addUserProject = function(uid, projectName, description, start, end) {
     return Promise.resolve(addProjectPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} projectDoc
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.updateUserProject = function(uid, projectDoc, inputJson) {
     const updateProjectPromise = db.collection("Users").doc(uid).collection("Project").doc(projectDoc).update(inputJson);
 
     return Promise.resolve(updateProjectPromise);
 };
 
+/**
+ * Description
+ * @param {any} uid
+ * @return {any}
+ */
 exports.getAllUserProject = function(uid) {
     const getProjectPromise = db.collection("Users").doc(uid).collection("Project").get().then((projects) => {
         return projects;

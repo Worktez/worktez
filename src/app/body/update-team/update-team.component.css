@@ -1,0 +1,85 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+.modal-header {
+    border-bottom: none !important;
+    padding: 1.1rem;
+}
+
+.modal-footer {
+    border-top: none !important;
+    padding: 1.1rem;
+    padding-bottom: 0 !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px; 
+    min-height: 350px;
+    padding: 1.1rem;
+    justify-content: space-evenly;
+    padding-top: 0 !important;
+}
+
+.modal-title {
+    color: var(--text);
+}
+
+.close {
+    color: var(--text);
+}
+
+.form-row {
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control, .card {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+#button {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    outline: none;
+    box-shadow: none;
+    background-color: var(--primary-color);
+}
+
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+.member-email {
+    background-color: var(--secondary-header-bg);
+    color: var(--text);
+    border-radius: 18px;
+}

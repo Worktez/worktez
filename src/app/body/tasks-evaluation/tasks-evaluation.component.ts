@@ -24,6 +24,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FormControl } from '@angular/forms';
 import { Observable, startWith, map } from 'rxjs';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -32,7 +33,6 @@ import { Observable, startWith, map } from 'rxjs';
 })
 export class TasksEvaluationComponent implements OnInit {
 
-  constructor(public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
   componentName: string = "TASKS-EVALUATION";
   tasks = [];
   sprints: Sprint[] = []
@@ -56,39 +56,52 @@ export class TasksEvaluationComponent implements OnInit {
 
   nextSprintTasksToFetch: number;
 
+  constructor(private startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
+
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
     this.navbarHandlerService.addToNavbar(this.componentName);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.backendService.organizationsData.subscribe(data => {
-              this.teamIds = this.backendService.getOrganizationTeamIds();
-              this.selectedTeamId = this.authService.getTeamId();
-              this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(data => {
-                this.teamCurrentSprint = data.CurrentSprintId;
-                this.nextSprintTasksToFetch = this.teamCurrentSprint;
-                this.selectedTeamName = data.TeamName;
-                this.statusLabels = data.StatusLabels;
-                this.priorityLabels = data.PriorityLabels;
-                this.difficultyLabels = data.DifficultyLabels;
-                this.teamMembers = data.TeamMembers;
 
-                this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
-                  startWith(''),
-                  map((value) => {
-                    return this._filter(value)
-                  }),
-                );
-                this.readTasks(); 
+    if(this.startService.showTeamsData) {
+      this.getData();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.startService.applicationDataStateObservable.subscribe((data) => {
+            if(data) {
+              this.applicationSettingsService.teamData.subscribe((data) => {
+                if(data) {
+                  console.log("check1")
+                  this.getData();
+                }
               });
+            }
           });
         }
       });
-    });
+    }
+  }
+
+  getData() {
+    this.teamCurrentSprint = this.startService.currentSprintNumber;
+    this.nextSprintTasksToFetch = this.teamCurrentSprint;
+    this.selectedTeamId = this.startService.selectedTeamId;
+    this.selectedTeamName = this.startService.teamName;
+    this.statusLabels = this.applicationSettingsService.status;
+    this.priorityLabels = this.applicationSettingsService.priority;
+    this.difficultyLabels = this.applicationSettingsService.difficulty;
+    this.teamMembers = this.applicationSettingsService.team.TeamMembers;
+
+    this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      }),
+    );
+    this.readTasks(); 
   }
 
   private _filter(value: string): string[] {
@@ -97,7 +110,6 @@ export class TasksEvaluationComponent implements OnInit {
   }
 
   async readTasks() {
-    console.log(this.nextSprintTasksToFetch)
     this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
@@ -108,7 +120,7 @@ export class TasksEvaluationComponent implements OnInit {
       } else {
         pageToLoad = "loadMore";
       }
-      await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.teamCurrentSprint }).subscribe ({
+      await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.nextSprintTasksToFetch }).subscribe ({
         next: (data) => {
           result = data;
           if (result.BacklogTasks.length > 0) {

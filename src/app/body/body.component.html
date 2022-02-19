@@ -14,8 +14,8 @@
 <div class="page">
     <app-navbar></app-navbar>
     <app-error></app-error>
-    <ng-container *ngIf="applicationSettingsService.teamData | async">
-        <ng-container *ngIf="applicationSettingsService.team.TeamStatus == -1">
+    <ng-container *ngIf="startService.showTeamsData">
+        <ng-container *ngIf="!applicationSettingsService.teamAvailable">
             <p class="alert alert-danger" role="alert">The current team is marked as inactive by the org admin</p>
         </ng-container>
     </ng-container>
@@ -28,9 +28,6 @@
     <ng-container *ngIf="popupHandlerService.createNewTeamEnabled">
         <app-create-new-team (teamCreated)="teamCreated($event)"></app-create-new-team>
     </ng-container>
-    <ng-container *ngIf="popupHandlerService.updateTeamEnabled">
-        <app-create-new-team (teamUpdated)="teamUpdated($event)" [teamId]="popupHandlerService.updateTeamId"></app-create-new-team>
-    </ng-container>
 
     <ng-container *ngIf="popupHandlerService.createPostEnabled">
         <app-create-post></app-create-post>
@@ -38,7 +35,7 @@
     
     <ng-container *ngIf="authService.completedLoadingApplication; else loader">
         <router-outlet></router-outlet>
-        <app-quick-notes *ngIf="userDataReady" ></app-quick-notes>
+        <app-quick-notes *ngIf="startService.userReady" ></app-quick-notes>
     </ng-container>
 
     <ng-template #loader>

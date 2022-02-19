@@ -34,103 +34,160 @@ const { patch8 } = require("./tark/patch8");
 const { patch9 } = require("./tark/patch9");
 const { patch10 } = require("./tark/patch10");
 
-  fastify.post("/editPatch", (req, res) => {
-    editPatch(req, res);
-  });
-
-  fastify.post("/patch1", (req, res) => {
-    patch1(req, res);
-  });
-
-  fastify.post("/patch2", (req, res) => {
-    patch2(req, res);
-  });
-
-  fastify.post("/patch3", (req, res) => {
-    patch3(req, res);
-  });
-
-  fastify.post("/patch4", (req, res) => {
-    patch4(req, res);
-  });
-
-  fastify.post("/patch5", (req, res) => {
-    patch5(req, res);
-  });
-
-  fastify.post("/patch6", (req, res) => {
-    patch6(req, res);
-  });
-
-  fastify.post("/patch7", (req, res) => {
-    patch7(req, res);
-  });
-
-  fastify.post("/patch8", (req, res) => {
-    patch8(req, res);
-  });
-
-  fastify.post("/patch9", (req, res) => {
-    patch9(req, res);
-  });
-
-  fastify.post("/patch10", (req, res) => {
-    patch10(req, res);
-  });
-
-  fastify.post("/patchModerator", (req, res) => {
-    patchModerator(req, res);
-  });
-
-  fastify.post("/setPatches", (req, res) => {
-    setPatches(req, res);
-  });
-
-  exports.patch = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createOrg(request, response);
-        // } else if (mode == "getOrgData") {
-        //     return getOrgData(request, response);
-        // }
-    });
+/**
+ * Description
+ * @param {any} "/editPatch"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/editPatch", (req, res) => {
+  editPatch(req, res);
 });
-    // cors(request, response, () => {
-    //     const mode = request.body.data.mode;
 
-    //     if (mode == "patch1") {
-    //         // To fix counters of all sprints
-    //         return patch1(request, response);
-    //     } else if (mode == "patch2") {
-    //         // To add a new field and value to all tasks
-    //         return patch2(request, response);
-    //     } else if (mode == "patch3") {
-    //         // To change a particular field in relevent tasks
-    //         return patch3(request, response);
-    //     } else if (mode == "patch4") {
-    //         // To update the uid for previous activities
-    //         return patch4(request, response);
-    //     } else if (mode == "patch5") {
-    //         // To update the userDoc for all Users to change Organization structure
-    //         return patch5(request, response);
-    //     } else if (mode == "patch6") {
-    //         // To update the Sprints collections with new field values
-    //         return patch6(request, response);
-    //     } else if (mode == "patch7") {
-    //         // To add a new field to the organization
-    //         return patch7(request, response);
-    //     } else if (mode == "patch9") {
-    //         // To add a new field to the organization
-    //         return patch9(request, response);
-    //     } else if (mode == "patchModerator") {
-    //         return patchModerator(request, response);
-    //     } else if (mode == "edit") {
-    //         return editPatch(request, response);
-    //     }
-    // });
+/**
+ * Description
+ * @param {any} "/patch1"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch1", (req, res) => {
+  patch1(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch2"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch2", (req, res) => {
+  patch2(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch3"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch3", (req, res) => {
+  patch3(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch4"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch4", (req, res) => {
+  patch4(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch5"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch5", (req, res) => {
+  patch5(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch6"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch6", (req, res) => {
+  patch6(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch7"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch7", (req, res) => {
+  patch7(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch8"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch8", (req, res) => {
+  patch8(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch9"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch9", (req, res) => {
+  patch9(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patch10"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patch10", (req, res) => {
+  patch10(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/patchModerator"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/patchModerator", (req, res) => {
+  patchModerator(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/setPatches"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/setPatches", (req, res) => {
+  setPatches(req, res);
+});
+
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+exports.patch = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+          requestHandler(req, res);
+      });
+  });
+});

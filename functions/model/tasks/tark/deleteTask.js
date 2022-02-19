@@ -41,7 +41,6 @@ exports.deleteTask = function(request, response) {
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
     let status = 200;
-
     let assigneeName = "";
     let senderName = "";
 
@@ -118,6 +117,8 @@ exports.deleteTask = function(request, response) {
                 status = 500;
                 console.log("Error:", error);
             });
+
+            
 
             const promises = [p1, p2, p3, p4];
             Promise.all(promises).then(() => {

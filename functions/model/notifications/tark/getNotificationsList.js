@@ -25,10 +25,11 @@ const { getNotifications, emptyActiveNotification } = require("../lib");
 exports.getNotificationsList = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
     const uid = request.body.data.Uid;
+    const notificationStatus = request.body.data.NotificationStatus;
 
     let status = 200;
     let result;
-    getNotifications(uid, orgDomain, "", "").then((doc) => {
+    getNotifications(uid, orgDomain, notificationStatus, "", "").then((doc) => {
         emptyActiveNotification(uid, orgDomain);
         result = { data: doc };
         console.log("Sent notifications successfully");

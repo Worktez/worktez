@@ -24,8 +24,6 @@ import { Patch } from 'src/app/Interface/PatchInterface';
   styleUrls: ['./patch4.component.css']
 })
 export class Patch4Component implements OnInit {
-  
-  // @ViewChild('form') form: NgForm;
   uid: string;
   patch: Patch;
   orgDomain: string;

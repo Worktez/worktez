@@ -44,27 +44,19 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     if(this.startService.showTeams) {
       this.getOrganizationDetails();
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.getOrganizationDetails();
         }
       });
     }
-
-
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     this.getOrganizationDetails();
-    //   });
-    // });
   }
 
   getOrganizationDetails() {
     this.showLoader = true;
     const appKey = this.authService.getAppKey();
     this.teams = [];
-    this.backendService.getOrgDetails(appKey).subscribe(data => {
+    this.backendService.organizationsData.subscribe(data => {
       this.organization = data;
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);

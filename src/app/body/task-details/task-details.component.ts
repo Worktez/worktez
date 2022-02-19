@@ -14,7 +14,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Tasks, Link } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
@@ -54,7 +53,7 @@ export class TaskDetailsComponent implements OnInit {
   activeCommentBtn: boolean = false
   activeEditBtn: boolean = false
   task: Tasks
-  todayDate: string
+  creationDate: string
   time: string
   assignee: string
   creator: string
@@ -63,10 +62,11 @@ export class TaskDetailsComponent implements OnInit {
   actionType: string = "All"
   comment: string = "";
   url: string;
+  addedWatcher: boolean = false;
+  newWatcher: string = "";
 
   dataReady: boolean = false
 
-  authServiceUserDataReady: boolean=false
   gotTaskData: boolean=false;
 
   public taskDataObservable: Tasks
@@ -76,7 +76,8 @@ export class TaskDetailsComponent implements OnInit {
   constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
-    this.todayDate = this.toolsService.date();
+    this.newWatcher = this.authService.getUserEmail();
+    this.creationDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
     this.Id = this.route.snapshot.params[ 'taskId' ];
@@ -86,11 +87,6 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
-
-    this.authService.afauth.user.subscribe((data) => {
-      this.authServiceUserDataReady = true;
-    });
-    
   }
 
   getTaskPageData(){
@@ -101,7 +97,6 @@ export class TaskDetailsComponent implements OnInit {
       this.getLinkData();
       this.activeAllBtn = true;
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();
@@ -122,13 +117,13 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks/getTaskDetails');
     callable({Id: this.Id, OrgDomain: this.orgDomain}).pipe(map(res => {
         const data = res.taskData as Tasks;
-        
-
         return { ...data }
     })).subscribe({
       next: (data) => {
         this.task = data;
-
+        if (this.task.Watcher.includes(this.newWatcher)) {
+          this.addedWatcher = true;
+        }
         this.userService.checkAndAddToUsersUsingEmail(this.task.Assignee);
         this.userService.checkAndAddToUsersUsingEmail(this.task.Reporter);
         this.userService.checkAndAddToUsersUsingEmail(this.task.Creator);
@@ -201,7 +196,7 @@ export class TaskDetailsComponent implements OnInit {
       const callable = this.functions.httpsCallable('tasks/comment');
       const appKey = this.backendService.getOrganizationAppKey();
 
-      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
           this.comment = "";
           return;
@@ -258,13 +253,14 @@ export class TaskDetailsComponent implements OnInit {
 
   addedLink( data: { completed: boolean } ) {
     this.linkEnabled = false;
+    this.getLinkData();
   }
 
   async reopenTask () {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+    await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
       next: (data) => {
         console.log("Successful");
         this.getTaskPageData();
@@ -308,5 +304,25 @@ export class TaskDetailsComponent implements OnInit {
       this.activeEditBtn = false;
       this.activeCommentBtn = true;
     }
+  }
+
+  async addWatcher() {
+    
+    const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
+    await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        console.log("checking if watcher exists or not:", this.task.Watcher)
+        
+        this.addedWatcher = true;
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.log( "Error", error );
+      },
+      complete: () => console.info('Successful')
+  });
   }
 }

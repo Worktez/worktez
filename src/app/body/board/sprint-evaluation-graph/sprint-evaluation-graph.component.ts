@@ -13,9 +13,7 @@
  ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
@@ -55,13 +53,11 @@ export class SprintEvaluationGraphComponent implements OnInit {
 
       callable({OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
         map(actions => {
-          if (actions.data != undefined) {
-            const data= actions.data.sort() as [];
+            const data= actions.data as [];
             return data
-          }
         })).subscribe({
           next: (data) => {
-            this.data=data;
+            this.data=data.sort();
             this.showLoader = false;
           },
           error: (error) => {

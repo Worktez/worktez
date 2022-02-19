@@ -45,7 +45,6 @@ export class SetupComponent implements OnInit {
   start() {
     this.getUser()
     this.showLoader = true;
-    // this.createNewOrg();
   }
 
   async getUser() {

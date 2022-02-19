@@ -11,13 +11,13 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div *ngIf="authserviceUserChecked; else showLoginButton">
+<div *ngIf="startService.userReady; else showLoginButton">
     <div class="row pl-2">
         <div class="col-5 pt-2">
             <app-notification-center></app-notification-center>
         </div>
         <div class="col">
-            <app-user-card [user]="user"></app-user-card>
+            <app-user-card [user]="startService.user"></app-user-card>
         </div>
     </div>
 </div>

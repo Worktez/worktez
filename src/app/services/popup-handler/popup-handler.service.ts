@@ -21,8 +21,6 @@ export class PopupHandlerService {
   createNewSprintEnabled: boolean = false
   createNewTaskEnabled: boolean = false
   createNewTeamEnabled: boolean = false
-  updateTeamEnabled: boolean = false
-  updateTeamId: string
   addNewContributorEnabled: boolean = false
   parentTaskId: string = "default"
   parentTaskUrl: string = "default"

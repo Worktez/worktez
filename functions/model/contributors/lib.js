@@ -19,6 +19,10 @@
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @return {any}
+ */
 exports.getContributors = function() {
     const query = db.collection("Contributors");
 
@@ -35,6 +39,16 @@ exports.getContributors = function() {
     return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} docId
+ * @param {any} email
+ * @param {any} about
+ * @param {any} photoUrl
+ * @param {any} title
+ * @param {any} name
+ * @return {any}
+ */
 exports.setContributors = function(docId, email, about, photoUrl, title, name) {
     console.log(about);
     const P1 = db.collection("Contributors").doc(docId).set({

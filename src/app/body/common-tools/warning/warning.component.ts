@@ -37,7 +37,6 @@ export class WarningComponent implements OnInit {
   logWorkEnabled: boolean = false
   editTaskEnabled: boolean = false
   userLoggedIn: boolean = false
-  // task: Tasks
   todayDate: string
   time: string
   orgDomain: string
