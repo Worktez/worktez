@@ -110,7 +110,6 @@ export class TasksEvaluationComponent implements OnInit {
   }
 
   async readTasks() {
-    console.log(this.nextSprintTasksToFetch)
     this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
@@ -121,7 +120,7 @@ export class TasksEvaluationComponent implements OnInit {
       } else {
         pageToLoad = "loadMore";
       }
-      await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.teamCurrentSprint }).subscribe ({
+      await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.nextSprintTasksToFetch }).subscribe ({
         next: (data) => {
           result = data;
           if (result.BacklogTasks.length > 0) {
