@@ -138,6 +138,8 @@ import { CreatePostComponent } from './body/social-page/create-post/create-post.
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
 
+import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -242,6 +244,8 @@ import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.compon
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
+    SchedularPatchComponent,
+    
   ],
   imports: [
     BrowserModule,

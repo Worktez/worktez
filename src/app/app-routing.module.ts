@@ -45,6 +45,7 @@ import { CopyrightComponent } from './body/copyright/copyright.component'
 import { ContributorsComponent } from './body/contributors/contributors.component';
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
+import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
@@ -70,6 +71,7 @@ const routes: Routes = [
   { path: 'Patch8', component: Patch8Component },
   { path: 'Patch9', component: Patch9Component },
   { path: 'Patch10', component: Patch10Component },
+  { path: 'SchedularPatch', component: SchedularPatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard]},
