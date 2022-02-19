@@ -28,9 +28,6 @@
     <ng-container *ngIf="popupHandlerService.createNewTeamEnabled">
         <app-create-new-team (teamCreated)="teamCreated($event)"></app-create-new-team>
     </ng-container>
-    <ng-container *ngIf="popupHandlerService.updateTeamEnabled">
-        <app-create-new-team (teamUpdated)="teamUpdated($event)" [teamId]="popupHandlerService.updateTeamId"></app-create-new-team>
-    </ng-container>
 
     <ng-container *ngIf="popupHandlerService.createPostEnabled">
         <app-create-post></app-create-post>

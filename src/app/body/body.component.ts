@@ -46,9 +46,4 @@ export class BodyComponent implements OnInit {
   teamCreated( completed: boolean) {
     this.popupHandlerService.createNewTeamEnabled = false;
   }
-
-  teamUpdated( completed: boolean ) {
-    this.popupHandlerService.updateTeamId = undefined;
-    this.popupHandlerService.updateTeamEnabled = false;
-  }
 }

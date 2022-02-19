@@ -137,6 +137,7 @@ import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
+import { UpdateTeamComponent } from './body/update-team/update-team.component';
 
 @NgModule({
   declarations: [
@@ -242,6 +243,7 @@ import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.compon
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
+    UpdateTeamComponent,
   ],
   imports: [
     BrowserModule,
