@@ -73,11 +73,8 @@ export class NotificationCenterComponent implements OnInit {
   }
 
   showOlderNotifications() {
-    console.log("1")
     this.showNotificationsList = !(this.showNotificationsList);
     this.loadNotifications(0);
-    console.log("2")
     this.showOldNotificationsList = true;
-    console.log("3")
   }
 } 
