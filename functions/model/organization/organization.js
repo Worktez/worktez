@@ -23,27 +23,39 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 const { createOrg } = require("./tark/createOrg");
 const { getOrgData } = require("./tark/getOrganizationData");
 
-  fastify.post("/createOrg", (req, res) => {
-    createOrg(req, res);
-  });
+/**
+ * Description
+ * @param {any} "/createOrg"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/createOrg", (req, res) => {
+  createOrg(req, res);
+});
 
-  fastify.post("/getOrgData", (req, res) => {
-    getOrgData(req, res);
-  });
+/**
+ * Description
+ * @param {any} "/getOrgData"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getOrgData", (req, res) => {
+  getOrgData(req, res);
+});
 
-
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.organization = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
       fastify.ready((err) => {
         if (err) throw err;
             requestHandler(req, res);
         });
-        // const mode = request.body.data.mode;
-
-        // if (mode == "create") {
-        //     return createOrg(request, response);
-        // } else if (mode == "getOrgData") {
-        //     return getOrgData(request, response);
-        // }
     });
 });

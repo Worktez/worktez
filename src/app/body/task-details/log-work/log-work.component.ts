@@ -81,7 +81,6 @@ export class LogWorkComponent implements OnInit {
       next: (data) => {
         this.enableLoader = false;
         this.showClose = true;
-        // this.workDone();
         return;
       },
       error: (error) => {

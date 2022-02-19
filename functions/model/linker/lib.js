@@ -21,11 +21,26 @@
 const { db } = require("../application/lib");
 
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} taskId
+ * @return {any}
+ */
 exports.getLink = function(orgDomain, taskId) {
     const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").get();
     return Promise.resolve(getLinkDetails);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} taskId
+ * @param {any} linkType
+ * @param {any} linkURL
+ * @param {any} linkID
+ * @return {any}
+ */
 exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
     const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).set({
         LinkType: linkType,

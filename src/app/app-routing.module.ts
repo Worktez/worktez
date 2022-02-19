@@ -51,14 +51,14 @@ import { SchedularPatchComponent } from './patches/schedular-patch/schedular-pat
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: 'Home', component: HomeComponent},
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
   { path: 'Board', component: BoardComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TasksEvaluation', component: TasksEvaluationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'SocialPage', component: SocialPageComponent},
+  { path: '', component: SocialPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },

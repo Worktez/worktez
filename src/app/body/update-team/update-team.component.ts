@@ -14,25 +14,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Team, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
-import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 declare var jQuery:any;
 
 @Component({
-  selector: 'app-create-new-team',
-  templateUrl: './create-new-team.component.html',
-  styleUrls: ['./create-new-team.component.css']
+  selector: 'app-update-team',
+  templateUrl: './update-team.component.html',
+  styleUrls: ['./update-team.component.css']
 })
-export class CreateNewTeamComponent implements OnInit {
-  componentName: string = "CREATE-NEW-TEAM"
+export class UpdateTeamComponent implements OnInit {
+
+  componentName: string = "UPDATE-TEAM"
 
   organizationDomain: string
   appKey: string
@@ -40,7 +40,6 @@ export class CreateNewTeamComponent implements OnInit {
   teamAdmin: string
   uid: string
   teamData: TeamDataId[] = [];
-  isUpdateTeam: boolean = false;
   addMemberEnabled: boolean = false;
   teamName: string;
   teamId: string;
@@ -48,8 +47,10 @@ export class CreateNewTeamComponent implements OnInit {
   teamManagerEmail: string;
   teamMembers: string[] = [];
   enableLoader: boolean = false;
+  @Input('teamToUpdate') teamToUpdate: Team;
+  @Output() teamUpdated = new EventEmitter<{ completed: boolean }>();
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
@@ -69,6 +70,12 @@ export class CreateNewTeamComponent implements OnInit {
     this.organizationDomain = this.backendService.getOrganizationDomain();
     this.teamAdmin = this.authService.getUserEmail();
     this.uid = this.authService.getLoggedInUser();
+
+    this.teamName = this.teamToUpdate.TeamName;
+    this.teamId = this.teamToUpdate.TeamId;
+    this.teamDescription = this.teamToUpdate.TeamDescription;
+    this.teamManagerEmail = this.teamToUpdate.TeamManagerEmail;
+    this.teamMembers = this.teamToUpdate.TeamMembers;
   }
 
   handleIdInput() {
@@ -136,11 +143,6 @@ export class CreateNewTeamComponent implements OnInit {
     this.childStep -= 1
   }
 
-  submit() {
-    //Functionality to Show Error When none of the option is checked in Particular labelName can be added
-    this.createNewTeamWithLabels()
-  }
-
   addMember() {
     this.addMemberEnabled = true;
   }
@@ -152,38 +154,62 @@ export class CreateNewTeamComponent implements OnInit {
     this.addMemberEnabled = false;
   }
 
-  async removeMember(remove: string) {
-    const index = this.teamMembers.indexOf(remove);
-    if (index != -1) {
-      this.teamMembers.splice(index, 1);
-    } else {
-      console.log("Error- Cannot remove member. Member not found");
+  async removeMemberDB(remove: string) {
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('teams/removeMember');
+    if (this.organizationDomain == undefined) {
+      this.organizationDomain = this.backendService.getOrganizationDomain();
     }
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).subscribe({
+      next: (data) => {
+        this.enableLoader = false;
+        console.log("Successful removed member");
+        const index = this.teamMembers.indexOf(remove);
+        if (index != -1) {
+          this.teamMembers.splice(index, 1);
+        } else {
+          console.log("Error- Cannot remove member. Member not found");
+        }
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        
+      },
+      complete: () => console.info('Successful ')
+  });
   }
 
-  createNewTeamWithLabels() {
+  async updateExistingTeam() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('teams/createTeam');
+    // this.teamFormSubmitted.emit({ submitted: true })
+    const callable = this.functions.httpsCallable('teams/updateTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).subscribe({
       next: (data) => {
       this.enableLoader = false;
+      jQuery('#updateTeam').modal('hide');
+      jQuery('#form').trigger("reset");
+      this.teamUpdated.emit({ completed: true });
       this.router.navigate(['MyDashboard']);
-      console.log("Successful created new team");
+        console.log("Successful ");
       },
       error: (error) => {
         this.errorHandlerService.showError = true;
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.error(error);
+        console.error("Error", error);
       },
       complete: () => console.info('Successful ')
-    });
+  });
   }
 
   close() {
-    this.router.navigate(['MyDashboard']);
+    jQuery('#updateTeam').modal('hide');
+    jQuery('#form').trigger("reset");
+    this.teamUpdated.emit({ completed: true });
   }
 }

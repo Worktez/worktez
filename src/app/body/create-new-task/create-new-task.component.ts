@@ -50,8 +50,6 @@ export class CreateNewTaskComponent implements OnInit {
   title: string
   todayDate: string
   description: string
-  // assigneeName: string
-  // reporterName: string
   watcherName: string[]
   creatorName : string
   estimatedTime: number
@@ -74,6 +72,7 @@ export class CreateNewTaskComponent implements OnInit {
   type: string[]
   taskType: string
   parentTaskId: string
+  showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -100,16 +99,6 @@ export class CreateNewTaskComponent implements OnInit {
           this.type = team.Type;
           this.difficultyLabels = team.DifficultyLabels;
           this.teamMembers=team.TeamMembers;
-          // this.teamMembers.forEach(element => {
-          //   this.userService.checkAndAddToUsersUsingEmail(element);
-          // });
-
-          // if(!this.userService.userReady) {
-          //   this.userService.fetchUserData().subscribe(()=>{
-          //     this.dataReady = true;
-          //   });
-          // }
-
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
 
@@ -146,8 +135,6 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   async submit() {
-    // this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
-    // this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
@@ -174,8 +161,7 @@ export class CreateNewTaskComponent implements OnInit {
       console.log("Task not created! Validation error");
   }
 
-  
-  async createNewTask() {
+  createNewTask() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
@@ -183,9 +169,11 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
 
-    await callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
       next: (data) => {
         console.log("Successful created task");
+        this.enableLoader=false;
+        this.showClose=true;
       },
       error: (error) => {
         this.errorHandlerService.showError = true;
@@ -193,13 +181,12 @@ export class CreateNewTaskComponent implements OnInit {
         console.error(error);
       },
       complete: () => console.info('Successfully created task')
-  });
+    });
 
-    this.close();
-  }
+}
 
   close() {
-    jQuery('#createNewTask').modal('hide');
+    jQuery('#createNewTask');
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
   }

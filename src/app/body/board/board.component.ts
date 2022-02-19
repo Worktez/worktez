@@ -52,7 +52,6 @@ export class BoardComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.readSprintData();
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
@@ -69,7 +68,7 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  async getSprintDetails(teamId: string) {
+  getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
     this.applicationSettingsService.editedTeamId = teamId;
@@ -78,7 +77,7 @@ export class BoardComponent implements OnInit {
     this.startService.readApplicationData();
     const callable = this.functions.httpsCallable('users/updateSelectedTeam');
 
-    await callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
+    callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
         next: (data) => {
           console.log("Successful updated Selected Team in db");
         },
@@ -120,7 +119,7 @@ export class BoardComponent implements OnInit {
           this.sprintNotExist = true;
         }
       });
-    } else{
+    } else {
       this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe({
         next: (data) => {
           this.readSprintData();
@@ -131,7 +130,7 @@ export class BoardComponent implements OnInit {
         complete: () => console.info('Getting team data successful')
       });
     }
-  }else {
+  } else {
       this.showContent = true
       this.changeSprintNumber(-1);
     }

@@ -23,7 +23,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="medium ml-1">{{ todayDate }}</div>
-                    <form #form="ngForm">
+                    <form #form="ngForm" *ngIf="!showClose" >
                         <div class="form-row my-2">
                             <div class="form-group col-md-6 col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
@@ -137,11 +137,37 @@
                                 </select>
                             </div>
                         </div>
-                        <app-loader *ngIf="enableLoader"></app-loader>
-                    </form>
-                </div>
+
+                
                 <div class="modal-footer mt-n1">
                     <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
+                    
+                </div>
+                <app-loader *ngIf="enableLoader"></app-loader>
+                    </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Task Created Successfully!</div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
                 </div>
             </div>
         </div>
