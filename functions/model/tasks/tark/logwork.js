@@ -47,7 +47,6 @@ exports.logWork = function(request, response) {
     const promises = [];
     let status = 200;
     let result;
-    const watchers = [];
     const subjectMessage = "your work got logged successfully";
     const htmlMessage ="<div style=\"background-color:#E9ECEF;margin:auto;width:80%;padding-top: 30px;height:100%;\">" +
     "<table style=\"background-color:#ffffff;height:80%;width:80%;margin:auto;\"><tr><td><img src=\"https://worktez.com/assets/logo.png\" style=\"height:50%;width:50%;display:block;margin:auto;\" alt=\"worktez logo\"></td></tr>" +
@@ -77,22 +76,14 @@ exports.logWork = function(request, response) {
                 CompletionDate: completiondate,
             };
             updateTask(logWorkInputJson, orgDomain, taskId);
-            watchers.forEach(element => {
-                sendMail(element, subjectMessage, htmlMessage);
-                console.log("mail sent!!!!!!!")
-            });
             sendMail(assignee, subjectMessage, htmlMessage);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
         });
 
-        const sendMailToWatcherPromise = getTask(taskId, orgDomain).then((taskDoc) => {
-            taskDoc.Watcher.forEach(element => {
-                watchers.push(element);
-            });
-        });
-        promises.push(promise1, sendMailToWatcherPromise);
+
+        promises.push(promise1);
 
         if (logStatus == "Completed") {
             const promise2 = getOrgRawData(orgDomain).then((rawData) => {
