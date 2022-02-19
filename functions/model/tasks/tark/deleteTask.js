@@ -118,8 +118,6 @@ exports.deleteTask = function(request, response) {
                 console.log("Error:", error);
             });
 
-            
-
             const promises = [p1, p2, p3, p4];
             Promise.all(promises).then(() => {
                 const notificationMessage = senderName + " deleted task " + taskId;

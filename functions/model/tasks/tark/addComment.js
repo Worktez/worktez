@@ -28,7 +28,7 @@ const { sendNotification } = require("../../notifications/lib");
 const { getUserUseEmail, getUser } = require("../../users/lib");
 const { updateTask } = require("../lib");
 
-exports.addComment = function (request, response) {
+exports.addComment = function(request, response) {
     const appKey = request.body.data.AppKey;
     const taskId = request.body.data.LogTaskId;
     const assignee = request.body.data.Assignee;
