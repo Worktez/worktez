@@ -30,6 +30,7 @@ const { addComment } = require("./tark/addComment");
 const { getTaskDetails } = require("./tark/getTaskDetails");
 const { getTasks } = require("./tark/getTasks");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
+const { addWatcher } = require("./tark/addWatcher");
 
 
 /**
@@ -126,6 +127,18 @@ fastify.post("/log", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
+
+ fastify.post("/addWatcher", (req, res) => {
+  addWatcher(req, res);
+});
+
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+
 exports.tasks = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {

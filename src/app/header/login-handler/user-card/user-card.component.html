@@ -12,10 +12,20 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="btn-group">
-    <img src="{{user.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="30" height="30" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <ng-container *ngIf="authService.userAppSetting; else showGooglePhoto">
+        <img src="{{authService.userAppSetting.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="30" height="30" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    </ng-container>
+    <ng-template #showGooglePhoto>
+        <img src="{{user.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="30" height="30" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    </ng-template>
     <div class="dropdown-menu dropdown-menu-right" id="dropdownUserCard">
         <div class="text-center align-middle">
-            <img src="{{user.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle" width="50" height="50" >
+            <ng-container *ngIf="authService.userAppSetting; else showGooglePhoto">
+                <img src="{{authService.userAppSetting.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle" width="50" height="50" >
+            </ng-container>
+            <ng-template #showGooglePhoto>
+                <img src="{{user.photoURL}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle" width="50" height="50" >
+            </ng-template>
             <p class="dropdown-item" id="username">
                 {{user.displayName}}
             </p>
