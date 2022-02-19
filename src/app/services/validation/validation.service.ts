@@ -134,6 +134,9 @@ export class ValidationService {
             case 'position': {
                 return (this.checkposition(value));
             }
+            case 'url':{
+                return(this.checkURL(value));
+            }
 
 
         }
@@ -574,5 +577,18 @@ export class ValidationService {
             }
         });
         return hasNoError;
+    }
+
+    async checkURL(value: string[]){
+        const control = new FormControl(value, Validators.required);
+        const regularExpression = /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/;
+        const result = regularExpression.test(String(value).toLowerCase());
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_URL";
+            this.errorHandlerService.addError(errorType, "Invalid URL")
+            return (false);
+        }
     }
 }  
