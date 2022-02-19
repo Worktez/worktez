@@ -106,6 +106,10 @@ a.nav-link{
     color: var(--text);
 }
 
+#descriptionTaskDescription {
+    white-space: pre-wrap;
+}
+
 ::-webkit-scrollbar {
     width: 5px;
 }
