@@ -73,6 +73,7 @@ export class BoardComponent implements OnInit {
     this.showContent = false;
     this.applicationSettingsService.editedTeamId = teamId;
     this.startService.selectedTeamId = teamId;
+    this.authService.userAppSetting.SelectedTeamId = teamId;
     this.startService.changeTeam = true;
     this.startService.readApplicationData();
     const callable = this.functions.httpsCallable('users/updateSelectedTeam');
@@ -122,7 +123,6 @@ export class BoardComponent implements OnInit {
     } else {
       this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe({
         next: (data) => {
-          this.readSprintData();
         },
         error: (error) => {
           console.log(error);

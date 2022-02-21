@@ -47,6 +47,7 @@ export class ApplicationSettingsService {
   public notificationListObservable: Observable<Notification[]>;
 
   teamDataReady: boolean = false;
+  teamAvailable: boolean=false;
 
   constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
@@ -61,6 +62,7 @@ export class ApplicationSettingsService {
 
           if(this.team == undefined) {
             this.team = data
+            this.teamAvailable = true;
             this.status = this.team.StatusLabels;
             this.priority = this.team.PriorityLabels;
             this.difficulty = this.team.DifficultyLabels;
@@ -93,10 +95,10 @@ export class ApplicationSettingsService {
     return this.sprintDataObservable;
   }
 
-  getNotificationsList() {
+  getNotificationsList(notificationStatus: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("notifications/getNotifications");
-    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain}).pipe(map(actions => {
+    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
         return actions as Notification[];
     }));
     return this.notificationListObservable;

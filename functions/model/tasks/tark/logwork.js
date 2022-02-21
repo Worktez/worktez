@@ -81,6 +81,8 @@ exports.logWork = function(request, response) {
             status = 500;
             console.log("Error:", error);
         });
+
+
         promises.push(promise1);
 
         if (logStatus == "Completed") {
