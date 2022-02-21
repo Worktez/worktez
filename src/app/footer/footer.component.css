@@ -12,10 +12,10 @@
 * See the MIT License for more details. 
 ***********************************************************/
 .footerbox {
-    position: fixed;
+    /* position: fixed; */
     bottom:0;
     width: 100%;
-    background-color: transparent;
+    /* background-color: transparent; */
     color: var(--text);
 }
 
