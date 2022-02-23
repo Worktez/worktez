@@ -81,10 +81,7 @@ export class ProfileComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
-    console.log("param Username: ", this.username);
-    //this.authService.userName =  this.username;
-    //var x = this.authService.userAppSetting.Username;
-   // console.log();
+    var x = this.authService.userAppSetting.Username;
     if(this.startService.showTeams) {
       this.readUser();
       this.organizationName = this.backendService.getOrganizationName();
