@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/Interface/UserInterface';
+import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 
@@ -25,10 +25,13 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 export class UserCardComponent implements OnInit {
   @Input('user') user: User
   showCard: boolean = false
+  photoUrl: string = ""
   constructor(private startService: StartServiceService, public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
   }
+   
+
   toogleCard() {
     this.showCard = !this.showCard
   }

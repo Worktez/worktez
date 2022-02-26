@@ -15,7 +15,7 @@
     <app-navbar></app-navbar>
     <app-error></app-error>
     <ng-container *ngIf="startService.showTeamsData">
-        <ng-container *ngIf="applicationSettingsService.team.TeamStatus == -1">
+        <ng-container *ngIf="!applicationSettingsService.teamAvailable">
             <p class="alert alert-danger" role="alert">The current team is marked as inactive by the org admin</p>
         </ng-container>
     </ng-container>
@@ -27,9 +27,6 @@
     </ng-container>
     <ng-container *ngIf="popupHandlerService.createNewTeamEnabled">
         <app-create-new-team (teamCreated)="teamCreated($event)"></app-create-new-team>
-    </ng-container>
-    <ng-container *ngIf="popupHandlerService.updateTeamEnabled">
-        <app-create-new-team (teamUpdated)="teamUpdated($event)" [teamId]="popupHandlerService.updateTeamId"></app-create-new-team>
     </ng-container>
 
     <ng-container *ngIf="popupHandlerService.createPostEnabled">

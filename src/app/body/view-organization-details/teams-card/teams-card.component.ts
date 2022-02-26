@@ -31,15 +31,17 @@ export class TeamsCardComponent implements OnInit {
   @Output() updatedDetails = new EventEmitter<boolean>();
 
   addMemberEnabled: boolean = false
+  updateTeamEnabled: boolean = false
   teamToAddMember: Team
+  teamToUpdate: Team
   componentName:string ="ORGANIZATION-DETAILS"
   constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {}
 
-  updateTeam(TeamId: string) {
-    this.popupHandlerService.updateTeamId = TeamId;
-    this.popupHandlerService.updateTeamEnabled = true;
+  updateTeam(team: Team) {
+    this.teamToUpdate = team;
+    this.updateTeamEnabled = true;
   }
 
   async deleteTeam() {
@@ -67,5 +69,9 @@ export class TeamsCardComponent implements OnInit {
   addedMember(data: { completed: boolean, memberEmail: string }) {
     this.updatedDetails.emit(true);
     this.addMemberEnabled = false;
+  }
+
+  teamUpdated(data: { completed: boolean }) {
+    this.updateTeamEnabled = false;
   }
 }

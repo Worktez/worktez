@@ -21,6 +21,7 @@
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
+const { emptyNotificationCount } = require("../notifications/tark/emptyNotificationCount");
 
 /**
  * Description
@@ -32,6 +33,10 @@ const { getNotificationsList } = require("../notifications/tark/getNotifications
 fastify.post("/getNotifications", (req, res) => {
   getNotificationsList(req, res);
 });
+
+  fastify.post("/emptyNotifications", (req, res) => {
+    emptyNotificationCount(req, res);
+  });
 
 /**
  * Description
