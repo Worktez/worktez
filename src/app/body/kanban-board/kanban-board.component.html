@@ -1,0 +1,83 @@
+<ng-container *ngIf="tasks && !showLoader">
+    <div class="container-fluid">
+        <div class="row" cdkDropListGroup>
+            <ng-container *ngFor="let tasksArr of tasks; let i = index">
+                <div class="col">
+                    <div class="container p-4" cdkDropList (cdkDropListDropped)="onDrop($event, selectedStatusLabels[i])" [cdkDropListData]="tasksArr" id="tasksContainer">
+                        <ng-container *ngIf="tasksArr.length;else emptyLabelContainer">
+                            <div class="row title" [ngStyle]="{'color': getColor(selectedStatusLabels[i])}">
+                                <div class="col-8">
+                                    {{selectedStatusLabels[i]}} 
+                                </div>
+                                <div class="col-4">
+                                    <app-status-icons [Status]="selectedStatusLabels[i]"></app-status-icons>
+                                </div>
+                            </div>
+                            <ng-container *ngFor="let task of tasksArr">
+                                <!-- TaskCard -->
+                                <div class="card mt-3" cdkDrag>
+                                    <div class="card-body p-1">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h4 class="card-title mb-1" id="taskId">{{task.Id}}</h4>
+                                                </div>
+                                                <div class="col-6" style="position: relative;bottom: 10px;">    
+                                                    <app-suggestion-bucket [email]="task.Assignee" [showOnlyProfilePic]="true" (selectedEmail)="selectedAssignee($event)">
+                                                    </app-suggestion-bucket>
+                                                </div>
+                                                <!-- <div class="col-6">
+                                                    <app-suggestion-bucket [email]="task.Assignee" [showOnlyProfilePic]="true" (selectedEmail)="selectedAssignee($event)">
+                                                    </app-suggestion-bucket>
+                                                </div>
+                                                <div class="col-6" id="taskId">
+                                                    <div class="card-title">{{task.Id}}</div>
+                                                </div> -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h6 class="card-title">{{task.Title}}</h6>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 difficulty">
+                                                    <span id="headerLabel" class="card-title">Difficulty</span>
+                                                    <app-difficulty-icons [Difficulty]="task.Difficulty"></app-difficulty-icons>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 priority">
+                                                    <span id="headerLabel" class="card-title">Priority</span>
+                                                    <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <app-progress-graph [workdone]="task.WorkDone"></app-progress-graph>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #emptyLabelContainer>
+                            <div class="row title" [ngStyle]="{'color': getColor(selectedStatusLabels[i])}">
+                                <div class="col-8">
+                                    {{selectedStatusLabels[i]}} 
+                                </div>
+                                <div class="col-4">
+                                    <app-status-icons [Status]="selectedStatusLabels[i]"></app-status-icons>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="showLoader">
+    <app-loader></app-loader>
+</ng-container>

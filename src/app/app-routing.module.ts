@@ -45,6 +45,7 @@ import { CopyrightComponent } from './body/copyright/copyright.component'
 import { ContributorsComponent } from './body/contributors/contributors.component';
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
+import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
@@ -81,7 +82,8 @@ const routes: Routes = [
   { path: 'contributors', component: ContributorsComponent },
   { path: 'termsandcondition', component: TermsAndConditionComponent},
   { path: 'releasenotes', component: ReleaseNotesComponent },
-  { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
+  { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
+  { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 
 @NgModule({
