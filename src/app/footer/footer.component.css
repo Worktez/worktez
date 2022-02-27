@@ -15,7 +15,7 @@
     position: fixed;
     bottom:0;
     width: 100%;
-    background-color: transparent;
+    background-color: var(--primary-bg);
     color: var(--text);
 }
 
