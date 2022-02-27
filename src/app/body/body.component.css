@@ -11,7 +11,20 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-.page {
+/* .page {
     padding-bottom: 5%;
     font-family: var(--font);
+    min-height: auto;
+    overflow-y:auto;
+    cursor: default;
+} */
+
+@media only screen and (max-width: 1920px) {
+    .page {
+        font-family: var(--font);
+        padding-bottom: 5%;
+        max-height: 90vh;
+        overflow-y:auto;
+        cursor: default;
+    }
 }

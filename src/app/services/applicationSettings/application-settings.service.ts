@@ -59,7 +59,6 @@ export class ApplicationSettingsService {
       this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
         map(actions => {
           const data = actions.resultData as Team
-
           if(this.team == undefined) {
             this.team = data
             this.teamAvailable = true;
@@ -69,7 +68,7 @@ export class ApplicationSettingsService {
             this.type = this.team.Type;
             this.project = this.backendService.organizationDetails.TeamsId;
           }
-          
+
           data.TeamMembers.forEach(element => {
             this.userService.checkAndAddToUsersUsingEmail(element);
           });
