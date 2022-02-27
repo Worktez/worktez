@@ -51,6 +51,25 @@ export class UserServiceService {
     }
   }
 
+  getUserNameData (username) {
+    if(this.users.length) {
+      const newArray = this.users.filter((data)=>{
+        if(data.Username == username) {
+          return data
+        }
+      });
+      if(newArray.length) {
+        return newArray[0];
+      } else {
+        console.log("User Not Found Loading empty User")
+        return newArray[0]
+      }
+    } else {
+      
+      return undefined
+    }
+  }
+
   checkAndAddToUsersUsingEmail(email) {
     if(this.newEmails.indexOf(email) == -1) {
       const checkUser = this.users.filter((obj) => {
