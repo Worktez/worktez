@@ -1,0 +1,76 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="modal fade" id="gitModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="container modal-body align-items-center px-4" id="addMemberPage">
+                <div class="row p-4">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <h4 class="active nav-link head bold" id="memberModalLabel">Add Organisation</h4>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons text" (click)="added()">close</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row px-4">
+                    <h3>Team Name: <span class="bold">{{ teamName }}</span></h3>
+                </div>
+                <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
+                    <div class="row px-2 my-2">
+                        <div class="col-md-5 my-1">
+                            <span class="form-inline">Organisation Name</span>
+                        </div>
+                        <div class="col-md-12 my-1">
+                            <input type="text" class="form-control" [(ngModel)]="memberOrgName" [ngModelOptions]="{standalone: true}" placeholder="Enter Organisation Name">
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12 pb-2 px-4">
+                            <button class="btn" type="submit" id="addButton" [disabled]="enableLoader">Submit</button>
+                        </div>
+                    </div>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row">
+                        <div class="col">Successfully Updated!</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 pb-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="added()">Close</button>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="dataFetched">
+                    <ng-container *ngFor="let item of objData">
+                        <li class="list-group-item" id="showRepos">
+                            <div class="row">
+                                <div class="col-8">
+                                    {{item.html_url}}
+                                </div>
+                            </div>
+                        </li>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
