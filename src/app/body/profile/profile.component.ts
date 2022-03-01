@@ -63,6 +63,8 @@ export class ProfileComponent implements OnInit {
   skills: string;
   website: string;
   username: string;
+  
+  sameUser: boolean = true;
 
   educations: MyEducationData;
   experiences: MyExperienceData;
@@ -189,6 +191,8 @@ export class ProfileComponent implements OnInit {
       this.readUserEducation(this.uid);
       this.readUserExperience(this.uid);
       this.readUserProject(this.uid);
+
+      this.sameUser = true;
     }
     else{
       const data = this.userService.getUserNameData(this.username);
@@ -212,6 +216,8 @@ export class ProfileComponent implements OnInit {
       this.readUserEducation(this.uid);
       this.readUserExperience(this.uid);
       this.readUserProject(this.uid);
+
+      this.sameUser = false;
 
       }
       else{

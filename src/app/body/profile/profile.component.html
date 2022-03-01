@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col">
                         <img class="mt-3 ml-3 rounded-circle" src={{photoURL}} onerror="this.src = '../../assets/defaultavatar.jpg' " alt="{{displayName}}" width="100" height="100" style=" border-radius: 50%;">
-                        <span type="button" class="m-3" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                        <span *ngIf="sameUser" type="button" class="m-3" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                             <span class="material-icons" style="font-size: 20px;">edit</span>
                         </span>
                         <div class="card-body">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row-my-5 py-4">
+            <div *ngIf="sameUser" class="row-my-5 py-4">
                 <div class="col" type="button" style="text-align: center;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" (click)="editProfile()">
                     <div class="card p-2">
                         <span class="float-right"><span class="material-icons" style="font-size: 18px;">edit</span>Edit Profile</span>
@@ -70,7 +70,7 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">add</span>
+                            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">add</span>
                             <h2>Education</h2>
                             <ng-container *ngIf="(educations)?.length == 0">
                                 <div class="row">
@@ -103,7 +103,7 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">add</span>
+                            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">add</span>
                             <h2>Work Experience</h2>
                             <ng-container *ngIf="(experiences)?.length == 0">
                                 <div class="row">
@@ -134,7 +134,7 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">add</span>
+                            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">add</span>
                             <h2>Projects</h2>
                             <ng-container *ngIf="(projects)?.length == 0">
                                 <div class="row">
@@ -167,7 +167,7 @@
                 <div class="card p-4">
                     <div class="row">
                         <div class="col-md">
-                            <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()" style="font-size: 16px;">edit</span>
+                            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()" style="font-size: 16px;">edit</span>
                             <h2>Skills</h2>
                             <div class="row">
                                 <div class="col-7">

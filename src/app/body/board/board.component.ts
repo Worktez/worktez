@@ -12,7 +12,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Sprint, SprintDataId, Team, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -75,12 +75,11 @@ export class BoardComponent implements OnInit {
     this.startService.selectedTeamId = teamId;
     this.authService.userAppSetting.SelectedTeamId = teamId;
     this.startService.changeTeam = true;
-    this.startService.readApplicationData();
-    const callable = this.functions.httpsCallable('users/updateSelectedTeam');
 
+    const callable = this.functions.httpsCallable('users/updateSelectedTeam');
     callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
         next: (data) => {
-          console.log("Successful updated Selected Team in db");
+          this.readSprintData();
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
@@ -94,7 +93,7 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      if(this.authService.userAppSetting.SelectedTeamId==this.applicationSettingsService.team.TeamId){
+      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
@@ -111,7 +110,7 @@ export class BoardComponent implements OnInit {
             this.workPercentCalc = 0;
           } else {
             this.workPercentCalc = Math.abs((parseInt(this.DaysUp)) /((this.EDate - this.SDate)/(1000 * 60 * 60 * 24)) * 100);
-        }
+          }
           this.workPercentage = parseInt(this.workPercentCalc);
           this.showContent = true;
         } else {
@@ -121,13 +120,15 @@ export class BoardComponent implements OnInit {
         }
       });
     } else {
-      this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe({
-        next: (data) => {
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => console.info('Getting team data successful')
+      this.startService.readApplicationData();
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
+            if(data) {
+              this.readSprintData();
+            }
+          });
+        }
       });
     }
   } else {
