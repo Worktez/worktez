@@ -125,12 +125,12 @@ export class StartServiceService {
   }
 
   readApplicationData() {
+    this.showTeamsData = false;
     this.applicationDataState.next(false);
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
-      
       if (this.teamData.TeamId == this.selectedTeamId) {
         if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
           this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
