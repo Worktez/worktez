@@ -27,6 +27,7 @@ const { removeMember } = require("./tark/removeMember");
 const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
+const { addProjLink } = require("./tark/addProjLink");
 
 fastify.post("/addMember", (req, res) => {
   addMember(req, res);
@@ -51,6 +52,11 @@ fastify.post("/removeMember", (req, res) => {
 
 fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
+});
+
+fastify.post("/addProjLink", (req, res) => {
+  console.log("here");
+  addProjLink(req, res);
 });
 
 

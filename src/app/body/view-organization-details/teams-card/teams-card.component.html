@@ -18,12 +18,12 @@
                 <app-speed-images [emails]="team.TeamMembers.slice(0,3)"></app-speed-images>
             </div>
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Integrate Github
+                <button class="btn btn-primary" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)" title="Add Organisation" data-bs-toggle="tooltip">Integrate Github
                 <span class="caret"></span></button>
-                <ul class="dropdown-menu">
+                <!-- <ul class="dropdown-menu">
                     <li><span type="button"  data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)" title="Add Organisation" data-bs-toggle="tooltip">Add Organisation</span></li>
-                    <li><span type="button"  data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#projectModal" (click)="enableAddUsernameLink(team)" title="Add Username" data-bs-toggle="tooltip">Add Username</span></li>
-                </ul>
+                    <li><span type="button"  data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" (click)="enableAddUsernameLink(team)" data-target="#gituserModel" title="Add Username" data-bs-toggle="tooltip">Add Username</span></li>
+                </ul> -->
               </div>
             <div class="col-md">
                 <span class="material-icons mr-2 float-right trash p-2" type="button" (click)="deleteTeam()" title="delete Team" data-bs-toggle="tooltip">delete</span>

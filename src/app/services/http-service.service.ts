@@ -21,8 +21,8 @@ export class HttpServiceService {
     return this.httpClient.get(url);
   }
 
-  getGithubUserRepos() {
-    const url = environment.githubApiUrl + "/users/printf-twinkle/repos";
+  getGithubUserRepos(memberUserName) {
+    const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
     return this.httpClient.get(url);
   }
 

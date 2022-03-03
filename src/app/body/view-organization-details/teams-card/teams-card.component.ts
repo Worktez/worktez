@@ -33,6 +33,7 @@ export class TeamsCardComponent implements OnInit {
 
   addMemberEnabled: boolean = false
   addProjectEnabled: boolean = false
+  addProjectLinkEnabled: boolean = false
   teamToAddMember: Team
   teamToAddGithub: Team
   typeLink: string
@@ -86,6 +87,4 @@ export class TeamsCardComponent implements OnInit {
     this.githubDetails.emit(true);
     this.addProjectEnabled = false;
   }
-
-
 }
