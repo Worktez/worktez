@@ -64,7 +64,7 @@ exports.createNewTask = function(request, response) {
     const completiondate = "Not yet Completed";
     let orgDomain;
     let orgId;
-    let watchers = [];
+    const watchers = [];
 
     let assigneeName = "";
     let senderName = "";
@@ -105,7 +105,7 @@ exports.createNewTask = function(request, response) {
             if (!watchers.includes(reporter)) {
                 watchers.push(reporter);
             }
-            console.log("watchers list:",watchers)
+            console.log("watchers list:", watchers);
             updateTeamDetails(updateTeamJson, orgDomain, project);
             setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0, 0, creationDate, watchers);
         }).catch((error) => {
