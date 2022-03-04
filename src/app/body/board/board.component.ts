@@ -1,11 +1,26 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Sprint, SprintDataId, Team, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FeatureCardComponent } from './feature-card/feature-card.component';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-board',
@@ -17,102 +32,72 @@ export class BoardComponent implements OnInit {
   @ViewChildren(FeatureCardComponent) child: QueryList<FeatureCardComponent>;
 
   componentName: string = "BOARD";
-  currentSprintNumber: number = 0;
   showContent: boolean = false;
-  uid: string;
-  teamData: Team;
-  selectedTeamId: string;
-  teamCurrentSprintNumber: number = -100;
   sprintData: Sprint;
   currentSprintName: string;
-  accessLevel: number;
-  showTeams: boolean = false;
-  teams: string[];
   sprintNotExist: boolean = false;
-  teamMembers: string[];
-  changeTeam: boolean = false;
   DaysUp: any;
   workPercentCalc: any;
   workPercentage: number;
   today: any = new Date();
   EDate: any;
   SDate: any;
-  
 
-  constructor(public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
-    this.accessLevel = 0;
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        this.uid= data.uid;
-        this.selectedTeamId= data.SelectedTeamId;
-        if (data.SelectedOrgAppKey) {
-          this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
-          this.accessLevel = 1;
-          if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
-            this.selectedTeamId = this.applicationSettingsService.editedTeamId;
-          } else {
-            this.selectedTeamId = data.SelectedTeamId;
-            this.applicationSettingsService.editedTeamId = this.selectedTeamId;
-          }
-          this.backendService.organizationsData.subscribe(data => {
-            this.authService.myTeamsListObservable.subscribe(data => {
-              this.teams = data;
-              this.showTeams = true;
-              this.readApplicationData();
-            });
+    if(this.startService.showTeamsData) {
+      this.readSprintData();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.startService.applicationDataStateObservable.subscribe((data) => {
+            if(data) {
+              this.applicationSettingsService.teamData.subscribe((data) => {
+                if(data) {
+                  this.readSprintData();
+                }
+              });
+            }
           });
         }
       });
-    });
+    }
   }
 
-  readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-      this.teamData = teams;
-      if (this.teamData.TeamId == this.selectedTeamId) {
-        if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
-          this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
-          this.currentSprintNumber = this.applicationSettingsService.editedSprintId;
-        } else {
-          this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
-          this.currentSprintNumber = this.teamData.CurrentSprintId;
-          this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
-          this.changeTeam = false;
-        }
-        this.teamMembers = this.teamData.TeamMembers;
-      }
-      this.readSprintData();
-    });
-  }
-
-  async getSprintDetails(teamId: string) {
+  getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
     this.applicationSettingsService.editedTeamId = teamId;
-    this.selectedTeamId = teamId;
-    this.changeTeam = true;
-    this.readApplicationData();
-    const callable = this.functions.httpsCallable('users');
-    try {
-      const result = await callable({ mode: "updateSelectedTeam", Uid: this.uid , SelectedTeam: this.selectedTeamId}).toPromise();
-      console.log("Successful updated Selected Team in db");
-    } catch (error) {
-      console.log(error);
-    }
+    this.startService.selectedTeamId = teamId;
+    this.authService.userAppSetting.SelectedTeamId = teamId;
+    this.startService.changeTeam = true;
+
+    const callable = this.functions.httpsCallable('users/updateSelectedTeam');
+    callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
+        next: (data) => {
+          this.readSprintData();
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
   }
 
   readSprintData() {
     this.showContent = false;
-    this.child.forEach(child => {
-      child.highlightSelectedTeam(this.selectedTeamId);
-    })
-    if (this.teamCurrentSprintNumber != 0) {
-      this.applicationSettingsService.getSprintsDetails(this.teamCurrentSprintNumber).subscribe(sprints => {
+    if (this.startService.teamCurrentSprintNumber != 0) {
+      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
+        this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
+        this.child.forEach(child => {
+          child.highlightSelectedTeam(this.startService.selectedTeamId);
+        });
         if (sprints) {
           this.sprintData = sprints;
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
@@ -125,7 +110,7 @@ export class BoardComponent implements OnInit {
             this.workPercentCalc = 0;
           } else {
             this.workPercentCalc = Math.abs((parseInt(this.DaysUp)) /((this.EDate - this.SDate)/(1000 * 60 * 60 * 24)) * 100);
-        }
+          }
           this.workPercentage = parseInt(this.workPercentCalc);
           this.showContent = true;
         } else {
@@ -135,14 +120,26 @@ export class BoardComponent implements OnInit {
         }
       });
     } else {
+      this.startService.readApplicationData();
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
+            if(data) {
+              this.readSprintData();
+            }
+          });
+        }
+      });
+    }
+  } else {
       this.showContent = true
       this.changeSprintNumber(-1);
     }
   }
 
   changeSprintNumber(filterSprintNumber: any) {
-    this.teamCurrentSprintNumber = filterSprintNumber;
-    this.currentSprintName = "S" + this.teamCurrentSprintNumber;
+    this.startService.teamCurrentSprintNumber = filterSprintNumber;
+    this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }

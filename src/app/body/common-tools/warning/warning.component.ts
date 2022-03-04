@@ -1,18 +1,25 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from '../../../services/tool/tools.service';
 import { Location } from '@angular/common';
-import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { Activity, ActivityId } from 'src/app/Interface/ActivityInterface';
 
 @Component({
   selector: 'app-warning',
@@ -30,38 +37,40 @@ export class WarningComponent implements OnInit {
   logWorkEnabled: boolean = false
   editTaskEnabled: boolean = false
   userLoggedIn: boolean = false
-  // task: Tasks
   todayDate: string
   time: string
   orgDomain: string
   showClose: boolean = false;
   enableLoader: boolean = false;
+  uid: string = "";
 
-
-
-  constructor(private route: ActivatedRoute, private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService) { }
+  constructor(private router: Router, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
   ngOnInit(): void {
+    this.uid = this.authService.userAppSetting.uid;
   }
 
   async deleteTask() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('tasks');
+    const callable = this.functions.httpsCallable('tasks/deleteTask');
     const appKey = this.backendService.getOrganizationAppKey();
-    try {
-      const result = await callable({ mode: "delete", AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time }).toPromise();
-      this.router.navigate(['/']);
-    } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-      console.log("Error", error);
-    }
-    location.reload();
-
     
+    await callable({AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Uid: this.uid }).subscribe({
+      next: (data) => {
+        this.router.navigate(['/']);
+        console.log("Successful");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('warning')
+  }); 
+    location.reload();
   }
 
   backToTasks() {
     this.location.back();
   }
-
 }

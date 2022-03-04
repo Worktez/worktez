@@ -1,3 +1,17 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
  * You can add your own extra polyfills to this file.

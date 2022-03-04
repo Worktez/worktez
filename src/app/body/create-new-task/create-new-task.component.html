@@ -1,23 +1,37 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <div class="container-fluid" *ngIf="popupHandlerService.createNewTaskEnabled">
     <div class="modal fade" id="createNewTask" tabindex="-1" role="dialog" aria-labelledby="createNewTaskTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="createNewTaskTitle">Create New Task</h4>
-                    <button type="button" class="close" (click)= "close()" aria-label="Close">
+                    <h2 class="modal-title " id="createNewTaskTitle"><strong>Create New Task</strong></h2>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true" class="material-icons">close</span>
                     </button>
                 </div>
-                <div class="modal-body container-fluid pt-0">
-                    <div>{{ todayDate }}</div>
-                    <br>
-                    <form #form="ngForm">
-                        <div class="form-row">
+                <div class="modal-body">
+                    <div class="medium ml-1">{{ todayDate }}</div>
+                    <form #form="ngForm" *ngIf="!showClose" >
+                        <div class="form-row my-2">
                             <div class="form-group col-md-6 col">
-                                <input type="text" class="form-control" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
                             </div>
                             <div class="form-group col-md-6 col ml-auto">
-                                <select class="form-control" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (change)="readTeamData(project)">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project</span>
+                                <select class="form-control form-control-sm" [(ngModel)]="project" [ngModelOptions]="{standalone: true}" (change)="readTeamData(project)">
                                     <option [ngValue]="null" [disabled]="true">Select Project Name</option>
                                     <ng-container *ngFor='let id of teamIds'>
                                         <option>{{ id }}</option>
@@ -25,88 +39,135 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row mb-2">
                             <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                                 <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" placeholder="Write a Task Description..."></textarea>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-6 col ml-auto">                       
-                                <input type="text" class="form-control" [(ngModel)]="assigneeName" [ngModelOptions]="{standalone: true}" list="assigneeSuggestion" placeholder="Enter Assignee's Name">
-                                <datalist id="assigneeSuggestion">
-                                    <ng-container *ngFor='let item of teamMembers'>
-                                        <option>
-                                            <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
-                                        </option>
-                                    </ng-container>
-                                </datalist>
+                        <div class="form-row mb-2">
+                            <div class="col-md-6 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Assignee</span>
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control form-control-sm" [formControl]="assigneeName" placeholder="Enter Assignee's Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                            <ng-container *ngIf="applicationSetting.teamDataReady; else loader">
+                                                <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                            </ng-container>
+                                            <ng-template #loader>
+                                                <app-loader></app-loader>
+                                            </ng-template>
+                                        </ng-container>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 col ml-auto">                        
-                                <input type="text" readonly class="form-control" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}" placeholder="Enter Creater's Name">
+                            <div class="col-md-6 col ml-auto">
+                                <span class="ml-2 text-secondary" style="font-size:0.8rem;" id="label">Creator</span>
+                                <input type="text" readonly class="form-control form-control-sm" value={{this.creatorName}} [(ngModel)]="creatorName" [ngModelOptions]="{standalone: true}" placeholder="Enter Creator's Name">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-6 col ml-auto">     
-                                <input type="text" class="form-control" [(ngModel)]="reporterName" [ngModelOptions]="{standalone: true}" list="reporterSuggestion" placeholder="Enter Reporter's Name">
-                                <datalist id="reporterSuggestion">
-                                <ng-container *ngFor='let item of teamMembers'>
-                                    <option>
-                                        <app-suggestion-bucket [email]="item"></app-suggestion-bucket>
-                                    </option>
-                                </ng-container>
-                                </datalist>                  
+                        <div class="form-row mb-2">
+                            <div class="col-md-6 col ml-auto">
+                                <div class="dropdown">
+                                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Reporter</span>
+                                    <input type="text" autocomplete="off" class="form-control form-control-sm" [formControl]="reporterName" placeholder="Enter Reporter's Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngIf="applicationSetting.teamDataReady; else loader">
+                                            <ng-container *ngFor='let item of filteredOptionsReporter | async'>
+                                                <app-suggestion-bucket [email]="item" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-template #loader>
+                                            <app-loader></app-loader>
+                                        </ng-template>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 col ml-auto">                        
-                                <input type="text" class="form-control" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" list="typeSuggestion" placeholder="Enter Task Type">
-                                <datalist id="typeSuggestion">
+                            <div class="col-md-6 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Type</span>
+                                <select class="form-select form-control form-control-sm p-0" [(ngModel)]="taskType" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Type">
+                                    <option [ngValue]="null" [disabled]="true">Select Task Type</option>
                                     <ng-container *ngFor='let item of type'>
                                         <option>{{ item }}</option>
                                     </ng-container>
-                                </datalist>                           
-                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-4 col-4 ml-auto">                       
-                                <input type="number" class="form-control" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}" placeholder="Sprint Number">
+                                </select>
                             </div>
-                            <div class="col-md-4 ml-auto">                       
-                                <select class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="form-row mb-2">
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Sprint Number</span>
+                                <input type="number" class="form-control form-control-sm" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}" placeholder="Sprint Number">
+                            </div>
+                            <div class="col-md-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Priority</span>
+                                <select class="form-control form-control-sm" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Priority</option>
                                     <ng-container *ngFor='let label of priorityLabels'>
                                         <option>{{ label }}</option>
                                     </ng-container>
-                                </select>                           
-                            </div> 
-                            <div class="col-md-4 col-4 ml-auto">                       
-                                <input type="number" min="0" class="form-control" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}" placeholder="Story Point">
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Story Point</span>
+                                <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="storyPoint" [ngModelOptions]="{standalone: true}" placeholder="Story Point">
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-4 col-4 ml-auto">                       
-                                <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
+                                <select class="form-control form-control-sm" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Status</option>
                                     <ng-container *ngFor='let label of statusLabels'>
                                         <option>{{ label }}</option>
                                     </ng-container>
-                                </select>     
-                           </div>
-                            <div class="col-md-4 col-4 ml-auto">                       
-                                <input type="number" class="form-control" [(ngModel)]="estimatedTime" [ngModelOptions]="{standalone: true}" placeholder="Enter Est Time">
-                            </div> 
-                            <div class="col-md-4 col-4 ml-auto">                       
-                                <select class="form-control" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Est Time</span>
+                                <input type="number" class="form-control form-control-sm" [(ngModel)]="estimatedTime" [ngModelOptions]="{standalone: true}" placeholder="Enter Est Time">
+                            </div>
+                            <div class="col-md-4 col-4 ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Difficulty</span>
+                                <select class="form-control form-control-sm" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
                                     <ng-container *ngFor='let label of difficultyLabels'>
                                         <option>{{ label }}</option>
                                     </ng-container>
-                                </select>                           
+                                </select>
                             </div>
                         </div>
-                        <app-loader *ngIf="enableLoader"></app-loader>
-                    </form>
+
+                
+                <div class="modal-footer mt-n1">
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
+                    
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "submit()">Create New Task</button>
+                <app-loader *ngIf="enableLoader"></app-loader>
+                    </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Task Created Successfully!</div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
                 </div>
             </div>
         </div>

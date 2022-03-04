@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -10,6 +23,8 @@ import { Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { DataTableService } from 'src/app/services/dataTable/data-table.service';
 import { FilterTaskService } from 'src/app/services/filter-task/filter-task.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
   selector: 'app-tasks',
@@ -39,7 +54,7 @@ export class TasksComponent implements OnInit {
   displayColoumns: string[] = []
   showLoader: boolean = true;
 
-  constructor(public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
+  constructor(public userService: UserServiceService, public startService: StartServiceService, public dataTableService: DataTableService, private route: ActivatedRoute, private router: Router, public navbarHandler: NavbarHandlerService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService,  public backendService: BackendService, public filterTaskService: FilterTaskService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -55,15 +70,15 @@ export class TasksComponent implements OnInit {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
     }
 
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.backendService.organizationsData.subscribe(data => {
-            this.getFilterData();
-          });
+    if(this.startService.showTeams) {
+      this.getFilterData();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.getFilterData();
         }
       });
-    });
+    }
   }
 
   backToDashboard() {
@@ -116,8 +131,15 @@ export class TasksComponent implements OnInit {
     this.dataTableService.readAllTaskData(this.teamId, this.currentSprintNumber, this.filterAssignee, this.filterPriority, this.filterDifficulty, this.filterStatus, this.filterProject).subscribe((data) =>{
       if(data.length) {
         this.tasksData = data;
-        this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
-        this.showLoader = false;
+        data.forEach(element => {
+          this.userService.checkAndAddToUsersUsingEmail(element.Assignee);
+          this.userService.checkAndAddToUsersUsingEmail(element.Reporter);
+          this.userService.checkAndAddToUsersUsingEmail(element.Creator);
+        });
+        this.userService.fetchUserData().subscribe(()=>{
+          this.displayColoumns = ['Priority', 'Id', 'Title', 'Assignee', 'Status', 'Difficulty', 'WorkDone'];
+          this.showLoader = false;
+        });
       }
     });
 

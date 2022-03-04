@@ -1,3 +1,16 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 
@@ -29,7 +42,7 @@ export class BarChartComponent implements OnInit {
         italic: false
       }
     },
-    colors: ['blue', '#FBAA1A', '#10BE65'],
+    colors: ['#F3941F', '#D91D5C', '#5C60EC'],
     is3D: true,
     titleTextStyle: {
       color: this.themeService.fontColor

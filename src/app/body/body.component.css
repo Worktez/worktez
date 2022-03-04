@@ -1,3 +1,30 @@
-.page {
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+/* .page {
     padding-bottom: 5%;
+    font-family: var(--font);
+    min-height: auto;
+    overflow-y:auto;
+    cursor: default;
+} */
+
+@media only screen and (max-width: 1920px) {
+    .page {
+        font-family: var(--font);
+        padding-bottom: 5%;
+        max-height: 90vh;
+        overflow-y:auto;
+        cursor: default;
+    }
 }

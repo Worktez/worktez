@@ -1,0 +1,73 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+{{popupHandlerService.addNewContributorEnabled}}
+<div class="container-fluid" *ngIf="popupHandlerService.addNewContributorEnabled">
+    <div class="modal fade" id="addNewMember" tabindex="-1" role="dialog" aria-labelledby="addNewMember" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="createNewTaskTitle">Add New Contributor</h4>
+                    <button type="button" class="close" (click)= "close()" aria-label="Close">
+                        <span aria-hidden="true" class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="modal-body container-fluid pt-0">
+                    <form *ngIf="percentage != 100; else showFileName">
+                        <div class="form-group">
+                          <label class="btn btn-primary" for="exampleFormControlFile1">
+                              Upload Image
+                          </label>
+                          <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+                        </div>
+                    </form>
+                    <ng-container *ngIf="uploadService.fileUploadStatus">
+                        <div class="progress" style="height: 10px; margin-top: 10px;">
+                            <div class="progress-bar bg-success" role="progressbar"  [ngStyle]="{'width': percentage + '%'}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        Uploading {{fileName}} ...
+                    </ng-container>
+                    <ng-template #showFileName>
+                        Image File: {{fileName}}
+                    </ng-template>
+                    
+                    <br>
+                    <form #form="ngForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col">
+                                <input type="text" class="form-control" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Title">
+                            </div>
+                            <div class="form-group col-md-6 col">
+                                <input type="text" class="form-control" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="Enter Name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col">
+                                <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="aboutme" [ngModelOptions]="{standalone: true}" placeholder="About Contributor..."></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">                        
+                                <input type="text" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+                            </div>
+                        </div>
+                        <app-loader *ngIf="enableLoader"></app-loader>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "submit()">Add New Contributor</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

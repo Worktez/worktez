@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { DataTableService } from 'src/app/services/dataTable/data-table.service';
@@ -15,6 +28,7 @@ export class MyTasksComponent implements OnInit {
   parentComponent: string = "MyDashboard"
   tasksData: Tasks[]
   showLoader: boolean = false;
+  noData: boolean = false;
 
   displayColoumns = [];
 
@@ -27,6 +41,10 @@ export class MyTasksComponent implements OnInit {
         this.tasksData = data;
         this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
         this.showLoader = false;
+        this.noData = false;
+      } else {
+        this.showLoader = false;
+        this.noData = true;
       }
     });
   }

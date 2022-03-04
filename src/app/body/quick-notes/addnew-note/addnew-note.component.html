@@ -1,0 +1,39 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="card" style="width: 36rem">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Note Title"/>
+            </div>
+            <div class="col-3" id="create">
+                <a (click)="createTask()" data-toggle="modal" data-target="#createNewTask" title="Create a task with the given Title and Description">Create a Task</a>
+            </div>
+            <div class="col-1">
+                <mat-icon fontSet="material-icons" id="icon" class="float-right align-middle" (click)="close()">
+                    close
+                </mat-icon>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <textarea type="text" class="form-control form-control-sm" rows="8" [(ngModel)]="notesContent" [ngModelOptions]="{ standalone: true }" placeholder="Write a note..."></textarea>
+        <div class="row pt-4">
+            <div class="col">
+                <button class="btn btn-success float-right" (click)="addNote()">save</button>
+            </div>
+        </div>
+    </div>
+    <app-loader *ngIf="enableLoader"></app-loader>
+</div>

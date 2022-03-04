@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -19,11 +32,15 @@ export class LoginComponent implements OnInit {
   componentName: string = "LOGIN"
 
   activeLogin: boolean = true
+  userExistChecked=false;
 
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
+    this.authService.afauth.user.subscribe((data) => {
+      this.userExistChecked=true;
+    })
   }
 
   onSignInWithGoogle() {
@@ -32,7 +49,7 @@ export class LoginComponent implements OnInit {
       if (path.startsWith('/verifyUser')) {
         this.navigateToVerification(path);
       } else {
-        this.navigateToDashboard();
+        this.navigateToHome();
       }
     }).catch((err) => {
       this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
@@ -42,7 +59,7 @@ export class LoginComponent implements OnInit {
 
   onLogOut() {
     this.authService.logout().then(() => {
-      this.navigateToDashboard();
+      this.navigateToHome();
     });
   }
 
@@ -52,7 +69,7 @@ export class LoginComponent implements OnInit {
 
   onSignUpWithEmail() {
     this.authService.createUser(this.email, this.password, this.username).then(() => {
-      this.navigateToDashboard();
+      this.navigateToHome();
     }).catch((err) => {
       console.log(err.message);
     });
@@ -64,17 +81,17 @@ export class LoginComponent implements OnInit {
       if (path.startsWith('/verifyUser')) {
         this.navigateToVerification(path);
       } else {
-        this.navigateToDashboard();
+        this.navigateToHome();
       }
     }).catch((err) => {
       console.log(err.message);
-    });;
+    });
   }
 
-  navigateToDashboard() {
-    this.router.navigate(['']);
+  navigateToHome() {
+    this.router.navigate(['/']);
   }
-
+  
   navigateToVerification(path) {
     this.router.navigate([path]);
   }

@@ -1,6 +1,19 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ToolsService } from '../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -9,6 +22,9 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { map, Observable, startWith } from 'rxjs';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+
 
 declare var jQuery:any;
 
@@ -19,16 +35,21 @@ declare var jQuery:any;
 })
 export class CreateNewTaskComponent implements OnInit {
 
+  assigneeName = new FormControl();
+  filteredOptionsAssignee: Observable<string[]>;
+
+  reporterName = new FormControl();
+  filteredOptionsReporter: Observable<string[]>;
+
   @ViewChild('form') form: NgForm;
   @Output() taskCreated = new EventEmitter<{ completed: boolean }>();
 
   componentName: string = "CREATE-NEW-TASK";
 
+  childTaskId: string
   title: string
   todayDate: string
   description: string
-  assigneeName: string
-  reporterName: string
   watcherName: string[]
   creatorName : string
   estimatedTime: number
@@ -43,13 +64,15 @@ export class CreateNewTaskComponent implements OnInit {
   valid: boolean = true
   task: Tasks
   teamIds: string[]
-  teamMembers: string[]
+  teamMembers: string[] = []
   teamName: string
   statusLabels: string[]
   priorityLabels: string[]
   difficultyLabels: string[]
   type: string[]
   taskType: string
+  parentTaskId: string
+  showClose: boolean = false;
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -59,6 +82,14 @@ export class CreateNewTaskComponent implements OnInit {
     this.readTeamData(this.project);
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
+    this.parentTaskId = this.popupHandlerService.parentTaskId;
+    this.title = this.popupHandlerService.quickNotesTitle;		
+    this.description = this.popupHandlerService.quickNotesDescription;
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   readTeamData(teamId :string){
@@ -70,11 +101,40 @@ export class CreateNewTaskComponent implements OnInit {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
+
+          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+            startWith(''),
+            map((value) => {
+              return this._filter(value)
+            }),
+          );
+
+          this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value)),
+          );
     }); 
   }
+  
+  selectedAssignee(item) {
+    if(item.selected == false) {
+      this.assigneeName.setValue("");
+      this.close();
+    } else {
+      this.assigneeName.setValue(item.data);
+    }
+  }
+
+  selectedReporter(item) {
+    if(item.selected == false) {
+      this.reporterName.setValue("");
+      this.close();
+    } else {
+      this.reporterName.setValue(item.data);
+    }
+  }
+
   async submit() {
-    this.assigneeName = this.toolsService.getEmailString(this.assigneeName);
-    this.reporterName = this.toolsService.getEmailString(this.reporterName);
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
@@ -83,11 +143,13 @@ export class CreateNewTaskComponent implements OnInit {
     { label: "description", value: this.description },
     { label: "creator", value: this.creatorName },
     { label: "project", value: this.teamName },
-    { label: "assignee", value: this.assigneeName },
-    { label: "reporter", value: this.reporterName },
+    { label: "assignee", value: this.assigneeName.value },
+    { label: "reporter", value: this.reporterName.value },
     { label: "creationDate", value: this.todayDate },
     { label: "sprintNumber", value: this.sprintNumber },
     { label: "storyPoint", value: this.storyPoint }];
+
+    
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
@@ -99,23 +161,32 @@ export class CreateNewTaskComponent implements OnInit {
       console.log("Task not created! Validation error");
   }
 
-  async createNewTask() {
+  createNewTask() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
     const teamId = this.authService.getTeamId();
-    const callable = this.functions.httpsCallable('tasks');
+    const parentTaskId = this.popupHandlerService.parentTaskId;
+    const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
+    const callable = this.functions.httpsCallable('tasks/createNewTask');
 
-    try {
-      const result = await callable({mode: "create", TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName, Reporter: this.reporterName, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType }).toPromise();
-    } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-      this.enableLoader = false;
-    }
-    this.close();
-  }
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+      next: (data) => {
+        console.log("Successful created task");
+        this.enableLoader=false;
+        this.showClose=true;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully created task')
+    });
+
+}
 
   close() {
-    jQuery('#createNewTask').modal('hide');
+    jQuery('#createNewTask');
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
   }

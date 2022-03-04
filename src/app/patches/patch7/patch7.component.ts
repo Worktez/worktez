@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
@@ -20,6 +33,7 @@ export class Patch7Component implements OnInit {
   showLoader: boolean = false;
   uid: string;
   patch: Patch;
+  patchObservableReady: boolean = false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -34,6 +48,9 @@ export class Patch7Component implements OnInit {
         }
       });
     });
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
+    });
     console.log("patch running");
   }
 
@@ -41,11 +58,17 @@ export class Patch7Component implements OnInit {
     this.showLoader = true;
     console.log("Patch7 function running");
     console.log(this.orgDomain, this.newfield, this.newFieldValue);
-    const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch7", OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    const callable = this.functions.httpsCallable('patch/patch7');
+    await callable({OrgDomain: this.orgDomain, newField: this.newfield, NewFieldValue: this.newFieldValue, NewFieldValueType: this.newFieldValueType, Uid: this.uid}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        
+      },
+      complete: () => console.info('successful')
     });
   }
 

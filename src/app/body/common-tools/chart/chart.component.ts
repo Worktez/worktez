@@ -1,3 +1,16 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 @Component({
@@ -9,7 +22,7 @@ export class ChartComponent implements OnInit {
   @Input("data") data: []
 
   constructor(private themeService: ThemeService) { }
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   myChartType: string = "AreaChart"
   chartColumns = ["Sprint Number", "StoryPoint"]

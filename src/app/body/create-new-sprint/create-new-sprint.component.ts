@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
@@ -106,14 +119,20 @@ export class CreateNewSprintComponent implements OnInit {
   async createNewSprint() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
-    const callable = this.functions.httpsCallable('sprints');
+    const callable = this.functions.httpsCallable('sprints/createNewSprint');
 
-    try {
-      const result = await callable({ mode: "create", AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).toPromise();
-    } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-      this.enableLoader = false;
-    }
+    await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).subscribe({
+      next: (data) => {
+        console.log("Successfully created sprint");
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully created sprint ')
+  });
     this.close();
   }
 

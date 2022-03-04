@@ -1,0 +1,241 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+#homePage{
+    
+    margin-left: 20px;
+    margin-right: 20px;
+}
+#home nav{
+    background-color: transparent !important;    
+}
+h4{
+    color: --text;
+}
+#intro{
+    display: inline-block;
+    width: 30%;
+    margin-top: 15%;
+    margin-left: 10%;
+    vertical-align: top;
+    align-content: center !important;
+    justify-content: space-around;
+}
+#intro p {
+    color: var(--primary-color);
+    font-size: 40px;
+    font-weight: bold;
+    overflow-wrap: break-word;
+    line-height: 50px;
+}
+#graph{
+    display: inline-block;
+    max-width: 60%;
+    max-height: 60%;
+    margin-right: -50px !important;
+    vertical-align: bottom;
+}
+#home{
+    background-image: url(../../../assets/dots.svg), url(../../../assets/purple_circle.jpg), url(../../../assets/dots.svg), url(../../../assets/dots.svg);
+    background-position: -5% 15%, -38% 90% , 90% 75%, 105% 14%;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-size: 150px, 900px, 180px, 150px;
+    height: 700px;
+}
+#services{
+    margin-top: 5%;
+    background-image: url(../../../assets/dots.svg);
+    background-position: 2% 95%;
+    background-repeat: no-repeat;
+    background-size: 180px 250px;
+    height: 400px;
+}
+.sectionTitle{
+    color: var(--primary-color);
+    font-size: 36px;
+    font-weight: bold;
+    overflow-wrap: break-word;
+    line-height: 40px;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+ }
+ 
+ .row > div[class*='col-'] {
+   display: flex;
+ }
+.card-img-top{
+    width: 90px;
+    height: 90px;
+    align-self: center;
+} 
+.card {
+    margin-top: 15%;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    box-shadow: var(--box-shadow-bottom);
+    border: none;
+    justify-content: center;
+    padding: 20px;
+    width: fit-content;
+}
+.card-text{
+    padding-top: 15px;
+    color: var(--text);
+    text-align: center;
+}
+#aboutUs{
+    background-image: url(../../../assets/dots.svg);
+    background-position: 105% 95%;
+    background-repeat: no-repeat;
+    background-size: 180px;
+    height: 550px;
+}
+.line {
+    border-left: 4px solid var(--primary-color);
+    height: fit-content;
+    text-indent: 10px;
+}
+#desktop{
+    float: left;
+    max-width: 50%;
+}
+#aboutUsText{
+    float: right;
+    max-width: 50%;
+    padding-right: 5%;
+}
+p, span {
+    color: var(--text);
+    font-size: 20px;
+    overflow-wrap: break-word;
+    line-height: 30px;
+    text-align: left;
+    font-size: medium;
+}
+#features{
+    background-image: url(../../../assets/dots.svg);
+    background-position: 2% 110%;
+    background-repeat: no-repeat;
+    background-size: 180px;
+    height: 600px;
+}
+#performance-chart{
+    padding-top: 5%;
+    float: right;
+    max-width: 50%;
+}
+#FeatureText{
+    float: left;
+    max-width: 50%;
+    padding: 5%;
+}
+#testimonial{
+    padding-top: 1%;
+    background-image: url(../../../assets/dots.svg);
+    background-position: 105% 95%;
+    background-repeat: no-repeat;
+    background-size: 180px;
+    height: 600px;
+}
+.testimonialText{
+    float: left;
+    width: 40%;
+    max-height: 50%;
+    align-content: center;
+    vertical-align: bottom;
+    padding-left: 13%;
+    padding-top: 10%;
+    justify-content: center;
+}
+.testimonialText p{
+    max-width: 70%;
+}
+#testimonial .card{
+    min-width: 300px;
+}
+.card-footer{
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+.card-img-btm{
+    width: 70px;
+    height: 70px;
+    border-radius: 90%;
+}
+.testimonial-card{
+    background-image: url(../../../assets/quotes.svg);
+    background-position: 105% 0%;
+    background-repeat: no-repeat;
+    background-size: 90px;
+    max-width: 90%;
+    min-height: 70%;
+}
+.user{
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: small !important;
+    line-height: 3;
+}
+#testimonial p {
+    font-size: medium;
+}
+.aboutUser p{
+    font-size: x-small !important;
+    line-height: 5px;
+}
+#updates{
+    padding-top: 5%;
+    background-image: url(../../../assets/blueBox.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 860px 550px;
+    height: 300px;
+    color: white !important;
+    display: flex;
+}
+#updatesText{
+    min-width: 30% !important;
+    display: inline-block;
+}
+#updatesForm{
+    min-width: 70% !important;
+    display: inline-block;
+}
+#updates p, #updates h1 {
+    color: white !important;
+    overflow-wrap: break-word;
+    max-width: 500px;
+}
+::-webkit-scrollbar {
+    width: 1px !important;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}
+input:focus {
+    border-color: var(--primary-color);
+    border-radius: 7px;
+    min-height: 40px;
+    box-shadow: transparent;
+}
+
+input {
+    border-color: transparent;
+    border-radius: 7px;
+    min-height: 40px;
+    background-color: var(--input-field);
+    outline: transparent;
+}

@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
@@ -19,8 +32,8 @@ export class DataTableService {
     var orgDomain = this.backendService.getOrganizationDomain();
     var userEmail = this.authService.getUserEmail();
 
-    const callable = this.functions.httpsCallable("tasks");
-    this.tasksDataObservable = callable({ mode: "getTasksForDashboard", OrgDomain: orgDomain, FilterAssignee: userEmail}).pipe(
+    const callable = this.functions.httpsCallable("tasks/getTasksForDashboard");
+    this.tasksDataObservable = callable({OrgDomain: orgDomain, FilterAssignee: userEmail}).pipe(
       map(actions => {
         return actions.data as Tasks[];
     }));
@@ -30,8 +43,8 @@ export class DataTableService {
 
   readAllTaskData(teamId, currentSprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject) {
     var orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("tasks");
-    this.tasksDataObservable = callable({ mode: "getAllTasks", OrgDomain: orgDomain, TeamId: teamId, SprintNumber: currentSprintNumber, FilterAssignee: filterAssignee, FilterPriority: filterPriority, FilterDifficulty: filterDifficulty, FilterStatus: filterStatus, FilterProject: filterProject }).pipe(
+    const callable = this.functions.httpsCallable("tasks/getAllTasks");
+    this.tasksDataObservable = callable({OrgDomain: orgDomain, TeamId: teamId, SprintNumber: currentSprintNumber, FilterAssignee: filterAssignee, FilterPriority: filterPriority, FilterDifficulty: filterDifficulty, FilterStatus: filterStatus, FilterProject: filterProject }).pipe(
       map(actions => {
         return actions.data as Tasks[];
       }));

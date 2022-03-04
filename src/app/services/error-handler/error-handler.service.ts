@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Parser } from 'xml2js'
@@ -61,18 +74,21 @@ export class ErrorHandlerService {
     });
   }
 
-  getErrorCode(componentName: string, errorType: string) {
+  getErrorCode(componentName: string, errorType: string, innerErrorType?:string) {
     let error: string = "00";
+    if(innerErrorType == undefined){
+      innerErrorType = "Error";
+    }
     this.xmlItems.map(item => {
       if (item["$"].name === componentName) {
         error += item["$"].code + '-';
         error += item["SubSystem"][0]["$"].code + '-';
         error += item["SubSystem"][0][errorType][0]["$"].code;
-        error += item["SubSystem"][0][errorType][0]["Error"][0]["$"].code;
+        error += item["SubSystem"][0][errorType][0][innerErrorType][0]["$"].code;
         if (errorType == "InternalError") {
           this.errorDescription = ""
         }
-        this.errorType = item["SubSystem"][0][errorType][0]["Error"][0]["$"].description;
+        this.errorType = item["SubSystem"][0][errorType][0][innerErrorType][0]["$"].description;
       }
     })
     this.errorCode = error;

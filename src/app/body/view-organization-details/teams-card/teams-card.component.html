@@ -1,3 +1,16 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <div class="card" *ngIf="team.TeamStatus != -1">
     <div class="card-body pt-4">
         <div class="row">
@@ -6,7 +19,7 @@
             </div>
             <div class="col-md">
                 <span class="material-icons mr-2 float-right trash p-2" type="button" (click)="deleteTeam()" title="delete Team" data-bs-toggle="tooltip">delete</span>
-                <span class="material-icons mr-2 p-2 float-right" type="button" (click)="updateTeam(team.TeamId)">manage_accounts</span>
+                <span class="material-icons mr-2 p-2 float-right" type="button" data-toggle="modal" data-target="#updateTeam" (click)="updateTeam(team)">manage_accounts</span>
                 <div class="mr-4 float-right p-2 add-member" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="enableAddMember(team)">
                     <span class="material-icons">person_add</span>
                     <span class="pl-2 pb-2">Add Member</span>
@@ -46,4 +59,7 @@
 </div>
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
     <app-add-member [teamId]="teamToAddMember.TeamId" [teamName]="teamToAddMember.TeamName" [teamMembers]="teamToAddMember.TeamMembers" [teamManager]="teamToAddMember.TeamManager" [teamDescription]="teamToAddMember.TeamDescription" [isUpdateTeam]="true" (addedMember)="addedMember($event)"></app-add-member>
+</ng-container>
+<ng-container *ngIf="updateTeamEnabled">
+    <app-update-team (teamUpdated)="teamUpdated($event)" [teamToUpdate]="teamToUpdate"></app-update-team>
 </ng-container>
