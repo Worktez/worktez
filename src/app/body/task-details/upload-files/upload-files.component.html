@@ -17,7 +17,7 @@
         <div class="col-md-1 col-2 pt-1">
             <form>
                 <div class="form-group">
-                    <label class="btn btn-outline-secondary" for="exampleFormControlFile1"><span class="material-icons uploadIcon">cloud_upload</span></label>
+                    <span class="material-icons uploadIcon">cloud_upload</span>
                   <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
                 </div>
             </form>
@@ -35,10 +35,13 @@
 <ng-template #upload>
     <form>
         <div class="form-group">
-            <label class="btn btn-outline-secondary btn-lg btn-block p-2" for="exampleFormControlFile1">
-              <h5><span class="material-icons">cloud_upload</span> Click to Upload Document</h5>
-            </label>
+            <a role="button" class="btn btn-outline-secondary btn-lg btn-block p-2" id="exampleFormControlFile1">
+            <mat-icon fontSet="material-icons-outlined" style="position: relative; bottom: 3px; right: 2px;" class="align-middle" >
+                cloud_upload
+            </mat-icon>
+            Click to upload Document
           <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+        </a>
         </div>
     </form>
 </ng-template>
