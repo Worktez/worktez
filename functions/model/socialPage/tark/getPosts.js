@@ -29,6 +29,7 @@ exports.getPosts = function(request, response) {
     let result;
 
     const getPostsPromise = getAllPosts().then((postData) => {
+        console.log("postData:", postData);
         postData.forEach((postDoc) => {
             postsData.push(postDoc.data());
         });
@@ -41,6 +42,7 @@ exports.getPosts = function(request, response) {
     Promise.all(promises).then(() => {
             result = { data: { status: "OK", data: postsData } };
             console.log("Got Posts Sucessfully");
+            console.log(result);
             return response.status(status).send(result);
         })
         .catch((error) => {

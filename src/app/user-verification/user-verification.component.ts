@@ -43,12 +43,12 @@ export class UserVerificationComponent implements OnInit {
     });
   }
 
-  verifyUser() {
+  async verifyUser() {
     const callable = this.functions.httpsCallable('users/verify');
-      callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
+      await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
         next: (data) => {
           this.router.navigate(['/']);
-          console.log("Successful");
+          console.log("Successful ");
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
@@ -56,5 +56,7 @@ export class UserVerificationComponent implements OnInit {
         },
         complete: () => console.info('Successful')
     });
+      
   }
+
 }

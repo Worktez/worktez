@@ -56,12 +56,12 @@ export class AddMemberComponent implements OnInit {
     } 
   }
 
-addUpdateTeam() {
+async addUpdateTeam() {
   this.organizationDomain = this.backendService.getOrganizationDomain();
   this.enableLoader = true;
   const callable = this.functions.httpsCallable('teams/addMember');
   
-  callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.authservice.user.email, TeamDescription: this.teamDescription, TeamId: this.teamId }).subscribe({
+  await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.authservice.user.email, TeamDescription: this.teamDescription, TeamId: this.teamId }).subscribe({
     next: (data) => {
       this.enableLoader = false;
       this.showClose = true;
@@ -74,7 +74,7 @@ addUpdateTeam() {
       console.error("Error", error);
     },
     complete: () => console.info('Successful added member ')
-  });
+});
 }
 
 addCreateTeam() {

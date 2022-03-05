@@ -38,7 +38,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 ml-auto px-2">
+                            <div class="col-md-6 ml-auto px-2">  
+                                <span id="label">Creator Name</span>                      
+                                <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Creator}} [(ngModel)]="task.Creator" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            <div class="col ml-auto px-2">
                                 <span id="label">Assignee Name</span>
                                 <div class="dropdown">
                                     <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,11 +51,7 @@
                                             <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
                                         </ng-container>
                                     </div>
-                                </div>  
-                            </div>
-                            <div class="col ml-auto px-2">
-                                <span id="label">Creator Name</span>                      
-                                <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Creator}} [(ngModel)]="task.Creator" [ngModelOptions]="{standalone: true}">
+                                </div>
                             </div>
                             </div>
                             <div class="row pt-3">
