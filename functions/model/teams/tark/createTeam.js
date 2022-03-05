@@ -25,6 +25,7 @@ const { setTeam, getTeam } = require("../lib");
 const { getOrg, updateOrg } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
+const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 
 
 exports.createTeam = function(request, response) {
@@ -62,6 +63,9 @@ exports.createTeam = function(request, response) {
         const prom2 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus);
+                teamMembers.forEach((element) => {
+                    sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, orgDomain, teamId);
+                });
                 updateTeamInOrganizations(uid, orgDomain, orgAppKey, teamId);
             } else {
                 status = 500;
@@ -81,7 +85,6 @@ exports.createTeam = function(request, response) {
     const promise2 = getOrg(orgDomain).then((orgDoc) => {
         orgId = orgDoc.OrganizationId;
         setSprint(orgDomain, teamName, "Deleted", orgId, teamId, -2, "-");
-
         setSprint(orgDomain, teamName, "Backlog", orgId, teamId, -1, "-");
     }).catch((error) => {
         status = 500;
