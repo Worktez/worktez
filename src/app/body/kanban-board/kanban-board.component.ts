@@ -45,7 +45,6 @@ export class KanbanBoardComponent implements OnInit {
               this.applicationSettingsService.teamData.subscribe((data) => {
                 if(data) {
                   this.readData();
-                  this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked']
                 }
               });
             }
@@ -56,6 +55,7 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   readData() {
+    this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
     this.readTasks();
@@ -69,7 +69,6 @@ export class KanbanBoardComponent implements OnInit {
     await callable({OrgDomain: orgDomain, TeamId: this.selectedTeamId}).subscribe ({
       next: (data) => {
         this.putDataInTasksArray(data.data);
-        console.log(this.tasks);
         this.showLoader = false;
         console.log("read tasks successfully!")
       },
