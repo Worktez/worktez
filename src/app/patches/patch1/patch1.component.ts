@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
@@ -17,6 +30,7 @@ export class Patch1Component implements OnInit {
   showLoader: boolean = false;
   uid: string;
   patch: Patch;
+  patchObservableReady: boolean= false;
 
   constructor(private functions: AngularFireFunctions, private location: Location, public authService: AuthService, public patchService: PatchService) { }
 
@@ -31,6 +45,9 @@ export class Patch1Component implements OnInit {
         }
       });
     });
+    this.patchService.patchObservable.subscribe((data) => {
+      this.patchObservableReady = true;
+    });
     console.log("patch running");
   }
 
@@ -38,10 +55,16 @@ export class Patch1Component implements OnInit {
     this.showLoader = true;
     console.log("Patch1 function running");
     console.log(this.orgDomain, this.orgId, this.teamId);
-    const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch1", OrgId: this.orgId, OrgDomain: this.orgDomain, TeamId: this.teamId, Uid: this.uid }).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
+    const callable = this.functions.httpsCallable('patch/patch1');
+    await callable({OrgId: this.orgId, OrgDomain: this.orgDomain, TeamId: this.teamId, Uid: this.uid }).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => console.info('successful')
     });
   }
 

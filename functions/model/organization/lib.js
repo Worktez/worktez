@@ -3,9 +3,35 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 
 const { db } = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} orgId
+ * @param {any} appKey
+ * @param {any} securityPhrase
+ * @param {any} orgName
+ * @param {any} orgEmail
+ * @param {any} orgAdmin
+ * @param {any} orgDescription
+ * @param {any} orgLogoURL
+ * @return {any}
+ */
 exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, orgEmail, orgAdmin, orgDescription, orgLogoURL) {
     const orgData = db.collection("Organizations").doc(orgDomain).set({
         OrganizationId: orgId,
@@ -20,15 +46,27 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
         TeamsId: [],
         TeamsName: [],
         LogoCounter: 0,
+        FilesCounter: 0,
     });
     return Promise.resolve(orgData);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} inputJson
+ * @return {any}
+ */
 exports.updateOrg = function(orgDomain, inputJson) {
     const updateTeam = db.collection("Organizations").doc(orgDomain).update(inputJson);
     return Promise.resolve(updateTeam);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.getOrg = function(orgDomain) {
     const getOrgPromise = db.collection("Organizations").doc(orgDomain).get().then((doc) => {
         if (doc.exists) return doc.data();
@@ -37,6 +75,11 @@ exports.getOrg = function(orgDomain) {
     return Promise.resolve(getOrgPromise);
 };
 
+/**
+ * Description
+ * @param {any} appKey
+ * @return {any}
+ */
 exports.getOrgUseAppKey = function(appKey) {
     const getOrgPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((doc) => {
         let data;
@@ -48,6 +91,11 @@ exports.getOrgUseAppKey = function(appKey) {
     return Promise.resolve(getOrgPromise);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.setOrgRawData = function(orgDomain) {
     const setOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").set({
         CurrentSprintId: 0,
@@ -59,11 +107,22 @@ exports.setOrgRawData = function(orgDomain) {
     return Promise.resolve(setOrgAppDetails);
 };
 
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.updateOrgRawData = function(inputJson, orgDomain) {
     const updateOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").update(inputJson);
     return Promise.resolve(updateOrgAppDetails);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @return {any}
+ */
 exports.getOrgRawData = function(orgDomain) {
     const getOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").get().then((doc) => {
         if (doc.exists) {

@@ -1,10 +1,23 @@
-<div *ngIf="authService.afauth.user | async; else showLoginButton">
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div *ngIf="startService.userReady; else showLoginButton">
     <div class="row pl-2">
         <div class="col-5 pt-2">
             <app-notification-center></app-notification-center>
         </div>
         <div class="col">
-            <app-user-card [user]="user"></app-user-card>
+            <app-user-card [user]="startService.user"></app-user-card>
         </div>
     </div>
 </div>

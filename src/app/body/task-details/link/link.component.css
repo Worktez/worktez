@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 #navbarMenu{
     background-color: var(--secondary-bg);
     color: var(--text);
@@ -8,6 +21,11 @@
     background-color: var(--secondary-bg);
     border: var(--primary-border);
     color: var(--text);
+}
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
 }
 
 .head {

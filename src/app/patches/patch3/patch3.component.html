@@ -1,4 +1,17 @@
-<div class="container" *ngIf="patchService.patchObservable | async">
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container" *ngIf="patchObservableReady">
     <div class="row">
         <div class="col pl-0 pr-0">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">
@@ -73,7 +86,7 @@
                 <div class="col-md-4 col-8">
                     <button type="submit" class="btn btn-primary" [disabled]="PatchshowLoader" (click)="patch3()">Query</button>
                 </div>
-                <div class="col-md-3 col-4" *ngIf="tasksData | async">
+                <div class="col-md-3 col-4" *ngIf="tasksData">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal" (click)="UpdatePage()">
                         Update
                     </button>
@@ -85,9 +98,9 @@
         <app-loader> </app-loader>
     </ng-container>
     <div class="row">
-        <div class="col" *ngIf="tasksData | async">
+        <div class="col" *ngIf="tasksData">
             <h3 class="m-2">Tasks</h3>
-            <ng-container *ngIf="tasksData | async">
+            <ng-container *ngIf="tasksData">
                 <app-task-cards [tasks]="tasksData"></app-task-cards>
             </ng-container>
         </div>

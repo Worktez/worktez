@@ -4,18 +4,51 @@
 /* eslint-disable indent */
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 
 
-const { functions, cors } = require("../application/lib");
-const { getNotificationsList } = require("./getNotificationsList");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { getNotificationsList } = require("../notifications/tark/getNotificationsList");
+const { emptyNotificationCount } = require("../notifications/tark/emptyNotificationCount");
 
+/**
+ * Description
+ * @param {any} "/getNotifications"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getNotifications", (req, res) => {
+  getNotificationsList(req, res);
+});
 
-exports.notifications = functions.https.onRequest((request, response) => {
-    cors(request, response, () => {
-        const mode = request.body.data.mode;
+  fastify.post("/emptyNotifications", (req, res) => {
+    emptyNotificationCount(req, res);
+  });
 
-        if (mode == "getNotifications") {
-            return getNotificationsList(request, response);
-        }
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+exports.notifications = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+      fastify.ready((err) => {
+        if (err) throw err;
+            requestHandler(req, res);
+        });
     });
 });

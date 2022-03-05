@@ -1,17 +1,32 @@
+<!--/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/-->
 <div class="card mb-3">
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-10">
-                <h4 class="m-0">Sprint Evaluation Graph</h4>
+                <h4 class="m-0">Velocity Chart</h4>
             </div>
             <div class="col-2 text-right">
                 <app-range-card (setRange)="onGetRange($event)"></app-range-card>
             </div>
         </div>
     </div>
-    <div class="card-body" *ngIf="!showLoader">
-        <app-bar-chart [data]="data | async" [columnNames]="columnNames" [title]="title"></app-bar-chart>
-    </div>
+    <ng-container *ngIf="data!=undefined">
+        <div class="card-body" *ngIf="!showLoader">
+            <app-bar-chart [data]="data" [columnNames]="columnNames" [title]="title"></app-bar-chart>
+        </div>
+    </ng-container>
     <div class="card-body" *ngIf="showLoader">
         <app-loader></app-loader>
     </div>

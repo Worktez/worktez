@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { FileData, FileUpload } from 'src/app/Interface/FileInterface';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
@@ -35,13 +48,16 @@ export class UploadFilesComponent implements OnInit {
     this.fileName = this.currentFileUpload.file.name;
 
     this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, this.taskId)
-    .subscribe(percentage => {
+    .subscribe({
+      next: (percentage) =>{
         this.percentage = Math.round(percentage);
       },
-      error => {
-        console.log(error);
-      }
-    );;
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.log("Getting Percentage Data Complete")
+    }
+    );
   }
 
   changeFileStatus(data: {changeStatus: string, file: FileData} ) {

@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 .app-theme {
     min-height: 100vh;
     background-color: var(--primary-bg);
@@ -37,6 +50,7 @@ body {
     --scrollbar-color: rgba(84, 84, 84, 0.17);
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
+    --font: 'Poppins', sans-serif;
 }
 
 .theme-dark {
@@ -68,4 +82,5 @@ body {
     --scrollbar-color: rgba(255, 255, 255, 0.51);
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
+    --font: 'Poppins', sans-serif;
 }

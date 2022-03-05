@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -14,7 +27,7 @@ export class UpdateFieldComponent implements OnInit {
   @Input('fieldValue') fieldValue: string;
   @Input('uid') uid: string;
   @Output() updateFieldCompleted = new EventEmitter<{ completed: boolean }>();
-
+  componentName:string = "PATCHES"
   QueryShowLoader: boolean = false;
   newfieldName: string;
   newfieldValue: string;
@@ -29,18 +42,24 @@ export class UpdateFieldComponent implements OnInit {
   async query() {
     this.QueryShowLoader = true;
     console.log("Querying in Patch3");
-    try {
-      const callable = this.functions.httpsCallable('patch');
-      await callable({ mode: "patch3", OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue, Uid: this.uid}).toPromise().then(result => {
-        this.QueryShowLoader = false;
-        this.showClose = true;
-        console.log(result);
+  
+      const callable = this.functions.httpsCallable('patch/patch3');
+      await callable({OrgDomain: this.orgDomain, FieldName: this.fieldName, FieldValue: this.fieldValue, NewField: this.newfieldName, NewFieldValue: this.newfieldValue, Uid: this.uid}).subscribe({
+        next: (result) => {
+          this.QueryShowLoader = false;
+          this.showClose = true;
+          console.log(result);
+        },
+        error: (error) => {
+          this.enableLoader = false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.log("Error", error);
+        },
+        complete: () => console.info('Getting team data successful')
+        
       });
-    } catch (error) {
-      this.errorHandlerService.getErrorCode("Update-data", "InternalError");
-      this.enableLoader = false;
-      console.log("Error", error);
-    }
+  
   }
 
   workDone() {

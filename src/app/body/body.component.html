@@ -1,8 +1,21 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <div class="page">
     <app-navbar></app-navbar>
     <app-error></app-error>
-    <ng-container *ngIf="applicationSettingsService.teamData | async">
-        <ng-container *ngIf="applicationSettingsService.team.TeamStatus == -1">
+    <ng-container *ngIf="startService.showTeamsData">
+        <ng-container *ngIf="!applicationSettingsService.teamAvailable">
             <p class="alert alert-danger" role="alert">The current team is marked as inactive by the org admin</p>
         </ng-container>
     </ng-container>
@@ -12,8 +25,17 @@
     <ng-container *ngIf="popupHandlerService.createNewTaskEnabled">
         <app-create-new-task (taskCreated)="taskCreated($event)"></app-create-new-task>
     </ng-container>
+    <ng-container *ngIf="popupHandlerService.createNewTeamEnabled">
+        <app-create-new-team (teamCreated)="teamCreated($event)"></app-create-new-team>
+    </ng-container>
+
+    <ng-container *ngIf="popupHandlerService.createPostEnabled">
+        <app-create-post></app-create-post>
+    </ng-container>
+    
     <ng-container *ngIf="authService.completedLoadingApplication; else loader">
         <router-outlet></router-outlet>
+        <app-quick-notes *ngIf="startService.userReady" ></app-quick-notes>
     </ng-container>
 
     <ng-template #loader>

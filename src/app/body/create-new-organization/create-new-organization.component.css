@@ -1,54 +1,47 @@
-.input {
-    border-radius: 10px;
-    padding: 10px;
-    outline: none;
-    width: 100%;
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+.container{
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border-radius: 18px;
+}
+
+.form-control{
+    background-color: var(--input-field);
+    color: var(--text);
     border: none;
-    box-shadow: var(--box-shadow-top);
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
 }
-
-#important {
-    color: red;
-}
-
-#files {
-    font-size: 60px;
-}
-
-#delete {
-    cursor: pointer;
-}
-
-#uploadButtonContainer{
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-}
-
 
 #button {
     background-color: var(--secondary-color);
-    border: var(--primary-border);
-    color: var(--button-text);
+    color: white;
 }
 
 #button:focus,
 #button:active,
 #button:hover {
-    background-color: var(--primary-color);
     outline: none;
     box-shadow: none;
-}
-
-#navbarMenu {
     background-color: var(--primary-color);
 }
 
-select:focus,
-input:focus,
-textarea:focus {
-    box-shadow: var(--box-shadow-top);
+input:focus {
+    box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
 }

@@ -1,0 +1,36 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="font-weight-bold ">{{versionName}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="font-weight-bold text-muted">&emsp;{{releaseDate}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="font-weight-bold text-muted" >&emsp;{{featuresArray[0]}}</h3>
+            <ul><p *ngFor="let arr of featuresArray; let i = index">
+                &emsp;{{featuresArray[i+1]}}
+            </p></ul>
+            
+        </div>
+    </div>
+</div>
+
+

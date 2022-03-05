@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
@@ -9,6 +22,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 export class SpeedImagesComponent implements OnInit {
 
   @Input('emails') emails: string[]
+  photoUrlReady: boolean = false
 
   constructor(public userService: UserServiceService) { }
 
@@ -19,6 +33,7 @@ export class SpeedImagesComponent implements OnInit {
       this.userService.getPhotoList(this.emails);
       this.userService.photoUrlObservable.subscribe(data => {
       this.watcherList = data;
+      this.photoUrlReady = true;
       }); 
     }
   }

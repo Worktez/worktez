@@ -1,4 +1,17 @@
-<div class="container" *ngIf="patchService.patchObservable | async">
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container" *ngIf="patchObservableReady">
     <div class="row">
         <div class="col pl-0 pr-0">
             <nav class="navbar navbar-expand-lg navbar-dark" id="navbarMenu">

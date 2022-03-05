@@ -1,3 +1,26 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+
+.watcherAdded {
+    color: var(--primary-color);
+    font-size: medium;
+}
+.watcherNotAdded {
+    color: var(--secondary-color);
+    font-size: medium;
+}
+
 .container-fluid{
     padding: 20px 110px 0px 110px;
     color: var(--text);
@@ -9,27 +32,48 @@
 }
 
 .dropdown-menu {
-    border-color: var(--primary-color) ;
     color: var(--text);
     background-color: var(--secondary-bg);
 }
+.pt-4, .py-4{
+    padding-top: 1.5rem !important;
 
-.dropdown-item {
-    color: var(--text);
 }
 
+span{
+    cursor: pointer;
+}
+.dropdown-item {
+    color: var(--text);
+    font-size: 12px;
+}
 .dropdown-item:hover {
-    background-color: var(--dropdown-hover);
+    background-color: var(--secondary-bg);
     color: var(--button-text-hover); 
 }
 
 .activity-card {
     background-color: var(--secondary-bg);
     color: var(--text);
+
+}
+form-row px-4 pt-4{ 
+    overflow-y:auto;
+    overflow-x: hidden; 
+    width: 106%;
+    height: 15vh;
+    position: static;
+}
+nav nav-tabs nav-fil:a {
+    cursor: pointer;
+}
+       
+.navbarMenu:th {
+    cursor: default;
 }
 
 #headerLabel{
-    font-size: 14px;
+    font-size: 12px;
     color: var(--table-header);
 }
 
@@ -46,6 +90,8 @@
     padding: 2px 30px 2px 30px;
     border-color: var(--dropdown-hover);
     border-style: solid;
+    border-width: medium;
+    
 }
 
 .btn {
@@ -68,6 +114,10 @@ a.nav-link{
 
 #noActivityDesc {
     color: var(--text);
+}
+
+#descriptionTaskDescription {
+    white-space: pre-wrap;
 }
 
 ::-webkit-scrollbar {

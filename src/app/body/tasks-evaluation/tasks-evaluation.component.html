@@ -1,139 +1,166 @@
-<div class="container">
-    <div class="row align-items-center py-2" id="navbarMenu">
-        <div class="col-8">
-            <h3 style="font-weight:bolder">Tasks</h3>
-        </div>
-        <div class="col-3 text-right">
-            <select class="form-select form-control-lg p-2"  [(ngModel)]="selectedTeamId" (ngModelChange)="readTasks()">
-                <ng-container *ngFor="let teamId of teamIds">
-                    <option>{{ teamId }}</option>
-                </ng-container>
-            </select>
-        </div>
-        <div class="col-1 text-right">
-            <div class="dropdown float-right">
-                <button class="btn material-icons" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">filter_list</button>
-                <div class="dropdown-menu dropdown-menu-right py-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-                    <div class="input-group">
-                        <input class="form-control" style="font-size: 11px;" type="number" id="filterSprintNumberInput" [(ngModel)]="filterSprintNumber">
-                        <div class="col-md-3 col-3">
-                            <button class="btn" id="dropdownButton" style="font-size: 10px;" (click)="readTasks()">Filter</button>
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<ng-container *ngIf="!showLoader && tasks.length" cdkDropListGroup>
+    <ng-container *ngFor="let item of tasks">
+        <ng-container *ngIf="item.length">
+            <div class="container-fluid mx-0 my-4">
+                <div class="row">
+                    <div class="col-lg-2 col-md-3 col-4 ml-2">
+                        <h4 id="sprintName" class="text-white px-4 py-2">{{getSprintName(item[0].SprintNumber)}}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="container-fluid" id="sprintContainer" cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="item" style="overflow-y:auto;overflow-x: hidden; min-height: fit-content;max-height: 60vh;">
+                            <ng-container *ngFor="let task of item" id="tasksContainer">
+                                <div class="row">
+                                    <div class="col">
+                                        <!-- Task card -->
+                                        <div class="card my-2 mx-2" cdkDrag>
+                                            <div class="card-body pt-2 pb-1">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-1 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-6 pr-0">
+                                                                    <h6 class="card-title label">Status</h6>
+                                                                </div>
+                                                                <div class="col-6 pl-0" (click)="showEditTask(task.Id, 'Status')" style="cursor: pointer;">
+                                                                    <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Status';else showStatusIcon">
+                                                                        <select class="form-control form-control-sm" [(ngModel)]="task.Status" size="7" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)">
+                                                                            <option [ngValue]="null" [disabled]="true">Select Status</option>
+                                                                            <ng-container *ngFor='let label of statusLabels'>
+                                                                                <option>{{ label }}</option>
+                                                                            </ng-container>
+                                                                        </select>
+                                                                    </ng-container>
+                                                                    <ng-template #showStatusIcon>
+                                                                        <app-status-icons [Status]="task.Status"></app-status-icons>
+                                                                    </ng-template>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-6 pr-0">
+                                                                    <h6 class="card-title label">Priority</h6>
+                                                                </div>
+                                                                <div class="col-6 pl-0" (click)="showEditTask(task.Id, 'Priority')" style="cursor: pointer;">
+                                                                    <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Priority';else showPriorityIcon">
+                                                                        <select class="form-control form-control-sm" [(ngModel)]="task.Priority" size="4" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)">
+                                                                            <option [ngValue]="null" [disabled]="true">Select Priority</option>
+                                                                            <ng-container *ngFor='let label of priorityLabels'>
+                                                                                <option>{{ label }}</option>
+                                                                            </ng-container>
+                                                                        </select>
+                                                                    </ng-container>
+                                                                    <ng-template #showPriorityIcon>
+                                                                        <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
+                                                                    </ng-template>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-7 pr-0">
+                                                                    <h6 class="card-title label">Difficulty</h6>
+                                                                </div>
+                                                                <div class="col-5 pl-0" (click)="showEditTask(task.Id, 'Difficulty')" style="cursor: pointer;">
+                                                                    <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Difficulty';else showDifficultyIcon">
+                                                                        <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" size="4" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)">
+                                                                            <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
+                                                                            <ng-container *ngFor='let label of difficultyLabels'>
+                                                                                <option>{{ label }}</option>
+                                                                            </ng-container>
+                                                                        </select>
+                                                                    </ng-container>
+                                                                    <ng-template #showDifficultyIcon>
+                                                                        <app-difficulty-icons [Difficulty]="task.Difficulty"></app-difficulty-icons>
+                                                                    </ng-template>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <h6 class="card-title label">TaskId</h6>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <h6 class="card-title value">{{task.Id}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                    <h6 class="card-title label">Title</h6>
+                                                                </div>
+                                                                <div class="col-10">
+                                                                    <h6 class="card-title value">{{task.Title}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <h6 class="card-title label">Assignee</h6>
+                                                                </div>
+                                                                <div class="col-8" (click)="showEditTask(task.Id, 'Assignee')" style="cursor: pointer;">
+                                                                    <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Assignee';else showAssignee">
+                                                                        <div class="dropdown">
+                                                                            <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                                <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                                                                                    <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event, task)"></app-suggestion-bucket>
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                    <ng-template #showAssignee>
+                                                                        <h6 class="card-title value">{{task.Assignee}}</h6>
+                                                                    </ng-template>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2 p-0 mx-1">
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <h6 class="card-title label">Last Updated</h6>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <h6 class="card-title value">{{task.LastUpdatedDate}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-1">
-        <ng-container>
-            <div class="col">
-                <ng-container>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th colspan="1">Status</th>
-                                    <th colspan="1">Priority</th>
-                                    <th colspan="1">Difficulty</th>
-                                    <th colspan="1">Task Id</th>
-                                    <th colspan="3">Title</th>
-                                    <th colspan="2">Assignee</th>
-                                    <th colspan="1">Sprint</th>
-                                    <th colspan="2">Move to Current Sprint?</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngIf="!tasks.length && !showLoader;">
-                                    <tr>
-                                        <td colspan="12" class="text-center">No tasks available</td>
-                                    </tr>
-                                </ng-container>
-                                <ng-container *ngIf="tasks.length && !showLoader;">
-                                    <ng-container *ngFor="let item of tasks">
-                                        <tr>
-                                            <td colspan="1">
-                                                <app-status-icons [Status]="item.Status" [Border]="false"></app-status-icons>
-                                            </td>
-                                            <td colspan="1">
-                                                <app-priority-icons [Priority]="item.Priority" [Border]="false"></app-priority-icons>
-                                            </td>
-                                            <td colspan="1">
-                                                <app-difficulty-icons [Difficulty]="item.Difficulty" [Border]="false"></app-difficulty-icons>
-                                            </td>
-                                            <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.Id}}</span></td>
-                                            <td colspan="3">{{item.Title}}</td>
-                                            <td colspan="2"><span class="material-icons" data-toggle="tooltip" style="vertical-align: middle;" data-placement="top" title="Assignee">perm_identity</span> {{item.Assignee}}</td>
-                                            <td colspan="1">{{ getSprintName(item.SprintNumber) }}</td>
-                                            <td colspan="2" class="text-center">
-                                                <button class="btn" id="moveBtn" [disabled]="item.SprintNumber == teamCurrentSprint" (click)="moveToCurrentSprint(item)" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#Modal">Move</button>
-                                            </td>
-                                        </tr>
-                                    </ng-container>
-                                </ng-container>
-                                <ng-container *ngIf="showLoader">
-                                    <tr> 
-                                        <td colspan="12" class="text-center"><app-loader></app-loader></td>
-                                    </tr>
-                                </ng-container>
-                                <tr>
-                                    <td colspan="12" class="pb-0">
-                                        <nav id="pagination">
-                                            <ul class="pagination justify-content-end">
-                                              <li [ngClass]="disable_prev ? 'page-item disabled' : 'page-item'" (click)="prevPage()">
-                                                <a class="page-link" tabindex="-1">Previous</a>
-                                              </li>
-                                              <li [ngClass]="disable_next ? 'page-item disabled' : 'page-item'" (click)="nextPage()">
-                                                <a class="page-link">Next</a>
-                                              </li>
-                                            </ul>
-                                          </nav>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </ng-container>
             </div>
         </ng-container>
+    </ng-container>
+    <div class="text-center">
+        <button class="btn btn-sm" (click)="readTasks()" [disabled]="disableLoadMore">Load More</button>
     </div>
-</div>
-<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <nav class="modal-header navbar navbar-expand navbar-dark" id="navbarMenu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <h4 class="active nav-link head" id="ModalLabel">Moving to Current Sprint</h4>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="material-icons text-light">close</span>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-            <ng-container *ngIf="showModalLoader">
-                <div class="container pt-2">
-                    <div class="row">
-                        <div class="col"><app-loader></app-loader></div>
-                    </div>
-                </div>
-            </ng-container>
-            <ng-container *ngIf="!showModalLoader">
-                <div class="container pt-2">
-                    <div class="row">
-                        <div class="col">Successfully Moved to Current Sprint!</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-        </div>
-    </div>
-</div>
+</ng-container>
+<ng-container *ngIf="showLoader">
+    <app-loader></app-loader>
+</ng-container>

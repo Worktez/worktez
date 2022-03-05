@@ -1,12 +1,24 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
-import { User } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-my-dashboard',
@@ -17,61 +29,34 @@ export class MyDashBoardComponent implements OnInit {
 
   componentName: string = "MY-DASHBOARD"
 
-  user: User
-  userEmail: string
-  userObservable: Observable<User>
-  showContent: boolean = true;
-
   currentSprintName: string;
 
   selectedTeamId: string = "Dev";
   teamCurrentSprintNumber: number;
   teamIdExists: boolean = true;
 
-  constructor(public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
+  loadingCurrentSprintStatus: boolean = false
+
+  constructor(public startService: StartServiceService, public router: Router, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-
-    this.readUser();
-  }
-
-  readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(team => {
-          this.teamCurrentSprintNumber = team.CurrentSprintId;
-          this.currentSprintName = "S" + this.teamCurrentSprintNumber;
-    });
-  }
-  
-  readUser() {
-    this.userObservable = this.authService.afauth.user.pipe(map(action => {
-      const data = action as User;
-      this.user = data;
-      if (data == null) {
-        this.router.navigate(['/Board']);
-      } else {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if(data.SelectedOrgAppKey) {
-          if(data.SelectedTeamId != ""){
-            this.selectedTeamId = data.SelectedTeamId;
-            this.teamIdExists = true;
-            this.backendService.organizationsData.subscribe(data => {
-              this.readApplicationData();
-            });
-          } else {
-            this.teamIdExists = false;
-          }
-        }
-      });
-    }
-      this.userEmail = data.email;
-      return { ...data }
-    }));
   }
 
   createNewTeam() {
     this.teamIdExists = true;
     this.router.navigate(["CreateNewTeam"]);
   }
+
+//   async runSchedular() {
+//     try {
+//       const callable = this.functions.httpsCallable('scheduledFn');
+//       const result = await callable({}).toPromise();
+//       console.log("Created Schedular document");
+//       console.log(result);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   }
 }

@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -60,12 +73,19 @@ export class CreateNewOrganizationComponent implements OnInit {
 
   async createNewOrganization() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('organization');
-    await callable({ mode: "create", OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise().then(result => {
-      this.orgId = result[2];
-      this.uploadLogo();
-      this.enableLoader = false;
-      this.router.navigate(["CreateNewTeam"]);
+    const callable = this.functions.httpsCallable('organization/createOrg');
+    await callable({OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).subscribe({
+      next: (result) => {
+        this.orgId = result[2];
+        this.uploadLogo();
+        this.enableLoader = false;
+        this.router.navigate(["CreateNewTeam"]);
+      },
+      error: (error) => {
+
+      },
+      complete: () => console.info(' successfully created new organization')
+  
     });
   }
 
