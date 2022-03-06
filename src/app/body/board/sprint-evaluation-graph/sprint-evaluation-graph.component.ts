@@ -13,9 +13,7 @@
  ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
@@ -33,7 +31,7 @@ export class SprintEvaluationGraphComponent implements OnInit {
   @Input("currentSprint") currentSprintNumber: number;
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
-  data: Observable<[]>;
+  data: [];
   componentName:string = "SPRINT-EVALUATION-GRAPH";
   columnNames: string[] = ["Sprints", "Start", "Mid", "End"];
   teamMember: string;
@@ -52,19 +50,24 @@ export class SprintEvaluationGraphComponent implements OnInit {
   async getData() {
     let orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('performanceChart/sprintEvaluationGraph');
-    try {
-      this.data = await callable({OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
+
+      callable({OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
         map(actions => {
-          if (actions.data != undefined) {
-            return actions.data.sort() as [];
-          }
-        }));
-      this.showLoader = false;
-    } catch(error) {
-      this.errorHandlerService.showError = true;
-    this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log(error);
-    }
+            const data= actions.data as [];
+            return data
+        })).subscribe({
+          next: (data) => {
+            this.data=data.sort();
+            this.showLoader = false;
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.showLoader = false;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            console.error(error);
+          },
+          complete: () => console.info('Getting Sprint Evaluation data successful')
+        });
   }
   onGetRange(range) {
     this.showLoader = true;

@@ -12,13 +12,15 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #quickNotesButton{
+    background:#5c60ec;
     display: block;
     border-radius:50px;
 	text-align:center;
-	box-shadow: 2px 2px 3px  #999;
+	box-shadow: 0px 3px 45px #5C60EC4F;
     position: fixed;
     bottom: 80px;
     right: 40px;
+    border: none !important;
 }
 
 .card {
@@ -28,14 +30,30 @@
     right: 30px;
     color: var(--text);
 }
+.card-body{
+    padding: 0.75rem 0.25rem !important;
+}
+.col{
+    flex-grow: 0 !important;
+}
+.noNotes{
+padding: auto;
+margin: auto;
+}
 
 #note {
     background-color: var(--secondary-bg);
+    border: none;
 }
 
 #note:hover {
     background-color: var(--primary-bg);
     cursor: pointer;
+}
+
+#add{
+    position: relative;
+    left: 50px;
 }
 
 @media only screen and (max-width: 600px) {

@@ -18,6 +18,7 @@ import { BackendService } from '../services/backend/backend.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { StartServiceService } from '../services/start/start-service.service';
 
 
 @Component({
@@ -29,38 +30,38 @@ export class HeaderComponent implements OnInit {
 
   uid: string;
   isHomePage: boolean = false;
+  userReady: boolean = false;
 
-  constructor(public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    console.log(this.router.url);
-    if (this.router.url == '/')  {
+    if (this.router.url == '/') {
       this.isHomePage = true;
-    } else { 
+    } else {
       this.isHomePage = false;
     }
-    this.authService.afauth.user.subscribe((action) => {
-      const data = action as User;
-      if(data) {
-        this.uid = data.uid;
-      }
-    }, (error) => {
-      console.log(error);
+  }
+
+  setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
+    this.uid = this.authService.getLoggedInUser();
+    const callable = this.functions.httpsCallable("users/setMyOrganization");
+    callable({ Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam }).subscribe({
+      next: (data) => {
+        window.location.reload()
+      },
+      error: (error) => {
+        console.error(error)
+      },
+      complete: () => console.info('Successful')
     });
   }
 
-  async setNewOrg(orgDomain: string, orgAppKey: string, selectedTeam: string) {
-    const callable = this.functions.httpsCallable("users/setMyOrganization");
-    await callable({Uid: this.uid, OrgDomain: orgDomain, OrgAppKey: orgAppKey, SelectedTeam: selectedTeam}).toPromise();
-    window.location.reload()
-  }
-
   startNewSprint() {
-    this.popupHandlerService.createNewSprintEnabled= true;
+    this.popupHandlerService.createNewSprintEnabled = true;
   }
 
   createNewTask() {
-    this.popupHandlerService.createNewTaskEnabled= true;
+    this.popupHandlerService.createNewTaskEnabled = true;
     this.popupHandlerService.resetTaskIds();
   }
 
@@ -77,7 +78,7 @@ export class HeaderComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/Home']);
   }
 
   organizationDetails() {
@@ -89,7 +90,11 @@ export class HeaderComponent implements OnInit {
   }
 
   socialPage() {
-    this.router.navigate(['/SocialPage']);
+    this.router.navigate(['/']);
+  }
+
+  kanbanBoard() {
+    this.router.navigate(['/KanbanBoard']);
   }
 
 }

@@ -27,9 +27,14 @@ export class ThemeComponent implements OnInit {
   showloader: boolean = false;
   componentName:string ="THEME";
   enableDarkTheme: boolean
+  presentThemeReady: boolean=false;
   constructor(public themeService: ThemeService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
+    this.themeService.presentTheme$.subscribe((data) => {
+      this.presentThemeReady = true;
+    });
+    
     if (this.appTheme == 'theme-dark') {
       this.enableDarkTheme = true;
     } else {
@@ -52,13 +57,20 @@ export class ThemeComponent implements OnInit {
     this.showloader = true;
     this.themeService.changeTheme(appTheme);
 
-    try {
-      const result = await callable({Uid: this.uid, AppTheme: appTheme }).toPromise();
-      this.showloader = false;
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
-  }
-
+    await callable({Uid: this.uid, AppTheme: appTheme }).subscribe({
+      next: (data) => {
+        console.log("Successful updated theme");
+        this.showloader = false;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Theme updated successfully')
+  });
 }
+} 
+  
+
+

@@ -17,9 +17,11 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ActivatedRoute } from '@angular/router';
-import { MyEducationData, MyExperienceData, MyProjectData } from 'src/app/Interface/UserInterface';
+import { MyEducationData, MyExperienceData, MyProjectData, User } from 'src/app/Interface/UserInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 
 @Component({
   selector: 'app-profile',
@@ -61,19 +63,27 @@ export class ProfileComponent implements OnInit {
   skills: string;
   website: string;
   username: string;
+  
+  sameUser: boolean = true;
 
   educations: MyEducationData;
   experiences: MyExperienceData;
   projects: MyProjectData;
 
-  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService) { }
+  userData : User[]
+
+  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private functions: AngularFireFunctions ) {4
+    this.route.paramMap.subscribe((params) => {
+      this.ngOnInit();
+    });
+   }
 
   ngOnInit(): void {
-    // this.popupHandler.resetPopUps();
+    this.popupHandler.resetPopUps();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
-    this.authService.userName =  this.username;
+    this.authService.userName = this.username;
     if(this.startService.showTeams) {
       this.readUser();
       this.organizationName = this.backendService.getOrganizationName();
@@ -81,7 +91,6 @@ export class ProfileComponent implements OnInit {
       this.managerEmail = this.startService.managerEmail;
       this.role = this.startService.role;
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.readUser();
@@ -94,27 +103,6 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
-
-    // this.authService.afauth.user.subscribe(data => {
-    //   this.authService.userAppSettingObservable.subscribe(data => {
-    //     if (data.SelectedOrgAppKey) {
-    //       this.backendService.organizationsData.subscribe(data => {
-    //         this.readUser();
-    //         this.organizationName = this.backendService.getOrganizationName();
-    //         this.applicationSettingsService.getTeamDetails(this.authService.getTeamId()).subscribe(team => {
-    //           this.teamName = team.TeamName;
-    //           this.managerEmail = team.TeamManagerEmail;
-    //           if (team.TeamManagerEmail == this.email) {
-    //             this.role = "Manager";
-    //           } else {
-    //             this.role = "Member";
-    //           }
-    //         });
-    //       });
-    //     }
-    //   });
-    // });
-
   }
 
   editProfile() {
@@ -184,24 +172,60 @@ export class ProfileComponent implements OnInit {
   }
 
   readUser() {
-    this.displayName = this.authService.userAppSetting.displayName;
-    this.email = this.authService.userAppSetting.email;
-    this.uid = this.authService.userAppSetting.uid;
-    this.aboutMe = this.authService.userAppSetting.AboutMe;
-    this.appTheme = this.authService.userAppSetting.AppTheme;
-    this.photoURL = this.authService.userAppSetting.photoURL;
-    this.phoneNumber = this.authService.userAppSetting.phoneNumber;
-    this.linkedInProfile = this.authService.userAppSetting.LinkedInProfile;
-    this.githubProfile = this.authService.userAppSetting.GithubProfile;
-    this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
-    this.skills = this.authService.userAppSetting.Skills;
-    this.website = this.authService.userAppSetting.Website;
-    if (this.website.includes("https://") == false) {
-      this.website = "https://" + this.website;
+    if(this.authService.userAppSetting.Username == this.username){
+      this.displayName = this.authService.userAppSetting.displayName;
+      this.email = this.authService.userAppSetting.email;
+      this.uid = this.authService.userAppSetting.uid;
+      this.aboutMe = this.authService.userAppSetting.AboutMe;
+      this.appTheme = this.authService.userAppSetting.AppTheme;
+      this.photoURL = this.authService.userAppSetting.photoURL;
+      this.phoneNumber = this.authService.userAppSetting.phoneNumber;
+      this.linkedInProfile = this.authService.userAppSetting.LinkedInProfile;
+      this.githubProfile = this.authService.userAppSetting.GithubProfile;
+      this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
+      this.skills = this.authService.userAppSetting.Skills;
+      this.website = this.authService.userAppSetting.Website;
+      if (this.website.includes("https://") == false) {
+        this.website = "https://" + this.website;
+      }
+      this.readUserEducation(this.uid);
+      this.readUserExperience(this.uid);
+      this.readUserProject(this.uid);
+
+      this.sameUser = true;
     }
-    this.readUserEducation(this.uid);
-    this.readUserExperience(this.uid);
-    this.readUserProject(this.uid);
+    else{
+      const data = this.userService.getUserNameData(this.username);
+      if(data != null){
+        console.log(data);
+        console.log(data.email);
+        this.displayName = data.displayName;
+      this.email = data.email;
+      this.uid = data.uid;
+      this.aboutMe = data.AboutMe;
+      this.photoURL = data.photoURL;
+      this.phoneNumber = data.phoneNumber;
+      this.linkedInProfile = data.LinkedInProfile;
+      this.githubProfile = data.LinkedInProfile;
+      this.dateOfJoining = data.DateOfJoining;
+      this.skills = data.Skills;
+      this.website = data.Website;
+      if (this.website.includes("https://") == false) {
+        this.website = "https://" + this.website;
+      }
+      this.readUserEducation(this.uid);
+      this.readUserExperience(this.uid);
+      this.readUserProject(this.uid);
+
+      this.sameUser = false;
+
+      }
+      else{
+        this.username = this.authService.userAppSetting.Username;
+        this.readUser();
+      }
+    }
+    
   }
 
   readUserEducation(uid: string) {

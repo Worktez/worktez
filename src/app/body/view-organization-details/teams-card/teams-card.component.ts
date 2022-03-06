@@ -37,27 +37,33 @@ export class TeamsCardComponent implements OnInit {
   teamToAddMember: Team
   teamToAddGithub: Team
   typeLink: string
+  updateTeamEnabled: boolean = false
+  teamToUpdate: Team
   componentName:string ="ORGANIZATION-DETAILS"
   constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {}
 
-  updateTeam(TeamId: string) {
-    this.popupHandlerService.updateTeamId = TeamId;
-    this.popupHandlerService.updateTeamEnabled = true;
+  updateTeam(team: Team) {
+    this.teamToUpdate = team;
+    this.updateTeamEnabled = true;
   }
 
   async deleteTeam() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/deleteTeam');
-    try {
-      const result = await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).toPromise();
-      this.team.TeamStatus = -1;
-    } catch (error) {
-      console.error("Error", error);
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+      next: (data) => {
+        this.team.TeamStatus = -1;
+      },
+      error: (error) => {
+        console.error("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful ')
+  });
+
   }
 
   enableAddMember(team: Team) {
@@ -86,5 +92,8 @@ export class TeamsCardComponent implements OnInit {
   addedProject(data: { completed: boolean, memberEmail: string }) {
     this.githubDetails.emit(true);
     this.addProjectEnabled = false;
+  }
+  teamUpdated(data: { completed: boolean }) {
+    this.updateTeamEnabled = false;
   }
 }

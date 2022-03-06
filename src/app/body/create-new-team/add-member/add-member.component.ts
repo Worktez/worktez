@@ -56,20 +56,25 @@ export class AddMemberComponent implements OnInit {
     } 
   }
 
-async addUpdateTeam() {
+addUpdateTeam() {
   this.organizationDomain = this.backendService.getOrganizationDomain();
   this.enableLoader = true;
   const callable = this.functions.httpsCallable('teams/addMember');
-  try {
-    const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.authservice.user.email, TeamDescription: this.teamDescription, TeamId: this.teamId }).toPromise();
-    this.enableLoader = false;
-    this.showClose = true;
-  } catch (error) {
-    this.enableLoader = false;
-    this.errorHandlerService.showError = true;
-    this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    console.error("Error", error);
-  }
+  
+  callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Add: this.memberEmail, TeamManager: this.authservice.user.email, TeamDescription: this.teamDescription, TeamId: this.teamId }).subscribe({
+    next: (data) => {
+      this.enableLoader = false;
+      this.showClose = true;
+      console.log("Successful added member");
+    },
+    error: (error) => {
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      this.enableLoader = false;
+      console.error("Error", error);
+    },
+    complete: () => console.info('Successful added member ')
+  });
 }
 
 addCreateTeam() {

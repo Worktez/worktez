@@ -19,6 +19,7 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 
 @Component({
@@ -29,17 +30,27 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 export class EditNoteComponent implements OnInit {
 
   @Output() editNoteCompleted = new EventEmitter<boolean>();
+  @Output() addNewNote = new EventEmitter();
   @Input('note') note: QuickNote;
   public quickNoteObservable: Observable<QuickNote>
   componentName:string = "QUICK-NOTES"
   editNote: QuickNote
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     
   }
+
+  createTask(){
+    this.popupHandlerService.createNewTaskEnabled= true;
+    this.popupHandlerService.resetTaskIds();
+    this.popupHandlerService.quickNotesTitle = this.note.Title;
+    this.popupHandlerService.quickNotesDescription = this.note.Note;
+    this.saveNote();
+    }
+
 
   async saveNote() {
     const uid = this.authService.getLoggedInUser();
@@ -48,15 +59,23 @@ export class EditNoteComponent implements OnInit {
     this.enableLoader = true
 
     const callable = this.functions.httpsCallable("quickNotes/editNote");
-    try {
-    const result = await callable({Uid: uid, Title: this.note.Title, Note: this.note.Note, LastUpdatedDate: date, LastUpdatedTime: time, DocId: this.note.DocId }).toPromise();
-    console.log("Note edited succesfully");
-    } catch(error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.error("Error", error);
-    }
+    
+    const result = await callable({Uid: uid, Title: this.note.Title, Note: this.note.Note, LastUpdatedDate: date, LastUpdatedTime: time, DocId: this.note.DocId }).subscribe({
+      next: (data) => {
+        console.log("Note edited succesfully");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successfully edited note')
+  });
     this.editNoteCompleted.emit(true);
+  }
+
+  addNote(){
+    this.addNewNote.emit();
   }
 
   close() {

@@ -54,6 +54,9 @@ export class CreateNewOrganizationComponent implements OnInit {
    }
 
   async submit() {
+    this.orgName = this.orgName.trimRight();
+    this.orgDomain = this.orgDomain.trimRight();
+    this.orgEmail = this.orgEmail.trimRight();
     let data = [
       { label: "organizationName", value: this.orgName },
       { label: "organizationDomain", value: this.orgDomain },
@@ -71,14 +74,20 @@ export class CreateNewOrganizationComponent implements OnInit {
     }
   }
 
-  async createNewOrganization() {
+  createNewOrganization() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('organization/createOrg');
-    await callable({OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).toPromise().then(result => {
-      this.orgId = result[2];
-      this.uploadLogo();
-      this.enableLoader = false;
-      this.router.navigate(["CreateNewTeam"]);
+    callable({OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).subscribe({
+      next: (result) => {
+        this.orgId = result[2];
+        this.uploadLogo();
+        this.enableLoader = false;
+        this.router.navigate(["CreateNewTeam"]);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => console.info(' successfully created new organization')
     });
   }
 

@@ -16,6 +16,17 @@
 
 const {db} = require("../application/lib");
 
+/**
+ * Description
+ * @param {any} documentName
+ * @param {any} PatchName
+ * @param {any} PatchDescription
+ * @param {any} CreationDate
+ * @param {any} UpdatedOn
+ * @param {any} LastUsedByOrg
+ * @param {any} LastUsedByUid
+ * @return {any}
+ */
 exports.setPatch = function(documentName, PatchName, PatchDescription, CreationDate, UpdatedOn, LastUsedByOrg, LastUsedByUid) {
   const promise = db.collection("Patches").doc(documentName).set({
     Name: PatchName,
@@ -29,11 +40,22 @@ exports.setPatch = function(documentName, PatchName, PatchDescription, CreationD
   return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} documentName
+ * @param {any} updateJson
+ * @return {any}
+ */
 exports.updatePatchData = function(documentName, updateJson) {
   const promise = db.collection("Patches").doc(documentName).update(updateJson);
   return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} documentName
+ * @return {any}
+ */
 exports.getPatchData = function(documentName) {
   const getPatchData = db.collection("Patches").doc(documentName).get().then((patch) => {
     if (patch.exists) {

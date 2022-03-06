@@ -15,6 +15,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { ValidationService } from '../../../services/validation/validation.service';
 
 @Component({
   selector: 'app-link',
@@ -33,25 +34,53 @@ export class LinkComponent implements OnInit {
   enableLoader: boolean = false;
   showClose: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService) { }
 
   ngOnInit(): void {
   }
 
   async submit() {
-    this.enableLoader = true;
-    const callable = this.functions.httpsCallable('linker/setLink');
-    try {
-      const result = await callable({OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).toPromise();
-      this.enableLoader = false;
-      this.showClose = true;
-      return;
-    } catch (error) {
-      this.enableLoader = false;
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log("Error", error);
+      this.enableLoader = true;
+    if(this.linkURL){
+      if(this.linkURL.includes("http://") == true){
+      this.linkURL = this.linkURL;
     }
+    else if(this.linkURL.includes("https://")== false){
+      this.linkURL = "https://" + this.linkURL;
+    }
+    }
+    
+    let data = [{ label: "title", value: this.linkType },
+    { label: "url", value: this.linkURL }];
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      return res;
+    });
+
+
+    if(condition){
+      const callable = this.functions.httpsCallable('linker/setLink');
+      await callable({OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL}).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+          this.enableLoader = false;
+          this.showClose = true;
+          return;
+        },
+        error: (error) => {
+          this.enableLoader = false
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.log("Error", error);
+          console.error(error);
+        },
+        complete: () => console.info('Successful')
+    });
+    }
+    else{
+      console.log("Inputs Are Not Valid, Link Not Added");
+      this.enableLoader = false;
+    }
+  
   }
 
   close() {

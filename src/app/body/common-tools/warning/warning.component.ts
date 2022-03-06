@@ -37,7 +37,6 @@ export class WarningComponent implements OnInit {
   logWorkEnabled: boolean = false
   editTaskEnabled: boolean = false
   userLoggedIn: boolean = false
-  // task: Tasks
   todayDate: string
   time: string
   orgDomain: string
@@ -55,14 +54,19 @@ export class WarningComponent implements OnInit {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('tasks/deleteTask');
     const appKey = this.backendService.getOrganizationAppKey();
-    try {
-      const result = await callable({AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Uid: this.uid }).toPromise();
-      this.router.navigate(['/']);
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log("Error", error);
-    }
+    
+    await callable({AppKey: appKey, Id: this.task.Id, SprintNumber: this.task.SprintNumber, Project: this.task.Project, Status: this.task.Status, Date: this.todayDate, Time: this.time, Uid: this.uid }).subscribe({
+      next: (data) => {
+        this.router.navigate(['/']);
+        console.log("Successful");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('warning')
+  }); 
     location.reload();
   }
 

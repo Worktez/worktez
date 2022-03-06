@@ -24,22 +24,56 @@ const { getMyNotesList } = require("./tark/getMyNotes");
 const { deleteNote } = require("./tark/deleteNote");
 const { editNote } = require("./tark/editNote");
 
+/**
+ * Description
+ * @param {any} "/addNote"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/addNote", (req, res) => {
     addNote(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/getMyNotesList"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getMyNotesList", (req, res) => {
     getMyNotesList(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/deleteNote"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/deleteNote", (req, res) => {
     deleteNote(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/editNote"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/editNote", (req, res) => {
     editNote(req, res);
 });
 
+/**
+ * Description
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.quickNotes = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
         fastify.ready((err) => {

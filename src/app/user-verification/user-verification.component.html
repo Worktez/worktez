@@ -11,8 +11,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container py-5" *ngIf="authService.afauth.user | async; else showText">
-    <h1 class="py-4">Worktrolly</h1>
+<div class="container py-5" *ngIf="userDataReady; else showText">
+    <h1 class="py-4">Worktez</h1>
     <div class="card text-center">
         <div class="card-body">
             <h2 class="card-title">Join {{teamName}}</h2>
@@ -24,7 +24,7 @@
 <ng-template #showText>
     <div class="row align-items-center justify-content-center" class="p-5">
         <div class="col text-center">
-            <h1>Login to Join Worktrolly</h1>
+            <h1>Login to Join Worktez</h1>
         </div>
     </div>
 </ng-template>

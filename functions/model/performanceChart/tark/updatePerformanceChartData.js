@@ -23,6 +23,7 @@
 const { getAllTasks } = require("../../tasks/lib");
 const { setOrganizationsChart } = require("../lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
+const { updatedUserPerformanceChartData } = require("./updatedUserPerformanceChartData");
 
 exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprintRange) {
     let teamName;
@@ -34,6 +35,12 @@ exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprin
     }
     getTeamUseTeamId(orgDomain, teamId).then((team) => {
         teamName = team.TeamName;
+        const teamMembers = team.TeamMembers;
+
+        teamMembers.forEach((element) => {
+            updatedUserPerformanceChartData(orgDomain, element, sprintRange);
+        });
+
         const promise1 = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
             let i; let storyPoint; let data;
             for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {

@@ -24,15 +24,34 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 const { getLinkDetails } = require("./tark/getLinkDetails");
 const { setLinkDetails } = require("./tark/setLinkDetails");
 
-
+/**
+ * Description
+ * @param {any} "/getLink"
+ * @param {any} (req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/getLink", (req, res) => {
   getLinkDetails(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/setLink"
+ * @param {any} (req
+ * @param {any} res
+ * @returns {any}
+ */
 fastify.post("/setLink", (req, res) => {
   setLinkDetails(req, res);
 });
 
+/**
+ * Description
+ * @param {any} (req
+ * @param {any} res
+ * @returns {any}
+ */
 exports.linker = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {

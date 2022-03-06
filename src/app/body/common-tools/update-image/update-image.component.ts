@@ -57,14 +57,19 @@ export class UpdateImageComponent implements OnInit {
 
   async setProfilePic() {
     const callable = this.functions.httpsCallable('users/updateProfilePic');
-    try {
-      await callable({Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).toPromise();
-      console.log("Successful");
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log("error");
-    }
+   
+    await callable({Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
+      next: (data) => {
+        console.log("Successful");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful updated image')
+  });
+
     this.cropPhotoDone();
   }
 

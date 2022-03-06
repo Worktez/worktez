@@ -43,34 +43,26 @@ export class CreatePostComponent implements OnInit {
     this.createPost();
   }
 
-  async createPost() {
+  createPost() {
     this.enableLoader = true;
-    console.log("done");
     const uid = this.authService.getLoggedInUser();
     const date = this.toolService.date();
     const time = this.toolService.time();
 
     const callable = this.functions.httpsCallable('socialPage/addPost');
-    try {
-      const result = await callable({Uid:uid, Post: this.post, LastUpdatedDate: date, LastUpdatedTime: time  }).toPromise();
-      console.log("done2");
-    } catch (error) {
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
-      this.enableLoader = false;
-    }
+    callable({Uid:uid, Post: this.post, LastUpdatedDate: date, LastUpdatedTime: time  }).subscribe({
+      next: (data) => {
+        console.log("Successfully");
+      },
+      error: (error) => {
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
+        this.enableLoader = false;
+        console.error(error);
+      },
+      complete: () => console.info('Successfully added post')
+    });
+  
     this.close();
-    // if(this.description != "" ) {
-    //   const callable = this.functions.httpsCallable("socialPage/addPost");
-    //   callable({Uid: uid, Description: this.description, Company: this.company, LastUpdatedDate: date, LastUpdatedTime: time }).pipe(map(res=>{
-    //     return res
-    //   })).subscribe((data) => {
-    //     this.enableLoader = false;
-    //    //this.CreatePostCompleted.emit(true);
-    //   });
-    // }
-
-    //   this.enableLoader = false;
-    // this.close();
     }
 
 

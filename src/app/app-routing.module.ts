@@ -45,19 +45,21 @@ import { CopyrightComponent } from './body/copyright/copyright.component'
 import { ContributorsComponent } from './body/contributors/contributors.component';
 import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
+import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
+import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: 'Home', component: HomeComponent},
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
   { path: 'Board', component: BoardComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TasksEvaluation', component: TasksEvaluationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'SocialPage', component: SocialPageComponent},
+  { path: '', component: SocialPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
@@ -70,6 +72,7 @@ const routes: Routes = [
   { path: 'Patch8', component: Patch8Component },
   { path: 'Patch9', component: Patch9Component },
   { path: 'Patch10', component: Patch10Component },
+  { path: 'SchedularPatch', component: SchedularPatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'UpdateTeam/:teamId', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard]},
@@ -81,7 +84,8 @@ const routes: Routes = [
   { path: 'contributors', component: ContributorsComponent },
   { path: 'termsandcondition', component: TermsAndConditionComponent},
   { path: 'releasenotes', component: ReleaseNotesComponent },
-  { path: '**', pathMatch: 'full', component: PagenotfoundComponent }
+  { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
+  { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 
 @NgModule({

@@ -12,7 +12,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Sprint, SprintDataId, Team, TeamDataId } from 'src/app/Interface/TeamInterface';
+import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -52,7 +52,6 @@ export class BoardComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.readSprintData();
     } else {
-      this.startService.startApplication();
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
@@ -69,28 +68,32 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  async getSprintDetails(teamId: string) {
+  getSprintDetails(teamId: string) {
     this.sprintNotExist = false;
     this.showContent = false;
     this.applicationSettingsService.editedTeamId = teamId;
     this.startService.selectedTeamId = teamId;
+    this.authService.userAppSetting.SelectedTeamId = teamId;
     this.startService.changeTeam = true;
-    this.startService.readApplicationData();
+
     const callable = this.functions.httpsCallable('users/updateSelectedTeam');
-    try {
-      const result = await callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).toPromise();
-      console.log("Successful updated Selected Team in db");
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log(error);
-    }
+    callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
+        next: (data) => {
+          this.readSprintData();
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
   }
 
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      if(this.authService.userAppSetting.SelectedTeamId==this.applicationSettingsService.team.TeamId){
+      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
@@ -107,7 +110,7 @@ export class BoardComponent implements OnInit {
             this.workPercentCalc = 0;
           } else {
             this.workPercentCalc = Math.abs((parseInt(this.DaysUp)) /((this.EDate - this.SDate)/(1000 * 60 * 60 * 24)) * 100);
-        }
+          }
           this.workPercentage = parseInt(this.workPercentCalc);
           this.showContent = true;
         } else {
@@ -116,12 +119,19 @@ export class BoardComponent implements OnInit {
           this.sprintNotExist = true;
         }
       });
-    } else{
-      this.applicationSettingsService.getTeamDetails(this.authService.userAppSetting.SelectedTeamId).subscribe(data => {
-        this.readSprintData();
+    } else {
+      this.startService.readApplicationData();
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
+            if(data) {
+              this.readSprintData();
+            }
+          });
+        }
       });
     }
-  }else {
+  } else {
       this.showContent = true
       this.changeSprintNumber(-1);
     }

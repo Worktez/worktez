@@ -15,7 +15,7 @@
     <mat-icon fontSet="material-icons" class="align-middle">
         notes
     </mat-icon>
-    QuickNotes
+    Quick Note
 </button>
 <ng-container *ngIf="showNotesList">
     <div class="card" style="width: 18rem;">
@@ -33,7 +33,9 @@
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
-                <ng-container *ngIf="quickNoteObservable|async; else loader">
+                <ng-container *ngIf="gotQuickNotes; else loader">
+                <div *ngIf="noNotes;" class="noNotes">No notes Added</div>
+
                     <ng-container *ngFor="let item of notes">
                         <li class="list-group-item" id="note">
                             <div class="row">
@@ -63,9 +65,9 @@
 </ng-container>
 
 <ng-container *ngIf="showAddNote">
-    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)"></app-addnew-note>
+    <app-addnew-note (addNoteCompleted)="addNoteCompleted($event)" ></app-addnew-note>
 </ng-container>
 
 <ng-container *ngIf="openEditNote">
-    <app-edit-note [note]="selectedNote" (editNoteCompleted)="editNoteCompleted($event)"></app-edit-note>
+    <app-edit-note [note]="selectedNote" (editNoteCompleted)="editNoteCompleted($event)"(addNewNote)="openAddNote()"></app-edit-note>
 </ng-container>

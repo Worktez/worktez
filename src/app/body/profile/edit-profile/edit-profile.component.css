@@ -79,3 +79,8 @@ input:focus {
     color: var(--secondary-color);
     font-size: 48px;
 }
+
+#check_availability{
+    margin: 0;
+  position: absolute;
+}

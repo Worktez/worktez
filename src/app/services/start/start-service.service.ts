@@ -12,8 +12,10 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Team } from 'src/app/Interface/TeamInterface';
+import { User } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from '../applicationSettings/application-settings.service';
 import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
@@ -39,6 +41,10 @@ export class StartServiceService {
   teamName: string;
   managerEmail: string;
   role: string;
+  userReady: boolean = false
+  user: User
+  currentUrl: string = ''
+  applicationStarted: boolean = false
 
   private userDataState: Subject<boolean> = new Subject<boolean>();
   public userDataStateObservable = this.userDataState.asObservable();
@@ -46,50 +52,85 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-
-  constructor(public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
+  constructor(private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
 
   startApplication() {
+    this.applicationStarted = true
+    this.currentUrl = window.location.pathname;
     this.userDataState.next(false);
     this.accessLevel = 0;
-    this.authService.afauth.user.subscribe(data => {
-      this.userEmail = data.email;
-      this.uid = data.uid;
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          if(data.SelectedTeamId != "") {
-            this.selectedTeamId = data.SelectedTeamId;
-            this.teamIdExists = true;
-            
-            this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
-            this.accessLevel = 1;
-            if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
-              this.selectedTeamId = this.applicationSettingsService.editedTeamId;
-            } else {
-              this.selectedTeamId = data.SelectedTeamId;
-              this.applicationSettingsService.editedTeamId = this.selectedTeamId;
-            }
-            this.backendService.organizationsData.subscribe(data => {
-              this.authService.myTeamsListObservable.subscribe(data => {
-                this.teams = data;
-                this.showTeams = true;
-                this.readApplicationData();
-                this.userDataState.next(true);
-              });
-            });
-          } else {
-            this.teamIdExists = false;
-          }
+    this.authService.afauth.user.subscribe({
+      next: (action) => {
+        const data = action as User;
+        if (data) {
+          this.userReady = true;
+          this.uid = data.uid;
+          this.userEmail = data.email;
+          this.user = data
+          this.authService.user = data;
+          this.authService.getUserSettings();
+          this.loadUserAppSettings();
+          if(this.currentUrl == '/')
+            this.router.navigate(['']);
+        } else {
+          this.userReady = false;
+          if(this.currentUrl == '/')
+            this.router.navigate(['/Home']);
         }
-      });
+        this.authService.completedLoadingApplication = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.userReady = false;
+        if(this.currentUrl == '/')
+          this.router.navigate(['/Home']);
+      },
+      complete: () => console.log("Getting User Data Complete")
+    });
+  }
+
+  loadUserAppSettings() {
+    this.authService.userAppSettingObservable.subscribe(data => {
+      if (data.SelectedOrgAppKey) {
+        if(!this.authService.landingToSocial) {
+          this.authService.landingToSocial = true;
+          if(this.currentUrl == '/')
+            this.router.navigate(['/MyDashboard']);
+        }
+        if(data.SelectedTeamId != "") {
+          this.selectedTeamId = data.SelectedTeamId;
+          this.teamIdExists = true;
+          
+          this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
+          this.accessLevel = 1;
+          if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
+            this.selectedTeamId = this.applicationSettingsService.editedTeamId;
+          } else {
+            this.selectedTeamId = data.SelectedTeamId;
+            this.applicationSettingsService.editedTeamId = this.selectedTeamId;
+          }
+          this.backendService.organizationsData.subscribe(data => {
+            this.authService.myTeamsListObservable.subscribe(data => {
+              this.teams = data;
+              this.showTeams = true;
+              this.readApplicationData();
+              this.userDataState.next(true);
+            });
+          });
+        } else {
+          this.teamIdExists = false;
+        }
+      }
     });
   }
 
   readApplicationData() {
+    this.showTeamsData = false;
     this.applicationDataState.next(false);
+    this.applicationSettingsService.team = undefined;
+    this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
-      
       if (this.teamData.TeamId == this.selectedTeamId) {
         if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
           this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
@@ -101,7 +142,6 @@ export class StartServiceService {
           this.changeTeam = false;
         }
         this.teamMembers = this.teamData.TeamMembers;
-
       }
       this.teamName = teams.TeamName;
       this.managerEmail = teams.TeamManagerEmail;
@@ -114,5 +154,9 @@ export class StartServiceService {
       this.applicationDataState.next(true);
       return this.teamData;
     });
+  }
+
+  stopApplication() {
+    this.applicationStarted = false;
   }
 }

@@ -15,7 +15,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
+import { UserAppSetting } from 'src/app/Interface/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,11 +43,29 @@ export class UserServiceService {
         return newArray[0];
       } else {
         console.log("User Not Found Loading empty User")
-        // this.userReady = false;
         return newArray[0]
       }
     } else {
       this.userReady = false;
+      return undefined
+    }
+  }
+
+  getUserNameData (username) {
+    if(this.users.length) {
+      const newArray = this.users.filter((data)=>{
+        if(data.Username == username) {
+          return data
+        }
+      });
+      if(newArray.length) {
+        return newArray[0];
+      } else {
+        console.log("User Not Found Loading empty User")
+        return newArray[0]
+      }
+    } else {
+      
       return undefined
     }
   }
@@ -86,7 +104,7 @@ export class UserServiceService {
         if(this.users.length == 0) {
           this.users = data
         } else {
-          this.users.concat(data)
+          this.users = this.users.concat(data)
         }
         this.newEmails = []
         this.userReady = true
@@ -104,7 +122,7 @@ export class UserServiceService {
         if(this.users.length == 0) {
           this.users = data
         } else {
-          this.users.concat(data)
+          this.users = this.users.concat(data)
         }
         this.newUids = []
         this.userReady = true

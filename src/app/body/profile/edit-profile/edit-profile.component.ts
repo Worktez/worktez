@@ -18,6 +18,8 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-edit-profile',
@@ -46,27 +48,37 @@ export class EditProfileComponent implements OnInit {
   public userAvailable: boolean = false;
   oldUserName: string
 
-  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,  public authService: AuthService) { }
 
   ngOnInit(): void {
     this.oldUserName = this.userName;
+    this.email = this.authService.userAppSetting.email;
   }
 
   async editProfile() {
     if(this.userAvailable == true || this.oldUserName == this.userName) {
       this.enableLoader = true
       const callable = this.functions.httpsCallable('users/updateUser');
-      try {
-        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).toPromise();
+
+        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).subscribe({
+          next: (data) => {
+            console.log("Successful");
+            this.showClose = true
+          },
+          error: (error) => {
+            console.log("error");
+            this.enableLoader = false
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            console.error(error);
+          },
+          complete: () => console.info('Successfully edited profile')
+      });
         console.log("Successful");
         this.showClose = true
-      } catch (error) {
-        console.log("error");
-        this.enableLoader = false
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       }
-    } else {
+
+      else {
       console.log("User Not Available");
     }
   }
@@ -77,18 +89,21 @@ export class EditProfileComponent implements OnInit {
 
   async checkAvailability() {
     const callable = this.functions.httpsCallable('users/checkAvailableUsername');
-    try {
-      const result = await callable({Username: this.userName }).toPromise();
-      if(result == "User Already Available"){
-        this.userAvailable = false;
-      } else {
-        this.userAvailable = true;
-      }
-    } catch (error) {
-      console.log(error);
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+      await callable({Username: this.userName }).subscribe({
+        next: (result) => {
+          if(result == "User Already Available"){
+            this.userAvailable = false;
+          } else {
+            this.userAvailable = true;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful ')
+    });
   }
 
 }

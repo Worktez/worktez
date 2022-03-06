@@ -12,10 +12,12 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #currentTab {
-    color: var(--secondary-color);
-    font-weight: bolder;
+    color: #727070;
+    font-weight: light;
+    font-size: 20px;
 }
 
 #navbarString {
-    color: var(--text);
+    color: #727070;
+    font-size: 20px;
 }

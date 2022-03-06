@@ -41,7 +41,6 @@ exports.deleteTask = function(request, response) {
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
     let status = 200;
-
     let assigneeName = "";
     let senderName = "";
 

@@ -47,6 +47,7 @@ export class ApplicationSettingsService {
   public notificationListObservable: Observable<Notification[]>;
 
   teamDataReady: boolean = false;
+  teamAvailable: boolean=false;
 
   constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
@@ -57,24 +58,27 @@ export class ApplicationSettingsService {
       const callable = this.functions.httpsCallable("teams/getTeamData");
       this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
         map(actions => {
-          this.team = actions.resultData as Team
-          this.status = this.team.StatusLabels;
-          this.priority = this.team.PriorityLabels;
-          this.difficulty = this.team.DifficultyLabels;
-          this.type = this.team.Type;
-          this.project = this.backendService.organizationDetails.TeamsId;
-          this.team.TeamMembers.forEach(element => {
+          const data = actions.resultData as Team
+          if(this.team == undefined) {
+            this.team = data
+            this.teamAvailable = true;
+            this.status = this.team.StatusLabels;
+            this.priority = this.team.PriorityLabels;
+            this.difficulty = this.team.DifficultyLabels;
+            this.type = this.team.Type;
+            this.project = this.backendService.organizationDetails.TeamsId;
+          }
+
+          data.TeamMembers.forEach(element => {
             this.userService.checkAndAddToUsersUsingEmail(element);
           });
-
           if(!this.userService.userReady) {
             this.userService.fetchUserData().subscribe(()=>{
               this.teamDataReady = true;
-              console.log("teamDataReady : ", this.teamDataReady);
             });
           }
 
-          return this.team;
+          return data;
       }));
     }
     return this.teamData;
@@ -90,10 +94,10 @@ export class ApplicationSettingsService {
     return this.sprintDataObservable;
   }
 
-  getNotificationsList() {
+  getNotificationsList(notificationStatus: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("notifications/getNotifications");
-    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain}).pipe(map(actions => {
+    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
         return actions as Notification[];
     }));
     return this.notificationListObservable;

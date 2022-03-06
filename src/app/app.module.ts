@@ -107,6 +107,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
@@ -137,6 +138,10 @@ import { CreatePostComponent } from './body/social-page/create-post/create-post.
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
 import { GithubLinkComponent } from './body/github-link/github-link.component';
+import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
+import { UpdateTeamComponent } from './body/update-team/update-team.component';
+
+import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 
 @NgModule({
   declarations: [
@@ -243,6 +248,10 @@ import { GithubLinkComponent } from './body/github-link/github-link.component';
     PostsComponent,
     WhatsNewComponent,
     GithubLinkComponent,
+    KanbanBoardComponent,
+    SchedularPatchComponent,
+    
+    UpdateTeamComponent,
   ],
   imports: [
     BrowserModule,
@@ -262,7 +271,8 @@ import { GithubLinkComponent } from './body/github-link/github-link.component';
     MatBadgeModule,
     MatSortModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    DragDropModule
   ],
   providers: [
     AuthService,
