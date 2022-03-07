@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
@@ -36,11 +49,17 @@ export class Patch5Component implements OnInit {
     this.showLoader = true;
     console.log("Patch5 function running");
     console.log(this.orgDomain);
-    const callable = this.functions.httpsCallable('patch');
-    await callable({ mode: "patch5", OrgDomain: this.orgDomain, Uid: this.uid, Key: this.fieldName, Value: this.fieldValue}).toPromise().then(result => {
-      this.showLoader = false;
-      console.log(result);
-      alert(result);
+    const callable = this.functions.httpsCallable('patch/patch5');
+    await callable({OrgDomain: this.orgDomain, Uid: this.uid, Key: this.fieldName, Value: this.fieldValue}).subscribe({
+      next: (result) => {
+        this.showLoader = false;
+        console.log(result);
+        alert(result);
+      },
+      error: (error) => {
+        
+      },
+      complete: () => console.info('successful')
     });
   }
 

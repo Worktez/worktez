@@ -1,0 +1,45 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+.container {
+    border: var(--primary-border);
+    background-color: var(--secondary-bg);
+    color: var(--text);
+  }
+  .btn {
+    background-color: var(--secondary-color);
+    border: var(--primary-border);
+    color: var(--button-text);
+  }
+  #navbarMenu {
+    background-color: var(--primary-color);
+  }
+  #font {
+    font-size: 20px;
+  }
+  
+  #weigh {
+    font-weight: bold;
+  }
+  
+  #head {
+    font-weight: bolder;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border: var(--primary-border);
+  } 

@@ -1,9 +1,21 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-sprint-evaluation-graph',
@@ -12,14 +24,15 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class SprintEvaluationGraphComponent implements OnInit {
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions) { }
+  constructor(public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   showLoader: boolean = false;
   @Input("userEmail") userEmail: string;
   @Input("currentSprint") currentSprintNumber: number;
   @Input("teamId") teamId: string;
   @Input("teamMembers") teamMembers: string[];
-  data: Observable<[]>;
+  data: [];
+  componentName:string = "SPRINT-EVALUATION-GRAPH";
   columnNames: string[] = ["Sprints", "Start", "Mid", "End"];
   teamMember: string;
   sprintRange1: number;
@@ -36,17 +49,25 @@ export class SprintEvaluationGraphComponent implements OnInit {
 
   async getData() {
     let orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('performanceChart');
-    try {
-      this.data = await callable({ mode: "sprintEvaluationGraph", OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
+    const callable = this.functions.httpsCallable('performanceChart/sprintEvaluationGraph');
+
+      callable({OrganizationDomain: orgDomain,SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId}).pipe(
         map(actions => {
-          console.log(actions.data);
-          return actions.data as [];
-        }));
-      this.showLoader = false;
-    } catch(error) {
-      console.log(error);
-    }
+            const data= actions.data as [];
+            return data
+        })).subscribe({
+          next: (data) => {
+            this.data=data.sort();
+            this.showLoader = false;
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.showLoader = false;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+            console.error(error);
+          },
+          complete: () => console.info('Getting Sprint Evaluation data successful')
+        });
   }
   onGetRange(range) {
     this.showLoader = true;

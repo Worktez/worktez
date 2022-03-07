@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 .header {
     background-color: var(--header-bg);
     color: var(--text);
@@ -26,7 +39,26 @@
     background-color: var(--button-hover-bg);
     cursor: pointer;
 }
-
+.nav-item {
+    display: inline-flex;
+}
+.nav-link {
+    color: var(--primary-color);
+    font-size: medium;
+}
+.nav-btn{
+    background-color: var(--hover) !important;
+    color: white;
+    margin-right: 20px;
+}
+.btn{
+    background-color: var(--secondary-color);
+}
+#brand_img{
+    width:125px;
+    height:45px;
+    margin-left: 55%;
+}
 #navbarDropdownBoards,
 #navbarDropdownTeam,
 #navbarDropdownCreate {

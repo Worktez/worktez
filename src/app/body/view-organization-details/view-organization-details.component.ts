@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
@@ -6,6 +19,8 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-view-organization-details',
@@ -20,23 +35,28 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
 
-  constructor(public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService) { }
+  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        this.getOrganizationDetails();
+
+    if(this.startService.showTeams) {
+      this.getOrganizationDetails();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.getOrganizationDetails();
+        }
       });
-    });
+    }
   }
 
   getOrganizationDetails() {
     this.showLoader = true;
     const appKey = this.authService.getAppKey();
     this.teams = [];
-    this.backendService.getOrgDetails(appKey).subscribe(data => {
+    this.backendService.organizationsData.subscribe(data => {
       this.organization = data;
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);
@@ -52,7 +72,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   createTeam() {
-    this.router.navigate(['/CreateNewTeam']);
+    this.popupHandlerService.createNewTeamEnabled = true;
   }
 
   updatedDetails(data) {

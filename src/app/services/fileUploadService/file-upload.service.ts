@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -16,7 +29,7 @@ export class FileUploadService {
   public fileUploadStatus: boolean = false;
   taskId: string = "";
 
-  filesData: Observable<FileData[]>
+  filesData: FileData[]
 
   constructor(private storage: AngularFireStorage, private functions: AngularFireFunctions, private backendService: BackendService, private authService: AuthService, private toolsService: ToolsService) { }
 
@@ -25,7 +38,7 @@ export class FileUploadService {
     const filePath = `${basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
-  
+
     uploadTask.snapshotChanges().pipe(
       finalize(() => {
         storageRef.getDownloadURL().subscribe(downloadURL => {
@@ -37,12 +50,11 @@ export class FileUploadService {
         });
       })
     ).subscribe();
-  
+
     return uploadTask.percentageChanges();
   }
 
   async saveFileData(fileUpload: FileUpload, basePath: string, folderName: string) {
-    const appKey = this.backendService.getOrganizationAppKey();
 
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -52,14 +64,65 @@ export class FileUploadService {
     const lastModified = fileUpload.file.lastModified;
     const size = fileUpload.file.size;
 
-    const callable = this.functions.httpsCallable( 'librarian' );
-    if ( folderName == "Logo") {
-      await callable( { mode: "UploadLogoFile", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    } else if(folderName == "Documents") {
-      await callable( { mode: "UploadFileToOrgDocuments", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
-    }
-     else {
-      await callable( { mode: "UploadFileToTask", BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time } ).toPromise();
+    if (folderName == "ContributorsDocuments") {
+      const callable = this.functions.httpsCallable('librarian/uploadFileToContributorsDocuments');
+      await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Date: todayDate, Time: time }).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+        },
+        error: (error) => {
+          
+        },
+        complete: () => console.info('Successful ')
+    });
+
+    } else if (folderName == "ProfilePic") {
+      const callable = this.functions.httpsCallable('librarian/uploadUserProfilePic');
+      await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Uid: this.authService.user.uid, Date: todayDate, Time: time }).subscribe({
+        next: (data) => {
+          console.log("Successful ");
+        },
+        error: (error) => {
+         
+        },
+        complete: () => console.info('Successful')
+    });
+    } else {
+      const appKey = this.backendService.getOrganizationAppKey();
+      if (folderName == "Logo") {
+        const callable = this.functions.httpsCallable('librarian/uploadLogoFile');
+        await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time }).subscribe({
+          next: (data) => {
+            console.log("Successful ");
+          },
+          error: (error) => {
+
+          },
+          complete: () => console.info('Successful')
+      });
+      } else if (folderName == "Documents") {
+        const callable = this.functions.httpsCallable('librarian/uploadFileToOrgDocuments');
+        await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time }).subscribe({
+          next: (data) => {
+            console.log("Successful ");
+          },
+          error: (error) => {
+            
+          },
+          complete: () => console.info('Successful ')
+      });
+      } else {
+        const callable = this.functions.httpsCallable('librarian/uploadFileToTask');
+        await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, TaskId: folderName, Size: size, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time }).subscribe({
+          next: (data) => {
+            console.log("Successful");
+          },
+          error: (error) => {
+            
+          },
+          complete: () => this.readFiles(this.backendService.getOrganizationDomain(), folderName)
+      });
+      }
     }
     this.fileUploadStatus = false;
   }
@@ -69,11 +132,19 @@ export class FileUploadService {
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
 
-    const callable = this.functions.httpsCallable( 'librarian' );
-    return await callable( { mode: "DeleteFilesInTask", FileName: fileName, TaskId: taskId, AppKey: appKey,  Uid: this.authService.user.uid, Date: todayDate, Time: time, TaskFileDocumentName:  taskFileDocumentName} ).toPromise();
+    const callable = this.functions.httpsCallable('librarian/deleteFilesInTask');
+    return await callable({ FileName: fileName, TaskId: taskId, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time, TaskFileDocumentName: taskFileDocumentName }).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+      },
+      error: (error) => {
+      
+      },
+      complete: () =>  this.readFiles(this.backendService.getOrganizationDomain(), taskId)
+  });
   }
 
-  private deleteFileStorage(name: string, basePath:string): void {
+  private deleteFileStorage(name: string, basePath: string): void {
     const storageRef = this.storage.ref(basePath);
     storageRef.child(name).delete();
   }
@@ -85,19 +156,62 @@ export class FileUploadService {
     });
   }
 
+  private async deleteFileFromDBOrg(fileName: string, fileUrl: string, orgFileDocumentName: string) {
+    const appKey = this.backendService.getOrganizationAppKey();
+    const todayDate = this.toolsService.date();
+    const time = this.toolsService.time();  
+    const callable = this.functions.httpsCallable('librarian/deleteFilesInOrg');
+    return await callable({ FileName: fileName, FileUrl: fileUrl, AppKey: appKey, Uid: this.authService.user.uid, Date: todayDate, Time: time, OrgFileDocumentName: orgFileDocumentName }).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+      },
+      error: (error) => {
+      
+      },
+      complete: () => console.info('Successful')
+  });
+    }
+
+  async deleteFileOrg(file: FileData) {
+    this.deleteFileStorage(file.FileName, file.BasePath);
+    this.deleteFileFromDBOrg(file.FileName, file.FileUrl, file.OrgFileDocumentName, ).then((data) => {
+    this.readFiles(this.backendService.getOrganizationDomain(), "Documents");
+    });
+    }
+
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
-      const callable = this.functions.httpsCallable("librarian");
-      if(id == "Documents") {
-        this.filesData = callable({ mode: "GetFilesInOrgDocument", OrgDomain: orgDomain}).pipe(
+
+      if (id == "Documents") {
+        const callable = this.functions.httpsCallable("librarian/getFilesInOrgDocument");
+        callable({ OrgDomain: orgDomain }).pipe(
           map(actions => {
             return actions.data as FileData[];
-        }));
+          })).subscribe({
+            next: (data) =>{
+              this.filesData=data;
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.log("Getting Organisation Files Data Complete")
+          }
+          );
       } else {
-        this.filesData = callable({ mode: "GetFilesInTask", OrgDomain: orgDomain, Id: id }).pipe(
+        const callable = this.functions.httpsCallable("librarian/getFilesInTask");
+        callable({ OrgDomain: orgDomain, Id: id }).pipe(
           map(actions => {
             return actions.data as FileData[];
-        })); 
+          })).subscribe({
+            next: (data) =>{
+              this.filesData=data;
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.log("Getting Task Details Page Files Data Complete")
+          }
+          );
       }
     }
   }

@@ -1,4 +1,17 @@
-<div class="custom-control custom-switch custom-switch-md" *ngIf="(themeService.presentTheme$ | async)">
+<!--/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/-->
+<div class="custom-control custom-switch custom-switch-md" *ngIf="presentThemeReady">
   <div class="row">
     <div class="col-3 pl-5">
       <span class="material-icons">dark_mode</span>

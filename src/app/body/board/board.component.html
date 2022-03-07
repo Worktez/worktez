@@ -1,8 +1,20 @@
-<ng-container *ngIf="accessLevel; else unauthorizedAccess">
-    <div class="row p-4" *ngIf="showTeams">
+<!--/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/-->
+    <div class="row p-4" *ngIf="startService.showTeams">
         <div class="col-md-2 pb-2">
             <div class="vertical-menu">
-                <ng-container *ngFor="let item of teams">
+                <ng-container *ngFor="let item of startService.teams">
                     <div (click)="getSprintDetails(item)">
                         <app-feature-card [cardName]="item"></app-feature-card>
                     </div>
@@ -10,9 +22,9 @@
             </div>
             <div class="vertical-menu-mobile">
                 <div class="btn-group">
-                    <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{selectedTeamId}}&nbsp;&nbsp;</button>
+                    <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
                     <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                        <ng-container *ngFor="let item of teams">
+                        <ng-container *ngFor="let item of startService.teams">
                             <button class="dropdown-item" type="button" (click)="getSprintDetails(item)">{{item}}</button>
                         </ng-container>
                     </div>
@@ -27,33 +39,27 @@
                             <p class="board-text">The Sprint does not exist</p>
                         </ng-container>
                         <ng-container *ngIf="sprintNotExist == false">
-                            <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                            <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="startService.currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
                         </ng-container>
                     </div>
                     <div class="col-md-8 pb-2">
-                        <ng-container *ngIf="sprintNotExist == false">
-                            <app-performance-column-chart [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-performance-column-chart>
+                        <ng-container *ngIf="sprintNotExist == false && startService.currentSprintNumber != 0">
+                            <app-sprint-evaluation-graph [currentSprint]="startService.currentSprintNumber" [teamMembers]="startService.teamMembers" [teamId]="startService.selectedTeamId"></app-sprint-evaluation-graph>
                         </ng-container>
                     </div>
                 </ng-container>
             </div>
             <div class="row">
-                <div class="col-md-10 col-12">
-                    <ng-container *ngIf="sprintNotExist == false && currentSprintNumber != 0">
-                        <div class="row my-2">
-                            <div class="col">
-                                <app-sprint-evaluation-graph [currentSprint]="currentSprintNumber" [teamMembers]="teamMembers" [teamId]="selectedTeamId"></app-sprint-evaluation-graph>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
+                <ng-container *ngIf="showContent">
+                    <div class="col-md-12 col-12">
+                        <ng-container *ngIf="sprintNotExist == false">
+                            <app-performance-column-chart [currentSprint]="startService.currentSprintNumber" [teamMembers]="startService.teamMembers" [teamId]="startService.selectedTeamId"></app-performance-column-chart>
+                        </ng-container>
+                    </div>
+                </ng-container>
             </div>
         </div>
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>
     </div>
-</ng-container>
-<ng-template #unauthorizedAccess>
-    You don't have access
-</ng-template>

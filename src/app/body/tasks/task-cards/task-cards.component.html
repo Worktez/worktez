@@ -1,4 +1,17 @@
-<ng-container *ngIf="tasks | async; else loader">
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<ng-container *ngIf="tasks; else loader">
     <div [ngClass]="parentComponent == 'MyDashboard' ? 'table-responsive' : ''">
         <table class="table table-hover table-borderless">
             <thead>
@@ -17,12 +30,12 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngIf="(tasks|async)?.length==0">
+                <ng-container *ngIf="(tasks)?.length==0">
                     <tr>
                         <td colspan="9" class="text-center">No tasks available</td>
                     </tr>
                 </ng-container>
-                <ng-container *ngFor="let item of tasks|async">
+                <ng-container *ngFor="let item of tasks">
                     <tr (click)="openTaskDetails(item.Id)">
                         <td colspan="1">
                             <app-status-icons [Status]="item.Status" [Border]="false"></app-status-icons>

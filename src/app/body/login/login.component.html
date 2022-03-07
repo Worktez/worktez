@@ -1,4 +1,17 @@
-<div class="container" *ngIf="!(authService.afauth.user | async)">
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container" *ngIf="userExistChecked">
     <div class="row align-middle">
         <div class="col-md-4"></div>
         <div class="col-12 col-sm-6 col-md-4" id="loginContainer">

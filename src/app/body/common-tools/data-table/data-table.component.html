@@ -1,3 +1,16 @@
+<!--/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/-->
 <table mat-table class="full-width-table" matSort aria-label="Elements">
   <!-- Status Column -->
   <ng-container matColumnDef="Status">
@@ -47,7 +60,8 @@
   <ng-container matColumnDef="Assignee">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Assignee</th>
     <td mat-cell *matCellDef="let row">
-      {{row.Assignee}}
+      <app-suggestion-bucket [email]="row.Assignee" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+      <!-- {{row.Assignee}} -->
     </td>
   </ng-container>
 

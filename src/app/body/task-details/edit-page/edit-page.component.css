@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 #editPageTaskContainer,
 .modal-content {
     background-color: var(--secondary-bg);
@@ -17,6 +30,12 @@
     box-shadow: none;
 }
 
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+
+}
+
 .clr {
     border: none;
     color: var(--text);
@@ -33,6 +52,15 @@
 .modal-title {
     color: var(--text);
     font-weight: bold;
+    font-size: 20px;
+}
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    opacity: 1;
 }
 
 select,
@@ -54,8 +82,8 @@ input:focus {
 
 #label {
     color: var(--button-text);
-    font-size: 14px;
-    font-weight: 100;
+    font-size: 12px;
+    font-weight: 200;
 }
 
 .close {
@@ -73,4 +101,14 @@ input:focus {
 
 #date {
     color: var(--text);
+}
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
 }

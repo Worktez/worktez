@@ -1,18 +1,32 @@
-<div class="container-fluid" *ngIf="userObservable | async; else loader ">
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container-fluid" *ngIf="startService.uid != undefined; else loader ">
     <ng-container *ngIf=!teamIdExists>
         <h3>You are not a part of any team. Please create a new team.</h3>
         <button type="submit" class="btn" id="button" (click)=createNewTeam()>Create Team</button>
     </ng-container>
-    <ng-container *ngIf="applicationSettingsService.teamData|async">
+    <ng-container *ngIf="startService.showTeamsData; else loader">
         <div class="row pt-2">
-            <div class="col col-md-5">
-                <app-performance-chart [userEmail]="userEmail" [uid]="user.uid" [currentSprint]="teamCurrentSprintNumber"></app-performance-chart>
+            <div class="col col-md-5" *ngIf="startService.showTeamsData">
+                <app-performance-chart [userEmail]="startService.userEmail" [uid]="startService.uid" [currentSprint]="startService.teamCurrentSprintNumber"></app-performance-chart>
             </div>
-            <div class="col col-md-7">
-                <app-my-tasks [userEmail]="userEmail" [currentSprint]="teamCurrentSprintNumber"></app-my-tasks>
+            <div class="col col-md-7" *ngIf="startService.showTeamsData">
+                <app-my-tasks [userEmail]="startService.userEmail" [currentSprint]="startService.teamCurrentSprintNumber"></app-my-tasks>
             </div>
         </div>
     </ng-container>
+    <!-- <button class="btn btn-primary" (click)="runSchedular()">schedule</button> -->
 </div>
 <ng-template #loader>
     <app-loader></app-loader>

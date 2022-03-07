@@ -1,0 +1,39 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<ng-container *ngIf="popupHandlerService.addNewContributorEnabled">
+  <app-add-contributors (addNewContributor)="addNewContirbutor($event)"></app-add-contributors>
+</ng-container>
+<div class="row">
+  <div class="col">
+    <div class="row pl-5 ">
+      <ng-container *ngFor="let item of contributorsData ">
+        <div class="col pt-2">
+          <div class="card pt-2">
+            <img class="imageProp mx-auto rounded-circle" src="{{item.PhotoUrl}}" alt="Card image cap">
+            <div class="card-body text-center">
+              {{item.Name}} <br>
+              {{item.Title}} <hr>
+              <p>{{item.About}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="col-1" (click)="openAddMember()">
+    <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal" data-target="#addNewMember">
+      person_add
+    </mat-icon>
+  </div>
+</div>

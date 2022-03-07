@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -86,11 +99,16 @@ import { SprintEvaluationGraphComponent } from './body/board/sprint-evaluation-g
 import { SpeedImagesComponent } from './body/common-tools/speed-images/speed-images.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTableComponent } from './body/common-tools/data-table/data-table.component';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 import { TeamsCardComponent } from './body/view-organization-details/teams-card/teams-card.component';
 import { OrgDocumentsComponent } from './body/view-organization-details/org-documents/org-documents.component';
 import { Patch6Component } from './patches/patch6/patch6.component';
@@ -102,7 +120,27 @@ import { EditSkillsComponent } from './body/profile/edit-skills/edit-skills.comp
 import { NotificationCenterComponent } from './header/notification-center/notification-center.component';
 import { Patch7Component } from './patches/patch7/patch7.component';
 import { CopyrightComponent } from './body/copyright/copyright.component';
+import { ContributorsComponent } from './body/contributors/contributors.component';
+import { TermsAndConditionComponent } from './terms-and-condition/terms-and-condition.component';
 import { Patch8Component } from './patches/patch8/patch8.component';
+import { AddContributorsComponent } from './body/contributors/add-contributors/add-contributors.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { EditProfilePicComponent } from './body/profile/edit-profile-pic/edit-profile-pic.component';
+import { UpdateImageComponent } from './body/common-tools/update-image/update-image.component';
+import { Patch10Component } from './patches/patch10/patch10.component';
+import { QuickNotesComponent } from './body/quick-notes/quick-notes.component';
+import { AddnewNoteComponent } from './body/quick-notes/addnew-note/addnew-note.component';
+import { EditNoteComponent } from './body/quick-notes/edit-note/edit-note.component';
+import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
+import { ReleaseNotesBodyComponent } from './body/release-notes/release-notes-body/release-notes-body.component';
+import { SocialPageComponent } from './body/social-page/social-page.component';
+import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
+import { PostsComponent } from './body/social-page/posts/posts.component';
+import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
+import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
+import { UpdateTeamComponent } from './body/update-team/update-team.component';
+
+import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 
 @NgModule({
   declarations: [
@@ -188,7 +226,30 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     EditEducationComponent,
     EditWorkexperienceComponent,
     EditProjectsComponent,
-    EditSkillsComponent
+    EditSkillsComponent,
+    CopyrightComponent,
+    NotificationCenterComponent,
+    Patch7Component,
+    CopyrightComponent,
+    ContributorsComponent,
+    TermsAndConditionComponent,
+    AddContributorsComponent,
+    EditProfilePicComponent,
+    UpdateImageComponent,
+    Patch10Component,
+    QuickNotesComponent,
+    AddnewNoteComponent,
+    EditNoteComponent,
+    ReleaseNotesComponent,
+    ReleaseNotesBodyComponent,
+    SocialPageComponent,
+    CreatePostComponent,
+    PostsComponent,
+    WhatsNewComponent,
+    KanbanBoardComponent,
+    SchedularPatchComponent,
+    
+    UpdateTeamComponent,
   ],
   imports: [
     BrowserModule,
@@ -206,10 +267,14 @@ import { Patch8Component } from './patches/patch8/patch8.component';
     MatPaginatorModule,
     MatIconModule,
     MatBadgeModule,
-    MatSortModule
+    MatSortModule,
+    MatInputModule,
+    MatFormFieldModule,
+    DragDropModule
   ],
   providers: [
     AuthService,
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },
     { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', '7002'] : undefined },
     { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', '7001'] : undefined }

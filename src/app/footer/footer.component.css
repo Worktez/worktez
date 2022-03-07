@@ -1,14 +1,56 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 .footerbox {
     position: fixed;
     bottom:0;
     width: 100%;
-    background-color: transparent;
+    background-color: var(--primary-bg);
     color: var(--text);
 }
 
 span {
     cursor: pointer;
     color: var(--text);
+}
+
+a {
+    color: white;
+}
+#page-footer {
+    background-color: #26272E !important;
+    padding-left: 50px;
+    padding-right: 50px;
+    width: 100%;
+}
+.footer-headings{
+    font-weight: bold;
+    color: #545454 !important;
+}
+.company-text p, .company-text h3{
+    color: white !important;
+    max-width: 150px;
+}
+.company-text p{
+    font-size: x-small;
+    overflow-wrap: break-word;
+    line-height: 20px;
+}
+.company-text h3{
+    font-style: italic;
+    font-weight: bold;
+    font-size: large !important;
+    margin-bottom: 0px !important;
 }
 
 @media only screen and (max-width: 600px) {

@@ -1,14 +1,34 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <div class="card">
     <div class="card-header pb-0">
             <div class="pl-4 pt-1"><h4>My Tasks</h4></div>
     </div>
     <div class="card-body pt-0">
-        <ng-container *ngIf="!showLoader; else loader">
+        <ng-container *ngIf="!showLoader && !noData">
             <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
             <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="5"></app-data-table>
         </ng-container>
-        <ng-template #loader>
+
+        <ng-container *ngIf="showLoader">
             <app-loader></app-loader>
-        </ng-template>
+        </ng-container>
+
+        <ng-container *ngIf="noData">
+            <p class="pt-4">
+                No Data Found
+            </p>
+        </ng-container>
     </div>
 </div>

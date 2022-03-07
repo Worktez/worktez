@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
@@ -21,8 +34,8 @@ export class BackendService {
   constructor(private functions: AngularFireFunctions) { }
 
   getOrgDetails(AppKey: string) {
-    const callable = this.functions.httpsCallable("organization");
-    this.organizationsData = callable({mode: "getOrgData", AppKey: AppKey}).pipe(
+    const callable = this.functions.httpsCallable("organization/getOrgData");
+    this.organizationsData = callable({ AppKey: AppKey}).pipe(
       map(actions => {
         this.organizationDetails = actions.resultData as Organizations
         return actions.resultData as Organizations;

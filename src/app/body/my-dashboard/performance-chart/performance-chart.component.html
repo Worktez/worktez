@@ -1,3 +1,16 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
 <div class="card">
     <div class="card-header">
         <div class="row align-items-center">
@@ -9,9 +22,11 @@
             </div>
         </div>
     </div>
-    <div class="card-body pb-4" *ngIf="!showLoader && (data|async)?.length != 0">
-        <app-chart [data]="data | async"></app-chart>
-    </div>
+    <ng-container *ngIf="data">
+        <div class="card-body pb-4" *ngIf="!showLoader && (data)?.length != 0">
+            <app-chart [data]="data "></app-chart>
+        </div>
+    </ng-container>
     <div class="card-body" *ngIf="showLoader">
         <app-loader></app-loader>
     </div>

@@ -1,6 +1,19 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -8,6 +21,10 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+
+declare var jQuery:any;
 
 @Component({
   selector: 'app-create-new-team',
@@ -23,7 +40,6 @@ export class CreateNewTeamComponent implements OnInit {
   teamAdmin: string
   uid: string
   teamData: TeamDataId[] = [];
-  selectedTeamId: string;
   isUpdateTeam: boolean = false;
   addMemberEnabled: boolean = false;
   teamName: string;
@@ -33,7 +49,7 @@ export class CreateNewTeamComponent implements OnInit {
   teamMembers: string[] = [];
   enableLoader: boolean = false;
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.authService.afauth.user.subscribe(data => {
@@ -45,8 +61,6 @@ export class CreateNewTeamComponent implements OnInit {
         }
       });
     });
-  
-    this.selectedTeamId = this.route.snapshot.params['teamId'];
   }
 
   loadData() {
@@ -55,19 +69,6 @@ export class CreateNewTeamComponent implements OnInit {
     this.organizationDomain = this.backendService.getOrganizationDomain();
     this.teamAdmin = this.authService.getUserEmail();
     this.uid = this.authService.getLoggedInUser();
-
-    if (this.selectedTeamId != undefined) {
-      if (this.router.url.startsWith('/UpdateTeam')) {
-        this.isUpdateTeam = true;
-      }
-      this.applicationSettings.getTeamDetails(this.selectedTeamId).subscribe(team => {
-        this.teamName = team.TeamName;
-        this.teamId = team.TeamId;
-        this.teamDescription = team.TeamDescription;
-        this.teamManagerEmail = team.TeamManagerEmail;
-        this.teamMembers = team.TeamMembers;
-      });
-    }
   }
 
   handleIdInput() {
@@ -111,6 +112,11 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   async nextChildStep() {
+    this.teamName = this.teamName.trimRight();
+    this.teamName = this.teamName.trimLeft();
+    this.teamId = this.teamId.trimLeft();
+    this.teamId = this.teamId.trimRight();
+    this.teamMembers.push(this.teamManagerEmail);
     let data = [
       { label: "teamName", value: this.teamName },
       { label: "teamId", value: this.teamId },
@@ -137,95 +143,52 @@ export class CreateNewTeamComponent implements OnInit {
 
   submit() {
     //Functionality to Show Error When none of the option is checked in Particular labelName can be added
-    if (this.isUpdateTeam === false) {
-      this.createNewTeamWithLabels()
-    } else {
-      this.updateExistingTeam()
-    }
+    this.createNewTeamWithLabels()
   }
-
 
   addMember() {
     this.addMemberEnabled = true;
   }
 
   addedMember(data: { completed: boolean, memberEmail: string}) {
-    if (this.isUpdateTeam === false && data.memberEmail!="") {
+    if (data.memberEmail) {
       this.teamMembers.push(data.memberEmail);
     }
     this.addMemberEnabled = false;
   }
 
-  removeMember(remove: string) {
-    if (this.isUpdateTeam === false) {
-      const index = this.teamMembers.indexOf(remove);
-      if (index != -1) {
-        this.teamMembers.splice(index, 1);
-      } else {
-        console.log("Error- Cannot remove member. Member not found");
-      }
+  async removeMember(remove: string) {
+    const index = this.teamMembers.indexOf(remove);
+    if (index != -1) {
+      this.teamMembers.splice(index, 1);
     } else {
-      this.removeMemberDB(remove)
+      console.error("Error - Cannot remove member. Member not found");
     }
   }
 
-  async removeMemberDB(remove: string) {
+  createNewTeamWithLabels() {
     this.enableLoader = true;
-    const callable = this.functions.httpsCallable('teams');
-    if (this.organizationDomain == undefined) {
-      this.organizationDomain = this.backendService.getOrganizationDomain();
-    }
-    try {
-      const result = await callable({ mode: "remove-member", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).toPromise();
-      this.enableLoader = false;
-    } catch (error) {
-      this.enableLoader = false;
-      console.error("Error", error);
-    }  
-  }
-
-  async createNewTeamWithLabels() {
-    this.enableLoader = true;
-    // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams');
+    const callable = this.functions.httpsCallable('teams/createTeam');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    try {
-      const result = await callable({ mode: "create", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).toPromise();
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
+      next: (data) => {
       this.enableLoader = false;
-      // this.teamFormSubmitted.emit({ submitted: false });
       this.router.navigate(['MyDashboard']);
-    } catch (error) {
-
-      this.enableLoader = false;
-      console.error("Error", error);
-    }
-  }
-
-  async updateExistingTeam() {
-    this.enableLoader = true;
-    // this.teamFormSubmitted.emit({ submitted: true })
-    const callable = this.functions.httpsCallable('teams');
-    if (this.organizationDomain == undefined) {
-      this.organizationDomain = this.backendService.getOrganizationDomain();
-    }
-
-    try {
-      const result = await callable({ mode: "update", OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).toPromise();
-      this.enableLoader = false;
-      // this.teamFormSubmitted.emit({ submitted: false });
-      this.router.navigate(['MyDashboard']);
-    } catch (error) {
-
-      this.enableLoader = false;
-      console.error("Error", error);
-    }
+      console.log("Successful created new team");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful ')
+    });
   }
 
   close() {
-    // this.location.back();
-    this.router.navigate(["MyDashboard"]);
+    this.router.navigate(['MyDashboard']);
   }
 }
