@@ -23,7 +23,6 @@
  const { emptyActiveNotification, getNotifications, updateNotifications } = require("../lib");
 
  exports.emptyNotificationCount = function(request, response) {
-     console.log("inside empty notifications!!!!")
      const orgDomain = request.body.data.OrgDomain;
      const lastSeenDate = request.body.data.LastSeenDate;
      const uid = request.body.data.Uid;
@@ -31,12 +30,12 @@
      let result;
      getNotifications(uid, orgDomain, 1, "", "").then((notificationList) => {
          emptyActiveNotification(uid, orgDomain);
-         notificationList.forEach(element => {
+         notificationList.forEach((element) => {
              if (element.LastSeen == "") {
                  const inputJson = {
-                     LastSeen : lastSeenDate,
-                     Status : 0,
-                 }
+                     LastSeen: lastSeenDate,
+                     Status: 0,
+                 };
                  updateNotifications(inputJson, uid, element.NotificationId);
              }
          });

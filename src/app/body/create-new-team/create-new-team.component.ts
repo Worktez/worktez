@@ -11,9 +11,9 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TeamDataId } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -112,6 +112,11 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   async nextChildStep() {
+    this.teamName = this.teamName.trimRight();
+    this.teamName = this.teamName.trimLeft();
+    this.teamId = this.teamId.trimLeft();
+    this.teamId = this.teamId.trimRight();
+    this.teamMembers.push(this.teamManagerEmail);
     let data = [
       { label: "teamName", value: this.teamName },
       { label: "teamId", value: this.teamId },
@@ -157,7 +162,7 @@ export class CreateNewTeamComponent implements OnInit {
     if (index != -1) {
       this.teamMembers.splice(index, 1);
     } else {
-      console.log("Error- Cannot remove member. Member not found");
+      console.error("Error - Cannot remove member. Member not found");
     }
   }
 

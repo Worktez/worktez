@@ -52,6 +52,15 @@
 .modal-title {
     color: var(--text);
     font-weight: bold;
+    font-size: 20px;
+}
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    opacity: 1;
 }
 
 select,
@@ -73,8 +82,8 @@ input:focus {
 
 #label {
     color: var(--button-text);
-    font-size: 14px;
-    font-weight: 100;
+    font-size: 12px;
+    font-weight: 200;
 }
 
 .close {
