@@ -12,6 +12,11 @@ export class HttpServiceService {
     this.gitReleaseApiUrl = environment.gitApiUrl + "/releases";
   }
 
+  getPrDetails(){
+    const url = environment.githubApiUrl + "/repos/Worktez/worktez/pulls";
+    return this.httpClient.get(url);
+  }
+
   getReleaseDetails(){
     return this.httpClient.get(this.gitReleaseApiUrl);
   }

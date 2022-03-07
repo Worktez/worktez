@@ -26,19 +26,16 @@ export class GithubLinkComponent implements OnInit {
   showClose: boolean = false;
   showSubmitButton: boolean = false;
   objData: GitOrgData[] = [];
-  @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, organisaion:string, username:string }>();
+  @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, organisation:string, username:string }>();
 
   constructor(private httpService: HttpServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-      
+
   }
 
   submit() {
     if (this.memberOrgName) {
-      console.log(this.memberOrgName)
-      console.log(this.username)
-      console.log(this.organisation)
       if (this.organisation != undefined) {
         this.httpService.getGithubOrgRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
@@ -49,7 +46,6 @@ export class GithubLinkComponent implements OnInit {
           if(this.projLink != undefined){
             this.addProjLink(this.projLink);
             this.showClose = true;
-            console.log("the value of close button is:", this.showClose)
           }
           else {
             this.showSubmitButton = true;
@@ -58,7 +54,6 @@ export class GithubLinkComponent implements OnInit {
       } 
       else if(this.username != undefined) {
         this.httpService.getGithubUserRepos(this.memberOrgName).pipe(map(data => {
-          console.log("hereeweeee")
           const objData = data as GitOrgData[];
           return objData;
         })).subscribe(data => {
@@ -67,7 +62,6 @@ export class GithubLinkComponent implements OnInit {
           if(this.projLink != undefined){
             this.addProjLink(this.projLink);
             this.showClose = true;
-            console.log("the value of close button is:", this.showClose)
           }
           else {
             this.showSubmitButton = true;
@@ -78,20 +72,26 @@ export class GithubLinkComponent implements OnInit {
          
   }
 
-  async addProjLink(projLink: string) {
+  addProjLink(projLink: string) {
     console.log(projLink)
     this.organizationDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/addProjLink');
-  try {
-    const result = await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink}).toPromise();
-    this.showClose = true;
-  } catch (error) {
-    console.error("Error", error);
-  }
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink}).subscribe({
+      next: (data) => {
+        console.log("Successfully added project link");
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully created project link ')
+    })
+    
   }
 
   added() {
-    this.addedProject.emit({ completed: true, memberOrgName: this.memberOrgName, projLink:this.projLink, organisaion:this.organisation, username:this.username});
+    this.addedProject.emit({ completed: true, memberOrgName: this.memberOrgName, projLink:this.projLink, organisation:this.organisation, username:this.username});
   }
 
 }

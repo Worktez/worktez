@@ -21,19 +21,41 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { updateTeamDetails } = require("../lib");
+const { updateTeamDetails, getTeam } = require("../lib");
 
 exports.addProjLink = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
     const teamName = request.body.data.TeamName;
     const projectLink = request.body.data.ProjLink;
 
-    let result;
-    const status = 200;
-    const updateJson = {
-            ProjectLink: projectLink,
-    };
-    console.log(updateJson);
-    updateTeamDetails(updateJson, orgDomain, teamName);
-    return response.status(status).send(result);
+    let status = 200;
+    let result = { data: "Error in updating team" };
+
+    const promise1 = getTeam(orgDomain, teamName).then((team) => {
+        if (team) {
+            const updateJson = {
+                ProjectLink: projectLink,
+            };
+            updateTeamDetails(updateJson, orgDomain, teamName);
+            result = { data: "Team Updated Successfully" };
+            console.log("Team Updated Successfully");
+        } else {
+            status = 500;
+            result = { data: "Error: Team doesn't exist" };
+            console.log("Error: Team doesn't exist");
+        }
+    }).catch((error) => {
+        status = 500;
+        console.log("Error: ", error);
+    });
+
+    const Promises = [promise1];
+    return Promise.all(Promises).then(() => {
+            return response.status(status).send(result);
+        })
+        .catch((error) => {
+            result = { data: error };
+            console.error("Error updating Team", error);
+            return response.status(status).send(result);
+        });
 };

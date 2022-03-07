@@ -96,21 +96,18 @@ fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
 });
 
-<<<<<<< HEAD
 fastify.post("/addProjLink", (req, res) => {
   console.log("here");
   addProjLink(req, res);
 });
 
 
-=======
 /**
  * Description
  * @param {any} req
  * @param {any} res
  * @returns {any}
  */
->>>>>>> a53c3037b358f5e161a682cbfcd07be63de674d7
 exports.teams = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
       fastify.ready((err) => {

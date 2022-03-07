@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators'
@@ -30,6 +30,7 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { HttpServiceService } from 'src/app/services/http-service.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -64,6 +65,8 @@ export class TaskDetailsComponent implements OnInit {
   url: string;
   addedWatcher: boolean = false;
   newWatcher: string = "";
+  prLink: string;
+  objData: [];
 
   dataReady: boolean = false
 
@@ -72,8 +75,9 @@ export class TaskDetailsComponent implements OnInit {
   public taskDataObservable: Tasks
   activityData: Activity[]
   linkData: Link[]
+  @Output() addedPrLink = new EventEmitter<{ prLink: string }>();
 
-  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor (private httpService: HttpServiceService, public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -87,6 +91,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
+    this.getPullRequests();
   }
 
   getTaskPageData(){
@@ -324,5 +329,18 @@ export class TaskDetailsComponent implements OnInit {
       },
       complete: () => console.info('Successful')
   });
+  }
+
+  getPullRequests() {
+      this.httpService.getPrDetails().pipe(map(data => {
+        const prData = data;
+        return prData;
+      })).subscribe(data => {
+        console.log("the prs:",data)
+      });
+  }
+
+  added() {
+    this.addedPrLink.emit({ prLink: this.prLink });
   }
 }

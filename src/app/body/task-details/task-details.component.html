@@ -188,6 +188,13 @@
                         </div>
                     </div>
                 </div>
+                <select class="form-control form-control-sm" [(ngModel)]="prLink"
+                [ngModelOptions]="{standalone: true}">
+                <option [ngValue]="null" [disabled]="true">Link Pull Request</option>
+                <ng-container *ngFor="let item of prData">
+                    <option>{{ item.html_url }}</option>
+                </ng-container>
+            </select>
                 <div class="row p-2">
                     <span id="label ">Link</span>
                     <div class="table-responsive card">
