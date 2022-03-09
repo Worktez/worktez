@@ -96,10 +96,6 @@ export class SprintDetailsComponent implements OnInit {
     this.currentSprint.emit(-2);
   }
 
-  // exit(){
-  //   window.location.reload();
-  // }
-
   async autoSchedule() {
     const orgAppKey = this.backendService.getOrganizationAppKey();
     const assignee = this.authService.getUserEmail();
