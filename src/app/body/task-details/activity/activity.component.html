@@ -14,7 +14,7 @@
 <div class="card mt-3 mx-2" *ngIf="user">
     <div class="card-body row">
         <div class="col-md-1">
-            <img src="{{user.photoURL}}" alt="Card image cap" width="30" height="30" style=" border-radius: 50%;">
+            <img src="{{authService.userAppSetting.photoURL}}" alt="Card image cap" width="30" height="30" style=" border-radius: 50%;">
         </div>
         <div class="col-md-2 bold">
             {{user.displayName}}
