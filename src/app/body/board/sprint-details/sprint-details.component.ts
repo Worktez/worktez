@@ -21,7 +21,6 @@ import { Sprint } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { AuthService } from '../../../services/auth.service';
 
-import { LoaderComponent } from './../../loader/loader.component';
 
 @Component({
   selector: 'app-sprint-details',
