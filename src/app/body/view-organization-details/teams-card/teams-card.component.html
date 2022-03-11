@@ -51,7 +51,8 @@
             </div>
             <div class="col-12">
                 <h4 class="card-title mt-2">
-                    <span class="material-icons mr-2" style="position: relative;top: 5px;">groups</span> {{ team.TeamMembers.join(', ') }}
+                   <h4>Team Members</h4>
+                   <app-profile-pictures [emails]="team.TeamMembers"></app-profile-pictures>
                 </h4>
             </div>
         </div>
