@@ -54,6 +54,8 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         TeamId: teamId,
         TeamStatus: teamStatus,
         CurrentSprintId: 0,
+        LabelCounter: 0,
+
     });
     return Promise.resolve(setTeam);
 };
@@ -101,3 +103,10 @@ exports.getTeamUseTeamId = function(orgDomain, teamId) {
     });
     return Promise.resolve(getTeamPromise);
 };
+exports.setLabelProperties = function(element,displayName,color,scope) {
+    console.log(orgDomain, teamId);
+    const setLabelPropertiePromise = db.collection("Organizations").doc(orgDomain).collection("Teams").where("TeamId", "==", teamId).get().then((doc) => {
+
+    return Promise.resolve(setLabelPropertiePromise);
+    });
+}

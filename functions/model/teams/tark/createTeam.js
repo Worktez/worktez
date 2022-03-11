@@ -25,6 +25,7 @@ const { setTeam, getTeam } = require("../lib");
 const { getOrg, updateOrg } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
+const { setDefaultLabelProperties } = require("./setDefaultLabels");
 
 
 exports.createTeam = function(request, response) {
@@ -61,7 +62,9 @@ exports.createTeam = function(request, response) {
 
         const prom2 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
-                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus);
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus).then(()=>{
+                    setDefaultLabelProperties(type, statusLabels, priorityLabels, difficultyLabels);
+                });
                 updateTeamInOrganizations(uid, orgDomain, orgAppKey, teamId);
             } else {
                 status = 500;

@@ -36,7 +36,6 @@ export class CreateNewTeamComponent implements OnInit {
 
   organizationDomain: string
   appKey: string
-  childStep: number = 1
   teamAdmin: string
   uid: string
   teamData: TeamDataId[] = [];
@@ -80,62 +79,6 @@ export class CreateNewTeamComponent implements OnInit {
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
 
-  labelFunc(checked: boolean, value: string, array: string[]) {
-    if (checked === false) {
-      for (var i = 0; i < array.length; i++) {
-        if (array[i] === value) {
-          array.splice(i, 1);
-        }
-      }
-    }
-    else {
-      array.push(value);
-    }
-  }
-
-  getLabels(event: Event) {
-    let labelName = (<HTMLInputElement>event.target).name;
-    let labelValue = (<HTMLInputElement>event.target).value;
-    let isChecked = (<HTMLInputElement>event.target).checked;
-    if (labelName === "Task") {
-      this.labelFunc(isChecked, labelValue, this.type)
-    }
-    if (labelName === "Status") {
-      this.labelFunc(isChecked, labelValue, this.statusLabels)
-    };
-    if (labelName === "Priority") {
-      this.labelFunc(isChecked, labelValue, this.priorityLabels)
-    };
-    if (labelName === "Difficulty") {
-      this.labelFunc(isChecked, labelValue, this.difficultyLabels)
-    };
-  }
-
-  async nextChildStep() {
-    let data = [
-      { label: "teamName", value: this.teamName },
-      { label: "teamId", value: this.teamId },
-      { label: "teamDescription", value: this.teamDescription },
-      { label: "teamManagerEmail", value: this.teamManagerEmail },
-      { label: "teamMemberEmails", value: this.teamMembers }
-    ];
-
-    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      return res;
-    });
-    if (condition) {
-      console.log("Inputs are valid");
-      this.childStep += 1
-    }
-    else {
-      console.log("Team not created! Validation error");
-    }
-  }
-
-  prevChildStep() {
-    this.childStep -= 1
-  }
-
   submit() {
     //Functionality to Show Error When none of the option is checked in Particular labelName can be added
     this.createNewTeamWithLabels()
@@ -171,7 +114,7 @@ export class CreateNewTeamComponent implements OnInit {
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
       next: (data) => {
       this.enableLoader = false;
-      this.router.navigate(['MyDashboard']);
+      this.router.navigate([ 'TeamDetails', this.teamId])
       console.log("Successful created new team");
       },
       error: (error) => {

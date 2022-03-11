@@ -25,10 +25,6 @@
     <ng-container *ngIf="popupHandlerService.createNewTaskEnabled">
         <app-create-new-task (taskCreated)="taskCreated($event)"></app-create-new-task>
     </ng-container>
-    <ng-container *ngIf="popupHandlerService.createNewTeamEnabled">
-        <app-create-new-team (teamCreated)="teamCreated($event)"></app-create-new-team>
-    </ng-container>
-
     <ng-container *ngIf="popupHandlerService.createPostEnabled">
         <app-create-post></app-create-post>
     </ng-container>

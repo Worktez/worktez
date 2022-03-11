@@ -1,0 +1,199 @@
+<div class="container-fluid">
+<div class="container" *ngIf="teamDataReady">
+    <div class="row align-items-center justify-content-center m-0 p-2">
+        
+        <div class="card" style="width: 90%;height: 80vh;">
+            <div class="modal-header">
+                <h2 class="modal-title" id="updateTeamTitle">
+                    <ng-container>
+                        <span class="material-icons float-left" data-toggle="tooltip" data-placement="top" title="Back" style="position: relative;top: 5px;cursor: pointer;">arrow_back_ios</span>
+                    </ng-container>
+                      Team Details
+                </h2>
+                <button type="button" class="close" (click)= "close()" aria-label="Close">
+                    <span aria-hidden="true" class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <form #form="ngForm">
+                 <ng-container >
+                  <div class="form-group col-md-8 col">
+                      <div class="form-row">
+                           <div class="col">
+                            Team Name
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TeamName}}</div>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8 col">
+                        <div class="form-row">
+                           <div class="col">
+                            Team Id
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TeamId}}</div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8 col">
+                         <div class="form-row">
+                           <div class="col">
+                            Team Status
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TeamStatus}}</div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8 col">
+                        <div class="form-row">
+                           <div class="col">
+                            Team Description 
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TeamDescription}}</div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8 col">
+                      <div class="form-row">
+                           <div class="col">
+                            Team Manager EmailId 
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TeamManagerEmail}}</div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                      <div class="form-row">
+                           <div class="col">
+                            Team Members 
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TeamMembers}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8 col">
+                      <div class="form-row">
+                           <div class="col">
+                               Type   
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.Type}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8 col">
+                      <div class="form-row">
+                           <div class="col">
+                               Total Team Tasks   
+                           </div>
+                           <div class="col">
+                            <div class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: false}" placeholder="Enter Team Name"> {{team.TotalTeamTasks}}</div>
+                            </div>
+                        </div>
+                    </div>               
+            </ng-container>
+        </form>
+
+        <div class="row">
+          <div class="col-md-12 col">
+          <h3 class="modal-title">{{teamName}}</h3>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-12 col">
+          <h5 class="modal-title">Setup task labels*</h5>
+          </div>
+          </div>
+          <div class="form-row justify-content-start pl-4">
+          <div class="form-group form-check col-md-4 text-left">
+          <div class="form-check-input" id="Task1" name="Task" (change)="getLabels($event)" value="Bug"></div>
+          <div class="row">
+            {{team.StatusLabels[0]}}
+          </div>
+          <div class="row">
+            {{team.StatusLabels[1]}}
+          </div>
+          <div class="row">
+            {{team.StatusLabels[2]}}
+          </div>
+          <div class="row">
+            {{team.StatusLabels[3]}}
+          </div>
+          </div>
+          </div>
+          <div class="row mt-4">
+          <div class="col-md-12 col">
+          <h5 class="modal-title">Setup Status labels*</h5>
+          </div>
+          </div>
+          <div class="form-row justify-content-start pl-4">
+          <div class="form-group form-check col-md-4 text-left">
+          <div class="form-check-input" id="Task1" name="Task" (change)="getLabels($event)" value="Bug"></div>
+            <div class="row">
+              {{team.StatusLabels[0]}}
+            </div>
+            <div class="row">
+              {{team.StatusLabels[1]}}
+            </div>
+            <div class="row">
+              {{team.StatusLabels[2]}}
+            </div>
+            <div class="row">
+              {{team.StatusLabels[3]}}
+            </div>
+          </div>
+          </div>
+          <div class="row mt-4">
+          <div class="col-md-12 col">
+          <h5 class="modal-title">Setup Priority labels*</h5>
+          </div>
+          </div>
+          <div class="form-row justify-content-start pl-4">
+            <div class="form-group form-check col-md-4 text-left">
+              <div class="form-check-input" id="Task1" name="Task" (change)="getLabels($event)" value="Bug"></div>
+            <div class="row">
+              {{team.PriorityLabels[0]}}
+            </div>
+            <div class="row">
+              {{team.PriorityLabels[1]}}
+            </div>
+            <div class="row">
+              {{team.PriorityLabels[2]}}
+            </div>
+          </div>
+          </div>
+          <div class="row mt-4">
+          <div class="col-md-12 col">
+          <h5 class="modal-title">Setup Difficulty labels*</h5>
+          </div>
+          </div>
+          <div class="form-row justify-content-start pl-4">
+          <div class="form-group form-check col-md-4 text-left">
+          <div class="form-check-input" id="Difficulty1" name="Difficulty" (change)="getLabels($event)" value="High"></div>
+          <div class="row">
+            {{team.DifficultyLabels[0]}}
+          </div>
+          <div class="row">
+            {{team.DifficultyLabels[1]}}
+          </div>
+          <div class="row">
+            {{team.DifficultyLabels[2]}}
+          </div>
+          </div>
+          <div class="modal-footer px-0">
+          <button class="btn btn-md btn-block" id="button" [disabled]="enableLoader" (click)="submit()">
+           Update Lablels
+          </button>
+          </div>
+        </div>
+       </div>
+    </div>
+
+</div>   
+

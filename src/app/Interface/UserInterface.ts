@@ -110,3 +110,11 @@ export interface Post{
     Comment: number;
     PostId: string;
 }
+
+export interface Labels{
+    DisplayName: string;
+    IconName: string;
+    Scope:string;
+    Color:string;
+}
+

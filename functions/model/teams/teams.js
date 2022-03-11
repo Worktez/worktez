@@ -27,6 +27,7 @@ const { removeMember } = require("./tark/removeMember");
 const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
+const { setDefaultLabelProperties } = require("./tark/setDefaultLabels");
 
 /**
  * Description
@@ -93,6 +94,28 @@ fastify.post("/removeMember", (req, res) => {
  */
 fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/setLabelProperties"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/setLabelProperties", (req, res) => {
+  setDefaultLabelProperties(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/setLabelProperties"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/seDefaultLabels", (req, res) => {
+  setDefaultLabels(req, res);
 });
 
 /**

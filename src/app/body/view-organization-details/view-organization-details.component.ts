@@ -72,7 +72,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   createTeam() {
-    this.popupHandlerService.createNewTeamEnabled = true;
+    this.router.navigate(['CreateNewTeam']);
   }
 
   updatedDetails(data) {
