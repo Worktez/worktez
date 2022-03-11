@@ -20,7 +20,6 @@
     color: var(--button-text);
     cursor: pointer;
 }
-
 .dropdown-item:hover {
     color: var(--button-text-hover);
     background-color: var(--secondary-bg);

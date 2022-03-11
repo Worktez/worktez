@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "worktrolly"
+    "default": "worktez-first"
   },
   "targets": {
     "worktrolly": {
