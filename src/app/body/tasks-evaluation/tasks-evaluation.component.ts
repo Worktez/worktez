@@ -40,7 +40,6 @@ export class TasksEvaluationComponent implements OnInit {
   selectedTeamName: string;
   todayDate: string;
   time: string;
-  teamIds: string[];
   teamCurrentSprint: number;
   disableLoadMore: boolean = false;
   taskIdToEdit: string = "";
@@ -50,7 +49,7 @@ export class TasksEvaluationComponent implements OnInit {
 
   nextSprintTasksToFetch: number;
 
-  constructor(private startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
+  constructor(public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -201,12 +200,9 @@ export class TasksEvaluationComponent implements OnInit {
     const index = this.toogleClosedSprint.indexOf(sprintNumber);
     if(index != -1) {
       const removed = this.toogleClosedSprint.splice(index, 1);
-      console.log("Opened : ", removed);
     } else {
       this.toogleClosedSprint.push(sprintNumber);
-      console.log("Closed : ", sprintNumber);
     }
     this.expandedIcons= !(this.expandedIcons);
-    console.log("icon toggled")
   }
 }

@@ -11,6 +11,18 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
+<div class="row px-5 py-2">
+    <div class="col">
+        <div class="btn-group">
+            <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+            <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                <ng-container *ngFor="let item of startService.teams">
+                    <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
 <ng-container *ngIf="!showLoader && tasks.length" cdkDropListGroup>
     <ng-container *ngFor="let item of tasks">
         <ng-container *ngIf="item.length">
@@ -43,7 +55,13 @@
             <app-loader></app-loader>
         </ng-container>
     </ng-container>
-    <div class="text-center">
+    <div class="text-center" *ngIf="!disableLoadMore; else noMoreData">
         <button class="btn btn-sm" (click)="readTasks()" [disabled]="disableLoadMore">Load More</button>
     </div>
+    <ng-template #noMoreData>
+        <div class="text-center">
+            <button class="btn btn-sm" [disabled]="disableLoadMore"> No more data to load...</button>
+        </div>
+    </ng-template>
+    
 </ng-container>
