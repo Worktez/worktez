@@ -12,11 +12,9 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #sprintName {
-    background-color: var(--hover);
-    border-radius: 18px;
-    width: max-content;
+    color: var(--hover);
+    background-color: var(--card-bg);
 }
-
 h6 {
     font-size: smaller;
 }
@@ -36,7 +34,10 @@ h6 {
 #sprintContainer {
     background-color: var(--primary-bg);
 }
-
+#taskID:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -67,7 +68,10 @@ transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .btn {
-    color: var(--button-text);
+    color: var(--text);
+    background-color: var(--card-bg);
+    border: none;
 }
+
 
 

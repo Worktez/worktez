@@ -25,6 +25,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { FormControl } from '@angular/forms';
 import { Observable, startWith, map } from 'rxjs';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { Router } from '@angular/router';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -50,13 +52,15 @@ export class TasksEvaluationComponent implements OnInit {
   disableLoadMore: boolean = false;
   taskIdToEdit: string = "";
   fieldToEdit: string = "";
+  expandedIcons: boolean = true ;
+  
 
   assigneeName = new FormControl();
   filteredOptionsAssignee: Observable<string[]>;
 
   nextSprintTasksToFetch: number;
 
-  constructor(private startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -103,13 +107,34 @@ export class TasksEvaluationComponent implements OnInit {
     );
     this.readTasks(); 
   }
-
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  async readTasks() {
+
+  updateSelectedTeamId(teamId: string) {
+    this.applicationSettingsService.editedTeamId = teamId;
+    this.startService.selectedTeamId = teamId;
+    this.authService.userAppSetting.SelectedTeamId = teamId;
+    this.startService.changeTeam = true;
+
+    const callable = this.functions.httpsCallable('users/updateSelectedTeam');
+    callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
+        next: (data) => {
+          this.tasks=[];
+          this.getData();
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
+  }
+
+  readTasks() {
     this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
@@ -120,7 +145,7 @@ export class TasksEvaluationComponent implements OnInit {
       } else {
         pageToLoad = "loadMore";
       }
-      await callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.nextSprintTasksToFetch }).subscribe ({
+      callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.nextSprintTasksToFetch }).subscribe ({
         next: (data) => {
           result = data;
           if (result.BacklogTasks.length > 0) {
@@ -209,5 +234,12 @@ export class TasksEvaluationComponent implements OnInit {
       task.Assignee = this.assigneeName.value;
       this.editTask(task, null);
     }
+  }
+   openTaskDetails(id: string) {
+    this.router.navigate(['/TaskDetails', id]);
+  }
+  iconsToggle(){
+    this.expandedIcons= !(this.expandedIcons);
+    console.log("icon toggled")
   }
 }
