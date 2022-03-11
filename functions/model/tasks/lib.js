@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez

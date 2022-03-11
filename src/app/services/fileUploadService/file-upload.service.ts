@@ -120,7 +120,7 @@ export class FileUploadService {
           error: (error) => {
             
           },
-          complete: () => console.info('Successful')
+          complete: () => this.readFiles(this.backendService.getOrganizationDomain(), folderName)
       });
       }
     }
@@ -140,7 +140,7 @@ export class FileUploadService {
       error: (error) => {
       
       },
-      complete: () => console.info('Successful ')
+      complete: () =>  this.readFiles(this.backendService.getOrganizationDomain(), taskId)
   });
   }
 

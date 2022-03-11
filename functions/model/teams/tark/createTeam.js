@@ -84,7 +84,6 @@ exports.createTeam = function(request, response) {
     const promise2 = getOrg(orgDomain).then((orgDoc) => {
         orgId = orgDoc.OrganizationId;
         setSprint(orgDomain, teamName, "Deleted", orgId, teamId, -2, "-");
-
         setSprint(orgDomain, teamName, "Backlog", orgId, teamId, -1, "-");
     }).catch((error) => {
         status = 500;
