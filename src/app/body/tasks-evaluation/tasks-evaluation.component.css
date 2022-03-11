@@ -11,33 +11,40 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-#sprintName {
-    color: var(--hover);
-    background-color: var(--card-bg);
-}
-h6 {
-    font-size: smaller;
-}
-
-.label {
-    color: var(--primary-color);
-}
-
-.value {
-    color: var(--text);
-}
 
 .card {
-    background-color: var(--card-bg);
+    background-color: var(--secondary-bg);
+    border: none;
+}
+
+.card-header{
+    color: var(--primary-color);
+    background-color: var(--secondary-bg);
+    border: none;
+}
+
+.card-body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: fit-content;
+    max-height: 60vh;
+    background-color: var(--secondary-bg);
+}
+
+.list-group, .list-group-item {
+    background-color: var(--secondary-bg);
+}
+
+.rightMenu {
+    text-align: end;
+    color: var(--primary-color);
+    cursor: pointer;
 }
 
 #sprintContainer {
     background-color: var(--primary-bg);
 }
-#taskID:hover{
-    text-decoration: underline;
-    cursor: pointer;
-}
+
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -72,6 +79,3 @@ transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
     background-color: var(--card-bg);
     border: none;
 }
-
-
-
