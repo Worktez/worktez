@@ -141,6 +141,7 @@ import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
 
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -248,8 +249,8 @@ import { SchedularPatchComponent } from './patches/schedular-patch/schedular-pat
     WhatsNewComponent,
     KanbanBoardComponent,
     SchedularPatchComponent,
-    
     UpdateTeamComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,

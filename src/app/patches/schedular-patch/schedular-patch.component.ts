@@ -86,10 +86,4 @@ export class SchedularPatchComponent implements OnInit {
   }
   */
 
-
-
-
-
 }
-
-

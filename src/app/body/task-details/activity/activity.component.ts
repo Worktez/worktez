@@ -13,8 +13,7 @@
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { Activity } from 'src/app/Interface/ActivityInterface';
-import { UserAppSetting, defaultUser} from "../../../Interface/UserInterface";
-import { Observable } from 'rxjs';
+import { defaultUser, User} from "../../../Interface/UserInterface";
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
@@ -26,9 +25,7 @@ export class ActivityComponent implements OnInit {
 
   @Input('activity') activity: Activity
 
-  public userObservable: Observable<UserAppSetting>;
-
-  user: UserAppSetting;
+  user: User;
 
   constructor(private userService: UserServiceService) { }
 
@@ -37,15 +34,15 @@ export class ActivityComponent implements OnInit {
   }
 
   getUserDetail() {
-    if(this.activity.Uid == "defaultUser"){
+    if(this.activity.Uid == "defaultUser") {
       this.user = defaultUser;
     }
     else {
       this.user = this.userService.users.filter((obj) => {
-        return obj.uid == this.activity.Uid
+      return obj.uid == this.activity.Uid
       })[0];
     }
-
   }
+
 }
 
