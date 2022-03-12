@@ -139,9 +139,9 @@ import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
-
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
+import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -251,6 +251,7 @@ import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecar
     SchedularPatchComponent,
     UpdateTeamComponent,
     TaskECardComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,

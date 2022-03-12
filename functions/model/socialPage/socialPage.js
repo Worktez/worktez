@@ -23,6 +23,7 @@ const { addPost } = require("./tark/addPost");
 const { addPostComment } = require("./tark/addPostComment");
 const { getPosts } = require("./tark/getPosts");
 const { addReaction } = require("./tark/addReaction");
+const { getComments } = require("./tark/getComments");
 
 /**
  * Description
@@ -66,6 +67,17 @@ fastify.post("/getAllPosts", (req, res) => {
  */
 fastify.post("/addReaction", (req, res) => {
     addReaction(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getComments"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getComments", (req, res) => {
+    getComments(req, res);
 });
 
 /**
