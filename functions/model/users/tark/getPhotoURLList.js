@@ -53,7 +53,7 @@ exports.getPhotoURLList = function(request, response) {
         email.splice(0, email.length);
     }
 }
-    
+
     return Promise.all(Promises).then(() => {
         result = { data: { status: "OK", data: photoList } };
         return response.status(status).send(result);
