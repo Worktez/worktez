@@ -23,6 +23,8 @@ import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 declare var jQuery:any;
 
@@ -36,7 +38,6 @@ export class CreateNewTeamComponent implements OnInit {
 
   organizationDomain: string
   appKey: string
-  childStep: number = 1
   teamAdmin: string
   uid: string
   teamData: TeamDataId[] = [];
@@ -49,18 +50,25 @@ export class CreateNewTeamComponent implements OnInit {
   teamMembers: string[] = [];
   enableLoader: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-    this.authService.afauth.user.subscribe(data => {
-      this.authService.userAppSettingObservable.subscribe(data => {
-        if (data.SelectedOrgAppKey) {
-          this.backendService.organizationsData.subscribe(data => {
-            this.loadData();
+    this.navbarService.resetNavbar();
+    this.navbarService.addToNavbar(this.componentName);
+
+    if(this.startService.showTeamsData) {
+      this.loadData();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.startService.applicationDataStateObservable.subscribe((data) => {
+            if(data) {
+              this.loadData();
+            }
           });
         }
       });
-    });
+    }
   }
 
   loadData() {
@@ -80,38 +88,7 @@ export class CreateNewTeamComponent implements OnInit {
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
 
-  labelFunc(checked: boolean, value: string, array: string[]) {
-    if (checked === false) {
-      for (var i = 0; i < array.length; i++) {
-        if (array[i] === value) {
-          array.splice(i, 1);
-        }
-      }
-    }
-    else {
-      array.push(value);
-    }
-  }
-
-  getLabels(event: Event) {
-    let labelName = (<HTMLInputElement>event.target).name;
-    let labelValue = (<HTMLInputElement>event.target).value;
-    let isChecked = (<HTMLInputElement>event.target).checked;
-    if (labelName === "Task") {
-      this.labelFunc(isChecked, labelValue, this.type)
-    }
-    if (labelName === "Status") {
-      this.labelFunc(isChecked, labelValue, this.statusLabels)
-    };
-    if (labelName === "Priority") {
-      this.labelFunc(isChecked, labelValue, this.priorityLabels)
-    };
-    if (labelName === "Difficulty") {
-      this.labelFunc(isChecked, labelValue, this.difficultyLabels)
-    };
-  }
-
-  async nextChildStep() {
+  async submit() {
     this.teamName = this.teamName.trimRight();
     this.teamName = this.teamName.trimLeft();
     this.teamId = this.teamId.trimLeft();
@@ -130,20 +107,11 @@ export class CreateNewTeamComponent implements OnInit {
     });
     if (condition) {
       console.log("Inputs are valid");
-      this.childStep += 1
+      this.createNewTeamWithLabels()
     }
     else {
       console.log("Team not created! Validation error");
     }
-  }
-
-  prevChildStep() {
-    this.childStep -= 1
-  }
-
-  submit() {
-    //Functionality to Show Error When none of the option is checked in Particular labelName can be added
-    this.createNewTeamWithLabels()
   }
 
   addMember() {
@@ -176,7 +144,7 @@ export class CreateNewTeamComponent implements OnInit {
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
       next: (data) => {
       this.enableLoader = false;
-      this.router.navigate(['MyDashboard']);
+      this.router.navigate(['TeamDetails',this.teamId]);
       console.log("Successful created new team");
       },
       error: (error) => {

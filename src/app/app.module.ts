@@ -140,6 +140,9 @@ import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.compon
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+import { TeamDetailsComponent } from './body/team-details/team-details.component';
+import { LabelCardComponent } from './body/team-details/label-card/label-card.component';
+import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit-label-prop.component';
 import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 
@@ -250,6 +253,9 @@ import { CommentsComponent } from './body/social-page/posts/comments/comments.co
     KanbanBoardComponent,
     SchedularPatchComponent,
     UpdateTeamComponent,
+    TeamDetailsComponent,
+    LabelCardComponent,
+    EditLabelPropComponent,
     TaskECardComponent,
     CommentsComponent,
   ],
