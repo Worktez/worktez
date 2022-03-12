@@ -47,6 +47,7 @@ import { TermsAndConditionComponent } from './terms-and-condition/terms-and-cond
 import { ReleaseNotesComponent } from './body/release-notes/release-notes.component';
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+import { TeamDetailsComponent } from './body/team-details/team-details.component';
 
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
@@ -62,6 +63,7 @@ const routes: Routes = [
   { path: '', component: SocialPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
   { path: 'Patch2', component: Patch2Component },
   { path: 'Patch3', component: Patch3Component },

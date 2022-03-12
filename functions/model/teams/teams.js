@@ -28,6 +28,7 @@ const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 const { addProjLink } = require("./tark/addProjLink");
+const { getLabelByScope } = require("./tark/getTeamLabels");
 
 /**
  * Description
@@ -100,6 +101,17 @@ fastify.post("/addProjLink", (req, res) => {
   addProjLink(req, res);
 });
 
+
+/**
+ * Description
+ * @param {any} "/updateTeam"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getLabelByScope", (req, res) => {
+  getLabelByScope(req, res);
+});
 
 /**
  * Description
