@@ -14,3 +14,7 @@
 export interface GitData {
     avatar_url: string;
 }
+
+export interface GitRepoData {
+    html_url; string;
+}

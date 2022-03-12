@@ -57,7 +57,7 @@
                     </div>
                 </ng-container>
                     <ng-container *ngIf="dataFetched">
-                        <select class="form-control form-control-sm" [(ngModel)]="projLink"
+                        <select class="form-control form-control-sm" [(ngModel)]="prLink"
                             [ngModelOptions]="{standalone: true}">
                             <option [ngValue]="null" [disabled]="true">Select Github Repo</option>
                             <ng-container *ngFor="let item of objData">

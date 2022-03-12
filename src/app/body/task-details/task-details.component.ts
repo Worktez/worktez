@@ -31,6 +31,7 @@ import { PopupHandlerService } from '../../services/popup-handler/popup-handler.
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
+import { GitRepoData } from 'src/app/Interface/githubOrgData';
 
 @Component( {
   selector: 'app-task-details',
@@ -44,6 +45,7 @@ export class TaskDetailsComponent implements OnInit {
   sprintName: string
   Id: string
   logWorkEnabled: boolean = false
+  gitPrEnabled: boolean = false
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
   linkEnabled: boolean = false
@@ -66,7 +68,7 @@ export class TaskDetailsComponent implements OnInit {
   addedWatcher: boolean = false;
   newWatcher: string = "";
   prLink: string;
-  objData: [];
+  prData: GitRepoData[] = [];
 
   dataReady: boolean = false
 
@@ -75,9 +77,8 @@ export class TaskDetailsComponent implements OnInit {
   public taskDataObservable: Tasks
   activityData: Activity[]
   linkData: Link[]
-  @Output() addedPrLink = new EventEmitter<{ prLink: string }>();
 
-  constructor (private httpService: HttpServiceService, public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -91,7 +92,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
-    this.getPullRequests();
+    // this.getPullRequests();
   }
 
   getTaskPageData(){
@@ -331,16 +332,21 @@ export class TaskDetailsComponent implements OnInit {
   });
   }
 
-  getPullRequests() {
-      this.httpService.getPrDetails().pipe(map(data => {
-        const prData = data;
-        return prData;
-      })).subscribe(data => {
-        console.log("the prs:",data)
-      });
+  // getPullRequests() {
+  //     this.httpService.getPrDetails().pipe(map(data => {
+  //       const prData = data as GitRepoData[];
+  //       return prData;
+  //     })).subscribe(data => {
+  //       this.prData = data;
+  //       console.log("the prs:",data)
+  //     });
+  // }
+
+  linkPr() {
+    this.gitPrEnabled = true;
+    console.log("clicked for github link")
   }
 
-  added() {
-    this.addedPrLink.emit({ prLink: this.prLink });
-  }
+  
 }
+
