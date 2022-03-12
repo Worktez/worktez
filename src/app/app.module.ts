@@ -140,9 +140,9 @@ import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.compon
 import { GithubLinkComponent } from './body/github-link/github-link.component';
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
-
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 import { GitComponent } from './body/task-details/git/git.component';
+import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 
 @NgModule({
@@ -254,6 +254,7 @@ import { CommentsComponent } from './body/social-page/posts/comments/comments.co
     SchedularPatchComponent,
     UpdateTeamComponent,
     GitComponent,
+    TaskECardComponent,
     CommentsComponent,
   ],
   imports: [
