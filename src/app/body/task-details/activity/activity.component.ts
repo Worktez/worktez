@@ -13,8 +13,8 @@
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { Activity } from 'src/app/Interface/ActivityInterface';
-import { User} from "../../../Interface/UserInterface";
-import { AuthService } from 'src/app/services/auth.service';
+import { defaultUser, User} from "../../../Interface/UserInterface";
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
   selector: 'app-activity',
@@ -27,10 +27,21 @@ export class ActivityComponent implements OnInit {
 
   user: User;
 
-  constructor(public authService: AuthService) { }
+  constructor(private userService: UserServiceService) { }
 
   ngOnInit(): void {
-    
+    this.getUserDetail();
+  }
+
+  getUserDetail() {
+    if(this.activity.Uid == "defaultUser") {
+      this.user = defaultUser;
+    }
+    else {
+      this.user = this.userService.users.filter((obj) => {
+      return obj.uid == this.activity.Uid
+      })[0];
+    }
   }
 
 }
