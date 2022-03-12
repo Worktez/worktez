@@ -29,15 +29,10 @@ export class TeamsCardComponent implements OnInit {
   @Input('team') team: Team
 
   @Output() updatedDetails = new EventEmitter<boolean>();
-  @Output() githubDetails = new EventEmitter<boolean>();
 
   addMemberEnabled: boolean = false
-  addProjectEnabled: boolean = false
-  addProjectLinkEnabled: boolean = false
-  teamToAddMember: Team
-  teamToAddGithub: Team
-  typeLink: string
   updateTeamEnabled: boolean = false
+  teamToAddMember: Team
   teamToUpdate: Team
   componentName:string ="ORGANIZATION-DETAILS"
   constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
@@ -72,7 +67,6 @@ export class TeamsCardComponent implements OnInit {
   enableAddMember(team: Team) {
     this.teamToAddMember = team;
     this.addMemberEnabled = true;
-    console.log("team:", team)
   }
 
   addedMember(data: { completed: boolean, memberEmail: string }) {
@@ -80,22 +74,6 @@ export class TeamsCardComponent implements OnInit {
     this.addMemberEnabled = false;
   }
 
-  enableAddOrganisationLink(team: Team) {
-    this.teamToAddGithub = team;
-    this.addProjectEnabled = true;
-    this.typeLink = "Organisation";
-  }
-
-  enableAddUsernameLink(team: Team) {
-    this.teamToAddGithub = team;
-    this.addProjectEnabled = true;
-    this.typeLink = "Username";
-  }
-
-  addedProject(data: { completed: boolean, memberEmail: string }) {
-    this.githubDetails.emit(true);
-    this.addProjectEnabled = false;
-  }
   teamUpdated(data: { completed: boolean }) {
     this.updateTeamEnabled = false;
   }

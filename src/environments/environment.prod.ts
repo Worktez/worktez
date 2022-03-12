@@ -4,6 +4,5 @@ export const environment = {
     
   },
   useEmulators: false,
-  gitApiUrl: "https://api.github.com/repos/Worktez/worktez",
-  githubApiUrl: "https://api.github.com"
+  gitApiUrl: "https://api.github.com/repos/Worktez/worktez"
 };
