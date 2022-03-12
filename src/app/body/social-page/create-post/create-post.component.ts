@@ -21,7 +21,7 @@ declare var jQuery:any;
 export class CreatePostComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
-  @Output() postCreated = new EventEmitter<{ completed: boolean }>();
+  @Output() createPostCompleted = new EventEmitter<{ completed: boolean }>();
 
 
   componentName: string = "CREATE-POST";
@@ -69,6 +69,6 @@ export class CreatePostComponent implements OnInit {
     close() {
       jQuery('#createPost').modal('hide');
       jQuery('#form').trigger("reset");
-      this.postCreated.emit({ completed: true });
+      this.createPostCompleted.emit({ completed: true });
     }
   } 

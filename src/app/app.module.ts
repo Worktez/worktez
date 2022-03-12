@@ -143,6 +143,7 @@ import { UpdateTeamComponent } from './body/update-team/update-team.component';
 
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 import { GitComponent } from './body/task-details/git/git.component';
+import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -251,9 +252,9 @@ import { GitComponent } from './body/task-details/git/git.component';
     GithubLinkComponent,
     KanbanBoardComponent,
     SchedularPatchComponent,
-    
     UpdateTeamComponent,
-         GitComponent,
+    GitComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,

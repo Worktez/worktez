@@ -13,33 +13,51 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
-<div class="card ">
-    <div class="card-header">
+<div class="card pb-3">
+    <div class="card-header mb-3">
         <div class="row p-2">
-            <img src="{{user.photoURL}}" onerror="this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="ml-3 col">
-                <h3>{{user.displayName}} <br><span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer at Random Company</span></h3>
-
+                <h3>{{authService.userAppSetting.displayName}} <br><span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer at Random Company</span><br>
+                <span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">4h</span></h3>
+            </div>
+            <div>
+                <button class="btn m-auto"><mat-icon fontSet="material-icons" class="align-middle">add</mat-icon>Follow</button> 
             </div>
         </div>
     </div>
     <div class="card-body mt-5">
         <p>{{post.Post}}</p>
         <hr>
-        <div class="row pl-2">
-            <button class="btn mt-3 px-4 py-1" (click)="onReact(post.PostId)"  id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">
-            thumb_up
-        </mat-icon>Like</button> 
-        <button class="btn mt-3 px-4 py-1" (click)="showCommentBox()" id="commentButton1"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat_bubble_outline</mat-icon>Comment</button>
-        <ng-container *ngIf="showAddComment">
-            <input type="text" class="form-control form-control-sm commentBox" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
-            <button class="btn ml-3 px-4 py-1" id="commentButton" (click)="openAddComment(post.PostId)">Send</button>
-        </ng-container>
-
+        <div class="row">
+            <button class="btn m-auto px-3 py-1" (click)="onReact(post.PostId)"  id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">thumb_up</mat-icon></button> 
+            <button class="btn m-auto px-3 py-1" (click)="showCommentBox(post.PostId)" id="commentButton1" data-toggle="button"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat</mat-icon></button>
+            <button class="btn m-auto px-3 py-1" id="shareIcon"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">share</mat-icon></button>
+            <button class="btn m-auto px-3 py-1" id="SendIcon"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">send</mat-icon></button>
+        </div>
+        <div class="row">
+            <span class="m-auto">Like</span>
+            <span class="m-auto">Comment</span>
+            <span class="m-auto">Share</span>
+            <span class="m-auto">Send</span>
         </div>
     </div>
 </div>
-
-
-<!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
-            <button class="btn mt-3 px-4 py-1" id="commentButton" (click)="openAddComment(post.PostId)">Send</button> -->
+<div class="card mt-1 mb-3" id="comments">
+    <ng-container *ngIf="showAddComment">
+        <div class="row mt-2">
+            <h2 class="ml-4">Comments</h2>
+            <p class="ml-auto mr-5">Most Relevant</p>
+        </div>
+    <div class="col m-2">
+        <ng-container *ngFor="let comment of comments">
+            <app-comments [comment]="comment"></app-comments>
+        </ng-container>
+    </div>
+    <hr>
+    <div class="row ml-2">
+        <input type="text" class="form-control form-control-md commentBox" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
+        <button class="btn btn-success px-3 mt-2" id="commentButton" (click)="openAddComment(post.PostId)">Send</button>
+    </div>
+    </ng-container>
+</div>
