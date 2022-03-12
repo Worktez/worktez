@@ -29,6 +29,7 @@ const { db } = require("../application/lib");
  * @param {any} teamAdmin
  * @param {any} teamManagerEmail
  * @param {any} teamMembers
+ * @param {any} scope
  * @param {any} type
  * @param {any} statusLabels
  * @param {any} priorityLabels
@@ -38,7 +39,7 @@ const { db } = require("../application/lib");
  * @param {any} teamStatus
  * @return {any}
  */
-exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus) {
+exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus) {
     const setTeam = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).set({
         TeamName: teamName,
         TeamDescription: teamDescription,
@@ -54,8 +55,31 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         TeamId: teamId,
         TeamStatus: teamStatus,
         CurrentSprintId: 0,
+        LabelCounters: 0,
+        Scope: scope,
     });
     return Promise.resolve(setTeam);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} docId
+ * @param {any} displayName
+ * @param {any} scope
+ * @param {any} iconName
+ * @param {any} colorCode
+ * @return {any}
+ */
+ exports.setLabelProperties = function(orgDomain, teamName, docId, displayName, scope, iconName, colorCode) {
+    const setLabelProperties = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).set({
+        DisplayName: displayName,
+        Scope: scope,
+        IconName: iconName,
+        ColorCode: colorCode,
+    });
+    return Promise.resolve(setLabelProperties);
 };
 
 /**
@@ -101,3 +125,22 @@ exports.getTeamUseTeamId = function(orgDomain, teamId) {
     });
     return Promise.resolve(getTeamPromise);
 };
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} scope
+ * @return {any}
+ */
+ exports.getLabelInScope = function(orgDomain, teamName, scope) {
+    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Scope", "==", scope).get().then((doc) => {
+        const data = [];
+        doc.forEach((team) => {
+            data.push(team.data());
+        });
+        return data;
+    });
+    return Promise.resolve(getTeamPromise);
+};
+

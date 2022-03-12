@@ -34,6 +34,9 @@ export interface UserAppSetting extends User {
     Projects: string;
     Website: string;
     Username: string;
+    UserPostsCounter: number;
+    UserReactionCounter: number;
+    UserCommentCounter: number;
 }
 
 export interface MyOrganizationData {
@@ -98,15 +101,4 @@ export interface QuickNote {
     Note: string;
     Status: string;
     Title: string;
-}
-
-export interface Post{
-    Uid: string;
-    CreationTime: string;
-    CreationDate: string;
-    Post: string;
-    Reach: number;
-    Reactions: number;
-    Comment: number;
-    PostId: string;
 }

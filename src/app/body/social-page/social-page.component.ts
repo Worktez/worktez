@@ -17,7 +17,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Post, User } from 'src/app/Interface/UserInterface';
+import { Post } from 'src/app/Interface/SocialInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
@@ -32,13 +32,12 @@ export class SocialPageComponent implements OnInit {
 
   showloader: boolean = false
   dataReady: boolean = false
+  createPostEnabled: boolean = false
   public posts: Post[]
 
-  Post: string
   PostId: string
 
-
-  constructor(private router: Router, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public userService:UserServiceService) { }
+  constructor(private router: Router, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -65,7 +64,13 @@ export class SocialPageComponent implements OnInit {
   }
 
   createPost() {
-    this.popupHandlerService.createPostEnabled = true;
+    this.createPostEnabled = true;
+    this.loadSocialPageData();
+  }
+
+  createPostCompleted ( data: { completed: boolean } ) {
+    this.createPostEnabled = false;
+    this.loadSocialPageData();
   }
 
 }

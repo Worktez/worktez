@@ -28,8 +28,16 @@ exports.getPhotoURLList = function(request, response) {
     const photoList=[];
     let status = 200;
     let result;
+    const Promises = [];
 
-    const promise = getAllPhotos(email).then((doc) => {
+    while (email.length > 0) {
+        let temp;
+        if (email.length > 10) {
+            temp = email.slice(0, 10);
+        } else {
+            temp = email.slice(0, email.length);
+        }
+    const promise = getAllPhotos(temp).then((doc) => {
         doc.forEach((url) => {
             photoList.push(url);
         });
@@ -37,9 +45,16 @@ exports.getPhotoURLList = function(request, response) {
         status = 500;
         console.error("Error:", error);
     });
+    Promises.push(promise);
 
-    const promises = [promise];
-    Promise.all(promises).then(() => {
+    if (email.length > 10) {
+        email.splice(0, 10);
+    } else {
+        email.splice(0, email.length);
+    }
+}
+    
+    return Promise.all(Promises).then(() => {
         result = { data: { status: "OK", data: photoList } };
         return response.status(status).send(result);
     })

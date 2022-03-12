@@ -26,6 +26,7 @@ const { getOrg, updateOrg } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
+const { createLableProperties } = require("./createLabelProperties");
 
 
 exports.createTeam = function(request, response) {
@@ -42,6 +43,7 @@ exports.createTeam = function(request, response) {
     const orgAppKey = request.body.data.OrganizationAppKey;
     const orgDomain = request.body.data.OrganizationDomain;
     const teamName = request.body.data.TeamName;
+    const scope = ["Priority", "Difficulty", "Status", "Type"];
     let orgId;
     const teamStatus = 1;
 
@@ -51,7 +53,6 @@ exports.createTeam = function(request, response) {
     const promise1 = getOrg(orgDomain).then((orgDoc) => {
         if (orgDoc != undefined) {
             orgId = orgDoc.OrganizationId;
-            console.log(orgId);
 
             const inputJson = {
                 TeamsId: admin.firestore.FieldValue.arrayUnion(teamId),
@@ -60,9 +61,11 @@ exports.createTeam = function(request, response) {
             updateOrg(orgDomain, inputJson);
         }
 
-        const prom2 = getTeam(orgDomain, teamName).then((team) => {
+        const prom1 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
-                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus);
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus).then((data)=>{
+                    createLableProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels);
+                });
                 teamMembers.forEach((element) => {
                     sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, orgDomain, teamId);
                 });
@@ -76,7 +79,7 @@ exports.createTeam = function(request, response) {
             status = 500;
             console.log("Error:", error);
         });
-        return Promise.resolve(prom2);
+        return Promise.resolve(prom1);
     }).catch((error) => {
         status = 500;
         console.log("Error:", error);

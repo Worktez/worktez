@@ -44,4 +44,7 @@ export class UserCardComponent implements OnInit {
   profile() {
     this.router.navigate(['/profile', this.authService.userAppSetting.Username]);
   }
+  createNewOrganisation(){
+    this.router.navigate(['/CreateNewOrganization']);
+  }
 }
