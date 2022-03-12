@@ -28,6 +28,7 @@ const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
 const { getLabelByScope } = require("./tark/getTeamLabels");
+const { deleteLabel } = require("./tark/deleteLabel");
 
 /**
  * Description
@@ -94,6 +95,18 @@ fastify.post("/removeMember", (req, res) => {
  */
 fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
+});
+
+
+/**
+ * Description
+ * @param {any} "/deleteLabel"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/deleteLabel", (req, res) => {
+  deleteLabel(req, res);
 });
 
 /**

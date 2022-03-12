@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
 import { Label } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-label-card',
@@ -15,10 +17,11 @@ export class LabelCardComponent implements OnInit {
 
   labels: Label[] = [];
   labelsReady: boolean = false;
-
+  displayName: string = ""
+  showAddLabel: boolean = false
   showEditLabelProp: boolean = false;
 
-  constructor(private functions: AngularFireFunctions, private backendService: BackendService) { }
+  constructor(private functions: AngularFireFunctions, private backendService: BackendService , public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.getTeamLabelsByScope();
@@ -49,8 +52,45 @@ export class LabelCardComponent implements OnInit {
     this.showEditLabelProp = true;
   }
 
+  addLabel(){
+    const orgDomain = this.backendService.getOrganizationDomain();
+    
+    if(this.displayName != "") {
+      const callable = this.functions.httpsCallable("teams/createLabelProperties");
+      callable({OrgDomain: orgDomain, TeamName: this.teamName, Scope: this.scope }).pipe(map(res=>{
+        return res
+      })).subscribe((data) => {
+      });
+    }
+  }
+
+
+  addLabelCompleted(data) {
+    if(data) {
+      this.showAddLabel = false
+      return this.getTeamLabelsByScope()
+    }
+  }
+
   deletedLabel(item: Label) {
-    console.info("Deletign label");
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable("teams/deleteLabel");
+    
+    callable({OrgDomain: orgDomain,TeamName: this.teamName, Scope: this.scope , Label: item }).subscribe({
+      next: (data) => {
+        this.getTeamLabelsByScope();
+        console.log("Successfull");
+      },
+      error: (error) => {
+        console.log("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode("InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful updated Selected Team in db')
+  });
+    
+    console.info("Deleting label");
   }
 
 }
