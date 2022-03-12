@@ -7,7 +7,8 @@ export const environment = {
   firebase: {
   },
   useEmulators: true,
-  gitApiUrl: "https://api.github.com/repos/Worktez/worktez"
+  gitApiUrl: "https://api.github.com/repos/Worktez/worktez",
+  githubApiUrl: "https://api.github.com"
 };
 
 /*

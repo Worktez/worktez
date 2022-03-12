@@ -13,7 +13,7 @@ export class HttpServiceService {
   }
 
   getPrDetails(){
-    const url = environment.githubApiUrl + "/repos/Worktez/worktez/pulls";
+    const url = environment.gitApiUrl + "/repos/Worktez/worktez/pulls";
     return this.httpClient.get(url);
   }
 
@@ -21,18 +21,13 @@ export class HttpServiceService {
     return this.httpClient.get(this.gitReleaseApiUrl);
   }
 
-  getGithubUserDetails() {
-    const url = environment.githubApiUrl + "/users/printf-twinkle";
-    return this.httpClient.get(url);
-  }
-
   getGithubUserRepos(memberUserName) {
-    const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
+    const url = environment.gitApiUrl + "/users/" + memberUserName + "/repos";
     return this.httpClient.get(url);
   }
 
   getGithubOrgRepos(memberOrgName) {
-    const url = environment.githubApiUrl + "/orgs/" + memberOrgName + "/repos";
+    const url = environment.gitApiUrl + "/orgs/" + memberOrgName + "/repos";
     console.log("the url:", url);
     return this.httpClient.get(url);
   }

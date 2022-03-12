@@ -22,7 +22,6 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
-    "@octokit/core": "^3.5.1",
     "angular-google-charts": "^2.2.2",
     "bootstrap": "^4.6.1",
     "cors": "^2.8.5",

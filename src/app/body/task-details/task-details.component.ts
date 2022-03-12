@@ -332,16 +332,6 @@ export class TaskDetailsComponent implements OnInit {
   });
   }
 
-  // getPullRequests() {
-  //     this.httpService.getPrDetails().pipe(map(data => {
-  //       const prData = data as GitRepoData[];
-  //       return prData;
-  //     })).subscribe(data => {
-  //       this.prData = data;
-  //       console.log("the prs:",data)
-  //     });
-  // }
-
   linkPr() {
     this.gitPrEnabled = true;
     console.log("clicked for github link")
