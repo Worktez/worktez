@@ -97,7 +97,6 @@ fastify.post("/updateTeam", (req, res) => {
 });
 
 fastify.post("/addProjLink", (req, res) => {
-  console.log("here");
   addProjLink(req, res);
 });
 

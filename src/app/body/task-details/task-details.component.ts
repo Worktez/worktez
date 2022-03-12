@@ -92,7 +92,6 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
-    // this.getPullRequests();
   }
 
   getTaskPageData(){
@@ -318,7 +317,6 @@ export class TaskDetailsComponent implements OnInit {
     await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
       next: (data) => {
         console.log("Successful");
-        console.log("checking if watcher exists or not:", this.task.Watcher)
         
         this.addedWatcher = true;
         return;
@@ -334,7 +332,6 @@ export class TaskDetailsComponent implements OnInit {
 
   linkPr() {
     this.gitPrEnabled = true;
-    console.log("clicked for github link")
   }
 
   
