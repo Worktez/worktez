@@ -141,6 +141,9 @@ import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
 
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+import { TeamDetailsComponent } from './body/team-details/team-details.component';
+import { LabelCardComponent } from './body/team-details/label-card/label-card.component';
+import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit-label-prop.component';
 
 @NgModule({
   declarations: [
@@ -250,6 +253,9 @@ import { SchedularPatchComponent } from './patches/schedular-patch/schedular-pat
     SchedularPatchComponent,
     
     UpdateTeamComponent,
+         TeamDetailsComponent,
+         LabelCardComponent,
+         EditLabelPropComponent,
   ],
   imports: [
     BrowserModule,
