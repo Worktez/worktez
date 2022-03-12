@@ -137,9 +137,11 @@ import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
+import { GithubLinkComponent } from './body/github-link/github-link.component';
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+import { GitComponent } from './body/task-details/git/git.component';
 import { ProfilePicturesComponent } from './body/common-tools/profile-pictures/profile-pictures.component';
 import { TeamDetailsComponent } from './body/team-details/team-details.component';
 import { LabelCardComponent } from './body/team-details/label-card/label-card.component';
@@ -251,9 +253,11 @@ import { CommentsComponent } from './body/social-page/posts/comments/comments.co
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
+    GithubLinkComponent,
     KanbanBoardComponent,
     SchedularPatchComponent,
     UpdateTeamComponent,
+    GitComponent,
     ProfilePicturesComponent,
     TeamDetailsComponent,
     LabelCardComponent,

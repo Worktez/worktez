@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators'
@@ -30,6 +30,8 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { HttpServiceService } from 'src/app/services/http-service.service';
+import { GitRepoData } from 'src/app/Interface/githubOrgData';
 
 @Component( {
   selector: 'app-task-details',
@@ -43,6 +45,7 @@ export class TaskDetailsComponent implements OnInit {
   sprintName: string
   Id: string
   logWorkEnabled: boolean = false
+  gitPrEnabled: boolean = false
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
   linkEnabled: boolean = false
@@ -64,6 +67,8 @@ export class TaskDetailsComponent implements OnInit {
   url: string;
   addedWatcher: boolean = false;
   newWatcher: string = "";
+  prLink: string;
+  prData: GitRepoData[] = [];
 
   dataReady: boolean = false
 
@@ -312,7 +317,6 @@ export class TaskDetailsComponent implements OnInit {
     await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
       next: (data) => {
         console.log("Successful");
-        console.log("checking if watcher exists or not:", this.task.Watcher)
         
         this.addedWatcher = true;
         return;
@@ -325,4 +329,11 @@ export class TaskDetailsComponent implements OnInit {
       complete: () => console.info('Successful')
   });
   }
+
+  linkPr() {
+    this.gitPrEnabled = true;
+  }
+
+  
 }
+

@@ -1,0 +1,18 @@
+.list-group-item{
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+.list-group-item:hover {
+    background-color: var(--primary-bg);
+}
+
+.card, .modal-body, .modal-content, button{
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+.card-header{
+    color: var(--text);
+    background-color: var(--primary-bg);
+}
