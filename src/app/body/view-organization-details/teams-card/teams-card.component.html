@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2 class="card-title">{{ team.TeamName }}</h2>
+                <h2 class="card-title" (click)="openTeamDetails()" style="cursor: pointer;">{{ team.TeamName }}</h2>
                 <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
             </div>
         </div>

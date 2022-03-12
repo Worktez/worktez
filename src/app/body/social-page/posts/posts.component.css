@@ -9,55 +9,54 @@
   background-color: var(--secondary-bg);
   color: var(--text);
   border: none;
-  width:34rem;
-  margin-left:9rem;
 }
+
 hr {
   margin: 0;
   border: none;
   border-bottom: 2px solid var(--scrollbar-color);
 }
+
 h3 {
   color:#5C60EC;
 }
-#likeButton {
-  display: block;
-  margin-bottom: 10px;
-  border-radius:50px;
-text-align:center;
-  background-color: var(--primary-bg);
-  color: var(--text);
-  font-size:1rem;
-}
 
 .commentBox {
-  margin-left: 23%;
-  display: inline-block;
-  width: 40%;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-#commentButton1 {
-  margin-bottom: 10px;
-  margin-left: 6px;
-  display: block;
-  border-radius:50px;
-text-align:center;
   background-color: var(--primary-bg);
   color: var(--text);
-  font-size:1rem;
+  border: none;
+  border-radius: 10px;
+  margin: 10px;
+  width: 70%;
 }
-#commentButton {
-  display: block;
-  text-align:center;
-  color: var(--text);
-  font-size:1rem;
-  background-color: var(--primary-bg);
-  border-radius: 13px;
-}
-#commentButton:hover{
-  color:#5C60EC;
-  cursor: pointer;
 
+#commentButton {
+  background-color: var(--primary-color);
+  border-radius: 13px;
+  width: 20%;
+  height: 5%;
+}
+
+#commentButton:hover{
+  cursor: pointer;
 } 
+
+mat-icon {
+  color: var(--text);
+}
+
+#comments {
+  width: 100%;
+}
+
+/* #comments::-webkit-scrollbar {
+  width: 6px;              
+}
+#comments::-webkit-scrollbar-track {
+  background: var(--secondary-bg);        
+}
+#comments::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #00d2ff;
+  background-image: linear-gradient(to top, #3a7bd5 0%, #5C60EC 100%);
+}  */

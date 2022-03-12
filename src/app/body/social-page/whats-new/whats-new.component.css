@@ -2,16 +2,14 @@
     background-color: var(--secondary-bg);
     color: var(--text);
     border: none;
-
 }
 
 .card {
     background-color: var(--secondary-bg);
     color: var(--text);
     border: none;
-    width:23rem;
-    margin-left:13rem;
     height: 25rem;
+    width: 90%;
 }
 hr {
     margin: 0;
@@ -26,7 +24,7 @@ hr {
     background: var(--secondary-bg);        
 }
 .whatsnew::-webkit-scrollbar-thumb {
-      border-radius: 1rem;
+    border-radius: 1rem;
     background-color: #00d2ff;
     background-image: linear-gradient(to top, #3a7bd5 0%, #5C60EC 100%);
 } 

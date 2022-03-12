@@ -39,6 +39,14 @@ export interface Team {
     TotalTeamTasks: number;
     OrganizationId: string;
     CurrentSprintId: number;
+    Scope: string[];
 }
 
 export interface TeamDataId extends Team {id: string;}
+
+export interface Label {
+    ColorCode: string;
+    DisplayName: string;
+    IconName: string;
+    Scope: string;
+}

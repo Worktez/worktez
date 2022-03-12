@@ -24,6 +24,7 @@
 const { setPost } = require("../lib");
 
 const { getApplicationData, updateApplication } = require("../../application/lib");
+const { incrementNumberofPostsforUser } = require("../../users/tark/incrementUserCounters");
 
 exports.addPost = function(request, response) {
     const uid = request.body.data.Uid;
@@ -43,7 +44,7 @@ exports.addPost = function(request, response) {
             const postId = "P" + postcounter;
 
             setPost(uid, post, postId, lastUpdatedDate, lastUpdatedTime).then((postData) => {
-                console.log("Post added Successfully");
+                incrementNumberofPostsforUser(uid);
             }).catch((error) => {
                 result = { data: error };
                 status = 500;
@@ -59,11 +60,11 @@ exports.addPost = function(request, response) {
 
     const Promises = [promise1];
     return Promise.all(Promises).then(() => {
-        result = { data: "Comment Added successfully" };
+        result = { data: "Post Added successfully" };
         return response.status(status).send(result);
     }).catch((error) => {
         result = { data: error };
-        console.error("Error adding Note", error);
+        console.error("Error adding Post", error);
         return response.status(status).send(result);
     });
 };
