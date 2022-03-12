@@ -52,7 +52,6 @@ export class ApplicationSettingsService {
   constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
   getTeamDetails(teamId: string) {
-    if(this.team == undefined || this.team.TeamId != teamId) {
       this.teamDataReady = false;
       const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
       const callable = this.functions.httpsCallable("teams/getTeamData");
@@ -80,7 +79,6 @@ export class ApplicationSettingsService {
 
           return data;
       }));
-    }
     return this.teamData;
   }
 

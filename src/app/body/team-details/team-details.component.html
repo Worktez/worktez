@@ -1,0 +1,16 @@
+<ng-container *ngIf="teamDataReady">
+  <div class="card">
+    <div class="card-header">
+      {{team.TeamName}}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <ng-container *ngFor="let item of team.Scope">
+          <div class="col">
+            <app-label-card [scope]="item" [teamName]="team.TeamName"></app-label-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>

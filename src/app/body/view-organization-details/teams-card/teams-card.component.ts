@@ -63,7 +63,10 @@ export class TeamsCardComponent implements OnInit {
       },
       complete: () => console.info('Successful ')
   });
+  }
 
+  openTeamDetails() {
+    this.router.navigate(['TeamDetails', this.team.TeamId]);
   }
 
   enableAddMember(team: Team) {
