@@ -66,7 +66,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   getTeamDetails(teamId: string) {
-    this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
+    this.applicationSettingsService.getTeamDetails(teamId, true).subscribe(data => {
       this.teams.push(data);
     });
   }
