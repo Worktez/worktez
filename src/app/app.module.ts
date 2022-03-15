@@ -148,6 +148,7 @@ import { LabelCardComponent } from './body/team-details/label-card/label-card.co
 import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit-label-prop.component';
 import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
+import { EditDpComponent } from './body/view-organization-details/edit-dp/edit-dp.component';
 
 @NgModule({
   declarations: [
@@ -264,6 +265,7 @@ import { CommentsComponent } from './body/social-page/posts/comments/comments.co
     EditLabelPropComponent,
     TaskECardComponent,
     CommentsComponent,
+    EditDpComponent,
   ],
   imports: [
     BrowserModule,

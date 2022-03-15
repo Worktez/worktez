@@ -25,7 +25,7 @@ import { StartServiceService } from '../services/start/start-service.service';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  tag_name: string
+  tag_name: string;
   userDataReady: boolean = false;
 
   constructor(public startService: StartServiceService, public authService: AuthService, private httpService: HttpServiceService, public router: Router) { }
