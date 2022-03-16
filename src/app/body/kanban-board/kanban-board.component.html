@@ -1,6 +1,37 @@
+<div class="row px-5 py-2">
+    <div class="col-1 mr-5">
+        <div class="btn-group">
+            <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+            <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                <ng-container *ngFor="let item of startService.teams">
+                    <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          class="btn ">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+            filter_list
+        </mat-icon>
+          Sprint {{currentSprintNumber}}
+        </button>
+        <div class="dropdown-menu dropdown-menu-right py-4 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+          <div class="input-group">
+            <h5>Sprint No.</h5>
+            <input class="form-control" style="font-size: 11px" type="number" id="filterSprintNumberInput"
+              [(ngModel)]="filterSprintNumber" />
+            <button id="dropdownButton" class="btn" style="font-size: 10px" (click)="changeSprintNumber()">
+              Filter
+            </button>
+          </div>
+        </div>
+      </div>
+</div>
 <ng-container *ngIf="tasks && !showLoader">
     <div class="container-fluid">
-        <div class="row" cdkDropListGroup>
+        <div class="row mx-3" cdkDropListGroup>
             <ng-container *ngFor="let tasksArr of tasks; let i = index">
                 <div class="col">
                     <div class="container p-4" cdkDropList (cdkDropListDropped)="onDrop($event, selectedStatusLabels[i])" [cdkDropListData]="tasksArr" id="tasksContainer">
@@ -39,23 +70,18 @@
                                                     <h6 class="card-title">{{task.Title}}</h6>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12 difficulty">
-                                                    <span id="headerLabel" class="card-title">Difficulty</span>
+                                                <div class="row ml-1 difficulty">
+                                                    <span id="headerLabel" class="card-title mr-1 col-3 pt-1 px-0">Difficulty</span>
                                                     <app-difficulty-icons [Difficulty]="task.Difficulty"></app-difficulty-icons>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 priority">
-                                                    <span id="headerLabel" class="card-title">Priority</span>
-                                                    <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
+                                                <div class="row ml-1 priority">
+                                                    <span id="headerLabel" class="card-title mr-1 col-3 pt-1 px-0">Priority</span>
+                                                    <app-priority-icons [Priority]="task.Priority" ></app-priority-icons>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <app-progress-graph [workdone]="task.WorkDone"></app-progress-graph>
+                                                <div class="row ml-1 mb-1 Progress">
+                                                    <span id="headerLabel" class="card-title mr-1 col-3 pt-1 px-0">Progress</span>
+                                                    <app-progress-graph [workdone]="task.WorkDone" class="col-8 p-0"></app-progress-graph>
                                                 </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

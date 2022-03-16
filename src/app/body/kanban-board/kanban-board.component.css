@@ -5,6 +5,11 @@
 #tasksContainer {
     background-color: var(--secondary-bg);
 }
+.btn {
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border: none;
+}
 
 .cdk-drag-preview {
     box-sizing: border-box;
@@ -35,6 +40,7 @@
 
 .card-title {
     font-size: 9px;
+    display: inline-block;
 }
 
 #taskId {
