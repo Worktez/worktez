@@ -189,6 +189,7 @@ export class CreateNewTaskComponent implements OnInit {
     jQuery('#createNewTask');
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
+    window.location.reload();
   }
 
 }
