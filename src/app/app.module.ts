@@ -15,7 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/compat/functions';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
@@ -137,13 +137,17 @@ import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
+import { GithubLinkComponent } from './body/github-link/github-link.component';
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
-
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
+import { GitComponent } from './body/task-details/git/git.component';
+import { ProfilePicturesComponent } from './body/common-tools/profile-pictures/profile-pictures.component';
 import { TeamDetailsComponent } from './body/team-details/team-details.component';
 import { LabelCardComponent } from './body/team-details/label-card/label-card.component';
 import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit-label-prop.component';
+import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
+import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -249,13 +253,17 @@ import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
+    GithubLinkComponent,
     KanbanBoardComponent,
     SchedularPatchComponent,
-    
     UpdateTeamComponent,
-         TeamDetailsComponent,
-         LabelCardComponent,
-         EditLabelPropComponent,
+    GitComponent,
+    ProfilePicturesComponent,
+    TeamDetailsComponent,
+    LabelCardComponent,
+    EditLabelPropComponent,
+    TaskECardComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -280,7 +288,8 @@ import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit
   ],
   providers: [
     AuthService,
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
+    { provide: REGION, useValue: 'asia-south1' },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'} },
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },
     { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', '7002'] : undefined },
     { provide: USE_FUNCTIONS_EMULATOR, useValue: environment.useEmulators ? ['localhost', '7001'] : undefined }

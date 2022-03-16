@@ -27,6 +27,7 @@ const { removeMember } = require("./tark/removeMember");
 const { updateTeam } = require("./tark/updateTeam");
 const { getTeamData } = require("./tark/getTeamData");
 const { deleteTeam } = require("./tark/deleteTeam");
+const { addProjLink } = require("./tark/addProjLink");
 const { getLabelByScope } = require("./tark/getTeamLabels");
 const { deleteLabel } = require("./tark/deleteLabel");
 
@@ -108,6 +109,11 @@ fastify.post("/updateTeam", (req, res) => {
  fastify.post("/deleteLabel", (req, res) => {
   deleteLabel(req, res);
 });
+
+fastify.post("/addProjLink", (req, res) => {
+  addProjLink(req, res);
+});
+
 
 /**
  * Description

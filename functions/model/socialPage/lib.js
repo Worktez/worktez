@@ -61,8 +61,8 @@ exports.getAllPosts = function() {
  * @return {any}
  */
 exports.getPost = function(postId) {
-    const getPostDetails = db.collection("Social").doc(postId).get().then((taskDoc) => {
-        return taskDoc.data();
+    const getPostDetails = db.collection("Social").doc(postId).get().then((postDoc) => {
+        return postDoc.data();
     });
     return Promise.resolve(getPostDetails);
 };
@@ -120,4 +120,9 @@ exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type
 exports.updatePost = function(inputJson, postID) {
     const updatePostPromise = db.collection("Social").doc(postID).update(inputJson);
     return Promise.resolve(updatePostPromise);
+};
+
+exports.getCommentsContent = function(postID) {
+    const getCommentsPromise = db.collection("Social").doc(postID).collection("Comment").get();
+    return Promise.resolve(getCommentsPromise);
 };

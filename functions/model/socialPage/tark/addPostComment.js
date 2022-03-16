@@ -21,8 +21,8 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { addUserComment } = require("../lib");
-const { getUser, updateUser } = require("../../users/lib");
+const { addUserComment, getPost, updatePost } = require("../lib");
+const { incrementNumberofCommentsforUser } = require("../../users/tark/incrementUserCounters");
 
 exports.addPostComment = function(request, response) {
     const uid = request.body.data.Uid;
@@ -36,20 +36,17 @@ exports.addPostComment = function(request, response) {
     let status = 200;
 
 
-    const promise1 = getUser(uid, "").then((userData) => {
-        if (userData) {
-            let Commentcounter=userData.CommentCounter;
-            if (isNaN(Commentcounter)) {
-                Commentcounter = 0;
+    const promise1 = getPost(postId).then((PostDoc) => {
+        if (PostDoc) {
+            let CommentCounter=PostDoc.CommentCounter;
+            if (isNaN(CommentCounter)) {
+                CommentCounter = 0;
             }
-            Commentcounter = Commentcounter+1;
-            const commentId= "C" + Commentcounter;
-            console.log(commentId);
-            console.log(content);
-
+            CommentCounter = CommentCounter+1;
+            const commentId= "C" + CommentCounter;
 
             addUserComment(uid, postId, content, commentId, lastUpdatedDate, lastUpdatedTime).then((commentData) => {
-                console.log("Comment added Successfully");
+                incrementNumberofCommentsforUser(uid);
             }).catch((error) => {
                 result = { data: error };
                 status = 500;
@@ -57,9 +54,9 @@ exports.addPostComment = function(request, response) {
             });
 
             updateUserInputJson = {
-                CommentCounter: Commentcounter,
+                CommentCounter: CommentCounter,
             };
-            updateUser(updateUserInputJson, uid);
+            updatePost(updateUserInputJson, postId);
         }
 });
 
@@ -69,7 +66,7 @@ exports.addPostComment = function(request, response) {
         return response.status(status).send(result);
     }).catch((error) => {
         result = { data: error };
-        console.error("Error adding Note", error);
+        console.error("Error adding Comment", error);
         return response.status(status).send(result);
     });
 };

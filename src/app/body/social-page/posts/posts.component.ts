@@ -16,7 +16,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
-import { defaultUser, Post, User} from 'src/app/Interface/UserInterface';
+import { Post, Comment } from 'src/app/Interface/SocialInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
@@ -30,15 +30,16 @@ import { map } from 'rxjs';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
+
   showCommentList: boolean = false
   public CommentObservable: Observable<Comment[]>
   showAddComment: boolean = false
-  user : User
   enableLoader: boolean;
   todayDate: string;
   time: string;
   content: string = ""
   reactionStatus : boolean = false;
+  public comments: Comment[];
   
   @Input('post') post : Post;
   @Output() addCommentCompleted = new EventEmitter<boolean>();
@@ -46,12 +47,12 @@ export class PostsComponent implements OnInit {
   constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-    this.getUserDetails();
   }
 
-  showCommentBox() {
+  showCommentBox(postId: string) {
     this.showCommentList = true;
     this.showAddComment = true
+    this.getComments(postId);
   }
 
   openAddComment(postId: string) {
@@ -68,10 +69,12 @@ export class PostsComponent implements OnInit {
       })).subscribe((data) => {
         this.enableLoader = false;
         this.addCommentCompleted.emit(true);
+        this.content = "";
+        this.getComments(postId);
       });
     }
-    console.log("done");
   }
+  
   close() {
     this.showAddComment = false;
   }
@@ -87,7 +90,6 @@ export class PostsComponent implements OnInit {
 
       await callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).subscribe({
         next: (data) => {
-          console.log("Successful ");
         },
         error: (error) => {
           console.log("Error", error);
@@ -99,14 +101,18 @@ export class PostsComponent implements OnInit {
      
   }
 
-  getUserDetails() {
-    if(this.post.Uid == 'defaultUser') {
-      this.user = defaultUser;
-    } else {
-      this.user = this.userService.users.filter((obj) => {
-        return obj.uid == this.post.Uid
-      })[0];
-    }
+  getComments(postId: string) {
+      const callable = this.functions.httpsCallable("socialPage/getComments");
+      const res = callable({PostId: postId}).pipe(map(res=>{
+        const data = res.data as Comment[];
+        return data
+      })).subscribe((data) => {
+        if (data) {
+          this.enableLoader= true;
+          this.comments = data;
+        }
+        this.enableLoader = false;
+      });
   }
 
 }

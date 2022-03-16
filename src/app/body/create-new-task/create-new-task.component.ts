@@ -23,7 +23,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
-import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 
 declare var jQuery:any;
