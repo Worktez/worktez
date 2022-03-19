@@ -20,3 +20,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKTROLLY }}'
           channelId: live
           projectId: worktrolly
+      - run: firebase deploy --only funtions
