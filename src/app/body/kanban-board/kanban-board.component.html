@@ -1,5 +1,5 @@
 <div class="row px-5 py-2">
-    <div class="col-1 mr-5">
+    <div class="col-1 mr-4">
         <div class="btn-group">
             <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
             <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
@@ -9,15 +9,15 @@
             </div>
         </div>
     </div>
-    <div class="dropdown">
+    <div class="col-2 dropdown">
         <button type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          class="btn ">
-          <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
-            filter_list
-        </mat-icon>
-          Sprint {{currentSprintNumber}}
+          class="btn">
+            <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                filter_list
+            </mat-icon>
+            Sprint {{currentSprintNumber}}
         </button>
-        <div class="dropdown-menu dropdown-menu-right py-4 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
+        <div class="col-2 dropdown-menu dropdown-menu-right py-4 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
           <div class="input-group">
             <h5>Sprint No.</h5>
             <input class="form-control" style="font-size: 11px" type="number" id="filterSprintNumberInput"
