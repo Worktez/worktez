@@ -81,6 +81,7 @@ export class ApplicationSettingsService {
 
           return data;
       }));
+    
     return this.teamData;
   }
 
