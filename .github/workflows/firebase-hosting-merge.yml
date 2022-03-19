@@ -11,11 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm install -g @angular/cli
+      # - run: npm install
+      # - run: npm install -g @angular/cli
       - run: pwd
       # - run: cd src/environments/
       # - run: pwd
+      script:
+        - sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' src/environments/environments.prod.ts
+
       # - run: cd src/environments/ && sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' environments.prod.ts
       # - run: cd src/environments/ && sed -i 's/appIdSecret/${{ secrets.APPID }}/g' environments.prod.ts
       # - run: cd src/environments/ && sed -i 's/measurementIdSecret/${{ secrets.MEASUREMENTID }}/g' environments.prod.ts
