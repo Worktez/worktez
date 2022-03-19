@@ -1,3 +1,5 @@
+import * as process from "process";
+
 export const environment = {
   production: true,
   firebase: {
@@ -5,10 +7,10 @@ export const environment = {
     databaseURL: "https://worktrolly.firebaseio.com",
     projectId: "worktrolly",
     storageBucket: "worktrolly.appspot.com",
-    apiKey: "apiKeySecret",
-    appId: "appIdSecret",
-    measurementId: "measurementIdSecret",
-    messagingSenderId: "messagingSenderIdSecret",
+    apiKey: `${process.env.APIKEY}`,
+    appId: `${process.env.APPID}`,
+    measurementId: `${process.env.MEASUREMENTID}`,
+    messagingSenderId: `${process.env.MESSAGINGSENDERID}`,
   },
   useEmulators: false,
   gitApiUrl: "https://api.github.com/repos/Worktez/worktez",
