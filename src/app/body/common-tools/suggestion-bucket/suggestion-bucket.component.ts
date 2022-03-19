@@ -26,6 +26,8 @@ export class SuggestionBucketComponent implements OnInit {
 
   @Input("email") email: string;
   @Input("showOnlyProfilePic") showOnlyProfilePic: boolean = false;
+
+  @Input("showEmail") showEmail: boolean;
   @Output() selectedEmail = new EventEmitter<{ selected: boolean, data: string }>();
 
   userName: string;

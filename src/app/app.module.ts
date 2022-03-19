@@ -148,6 +148,7 @@ import { LabelCardComponent } from './body/team-details/label-card/label-card.co
 import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit-label-prop.component';
 import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
+import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart/sprint-burndown-chart.component';
 
 @NgModule({
   declarations: [
@@ -264,6 +265,7 @@ import { CommentsComponent } from './body/social-page/posts/comments/comments.co
     EditLabelPropComponent,
     TaskECardComponent,
     CommentsComponent,
+    SprintBurndownChartComponent,
   ],
   imports: [
     BrowserModule,

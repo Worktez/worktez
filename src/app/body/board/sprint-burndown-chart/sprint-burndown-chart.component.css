@@ -1,0 +1,10 @@
+.card-header {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+.card {
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+}

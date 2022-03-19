@@ -53,7 +53,7 @@
                                     <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
                                             <ng-container *ngIf="applicationSetting.teamDataReady; else loader">
-                                                <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                                <app-suggestion-bucket [email]="item" [showEmail] = "true  (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
                                             </ng-container>
                                             <ng-template #loader>
                                                 <app-loader></app-loader>
@@ -75,7 +75,7 @@
                                     <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <ng-container *ngIf="applicationSetting.teamDataReady; else loader">
                                             <ng-container *ngFor='let item of filteredOptionsReporter | async'>
-                                                <app-suggestion-bucket [email]="item" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
+                                                <app-suggestion-bucket [email]="item"  [showEmail] = "true" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
                                             </ng-container>
                                         </ng-container>
                                         <ng-template #loader>
