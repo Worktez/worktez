@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="card-header pr-4">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h4>Sprint Burndown Chart</h4>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="!showLoader">
+        <app-chart [data]="data" [columnNames]='["Day", "StoryPoint"]'></app-chart>
+    </div>
+    <div class="card-body" *ngIf="showLoader">
+        <app-loader></app-loader>
+    </div>
+</div>

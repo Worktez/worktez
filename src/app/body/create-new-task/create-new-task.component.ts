@@ -23,7 +23,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
-import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 
 declare var jQuery:any;
@@ -93,6 +92,7 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   readTeamData(teamId :string){
+    this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.priorityLabels = team.PriorityLabels;
           this.statusLabels = team.StatusLabels;
@@ -113,6 +113,7 @@ export class CreateNewTaskComponent implements OnInit {
             startWith(''),
             map(value => this._filter(value)),
           );
+          this.enableLoader = false;
     }); 
   }
   

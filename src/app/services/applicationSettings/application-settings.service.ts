@@ -47,12 +47,11 @@ export class ApplicationSettingsService {
   public notificationListObservable: Observable<Notification[]>;
 
   teamDataReady: boolean = false;
-  teamAvailable: boolean=false;
+  teamAvailable: boolean = false;
 
   constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
   getTeamDetails(teamId: string) {
-    if(this.team == undefined || this.team.TeamId != teamId) {
       this.teamDataReady = false;
       const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
       const callable = this.functions.httpsCallable("teams/getTeamData");
@@ -76,11 +75,12 @@ export class ApplicationSettingsService {
             this.userService.fetchUserData().subscribe(()=>{
               this.teamDataReady = true;
             });
+          } else {
+            this.teamDataReady = true;
           }
 
           return data;
       }));
-    }
     return this.teamData;
   }
 

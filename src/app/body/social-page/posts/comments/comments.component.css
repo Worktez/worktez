@@ -1,0 +1,17 @@
+.card-header {
+  background-color: var(--primary-bg);
+  color: var(--text);
+  border: none;
+  padding-bottom: 0%;
+}
+
+.card {
+  background-color: var(--primary-bg);
+  color: var(--text);
+  border: none;
+  width: 70%;
+}
+
+h3 {
+  color:#5C60EC;
+}

@@ -64,6 +64,9 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
         ProjectCounter: 0,
         TotalPhotoCounter: 0,
         NoteCounter: 0,
+        UserPostsCounter: 0,
+        UserReactionCounter: 0,
+        UserCommentCounter: 0,
     });
     return Promise.resolve(userData);
 };
@@ -214,10 +217,15 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
  * @return {any}
  */
 exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
+    //Logging for Finding the notification issue after depolyment
+    console.log("Getting the My Organization Collection Data");
     const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
         if (doc.exists) {
+            console.log("Data Exists");
+            console.log(doc.data());
             return doc.data();
         } else {
+            console.log("Doc does not exist");
             return;
         }
     });
