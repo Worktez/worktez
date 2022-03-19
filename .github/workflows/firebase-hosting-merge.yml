@@ -20,7 +20,6 @@ jobs:
       #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKTROLLY }}'
       #     channelId: live
       #     projectId: worktrolly
-      - run: pwd
       - run: cd functions/ && npm install
-      - run: pwd
+      - run: npm i firebase
       - run: firebase deploy --only funtions
