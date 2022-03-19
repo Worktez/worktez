@@ -151,6 +151,17 @@
         </ExternalError>
       </SubSystem>
   </SubComponent>
+  <SubComponent name="SPRINT-BURNDOWN-CHART" code="13">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+          <Api code="03" description= "API_ERROR"></Api>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+  </SubComponent>
   <SubComponent name="SPRINT-EVALUATION-GRAPH" code="14">
       <SubSystem code="0000">
         <InternalError code="00">
