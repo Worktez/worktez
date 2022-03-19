@@ -18,13 +18,17 @@
         </div>
         <ng-container *ngIf="!showOnlyProfilePic">
             <div class="col pl-2" (click)="selectedOption(true)">
-                <span id="username">
-                    {{userName}}
-                </span>
+                <div class="col-md-4">
+                    <span id="username">
+                        {{userName}}
+                    </span>
+                </div>
                 <br>
-                <span id="email">
-                    {{email}}
-                </span>
+                <div *ngIf="showEmail" class="col-md-8">
+                    <span id="email">
+                        {{email}}
+                    </span>
+                </div>
             </div>
         </ng-container>
     </ng-container>

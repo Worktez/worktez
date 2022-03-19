@@ -110,12 +110,12 @@
                     </div>
                     <div class="col-3 assignee">
                         <span id="headerLabel" style="cursor: default;">Assignee</span>
-                        <app-suggestion-bucket [email]="task.Assignee" (selectedEmail)="selectedAssignee($event)">
+                        <app-suggestion-bucket [email]="task.Assignee" [showEmail] = "false" (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
                     </div>
                     <div class="col-3 creator">
                         <span id="headerLabel" style="cursor: default;">Creator</span>
-                        <app-suggestion-bucket [email]="task.Creator" (selectedEmail)="selectedAssignee($event)">
+                        <app-suggestion-bucket [email]="task.Creator" [showEmail] = "false"  (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
                     </div>
                     <div class="col-3 watchers">

@@ -80,13 +80,13 @@
                         <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
-                                <app-suggestion-bucket [email]="item" (selectedEmail)="selectedAssignee($event, task)"></app-suggestion-bucket>
+                                <app-suggestion-bucket [email]="item"  [showEmail] = "true" (selectedEmail)="selectedAssignee($event, task)"></app-suggestion-bucket>
                             </ng-container>
                         </div>
                     </div>
                 </ng-container>
                 <ng-template #showAssignee>
-                    <app-suggestion-bucket [email]="task.Assignee" [showOnlyProfilePic]="false"></app-suggestion-bucket>
+                    <app-suggestion-bucket [email]="task.Assignee" [showEmail] = "true"  [showOnlyProfilePic]="false"></app-suggestion-bucket>
                 </ng-template>
             </div>
         </div>
