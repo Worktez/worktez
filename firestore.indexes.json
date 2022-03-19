@@ -1,4 +1,38 @@
 {
-  "indexes": [],
-  "fieldOverrides": []
+  "indexes": [
+    { 
+      "collectionGroup": "Tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "TeamId", "order": "ASCENDING" },
+        { "fieldPath": "Id", "order": "DESCENDING" }
+      ]
+    },
+    { 
+      "collectionGroup": "Tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "Assignee", "order": "ASCENDING" },
+        { "fieldPath": "Status", "order": "ASCENDING" },
+        { "fieldPath": "SprintNumber", "order": "ASCENDING" }
+      ]
+    },
+    { 
+      "collectionGroup": "Tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "Assignee", "order": "ASCENDING" },
+        { "fieldPath": "Status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "Tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "Status", "order": "ASCENDING" },
+        { "fieldPath": "Teamld", "order": "ASCENDING" },
+        { "fieldPath": "SprintNumber", "order": "ASCENDING" }
+      ]
+    }
+  ]
 }
