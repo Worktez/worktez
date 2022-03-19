@@ -19,7 +19,7 @@ jobs:
       #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
       #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKTROLLY }}'
       #     channelId: live
-      #     projectId: worktrolly
+      #     projectId: worktrolly 
       - run: cd functions/ && npm install
       - run: npm i firebase-tools -g
       - run: firebase deploy --token ${{ FIREBASE_TOKEN }}
