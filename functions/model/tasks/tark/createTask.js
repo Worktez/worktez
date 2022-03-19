@@ -67,7 +67,7 @@ exports.createNewTask = function(request, response) {
     const watchers = [];
 
     let assigneeName = "";
-    let assigneeUid = ""
+    let assigneeUid = "";
     let senderName = "";
 
     let status = 200;
@@ -100,7 +100,7 @@ exports.createNewTask = function(request, response) {
         }).catch((error) => {
             console.log(error);
             return error;
-        })
+        });
 
         const promise1 = getTeam(orgDomain, project).then((team) => {
             const totalTeamTasks = team.TotalTeamTasks + 1;
