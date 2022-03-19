@@ -22,5 +22,5 @@ jobs:
       #     projectId: worktrolly 
       - run: cd functions/ && npm install
       - run: npm i firebase-tools -g
-      - run: firebase deploy --token ${{ FIREBASE_TOKEN }}
+      - run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
       # - run: firebase deploy --only functions
