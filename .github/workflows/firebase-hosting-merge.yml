@@ -11,16 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm install
-      - run: npm install -g @angular/cli
-      - run: ng build --configuration production
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKTROLLY }}'
-          channelId: live
-          projectId: worktrolly
-      - run: cd functions
-      - run: npm install
-      - run: cd ..
+      # - run: npm install
+      # - run: npm install -g @angular/cli
+      # - run: ng build --configuration production
+      # - uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
+      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKTROLLY }}'
+      #     channelId: live
+      #     projectId: worktrolly
+      - run: pwd
+      - run: cd functions/ && npm install
+      - run: pwd
       - run: firebase deploy --only funtions
