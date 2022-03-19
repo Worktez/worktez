@@ -16,7 +16,7 @@ jobs:
       - run: pwd
       # - run: cd src/environments/
       # - run: pwd
-      script:
+      - script:
         - sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' src/environments/environments.prod.ts
 
       # - run: cd src/environments/ && sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' environments.prod.ts
