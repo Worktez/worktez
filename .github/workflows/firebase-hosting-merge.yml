@@ -15,6 +15,7 @@ jobs:
       # - run: npm install -g @angular/cli
       - run: pwd
       - run: cd src
+      - run: ll
       - run: sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' ./src/environments/environments.prod.ts
       - run: sed -i 's/appIdSecret/${{ secrets.APPID }}/g' ./src/environments/environments.prod.ts
       - run: sed -i 's/measurementIdSecret/${{ secrets.MEASUREMENTID }}/g' ./src/environments/environments.prod.ts
