@@ -92,6 +92,7 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   readTeamData(teamId :string){
+    this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.priorityLabels = team.PriorityLabels;
           this.statusLabels = team.StatusLabels;
@@ -112,6 +113,7 @@ export class CreateNewTaskComponent implements OnInit {
             startWith(''),
             map(value => this._filter(value)),
           );
+          this.enableLoader = false;
     }); 
   }
   
