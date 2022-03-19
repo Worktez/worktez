@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm install
       - run: npm install -g @angular/cli
-      - run: sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' src/environments/environments.prod.ts
-      - run: sed -i 's/appIdSecret/${{ secrets.APPID }}/g' src/environments/environments.prod.ts
-      - run: sed -i 's/measurementIdSecret/${{ secrets.MEASUREMENTID }}/g' src/environments/environments.prod.ts
-      - run: sed -i 's/messagingSenderIdSecret/${{ secrets.MESSAGINGSENDERID }}/g' src/environments/environments.prod.ts
+      - run: sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' ./src/environments/environments.prod.ts
+      - run: sed -i 's/appIdSecret/${{ secrets.APPID }}/g' ./src/environments/environments.prod.ts
+      - run: sed -i 's/measurementIdSecret/${{ secrets.MEASUREMENTID }}/g' ./src/environments/environments.prod.ts
+      - run: sed -i 's/messagingSenderIdSecret/${{ secrets.MESSAGINGSENDERID }}/g' ./src/environments/environments.prod.ts
       - run: ng build --configuration production
       # - uses: FirebaseExtended/action-hosting-deploy@v0
       #   with:
