@@ -11,21 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - run: npm install
-      # - run: npm install -g @angular/cli
-      - run: pwd
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
       - run: node createEnv.js
         env:
           FIREBASE_DETAILS: '${{ secrets.FIREBASE_DETAILS }}'
-      # - run: cd src/environments/
-      # - run: pwd
-      # - run: cd src/environments/ && sed -i 's/apiKeySecret/${{ secrets.APIKEY }}/g' environments.prod.ts
-      # - run: cd src/environments/ && sed -i 's/appIdSecret/${{ secrets.APPID }}/g' environments.prod.ts
-      # - run: cd src/environments/ && sed -i 's/measurementIdSecret/${{ secrets.MEASUREMENTID }}/g' environments.prod.ts
-      # - run: cd src/environments/ && sed -i 's/messagingSenderIdSecret/${{ secrets.MESSAGINGSENDERID }}/g' environments.prod.ts
+      - run: npm install
+      - run: npm install -g @angular/cli
       - run: ng build --configuration production
       # - uses: FirebaseExtended/action-hosting-deploy@v0
       #   with:
