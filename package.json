@@ -11,6 +11,9 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^13.0.3",
+    "@angular/cli": "~13.0.3",
+    "@angular/compiler-cli": "~13.0.0",
     "@angular/animations": "~13.0.0",
     "@angular/cdk": "^12.2.13",
     "@angular/common": "~13.0.2",
