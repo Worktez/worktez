@@ -144,6 +144,7 @@ import { SchedularPatchComponent } from './patches/schedular-patch/schedular-pat
 import { TeamDetailsComponent } from './body/team-details/team-details.component';
 import { LabelCardComponent } from './body/team-details/label-card/label-card.component';
 import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit-label-prop.component';
+import { AddLabelComponent } from './body/team-details/add-label/add-label.component';
 
 @NgModule({
   declarations: [
@@ -256,6 +257,7 @@ import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit
          TeamDetailsComponent,
          LabelCardComponent,
          EditLabelPropComponent,
+         AddLabelComponent,
   ],
   imports: [
     BrowserModule,

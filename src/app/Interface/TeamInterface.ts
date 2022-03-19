@@ -50,4 +50,5 @@ export interface Label {
     IconName: string;
     Scope: string;
     Status: string;
+    Id: string;
 }

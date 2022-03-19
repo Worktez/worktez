@@ -20,6 +20,11 @@ export class LabelCardComponent implements OnInit {
   displayName: string = ""
   showAddLabel: boolean = false
   showEditLabelProp: boolean = false;
+  addLabelEnabled: boolean = false;
+  gotLabelData: boolean=false;
+  deletedLabelEnabled: boolean=false;
+
+  public labelDataObservable: Label
 
   constructor(private functions: AngularFireFunctions, private backendService: BackendService , public errorHandlerService: ErrorHandlerService) { }
 
@@ -50,29 +55,26 @@ export class LabelCardComponent implements OnInit {
 
   openEditProperties(item: Label) {
     this.showEditLabelProp = true;
+    console.log("checking")
+  }
+
+  editLabelCompleted(){
+    this.showEditLabelProp = false;
   }
 
   addLabel(){
-    const orgDomain = this.backendService.getOrganizationDomain();
-    
-    if(this.displayName != "") {
-      const callable = this.functions.httpsCallable("teams/createLabelProperties");
-      callable({OrgDomain: orgDomain, TeamName: this.teamName, Scope: this.scope }).pipe(map(res=>{
-        return res
-      })).subscribe((data) => {
-      });
-    }
+    this.addLabelEnabled = true; 
+    console.log("checking")
   }
 
+  addLabelCompleted () {
+     this.addLabelEnabled = true;
 
-  addLabelCompleted(data) {
-    if(data) {
-      this.showAddLabel = false
-      return this.getTeamLabelsByScope()
-    }
   }
+
 
   deletedLabel(item: Label) {
+    this.deletedLabelEnabled=true
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("teams/deleteLabel");
     

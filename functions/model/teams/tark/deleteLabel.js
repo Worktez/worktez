@@ -4,11 +4,13 @@ exports.deleteLabel= function(request,response) {
 const orgDomain = request.body.data.OrgDomain;
 const teamName = request.body.data.TeamName;
 const scope = request.body.data.Scope;
-
+const docId = request.body.Id
     let result;
     let status = 200;
 
     const p1 = getLabelInScope(orgDomain, teamName, scope).then((labelData) => {
+      console.log("checking");
+      console.log(labelData);
        if (labelData == undefined) {
           console.log("checking");
           result = {data: {status:"Label does not exist"}};
@@ -16,7 +18,7 @@ const scope = request.body.data.Scope;
            const updateLabelToJson = {
                Status: "DELETED" ,
            };
-           deleteUserLabel(updateLabelToJson, orgDomain, teamName, scope);
+           deleteUserLabel(updateLabelToJson, orgDomain, teamName, scope, docId);
        }
     }).catch((error) => {
         status = 500;
