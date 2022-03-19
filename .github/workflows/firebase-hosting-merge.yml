@@ -22,4 +22,5 @@ jobs:
           projectId: worktrolly
       - run: cd functions
       - run: npm install
+      - run: cd ..
       - run: firebase deploy --only funtions
