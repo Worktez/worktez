@@ -4,7 +4,7 @@ const path = require('path');
 const dir = "src/environments";
 const prodFile = "environment.prod.ts";
 
-const content = `${process.env.FIREBase_DETAILS}`;
+const content = `${process.env.FIREBASE_DETAILS}`;
 
 fs.access(dir, fs.constants.F_OK, (err) => {
     if(err) {
