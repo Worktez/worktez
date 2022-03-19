@@ -1,8 +1,5 @@
 <div class="card" style="width: 18rem;" *ngIf="labelsReady">
     <div class="card-header">{{scope}}    
-    <mat-icon fontSet="material-icons" class="align-middle" (click)="addLabel()">
-        add
-    </mat-icon></div>
     <ul class="list-group list-group-flush">
     <ng-container *ngFor="let item of labels">
         <li class="list-group-item">

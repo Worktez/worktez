@@ -70,7 +70,6 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
  * @param {any} scope
  * @param {any} iconName
  * @param {any} colorCode
- * @param {any} status
  * @return {any}
  */
  exports.setLabelProperties = function(orgDomain, teamName, docId, displayName, scope, iconName, colorCode) {
@@ -79,7 +78,6 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         Scope: scope,
         IconName: iconName,
         ColorCode: colorCode,
-        Status: "OK",
     });
     return Promise.resolve(setLabelProperties);
 };
@@ -126,19 +124,6 @@ exports.getTeamUseTeamId = function(orgDomain, teamId) {
         return data;
     });
     return Promise.resolve(getTeamPromise);
-};
-
-/**
- * Description
- * @param {any} updateLabelToJson
- * @param {any} teamName
- * @param {any} orgDomain
- * @param {any} scope
- * @return {any} 
- */
- exports.deleteUserLabel = function(updateLabelToJson, orgDomain, teamName, scope) {
-    const deleteLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Scope", "==", scope).update(updateLabelToJson);
-    return Promise.resolve(deleteLabelPromise);
 };
 
 /**
