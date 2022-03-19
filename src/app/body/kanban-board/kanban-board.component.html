@@ -23,7 +23,7 @@
                                                     <h4 class="card-title mb-1" id="taskId">{{task.Id}}</h4>
                                                 </div>
                                                 <div class="col-6" style="position: relative;bottom: 10px;">    
-                                                    <app-suggestion-bucket [email]="task.Assignee" [showOnlyProfilePic]="true" (selectedEmail)="selectedAssignee($event)">
+                                                    <app-suggestion-bucket [email]="task.Assignee" [showEmail] = "false"  [showOnlyProfilePic]="true" (selectedEmail)="selectedAssignee($event)">
                                                     </app-suggestion-bucket>
                                                 </div>
                                                 <!-- <div class="col-6">
