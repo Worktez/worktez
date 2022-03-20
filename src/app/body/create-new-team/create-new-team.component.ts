@@ -56,18 +56,22 @@ export class CreateNewTeamComponent implements OnInit {
     this.navbarService.resetNavbar();
     this.navbarService.addToNavbar(this.componentName);
 
-    if(this.startService.showTeamsData) {
+    if(!this.startService.teamIdExists && this.startService.userAppSettingsReady) {
       this.loadData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            if(data) {
-              this.loadData();
-            }
-          });
-        }
-      });
+      if(this.startService.showTeamsData) {
+        this.loadData();
+      } else {
+        this.startService.userDataStateObservable.subscribe((data) => {
+          if(data){
+            this.startService.applicationDataStateObservable.subscribe((data) => {
+              if(data) {
+                this.loadData();
+              }
+            });
+          }
+        });
+      }
     }
   }
 
