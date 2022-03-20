@@ -36,7 +36,7 @@
       </div>
     </li>
     <li class="active flex-item">
-      <div class="btn-group" *ngIf="sprintData.Status != 'Completed'">
+      <div class="btn-group" *ngIf="sprintData.Status != 'Completed' && startService.currentSprintNumber > 0">
         <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Status&nbsp;&nbsp;
@@ -50,6 +50,12 @@
             Completed
           </button>
         </div>
+      </div>
+      <div class="completionBtn" *ngIf="startService.currentSprintNumber == 0">
+        <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal"
+          data-target="#createNewSprint">
+          Start New Sprint
+        </button>
       </div>
       <div class="completionBtn" *ngIf="sprintData.Status === 'Completed'">
         <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal"
