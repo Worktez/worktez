@@ -31,7 +31,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   organization: Organizations;
   teams: Team[] = []
-  showLoader: boolean = true;
+  showLoader: boolean = false;
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
 

@@ -33,6 +33,13 @@
         { "fieldPath": "Teamld", "order": "ASCENDING" },
         { "fieldPath": "SprintNumber", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "Notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "CreationTime", "order": "DESCENDING" }
+      ]
     }
   ]
 }
