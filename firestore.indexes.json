@@ -33,6 +33,15 @@
         { "fieldPath": "Teamld", "order": "ASCENDING" },
         { "fieldPath": "SprintNumber", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "Notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "OrgDomain", "order": "ASCENDING" },
+        { "fieldPath": "Status", "order": "ASCENDING" },
+        { "fieldPath": "CreationTime", "order": "DESCENDING" }
+      ]
     }
   ]
 }
