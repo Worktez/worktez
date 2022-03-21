@@ -150,6 +150,7 @@ import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecar
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 import { EditDpComponent } from './body/view-organization-details/edit-dp/edit-dp.component';
 import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart/sprint-burndown-chart.component';
+import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 
 @NgModule({
   declarations: [
@@ -268,6 +269,7 @@ import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart
     CommentsComponent,
     EditDpComponent,
     SprintBurndownChartComponent,
+    OrgDpComponent,
   ],
   imports: [
     BrowserModule,

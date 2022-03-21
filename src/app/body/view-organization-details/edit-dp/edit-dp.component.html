@@ -32,7 +32,7 @@
             </ng-container>
 
             <ng-container *ngIf="enableCropper">
-                <app-update-image [imageUrl]="imageUrl" (cropPhotoCompleted)="cropPhotoCompleted($event)"></app-update-image>
+                <app-org-dp [imageUrl]="imageUrl" (cropPhotoCompleted)="cropPhotoCompleted($event)"></app-org-dp>
 
                 <button class="btn btn-primary col-12" (click)="cancel()">Cancel</button>
             </ng-container>

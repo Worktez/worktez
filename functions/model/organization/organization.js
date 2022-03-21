@@ -43,7 +43,6 @@ fastify.post("/createOrg", (req, res) => {
  * @returns {any}
  */
  fastify.post("/updateOrg", (req, res) => {
-   console.log("1");
   updateProfilePic(req, res);
 });
 
