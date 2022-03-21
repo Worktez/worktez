@@ -25,10 +25,6 @@ const { getTeamUseTeamId } = require("../lib");
 exports.getTeamData = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
     const teamId = request.body.data.TeamId;
-
-
-    console.log("checking get Team Data...");
-
     let status = 200;
     let result;
 

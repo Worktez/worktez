@@ -217,10 +217,15 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
  * @return {any}
  */
 exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
+    // Logging for Finding the notification issue after depolyment
+    console.log("Getting the My Organization Collection Data");
     const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
         if (doc.exists) {
+            console.log("Data Exists");
+            console.log(doc.data());
             return doc.data();
         } else {
+            console.log("Doc does not exist");
             return;
         }
     });

@@ -78,9 +78,9 @@ export class ApplicationSettingsService {
           } else {
             this.teamDataReady = true;
           }
-
           return data;
       }));
+    
     return this.teamData;
   }
 

@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Observable, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserAppSetting } from 'src/app/Interface/UserInterface';
 

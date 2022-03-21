@@ -60,7 +60,7 @@
   <ng-container matColumnDef="Assignee">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Assignee</th>
     <td mat-cell *matCellDef="let row">
-      <app-suggestion-bucket [email]="row.Assignee" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+      <app-suggestion-bucket [email]="row.Assignee"  [showEmail] = "false" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
       <!-- {{row.Assignee}} -->
     </td>
   </ng-container>

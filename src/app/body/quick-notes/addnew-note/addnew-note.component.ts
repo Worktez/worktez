@@ -28,6 +28,7 @@ export class AddnewNoteComponent implements OnInit {
   @Output() addNoteCompleted = new EventEmitter<boolean>();
 
   title: string = ""
+  titleChanged:boolean = false
   notesContent: string = ""
 
   enableLoader: boolean = false
@@ -60,6 +61,18 @@ export class AddnewNoteComponent implements OnInit {
         this.addNoteCompleted.emit(true);
       });
     }
+  }
+
+  setTitle(){
+    if(!this.titleChanged){
+    var titleArray = this.notesContent.split(' ');
+    titleArray = titleArray.slice(0,3);
+    this.title = titleArray.join(' ');
+    }
+  }
+
+  setChange(){
+      this.titleChanged = true;
   }
 
   close() {

@@ -9,6 +9,7 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Sprint } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-kanban-board',
@@ -25,6 +26,13 @@ export class KanbanBoardComponent implements OnInit {
   showLoader: boolean;
   todayDate: string;
   time: string;
+  sprintNotExist: boolean;
+  showContent: boolean;
+  child: any;
+  sprintData: Sprint;
+  currentSprintName: string;
+  currentSprintNumber: number;
+  filterSprintNumber: number;
 
   constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService) { }
 
@@ -58,15 +66,85 @@ export class KanbanBoardComponent implements OnInit {
     this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
+    this.readSprintData();
     this.readTasks();
   }
 
-  async readTasks() {
+  updateSelectedTeamId(teamId: string) {
+    this.applicationSettingsService.editedTeamId = teamId;
+    this.startService.selectedTeamId = teamId;
+    this.authService.userAppSetting.SelectedTeamId = teamId;
+    this.startService.changeTeam = true;
+    this.sprintNotExist = false;
+    this.showContent = false;
+
+    const callable = this.functions.httpsCallable('users/updateSelectedTeam');
+    callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
+        next: (data) => {
+          this.tasks=[];
+          this.readData();
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated Selected Team in db')
+    });
+  }
+
+  readSprintData() {
+    this.showContent = false;
+    if (this.startService.teamCurrentSprintNumber != 0) {
+      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
+        this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
+        if (sprints) {
+          this.sprintData = sprints;
+          this.currentSprintNumber=this.startService.teamCurrentSprintNumber;
+          this.filterSprintNumber=this.currentSprintNumber;
+          this.currentSprintName = "S" + this.sprintData.SprintNumber;
+        } else {
+          console.log("Not existing");
+          this.showContent = true;
+          this.sprintNotExist = true;
+        }
+      });
+    } else {
+      this.startService.readApplicationData();
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
+            if(data) {
+              this.readSprintData();
+            }
+          });
+        }
+      });
+    }
+  } else {
+      this.showContent = true;
+      this.filterSprintNumber=-1;
+      this.changeSprintNumber();
+    }
+    this.showContent = true;
+  }
+
+  changeSprintNumber() {
+    this.startService.teamCurrentSprintNumber = this.filterSprintNumber;
+    this.currentSprintNumber=this.filterSprintNumber;
+    this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
+    this.applicationSettingsService.editedSprintId = this.filterSprintNumber;
+    this.tasks=[];
+    this.readData();
+    console.log(this.applicationSettingsService.editedSprintId);
+  }
+
+  readTasks() {
     this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
 
-    await callable({OrgDomain: orgDomain, TeamId: this.selectedTeamId}).subscribe ({
+    callable({OrgDomain: orgDomain, TeamId: this.selectedTeamId, SprintNumber: this.currentSprintNumber }).subscribe ({
       next: (data) => {
         this.putDataInTasksArray(data.data);
         this.showLoader = false;
