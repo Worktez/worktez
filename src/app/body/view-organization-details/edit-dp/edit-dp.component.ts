@@ -28,7 +28,7 @@ export class EditDpComponent implements OnInit {
   private currentFileUpload: FileUpload;
   public fileName: string
 
-  @Output() editProfilePicCompleted = new EventEmitter<{ completed: boolean }>();
+  @Output() editOrgLogoCompleted = new EventEmitter<{ completed: boolean }>();
 
   constructor(public uploadService: FileUploadService) { }
 
@@ -37,7 +37,7 @@ export class EditDpComponent implements OnInit {
     this.choosePhoto = true;
     this.enableCropper = false;
 
-    this.basePath = '/Users/' + this.uid + '/ProfilePic';
+    this.basePath = '/Organisation/' + this.uid + '/Logo';
   }
 
   detectImage(imageUpload) {
@@ -69,7 +69,7 @@ export class EditDpComponent implements OnInit {
     this.currentFileUpload = new FileUpload(file);
     this.fileName = this.currentFileUpload.file.name;
 
-    this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "ProfilePic")
+    this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "Logo")
     .subscribe(percentage => {
       this.percentage = Math.round(percentage);
     },
@@ -78,12 +78,12 @@ export class EditDpComponent implements OnInit {
     }
     );
 
-    this.editProfilePicDone();
+    this.editOrgLogoDone();
   }
 
-  editProfilePicDone() {
+  editOrgLogoDone() {
     this.showClose = true;
-    this.editProfilePicCompleted.emit({ completed: true });
+    this.editOrgLogoCompleted.emit({ completed: true });
   }
 
   closeModal() {
