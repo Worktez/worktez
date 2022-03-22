@@ -42,7 +42,7 @@ fastify.post("/createOrg", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/updateOrg", (req, res) => {
+ fastify.post("/updateOrgLogo", (req, res) => {
   updateProfilePic(req, res);
 });
 

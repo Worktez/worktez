@@ -46,9 +46,8 @@ export class OrgDpComponent implements OnInit {
   }
 
   setOrgDp() {
-      console.log("2")
       const orgDomain = this.backendService.getOrganizationDomain();
-      const callable = this.functions.httpsCallable('organization/updateOrg');
+      const callable = this.functions.httpsCallable('organization/updateOrgLogo');
 
       callable({OrgDomain: orgDomain, PhotoURL: this.croppedImage}).subscribe({
         next: (data) => {

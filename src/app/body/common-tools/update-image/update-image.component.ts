@@ -57,24 +57,6 @@ export class UpdateImageComponent implements OnInit {
   }
 
   setProfilePic() {
-    if (this.displayName == undefined) {
-      console.log("2")
-      const orgDomain = this.backendService.getOrganizationDomain();
-      const callable = this.functions.httpsCallable('organization/updateOrg');
-
-      callable({OrgDomain: orgDomain, PhotoURL: this.croppedImage}).subscribe({
-        next: (data) => {
-          console.log("Successful");
-        },
-        error: (error) => {
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
-          console.error(error);
-        },
-        complete: () => console.info('Successful updated image')
-      });
-    }
-    else {
       const callable = this.functions.httpsCallable('users/updateProfilePic');
 
       callable({ Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
@@ -88,8 +70,6 @@ export class UpdateImageComponent implements OnInit {
         },
         complete: () => console.info('Successful updated image')
       });
-
-    }
 
     this.cropPhotoDone();
   }
