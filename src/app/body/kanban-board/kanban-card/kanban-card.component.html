@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9 py-1">
+            <a>{{task.Id}}</a>
+            <br>
+            <a>{{task.Title}}</a>
+        </div>
+        <div class="col-3 text-end">    
+            <app-suggestion-bucket [email]="task.Assignee" [showEmail]="false"  [showOnlyProfilePic]="true"></app-suggestion-bucket>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col">
+            Difficulty
+        </div>
+        <div class="col">
+            <app-difficulty-icons [Difficulty]="task.Difficulty"></app-difficulty-icons>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col">
+            Priority 
+        </div>
+        <div class="col">
+            <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <span id="headerLabel">Progress</span>
+            <app-progress-graph [workdone]="task.WorkDone" class="col-8"></app-progress-graph>
+        </div>
+    </div>
+</div>

@@ -149,6 +149,7 @@ import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit
 import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart/sprint-burndown-chart.component';
+import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 
 @NgModule({
   declarations: [
@@ -266,6 +267,7 @@ import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart
     TaskECardComponent,
     CommentsComponent,
     SprintBurndownChartComponent,
+    KanbanCardComponent,
   ],
   imports: [
     BrowserModule,

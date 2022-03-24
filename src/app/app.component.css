@@ -40,7 +40,7 @@ body {
     --button-hover-bg: #fff;
     --progress-bg: #5C60EC;
     --progress-left-bg: rgba(70, 70, 70, 0.23);
-    --card-bg: #FFFFFF;
+    --card-bg: #F6F7F9;
     --input-field: #F6F7F9;
     --heading-text: #272845;
     --danger-color: #c62828;
@@ -71,8 +71,8 @@ body {
     --button-bg: none;
     --button-hover-bg: #20282E;
     --progress-bg: #5C60EC;
-    --progress-left-bg: rgba(70, 70, 70, 1);
-    --card-bg: #26272E;
+    --progress-left-bg: rgba(17, 23, 27, 0.733);
+    --card-bg: #11171B;
     --input-field: #1E1F28;
     --heading-text: #F6F7F9;
     --danger-color: #c62828;
