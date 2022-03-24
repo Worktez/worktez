@@ -20,6 +20,8 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { AuthService } from '../../../services/auth.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+
 
 @Component({
   selector: 'app-sprint-details',
@@ -37,9 +39,10 @@ export class SprintDetailsComponent implements OnInit {
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
 
+  showLoader:boolean = false
   sprintDataReady: boolean = false
 
-  constructor(private authService: AuthService , public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
@@ -48,9 +51,11 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   async changeSprintStatus(sprintStatus: string) {
+    this.showLoader = true;
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
-    
+     
+
     await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).subscribe({
         next: (data) => {
           console.log("Successful updated ");
@@ -60,7 +65,10 @@ export class SprintDetailsComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated sprint Details')
+        complete: () => this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
+          this.sprintData = data;
+          this.showLoader = false;
+        })
     });
   }
     

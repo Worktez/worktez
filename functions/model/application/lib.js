@@ -66,7 +66,7 @@ exports.requestHandler = requestHandler;
 exports.fastify = fastify;
 
 exports.db = firestore;
-exports.functions = functions;
+exports.functions = functions.region("asia-south1");
 exports.cors = cors;
 
 /**

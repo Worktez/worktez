@@ -19,13 +19,13 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements OnInit {
-  @Input("data") data: []
+  @Input('columnNames') chartColumns: [];
+  @Input("data") data: [];
 
   constructor(private themeService: ThemeService) { }
   ngOnInit(): void {}
 
   myChartType: string = "AreaChart"
-  chartColumns = ["Sprint Number", "StoryPoint"]
   myOptions = {
     colors: ['#16C85A'],
     is3D: true,

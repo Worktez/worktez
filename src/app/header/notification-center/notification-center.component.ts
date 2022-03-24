@@ -68,7 +68,7 @@ export class NotificationCenterComponent implements OnInit {
       error: (error) => {
         console.error("active notifications reset");
       },
-      complete: () => console.info("notification reset successfully!")
+      complete: () => this.authService.getMyOrgCollectionDocs(this.authService.userAppSetting.uid,this.authService.userAppSetting.SelectedOrgAppKey)
     })
   }
 

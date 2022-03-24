@@ -33,7 +33,7 @@ export class MyDashBoardComponent implements OnInit {
 
   selectedTeamId: string = "Dev";
   teamCurrentSprintNumber: number;
-  teamIdExists: boolean = true;
+  teamIdExists: boolean = false;
 
   loadingCurrentSprintStatus: boolean = false
 
@@ -45,7 +45,7 @@ export class MyDashBoardComponent implements OnInit {
   }
 
   createNewTeam() {
-    this.teamIdExists = true;
+    this.teamIdExists = false;
     this.router.navigate(["CreateNewTeam"]);
   }
 

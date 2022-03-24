@@ -37,7 +37,7 @@ export class StartServiceService {
   currentSprintNumber: number = 0;
   changeTeam: boolean = false;
   teamMembers: string[];
-  teamIdExists: boolean = false;
+  teamIdExists: boolean = true;
   teamName: string;
   managerEmail: string;
   role: string;
@@ -45,6 +45,7 @@ export class StartServiceService {
   user: User
   currentUrl: string = ''
   applicationStarted: boolean = false
+  userAppSettingsReady: boolean = false
 
   private userDataState: Subject<boolean> = new Subject<boolean>();
   public userDataStateObservable = this.userDataState.asObservable();
@@ -91,6 +92,7 @@ export class StartServiceService {
 
   loadUserAppSettings() {
     this.authService.userAppSettingObservable.subscribe(data => {
+      this.userAppSettingsReady = true;
       if (data.SelectedOrgAppKey) {
         if(!this.authService.landingToSocial) {
           this.authService.landingToSocial = true;
@@ -119,6 +121,7 @@ export class StartServiceService {
           });
         } else {
           this.teamIdExists = false;
+          console.log("TeamId doesn't exists");
         }
       }
     });
