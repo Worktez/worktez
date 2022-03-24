@@ -11,10 +11,10 @@
                     {{item.DisplayName}}
                 </div>
                 <div class="col-4 text-right">
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons" (click)="openEditProperties(item)" data-toggle="modal" data-target="#openEditProperties"> 
-                        edit
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
+                        edit 
                     </mat-icon>
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons" (click)="deletedLabel(item)" data-toggle="modal" data-target="#deletedLabel">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons" (click)="setLabelTodelete(item)" data-toggle="modal" data-target="#deletedLabel">
                         delete
                     </mat-icon>
                 </div>
@@ -24,10 +24,10 @@
     </ul>
 </div>
 <ng-container *ngIf="addLabelEnabled" id="exampleModalCenterLabel">
-    <app-add-label [label]="label" (addLabelCompleted)="addLabelCompleted($event)"></app-add-label>
+    <app-add-label [teamName]="teamName" (addLabelCompleted)=" addLabelCompleted($event)"></app-add-label>
 </ng-container>
 <ng-container *ngIf="showEditLabelProp" id="openEditProperties">
-    <app-edit-label-prop (editLabelCompleted)="editLabelCompleted($event)"></app-edit-label-prop>
+    <app-edit-label-prop [label]="labelToEdit" [teamName]="teamName" (editLabelCompleted)="editLabelCompleted($event)" (getTeamLabelsByScope)="getTeamLabelsByScope()" [scope]="scope"></app-edit-label-prop>
 </ng-container>
 <ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
     <div class="modal fade" id="deletedLabel" tabindex="-1" role="dialog" aria-labelledby="deletedLabelTitle" aria-hidden="true">
@@ -55,7 +55,7 @@
                         <div class="row">
                             <div class="col-md-9"></div>
                             <div class="col-md-3 pb-2 px-4">
-                                <button class="btn" id="button" type="button"  (click)="deletedLabel(item)">Delete</button>
+                                <button class="btn" id="button" type="button"  (click)="deletedLabel()">Delete</button>
                             </div>
                         </div>
                     </ng-container>

@@ -23,6 +23,8 @@ export class LabelCardComponent implements OnInit {
   addLabelEnabled: boolean = false;
   gotLabelData: boolean=false;
   deletedLabelEnabled: boolean=false;
+  labelToDelete: Label = null;
+  labelToEdit: Label = null;
 
   public labelDataObservable: Label
 
@@ -33,8 +35,6 @@ export class LabelCardComponent implements OnInit {
   }
 
   getTeamLabelsByScope() {
-    console.log(this.scope)
-    console.log(this.teamName);
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("teams/getLabelByScope");
     callable({OrganizationDomain: orgDomain, TeamName: this.teamName, Scope: this.scope}).pipe(
@@ -55,7 +55,8 @@ export class LabelCardComponent implements OnInit {
 
   openEditProperties(item: Label) {
     this.showEditLabelProp = true;
-    console.log("checking")
+    this.labelToEdit = item;
+    this.getTeamLabelsByScope();
   }
 
   editLabelCompleted(){
@@ -64,21 +65,26 @@ export class LabelCardComponent implements OnInit {
 
   addLabel(){
     this.addLabelEnabled = true; 
-    console.log("checking")
   }
 
   addLabelCompleted () {
-     this.addLabelEnabled = true;
-
+     this.addLabelEnabled = false;
   }
 
+  setLabelToEdit(item: Label){
+    this.labelToEdit=item;
+    this.showEditLabelProp=true;
+  }
+  setLabelTodelete(item: Label){
+    this.labelToDelete=item;
+    this.deletedLabelEnabled=true;
+  }
 
-  deletedLabel(item: Label) {
-    this.deletedLabelEnabled=true
+  deletedLabel() {
+    if(this.labelToDelete != null){
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("teams/deleteLabel");
-    
-    callable({OrgDomain: orgDomain,TeamName: this.teamName, Scope: this.scope , Label: item }).subscribe({
+    callable({OrgDomain: orgDomain,TeamName: this.teamName, Id:this.labelToDelete.Id}).subscribe({
       next: (data) => {
         this.getTeamLabelsByScope();
         console.log("Successfull");
@@ -96,3 +102,5 @@ export class LabelCardComponent implements OnInit {
   }
 
 }
+}
+

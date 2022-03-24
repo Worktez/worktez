@@ -1,36 +1,31 @@
-
-const { getLabelInScope ,updateLabel} =require("../lib");
+const {getLabelById, updateLabel} =require("../lib");
 
 exports.editLabel = function(request, response) {
-    const displayName = request.body.data.DisplayName;
-    const iconName = request.body.data.IconName;
-    const colorCode = request.body.data.ColorCode;
-    const scope = request.body.data.Scope;
-    const orgDomain = request.body.data.OrgDomain;
-    const teamName = request.body.data.TeamName;
+  const displayName = request.body.data.DisplayName;
+  const iconName = request.body.data.IconName;
+  const colorCode = request.body.data.ColorCode;
+  const orgDomain = request.body.data.OrgDomain;
+  const teamName = request.body.data.TeamName;
+  const docId = request.body.data.Id;
 
-    let result;
-    let status = 200;
+  let result;
+  let status = 200;
 
-    console.log(displayName);
-    console.log(scope);
-
-    const promise = getLabelInScope(orgDomain, teamName, scope).then((labelData) => {
-      if (labelData == undefined){
-        result = {data: {status: "Label does not exist"}};
-      } else {
-          const inputJson = {
-              DisplayName: displayName,
-              IconName: iconName,
-              ColorCode: colorCode,
-              Scope: scope,
-          };
-          updateLabel(inputJson, orgDomain, teamName, scope);
-      }
-    }).catch((error) => {
-          status = 500;
-          console.log("Error:" ,error);
-    });
+  const promise = getLabelById(orgDomain, teamName, docId).then((labelData) => {
+    if (labelData == undefined) {
+      result = {data: {status: "Label does not exist"}};
+    } else {
+      const inputJson = {
+        DisplayName: displayName,
+        IconName: iconName,
+        ColorCode: colorCode,
+      };
+      updateLabel(inputJson, orgDomain, teamName, docId);
+    }
+  }).catch((error) => {
+    status = 500;
+    console.log("Error:", error);
+  });
 
 
   Promise.resolve(promise).then(() => {
@@ -43,5 +38,4 @@ exports.editLabel = function(request, response) {
         console.error("Error editing Label", error);
         return response.status(status).send(result);
       });
-
 };

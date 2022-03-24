@@ -1,0 +1,114 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+#editPageTaskContainer,
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--button-text);
+}
+
+#button {
+    background-color: var(--secondary-color);
+    color:white;
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--primary-color);
+    outline: none;
+    box-shadow: none;
+}
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+
+}
+
+.clr {
+    border: none;
+    color: var(--text);
+    background-color: var(--primary-bg);
+}
+
+#font {
+    font-size: 20px;
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+}
+
+
+.modal-title {
+    color: var(--text);
+    font-weight: bold;
+    font-size: 20px;
+}
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    opacity: 1;
+}
+
+select,
+input {
+    border: none;
+    color: var(--text);
+    font-size: 15px;
+    background-color: var(--primary-bg);
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
+#label {
+    color: var(--button-text);
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.close {
+    color: var(--text);
+}
+
+.close:hover {
+    transform: scale(1.3);
+}
+
+#non-editable {
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
+#date {
+    color: var(--text);
+}
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}

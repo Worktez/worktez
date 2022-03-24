@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
 /** *********************************************************
  * Copyright (C) 2022
@@ -80,7 +81,7 @@ s * @param {any} scope
         IconName: iconName,
         ColorCode: colorCode,
         Status: "OK",
-        Id:docId,
+        Id: docId,
     });
     return Promise.resolve(setLabelProperties);
 };
@@ -136,10 +137,10 @@ exports.getTeamUseTeamId = function(orgDomain, teamId) {
  * @param {any} orgDomain
  * @param {any} scope
  * @param {any} docId
- * @return {any} 
+ * @return {any}
  */
- exports.deleteUserLabel = function(updateLabelToJson, orgDomain, teamName, scope, docId) {
-    const deleteLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).where("Scope", "==", scope).update(updateLabelToJson);
+ exports.deleteScopeLabel = function(updateLabelToJson, orgDomain, teamName, scope, docId) {
+    const deleteLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).where("Id", "==", docId).update(updateLabelToJson);
     return Promise.resolve(deleteLabelPromise);
 };
 
@@ -152,16 +153,16 @@ exports.getTeamUseTeamId = function(orgDomain, teamId) {
  * @param {any} displayName
  * @param {any} iconName
  * @param {any} colorCode
- * @return {any} 
+ * @return {any}
  */
-exports.addTeamLabel=function(orgDomain, teamName, scope, docId){
-    const addTeamLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).where("Scope", "==", scope).set({
+exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, iconName, colorCode) {
+    const addTeamLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).set({
         DisplayName: displayName,
         Scope: scope,
         IconName: iconName,
         ColorCode: colorCode,
         Status: "OK",
-        Id:docId,
+        Id: docId,
     });
     return Promise.resolve(addTeamLabelPromise);
 };
@@ -171,13 +172,28 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId){
  * @param {any} inputJson
  * @param {any} teamName
  * @param {any} orgDomain
- * @param {any} scope
  * @param {any} docId
- * @return {any} 
+ * @return {any}
  */
- exports.updateLabel = function(inputJson, orgDomain, teamName, scope, docId) {
-    const editLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).where("Scope", "==", scope).update(inputJson);
+ exports.updateLabel = function(inputJson, orgDomain, teamName, docId) {
+    const editLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).update(inputJson);
     return Promise.resolve(editLabelPromise);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} docId
+ * @return {any}
+ */
+ exports.getLabelById = function(orgDomain, teamName, docId) {
+     console.log(orgDomain, teamName, docId);
+    const getLabelByIdPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).get().then((doc) => {
+        const data = doc.data();
+        return data;
+    });
+    return Promise.resolve(getLabelByIdPromise);
 };
 
 /**
@@ -188,7 +204,7 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId){
  * @return {any}
  */
  exports.getLabelInScope = function(orgDomain, teamName, scope) {
-    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Scope", "==", scope).get().then((doc) => {
+    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Scope", "==", scope).where("Status", "==", "OK").get().then((doc) => {
         const data = [];
         doc.forEach((team) => {
             data.push(team.data());
