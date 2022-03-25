@@ -37,13 +37,14 @@ export class SprintEvaluationGraphComponent implements OnInit {
   teamMember: string;
   sprintRange1: number;
   sprintRange2: number;
-  title: string = "Sprint Evaluation Graph";
+  title: string = "TeamID:";
 
   ngOnInit(): void {
     this.showLoader = true;
     this.sprintRange2 = this.currentSprintNumber;
     this.sprintRange1 = this.currentSprintNumber - 4;
     this.teamMember = 'Team';
+    this.title = this.title + this.teamId;
     this.getData();
   }
 

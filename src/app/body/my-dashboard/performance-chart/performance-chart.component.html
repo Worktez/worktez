@@ -24,7 +24,7 @@
     </div>
     <ng-container *ngIf="data">
         <div class="card-body pb-4" *ngIf="!showLoader && (data)?.length != 0">
-            <app-chart [data]="data" [columnNames]='["Sprint Number", "StoryPoint"]'></app-chart>
+            <app-chart [data]="data" [columnNames]='["Sprint Number", "StoryPoint"]' [hAxisTitle]='""' [vAxisTitle]='""' [height]='0'></app-chart>
         </div>
     </ng-container>
     <div class="card-body" *ngIf="showLoader">

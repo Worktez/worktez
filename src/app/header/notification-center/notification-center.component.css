@@ -42,19 +42,16 @@ mat-icon {
 a {
     color: var(--text);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 
 #notificationBox:hover {
     border: 1px solid var(--button-text-hover);
-    background-color: rgb(208, 212, 238);
 }
 
-
-
 #message {
-    font-size: 14px;
+    font-size: 12px;
     text-align: justify;
     margin: 10px;
 }
@@ -64,10 +61,13 @@ a {
 } */
 
 .notificationCenter {
-    width: 400px;
-    height: auto;
-    max-height: 400px;
-    overflow-y: auto;
+    width: 20rem;
+    position:absolute;
+    right: 1rem;
+    top: 3rem;
+    height:15rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 2%;

@@ -34,7 +34,7 @@
         <div class="col-md-10">
             <div class="row">
                 <ng-container *ngIf="showContent; else loader">     
-                    <div class="col-md-4 pb-2">
+                    <div class="col-md-4 col">
                         <ng-container *ngIf="sprintNotExist">
                             <p class="board-text">The Sprint does not exist</p>
                         </ng-container>
@@ -42,27 +42,9 @@
                             <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="startService.currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
                         </ng-container>
                     </div>
-                    <div class="col-md-8 pb-2">
+                    <div class="col-md-8 col mb-2">
                         <ng-container *ngIf="sprintNotExist == false && startService.currentSprintNumber != 0">
                             <app-sprint-evaluation-graph [currentSprint]="startService.currentSprintNumber" [teamMembers]="startService.teamMembers" [teamId]="startService.selectedTeamId"></app-sprint-evaluation-graph>
-                        </ng-container>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="row">
-                <ng-container *ngIf="showContent">
-                    <div class="col-md-12 col-12 pb-3">
-                        <ng-container *ngIf="sprintNotExist == false">
-                            <app-performance-column-chart [currentSprint]="startService.currentSprintNumber" [teamMembers]="startService.teamMembers" [teamId]="startService.selectedTeamId"></app-performance-column-chart>
-                        </ng-container>
-                    </div>
-                </ng-container>
-            </div>
-            <div class="row">
-                <ng-container *ngIf="showContent">
-                    <div class="col-md-12 col-12">
-                        <ng-container *ngIf="sprintNotExist == false">
-                            <app-sprint-burndown-chart [currentSprint]="startService.currentSprintNumber"  [teamId]="startService.selectedTeamId" [sprintStartDate]="SDate" [sprintEndDate]="EDate"></app-sprint-burndown-chart>
                         </ng-container>
                     </div>
                 </ng-container>
@@ -71,4 +53,18 @@
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>
+    </div>
+    <div class="row px-4" *ngIf="startService.showTeams">
+        <ng-container *ngIf="showContent">
+            <div class="col-md-6 col-12 pb-2">
+                <ng-container *ngIf="sprintNotExist == false">
+                    <app-performance-column-chart [currentSprint]="startService.currentSprintNumber" [teamMembers]="startService.teamMembers" [teamId]="startService.selectedTeamId"></app-performance-column-chart>
+                </ng-container>
+            </div>
+            <div class="col-md-6 col-12 pb-2">
+                <ng-container *ngIf="sprintNotExist == false">
+                    <app-sprint-burndown-chart [currentSprint]="startService.currentSprintNumber"  [teamId]="startService.selectedTeamId" [sprintStartDate]="SDate" [sprintEndDate]="EDate"></app-sprint-burndown-chart>
+                </ng-container>
+            </div>
+        </ng-container>
     </div>

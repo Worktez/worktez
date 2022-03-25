@@ -12,12 +12,12 @@
  * See the MIT License for more details.
  ***********************************************************/-->
 <div class="card">
-    <div class="card-header pr-4">
-        <div class="row align-items-center">
+    <div class="card-header">
+        <div class="row">
             <div class="col-md-10">
-                <h4>Team Performance Chart</h4>
+                <h4 class="m-0">Team Performance Chart</h4>
             </div>
-            <div class="col-md-2 float-right">
+            <div class="d-flex col-md-2 justify-content-end">
                 <div class="row">
                     <app-range-card (setRange)="onGetRange($event)"></app-range-card>
                     <app-select-dropdown [teamMembers]="teamMembers" (setteamMember)="onGetTeamMember($event)"></app-select-dropdown>

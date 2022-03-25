@@ -12,10 +12,10 @@
  * See the MIT License for more details.
  ***********************************************************/-->
 <ng-container *ngIf="sprintDataReady">
-  <ul class="nav flex-container buttons mb-2">
-    <li class="active flex-item">
+  <div class="row py-1 justify-content-center">
+    <div class="d-flex col-3 justify-content-center">
       <div class="btn-group">
-        <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
+        <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Menu&nbsp;&nbsp;
         </button>
@@ -34,10 +34,10 @@
           </button>
         </div>
       </div>
-    </li>
-    <li class="active flex-item">
+    </div>
+    <div class="d-flex col-6 justify-content-center">
       <div class="btn-group" *ngIf="sprintData.Status != 'Completed' && startService.currentSprintNumber > 0">
-        <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
+        <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           Status&nbsp;&nbsp;
         </button>
@@ -63,14 +63,14 @@
           Start New Sprint
         </button>
       </div>
-    </li>
-    <li class="active flex-item">
-      <button class="btn px-4" type="button" id="button" (click)="showTasks()">
+    </div>
+    <div class="d-flex col-3 justify-content-center">
+      <button class="btn box" type="button" id="button" (click)="showTasks()">
         Tasks
       </button>
-    </li>
-  </ul>
-  <div class="card pb-4">
+    </div>
+  </div>
+  <div class="card">
     <div class="card-header">
       <div class="dropdown float-right">
         <button type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -91,43 +91,43 @@
       <nav class="navbar navbar-expand-lg p-0" id="navbarMenu">
         <ul class="nav mr-auto">
           <li class="nav-item">
-            <h6 class="active nav-link navbar-text" id="head" style="font-size: 19px">
+            <h6 class="active nav-link navbar-text" id="head" style="font-size: 15px">
               Sprint No: {{ currentSprintName }}
             </h6>
           </li>
           <li class="nav-item">
-            <h6 class="active nav-link navbar-text" id="head" style="font-size: 19px">
+            <h6 class="active nav-link navbar-text" id="head" style="font-size: 15px">
               TeamId: {{ sprintData.TeamId }}
             </h6>
           </li>
         </ul>
       </nav>
     </div>
-    <div class="card-body ml-4">
+    <div class="card-body px-4">
       <div class="row">
         <div class="col-md-6 col">
-          <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 15px">
-            <span class="material-icons" style="font-size: 17px">date_range</span>Start Date:
+          <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 12px">
+            <span class="material-icons" style="font-size: 15px">date_range</span>Start Date:
           </h6>
-          <h6 class="row card-text" id="sprintStartDate" style="font-size: 14px">
+          <h6 class="row card-text" id="sprintStartDate" style="font-size: 12px">
             {{ sprintData.StartDate }}
           </h6>
         </div>
         <div class="col-md-6 col">
-          <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 15px">
-            <span class="material-icons" style="font-size: 17px">date_range</span>End Date:
+          <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 12px">
+            <span class="material-icons" style="font-size: 15px">date_range</span>End Date:
           </h6>
-          <h6 class="row card-text" id="sprintEndDate" style="font-size: 14px">
+          <h6 class="row card-text" id="sprintEndDate" style="font-size: 12px">
             {{ sprintData.EndDate }}
           </h6>
         </div>
       </div>
-      <div class="row my-4 mr-4 pb-2">
+      <div class="row py-4">
         <div class="col-12">
           <ng-container *ngIf="sprintData.SprintNumber > 0">
             <div class="row" id="sprintStatus">
               <div class="col-10" id="statusHeading">
-                <span class="material-icons ml-3" style="font-size: 18px; padding-left: 0">donut_large</span>
+                <span class="material-icons" style="font-size: 15px; padding-left: 0">donut_large</span>
                 <h5>&nbsp;&nbsp;Status</h5>
               </div>
               <div class="col-2">
@@ -140,10 +140,10 @@
               <app-progress-graph [ngStyle]="{ width: workPercentage + '%' }" class="progress">
               </app-progress-graph>
               <div class="row mt-1">
-                <h6 class="col-md-7 col" id="sprintStatus" style="font-size: 13px">
+                <h6 class="col-md-7 col" id="sprintStatus" style="font-size: 11px">
                   {{ sprintData.Status }}
                 </h6>
-                <h6 class="col-md-5 col text-right" style="font-size: 13px">
+                <h6 class="col-md-5 col text-right" style="font-size: 11px">
                   {{ workPercentage }}%
                 </h6>
               </div>
@@ -151,33 +151,33 @@
           </ng-container>
         </div>
       </div>
-      <div class="row my-2">
+      <div class="row py-2">
         <div class="col-md-7 col">
-          <h6 class="row card-title" style="font-weight: bold; font-size: 15px">
+          <h6 class="row card-title" style="font-weight: bold; font-size: 12px">
             <span class="material-icons" style="font-size: 18px">format_list_numbered</span>&nbsp;&nbsp;Total Tasks:
           </h6>
         </div>
         <div class="col-md-5 col">
-          <h6 class="row card-text" id="sprintStatus" style="font-size: 13px">
+          <h6 class="row card-text" id="sprintStatus" style="font-size: 12px">
             {{ sprintData.TotalNumberOfTask }}
           </h6>
         </div>
       </div>
-      <div class="row my-2">
+      <div class="row">
         <div class="col-md-7 col">
-          <h6 class="row card-title" style="font-weight: bold; font-size: 15px">
+          <h6 class="row card-title" style="font-weight: bold; font-size: 12px">
             <span class="material-icons" style="font-size: 18px">checklist</span>&nbsp;&nbsp;Completed Tasks:
           </h6>
         </div>
         <div class="col-md-5 col">
-          <h6 class="row card-text" id="sprintStatus" style="font-size: 13px">
+          <h6 class="row card-text" id="sprintStatus" style="font-size: 12px">
             {{ sprintData.TotalCompletedTask }}
           </h6>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-body" *ngIf="showLoader">
+  <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
-  </div>
+  </ng-container>
 </ng-container>

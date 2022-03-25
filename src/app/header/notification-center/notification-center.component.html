@@ -15,7 +15,7 @@
     <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}"
         matBadgeColor="warn" (click)="loadNotifications(1)">notifications</mat-icon>
     <ng-container *ngIf="showNotificationsList">
-        <div class="card-body" style="width: 20rem; position:absolute; right: 1rem; top: 3rem; height:15rem; background-color: whitesmoke ; overflow-y: scroll; overflow-x: hidden;">
+        <div class="notificationCenter">
             <!-- <div class="card-body"> -->
                 <ng-container *ngIf="!showLoader; else loader">
                     <!-- <div class="notificationCenter"> -->

@@ -36,10 +36,9 @@ export class ActivityComponent implements OnInit {
   getUserDetail() {
     if(this.activity.Uid == "defaultUser") {
       this.user = defaultUser;
-    }
-    else {
+    } else {
       this.user = this.userService.users.filter((obj) => {
-      return obj.uid == this.activity.Uid
+        return obj.uid == this.activity.Uid
       })[0];
     }
   }

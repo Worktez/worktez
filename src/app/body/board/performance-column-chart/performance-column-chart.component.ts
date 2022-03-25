@@ -51,19 +51,13 @@ export class PerformanceColumnChartComponent implements OnInit {
     let orgDomain = this.backendService.getOrganizationDomain();
     this.columnNames = this.teamMember == "Team" ? ["Sprints", this.teamId] : ["Sprints", this.teamMember];
     const callable = this.functions.httpsCallable('performanceChart/performanceChartData');
-    try {
-      await callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
+    callable({OrganizationDomain: orgDomain, SprintNumberRange: {'SprintRange1': this.sprintRange1, 'SprintRange2': this.sprintRange2}, TeamId: this.teamId, Assignee: this.teamMember}).pipe(
         map(actions => {
             return actions.data as [];
         })).subscribe((data)=>{
           this.data = data.sort()
           this.showLoader = false;
         });
-    } catch(error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log(error);
-    }
   }
 
   onGetTeamMember(selectedOption) {
