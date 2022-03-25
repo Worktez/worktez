@@ -203,6 +203,7 @@ export class TaskDetailsComponent implements OnInit {
 
       await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
+          this.getActivityData();
           this.comment = "";
           return;
         },
