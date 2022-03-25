@@ -66,7 +66,8 @@ export class KanbanBoardComponent implements OnInit {
     this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
-    this.readSprintData();
+    this.currentSprintNumber = this.startService.currentSprintNumber;
+    this.currentSprintName = "S" + this.currentSprintNumber;
     this.readTasks();
   }
 
@@ -93,50 +94,11 @@ export class KanbanBoardComponent implements OnInit {
     });
   }
 
-  readSprintData() {
-    this.showContent = false;
-    if (this.startService.teamCurrentSprintNumber != 0) {
-      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
-        this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
-        if (sprints) {
-          this.sprintData = sprints;
-          this.currentSprintNumber=this.startService.teamCurrentSprintNumber;
-          this.filterSprintNumber=this.currentSprintNumber;
-          this.currentSprintName = "S" + this.sprintData.SprintNumber;
-        } else {
-          console.log("Not existing");
-          this.showContent = true;
-          this.sprintNotExist = true;
-        }
-      });
-    } else {
-      this.startService.readApplicationData();
-      this.startService.applicationDataStateObservable.subscribe((data) => {
-        if(data) {
-          this.applicationSettingsService.teamData.subscribe((data) => {
-            if(data) {
-              this.readSprintData();
-            }
-          });
-        }
-      });
-    }
-  } else {
-      this.showContent = true;
-      this.filterSprintNumber=-1;
-      this.changeSprintNumber();
-    }
-    this.showContent = true;
-  }
-
   changeSprintNumber() {
-    this.startService.teamCurrentSprintNumber = this.filterSprintNumber;
     this.currentSprintNumber=this.filterSprintNumber;
-    this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
-    this.applicationSettingsService.editedSprintId = this.filterSprintNumber;
+    this.currentSprintName = "S" + this.currentSprintNumber;
     this.tasks=[];
-    this.readData();
-    console.log(this.applicationSettingsService.editedSprintId);
+    this.readTasks();
   }
 
   readTasks() {
@@ -170,38 +132,32 @@ export class KanbanBoardComponent implements OnInit {
     });
   }
 
-  async editTask(task: Tasks, status: string) {
-    this.showLoader = true;
-    let result;
+  editTask(task: Tasks, status: string) {
     const appKey = this.backendService.getOrganizationAppKey();
     const callable = this.functions.httpsCallable('tasks/editTask');
-    await callable({Title: task.Title, Status: status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter}).subscribe({
-      next: (data) => {
-        result = data;
-        if (result == "OK") {
-          task.Status = status;
-          this.showLoader = false;
-        }
-      },
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        this.showLoader = false;
-      },
-      complete: () => console.info("task edited successfully!")
-    })
+    return callable({Title: task.Title, Status: status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter});
   }
 
   onDrop(event: CdkDragDrop<Tasks[]>, status: string) {
     this.showLoader = true;
-    console.log(event.previousContainer === event.container);
+    var result;
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.showLoader = false;
     } else {
-      this.editTask(event.previousContainer.data[event.previousIndex], status).then(() => {
-        transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.editTask(event.previousContainer.data[event.previousIndex], status).subscribe({
+        next: (data) => {
+          result = data;
+          if (result == "OK") {
+            transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+            this.showLoader = false;
+          }
+        },
+        error: (error) => {
+          console.error(error);
           this.showLoader = false;
+        },
+        complete: () => console.info("task edited successfully!")
       });  
     }
   }
