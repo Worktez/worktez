@@ -65,7 +65,8 @@ export class BarChartComponent implements OnInit {
       textStyle: {
         color: this.themeService.fontColor,
       },
-    }
+    },
+    chartArea:{ width:'85%', height:'70%' }
   };
   dynamicResizable: boolean = true;
 

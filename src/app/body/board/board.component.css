@@ -18,7 +18,8 @@
 
 .vertical-menu {
     width: auto;
-    height: 400px;
+    max-height: 450px;
+    height: 100%;
     overflow-y: auto;
     background-color: var(--secondary-bg);
     color: var(--text);

@@ -1,15 +1,15 @@
 <div class="card">
-    <div class="card-header pr-4">
+    <div class="card-header">
         <div class="row align-items-center">
             <div class="col-md-12">
-                <h4>Sprint Burndown Chart</h4>
+                <h4 class="m-0">Sprint Burndown Chart</h4>
             </div>
         </div>
     </div>
     <div class="card-body" *ngIf="!showLoader">
-        <app-chart [data]="data" [columnNames]='["Day", "StoryPoint"]'></app-chart>
+        <app-chart [data]="data" [columnNames]='["Day", "StoryPoint"]' [hAxisTitle]='"Days"' [vAxisTitle]='"StoryPoint"' [height]='300'></app-chart>
     </div>
-    <div class="card-body" *ngIf="showLoader">
+    <ng-container *ngIf="showLoader">
         <app-loader></app-loader>
-    </div>
+    </ng-container>
 </div>

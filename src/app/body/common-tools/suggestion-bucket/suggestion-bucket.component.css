@@ -11,6 +11,11 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.option { 
+    color: var(--text);
+    cursor: pointer;
+}
+
 .option:hover { 
     background-color: var(--primary-bg);
     color: var(--primary-color);
@@ -18,7 +23,7 @@
 }
 
 #username {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 #email {

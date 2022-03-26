@@ -71,10 +71,10 @@ export class TaskDetailsComponent implements OnInit {
   prData: GitRepoData[] = [];
 
   dataReady: boolean = false
+  activityDataReady: boolean = false
 
   gotTaskData: boolean=false;
 
-  public taskDataObservable: Tasks
   activityData: Activity[]
   linkData: Link[]
 
@@ -139,8 +139,6 @@ export class TaskDetailsComponent implements OnInit {
 
         this.applicationSettingService.getTeamDetails(data.TeamId);
         this.gotTaskData=true;
-        this.taskDataObservable=data;
-        console.log("Saved Task Data")
       },
       error: (error) => {
         this.errorHandlerService.showError = true;
@@ -165,8 +163,10 @@ export class TaskDetailsComponent implements OnInit {
 
         if(!this.userService.userReady) {
           this.userService.fetchUserDataUsingUID().subscribe(()=>{
-            this.dataReady = true;
+            this.activityDataReady = true;
           });
+        } else {
+          this.activityDataReady = true;
         }
         this.activityData=data;
       },
@@ -203,6 +203,7 @@ export class TaskDetailsComponent implements OnInit {
 
       await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
+          this.getActivityData();
           this.comment = "";
           return;
         },

@@ -148,7 +148,7 @@ export class SetupComponent implements OnInit {
     const parentTaskId = this.popupHandlerService.parentTaskId;
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
 
-    await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 5, Status: "Ready to start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+    await callable({TeamId: teamId, AppKey: organizationAppKey, Title: "Title2", Description: "Backlog-2", Priority: "High", Difficulty: "Low", Creator: "Createor", Assignee: this.email, Reporter: this.email, EstimatedTime: 5, Status: "Ready to start", Project: project, SprintNumber: -1, StoryPointNumber: 3, CreationDate: "xx/xx/xxxx", Time: "07:30:21",  Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
       next: (result) => {
         console.log("Successful");
         this.progressPercentage = 30;
@@ -161,7 +161,7 @@ export class SetupComponent implements OnInit {
       complete: () => console.info('Successful created new session')
   });
 
-      await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: "Createor", Assignee: "-", Reporter: "-", EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+      await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "Title-1", Description: "Backlog description", Priority: "High", Difficulty: "High", Creator: this.email, Assignee: this.email, Reporter: this.email, EstimatedTime: 7, Status: "Ice Box", Project: project, SprintNumber: -1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
         next: (result) => {
           this.progressPercentage = 32;
           console.log("Successfully created the task");
@@ -174,7 +174,7 @@ export class SetupComponent implements OnInit {
     });
 
 
-    await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl  }).subscribe({
+    await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "1st Task", Description: "Do a task", Priority: "Medium", Difficulty: "Low", Creator: this.email, Assignee: this.email, Reporter: this.email, EstimatedTime: 9, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Sub Task", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl  }).subscribe({
       next: (result) => {
       this.progressPercentage = 33;
       console.log("Successfully created the task");
@@ -187,7 +187,7 @@ export class SetupComponent implements OnInit {
       complete: () => console.info('Successful ')
   });
 
-      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: "joe", Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+      const result = await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd Task", Description: "Do a task again", Priority: "High", Difficulty: "Medium", Creator: this.email, Assignee: this.email, Reporter: this.email, EstimatedTime: 24, Status: "Ice Box", Project: project, SprintNumber: 1, StoryPointNumber: 9, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Bug", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
         next: (result) => {
           this.progressPercentage = 38;
           console.log("Successfully created the task");
@@ -200,7 +200,7 @@ export class SetupComponent implements OnInit {
         complete: () => console.info('Successful')
     });
 
-      await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: "Mayo", Assignee: "Ketch", Reporter: "Cheese", EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+      await callable({ TeamId: teamId, AppKey: organizationAppKey, Title: "2nd task", Description: "Do this 2nd task", Priority: "High", Difficulty: "Medium", Creator: this.email, Assignee: this.email, Reporter: this.email, EstimatedTime: 8, Status: "Ready to start", Project: project, SprintNumber: 1, StoryPointNumber: 7, CreationDate: "xx/xx/xxxx", Time: "07:30:21", Type: "Story", Uid: this.authService.userAppSetting.uid, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
         next: (result) => {
           this.progressPercentage = 39;
           console.log("Successfully created the task");

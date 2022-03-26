@@ -31,19 +31,25 @@
                         </span>
                         <div class="card-body">
                             <h2 class="card-title" style="color: var(--primary-color);">{{displayName}}</h2>
-                            <h4 class="card-title">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h4>
-                            <h4 class="card-title">
-                                <span class="material-icons">call</span> {{phoneNumber}}
+                            <h4 class="card-title" *ngIf="role">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h4>
+                            <h4 class="card-title" *ngIf="phoneNumber">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    call
+                                </mat-icon> {{phoneNumber}}
                             </h4>
-                            <h4 class="card-title mt-2">
-                                <span class="material-icons">email</span> {{email}}
+                            <h4 class="card-title mt-2" *ngIf="email">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    email
+                                </mat-icon> {{email}}
                             </h4>
-                            <h4 class="card-title">
+                            <h4 class="card-title" *ngIf="managerEmail">
                                 <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
                                 Managed by {{ managerEmail }}
                             </h4>
-                            <h4 class="card-title">
-                                <span class="material-icons">language</span>
+                            <h4 class="card-title" *ngIf="website">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    language
+                                </mat-icon>
                                 <a href="{{website}}/" target="_blank">{{website}}</a>
                             </h4>
                             <a href="{{linkedInProfile}}" class="card-link" target="_blank">
@@ -169,6 +175,13 @@
                         <div class="col-md">
                             <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()" style="font-size: 16px;">edit</span>
                             <h2>Skills</h2>
+                            <ng-container *ngIf="(skills)?.length == 0">
+                                <div class="row">
+                                    <div class="col-12 mt-3">
+                                        <h3>Add your Skills</h3>
+                                    </div>
+                                </div>
+                            </ng-container>
                             <div class="row">
                                 <div class="col-7">
                                     <ul>
@@ -177,20 +190,6 @@
                                         </ng-container>
                                     </ul>
                                 </div>
-                                <!-- <div class="col-7">
-                                    <ul>
-                                        <li>Marketing</li>
-                                        <li>UI/UX</li>
-                                        <li>Content Creation</li>
-                                        <li>Social media</li>
-                                    </ul>
-                                </div>
-                                <div class="col-5">
-                                    <ul>
-                                        <li>Video Editing</li>
-                                        <li>Graphic designing</li>
-                                    </ul>
-                                </div> -->
                             </div>
                         </div>
                     </div>

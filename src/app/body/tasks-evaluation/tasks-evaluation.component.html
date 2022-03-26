@@ -51,9 +51,6 @@
                 </div>
             </div>
         </ng-container>
-        <ng-container *ngIf="showLoader">
-            <app-loader></app-loader>
-        </ng-container>
     </ng-container>
     <div class="text-center" *ngIf="!disableLoadMore; else noMoreData">
         <button class="btn btn-sm" (click)="readTasks()" [disabled]="disableLoadMore">Load More</button>
@@ -64,4 +61,8 @@
         </div>
     </ng-template>
     
+</ng-container>
+
+<ng-container *ngIf="showLoader">
+    <app-loader></app-loader>
 </ng-container>

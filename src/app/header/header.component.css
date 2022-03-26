@@ -14,8 +14,7 @@
 .header {
     background-color: var(--header-bg);
     color: var(--text);
-    /* border-bottom: var(--primary-border); */
-    height: inherit;
+    height: 5%;
 }
 
 .headerBox {
@@ -32,6 +31,7 @@
 
 .dropdown-item {
     color: var(--button-text);
+    font-size: 12px;
 }
 
 .dropdown-item:hover {
@@ -41,10 +41,11 @@
 }
 .nav-item {
     display: inline-flex;
+    font-size: 12px;
 }
 .nav-link {
     color: var(--primary-color);
-    font-size: medium;
+    font-size: 12px;
 }
 .nav-btn{
     background-color: var(--hover) !important;
@@ -53,6 +54,7 @@
 }
 .btn{
     background-color: var(--secondary-color);
+    font-size: 12px;
 }
 #brand_img{
     width:125px;

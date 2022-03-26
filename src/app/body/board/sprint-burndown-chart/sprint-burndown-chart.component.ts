@@ -29,22 +29,17 @@ export class SprintBurndownChartComponent implements OnInit {
     this.getData();
   }
 
-  async getData() {
+  getData() {
     this.showLoader = true;
     let orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasks/getAllTasks');
-    try {
-      await callable({OrgDomain: orgDomain, TeamId: this.teamId, SprintNumber: this.currentSprintNumber}).pipe(map(actions => {
+    callable({OrgDomain: orgDomain, TeamId: this.teamId, SprintNumber: this.currentSprintNumber}).pipe(map(actions => {
         return actions.data as Tasks[];
     })).subscribe((data)=>{
+      if(data) {
         this.setData(data);
-        this.showLoader = false;
+      }
     });
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      console.log(error);
-    }
   }
 
   getDatesInRange(startDate, endDate) {
@@ -74,11 +69,12 @@ export class SprintBurndownChartComponent implements OnInit {
         var formattedDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
         if (task.Status == "Completed" && new Date(formattedDate).toDateString() === element[0].toDateString()) {
           this.totalStoryPoints -= task.StoryPointNumber;
-          this.data[index] = ["Day"+index, this.totalStoryPoints];
+          this.data[index] = [index, this.totalStoryPoints];
         } else {          
-          this.data[index] = ["Day"+index, this.totalStoryPoints];
+          this.data[index] = [index, this.totalStoryPoints];
         }
       })
     });
+    this.showLoader = false
   }
 }

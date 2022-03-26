@@ -12,13 +12,9 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AuthService } from 'src/app/services/auth.service';
-import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 
 @Component({

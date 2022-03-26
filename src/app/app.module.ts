@@ -151,6 +151,8 @@ import { CommentsComponent } from './body/social-page/posts/comments/comments.co
 import { EditDpComponent } from './body/view-organization-details/edit-dp/edit-dp.component';
 import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart/sprint-burndown-chart.component';
 import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
+import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
+import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 
 @NgModule({
   declarations: [
@@ -270,6 +272,8 @@ import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
     EditDpComponent,
     SprintBurndownChartComponent,
     OrgDpComponent,
+    KanbanCardComponent,
+    TestimonialCardComponent,
   ],
   imports: [
     BrowserModule,

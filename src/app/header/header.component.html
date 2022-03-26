@@ -15,7 +15,7 @@
     <ng-container *ngIf="startService.userReady ; else homePageHeader">
         <nav class="navbar navbar-expand-lg sticky-top header">
             <a class="navbar-brand text-white px-1" (click)="home()">
-                <img src="../../assets/logo.png" width="50" height="30"> 
+                <img src="../../assets/logo.png" width="40" height="24"> 
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
@@ -48,8 +48,8 @@
                         <li class="nav-item px-1">
                             <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="socialPage()">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                    public
-                                </mat-icon> Social
+                                    tag
+                                </mat-icon> Tech Tag
                             </a>
                         </li>
                     </ng-container>
@@ -102,7 +102,7 @@
         </nav>    
     </ng-container>
     <ng-template #homePageHeader>
-        <nav id="navbar" class="navbar navbar-light bg-light">
+        <nav id="navbar" class="navbar header">
             <a class="navbar-brand" href="#">
                 <img id="brand_img" src="../../assets/worktezLogo.jpg" alt="Worktez">
             </a>
