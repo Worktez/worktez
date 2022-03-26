@@ -1,7 +1,7 @@
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
-* 
+* Author: Simran Nigam <nigamsimran14@gmail.com>
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
 * 
@@ -13,21 +13,21 @@
 ***********************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamDetailsComponent } from './team-details.component';
+import { AddLabelComponent } from './add-label.component';
 
-describe('TeamDetailsComponent', () => {
-  let component: TeamDetailsComponent;
-  let fixture: ComponentFixture<TeamDetailsComponent>;
+describe('AddLabelComponent', () => {
+  let component: AddLabelComponent;
+  let fixture: ComponentFixture<AddLabelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TeamDetailsComponent ]
+      declarations: [ AddLabelComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TeamDetailsComponent);
+    fixture = TestBed.createComponent(AddLabelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -27,12 +27,14 @@ export class PopupHandlerService {
   createPostEnabled: boolean = false
   quickNotesTitle: string = ""
   quickNotesDescription: string = ""
+  addLabelEnabled: boolean = false
   
   constructor() { }
 
   resetPopUps() {
     this.createNewSprintEnabled = false
     this.createNewTaskEnabled = false
+    this.addLabelEnabled=false
     this.createNewTeamEnabled = false
     this.addNewContributorEnabled = false
   }
