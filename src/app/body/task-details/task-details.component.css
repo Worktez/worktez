@@ -55,16 +55,10 @@ span{
 .activity-card {
     background-color: var(--secondary-bg);
     color: var(--text);
+    min-height: 500px;
+}
 
-}
-form-row px-4 pt-4{ 
-    overflow-y:auto;
-    overflow-x: hidden; 
-    width: 106%;
-    height: 15vh;
-    position: static;
-}
-nav nav-tabs nav-fil:a {
+nav {
     cursor: pointer;
 }
        
@@ -87,11 +81,9 @@ nav nav-tabs nav-fil:a {
 }
 
 .part {
-    padding: 2px 30px 2px 30px;
     border-color: var(--dropdown-hover);
     border-style: solid;
     border-width: medium;
-    
 }
 
 .btn {
@@ -100,7 +92,7 @@ nav nav-tabs nav-fil:a {
     color: var(--text);
 }
 
-a.active.nav-link{
+a .active .nav-link{
     background-color: var(--dropdown-hover) !important;
     color: var(--button-text-hover) !important;  
     border-color: var(--button-text-hover) !important;

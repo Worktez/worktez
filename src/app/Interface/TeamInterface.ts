@@ -49,4 +49,6 @@ export interface Label {
     DisplayName: string;
     IconName: string;
     Scope: string;
+    Status: string;
+    Id: string;
 }

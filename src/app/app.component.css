@@ -24,7 +24,7 @@ body {
 .theme-light {
     --primary-color: #5559D9;
     --secondary-color: #67CB45;
-    --header-bg: #fff;
+    --header-bg: #ffffff;
     --text: #545454;
     --button-text: #545454;
     --button-text-hover: #5559D9;
@@ -40,7 +40,7 @@ body {
     --button-hover-bg: #fff;
     --progress-bg: #5C60EC;
     --progress-left-bg: rgba(70, 70, 70, 0.23);
-    --card-bg: #FFFFFF;
+    --card-bg: #F6F7F9;
     --input-field: #F6F7F9;
     --heading-text: #272845;
     --danger-color: #c62828;
@@ -50,6 +50,7 @@ body {
     --scrollbar-color: rgba(84, 84, 84, 0.17);
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
+    --home-bg: #5C60EC;
     --font: 'Poppins', sans-serif;
 }
 
@@ -71,8 +72,8 @@ body {
     --button-bg: none;
     --button-hover-bg: #20282E;
     --progress-bg: #5C60EC;
-    --progress-left-bg: rgba(70, 70, 70, 1);
-    --card-bg: #26272E;
+    --progress-left-bg: rgba(17, 23, 27, 0.733);
+    --card-bg: #11171B;
     --input-field: #1E1F28;
     --heading-text: #F6F7F9;
     --danger-color: #c62828;
@@ -82,5 +83,6 @@ body {
     --scrollbar-color: rgba(255, 255, 255, 0.51);
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
+    --home-bg: #5C60EC;
     --font: 'Poppins', sans-serif;
 }

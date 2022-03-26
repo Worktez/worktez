@@ -1,0 +1,14 @@
+.card {
+    background-color: #20282E;
+    color: #ffffff;
+    border: none;
+}
+
+.card-text {
+    color: #ffffff;
+}
+
+.imageCheck {
+    position: absolute;
+    top: -25px;
+}

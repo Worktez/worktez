@@ -15,6 +15,9 @@
     <div class="row p-2">
         <div class="col-3">
             <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg">
+            <span *ngIf="sameUser" type="button" class="m-3" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                <span class="material-icons" style="font-size: 20px;">edit</span>
+            </span>
         </div>
     </div>
     <div class="row p-2 my-1">
@@ -75,4 +78,8 @@
 </div>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
+</ng-container>
+
+<ng-container *ngIf="editProfilePicEnabled" id="profilePicModal">
+    <app-edit-dp [uid]="uid" [email]="email" [displayName]="displayName" (editProfilePicCompleted)="editProfilePicCompleted($event)"></app-edit-dp>
 </ng-container>

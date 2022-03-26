@@ -196,29 +196,28 @@ export class ProfileComponent implements OnInit {
     }
     else{
       const data = this.userService.getUserNameData(this.username);
-      if(data != null){
+      if(data != null) {
         console.log(data);
         console.log(data.email);
         this.displayName = data.displayName;
-      this.email = data.email;
-      this.uid = data.uid;
-      this.aboutMe = data.AboutMe;
-      this.photoURL = data.photoURL;
-      this.phoneNumber = data.phoneNumber;
-      this.linkedInProfile = data.LinkedInProfile;
-      this.githubProfile = data.LinkedInProfile;
-      this.dateOfJoining = data.DateOfJoining;
-      this.skills = data.Skills;
-      this.website = data.Website;
-      if (this.website.includes("https://") == false) {
-        this.website = "https://" + this.website;
-      }
-      this.readUserEducation(this.uid);
-      this.readUserExperience(this.uid);
-      this.readUserProject(this.uid);
+        this.email = data.email;
+        this.uid = data.uid;
+        this.aboutMe = data.AboutMe;
+        this.photoURL = data.photoURL;
+        this.phoneNumber = data.phoneNumber;
+        this.linkedInProfile = data.LinkedInProfile;
+        this.githubProfile = data.LinkedInProfile;
+        this.dateOfJoining = data.DateOfJoining;
+        this.skills = data.Skills;
+        this.website = data.Website;
+        if (this.website.includes("https://") == false) {
+          this.website = "https://" + this.website;
+        }
+        this.readUserEducation(this.uid);
+        this.readUserExperience(this.uid);
+        this.readUserProject(this.uid);
 
-      this.sameUser = false;
-
+        this.sameUser = false;
       }
       else{
         this.username = this.authService.userAppSetting.Username;

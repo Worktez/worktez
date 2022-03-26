@@ -16,6 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import Cropper from 'cropperjs';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
   selector: 'app-update-image',
@@ -34,12 +35,12 @@ export class UpdateImageComponent implements OnInit {
   @Output() cropPhotoCompleted = new EventEmitter<{ completed: boolean }>();
 
   cropper: Cropper;
-  componentName:string = "UPDATE-IMAGE"
+  componentName: string = "UPDATE-IMAGE"
   croppedImage: string;
   percentage: number;
   basePath: string;
 
-  constructor(public uploadService: FileUploadService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public backendService: BackendService, public uploadService: FileUploadService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void { }
 
@@ -55,20 +56,20 @@ export class UpdateImageComponent implements OnInit {
     });
   }
 
-  async setProfilePic() {
-    const callable = this.functions.httpsCallable('users/updateProfilePic');
-   
-    await callable({Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
-      next: (data) => {
-        console.log("Successful");
-      },
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.error(error);
-      },
-      complete: () => console.info('Successful updated image')
-  });
+  setProfilePic() {
+      const callable = this.functions.httpsCallable('users/updateProfilePic');
+
+      callable({ Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful updated image')
+      });
 
     this.cropPhotoDone();
   }

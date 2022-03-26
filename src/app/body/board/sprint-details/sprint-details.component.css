@@ -16,6 +16,7 @@
     color: var(--text);
     box-shadow: var(--box-shadow-bottom);
     border: none;
+    height: 90%;
 }
 
 .card-header, .btn {
@@ -47,10 +48,6 @@
     color: var(--secondary-color);
 }
 
-#sprintStatus {
-    flex-wrap: nowrap;
-}
-
 #statusHeading {
     display:inline-flex;
 }
@@ -68,7 +65,6 @@
 
 #Progressgraph {
     height: 10px; 
-    margin: 0px 20px 10px 10px;
     border-radius: 2%;
     background-color: var(--progress-left-bg);
     width: 100%;
@@ -85,4 +81,9 @@
 
 #EndDate {
     color: var(--danger-color);
+}
+
+.box { 
+    padding-left: 20%;
+    padding-right: 20%;
 }

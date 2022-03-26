@@ -35,13 +35,13 @@
 <ng-template #upload>
     <form>
         <div class="form-group">
-            <a role="button" class="btn btn-outline-secondary btn-lg btn-block p-2" id="exampleFormControlFile1">
-            <mat-icon fontSet="material-icons-outlined" style="position: relative; bottom: 3px; right: 2px;" class="align-middle" >
-                cloud_upload
-            </mat-icon>
-            Click to upload Document
-          <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
-        </a>
+            <label role="button" class="btn btn-outline-secondary btn-lg btn-block p-2" id="exampleFormControlFile1">
+                    <mat-icon fontSet="material-icons-outlined" style="position: relative; bottom: 3px; right: 2px;" class="align-middle" >
+                        cloud_upload
+                    </mat-icon>
+                    Click to upload Document
+                <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+            </label>
         </div>
     </form>
 </ng-template>
