@@ -150,6 +150,7 @@ import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecar
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
 import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart/sprint-burndown-chart.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
+import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 
 @NgModule({
   declarations: [
@@ -268,6 +269,7 @@ import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card
     CommentsComponent,
     SprintBurndownChartComponent,
     KanbanCardComponent,
+    TestimonialCardComponent,
   ],
   imports: [
     BrowserModule,

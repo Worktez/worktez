@@ -28,7 +28,6 @@
         <div class="row">
             <ng-container *ngIf="!showLoader; else loader">
                 <div class="col">
-                    <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
                     <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
                 </div>
             </ng-container>
