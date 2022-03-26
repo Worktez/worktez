@@ -187,7 +187,7 @@ export class CreateNewTaskComponent implements OnInit {
 }
 
   close() {
-    jQuery('#createNewTask');
+    jQuery('#createNewTask').modal('hide');
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
   }
