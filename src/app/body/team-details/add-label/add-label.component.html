@@ -29,12 +29,8 @@
                             </div>
                             <div class="form-group col-md-6 col ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Scope</span>
-                                <input type="text" class="form-control form-control-sm" [(ngModel)]="scope" [ngModelOptions]="{standalone: true}" placeholder="Enter scope Name">
-                                
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="scope" [ngModelOptions]="{standalone: true}" placeholder="Enter scope Name">                               
                             </div>
-                        </div>
-                        <div class="form-row mb-2">
-                    
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6 col">
@@ -45,14 +41,9 @@
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Color Code</span>
                                 <input type="text" class="form-control form-control-sm" [(ngModel)]="colorCode" [ngModelOptions]="{standalone: true}" placeholder="Enter color code">
                             </div>
-
-
-                        </div>
-
-                
+                        </div>                
                 <div class="modal-footer mt-n1">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Label</button>
-                    
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Label</button>                   
                 </div>
                 <app-loader *ngIf="enableLoader"></app-loader>
                     </form>

@@ -68,7 +68,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
  * @param {any} teamName
  * @param {any} docId
  * @param {any} displayName
-s * @param {any} scope
+ * @param {any} scope
  * @param {any} iconName
  * @param {any} colorCode
  * @param {any} status
