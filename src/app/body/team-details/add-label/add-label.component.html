@@ -1,0 +1,76 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Simran Nigam <nigamsimran14@gmail.com>
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+    <div class="modal fade" id="addLabel" tabindex="-1" role="dialog" aria-labelledby="addLabelTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title " id="addLabelTitle"><strong>Create New Label</strong></h2>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true" class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #form="ngForm" *ngIf="!showClose" >
+                        <div class="form-row my-2">
+                            <div class="form-group col-md-6 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Display Name</span>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}" placeholder="Enter Label Name">
+                            </div>
+                            <div class="form-group col-md-6 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Scope</span>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="scope" [ngModelOptions]="{standalone: true}" placeholder="Enter scope Name">                               
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Icon Name</span>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="iconName" [ngModelOptions]="{standalone: true}" placeholder="Enter Icon Name">
+                            </div>
+                            <div class="form-group col-md-6 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Color Code</span>
+                                <input type="text" class="form-control form-control-sm" [(ngModel)]="colorCode" [ngModelOptions]="{standalone: true}" placeholder="Enter color code">
+                            </div>
+                        </div>                
+                <div class="modal-footer mt-n1">
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Label</button>                   
+                </div>
+                <app-loader *ngIf="enableLoader"></app-loader>
+                    </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Label Created Successfully!</div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
