@@ -1,16 +1,3 @@
-/*********************************************************** 
-* Copyright (C) 2022 
-* Worktez 
-* 
-* This program is free software; you can redistribute it and/or 
-* modify it under the terms of the MIT License 
-* 
-* 
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-* See the MIT License for more details. 
-***********************************************************/
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import Cropper from 'cropperjs';
@@ -19,11 +6,12 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
-  selector: 'app-update-image',
-  templateUrl: './update-image.component.html',
-  styleUrls: ['./update-image.component.css']
+  selector: 'app-org-dp',
+  templateUrl: './org-dp.component.html',
+  styleUrls: ['./org-dp.component.css']
 })
-export class UpdateImageComponent implements OnInit {
+export class OrgDpComponent implements OnInit {
+
 
   @ViewChild("image", { static: false }) public imageElement: ElementRef;
 
@@ -42,7 +30,8 @@ export class UpdateImageComponent implements OnInit {
 
   constructor(public backendService: BackendService, public uploadService: FileUploadService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit() {
     this.cropper = new Cropper(this.imageElement.nativeElement, {
@@ -56,10 +45,11 @@ export class UpdateImageComponent implements OnInit {
     });
   }
 
-  setProfilePic() {
-      const callable = this.functions.httpsCallable('users/updateProfilePic');
+  setOrgDp() {
+      const orgDomain = this.backendService.getOrganizationDomain();
+      const callable = this.functions.httpsCallable('organization/updateOrgLogo');
 
-      callable({ Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
+      callable({OrgDomain: orgDomain, PhotoURL: this.croppedImage}).subscribe({
         next: (data) => {
           console.log("Successful");
         },

@@ -149,7 +149,9 @@ import { EditLabelPropComponent } from './body/team-details/edit-label-prop/edit
 import { AddLabelComponent } from './body/team-details/add-label/add-label.component';
 import { TaskECardComponent } from './body/tasks-evaluation/task-ecard/task-ecard.component';
 import { CommentsComponent } from './body/social-page/posts/comments/comments.component';
+import { EditDpComponent } from './body/view-organization-details/edit-dp/edit-dp.component';
 import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart/sprint-burndown-chart.component';
+import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 
@@ -269,7 +271,9 @@ import { TestimonialCardComponent } from './body/home/testimonial-card/testimoni
     AddLabelComponent,
     TaskECardComponent,
     CommentsComponent,
+    EditDpComponent,
     SprintBurndownChartComponent,
+    OrgDpComponent,
     KanbanCardComponent,
     TestimonialCardComponent,
   ],
