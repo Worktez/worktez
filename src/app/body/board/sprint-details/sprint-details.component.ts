@@ -48,6 +48,7 @@ export class SprintDetailsComponent implements OnInit {
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
       this.sprintDataReady = true;
     });
+    this.filterSprintNumber=this.startService.teamCurrentSprintNumber ;
   }
 
   async changeSprintStatus(sprintStatus: string) {

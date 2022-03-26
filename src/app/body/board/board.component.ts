@@ -138,6 +138,12 @@ export class BoardComponent implements OnInit {
   }
 
   changeSprintNumber(filterSprintNumber: any) {
+    if(filterSprintNumber==0){
+      filterSprintNumber=-1;
+    }
+    else if(filterSprintNumber<-2){
+      filterSprintNumber=-2;
+    }
     this.startService.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
