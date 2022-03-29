@@ -67,7 +67,15 @@ export class KanbanBoardComponent implements OnInit {
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
     this.currentSprintNumber = this.startService.currentSprintNumber;
-    this.currentSprintName = "S" + this.currentSprintNumber;
+    if(this.currentSprintNumber==-1){
+      this.currentSprintName= "Backlog";
+    }
+    else if(this.currentSprintNumber==-2){
+      this.currentSprintName= "Deleted";
+    }
+    else{
+    this.currentSprintName = "Sprint " + this.currentSprintNumber;
+    }
     this.filterSprintNumber=this.currentSprintNumber;
     this.readTasks();
   }
@@ -103,7 +111,15 @@ export class KanbanBoardComponent implements OnInit {
       this.filterSprintNumber=-2;
     }
     this.currentSprintNumber=this.filterSprintNumber;
-    this.currentSprintName = "S" + this.currentSprintNumber;
+    if(this.currentSprintNumber==-1){
+      this.currentSprintName= "Backlog";
+    }
+    else if(this.currentSprintNumber==-2){
+      this.currentSprintName= "Deleted";
+    }
+    else{
+    this.currentSprintName = "Sprint " + this.currentSprintNumber;
+    }
     this.tasks=[];
     this.readTasks();
   }
