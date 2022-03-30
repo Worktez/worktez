@@ -13,7 +13,7 @@ export class HttpServiceService {
   }
 
   getPrDetails(){
-    const url = environment.gitApiUrl + "/repos/Worktez/worktez/pulls";
+    const url = environment.githubApiUrl + "/repos/Worktez/worktez/pulls";
     return this.httpClient.get(url);
   }
 
@@ -22,12 +22,12 @@ export class HttpServiceService {
   }
 
   getGithubUserRepos(memberUserName) {
-    const url = environment.gitApiUrl + "/users/" + memberUserName + "/repos";
+    const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
     return this.httpClient.get(url);
   }
 
   getGithubOrgRepos(memberOrgName) {
-    const url = environment.gitApiUrl + "/orgs/" + memberOrgName + "/repos";
+    const url = environment.githubApiUrl+ "/orgs/" + memberOrgName + "/repos";
     console.log("the url:", url);
     return this.httpClient.get(url);
   }

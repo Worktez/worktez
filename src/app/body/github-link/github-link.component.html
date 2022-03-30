@@ -51,17 +51,17 @@
                               </div>
                               <br><br>
                             <input type="text" class="form-control" [(ngModel)]="memberOrgName"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name/username"><br>
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name or username"><br>
                             <button type="submit" class="btn px-4" id="button" style="background-color: bisque;">Fetch Repos</button>
                         </div>
                     </div>
                 </ng-container>
                     <ng-container *ngIf="dataFetched">
-                        <select class="form-control form-control-sm" [(ngModel)]="prLink"
+                        <select class="form-control form-control-sm" [(ngModel)]="projLink"
                             [ngModelOptions]="{standalone: true}">
                             <option [ngValue]="null" [disabled]="true">Select Github Repo</option>
                             <ng-container *ngFor="let item of objData">
-                                <option>{{ item.html_url }}</option>
+                                <option>{{ item.html_url.slice(19) }}</option>
                             </ng-container>
                         </select>
                     </ng-container>
@@ -76,8 +76,8 @@
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="showClose">
-                    <div class="row">
-                        <div class="col">Successfully Updated!</div>
+                    <div class="row pl-2">
+                        <div class="col">Successfully Integrated <span class="font-weight-bold">{{projLink}}!</span></div>
                     </div>
                     <div class="row">
                         <div class="col-md-9"></div>
