@@ -38,20 +38,22 @@
                         </div>
                         <div class="col-md-12 my-1">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="organisation" [(ngModel)]="organisation" checked>
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="organisation" [(ngModel)]="searchType" checked>
                                 <label class="form-check-label" for="exampleRadios1">
                                   Organisation
                                 </label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="username" [(ngModel)]="username">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="username" [(ngModel)]="searchType">
                                 <label class="form-check-label" for="exampleRadios2">
                                   Username
                                 </label>
                               </div>
                               <br><br>
-                            <input type="text" class="form-control" [(ngModel)]="memberOrgName"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name or username"><br>
+                              <input *ngIf="searchType==='organisation'" type="text" class="form-control" [(ngModel)]="memberOrgName"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name">
+                            <input type="text" *ngIf="searchType==='username'" class="form-control" [(ngModel)]="memberOrgName"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the username"><br>
                             <button type="submit" class="btn px-4" id="button" style="background-color: bisque;">Fetch Repos</button>
                         </div>
                     </div>
