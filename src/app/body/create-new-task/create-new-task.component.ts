@@ -79,6 +79,8 @@ export class CreateNewTaskComponent implements OnInit {
     this.project = this.authService.getTeamId();
     this.creatorName=this.authService.getUserEmail();
     this.readTeamData(this.project);
+    this.showBacklog(this.project);
+    this.activeSprint(this.project); 
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.parentTaskId = this.popupHandlerService.parentTaskId;
@@ -115,6 +117,19 @@ export class CreateNewTaskComponent implements OnInit {
           );
           this.enableLoader = false;
     }); 
+  }
+
+  showBacklog(teamId:string){
+    this.applicationSetting.getTeamDetails(teamId).subscribe(team=>{
+    this.sprintNumber=team.CurrentSprintId-1;
+    })
+    
+  }
+    
+  activeSprint(teamId:string){
+    this.applicationSetting.getTeamDetails(teamId).subscribe(team=>{
+    this.sprintNumber=team.CurrentSprintId;
+    })
   }
   
   selectedAssignee(item) {
