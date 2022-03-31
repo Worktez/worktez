@@ -60,7 +60,7 @@
 }
 
 #button {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -69,7 +69,7 @@
 #button:hover {
     outline: none;
     box-shadow: none;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
 
 input:focus {
