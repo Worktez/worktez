@@ -22,29 +22,23 @@ const { getApplicationData, updateApplication } = require("../../application/lib
 const { setSchedular, getAllSchedular } = require("../lib");
 
 exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain) {
-    getApplicationData().then((appData) => {
-        const totalNumberOfSchedularOrg = appData.TotalNumberSchedularOrg + 1;
-        const appDetailsUpdateJson = {
-            TotalNumberSchedularOrg: totalNumberOfSchedularOrg,
-        };
-
-        const schedularDocId = "so" + totalNumberOfSchedularOrg;
-
-        getAllSchedular().then((data)=>{
-            if (data.docs.length != 0) {
-                data.docs.forEach((element) => {
-                    if (type == element.data().Type && orgAppKey == element.data().OrgAppKey && assignee == element.data().Assignee && teamId == element.data().TeamId && orgDomain == element.data().OrgDomain) {
-                        console.log("Already exsisting result");
-                    } else {
-                        setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
-                        updateApplication(appDetailsUpdateJson);
-                    }
-                });
-            } else {
+    console.log(type, orgAppKey, assignee, teamId, orgDomain);
+    getAllSchedular(type, orgAppKey, assignee, teamId, orgDomain).then((snapshot)=>{
+        console.log(snapshot.docs);
+        if (snapshot.docs.length != 0) {
+            console.log("Job already exists");
+        } else {
+            getApplicationData().then((appData) => {
+                const totalNumberOfSchedularOrg = appData.TotalNumberSchedularOrg + 1;
+                const appDetailsUpdateJson = {
+                    TotalNumberSchedularOrg: totalNumberOfSchedularOrg,
+                };
+                const schedularDocId = "so" + totalNumberOfSchedularOrg;
+                updateApplication(appDetailsUpdateJson);
                 setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
-            }
-        });
-    }).catch((error) => {
-        console.log("Error:", error);
+            }).catch((error) => {
+                console.log("Error:", error);
+            });
+        }
     });
 };

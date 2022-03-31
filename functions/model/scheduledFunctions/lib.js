@@ -56,10 +56,35 @@ exports.getSchedular = function(schedularDocId) {
 
 /**
  * Description
+ * @param {any} type
+ * @param {any} orgAppKey
+ * @param {any} assignee
+ * @param {any} teamId
+ * @param {any} orgDomain
  * @return {any}
  */
-exports.getAllSchedular = function() {
-    const query = db.collection("SchedularOrg");
+exports.getAllSchedular = function(type, orgAppKey, assignee, teamId, orgDomain) {
+    let query = db.collection("SchedularOrg");
+    if (type != "") {
+        console.log("check1");
+        query = query.where("Type", "==", type);
+    }
+    if (orgAppKey != "") {
+        console.log("check2");
+        query = query.where("OrgAppKey", "==", orgAppKey);
+    }
+    if (assignee != "") {
+        console.log("check3");
+        query = query.where("Assignee", "==", assignee);
+    }
+    if (teamId != "") {
+        console.log("check4");
+        query = query.where("TeamId", "==", teamId);
+    }
+    if (orgDomain != "") {
+        console.log("check5");
+        query = query.where("OrgDomain", "==", orgDomain);
+    }
     const getAllScheduledPromises = query.get();
 
     return Promise.resolve(getAllScheduledPromises);

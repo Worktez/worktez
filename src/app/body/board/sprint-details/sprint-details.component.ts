@@ -50,13 +50,13 @@ export class SprintDetailsComponent implements OnInit {
     });
   }
 
-  async changeSprintStatus(sprintStatus: string) {
+  changeSprintStatus(sprintStatus: string) {
     this.showLoader = true;
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
-     
+    const uid = this.authService.getLoggedInUser();
 
-    await callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId }).subscribe({
+    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid }).subscribe({
         next: (data) => {
           console.log("Successful updated ");
         },

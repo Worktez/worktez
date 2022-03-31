@@ -160,3 +160,8 @@ exports.checkUpdateTime = function(lastUpdated) {
     }
     return 0;
 };
+
+const today = new Date();
+
+exports.currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+exports.currentTime = today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds();

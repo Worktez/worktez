@@ -22,7 +22,6 @@ const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular
 const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 const { getAllUsersInUids } = require("../../users/lib");
 const { getUserPerformanceChart } = require("../lib");
-const { updatedUserPerformanceChartData } = require("../tark/updatedUserPerformanceChartData");
 
 exports.getUserPerformanceChartData = function(request, response) {
   const data = request.body.data;

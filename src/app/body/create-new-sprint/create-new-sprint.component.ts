@@ -116,12 +116,13 @@ export class CreateNewSprintComponent implements OnInit {
       console.log("Sprint not created! Validation error");
   }
 
-  async createNewSprint() {
+  createNewSprint() {
     this.enableLoader = true;
     const appKey = this.backendService.getOrganizationAppKey();
+    const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable('sprints/createNewSprint');
 
-    await callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId }).subscribe({
+    callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId, Uid: uid }).subscribe({
       next: (data) => {
         console.log("Successfully created sprint");
       },

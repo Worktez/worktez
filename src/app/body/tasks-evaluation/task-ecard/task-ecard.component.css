@@ -1,7 +1,3 @@
-.row {
-    background-color: var(--primary-bg);
-}
-
 .label {
     font-size: 11px;
     color: var(--primary-color);
@@ -21,4 +17,18 @@
 #taskID:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+
+.xoverflow {
+    background-color: var(--primary-bg);
+    display: flex;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+}
+
+select {
+    width: 100px;
 }
