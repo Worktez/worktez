@@ -20,6 +20,7 @@ import { TasksComponent } from './body/tasks/tasks.component';
 import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { SocialPageComponent } from './body/social-page/social-page.component';
+import { AddLabelComponent } from './body/team-details/add-label/add-label.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
 import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
 import { Patch1Component } from './patches/patch1/patch1.component';

@@ -22,6 +22,7 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 
 const { createOrg } = require("./tark/createOrg");
 const { getOrgData } = require("./tark/getOrganizationData");
+const { updateProfilePic } = require("./tark/updateOrg");
 
 /**
  * Description
@@ -32,6 +33,17 @@ const { getOrgData } = require("./tark/getOrganizationData");
  */
 fastify.post("/createOrg", (req, res) => {
   createOrg(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/updateOrg"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/updateOrgLogo", (req, res) => {
+  updateProfilePic(req, res);
 });
 
 /**

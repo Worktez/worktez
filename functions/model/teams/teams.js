@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
 
 /** *********************************************************
@@ -14,21 +15,18 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 
-const { functions, cors, fastify, requestHandler } = require("../application/lib");
-const { createTeam } = require("./tark/createTeam");
-const { addMember } = require("./tark/addMember");
-const { removeMember } = require("./tark/removeMember");
-const { updateTeam } = require("./tark/updateTeam");
-const { getTeamData } = require("./tark/getTeamData");
-const { deleteTeam } = require("./tark/deleteTeam");
-const { addProjLink } = require("./tark/addProjLink");
-const { getLabelByScope } = require("./tark/getTeamLabels");
+const {functions, cors, fastify, requestHandler} = require("../application/lib");
+const {createTeam} = require("./tark/createTeam");
+const {addMember} = require("./tark/addMember");
+const {removeMember} = require("./tark/removeMember");
+const {updateTeam} = require("./tark/updateTeam");
+const {getTeamData} = require("./tark/getTeamData");
+const {deleteTeam} = require("./tark/deleteTeam");
+const {getLabelByScope} = require("./tark/getTeamLabels");
+const {deleteLabel} = require("./tark/deleteLabel");
+const {editLabel} = require("./tark/editLabel");
+const {addLabel} = require("./tark/addLabel");
 
 /**
  * Description
@@ -97,20 +95,49 @@ fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
 });
 
-fastify.post("/addProjLink", (req, res) => {
-  addProjLink(req, res);
-});
-
 
 /**
  * Description
- * @param {any} "/updateTeam"
+ * @param {any} "/deleteLabel"
  * @param {any} req
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getLabelByScope", (req, res) => {
+fastify.post("/deleteLabel", (req, res) => {
+  deleteLabel(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/addLabel"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/addLabel", (req, res) => {
+  addLabel(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getLabelByScope"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getLabelByScope", (req, res) => {
   getLabelByScope(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/editLabel"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/editLabel", (req, res) => {
+  editLabel(req, res);
 });
 
 /**
@@ -120,10 +147,10 @@ fastify.post("/addProjLink", (req, res) => {
  * @returns {any}
  */
 exports.teams = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

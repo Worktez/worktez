@@ -34,6 +34,8 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   showLoader: boolean = false;
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
+  sameUser: boolean = true;
+  editProfilePicEnabled: boolean = false;
 
   constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService) { }
 
@@ -69,6 +71,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
       this.teams.push(data);
     });
+    this.sameUser = true;
   }
 
   createTeam() {
@@ -79,6 +82,10 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     if(data) {
       this.getOrganizationDetails();
     }
+  }
+
+  editProfilePic() {
+    this.editProfilePicEnabled = true;
   }
 
   switchView(data: any){
