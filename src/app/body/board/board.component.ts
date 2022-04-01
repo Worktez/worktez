@@ -93,7 +93,7 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
+      if(this.startService.selectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
