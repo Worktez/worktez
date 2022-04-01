@@ -23,13 +23,11 @@ export class HttpServiceService {
 
   getGithubUserRepos(memberUserName) {
     const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
-    console.log("the url:", url);
     return this.httpClient.get(url);
   }
 
   getGithubOrgRepos(memberOrgName) {
     const url = environment.githubApiUrl+ "/orgs/" + memberOrgName + "/repos";
-    console.log("the url:", url);
     return this.httpClient.get(url);
   }
 }
