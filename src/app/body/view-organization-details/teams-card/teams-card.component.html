@@ -29,6 +29,9 @@
                 <span class="material-icons mr-2 p-2 float-right" type="button" data-toggle="modal"
                     data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts"
                     data-bs-toggle="tooltip">manage_accounts</span>
+                    <span class="material-icons mr-2 p-2 float-right" type="button" data-toggle="modal"
+                    data-target="#updateTeam" (click)="openTeamDetails()" title="manage accounts"
+                    data-bs-toggle="tooltip">bookmark</span>
                 <div class="mr-4 float-right p-2 add-member" type="button" data-bs-toggle="tooltip"
                     data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"
                     (click)="enableAddMember(team)">
@@ -39,7 +42,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2 class="card-title" (click)="openTeamDetails()" style="cursor: pointer;">{{ team.TeamName }}</h2>
+                <h2 class="card-title">{{ team.TeamName }}</h2>
                 <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
             </div>
         </div>
