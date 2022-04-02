@@ -72,6 +72,8 @@ export class CreateNewTaskComponent implements OnInit {
   taskType: string
   parentTaskId: string
   showClose: boolean = false;
+  currentSprintNumber: number
+  backlogSprintNumber: number
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -79,8 +81,6 @@ export class CreateNewTaskComponent implements OnInit {
     this.project = this.authService.getTeamId();
     this.creatorName=this.authService.getUserEmail();
     this.readTeamData(this.project);
-    this.showBacklog(this.project);
-    this.activeSprint(this.project); 
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
     this.parentTaskId = this.popupHandlerService.parentTaskId;
@@ -103,6 +103,8 @@ export class CreateNewTaskComponent implements OnInit {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
+          this.currentSprintNumber=team.CurrentSprintId;
+          this.backlogSprintNumber=-1;
 
           this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
             startWith(''),
@@ -119,17 +121,12 @@ export class CreateNewTaskComponent implements OnInit {
     }); 
   }
 
-  showBacklog(teamId:string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team=>{
-    this.sprintNumber=team.CurrentSprintId-1;
-    })
-    
+  showBacklog(){
+    this.sprintNumber=this.backlogSprintNumber    
   }
     
-  activeSprint(teamId:string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team=>{
-    this.sprintNumber=team.CurrentSprintId;
-    })
+  activeSprint(){
+    this.sprintNumber=this.currentSprintNumber
   }
   
   selectedAssignee(item) {
