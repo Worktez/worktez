@@ -154,6 +154,7 @@ import { SprintBurndownChartComponent } from './body/board/sprint-burndown-chart
 import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -300,6 +301,7 @@ import { TestimonialCardComponent } from './body/home/testimonial-card/testimoni
   ],
   providers: [
     AuthService,
+    CookieService,
     { provide: REGION, useValue: 'asia-south1' },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'} },
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },

@@ -24,7 +24,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons text" (click)="added()">close</span>
+                                <span aria-hidden="false" class="material-icons text" (click)="added()">close</span>
                             </button>
                         </li>
                     </ul>
@@ -50,7 +50,7 @@
                 </form>
                 <ng-container *ngIf="showClose">
                     <div class="row">
-                        <div class="col">Successfully Updated!</div>
+                        <div class="col" style="margin-left: 20px;">Successfully Updated!</div>
                     </div>
                     <div class="row">
                         <div class="col-md-9"></div>

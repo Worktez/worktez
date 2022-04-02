@@ -46,10 +46,10 @@
 
                     <div class="row px-4 py-4">
                         <ng-container *ngIf="educationModalMode == 'add'">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="addEducation()">Add Education</button>
+                            <button type="submit" class="btn btn-lg btn-block" id="button" (click)="addEducation()">Add Education</button>
                         </ng-container>
                         <ng-container *ngIf="educationModalMode == 'edit'">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="updateEducation()">Edit Education</button>
+                            <button type="submit" class="btn btn-lg btn-block" id="button" (click)="updateEducation()">Edit Education</button>
                         </ng-container>
                     </div>
                 </form>
@@ -64,7 +64,7 @@
                     <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
-                            <div class="col">Education Updated Successfully !</div>
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Education Updated Successfully !</div>
                         </div>
                         <div class="col-md-2"></div>
                     </div>
