@@ -65,25 +65,25 @@ export class TeamsCardComponent implements OnInit {
   });
   }
 
-  createDefaultLabels() {
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/createDefaultLabel');
-    const type: string[] = ["Bug", "Story", "Sub Task"];
-    const statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
-    const priorityLabels: string[] = ["High", "Medium", "Low"];
-    const difficultyLabels: string[] = ["High", "Medium", "Low"];
-    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels}).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {
-        console.error("Error", error);
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      },
-      complete: () => console.info('Successful ')
-  });
-  }
+  // createDefaultLabels() {
+  //   const orgDomain = this.backendService.getOrganizationDomain();
+  //   const callable = this.functions.httpsCallable('teams/createDefaultLabel');
+  //   const type: string[] = ["Bug", "Story", "Sub Task"];
+  //   const statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
+  //   const priorityLabels: string[] = ["High", "Medium", "Low"];
+  //   const difficultyLabels: string[] = ["High", "Medium", "Low"];
+  //   callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels}).subscribe({
+  //     next: (data) => {
+  //       console.log(data);
+  //     },
+  //     error: (error) => {
+  //       console.error("Error", error);
+  //       this.errorHandlerService.showError = true;
+  //       this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+  //     },
+  //     complete: () => console.info('Successful ')
+  // });
+  // }
 
   openTeamDetails() {
     this.router.navigate(['TeamDetails', this.team.TeamId]);
