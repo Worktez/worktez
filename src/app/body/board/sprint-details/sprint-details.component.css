@@ -64,8 +64,7 @@
 }
 
 #Progressgraph {
-    height: 10px; 
-    border-radius: 2%;
+    height: 10px;
     background-color: var(--progress-left-bg);
     width: 100%;
 } 
