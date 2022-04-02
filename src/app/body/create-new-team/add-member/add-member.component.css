@@ -37,14 +37,14 @@
 }
 
 #addButton {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--button-text);
     width: 100%;
     text-align: center;
 }
 
 #addButton:hover {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
 
 select:focus,
@@ -61,7 +61,7 @@ input:focus {
 }
 
 .btn-secondary {
-    background-color: var(--button-hover-bg);
+    background-color: var(--secondary-color);
 }
 
 .btn-secondary:hover {

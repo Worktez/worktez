@@ -72,6 +72,8 @@ export class CreateNewTaskComponent implements OnInit {
   taskType: string
   parentTaskId: string
   showClose: boolean = false;
+  currentSprintNumber: number
+  backlogSprintNumber: number
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -101,6 +103,8 @@ export class CreateNewTaskComponent implements OnInit {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
+          this.currentSprintNumber=team.CurrentSprintId;
+          this.backlogSprintNumber=-1;
 
           this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
             startWith(''),
@@ -117,6 +121,14 @@ export class CreateNewTaskComponent implements OnInit {
     }); 
   }
 
+  showBacklog(){
+    this.sprintNumber=this.backlogSprintNumber    
+  }
+    
+  activeSprint(){
+    this.sprintNumber=this.currentSprintNumber
+  }
+  
   selectedAssignee(item) {
     if(item.selected == false) {
       this.assigneeName.setValue("");

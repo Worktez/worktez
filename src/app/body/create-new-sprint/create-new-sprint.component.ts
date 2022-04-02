@@ -60,7 +60,7 @@ export class CreateNewSprintComponent implements OnInit {
   nextSprintId: number;
   showContent: boolean;
   todayDate: string;
-
+  showClose: boolean = false
   constructor(private applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public validationService: ValidationService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public popupHandlerService: PopupHandlerService, public toolsService:ToolsService) { }
 
   ngOnInit(): void {
@@ -125,6 +125,7 @@ export class CreateNewSprintComponent implements OnInit {
     callable({AppKey: appKey, StartDate: this.startDate, EndDate: this.endDate, Status: this.status, NewSprintId: this.nextSprintId, TeamId: this.selectedTeamId, Uid: uid }).subscribe({
       next: (data) => {
         console.log("Successfully created sprint");
+        this.showClose = true
       },
       error: (error) => {
         this.enableLoader = false;
@@ -134,12 +135,13 @@ export class CreateNewSprintComponent implements OnInit {
       },
       complete: () => console.info('Successfully created sprint ')
   });
-    this.close();
+    this.showClose = true
   }
 
   close() {
     jQuery('#createNewSprint').modal('hide');
     jQuery('#form').trigger("reset");
+    window.location.reload();
     this.sprintCreated.emit({ completed: true });
   }
 }

@@ -19,7 +19,7 @@
 }
 
 #button {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     border: var(--primary-border);
     color: var(--button-text);
 }
@@ -27,7 +27,7 @@
 #button:focus,
 #button:active,
 #button:hover {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     outline: none;
     box-shadow: none;
 }

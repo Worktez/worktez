@@ -54,7 +54,7 @@
 }
 
 #button {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -63,7 +63,7 @@
 #button:hover {
     outline: none;
     box-shadow: none;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
 
 select:focus,
@@ -71,4 +71,9 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
+}
+
+#SuccessIcon{
+    color: var(--primary-color);
+    font-size: 48px;
 }
