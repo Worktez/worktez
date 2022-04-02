@@ -40,21 +40,6 @@
                             </div>
                         </div>
                         <div class="form-row mb-2">
-                          <div class="form-check" style="margin-left: 10px;">
-                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" (click)="activeSprint(project)" >
-                             <label class="form-check-label" for="flexRadioDefault1">
-                               Active 
-                             </label>
-                          </div>
-                        <div class="col-md-3"></div>
-                          <div class="form-check">
-                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" (click)="showBacklog(project)" >
-                              <label class="form-check-label" for="flexRadioDefault2">
-                               Backlog
-                              </label>
-                          </div>
-                        </div>
-                        <div class="form-row mb-2">
                             <div class="form-group col-md-12 col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                                 <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" placeholder="Write a Task Description..."></textarea>
