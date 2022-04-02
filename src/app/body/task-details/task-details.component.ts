@@ -75,6 +75,8 @@ export class TaskDetailsComponent implements OnInit {
 
   gotTaskData: boolean=false;
 
+  
+
   activityData: Activity[]
   linkData: Link[]
 
@@ -194,6 +196,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   async addComment() {
+    this.activityDataReady = true
+
     var condition=await (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
       return res;
     });
@@ -212,7 +216,11 @@ export class TaskDetailsComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.log("Error", error);
         },
-        complete: () => console.info('Successful ')
+        complete: () => {
+          this.activityDataReady = false
+          console.info('Successful ')
+          
+        }
     });
 
     }

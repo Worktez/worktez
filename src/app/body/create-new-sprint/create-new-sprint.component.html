@@ -22,7 +22,7 @@
                 </button>
                 </div>
                 <div class="modal-body container-fluid">
-                    <form #form="ngForm">
+                    <form *ngIf="!enableLoader" #form="ngForm">
                         <div class="form-row">
                             <div class="form-group col-md-5 col-4 ml-auto">
                                 <select class="form-control" [(ngModel)]="selectedTeamId" [ngModelOptions]="{standalone: true}" (ngModelChange)="readApplicationData()">
@@ -50,13 +50,40 @@
                                 <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
                             </div>
                         </div>
-                        <app-loader *ngIf="enableLoader"></app-loader>
+                        <!-- <app-loader *ngIf="enableLoader"></app-loader> -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "submit()">Create New Sprint</button>
+                        </div>
                     </form>
+                    <ng-container *ngIf="showClose">
+                        <div class="row mx-5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <!-- <div class="row"></div> -->
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="col">New sprint created Successfully !</div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4 pt-2 px-4">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close()">Close</button>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </ng-container>
+                    
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "submit()">Create New Sprint</button>
-                </div>
+
             </div>
         </div>
     </div>
 </div>
+<app-loader *ngIf="enableLoader && !showClose"></app-loader> -->

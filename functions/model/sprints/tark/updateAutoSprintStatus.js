@@ -21,17 +21,16 @@
  * See the MIT License for more details.
  ***********************************************************/
 
+const { currentDate, currentTime } = require("../../application/lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
-const { updateSprint, getSprint } = require("../lib");
+const { updateSprint, getSprint, setSprintActivity } = require("../lib");
 
 
 exports.updateAutoSprintStatus = function(appKey, teamId) {
     let orgDomain;
     let result;
     let status = 200;
-    const today = new Date();
-    const currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
 
     const updateSprintPromise = getOrgUseAppKey(appKey).then((orgDoc) => {
         orgDomain = orgDoc.OrganizationDomain;
@@ -42,12 +41,20 @@ exports.updateAutoSprintStatus = function(appKey, teamId) {
 
             let updateSprintStatusInputJson;
             const getSprintPromise = getSprint(orgDomain, teamName, currentSprintName).then((sprintDoc) => {
-                console.log(currentDate);
-                console.log(sprintDoc.EndDate);
                 if (currentDate >= sprintDoc.EndDate) {
                     updateSprintStatusInputJson = {
                         Status: "Completed",
                     };
+                    const message = "Updated Sprint Status As Completed";
+                    let sprintActivityCounter = sprintDoc.SprintActivityCounter;
+                    if (sprintActivityCounter) {
+                        sprintActivityCounter = sprintActivityCounter + 1;
+                        updateSprintStatusInputJson["SprintActivityCounter"] = sprintActivityCounter;
+                    } else {
+                        sprintActivityCounter = 1;
+                        updateSprintStatusInputJson["SprintActivityCounter"] = sprintActivityCounter;
+                    }
+                    setSprintActivity(orgDomain, teamName, currentSprintName, sprintActivityCounter, message, currentDate, currentTime);
                     updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
                 }
             });

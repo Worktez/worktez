@@ -26,7 +26,7 @@ const { getAllSchedular } = require("../lib");
 const { updateAutoSprintStatus } = require("../../sprints/tark/updateAutoSprintStatus");
 
 exports.startSchedular = function() {
-  getAllSchedular().then((sched) => {
+  getAllSchedular("", "", "", "", "").then((sched) => {
     if (sched) {
       sched.forEach((schDoc) => {
         const type = schDoc.data().Type;

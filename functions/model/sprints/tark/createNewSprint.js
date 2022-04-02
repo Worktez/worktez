@@ -20,8 +20,8 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { createSprintName } = require("../../application/lib");
-const { getSprint, setSprint, updateSprint } = require("../lib");
+const { createSprintName, currentDate, currentTime } = require("../../application/lib");
+const { getSprint, setSprint, updateSprint, setSprintActivity } = require("../lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId, updateTeamDetails } = require("../../teams/lib");
 
@@ -33,6 +33,7 @@ exports.createNewSprint = function(request, response) {
     const newSprintId = parseInt(request.body.data.NewSprintId);
     const newSprintIdString = createSprintName(newSprintId);
     const teamId = request.body.data.TeamId;
+    const uid = request.body.data.Uid;
     let orgDomain;
     let orgId;
     let teamName;
@@ -69,6 +70,17 @@ exports.createNewSprint = function(request, response) {
                         value = "EndStoryPoint";
                         inputJson[value] = startStoryPointNumber;
                     }
+                    const message = "Updated Sprint Status As Completed";
+
+                    let sprintActivityCounter = sprint.SprintActivityCounter;
+                    if (sprintActivityCounter) {
+                        sprintActivityCounter = sprintActivityCounter + 1;
+                        inputJson["SprintActivityCounter"] = sprintActivityCounter;
+                    } else {
+                        sprintActivityCounter = 1;
+                        inputJson["SprintActivityCounter"] = sprintActivityCounter;
+                    }
+                    setSprintActivity(orgDomain, teamName, newSprintIdString, sprintActivityCounter, message, currentDate, currentTime, uid);
                     updateSprint(inputJson, orgDomain, teamName, newSprintIdString);
                 }
             }).catch((error) => {

@@ -13,6 +13,7 @@
 ***********************************************************/
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { User } from 'src/app/Interface/UserInterface';
@@ -53,7 +54,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
+  constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -71,8 +72,6 @@ export class StartServiceService {
           this.authService.user = data;
           this.authService.getUserSettings();
           this.loadUserAppSettings();
-          if(this.currentUrl == '/')
-            this.router.navigate(['']);
         } else {
           this.userReady = false;
           if(this.currentUrl == '/')
@@ -91,40 +90,73 @@ export class StartServiceService {
   }
 
   loadUserAppSettings() {
+    const userSelectedOrgAppKeyCookie = this.cookieService.get("userSelectedOrgAppKey");
+    const userSelectedTeamId = this.cookieService.get("userSelectedTeamId");
+
+    if(userSelectedOrgAppKeyCookie && userSelectedTeamId) {
+      const userUid = this.cookieService.get("useruid");
+      const userAppTheme = this.cookieService.get("userAppTheme");
+      this.loadNext(userSelectedOrgAppKeyCookie, userSelectedTeamId, userUid, userAppTheme);
+    }
+
     this.authService.userAppSettingObservable.subscribe(data => {
-      this.userAppSettingsReady = true;
-      if (data.SelectedOrgAppKey) {
-        if(!this.authService.landingToSocial) {
-          this.authService.landingToSocial = true;
-          if(this.currentUrl == '/')
-            this.router.navigate(['/MyDashboard']);
-        }
-        if(data.SelectedTeamId != "") {
-          this.selectedTeamId = data.SelectedTeamId;
-          this.teamIdExists = true;
-          
-          this.authService.getListedTeams(this.uid, data.SelectedOrgAppKey);
-          this.accessLevel = 1;
-          if (this.applicationSettingsService.editedTeamId != data.SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
-            this.selectedTeamId = this.applicationSettingsService.editedTeamId;
-          } else {
-            this.selectedTeamId = data.SelectedTeamId;
-            this.applicationSettingsService.editedTeamId = this.selectedTeamId;
-          }
-          this.backendService.organizationsData.subscribe(data => {
-            this.authService.myTeamsListObservable.subscribe(data => {
-              this.teams = data;
-              this.showTeams = true;
-              this.readApplicationData();
-              this.userDataState.next(true);
-            });
-          });
-        } else {
-          this.teamIdExists = false;
-          console.log("TeamId doesn't exists");
-        }
+      this.authService.userAppSetting = data;
+
+      if(userSelectedOrgAppKeyCookie != data.SelectedOrgAppKey || userSelectedTeamId != data.SelectedTeamId) {
+        this.cookieService.set("userSelectedOrgAppKey", data.SelectedOrgAppKey);
+        this.cookieService.set("userSelectedTeamId", data.SelectedTeamId);
+        this.cookieService.set("useruid", data.uid);
+        this.cookieService.set("userAppTheme", data.AppTheme);
+        this.loadNext(data.SelectedOrgAppKey, data.SelectedTeamId, data.uid, data.AppTheme);
       }
     });
+  }
+
+  loadNext(SelectedOrgAppKey, SelectedTeamId, uid, AppTheme) {
+    this.userAppSettingsReady = true;
+    this.authService.landingToSocial = false
+    if (SelectedOrgAppKey != "") {
+      this.authService.organizationAvailable = true;
+      this.authService.getListedOrganizationData(uid);
+      this.backendService.getOrgDetails(SelectedOrgAppKey);
+      this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
+      this.authService.themeService.changeTheme(AppTheme);
+    } else {
+      this.authService.organizationAvailable = false;
+    }
+    if (SelectedOrgAppKey) {
+      if(!this.authService.landingToSocial) {
+        this.authService.landingToSocial = true;
+        if(this.currentUrl == '/') {
+          this.router.navigate(['/MyDashboard']);
+        }
+          
+      }
+      if(SelectedTeamId != "") {
+        this.selectedTeamId = SelectedTeamId;
+        this.teamIdExists = true;
+        
+        this.authService.getListedTeams(this.uid, SelectedOrgAppKey);
+        this.accessLevel = 1;
+        if (this.applicationSettingsService.editedTeamId != SelectedTeamId && this.applicationSettingsService.editedTeamId != "") {
+          this.selectedTeamId = this.applicationSettingsService.editedTeamId;
+        } else {
+          this.selectedTeamId = SelectedTeamId;
+          this.applicationSettingsService.editedTeamId = this.selectedTeamId;
+        }
+        this.backendService.organizationsData.subscribe(data => {
+          this.readApplicationData();
+        });
+        this.authService.myTeamsListObservable.subscribe(data => {
+          this.teams = data;
+          this.showTeams = true;
+          this.userDataState.next(true);
+        });
+      } else {
+        this.teamIdExists = false;
+        console.log("TeamId doesn't exists");
+      }
+    }
   }
 
   readApplicationData() {

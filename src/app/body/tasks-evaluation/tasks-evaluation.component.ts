@@ -24,6 +24,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { Router } from '@angular/router';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -49,7 +50,7 @@ export class TasksEvaluationComponent implements OnInit {
 
   nextSprintTasksToFetch: number;
 
-  constructor(public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
+  constructor(public userService: UserServiceService, public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -129,7 +130,19 @@ export class TasksEvaluationComponent implements OnInit {
           if (this.nextSprintTasksToFetch < 1) {
             this.disableLoadMore = true;
           }
-          this.showLoader = false;
+
+          if(result.Tasks.length) {
+            result.Tasks.forEach(element => {
+              this.userService.checkAndAddToUsersUsingEmail(element.Assignee);
+              this.userService.checkAndAddToUsersUsingEmail(element.Reporter);
+              this.userService.checkAndAddToUsersUsingEmail(element.Creator);
+            });
+            this.userService.fetchUserData().subscribe(()=>{
+              this.showLoader = false;
+            });
+          } else {
+            this.showLoader = false;
+          }
           console.log("read tasks successfully!")
         },
         error: (error) => {

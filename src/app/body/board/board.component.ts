@@ -93,7 +93,7 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      if(this.authService.userAppSetting.SelectedTeamId == this.applicationSettingsService.team.TeamId) {
+      if(this.startService.selectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
@@ -138,6 +138,12 @@ export class BoardComponent implements OnInit {
   }
 
   changeSprintNumber(filterSprintNumber: any) {
+    if(filterSprintNumber==0){
+      filterSprintNumber=-1;
+    }
+    else if(filterSprintNumber<-2){
+      filterSprintNumber=-2;
+    }
     this.startService.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
     this.applicationSettingsService.editedSprintId = filterSprintNumber;

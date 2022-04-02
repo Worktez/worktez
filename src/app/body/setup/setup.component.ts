@@ -73,8 +73,6 @@ export class SetupComponent implements OnInit {
   }
 
   async createNewOrganization(modeTo: string , organizationName: string, organizationEmail: string, organizationDomain: string, organizationDescription: string, organizationAdmin: string, organizationAdminUid: string, organizationLogoURL: string) {
-    
-    
       if (modeTo == "create")
       {
         const callable = this.functions.httpsCallable('organization/createOrg');
@@ -89,8 +87,8 @@ export class SetupComponent implements OnInit {
             const difficulty = ["High", "Medium", "Low"];
             this.progressPercentage = 15;
   
-            this.createNewTeamWithLabels("create", organizationDomain, "Development", "Dev", "test", organizationAdmin, ["member1@gmail.com"], this.email, type, status, priority, difficulty, orgAppKey);
-            this.createNewTeamWithLabels("create", organizationDomain, "Marketing", "Mar", "test2", organizationAdmin, ["member2@gmail.com"], this.email, type, status, priority, difficulty, orgAppKey)
+            this.createNewTeamWithLabels("create", organizationDomain, "Development", "Dev", "test", organizationAdmin, ["member1@gmail.com", this.email], this.email, type, status, priority, difficulty, orgAppKey);
+            this.createNewTeamWithLabels("create", organizationDomain, "Marketing", "Mar", "test2", organizationAdmin, ["member2@gmail.com", this.email], this.email, type, status, priority, difficulty, orgAppKey)
           },
           error: (error) => {
             console.log(error);
@@ -102,44 +100,59 @@ export class SetupComponent implements OnInit {
       }
       
   }
-
-  async createNewTeamWithLabels( modeTo: string, organizationDomain: string, teamName: string, teamId: string, teamDescription: string, teamManagerEmail: string, teamMembers: string[], teamAdmin: string, type: string[], statusLabels: string[], priorityLabels: string[], difficultyLabels: string[], organizationAppKey: any ) {
+  
+  createNewTeamWithLabels( modeTo: string, organizationDomain: string, teamName: string, teamId: string, teamDescription: string, teamManagerEmail: string, teamMembers: string[], teamAdmin: string, type: string[], statusLabels: string[], priorityLabels: string[], difficultyLabels: string[], organizationAppKey: any ) {
       if (modeTo == "create")
       {
         const callable = this.functions.httpsCallable('teams/createTeam');
-        const result = await callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, TypeLabels: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).subscribe({
+        callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, TypeLabels: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).subscribe({
           next: (result) => {
             console.log("Successful");
             this.progressPercentage = 20;
-            this.createNewSprint(teamName, teamId, organizationAppKey);
           },
           error: (error) => {
             console.error("Error", error);
             console.error(error);
           },
-          complete: () => console.info('Successfully created new team with label')
-      });
-        
-      }    
-   
+          complete: () => {
+            this.createNewSprint(teamName, teamId, organizationAppKey);
+            this.verifyUser(organizationDomain, teamName, teamId);
+            console.info('Successfully created new team with label')
+          }
+        });
+      }
+  }
+  
+  verifyUser(organizationDomain: string, teamName: string, teamId: string) {
+    const callable = this.functions.httpsCallable('users/verify');
+      callable({OrganizationDomain: organizationDomain, TeamName: teamName, UserEmail: this.email, TeamId: teamId }).subscribe({
+        next: (data) => {
+          console.log("Successful");
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => console.info('Successfully verified')
+    });
   }
 
-
-  async createNewSprint(project: string, teamId: string, organizationAppKey: string) {
+  createNewSprint(project: string, teamId: string, organizationAppKey: string) {
     const callable = this.functions.httpsCallable('sprints/createNewSprint');
-
-    await callable({AppKey: organizationAppKey, StartDate: "2021-10-09", EndDate: "2021-10-18", Status: "Under Progress", NewSprintId: 1, TeamId: teamId }).subscribe({
+    callable({AppKey: organizationAppKey, StartDate: "2021-10-09", EndDate: "2021-10-18", Status: "Under Progress", NewSprintId: 1, TeamId: teamId }).subscribe({
       next: (result) => {
         console.log("Successfully created ");
         this.progressPercentage = 25;
-        this.createNewSession(project, teamId, organizationAppKey);
+        // this.createNewSession(project, teamId, organizationAppKey);
       },
       error: (error) => {
         console.log(error);
         console.error(error);
       },
-      complete: () => console.info('Successful created new sprint')
-  });
+      complete: () => {
+        console.info('Successful created new sprint');
+        this.createNewSession(project, teamId, organizationAppKey);
+      }
+    });
 
   }
 

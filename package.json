@@ -31,6 +31,7 @@
     "firebase-functions": "^3.19.0",
     "jquery": "^3.5.1",
     "latest": "^0.2.0",
+    "ngx-cookie-service": "^13.1.2",
     "popper.js": "^1.16.1",
     "rxfire": "^6.0.0",
     "rxjs": "~7.4.0",
