@@ -74,6 +74,6 @@ input:focus {
 }
 
 #SuccessIcon{
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-size: 48px;
 }
