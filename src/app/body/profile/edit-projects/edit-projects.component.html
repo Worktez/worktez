@@ -45,10 +45,10 @@
 
                     <div class="row px-4 py-4">
                         <ng-container *ngIf="projectModalMode == 'add'">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="addProject()">Add Project</button>
+                            <button type="submit" class="btn btn-lg btn-block" id="button" (click)="addProject()">Add Project</button>
                         </ng-container>
                         <ng-container *ngIf="projectModalMode == 'edit'">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="updateProject()">Edit Project</button>
+                            <button type="submit" class="btn btn-lg btn-block" id="button" (click)="updateProject()">Edit Project</button>
                         </ng-container>
                     </div>
                 </form>
@@ -56,21 +56,21 @@
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
-                            <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
-                            <div class="col">Project Updated Successfully !</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Project Updated Successfully!</div>
                         </div>
                         <div class="col-md-2"></div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editProjectDone()">Close</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editProjectDone()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
