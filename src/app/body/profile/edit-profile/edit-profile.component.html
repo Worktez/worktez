@@ -63,7 +63,7 @@
                         <!-- <input type="text" class="form-control" id="recipient-website" [(ngModel)]="website" [ngModelOptions]="{standalone: true}"> -->
                     <!-- </div> -->
                     <div class="my-1 form-group text-center success">
-                        <button type="button" class="ml-12 btn-block btn-xs btn btn-success" (click)="editProfile()">Save Changes</button>
+                        <button type="submit" class="btn btn-lg btn-block" id="button" (click)="editProfile()">Save Changes</button>
                     </div>
                 </form>
                 <ng-container *ngIf="showClose">
@@ -76,16 +76,16 @@
                     </div>
                     <!-- <div class="row"></div> -->
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
-                            <div class="col">Profile Updated Successfully !</div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Profile Updated Successfully !</div>
                         </div>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-3"></div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editProfileDone()">Close</button>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editProfileDone()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>

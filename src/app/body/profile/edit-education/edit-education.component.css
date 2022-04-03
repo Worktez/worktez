@@ -20,15 +20,10 @@
     padding-bottom: 0 !important;
 }
 
-.btn {
-    background-color: var(--button-bg);
-}
-
 .modal-content {
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 6px;
-    min-height: 350px;
     justify-content: space-evenly;
     padding-top: 0 !important;
 }
@@ -57,16 +52,16 @@
 }
 
 #button {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
 }
 
 #button:focus,
 #button:active,
 #button:hover {
-    outline: none;
+    outline: 0 none;
     box-shadow: none;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
 }
 
 select:focus,

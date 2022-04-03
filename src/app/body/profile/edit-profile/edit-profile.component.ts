@@ -64,6 +64,7 @@ export class EditProfileComponent implements OnInit {
           next: (data) => {
             console.log("Successful");
             this.showClose = true
+            
           },
           error: (error) => {
             console.log("error");
@@ -76,15 +77,18 @@ export class EditProfileComponent implements OnInit {
       });
         console.log("Successful");
         this.showClose = true
+        
       }
 
       else {
       console.log("User Not Available");
     }
+    
   }
 
   editProfileDone() {
     this.editProfileCompleted.emit({ completed: true });
+    window.location.reload()
   }
 
   async checkAvailability() {
