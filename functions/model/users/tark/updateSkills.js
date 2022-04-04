@@ -23,6 +23,7 @@
 
 const { updateUser, getUser } = require("../lib");
 const { sendMail } = require("../../email/lib");
+const { profileMailer  } = require("../../mailer/lib");
 
 exports.updateUserSkill = function(request, response) {
     const uid = request.body.data.Uid;
@@ -46,7 +47,8 @@ exports.updateUserSkill = function(request, response) {
             Skills: prevSkill,
         };
         updateUser(updateUserInputJson, uid).then(() => {
-            sendMail(email, subjectMessage, htmlMessage);
+            //sendMail(email, subjectMessage, htmlMessage);
+            profileMailer("Update_Skill_Profile",uid,email,displayName);
             console.log("Successful");
         }).catch((error) => {
             status = 500;

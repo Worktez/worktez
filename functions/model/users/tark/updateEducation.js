@@ -23,6 +23,7 @@
 
 const { updateUserEducation } = require("../lib");
 const { sendMail } = require("../../email/lib");
+const { profileMailer  } = require("../../mailer/lib");
 
 exports.updateEducation = function(request, response) {
     const educationDoc = request.body.data.EducationId;
@@ -47,7 +48,8 @@ exports.updateEducation = function(request, response) {
         Degree: degree,
     };
     updateUserEducation(uid, educationDoc, inputJson).then(() => {
-        sendMail(email, subjectMessage, htmlMessage);
+        //sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Update_Education_Profile",uid,email,displayName);
         console.log("Mail worked");
         result = { data: "User Education updated successfully" };
         console.log("Successful");

@@ -27,6 +27,7 @@ const { getOrgRawData, updateOrgRawData } = require("../../organization/lib");
 const { getSprint, updateSprint } = require("../../sprints/lib");
 const { getTask, updateTask } = require("../lib");
 const { sendMail } = require("../../email/lib");
+const { taskMailer  } = require("../../Mailer/lib");
 
 exports.logWork = function(request, response) {
     const assignee = request.body.data.Assignee;
@@ -76,7 +77,8 @@ exports.logWork = function(request, response) {
                 CompletionDate: completiondate,
             };
             updateTask(logWorkInputJson, orgDomain, taskId);
-            sendMail(assignee, subjectMessage, htmlMessage);
+            taskMailer("Log_Task",taskId, orgDomain, assignee);
+            //sendMail(assignee, subjectMessage, htmlMessage);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);
