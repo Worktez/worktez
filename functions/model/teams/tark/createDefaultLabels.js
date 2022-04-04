@@ -2,7 +2,7 @@
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- *
+ * Twinkle Chatterjee (ctwinkle2812@gmail.com)
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -23,7 +23,13 @@
 
 const { setLabelProperties, getTeam, updateTeamDetails } = require("../lib");
 
-exports.createLabelProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels) {
+exports.createDefaultLabels = function(request, response) {
+    const orgDomain = request.body.data.OrganizationDomain;
+    const teamName = request.body.data.TeamName;
+    const type = request.body.data.Type;
+    const statusLabels = request.body.data.StatusLabels;
+    const priorityLabels = request.body.data.PriorityLabels;
+    const difficultyLabels = request.body.data.DifficultyLabels;
     let scope;
     let displayName;
     let iconName;

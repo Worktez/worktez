@@ -27,7 +27,7 @@ const {getLabelByScope} = require("./tark/getTeamLabels");
 const {deleteLabel} = require("./tark/deleteLabel");
 const {editLabel} = require("./tark/editLabel");
 const {addLabel} = require("./tark/addLabel");
-const {createLabelProperties} = require("./tark/createLabelProperties");
+const {createDefaultLabels} = require("./tark/createDefaultLabels");
 
 /**
  * Description
@@ -149,7 +149,7 @@ fastify.post("/editLabel", (req, res) => {
  * @returns {any}
  */
 fastify.post("/createDefaultLabel", (req, res) => {
-  createLabelProperties(req, res);
+  createDefaultLabels(req, res);
 });
 
 /**
