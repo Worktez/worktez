@@ -100,7 +100,9 @@ export class CreateNewSprintComponent implements OnInit {
       this.showContent = true;
     });
   }
-
+  load(){
+    window.location.reload();
+  }
   async submit() {
     let data = [{ label: "startDate", value: this.startDate },
     { label: "endDate", value: this.endDate },
@@ -140,7 +142,7 @@ export class CreateNewSprintComponent implements OnInit {
   close() {
     jQuery('#createNewSprint').modal('hide');
     jQuery('#form').trigger("reset");
-    window.location.reload();
+    // window.location.reload();
     this.sprintCreated.emit({ completed: true });
   }
 }
