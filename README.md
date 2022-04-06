@@ -11,11 +11,13 @@ _At **Worktez**, we are envisioned to give milestones to your dreams._
 
 ## About our Product :speech_balloon:
 
-Worktez is a Web App developed by a team of fresh and enthusiastic minds to help the firms in solving issues concerning task allocations and monitoring.
-From just another basic Agile Tool to even more visually appealing and functionally progressive solution to all your Project Management related work.
-WorkTez promotes a happy workFromHome environment because a happy employee is way more productive in comparison to an employee burdened with loads of work!
-With an agile platform like WorkTez, you can be affirmed by a more organised remote team management.You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore! 
+Worktez is a smart solution to scrum your project with devOps to plan, track, deploy and collaborate over ideas and project implementation with Developers, Students and Architects across the world.
 
+
+Worktez is a Web App developed by a team of fresh and enthusiastic minds to help plan, track and automate the development activities.
+Our focus is create visually appealing and functionally progressive solution to all your Project Management related work.
+WorkTez promotes a happy work culture environment because a happy employee is way more productive in comparison to an employee burdened with loads of work!
+Our solution is focused on agile based devOps automation, that helps in more organised remote team management. You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore!
 
 
 # Technologies used
