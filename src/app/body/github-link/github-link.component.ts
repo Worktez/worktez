@@ -18,15 +18,14 @@ export class GithubLinkComponent implements OnInit {
   @Input("teamId") teamId: string;
   @Input("typeLink") typeLink: string;
   memberOrgName: string;
-  organisation: string;
-  username: string;
+  searchType: string = 'organisation';
   projLink: string;
   organizationDomain: string;
   dataFetched: boolean = false;
   showClose: boolean = false;
   showSubmitButton: boolean = false;
   objData: GitOrgData[] = [];
-  @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, organisation:string, username:string }>();
+  @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
   constructor(private httpService: HttpServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
 
@@ -36,7 +35,7 @@ export class GithubLinkComponent implements OnInit {
 
   submit() {
     if (this.memberOrgName) {
-      if (this.organisation != undefined) {
+      if (this.searchType == 'organisation') {
         this.httpService.getGithubOrgRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
@@ -52,7 +51,7 @@ export class GithubLinkComponent implements OnInit {
           }
         });
       } 
-      else if(this.username != undefined) {
+      else if(this.searchType == 'username') {
         this.httpService.getGithubUserRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
@@ -91,7 +90,7 @@ export class GithubLinkComponent implements OnInit {
   }
 
   added() {
-    this.addedProject.emit({ completed: true, memberOrgName: this.memberOrgName, projLink:this.projLink, organisation:this.organisation, username:this.username});
+    this.addedProject.emit({ completed: true, memberOrgName: this.memberOrgName, projLink:this.projLink, searchType:this.searchType});
   }
 
 }

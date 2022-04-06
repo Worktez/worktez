@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="addSkill()">Add Skill</button>
+                            <button type="submit" class="btn btn-lg btn-block" id="button" (click)="addSkill()">Add Skill</button>
                         </div>
                     </div>
 
@@ -40,21 +40,21 @@
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
                         <div class="col-md-4">
-                            <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-3"></div>
                         <div class="col-md-8">
-                            <div class="col">Skills Updated Successfully !</div>
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Skills Updated Successfully !</div>
                         </div>
                         <div class="col-md-2"></div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editSkillCompleted()">Close</button>
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="editSkillCompleted()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>

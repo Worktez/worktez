@@ -27,6 +27,7 @@ const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 const { createLableProperties } = require("./createLabelProperties");
+const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 
 
 exports.createTeam = function(request, response) {
@@ -65,6 +66,8 @@ exports.createTeam = function(request, response) {
             if (team == undefined) {
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus).then((data)=>{
                     createLableProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels);
+                    setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
+                    setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
                 });
                 teamMembers.forEach((element) => {
                     sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, orgDomain, teamId);

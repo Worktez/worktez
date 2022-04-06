@@ -14,15 +14,27 @@
 <div class="container-fluid" *ngIf="popupHandlerService.createNewTaskEnabled">
     <div class="modal fade" id="createNewTask" tabindex="-1" role="dialog" aria-labelledby="createNewTaskTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title " id="createNewTaskTitle"><strong>Create New Task</strong></h2>
-                    <button type="button" class="close" (click)="close()" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons">close</span>
-                    </button>
-                </div>
+            <div class="modal-content p-2">
                 <div class="modal-body">
-                    <div class="medium ml-1">{{ todayDate }}</div>
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="modal-title " id="createNewTaskTitle"><strong>Create New Task</strong></h2>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="close" (click)="close()" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons">close</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row p-2 align-item-center">
+                        <div class="col">
+                            {{ todayDate }}
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <span id="Active" class="p-2 m-2" (click)="activeSprint()" *ngIf="sprintNumber!=currentSprintNumber">Active Sprint</span>
+                            <span id="Backlog" class="p-2 m-2" (click)="showBacklog()" *ngIf="sprintNumber!=backlogSprintNumber">Backlog</span>
+                        </div>
+                    </div>
                     <form #form="ngForm" *ngIf="!showClose" >
                         <div class="form-row my-2">
                             <div class="form-group col-md-6 col">

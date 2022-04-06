@@ -20,6 +20,7 @@ import { Observable } from 'rxjs';
 import { BackendService } from './backend/backend.service';
 import { ThemeService } from './theme/theme.service';
 import { map } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class AuthService {
   projects: MyProjectData;
   public projectCollectionData: Observable<MyProjectData>
 
-  constructor(public afauth: AngularFireAuth, private functions: AngularFireFunctions, private backendService: BackendService, private themeService: ThemeService) { }
+  constructor(private cookieService: CookieService, public afauth: AngularFireAuth, private functions: AngularFireFunctions, public themeService: ThemeService) { }
 
   async createUser(email: string, password: string, username: string) {
     await this.afauth.createUserWithEmailAndPassword(email, password);
@@ -91,6 +92,7 @@ export class AuthService {
   }
 
   async logout() {
+    this.cookieService.deleteAll();
     await this.afauth.signOut();
   }
 
@@ -99,7 +101,6 @@ export class AuthService {
   }
 
   getUserSettings() {
-    this.landingToSocial = false;
     let uid="";
     if(this.userName == ""){
       uid = this.getLoggedInUser(); 
@@ -108,16 +109,6 @@ export class AuthService {
 
     this.userAppSettingObservable = callable({ Uid: uid, Username: this.userName }).pipe(map(res => {
       const data = res.userData as UserAppSetting;
-      this.userAppSetting = data;
-      if (this.userAppSetting && this.userAppSetting.SelectedOrgAppKey != "") {
-        this.organizationAvailable = true;
-        this.getListedOrganizationData(data.uid);
-        this.backendService.getOrgDetails(this.userAppSetting.SelectedOrgAppKey);
-        this.getMyOrgCollectionDocs(data.uid, data.SelectedOrgAppKey);
-        this.themeService.changeTheme(data.AppTheme);
-      } else {
-        this.organizationAvailable = false;
-      }
       return { ...data };
     }));
     this.completedLoadingApplication =true;

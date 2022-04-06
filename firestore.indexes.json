@@ -30,7 +30,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "Status", "order": "ASCENDING" },
-        { "fieldPath": "Teamld", "order": "ASCENDING" },
+        { "fieldPath": "TeamId", "order": "ASCENDING" },
         { "fieldPath": "SprintNumber", "order": "ASCENDING" }
       ]
     },

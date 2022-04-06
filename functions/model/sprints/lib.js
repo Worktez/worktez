@@ -52,6 +52,7 @@ exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId,
         MidStoryPoint: midStoryPoint,
         EndStoryPoint: 0,
         CompletedStoryPoint: 0,
+        SprintActivityCounter: 0,
     });
     return Promise.resolve(setSprint);
 };
@@ -66,7 +67,6 @@ exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId,
  */
 exports.updateSprint = function(inputJson, orgDomain, teamName, fullSprintName) {
     const updateSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).update(inputJson);
-
     return Promise.resolve(updateSprint);
 };
 
@@ -136,4 +136,27 @@ exports.getAllSprints = function(orgDomain, teamName, sprintRange1 = "", sprintR
     });
 
     return Promise.resolve(getSprintDetails);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} fullSprintName
+ * @param {any} sprintActivityId
+ * @param {any} message
+ * @param {any} creationDate
+ * @param {any} creationTime
+ * @param {any} uid
+ * @return {any}
+ */
+ exports.setSprintActivity = function(orgDomain, teamName, fullSprintName, sprintActivityId, message, creationDate, creationTime, uid = "Bot") {
+    const docId = sprintActivityId.toString();
+    const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).collection("SprintActivity").doc(docId).set({
+        CreationTime: creationTime,
+        CreationDate: creationDate,
+        Message: message,
+        Uid: uid,
+    });
+    return Promise.resolve(setSprint);
 };

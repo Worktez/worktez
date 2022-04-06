@@ -20,9 +20,10 @@
  * See the MIT License for more details.
  ***********************************************************/
 
+const { currentDate, currentTime } = require("../../application/lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
-const { updateSprint, getSprint } = require("../lib");
+const { updateSprint, getSprint, setSprintActivity } = require("../lib");
 
 
 exports.updateSprintStatus = function(request, response) {
@@ -30,6 +31,7 @@ exports.updateSprintStatus = function(request, response) {
     const currentSprintName = request.body.data.CurrentSprintName;
     const appKey = request.body.data.AppKey;
     const teamId = request.body.data.TeamId;
+    const uid = request.body.data.Uid;
     let orgDomain;
     let result;
     let status = 200;
@@ -39,7 +41,7 @@ exports.updateSprintStatus = function(request, response) {
 
         const updateTeamSprintStatus = getTeamUseTeamId(orgDomain, teamId).then((teamDoc) => {
             const teamName = teamDoc.TeamName;
-
+            let message = "Nothing Modified";
             let updateSprintStatusInputJson;
             const getSprintPromise = getSprint(orgDomain, teamName, currentSprintName).then((sprintDoc) => {
                 if (sprintStatus == "Under Progress") {
@@ -48,14 +50,25 @@ exports.updateSprintStatus = function(request, response) {
                         Status: sprintStatus,
                         MidStoryPoint: startStoryPointNumber,
                     };
-                    updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
+                    message = "Updated Sprint Status As Under Progress";
                 } else if (sprintStatus == "Completed") {
                     updateSprintStatusInputJson = {
                         Status: sprintStatus,
                         EndStoryPoint: sprintDoc.CompletedStoryPoint,
                     };
-                    updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
+                    message = "Updated Sprint Status As Completed";
                 }
+
+                let sprintActivityCounter = sprintDoc.SprintActivityCounter;
+                if (sprintActivityCounter) {
+                    sprintActivityCounter = sprintActivityCounter + 1;
+                    updateSprintStatusInputJson["SprintActivityCounter"] = sprintActivityCounter;
+                } else {
+                    sprintActivityCounter = 1;
+                    updateSprintStatusInputJson["SprintActivityCounter"] = sprintActivityCounter;
+                }
+                setSprintActivity(orgDomain, teamName, currentSprintName, sprintActivityCounter, message, currentDate, currentTime, uid);
+                updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
             });
             return Promise.resolve(getSprintPromise);
         }).catch((error) => {

@@ -21,7 +21,7 @@ const { getOrg } = require("../../organization/lib");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 const { getTeamUseTeamId } = require("../../teams/lib");
-const { getOrganizationsChartDetails, getUserPerformanceChart } = require("../lib");
+const { getOrganizationsChartDetails } = require("../lib");
 const { getUserPerformanceChartData } = require("./getUserPerformanceChartData");
 const { getUserUseEmail} = require("../../users/lib");
 
