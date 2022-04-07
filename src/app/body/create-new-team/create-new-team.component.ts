@@ -93,11 +93,17 @@ export class CreateNewTeamComponent implements OnInit {
   difficultyLabels: string[] = ["High", "Medium", "Low"]
 
   async submit() {
-    this.teamName = this.teamName.trimRight();
-    this.teamName = this.teamName.trimLeft();
-    this.teamId = this.teamId.trimLeft();
-    this.teamId = this.teamId.trimRight();
-    this.teamMembers.push(this.teamManagerEmail);
+    console.log("This",this.teamName)
+    if (this.teamName!=undefined || this.teamId!=undefined || this.teamManagerEmail!=undefined){
+      console.log("That",this.teamMembers)
+      console.log("That",this.teamManagerEmail)
+      this.teamName = this.teamName.trimRight();
+      this.teamName = this.teamName.trimLeft();
+      this.teamId = this.teamId.trimLeft();
+      this.teamId = this.teamId.trimRight();
+      }
+      this.teamMembers.push(this.teamManagerEmail);
+      
     let data = [
       { label: "teamName", value: this.teamName },
       { label: "teamId", value: this.teamId },

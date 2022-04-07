@@ -54,9 +54,11 @@ export class CreateNewOrganizationComponent implements OnInit {
    }
 
   async submit() {
+    if (this.orgName!=undefined || this.orgDomain!=undefined || this.orgEmail!=undefined){
     this.orgName = this.orgName.trimRight();
     this.orgDomain = this.orgDomain.trimRight();
     this.orgEmail = this.orgEmail.trimRight();
+    }
     let data = [
       { label: "organizationName", value: this.orgName },
       { label: "organizationDomain", value: this.orgDomain },

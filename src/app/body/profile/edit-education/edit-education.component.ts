@@ -92,7 +92,7 @@ export class EditEducationComponent implements OnInit {
       this.submitaddEducation();
     }
     else
-      console.log("Log-Work failed due to validation error");
+      console.log("Edit Education failed due to validation error");
   }
 
 

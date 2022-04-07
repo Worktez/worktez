@@ -56,7 +56,7 @@ export class EditSkillsComponent implements OnInit {
       this.submitaddedskill();
     }
     else
-      console.log("Log-Work failed due to validation error");
+      console.log("Edit Skills failed due to validation error");
   }
   async submitaddedskill() {
     this.enableLoader = true;

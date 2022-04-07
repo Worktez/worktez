@@ -68,7 +68,7 @@ export class EditWorkexperienceComponent implements OnInit {
       this.submitaddWork();
     }
     else
-      console.log("Log-Work failed due to validation error");
+      console.log("Edit Work Experience failed due to validation error");
   }
 
   async updateWork() {

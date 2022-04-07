@@ -71,7 +71,7 @@ export class EditProjectsComponent implements OnInit {
       this.submitaddProject();
     }
     else
-      console.log("Log-Work failed due to validation error");
+      console.log("Edit Project failed due to validation error");
   }
 
 
