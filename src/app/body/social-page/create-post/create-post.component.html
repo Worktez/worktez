@@ -8,18 +8,29 @@
                         <span aria-hidden="true" class="material-icons">close</span>
                     </button>
                 </div>
+                <div class="row p-2">
+                  <div class="col-md-2 col">
+                    <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </div>
+                  <div class="col-md-2 col">
+                     <h3>{{authService.userAppSetting.displayName}}</h3>  
+                  </div>                   
+                </div>
                 <div class="modal-body">
                     <form #form="ngForm">
                         <div class="form-row mb-2">
                             <div class="form-group col-md-12 col">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">description</span>
-                                <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="post" [ngModelOptions]="{standalone: true}" placeholder="Post content"></textarea>
+                                <textarea type="text" class="form-control" rows="3" [(ngModel)]="post" [ngModelOptions]="{standalone: true}" placeholder="Post content"></textarea>
+                                <div class="col">
+                                    <button class="btn m-auto px-3 py-1" id="video_library"><mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle mr-3">video_library</mat-icon>Video</button> &nbsp;
+                                    <button class="btn m-auto px-3 py-1" id="insert_photo"><mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle mr-3">insert_photo</mat-icon>Photo</button>
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer mt-n1">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Post</button>
+                    <div class="col-md-6 col"> <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Post</button></div>
                 </div>
             </div>
         </div>

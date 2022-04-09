@@ -21,6 +21,7 @@ h3 {
   color:#5C60EC;
 }
 
+
 .commentBox {
   background-color: var(--primary-bg);
   color: var(--text);
@@ -40,6 +41,30 @@ h3 {
 #commentButton:hover{
   cursor: pointer;
 } 
+
+#commentButton1 {
+  color: var(--text);
+  background-color: var(--secondary-bg);
+  border: var(--primary-border);
+}
+
+#commentButton1:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
+  cursor: pointer;
+}
+
+#likeButton {
+  color: var(--text);
+  background-color: var(--secondary-bg);
+  border: var(--primary-border);
+}
+
+#likeButton:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
+  cursor: pointer;
+}
 
 mat-icon {
   color: var(--text);
