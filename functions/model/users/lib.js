@@ -220,12 +220,7 @@ exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
     // Logging for Finding the notification issue after depolyment
     console.log("Getting the My Organization Collection Data");
     const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
-        if (doc.exists) {
-            return doc.data();
-        } else {
-            console.log("Doc does not exist");
-            return;
-        }
+        return doc.data();
     });
     return Promise.resolve(getMyOrgPromise);
 };
@@ -297,7 +292,6 @@ exports.addUserEducation = function(uid, instituteName, degree, start, end) {
  */
 exports.updateUserEducation = function(uid, educationDoc, inputJson) {
     const updateEducationPromise = db.collection("Users").doc(uid).collection("Education").doc(educationDoc).update(inputJson);
-
     return Promise.resolve(updateEducationPromise);
 };
 
@@ -341,7 +335,6 @@ exports.addUserExperience = function(uid, organizationName, position, start, end
  */
 exports.updateUserExperience = function(uid, experienceDoc, inputJson) {
     const updateExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc(experienceDoc).update(inputJson);
-
     return Promise.resolve(updateExperiencePromise);
 };
 
@@ -385,7 +378,6 @@ exports.addUserProject = function(uid, projectName, description, start, end) {
  */
 exports.updateUserProject = function(uid, projectDoc, inputJson) {
     const updateProjectPromise = db.collection("Users").doc(uid).collection("Project").doc(projectDoc).update(inputJson);
-
     return Promise.resolve(updateProjectPromise);
 };
 
