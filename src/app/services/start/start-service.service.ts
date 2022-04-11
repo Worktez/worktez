@@ -101,7 +101,7 @@ export class StartServiceService {
 
     this.authService.userAppSettingObservable.subscribe(data => {
       this.authService.userAppSetting = data;
-
+      this.userDataState.next(true);
       if(userSelectedOrgAppKeyCookie != data.SelectedOrgAppKey || userSelectedTeamId != data.SelectedTeamId) {
         this.cookieService.set("userSelectedOrgAppKey", data.SelectedOrgAppKey);
         this.cookieService.set("userSelectedTeamId", data.SelectedTeamId);
@@ -150,7 +150,6 @@ export class StartServiceService {
         this.authService.myTeamsListObservable.subscribe(data => {
           this.teams = data;
           this.showTeams = true;
-          this.userDataState.next(true);
         });
       } else {
         this.teamIdExists = false;
