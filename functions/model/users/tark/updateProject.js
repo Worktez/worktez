@@ -23,7 +23,7 @@
 
 const { updateUserProject } = require("../lib");
 const { sendMail } = require("../../email/lib");
-const { profileMailer  } = require("../../mailer/lib");
+const { profileMailer } = require("../../mailer/lib");
 
 exports.updateProject = function(request, response) {
     const projectDoc = request.body.data.ProjectId;
@@ -48,8 +48,8 @@ exports.updateProject = function(request, response) {
         Description: description,
     };
     updateUserProject(uid, projectDoc, inputJson).then(() => {
-        //sendMail(email, subjectMessage, htmlMessage);
-        profileMailer("Update_Project_Profile",uid,email,displayName);
+        // sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Update_Project_Profile", uid, email, displayName);
         console.log("Mail worked");
         result = { data: "User Project updated successfully" };
         console.log("Successful");
