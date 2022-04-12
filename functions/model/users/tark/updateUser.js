@@ -23,7 +23,7 @@
 
 const { updateUser } = require("../lib");
 const { sendMail } = require("../../email/lib");
-const { profileMailer  } = require("../../mailer/lib");
+const { profileMailer } = require("../../mailer/lib");
 
 exports.updateUser = function(request, response) {
     const uid = request.body.data.Uid;
@@ -52,8 +52,8 @@ exports.updateUser = function(request, response) {
         Username: Username,
     };
     updateUser(updateUserInputJson, uid).then(() => {
-        //sendMail(email, subjectMessage, htmlMessage);
-        profileMailer("Edit_Profile",uid,email,displayName);
+        // sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Edit_Profile", uid, email, displayName);
         result = { data: "User Profile updated successfully" };
         console.log("Successful");
         return response.status(200).send(result);
