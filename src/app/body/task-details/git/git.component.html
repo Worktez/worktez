@@ -15,55 +15,66 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <nav class="modal-header navbar navbar-expand" id="navbarMenu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <h3 class="active nav-link head" id="PrModalLabel">Select A PR</h3>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="material-icons" (click)="close()">close</span>
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-            <div class="modal-body align-items-center">
-                <form *ngIf="!showClose">
+            <div class="container modal-body align-items-center px-4" id="addPrPage">
+                    <form *ngIf="!showClose && !noRepoLinked && !noPrExist">
                         <div class="card">
                             <div class="card-header">
-                                Open Pull Requests
+                                Select A Pull Request
+                                <span aria-hidden="true" type="button" class="material-icons close" data-dismiss="modal" (click)="close()">close</span>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <ng-container *ngFor="let item of prData">
-                                    <li (click)="submit(item.html_url)" class="list-group-item">#{{item.number}} {{item.title}}</li>
+                                <ng-container *ngFor="let item of prData; let prIndex=index;">
+                                    <li (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
+                                        <button class="btn-primary p-2 mr-2" > #{{item.number}} </button>
+                                        <button class="btn btn-secondary p-2 ml-0 mr-0 text-left">{{item.title}}</button>
+                                        <a href="{{item.html_url}}" target="_blank" class="btn btn-status p-2 ml-2 mr-0" data-toggle="tooltip" data-placement="top" title="view PR">
+                                            status: <span class="text-capitalize">{{item.state}}</span></a>
+                                    </li>
                                 </ng-container>
                             </ul>
                         </div>
-                    <hr>
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
-                <ng-container *ngIf="showClose">
-                    <div class="row mx-5">
+                <ng-container *ngIf="noRepoLinked || noPrExist">
+                    <div class="row pl-2 text-center" *ngIf="noRepoLinked">
+                        <div class="col font-weight-bold"> No Github Repository Exists, Please Integrate One !</div>
+                    </div>
+                    <div class="row pl-2 text-center" *ngIf="noPrExist">
+                        <div class="col font-weight-bold"> No Active Pull Requests !</div>
+                    </div>
+                    <div class="row pt-3">
                         <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                        <div class="col-md-4 px-4">
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <div class="col">Successfully linked the PR!</div>
+                </ng-container>
+                
+               <ng-container *ngIf="showClose">
+                    <div *ngIf="prLinked">
+                       <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
                         </div>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div class="row font-weight-bold" style="font-size: medium;flex-wrap: wrap;"> Successfully Linked The PR!</div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                    <div class="row pl-2 text-center" *ngIf="!prLinked">
+                        <div class="col font-weight-bold">Error! PR Couldn't be Linked </div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-secondary" id="addButton" type="button" data-dismiss="modal"
-                                (click)="close()">Close</button>
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>

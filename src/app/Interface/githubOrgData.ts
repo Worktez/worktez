@@ -16,5 +16,9 @@ export interface GitData {
 }
 
 export interface GitRepoData {
+    url: string;
     html_url; string;
+}
+export interface GitPrData{
+    state; string
 }

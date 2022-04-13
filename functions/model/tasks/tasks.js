@@ -31,6 +31,7 @@ const { getTaskDetails } = require("./tark/getTaskDetails");
 const { getTasks } = require("./tark/getTasks");
 const { getTasksForDashboard } = require("./tark/getTasksForDashboard");
 const { addWatcher } = require("./tark/addWatcher");
+const { addPrLink } = require("./tark/addPrLink");
 
 
 /**
@@ -77,6 +78,16 @@ fastify.post("/editTask", (req, res) => {
   editTask(req, res);
 });
 
+/**
+ * Description
+ * @param {any} "/addPrLink"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/addPrLink", (req, res) => {
+  addPrLink(req, res);
+});
 /**
  * Description
  * @param {any} "/getTaskDetails"

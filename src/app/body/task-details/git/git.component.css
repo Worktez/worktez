@@ -1,18 +1,62 @@
 .list-group-item{
     background-color: var(--secondary-bg);
     color: var(--text);
+    cursor: pointer;
 }
-
+.modal-content {
+    background-color: var(--secondary-bg);
+    border-radius: 8px;
+    color: var(--text);
+}
 .list-group-item:hover {
     background-color: var(--primary-bg);
+    cursor: pointer;
 }
-
-.card, .modal-body, .modal-content, button{
-    background-color: var(--secondary-bg);
-    color: var(--text);
-}
-
-.card-header{
-    color: var(--text);
+.card{
     background-color: var(--primary-bg);
+    color: var(--text);
+}
+.bold{
+    font-weight: bold;
+    font-size: 18px;
+}
+.close{
+    color: var(--text);
+}
+.btn-primary{
+    background-color: var(--primary-bg);
+    color: var(--text);
+    border: none;
+    border-radius: 5%;
+    width: 20%;
+    box-shadow: none;
+    outline: 0 none;
+}
+
+.btn-secondary{
+    background-color: var(--primary-bg);
+    color: var(--text);
+    font-size: 14px;
+    border: none;
+    border-radius: 5%;
+    text-overflow: auto;
+    width: 50%;
+    box-shadow: none;
+    outline: 0 none;
+}
+.btn-status{
+    background-color: var(--primary-bg);
+    color: var(--text);
+    border: none;
+    font-size: 14px;
+    border-radius: 5%;
+    width: 25%;
+    text-overflow: auto;
+    white-space: nowrap;
+    box-shadow: none;
+    outline: 0 none;
+}
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
 }
