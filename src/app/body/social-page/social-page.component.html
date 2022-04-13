@@ -14,14 +14,20 @@
                     <h3 class="text-right ml-auto" id="sprintStatus">{{authService.userAppSetting.UserPostsCounter}}</h3>
                 </div>
                 <div class="row px-4">
-                    <h3>Number of Likes:</h3>
+                    <h3>Number of Stars:</h3>
                     <h3 class="text-right ml-auto" id="sprintStatus" >{{authService.userAppSetting.UserReactionCounter}}</h3>
                 </div>
             </div>
             <hr>
             <div class="px-4">
-                <h3>Recent Activity</h3>
-                <p>When you take actions accross github we'll provide the links here.</p>
+                <h3 *ngIf="recentPosts" > <b>Recent Posts: </b> </h3>
+                <ng-container *ngFor="let post of recentPosts">
+                    <hr>
+                    <p class="row font-weight-light"> <span class="col-6">{{post.LastUpdatedDate}}</span><span class="col-6">{{post.LastUpdatedTime}}</span> </p>
+                    <p>
+                        {{post.Post}} </p>
+                    
+                </ng-container>
             </div>
         </div> 
         <div class="card mt-3 p-4" id="profileCard">
@@ -45,6 +51,7 @@
                         </div>
                     </div>
                 </ng-container>
+       
                 <ng-container *ngIf="(posts)?.length!=0;">
                     <ng-container *ngFor="let post of posts">
                         <app-posts [post]="post"></app-posts>
