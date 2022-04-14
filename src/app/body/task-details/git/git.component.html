@@ -1,6 +1,7 @@
 <!-- /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
+* Author: Abhishek Mishra <am1426620@gmail.com>
 * 
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
@@ -16,11 +17,20 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="container modal-body align-items-center px-4" id="addPrPage">
+                <div class="row px-4">
+                    <ul class="navbar-nav mr-auto">
+                            <h4 class="active nav-link head bold" id="memberModalLabel">Link Github PR</h4>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons text" (click)="close()">close</span>
+                            </button>
+                    </ul>
+                </div>
                     <form *ngIf="!showClose && !noRepoLinked && !noPrExist">
                         <div class="card">
                             <div class="card-header">
                                 Select A Pull Request
-                                <span aria-hidden="true" type="button" class="material-icons close" data-dismiss="modal" (click)="close()">close</span>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <ng-container *ngFor="let item of prData; let prIndex=index;">

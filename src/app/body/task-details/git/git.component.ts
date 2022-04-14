@@ -42,7 +42,6 @@ export class GitComponent implements OnInit {
 
   ngOnInit(): void {
     this.teamId = this.taskId.slice(0,3);
-    console.log(this.teamId);
     if(this.startService.showTeams) {
       this.getTeamDetails(this.teamId);
     } else {
@@ -56,7 +55,6 @@ export class GitComponent implements OnInit {
   getTeamDetails(teamId: string) {
     this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
       this.team=data;
-      console.log(this.team.ProjectLink);
       this.repoLink=this.team.ProjectLink;
       if(this.repoLink!=""){
       this.getPullRequests();
@@ -83,13 +81,11 @@ export class GitComponent implements OnInit {
     this.prLink = url;
     this.prApiLink=apiUrl;
     this.prNumber=prNumber;
-    console.log(this.prApiLink)
     this.enableLoader = true;
-    console.log(this.orgDomain, this.taskId)
     const callable = this.functions.httpsCallable('tasks/addPrLink');
     callable({OrganizationDomain: this.orgDomain,  TaskID: this.taskId, PrLink: this.prLink, PrApiLink: this.prApiLink, PrNumber: this.prNumber}).subscribe({
       next: (data) => {
-        console.log("Successfully added project link");
+        console.log("Successfully added PR link");
         this.prLinked=true;
         this.onAddingPr();
       },
@@ -98,18 +94,16 @@ export class GitComponent implements OnInit {
         this.enableLoader=false;
         this.showClose = true;
       },
-      complete: () => console.info('Successfully created project link')
+      complete: () => console.info('Successfully created PR link')
     }) 
   }
   onAddingPr(){
     this.linkType = "PR";
     this.linkURL = this.prLink
-
     const callable = this.functions.httpsCallable('linker/setLink');
-    console.log("this is the link url:", this.linkURL)
     callable({ OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL }).subscribe({
       next: (data) => {
-        console.log("Successful ");
+        console.log("Successfully added Link");
         this.enableLoader = false;
         this.showClose = true;
         return;
@@ -121,7 +115,7 @@ export class GitComponent implements OnInit {
         console.log("Error", error);
         console.error(error);
       },
-      complete: () => console.info('Successful')
+      complete: () => console.info('Successfully created Link')
     });
   }
   

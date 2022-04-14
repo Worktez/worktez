@@ -2,6 +2,7 @@
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
+ * Author: Abhishek Mishra <am1426620@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License

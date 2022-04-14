@@ -8,6 +8,10 @@
     border-radius: 8px;
     color: var(--text);
 }
+.head {
+    font-weight: bold;
+    font-size: 18px;
+}
 .list-group-item:hover {
     background-color: var(--primary-bg);
     cursor: pointer;

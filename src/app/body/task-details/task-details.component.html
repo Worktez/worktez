@@ -54,7 +54,7 @@
                                     alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel"
                                     (click)="linkPr()">
                                     <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status p-2" data-toggle="tooltip" data-placement="top" title="view PR">
-                                       PR status: <span class="text-capitalize">{{prData.state}}</span></a>
+                                       PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span></a>
                             </div>
                             <div class="logWork pt-3 pr-2"
                                 *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">

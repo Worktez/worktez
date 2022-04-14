@@ -92,12 +92,12 @@ nav {
     color: var(--text);
 }
 .btn-status{
-    background-color: var(--primary-bg);
-    color: var(--text);
+    background-color: var(--secondary-bg);
+    color: var(--text); 
     border: dashed;
     border-width: 1px;
     font-size: 12px;
-    border-radius: 5%;
+    border-color: var(--primary-color);
     box-shadow: none;
     outline: 0 none;
 }
