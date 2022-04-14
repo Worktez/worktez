@@ -18,6 +18,7 @@
  ***********************************************************/
 const { sendMail } = require("../email/lib");
 const { getTask } = require("../tasks/lib");
+const { generateTemplate } = require("./tark/generateTemplate");
 
 /**
  * Description
@@ -49,7 +50,7 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
                 let message;
                 if (element == watchers.Assignee) {
                     valueArray.push(false);// is watcher
-                     message = generateTemplate(mailType, valueArray);
+                    message = generateTemplate(mailType, valueArray);
                     sendMail(watchers.Assignee, message[0], message[1]);
                 } else {
                     valueArray.push(true);// is watcher
@@ -116,12 +117,12 @@ exports.verificationMailer = function(mailType, teamName, teamManagerEmail, user
 };
 
 
-const generateTemplate = function(mailType, valueArray) {
-    const message = [];
-    const subjectMessage = mailType;// generate subject
-    const htmlMessage = valueArray;// generate htmlmessage
-    message.push(subjectMessage);
-    message.push(htmlMessage);
-    return message;
-};
+// const generateTemplate = function(mailType, valueArray) {
+    // const message = [];
+    // const subjectMessage = mailType;// generate subject
+    // const htmlMessage = valueArray;// generate htmlmessage
+    // message.push(subjectMessage);
+    // message.push(htmlMessage);
+    // return message;
+// };
 
