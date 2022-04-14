@@ -27,11 +27,8 @@ const {getLabelByScope} = require("./tark/getTeamLabels");
 const {deleteLabel} = require("./tark/deleteLabel");
 const {editLabel} = require("./tark/editLabel");
 const {addLabel} = require("./tark/addLabel");
-<<<<<<< HEAD
 const {addProjLink} = require("./tark/addProjLink");
-=======
 const {createDefaultLabels} = require("./tark/createDefaultLabels");
->>>>>>> 4f45bb16dbee10faf56d3cb7823c87282472ad4e
 
 /**
  * Description
