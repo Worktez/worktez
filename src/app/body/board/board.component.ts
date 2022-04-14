@@ -161,7 +161,6 @@ export class BoardComponent implements OnInit {
     if(filterSprintNumber==-1){
       
       this.currentSprintName="Backlog";
-      console.log(this.currentSprintName);
     }
     else if(filterSprintNumber==-2){
       this.currentSprintName="Deleted";
