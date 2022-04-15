@@ -24,7 +24,7 @@ Our solution is focused on agile based devOps automation, that helps in more org
 
 | FRAMEWORK | DETAILS |
 | ------ | ------ |
-| AngularJs | [the frontend framework used - HTML enhanced for web apps!][angular] |
+| Angular | [the frontend framework used - HTML enhanced for web apps!][angular] |
 | Firebase | [firebase functions, storage, firestore and hosting services are incorporated into our product][firebase] |
 | FastifyJs | [backend framework used - rest API implementation][fastify] |
 | Node | [the backend engine  used][node] |
