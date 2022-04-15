@@ -32,15 +32,15 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
     let watchers = [];
     let valueArray = [];
     const promise = getTask(taskId, orgDomain).then((taskData) => {
-        console.log(taskData.taskId, "TaskId");
         watchers = taskData.Watcher;
-        console.log(watchers);
 
         if (mailType == "Watcher_Task") {
             valueArray.push(customParameter);// new Watcher email
             valueArray.push(taskId);
-            const message = generateTemplate(mailType, valueArray);
-            sendMail(customParameter, message[0], message[1]);
+            generateTemplate(mailType).then((data) => {
+                const message = data;
+                sendMail(customParameter, message[0], message[1]);
+            });
         } else {
             watchers.forEach((element) => {
                 valueArray = [];
