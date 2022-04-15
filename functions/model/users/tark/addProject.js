@@ -23,6 +23,7 @@
 
 const { getUser, updateUser, addUserProject } = require("../lib");
 const { sendMail } = require("../../email/lib");
+const { profileMailer } = require("../../mailer/lib");
 
 exports.addProject = function(request, response) {
     const uid = request.body.data.Uid;
@@ -50,7 +51,8 @@ exports.addProject = function(request, response) {
     });
 
     const promise2 = addUserProject(uid, projectName, description, start, end).then(() => {
-        sendMail(email, subjectMessage, htmlMessage);
+        // sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Add_Project_Profile", uid, email, displayName);
         console.log("Mail worked");
         result = { data: "User Project updated successfully" };
         console.log("Successful");

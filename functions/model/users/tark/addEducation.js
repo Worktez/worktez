@@ -23,6 +23,7 @@
 
 const { addUserEducation, getUser, updateUser } = require("../lib");
 const { sendMail } = require("../../email/lib");
+const { profileMailer } = require("../../mailer/lib");
 
 exports.addEducation = function(request, response) {
     const uid = request.body.data.Uid;
@@ -50,7 +51,8 @@ exports.addEducation = function(request, response) {
     });
 
     const promise2 = addUserEducation(uid, instituteName, degree, start, end).then(() => {
-        sendMail(email, subjectMessage, htmlMessage);
+        // sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Add_Education_Profile", uid, email, displayName);
         console.log("Mail worked");
         result = { data: "User Education updated successfully" };
         console.log("Successful");

@@ -23,6 +23,7 @@
 
 const { updateUser } = require("../lib");
 const { sendMail } = require("../../email/lib");
+const { profileMailer } = require("../../mailer/lib");
 
 exports.updateProfilePic = function(request, response) {
     const uid = request.body.data.Uid;
@@ -41,7 +42,8 @@ exports.updateProfilePic = function(request, response) {
     };
     console.log("Working  ", uid);
     updateUser(updateUserInputJson, uid).then(() => {
-        sendMail(email, subjectMessage, htmlMessage);
+        // sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Update_Pic_Profile", uid, email, displayName);
         result = { data: "Profile Picture updated successfully" };
         console.log("Successful");
         return response.status(200).send(result);

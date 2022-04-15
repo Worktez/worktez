@@ -22,7 +22,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { updateUserExperience } = require("../lib");
-const { sendMail } = require("../../email/lib");
+const { profileMailer } = require("../../mailer/lib");
 
 exports.updateExperience = function(request, response) {
     const experienceDoc = request.body.data.ExperienceId;
@@ -47,7 +47,8 @@ exports.updateExperience = function(request, response) {
         Position: position,
     };
     updateUserExperience(uid, experienceDoc, inputJson).then(() => {
-        sendMail(email, subjectMessage, htmlMessage);
+        // sendMail(email, subjectMessage, htmlMessage);
+        profileMailer("Update_Experience_Profile", uid, email, displayName);
         console.log("Mail worked");
         result = { data: "User Experience updated successfully" };
         console.log("Successful");
