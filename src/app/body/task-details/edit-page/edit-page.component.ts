@@ -71,10 +71,7 @@ export class EditPageComponent implements OnInit {
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
     this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type, this.task.Status, this.task.Title, this.task.Reporter];
-    console.log(this.task.TeamId)
-    console.log('Sprint number',this.sprintNumber)
-    console.log('Current Sprintno. ',this.currentSprintNumber)
-
+    
   }
   
   private _filter(value: string): string[] {
@@ -82,23 +79,11 @@ export class EditPageComponent implements OnInit {
     return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  // readTeamData(teamId :string){
-  //   this.enableLoader = true;
-  //   this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-  //         this.teamName=team.TeamName;
-  //         this.sprintNumber = team.CurrentSprintId;
-  //         this.currentSprintNumber=team.CurrentSprintId;
-  //         this.backlogSprintNumber=-1;
-
-  // }
-
   readTeamMembers(teamId :string){
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
-          console.log(team.CurrentSprintId)
           this.currentSprintNumber=team.CurrentSprintId;
-          console.log('ethayavathu poduvom', this.currentSprintNumber)
           this.backlogSprintNumber=-1;
 
 
@@ -226,13 +211,11 @@ export class EditPageComponent implements OnInit {
   showBacklog(){
     
     this.editTask.SprintNumber=this.backlogSprintNumber    
-    console.log('Showlog button is clicked', this.sprintNumber)
   }
     
   activeSprint(){
     
-    this.editTask.SprintNumber=this.currentSprintNumber
-    console.log('Active button is clicked' , this.sprintNumber) 
+    this.editTask.SprintNumber=this.currentSprintNumber 
   }
   
 
