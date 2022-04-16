@@ -6,7 +6,7 @@
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author: Twinkle Chatterjee (ctwinkle2812@gmail.com)
+ * Author: Vivek Kumar
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -126,7 +126,6 @@ exports.generateTemplate = function(mailType, valueArray) {
     subjectMessage = mailSubject;
     message.push(subjectMessage);
     message.push(htmlbody);
-    console.log("abc", message);
     return message;
   }).catch((err) => {
     console.error(err);
