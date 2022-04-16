@@ -37,7 +37,7 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
         if (mailType == "Watcher_Task") {
             valueArray.push(customParameter);// new Watcher email
             valueArray.push(taskId);
-            generateTemplate(mailType).then((data) => {
+            generateTemplate(mailType, valueArray).then((data) => {
                 const message = data;
                 sendMail(customParameter, message[0], message[1]);
             });
@@ -47,16 +47,20 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
                 valueArray.push(customParameter);// commentor or Deletor or editor or logger name
                 valueArray.push(taskId);
                 valueArray.push(taskData.Assignee);// assignee email
-                let message;
+                let message = "";
                 if (element == watchers.Assignee) {
                     valueArray.push(false);// is watcher
-                    message = generateTemplate(mailType, valueArray);
-                    sendMail(watchers.Assignee, message[0], message[1]);
+                    generateTemplate(mailType, valueArray).then((data) => {
+                        message = data;
+                        sendMail(watchers.Assignee, message[0], message[1]);
+                    });
                 } else {
                     valueArray.push(true);// is watcher
                     valueArray.push(element);// watcher email
-                    message = generateTemplate(mailType, valueArray);
-                    sendMail(element, message[0], message[1]);
+                    generateTemplate(mailType, valueArray).then((data) => {
+                        message = data;
+                        sendMail(element, message[0], message[1]);
+                    });
                 }
             });
         }
@@ -74,20 +78,16 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
  * @param {any} uid
  * @param {any} email
  * @param {any} displayName
- * @return {any}
  */
 exports.profileMailer = function(mailType, uid, email, displayName) {
     const valueArray = [];
     valueArray.push(uid);
     valueArray.push(email);
     valueArray.push(displayName);
-    const message = generateTemplate(mailType, valueArray);
-    console.log(email, "email in profilemailer");
-    const promise = sendMail(email, message[0], message[1]).catch((error) => {
-        console.error(error);
-        return error;
+    generateTemplate(mailType, valueArray).then((data)=>{
+        const message = data;
+        sendMail(email, message[0], message[1]);
     });
-    return Promise.resolve(promise);
 };
 
 
@@ -99,7 +99,6 @@ exports.profileMailer = function(mailType, uid, email, displayName) {
  * @param {any} userEmail
  * @param {any} organizationDomain
  * @param {any} teamId
- * @return {any}
  */
 exports.verificationMailer = function(mailType, teamName, teamManagerEmail, userEmail, organizationDomain, teamId) {
     const valueArray = [];
@@ -107,22 +106,9 @@ exports.verificationMailer = function(mailType, teamName, teamManagerEmail, user
     valueArray.push(teamManagerEmail);
     valueArray.push(userEmail);
     valueArray.push(organizationDomain);
-    const message = generateTemplate(mailType, valueArray);
     valueArray.push(teamId);
-    const promise = sendMail(userEmail, message[0], message[1]).catch((error) => {
-        console.error(error);
-        return error;
+    generateTemplate(mailType, valueArray).then((data)=>{
+        const message = data;
+        sendMail(userEmail, message[0], message[1]);
     });
-    return Promise.resolve(promise);
 };
-
-
-// const generateTemplate = function(mailType, valueArray) {
-    // const message = [];
-    // const subjectMessage = mailType;// generate subject
-    // const htmlMessage = valueArray;// generate htmlmessage
-    // message.push(subjectMessage);
-    // message.push(htmlMessage);
-    // return message;
-// };
-
