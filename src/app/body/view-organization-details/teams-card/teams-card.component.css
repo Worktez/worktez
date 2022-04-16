@@ -19,7 +19,16 @@
     border-radius: 10px;
     height: 100%;
 }
-
+.btn {
+    background-color: var(--primary-color);
+    width: 100%;
+    color: #ffffff;
+    border-radius:5px;
+	text-align:center;
+    border: none !important;
+    box-shadow: none;
+    outline: 0 none;
+}
 .team-pic {
     width: 37px;
     height: 37px;

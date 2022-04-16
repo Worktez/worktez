@@ -16,7 +16,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="container modal-body align-items-center px-4" id="addMemberPage">
-                <div class="row p-4">
+                <div class="row px-4">
                     <ul class="navbar-nav mr-auto">
                             <h4 class="active nav-link head bold" id="memberModalLabel">Link Github Repo</h4>
                     </ul>
@@ -32,62 +32,65 @@
                 
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <ng-container *ngIf="!dataFetched">
-                    <div class="row px-2 my-2">
-                        <div class="col-md-5 my-1">
+                    <div class="row px-2">
+                        <div class="col-md-5 py-0 my-0">
                             <span class="form-inline"><h3>Fetch repo by:</h3></span>
                         </div>
-                        <div class="col-md-12 my-1">
+                        <div class="col-md-12 my-0 py-0">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="organisation" [(ngModel)]="organisation" checked>
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="organisation" [(ngModel)]="searchType" checked>
                                 <label class="form-check-label" for="exampleRadios1">
                                   Organisation
                                 </label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="username" [(ngModel)]="username">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="username" [(ngModel)]="searchType">
                                 <label class="form-check-label" for="exampleRadios2">
                                   Username
                                 </label>
                               </div>
-                              <br><br>
-                            <input type="text" class="form-control" [(ngModel)]="memberOrgName"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name/username"><br>
-                            <button type="submit" class="btn px-4" id="button" style="background-color: bisque;">Fetch Repos</button>
+                              <br>
+                              <input *ngIf="searchType==='organisation'" type="text" class="form-control" [(ngModel)]="memberOrgName"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name">
+                            <input type="text" *ngIf="searchType==='username'" class="form-control" [(ngModel)]="memberOrgName"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the username"><br>
+                            <button type="submit" class="btn btn-primary px-4" id="button" >Fetch Repos</button>
                         </div>
                     </div>
                 </ng-container>
-                    <ng-container *ngIf="dataFetched">
-                        <select class="form-control form-control-sm" [(ngModel)]="prLink"
-                            [ngModelOptions]="{standalone: true}">
-                            <option [ngValue]="null" [disabled]="true">Select Github Repo</option>
-                            <ng-container *ngFor="let item of objData">
-                                <option>{{ item.html_url }}</option>
-                            </ng-container>
-                        </select>
-                    </ng-container>
-                    <div class="row mt-4">
-                        <ng-container *ngIf="showSubmitButton">
-                            <div class="col-12 pb-2 px-4">
-                                <button class="btn" type="submit" id="addButton"
-                                    [disabled]="enableLoader">Submit</button>
+                        <form *ngIf="dataFetched">
+                            <div class="card">
+                                <div class="card-header">
+                                    Select Github Repo
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <ng-container *ngFor="let item of objData">
+                                        <li (click)="addProjLink(item.html_url.slice(19))" class="list-group-item">{{ item.html_url.slice(19) }}</li>
+                                    </ng-container>
+                                </ul>
                             </div>
-                        </ng-container>
-                    </div>
+                    </form>
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="showClose">
-                    <div class="row">
-                        <div class="col">Successfully Updated!</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-danger" type="button" data-dismiss="modal"
-                                (click)="added()">Close</button>
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
                         </div>
+                        <div class="col-md-4"></div>
                     </div>
-                </ng-container>
-               
+                    <div class="row pl-2">
+                        <div class="col ml-5 font-weight-bold" style="font-size: medium;flex-wrap: wrap;">Successfully Integrated: {{projLink}}!</div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="added()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>             
             </div>
         </div>
     </div>

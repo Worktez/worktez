@@ -40,6 +40,7 @@ export interface Team {
     OrganizationId: string;
     CurrentSprintId: number;
     Scope: string[];
+    ProjectLink: string;
 }
 
 export interface TeamDataId extends Team {id: string;}

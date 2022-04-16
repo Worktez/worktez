@@ -58,6 +58,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         CurrentSprintId: 0,
         LabelCounters: 0,
         Scope: scope,
+        ProjectLink: string = "",
     });
     return Promise.resolve(setTeam);
 };

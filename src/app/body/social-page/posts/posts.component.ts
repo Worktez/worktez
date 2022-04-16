@@ -22,6 +22,8 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ToolsService } from '../../../services/tool/tools.service';
 import { map } from 'rxjs';
+import { defaultUser, User } from 'src/app/Interface/UserInterface';
+import { object } from 'firebase-functions/v1/storage';
 
 
 @Component({
@@ -37,6 +39,7 @@ export class PostsComponent implements OnInit {
   enableLoader: boolean;
   todayDate: string;
   time: string;
+  user: User;
   content: string = ""
   reactionStatus : boolean = false;
   public comments: Comment[];
@@ -47,6 +50,7 @@ export class PostsComponent implements OnInit {
   constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
+    this.getCreatorDetails();
   }
 
   showCommentBox(postId: string) {
@@ -115,4 +119,14 @@ export class PostsComponent implements OnInit {
       });
   }
 
-}
+  getCreatorDetails(){
+    console.log(this.post.Uid)
+    if(this.post.Uid=="defaultUser"){
+      this.user = defaultUser;
+    }else {
+      this.user = this.userService.users.filter((obj) => {
+        return obj.uid == this.post.Uid
+      })[0];
+    }
+    }
+  }
