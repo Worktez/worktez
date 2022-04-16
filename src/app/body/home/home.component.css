@@ -115,7 +115,6 @@
     overflow-y: hidden;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
-    padding-left: 10%;
     padding-top: 2%;
 }
 
