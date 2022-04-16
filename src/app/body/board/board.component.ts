@@ -42,6 +42,7 @@ export class BoardComponent implements OnInit {
   today: any = new Date();
   EDate: any;
   SDate: any;
+  currentSprintNumber: number;
 
   constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
@@ -100,7 +101,17 @@ export class BoardComponent implements OnInit {
         });
         if (sprints) {
           this.sprintData = sprints;
+          this.currentSprintNumber=this.sprintData.SprintNumber;
+          
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
+          if(this.currentSprintNumber==-1){
+      
+            this.currentSprintName="Backlog";
+            console.log(this.currentSprintName);
+          }
+          else if(this.currentSprintNumber==-2){
+            this.currentSprintName="Deleted";
+          }
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
           this.DaysUp = Math.abs((this.today - this.SDate)/(1000 * 60 * 60 * 24));
@@ -144,8 +155,17 @@ export class BoardComponent implements OnInit {
     else if(filterSprintNumber<-2){
       filterSprintNumber=-2;
     }
+    this.currentSprintNumber=filterSprintNumber;
     this.startService.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
+    if(filterSprintNumber==-1){
+      
+      this.currentSprintName="Backlog";
+    }
+    else if(filterSprintNumber==-2){
+      this.currentSprintName="Deleted";
+    }
+    
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }
