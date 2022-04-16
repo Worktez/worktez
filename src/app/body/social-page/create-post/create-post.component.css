@@ -40,6 +40,13 @@
 #button {
     background-color: var(--primary-color);
     color: white;
+    height: 5vh;
+    width: 100%;
+}
+
+.btn-outline-primary{
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 #button:focus,
@@ -48,6 +55,30 @@
     outline: none;
     box-shadow: none;
     background-color: var(--secondary-color);
+}
+
+#video_library{
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+}
+
+#video_library:hover{
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+
+#insert_photo{
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    border: var(--primary-border);
+}
+
+#insert_photo:hover{
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
 }
 
 select:focus,
