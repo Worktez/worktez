@@ -1,5 +1,5 @@
-/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -100,8 +100,6 @@ fastify.post("/updateTeam", (req, res) => {
 fastify.post("/addProjLink", (req, res) => {
   addProjLink(req, res);
 });
-
-
 
 /**
  * Description
