@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { Label, Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
@@ -31,10 +32,10 @@ export class TeamDetailsComponent implements OnInit {
 
   teamId: string;
   teamDataReady: boolean = false;
-
+  componentName:string ="ORGANIZATION-DETAILS";
   team: Team
 
-  constructor(private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,) { }
+  constructor(private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -77,5 +78,25 @@ export class TeamDetailsComponent implements OnInit {
         },
         complete: () => console.info("Completed getting Team Data...")
       });
+  }
+
+  createDefaultLabels() {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/createDefaultLabel');
+    const type: string[] = ["Bug", "Story", "Sub Task"];
+    const statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
+    const priorityLabels: string[] = ["High", "Medium", "Low"];
+    const difficultyLabels: string[] = ["High", "Medium", "Low"];
+    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels}).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.error("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful ')
+  });
   }
 }

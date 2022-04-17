@@ -46,6 +46,8 @@ export class ApplicationSettingsService {
 
   public notificationListObservable: Observable<Notification[]>;
 
+  public projectLink: string;
+
   teamDataReady: boolean = false;
   teamAvailable: boolean = false;
 
@@ -66,6 +68,7 @@ export class ApplicationSettingsService {
             this.difficulty = this.team.DifficultyLabels;
             this.type = this.team.Type;
             this.project = this.backendService.organizationDetails.TeamsId;
+            this.projectLink= this.team.ProjectLink;
           }
 
           data.TeamMembers.forEach(element => {

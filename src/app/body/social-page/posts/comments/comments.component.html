@@ -1,11 +1,11 @@
 <div class="row my-3">
-  <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle m-2" width="50" height="50">
+  <img src="{{user.photoURL}}" onerror="this.src = '../../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle m-2" width="50" height="50">
   <div class="card">
     <div class="card-header">
       <div class="row">
         <h3 class="ml-3">{{user.displayName}} <br>
         <span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer at Random Company</span></h3>
-        <button class="btn ml-auto p-0"><mat-icon fontSet="material-icons" class="align-middle">more_vert</mat-icon></button> 
+        <button class="btn ml-auto p-0" style="padding-left: 30px;margin-bottom: 35px;"><mat-icon fontSet="material-icons" class="align-middle">more_vert</mat-icon></button> 
       </div>
     </div>
     <div class="card-body pt-0">

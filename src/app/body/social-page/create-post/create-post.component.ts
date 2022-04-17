@@ -31,7 +31,7 @@ export class CreatePostComponent implements OnInit {
   enableLoader: boolean;
 
 
-  constructor(private functions: AngularFireFunctions, private toolService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions, private toolService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
   } 
 
@@ -41,6 +41,8 @@ export class CreatePostComponent implements OnInit {
     { label: "post", value: this.post },
     ];
     this.createPost();
+    this.enableLoader=false;
+    this.createPostCompleted.emit({ completed: true });
   }
 
   createPost() {
@@ -61,7 +63,6 @@ export class CreatePostComponent implements OnInit {
       },
       complete: () => console.info('Successfully added post')
     });
-  
     this.close();
     }
 

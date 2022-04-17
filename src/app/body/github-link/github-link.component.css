@@ -5,7 +5,6 @@
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
 * 
-* 
 * This program is distributed in the hope that it will be useful, 
 * but WITHOUT ANY WARRANTY; without even the implied warranty of 
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
@@ -15,8 +14,30 @@
 .modal-header {
     background-color: var(--primary-color);
 }
+.nav-link{
+    color: var(--text);
+}
+.btn-primary {
+    background-color: var(--primary-color);
+    width: 100%;
+    color: #ffffff;
+    border-radius:5px;
+	text-align:center;
+    border: none !important;
+}
+.list-group-item {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+.card{
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
 
-#addMemberPage,
+.list-group-item:hover {
+    background-color: var(--primary-bg);
+    cursor: pointer;
+}
 .modal-content {
     background-color: var(--secondary-bg);
     border-radius: 8px;
@@ -36,34 +57,12 @@
     font-weight: bold;
 }
 
-#addButton {
-    background-color: var(--secondary-color);
-    color: var(--button-text);
-    width: 100%;
-    text-align: center;
-}
-
-#addButton:hover {
-    background-color: var(--primary-color);
-}
-
-select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: #dc3226;
 }
-
-.form-email {
-    background-color: var(--primary-bg);
-    border: none;
-    color: var(--text);
-}
-
-.btn-secondary {
-    background-color: var(--button-hover-bg);
-}
-
-.btn-secondary:hover {
-    background-color: var(--button-bg);
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
 }
