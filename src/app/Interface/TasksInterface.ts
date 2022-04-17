@@ -35,6 +35,9 @@ export interface Tasks {
   Type: string;
   LinkCounter: number;
   LastUpdatedDate: string;
+  PrLink: string;
+  PrApiLink: string;
+  PrNumber: string;
 }
 
 export interface TasksId extends Tasks {id: string;}
