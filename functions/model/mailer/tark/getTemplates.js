@@ -6,7 +6,7 @@
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author: Twinkle Chatterjee (ctwinkle2812@gmail.com)
+ * Author: Twinkle Chatterjee <ctwinkle2812@gmail.com>
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
