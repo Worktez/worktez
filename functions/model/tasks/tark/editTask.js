@@ -54,9 +54,6 @@ exports.editTask = function(request, response) {
     let status = 200;
     let assigneeName = "";
 
-    console.log(title);
-    console.log(taskStatus);
-
     const date = request.body.data.Date;
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
@@ -233,7 +230,6 @@ exports.editTask = function(request, response) {
         // sendMail(assignee, subjectMessage, htmlMessage);
 
         comment = comment + changedData;
-        console.log(comment);
         addActivity("EDITED", comment, taskId, date, time, orgDomain, uid);
 
         Promise.all(promises).then(() => {

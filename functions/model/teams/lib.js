@@ -188,7 +188,6 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
  * @return {any}
  */
  exports.getLabelById = function(orgDomain, teamName, docId) {
-     console.log(orgDomain, teamName, docId);
     const getLabelByIdPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).get().then((doc) => {
         const data = doc.data();
         return data;

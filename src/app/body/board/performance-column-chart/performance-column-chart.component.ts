@@ -13,7 +13,6 @@
  ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -47,7 +46,7 @@ export class PerformanceColumnChartComponent implements OnInit {
     this.getData();
   }
 
-  async getData() {
+  getData() {
     let orgDomain = this.backendService.getOrganizationDomain();
     this.columnNames = this.teamMember == "Team" ? ["Sprints", this.teamId] : ["Sprints", this.teamMember];
     const callable = this.functions.httpsCallable('performanceChart/performanceChartData');

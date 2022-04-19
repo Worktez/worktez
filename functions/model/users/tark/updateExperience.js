@@ -44,9 +44,7 @@ exports.updateExperience = function(request, response) {
     };
     updateUserExperience(uid, experienceDoc, inputJson).then(() => {
         profileMailer("Update_Experience_Profile", uid, email, displayName);
-        console.log("Mail worked");
         result = { data: "User Experience updated successfully" };
-        console.log("Successful");
         return response.status(200).send(result);
     }).catch((error) => {
         result = { data: error };
