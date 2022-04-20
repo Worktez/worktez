@@ -17,6 +17,7 @@
       {{team.TeamName}}
     </div>
     <div class="card-body">
+      <button class="btn btn-primary" (click)="createDefaultLabels()">Add Default Label</button><br><br>
       <div class="row">
         <ng-container *ngFor="let item of team.Scope">
           <div class="col">

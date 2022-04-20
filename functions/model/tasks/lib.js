@@ -48,9 +48,12 @@ const { db } = require("../application/lib");
  * @param {any} taskFileCounter
  * @param {any} linkCounter=0
  * @param {any} lastUpdatedDate
+ * @param {any} prLink=""
+ * @param {any} prApiLink=""
+ * @param {any} prNumber
  * @return {any}
  */
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers, prLink="", prApiLink="", prNumber=null) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -76,6 +79,10 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         TaskFilesCounter: taskFileCounter,
         LinkCounter: linkCounter,
         LastUpdatedDate: lastUpdatedDate,
+        PrLink: prLink,
+        PrApiLink: prApiLink,
+        PrNumber: prNumber,
+
     });
     return Promise.resolve(createTask);
 };

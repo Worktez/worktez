@@ -23,7 +23,7 @@
 
 const { setLabelProperties, getTeam, updateTeamDetails } = require("../lib");
 
-exports.createLableProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels) {
+exports.createLabelProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels) {
     let scope;
     let displayName;
     let iconName;

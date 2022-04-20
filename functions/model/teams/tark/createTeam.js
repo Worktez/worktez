@@ -26,7 +26,7 @@ const { getOrg, updateOrg } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
-const { createLableProperties } = require("./createLabelProperties");
+const { createLabelProperties } = require("./createLabelProperties");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 
 
@@ -65,7 +65,7 @@ exports.createTeam = function(request, response) {
         const prom1 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus).then((data)=>{
-                    createLableProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels);
+                    createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels);
                     setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
                     setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
                 });

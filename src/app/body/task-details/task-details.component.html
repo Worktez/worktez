@@ -50,9 +50,11 @@
                                     alt="user">
                             </a> -->
                             <div class="pt-2 pr-2">
-                                    <img  src="../../../assets/git.png" height="35" class="rounded-circle" width="35"
+                                    <img  src="../../../assets/git.png" *ngIf="!prLinked" height="35" class="rounded-circle" width="35"
                                     alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel"
                                     (click)="linkPr()">
+                                    <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status p-2" data-toggle="tooltip" data-placement="top" title="view PR">
+                                       PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span></a>
                             </div>
                             <div class="logWork pt-3 pr-2"
                                 *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
@@ -303,7 +305,7 @@
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
-        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task"></app-git>
+        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" (addedPrLink)="addedPrLink($event)"></app-git>
     </ng-container>
 </ng-container>
 <app-loader *ngIf="!(gotTaskData)"></app-loader>

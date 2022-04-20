@@ -49,12 +49,12 @@ exports.updateChart = function(orgDomain, teamId, chartName, inputJson) {
 /**
  * Description
  * @param {any} orgDomain
- * @param {any} teamId
+ * @param {any} teamName
  * @param {any} chartName
  * @return {any}
  */
-exports.getOrganizationsChartDetails = function(orgDomain, teamId, chartName) {
-    const getDetailsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).get().then((doc) => {
+exports.getOrganizationsChartDetails = function(orgDomain, teamName, chartName) {
+    const getDetailsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Charts").doc(chartName).get().then((doc) => {
         return doc.data();
     });
     return Promise.resolve(getDetailsPromise);

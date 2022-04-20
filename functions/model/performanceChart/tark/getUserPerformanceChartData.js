@@ -29,29 +29,28 @@ exports.getUserPerformanceChartData = function(request, response) {
   const sprintRange = data.SprintNumberRange;
   const assignee = data.Assignee;
   const uid=data.Uid;
-  let result;
-  let status = 200;
-  
-  getUserPerformanceChart(orgDomain, uid).then((doc) => {
-    const responseData = [];
-    if (doc == undefined) {
-      getAllUsersInUids([uid]).then((data)=>{
-        const orgAppKey = data[0].SelectedOrgAppKey;
-        const teamId = data[0].SelectedTeamId;
-        setSchedularUnit("UserPerformanceChart", orgAppKey, assignee, teamId, orgDomain);
-        startSchedular();
-      });
-      result = {data: {status: "ERROR", data: "undefined"}};
-    } else {
-      for (const i in doc) {
-        responseData.push([i, doc[i]]);
-      }
-      result = { data: { status: "OK", data: responseData } };
-    }
-    return response.status(status).send(result);
-  }).catch((error) => {
-    status = 500;
-    console.log("Error:", error);
-    return response.status(status).send(result);
-  });
+
+  // This method needs improvement
+  // getUserPerformanceChart(orgDomain, uid).then((doc) => {
+  //   const responseData = [];
+  //   if (doc == undefined) {
+  //     getAllUsersInUids([uid]).then((data)=>{
+  //       const orgAppKey = data[0].SelectedOrgAppKey;
+  //       const teamId = data[0].SelectedTeamId;
+  //       setSchedularUnit("UserPerformanceChart", orgAppKey, assignee, teamId, orgDomain);
+  //       startSchedular();
+  //     });
+  //     result = {data: {status: "ERROR", data: "undefined"}};
+  //   } else {
+  //     for (const i in doc) {
+  //       responseData.push([i, doc[i]]);
+  //     }
+  //     result = { data: { status: "OK", data: responseData } };
+  //   }
+  //   return response.status(status).send(result);
+  // }).catch((error) => {
+  //   status = 500;
+  //   console.log("Error:", error);
+  //   return response.status(status).send(result);
+  // });
 };

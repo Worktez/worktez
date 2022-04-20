@@ -60,7 +60,7 @@ export class AuthService {
       displayName: username
     }).then(() => {
       this.createUserData(user);
-    }).catch(function (error) {
+    }).catch((error) => {
       console.log(error);
     });
   }
