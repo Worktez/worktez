@@ -69,6 +69,8 @@ export class QuickNotesComponent implements OnInit {
         this.quickNoteObservable=data;
       },
       error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.error(error);
       },
       complete: () => {

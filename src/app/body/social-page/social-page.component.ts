@@ -53,7 +53,8 @@ export class SocialPageComponent implements OnInit {
     callable({}).pipe(map(res=>{
       const data = res.data as Post[];
       return data
-    })).subscribe((data)=>{
+    })).subscribe({
+      next:(data)=>{
       if(data) {
         this.posts = data;
         this.posts.forEach(element => {
@@ -63,14 +64,14 @@ export class SocialPageComponent implements OnInit {
           this.dataReady = true;
         });
       }
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.error(error);
-      }
       this.showloader = false
       this.loadRecentActivity();
-    });
+    },
+    error:(error)=>{
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      console.error(error);
+    } });
   }
 
   createPost() {
