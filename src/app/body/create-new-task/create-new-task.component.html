@@ -149,6 +149,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div>
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone</span>
+                            <select class="form-select form-control form-control-sm p-0" [(ngModel)]="selectedMilestoneId" [ngModelOptions]="{standalone: true}" placeholder="Select Milestone Id">
+                                <option [ngValue]="0" [disabled]="false">Select Milestone</option>
+                                <ng-container *ngFor='let item of milestoneData'>
+                                    <option>{{ item.MilestoneId }}</option>
+                                </ng-container>
+
+                            </select>
+                        </div>
 
                 
                 <div class="modal-footer mt-n1">
