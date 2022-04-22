@@ -51,7 +51,6 @@ export class AddLabelComponent implements OnInit {
  submit(){
      this.enableLoader=true;
      const orgDomain = this.backendService.getOrganizationDomain();
-     console.log(this.teamName)
      const callable = this.functions.httpsCallable('teams/addLabel');
      callable({ColorCode:this.colorCode, DisplayName:this.displayName, IconName:this.iconName , Scope:this.scope, OrgDomain: orgDomain ,TeamName: this.teamName}).subscribe({
        next:() => {

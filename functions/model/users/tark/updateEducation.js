@@ -45,9 +45,7 @@ exports.updateEducation = function(request, response) {
     };
     updateUserEducation(uid, educationDoc, inputJson).then(() => {
         profileMailer("Update_Education_Profile", uid, email, displayName);
-        console.log("Mail worked");
         result = { data: "User Education updated successfully" };
-        console.log("Successful");
         return response.status(200).send(result);
     }).catch((error) => {
         result = { data: error };

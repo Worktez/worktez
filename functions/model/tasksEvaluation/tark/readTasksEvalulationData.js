@@ -59,11 +59,9 @@ exports.readTasksEvaluationData = function(request, response) {
 
     return Promise.all(promises).then(() => {
         result = { data: {Tasks: tasks, BacklogTasks: backlogTasks} };
-        console.log("Read Task Evaluation Page Data Successfully");
         return response.status(status).send(result);
     }).catch((err) => {
         result = { data: err };
-        console.log("Error occured in reading task evaluation page data");
         return response.status(status).send(result);
     });
 };

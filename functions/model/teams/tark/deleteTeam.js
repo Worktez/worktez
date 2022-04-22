@@ -48,9 +48,6 @@ exports.deleteTeam = function(request, response) {
 
   const promise2 = getOrg(orgDomain).then((orgDoc) => {
     if (orgDoc != undefined) {
-      const orgId = orgDoc.OrganizationId;
-      console.log(orgId);
-
       const inputJson = {
         TeamsId: admin.firestore.FieldValue.arrayRemove(teamId),
         TeamsName: admin.firestore.FieldValue.arrayRemove(teamName),

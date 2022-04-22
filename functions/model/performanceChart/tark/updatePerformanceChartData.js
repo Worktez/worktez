@@ -38,7 +38,7 @@ exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprin
         const teamMembers = team.TeamMembers;
 
         teamMembers.forEach((element) => {
-            updatedUserPerformanceChartData(orgDomain, element, sprintRange);
+            updatedUserPerformanceChartData(orgDomain, element, sprintRange, teamId, teamName);
         });
 
         const promise1 = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {

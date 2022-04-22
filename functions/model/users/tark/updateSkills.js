@@ -45,7 +45,6 @@ exports.updateUserSkill = function(request, response) {
         updateUser(updateUserInputJson, uid).then(() => {
             // sendMail(email, subjectMessage, htmlMessage);
             profileMailer("Update_Skill_Profile", uid, email, displayName);
-            console.log("Successful");
         }).catch((error) => {
             status = 500;
             console.error("Error", error);
@@ -53,7 +52,6 @@ exports.updateUserSkill = function(request, response) {
     });
     return Promise.resolve(promise1).then(() => {
         result = { data: "User Skills updated successfully" };
-        console.log("Successful");
         return response.status(status).send(result);
     }).catch((error) => {
         result = { data: error };
