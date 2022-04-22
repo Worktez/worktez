@@ -155,7 +155,7 @@ exports.createNewTask = function(request, response) {
             } else {
                 totalNumberOfTask = 1;
                 totalUnCompletedTask = 1;
-                const startStoryPointNumber = storyPointNumber + parseInt(sprint.StartStoryPoint);
+                const startStoryPointNumber = storyPointNumber;
 
                 const newSprintPromise = getTeam(orgDomain, project).then((team) => {
                     setSprint(orgDomain, project, fullSprintName, orgId, team.TeamId, sprintNumber, "Not Started", totalNumberOfTask, totalUnCompletedTask, startStoryPointNumber);
