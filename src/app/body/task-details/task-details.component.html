@@ -67,7 +67,7 @@
                                         title="Menu">more_horiz</span>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                         <div class="reopenTask "
-                                            *ngIf="startService.userReady && task.Status=='Completed'">
+                                            *ngIf="startService.userReady && task.Status=='Completed' && !showLoader">
                                             <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
                                                 Task</button>
                                         </div>
@@ -308,4 +308,6 @@
         <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" (addedPrLink)="addedPrLink($event)"></app-git>
     </ng-container>
 </ng-container>
-<app-loader *ngIf="!(gotTaskData)"></app-loader>
+<ng-container *ngIf="showLoader || !(gotTaskData)">
+    <app-loader></app-loader>
+</ng-container>

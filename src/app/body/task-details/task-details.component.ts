@@ -74,7 +74,7 @@ export class TaskDetailsComponent implements OnInit {
   activityDataReady: boolean = false
 
   gotTaskData: boolean=false;
-
+  showLoader: boolean=false;
   
 
   activityData: Activity[]
@@ -300,15 +300,16 @@ export class TaskDetailsComponent implements OnInit {
 
   }
 
-  async reopenTask () {
+  reopenTask () {
+    this.showLoader = true;
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+    callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
       next: (data) => {
-        console.log("Successful");
         this.getTaskPageData();
-        return;
+        this.showLoader = false;
+        console.log("Successful");
       },
       error: (error) => {
         this.errorHandlerService.showError = true;
