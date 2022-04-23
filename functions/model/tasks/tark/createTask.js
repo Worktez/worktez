@@ -119,7 +119,7 @@ exports.createNewTask = function(request, response) {
                 milestoneId = "0";
             }
             updateTeamDetails(updateTeamJson, orgDomain, project);
-            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0, 0, creationDate, watchers, "", "", null, milestoneId);
+            setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0, 0, creationDate, watchers, milestoneId);
         }).error((error) => {
             status = 500;
             console.log("Error:", error);

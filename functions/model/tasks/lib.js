@@ -53,7 +53,7 @@ const { db } = require("../application/lib");
  * @param {any} prNumber
  * @return {any}
  */
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers, prLink="", prApiLink="", prNumber=null, milestoneId) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers, milestoneId, prLink="", prApiLink="", prNumber=null) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
