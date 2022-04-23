@@ -33,10 +33,10 @@
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
-                <ng-container *ngIf="gotQuickNotes; else loader">
-                <div *ngIf="noNotes;" class="noNotes">No notes Added</div>
+                <ng-container *ngIf="!quickNotes.showloader; else loader">
+                <div *ngIf="quickNotes.noNotes;" class="noNotes">No notes Added</div>
 
-                    <ng-container *ngFor="let item of notes">
+                    <ng-container *ngFor="let item of quickNotes.notes">
                         <li class="list-group-item" id="note">
                             <div class="row">
                                 <div class="col-8" (click)="openNote(item)">
