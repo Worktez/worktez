@@ -41,7 +41,7 @@
     </div>
     <hr>
     <div class="row p-2">
-        <div class="col-md-10">
+        <div class="col-md-7">
             <ul class="nav">
                 <li class="nav-item mx-2">
                     <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
@@ -55,16 +55,23 @@
                 </li>
             </ul>
         </div>
-        <div class="col-2">
+        <div class="col pl-0">
+            <button class="create-team float-right" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()"
+            title="Create a New Team">
+            <span class="material-icons pl-1" style="position: relative;top: 3px;">group_add</span>
+            Create New Team</button>
+         </div>
+        <!-- <div class="col-2">
             <span type="button" class="material-icons float-right p-2 add-team" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()">group_add</span>
-        </div>
+        </div> -->
     </div>
     <div class="row p-2">
         <ng-container *ngIf="showTeamsDetails">
             <!-- <div class="container"> -->
             <div class="row">
                 <ng-container *ngFor="let team of teams">
-                    <div class="col-md-4 my-3">
+                    <div class="col-md-auto my-3 team-cards">
                         <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
                     </div>
                 </ng-container>
