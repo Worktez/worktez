@@ -47,9 +47,7 @@ exports.addExperience = function(request, response) {
 
     const promise2 = addUserExperience(uid, organizationName, position, start, end).then(() => {
         profileMailer("Add_Experience_Profile", uid, email, displayName);
-        console.log("Mail worked");
         result = { data: "User Experience added successfully" };
-        console.log("Successful");
     }).catch((error) => {
         result = { data: error };
         status = 500;

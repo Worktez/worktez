@@ -143,17 +143,6 @@ export class UpdateTeamComponent implements OnInit {
     this.childStep -= 1
   }
 
-  addMember() {
-    this.addMemberEnabled = true;
-  }
-
-  addedMember(data: { completed: boolean, memberEmail: string}) {
-    if (data.memberEmail) {
-      this.teamMembers.push(data.memberEmail);
-    }
-    this.addMemberEnabled = false;
-  }
-
   async removeMemberDB(remove: string) {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('teams/removeMember');
@@ -195,7 +184,7 @@ export class UpdateTeamComponent implements OnInit {
       jQuery('#updateTeam').modal('hide');
       jQuery('#form').trigger("reset");
       this.teamUpdated.emit({ completed: true });
-      this.router.navigate(['MyDashboard']);
+      this.router.navigate(['TeamDetails', this.teamId]);
         console.log("Successful ");
       },
       error: (error) => {

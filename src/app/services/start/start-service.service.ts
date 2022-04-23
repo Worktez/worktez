@@ -20,6 +20,7 @@ import { User } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from '../applicationSettings/application-settings.service';
 import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
+import { QuickNotesService } from '../quickNotes/quick-notes.service';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
+  constructor(private quickNotes: QuickNotesService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -112,7 +113,7 @@ export class StartServiceService {
     });
   }
 
-  loadNext(SelectedOrgAppKey, SelectedTeamId, uid, AppTheme) {
+  loadNext(SelectedOrgAppKey: string, SelectedTeamId: string, uid: string, AppTheme: string) {
     this.userAppSettingsReady = true;
     this.authService.landingToSocial = false
     if (SelectedOrgAppKey != "") {
@@ -121,6 +122,7 @@ export class StartServiceService {
       this.backendService.getOrgDetails(SelectedOrgAppKey);
       this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
       this.authService.themeService.changeTheme(AppTheme);
+      this.quickNotes.getQuickNotes();
     } else {
       this.authService.organizationAvailable = false;
     }
@@ -145,6 +147,7 @@ export class StartServiceService {
           this.applicationSettingsService.editedTeamId = this.selectedTeamId;
         }
         this.backendService.organizationsData.subscribe(data => {
+          console.log("p1");
           this.readApplicationData();
         });
         this.authService.myTeamsListObservable.subscribe(data => {
@@ -164,6 +167,8 @@ export class StartServiceService {
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
+      console.log("p2");
+      console.log(teams);
       this.teamData = teams;
       if (this.teamData.TeamId == this.selectedTeamId) {
         if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
@@ -185,6 +190,7 @@ export class StartServiceService {
         this.role = "Member";
       }
       this.showTeamsData = true;
+      console.log("p3");
       this.applicationDataState.next(true);
       return this.teamData;
     });

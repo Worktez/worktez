@@ -48,9 +48,7 @@ exports.addProject = function(request, response) {
 
     const promise2 = addUserProject(uid, projectName, description, start, end).then(() => {
         profileMailer("Add_Project_Profile", uid, email, displayName);
-        console.log("Mail worked");
         result = { data: "User Project updated successfully" };
-        console.log("Successful");
     }).catch((error) => {
         result = { data: error };
         status = 500;

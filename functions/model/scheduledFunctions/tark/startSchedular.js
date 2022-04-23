@@ -33,6 +33,7 @@ exports.startSchedular = function() {
         
         getTeamUseTeamId(schDoc.data().OrgDomain, schDoc.data().TeamId).then((team) => {
           const currentSprintID = team.CurrentSprintId;
+          const teamName = team.TeamName;
           const sprintRange = {
             SprintRange1: currentSprintID - 4,
             SprintRange2: currentSprintID,
@@ -40,8 +41,8 @@ exports.startSchedular = function() {
 
           if (type == "SprintEvaluationChart") {
             updateSprintEvaluationGraphData(schDoc.data().OrgDomain, schDoc.data().TeamId, sprintRange);
-          } else if (type == "UserPerformanceChart") {
-            updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange);
+          // } else if (type == "UserPerformanceChart") {
+          //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
           } else if (type == "PerformanceChart") {
             updatePerformanceChartData(schDoc.data().OrgDomain, schDoc.data().TeamId, schDoc.data().Assignee, sprintRange);
           } else if (type == "AutoSprintCompletion") {

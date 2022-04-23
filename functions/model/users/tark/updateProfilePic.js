@@ -36,12 +36,10 @@ exports.updateProfilePic = function(request, response) {
     updateUserInputJson = {
         photoURL: photoURL,
     };
-    console.log("Working  ", uid);
     updateUser(updateUserInputJson, uid).then(() => {
         // sendMail(email, subjectMessage, htmlMessage);
         profileMailer("Update_Pic_Profile", uid, email, displayName);
         result = { data: "Profile Picture updated successfully" };
-        console.log("Successful");
         return response.status(200).send(result);
     }).catch((error) => {
         result = { data: error };

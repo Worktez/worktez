@@ -78,7 +78,11 @@ input:focus {
     color: var(--secondary-color);
     font-size: 48px;
 }
-
+#CheckIcon{
+    color: var(--secondary-color);
+    width:"24";
+    height:"24";
+}
 #check_availability{
     margin: 0;
   position: absolute;

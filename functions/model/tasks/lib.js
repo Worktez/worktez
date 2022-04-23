@@ -53,7 +53,7 @@ const { db } = require("../application/lib");
  * @param {any} prNumber
  * @return {any}
  */
-exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers, prLink="", prApiLink="", prNumber=null) {
+exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers, milestoneId, prLink="", prApiLink="", prNumber=null) {
     const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
         Id: taskId,
         Title: title,
@@ -82,6 +82,7 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
         PrLink: prLink,
         PrApiLink: prApiLink,
         PrNumber: prNumber,
+        MilestoneId: milestoneId,
 
     });
     return Promise.resolve(createTask);
@@ -126,7 +127,7 @@ exports.getTask = function(taskId, orgDomain) {
  * @param {any} sprintRange2=""
  * @return {any}
  */
-exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filterAssignee = "", filterPriority = "", filterDifficulty = "", filterStatus = "", filterProject = "", sprintRange1 = "", sprintRange2 = "") {
+exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filterAssignee = "", filterPriority = "", filterDifficulty = "", filterStatus = "", filterProject = "", sprintRange1 = "", sprintRange2 = "", milestoneId = "") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
     if (sprintNumber != "") {
         query = query.where("SprintNumber", "==", sprintNumber);
@@ -156,6 +157,9 @@ exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filter
     }
     if (teamId != "") {
         query = query.where("TeamId", "==", teamId);
+    }
+    if (milestoneId != "") {
+        query = query.where("MilestoneId", "==", milestoneId);
     }
 
     const getAllTasksPromise = query.get();

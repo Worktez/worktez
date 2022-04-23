@@ -20,7 +20,7 @@
         <ng-container *ngIf="startService.showTeamsData; else loader">
             <div class="row pt-2">
                 <div class="col col-md-5" *ngIf="startService.showTeamsData">
-                    <app-performance-chart [userEmail]="startService.userEmail" [uid]="startService.uid" [currentSprint]="startService.teamCurrentSprintNumber"></app-performance-chart>
+                    <app-performance-chart [userEmail]="startService.userEmail" [uid]="startService.uid" [currentSprint]="startService.teamCurrentSprintNumber" [teamId]="startService.selectedTeamId"></app-performance-chart>
                 </div>
                 <div class="col col-md-7" *ngIf="startService.showTeamsData">
                     <app-my-tasks [userEmail]="startService.userEmail" [currentSprint]="startService.teamCurrentSprintNumber"></app-my-tasks>

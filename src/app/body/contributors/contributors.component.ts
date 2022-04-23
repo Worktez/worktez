@@ -41,7 +41,6 @@ export class ContributorsComponent implements OnInit {
     const callable = this.functions.httpsCallable("contributors/getContributorsData");
     callable({}).pipe(
       map(actions => {
-        console.log(actions)
         return actions as Contributors[];
     })).subscribe({
       next: (data) => {

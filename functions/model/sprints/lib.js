@@ -78,7 +78,6 @@ exports.updateSprint = function(inputJson, orgDomain, teamName, fullSprintName) 
  * @return {any}
  */
 exports.getSprint = function(orgDomain, teamName, fullSprintName) {
-    console.log(orgDomain, teamName, fullSprintName);
     const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).get().then((sprint) => {
         if (sprint.exists) {
         return sprint.data();

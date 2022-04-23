@@ -23,14 +23,11 @@
 const { getAllUserExperience } = require("../lib");
 
 exports.getExperienceList = function(request, response) {
-    console.log("coming to getting experience list");
     const uid = request.body.data.Uid;
 
     let status = 200;
     const resultData = [];
     let result;
-
-    console.log("Reading Data of experience");
 
     getAllUserExperience(uid).then((snapshot) => {
         if (snapshot == undefined) {
