@@ -93,10 +93,12 @@ export class CreateNewTeamComponent implements OnInit {
   difficultyLabels: string[] = ["High", "Medium", "Low"]
 
   async submit() {
-    this.teamName = this.teamName.trimRight();
-    this.teamName = this.teamName.trimLeft();
-    this.teamId = this.teamId.trimLeft();
-    this.teamId = this.teamId.trimRight();
+    if (this.teamName!=undefined || this.teamId!=undefined || this.teamManagerEmail!=undefined){
+      this.teamName = this.teamName.trimRight();
+      this.teamName = this.teamName.trimLeft();
+      this.teamId = this.teamId.trimLeft();
+      this.teamId = this.teamId.trimRight();
+    }
     this.teamMembers.push(this.teamManagerEmail);
     let data = [
       { label: "teamName", value: this.teamName },
@@ -161,6 +163,6 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(['MyDashboard']);
+    this.router.navigate(['ViewOrganizationDetails']);
   }
 }

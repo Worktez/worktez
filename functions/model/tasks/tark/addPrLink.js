@@ -29,7 +29,6 @@ exports.addPrLink = function(request, response) {
     const prLink = request.body.data.PrLink;
     const prApiLink = request.body.data.PrApiLink;
     const prNumber = request.body.data.PrNumber;
-    console.log(orgDomain, taskId, prLink, prNumber);
 
     let status = 200;
     let result;

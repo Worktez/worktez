@@ -23,14 +23,11 @@
 const { getAllUserEducation } = require("../lib");
 
 exports.getEducationList = function(request, response) {
-    console.log("coming to getting education list");
     const uid = request.body.data.Uid;
 
     let status = 200;
     const resultData = [];
     let result;
-
-    console.log("Reading Data of education");
 
     getAllUserEducation(uid).then((snapshot) => {
         if (snapshot == undefined) {

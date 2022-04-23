@@ -49,15 +49,21 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
+    console.log("0");
 
     if(this.startService.showTeamsData) {
+      console.log("1");
       this.readSprintData();
     } else {
+      console.log("2");
       this.startService.userDataStateObservable.subscribe((data) => {
+        console.log("3");
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
+            console.log("4");
             if(data) {
               this.applicationSettingsService.teamData.subscribe((data) => {
+                console.log("5");
                 if(data) {
                   this.readSprintData();
                 }
@@ -94,12 +100,14 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
+      console.log("checking 0");
       if(this.startService.selectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
         });
         if (sprints) {
+          console.log("checking 1");
           this.sprintData = sprints;
           this.currentSprintNumber=this.sprintData.SprintNumber;
           
@@ -107,7 +115,6 @@ export class BoardComponent implements OnInit {
           if(this.currentSprintNumber==-1){
       
             this.currentSprintName="Backlog";
-            console.log(this.currentSprintName);
           }
           else if(this.currentSprintNumber==-2){
             this.currentSprintName="Deleted";
@@ -131,6 +138,7 @@ export class BoardComponent implements OnInit {
         }
       });
     } else {
+      console.log("checking 2");
       this.startService.readApplicationData();
       this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data) {

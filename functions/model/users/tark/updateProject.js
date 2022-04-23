@@ -46,9 +46,7 @@ exports.updateProject = function(request, response) {
     updateUserProject(uid, projectDoc, inputJson).then(() => {
         // sendMail(email, subjectMessage, htmlMessage);
         profileMailer("Update_Project_Profile", uid, email, displayName);
-        console.log("Mail worked");
         result = { data: "User Project updated successfully" };
-        console.log("Successful");
         return response.status(200).send(result);
     }).catch((error) => {
         result = { data: error };

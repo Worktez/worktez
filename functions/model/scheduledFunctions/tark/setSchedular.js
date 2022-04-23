@@ -22,9 +22,7 @@ const { getApplicationData, updateApplication } = require("../../application/lib
 const { setSchedular, getAllSchedular } = require("../lib");
 
 exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain) {
-    console.log(type, orgAppKey, assignee, teamId, orgDomain);
     getAllSchedular(type, orgAppKey, assignee, teamId, orgDomain).then((snapshot)=>{
-        console.log(snapshot.docs);
         if (snapshot.docs.length != 0) {
             console.log("Job already exists");
         } else {
