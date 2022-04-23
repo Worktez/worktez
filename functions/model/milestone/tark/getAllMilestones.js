@@ -24,7 +24,12 @@
 
 const { addMilestone, getAllMilestonesData } = require("../lib");
 
-
+ /**
+ * Description
+ * @param {any} request
+ * @param {any} response
+ * @return {any}
+ */
 exports.getAllMilestones = function(request, response) {
     let result;
     let status = 200;

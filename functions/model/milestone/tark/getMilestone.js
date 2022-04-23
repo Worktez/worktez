@@ -22,6 +22,12 @@
  ***********************************************************/
 const { getMilestoneData } = require("../lib");
 
+ /**
+ * Description
+ * @param {any} request
+ * @param {any} response
+ * @return {any}
+ */
 exports.getMilestone = function(request, response) {
     let result;
     let status = 200;

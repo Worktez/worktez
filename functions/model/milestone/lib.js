@@ -27,9 +27,9 @@
  * @param {any} title
  * @param {any} description
  * @param {any} milestoneId
- * @param {anu} teamId
- * @param {anu} totalTasks
- * @param {anu} totalCompletedTasks
+ * @param {any} teamId
+ * @param {any} totalTasks
+ * @param {any} totalCompletedTasks
  * @param {any} creationDate
  * @param {any} creationTime
  * @return {any}
@@ -49,6 +49,12 @@ exports.setMilestone = function(uid, orgDomain, title, description, milestoneId,
     return Promise.resolve(addMilestonePromise);
 };
 
+ /**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} milestoneId
+ * @return {any}
+ */
 exports.getMilestoneData = function(orgDomain, milestoneId) {
     const getMilstoneDataPromise = db.collection("Organizations").doc(orgDomain).collection("Milestones").doc(milestoneId).get().then((doc) => {
         if (doc.exists) return doc.data();
@@ -57,6 +63,12 @@ exports.getMilestoneData = function(orgDomain, milestoneId) {
     return Promise.resolve(getMilstoneDataPromise);
 };
 
+ /**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamId
+ * @return {any}
+ */
 exports.getAllMilestonesData = function(orgDomain, teamId="") {
     let query = db.collection("Organizations").doc(orgDomain).collection("Milestones");
     if (teamId != "") {

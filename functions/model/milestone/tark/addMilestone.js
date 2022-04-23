@@ -23,6 +23,11 @@
 const { setMilestone } = require("../lib");
 const { getAllMilestonesData } = require("../lib");
 
+ /**
+ * Description
+ * @param {any} request
+ * @param {any} response
+ */
 exports.addMilestone = function(request, response) {
     let result;
     let status = 200;
@@ -33,7 +38,6 @@ exports.addMilestone = function(request, response) {
     const creationDate = request.body.data.CreationDate;
     const creationTime = request.body.data.CreationTime;
     const teamId = request.body.data.TeamId;
-    const milestoneData = [];
     const totalTasks = 0;
     const totalCompletedTask = 0;
 

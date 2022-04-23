@@ -21,5 +21,5 @@ export interface Milestones {
     Title: string;
     TotalCompletedTasks: string;
     TotalTasks: [];
-    CreatorUid: [];
+    CreatorUid: string;
   }
