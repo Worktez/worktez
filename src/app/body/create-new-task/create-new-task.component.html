@@ -30,7 +30,7 @@
                         <div class="col">
                             {{ todayDate }}
                         </div>
-                        <div class="col d-flex justify-content-end">
+                        <div class="col d-flex justify-content-end" *ngIf="!showClose" >
                             <span id="Active" class="p-2 m-2" (click)="activeSprint()" *ngIf="sprintNumber!=currentSprintNumber">Active Sprint</span>
                             <span id="Backlog" class="p-2 m-2" (click)="showBacklog()" *ngIf="sprintNumber!=backlogSprintNumber">Backlog</span>
                         </div>
