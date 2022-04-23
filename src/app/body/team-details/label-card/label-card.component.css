@@ -46,10 +46,6 @@
 .btn:hover {
     background-color: var(--hover);
 }
-/* 
-.clr {
-    background-color: white;
-} */
 
 .header {
     font-weight: bold;
