@@ -96,6 +96,9 @@ export class HeaderComponent implements OnInit {
   kanbanBoard() {
     this.router.navigate(['/KanbanBoard']);
   }
+  milestoneGraph(){
+    this.router.navigate(['/Milestone'])
+  }
 
 }
 
