@@ -123,6 +123,7 @@ export class TaskDetailsComponent implements OnInit {
   getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
+      console.log("Checking org domain in getTaskDetails 1: ", this.orgDomain);
       this.getTaskDetail();
       this.getActivityData();
       this.getLinkData();
@@ -131,6 +132,7 @@ export class TaskDetailsComponent implements OnInit {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();
+          console.log("Checking org domain in getTaskDetails 2: ", this.orgDomain);
           this.getTaskDetail();
           this.getActivityData();
           this.getLinkData();
@@ -177,6 +179,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getActivityData () {
+    this.activityDataReady = false;
     const callable = this.functions.httpsCallable("activity/getActivity");
      callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
@@ -230,11 +233,10 @@ export class TaskDetailsComponent implements OnInit {
       const callable = this.functions.httpsCallable('tasks/comment');
       const appKey = this.backendService.getOrganizationAppKey();
 
-      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+      callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
           this.getActivityData();
           this.comment = "";
-          return;
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
@@ -351,10 +353,9 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  async addWatcher() {
-    
+  addWatcher() {
     const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
-    await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
+    callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
       next: (data) => {
         console.log("Successful");
         
@@ -367,7 +368,7 @@ export class TaskDetailsComponent implements OnInit {
         console.log( "Error", error );
       },
       complete: () => console.info('Successful')
-  });
+    });
   }
 
   linkPr() {

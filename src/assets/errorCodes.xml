@@ -316,5 +316,49 @@
         </ExternalError>
       </SubSystem>
   </SubComponent>
+  <SubComponent name="CREATE-NEW-TEAM" code="2">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+          <Api code="03" description= "API_ERROR"></Api>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+  </SubComponent>
+  <SubComponent name="KANBAN-CARD" code="28">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+          <Api code="03" description= "API_ERROR"></Api>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+  </SubComponent>
+    <SubComponent name="QUICK-NOTES" code="29">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+          <Api code="03" description= "API_ERROR"></Api>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+        <SubComponent name="SOCIAL-PAGE" code="30">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+          <Api code="03" description= "API_ERROR"></Api>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
+  </SubComponent>
+  </SubComponent>
   
 </Component>
