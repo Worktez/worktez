@@ -163,6 +163,6 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(['MyDashboard']);
+    this.router.navigate(['ViewOrganizationDetails']);
   }
 }
