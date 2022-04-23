@@ -17,7 +17,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MyEducationData, MyExperienceData, MyOrganizationData, MyProjectData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
-import { BackendService } from './backend/backend.service';
 import { ThemeService } from './theme/theme.service';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
@@ -69,17 +68,17 @@ export class AuthService {
     await this.afauth.signInWithEmailAndPassword(email, password);
   }
 
-  async createUserData(user: User) {
+  createUserData(user: User) {
     const callable = this.functions.httpsCallable('users/createNewUser');
-      console.log("create new user from ui");
-      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
-        next: (data) => {
-          console.log("Successful ");
-        },
-        error: (error) => {
-          console.error("Error", error);
-        },
-        complete: () => console.info('Successful ')
+    console.log("create new user from ui");
+    callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+      },
+      error: (error) => {
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successful ')
     });
 
   }
@@ -122,7 +121,7 @@ export class AuthService {
     }));
   }
 
-  getMyOrgCollectionDocs(uid, appKey) {
+  getMyOrgCollectionDocs(uid: string, appKey: string) {
     const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
      callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {

@@ -13,11 +13,11 @@
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { map, Observable } from 'rxjs';
 import { QuickNote } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { QuickNotesService } from 'src/app/services/quickNotes/quick-notes.service';
 
 @Component({
   selector: 'app-quick-notes',
@@ -27,17 +27,12 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 export class QuickNotesComponent implements OnInit {
 
   showNotesList: boolean = false
-  public quickNoteObservable: QuickNote[]
-  public notes: QuickNote[]
   componentName:string = "QUICK-NOTES"
-  showloader: boolean = false
   showAddNote: boolean = false
   openEditNote: boolean = false
   selectedNote: QuickNote;
-  gotQuickNotes: boolean=false;
-  noNotes: boolean = true;
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
+  constructor(private quickNotes: QuickNotesService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -45,37 +40,7 @@ export class QuickNotesComponent implements OnInit {
   showList() {
     this.showNotesList = true
     this.showAddNote = false
-    this.showloader = true
-    const uid = this.authService.getLoggedInUser();
-
-    const callable = this.functions.httpsCallable("quickNotes/getMyNotesList");
-    callable({Uid: uid }).pipe(map(res=>{
-      const data = res.data as QuickNote[];
-      return data;
-    })).subscribe({
-      next: (data) => {
-        if(data) {
-          this.notes = data;
-        }
-        if(this.notes.length>0){
-          this.noNotes = false
-        }
-        else{
-          this.noNotes = true;
-        }
-        this.showloader = false
-        
-        this.gotQuickNotes=true;
-        this.quickNoteObservable=data;
-      },
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.error(error);
-      },
-      complete: () => {
-        console.info('Getting Notes List successful')}
-    });
+    this.quickNotes.getQuickNotes();
   }
 
   openAddNote() {
@@ -106,11 +71,11 @@ export class QuickNotesComponent implements OnInit {
     }
   }
 
-  async deleteNote(docId: string) {
+  deleteNote(docId: string) {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
     
-    await callable({Uid: uid, DocId: docId}).subscribe({
+    callable({Uid: uid, DocId: docId}).subscribe({
       next: (data) => {
         this.showList();
         console.log("Successfull");
