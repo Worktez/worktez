@@ -32,7 +32,6 @@ exports.setMyOrganization = function(request, response) {
     };
     updateUser(updateUserInputJson, uid).then(() => {
         result = { data: "User Profile updated successfully" };
-        console.log("Successful");
         return response.status(200).send(result);
     }).catch((error) => {
         result = { data: error };

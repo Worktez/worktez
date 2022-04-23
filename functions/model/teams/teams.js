@@ -71,7 +71,6 @@ fastify.post("/deleteTeam", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getTeamData", (req, res) => {
-  console.log("calling gettingTeamData api");
   getTeamData(req, res);
 });
 

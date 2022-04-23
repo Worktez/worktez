@@ -48,9 +48,7 @@ exports.addEducation = function(request, response) {
 
     const promise2 = addUserEducation(uid, instituteName, degree, start, end).then(() => {
         profileMailer("Add_Education_Profile", uid, email, displayName);
-        console.log("Mail worked");
         result = { data: "User Education updated successfully" };
-        console.log("Successful");
     }).catch((error) => {
         result = { data: error };
         status = 500;

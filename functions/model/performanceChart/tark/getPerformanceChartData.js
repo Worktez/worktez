@@ -22,8 +22,6 @@ const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular
 const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { getOrganizationsChartDetails } = require("../lib");
-const { getUserPerformanceChartData } = require("./getUserPerformanceChartData");
-const { getUserUseEmail} = require("../../users/lib");
 
 exports.getPerformanceChartData = function(request, response) {
   const data = request.body.data;
@@ -34,45 +32,50 @@ exports.getPerformanceChartData = function(request, response) {
   let teamName;
   let result;
   let status = 200;
+  let chartName = "";
 
   if (assignee=="Team") {
-    const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
-      teamName = team.TeamName;
-      const p1 = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((doc) => {
-        const responseData = [];
-        if (doc == undefined) {
-          getOrg(orgDomain).then((data) => {
-            const orgAppKey = data.AppKey;
-            setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
-            startSchedular();
-          });
-          result = {data: {status: "ERROR", data: "undefined"}};
-        } else {
-          for (const i in doc) {
-            responseData.push([i, doc[i]]);
-          }
-          result = { data: { status: "OK", data: responseData } };
-        }
-      });
-      return Promise.resolve(p1);
-    }).catch((error) => {
-      status = 500;
-      console.log("Error:", error);
-    });
-    return Promise.resolve(performanceChartDataPromise).then(() => {
-      console.log("Fetched Performance Chart Data Successfully");
-      return response.status(status).send(result);
-    }).catch((error) => {
-      console.error("Error Fetching Performance Chart Data", error);
-      return response.status(status).send(result);
-    });
+    chartName = "PerformanceChart";
   } else {
-    getUserUseEmail(assignee).then((data)=>{
-      if (data!=undefined) {
-        const uid=data.uid;
-        request.body.data.Uid = uid;
-        getUserPerformanceChartData(request, response);
-      }
-    });  
+    chartName = assignee;
+    // getUserUseEmail(assignee).then((data)=>{
+    //   if (data!=undefined) {
+    //     const uid=data.uid;
+    //     request.body.data.Uid = uid;
+    //     request.body.data.Assignee = assignee;
+    //     getUserPerformanceChartData(request, response);
+    //   }
+    // });  
   }
+  const performanceChartDataPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
+    teamName = team.TeamName;
+    const p1 = getOrganizationsChartDetails(orgDomain, teamName, chartName).then((doc) => {
+      const responseData = [];
+      if (doc == undefined) {
+        getOrg(orgDomain).then((data) => {
+          const orgAppKey = data.AppKey;
+          setSchedularUnit(chartName, orgAppKey, assignee, teamId, orgDomain);
+          startSchedular();
+        });
+        result = {data: {status: "ERROR", data: "undefined"}};
+      } else {
+        for (const i in doc) {
+          responseData.push([i, doc[i]]);
+        }
+        console.log(responseData);
+        result = { data: { status: "OK", data: responseData } };
+      }
+    });
+    return Promise.resolve(p1);
+  }).catch((error) => {
+    status = 500;
+    console.log("Error:", error);
+  });
+  return Promise.resolve(performanceChartDataPromise).then(() => {
+    console.log("Fetched Performance Chart Data Successfully");
+    return response.status(status).send(result);
+  }).catch((error) => {
+    console.error("Error Fetching Performance Chart Data", error);
+    return response.status(status).send(result);
+  });
 };

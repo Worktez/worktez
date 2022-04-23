@@ -50,7 +50,6 @@ exports.getContributors = function() {
  * @return {any}
  */
 exports.setContributors = function(docId, email, about, photoUrl, title, name) {
-    console.log(about);
     const P1 = db.collection("Contributors").doc(docId).set({
         Email: email,
         About: about,
