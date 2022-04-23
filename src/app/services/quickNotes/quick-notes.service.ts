@@ -3,17 +3,19 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
 import { QuickNote } from 'src/app/Interface/UserInterface';
 import { AuthService } from '../auth.service';
+import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuickNotesService {
+  componentName:string = "QUICK-NOTES"
 
   showloader: boolean = false;
   notes: QuickNote[];
   noNotes: boolean;
 
-  constructor(private authService: AuthService, private functions: AngularFireFunctions) { }
+  constructor(private errorHandlerService: ErrorHandlerService, private authService: AuthService, private functions: AngularFireFunctions) { }
 
   getQuickNotes() {
     const uid = this.authService.getLoggedInUser();
@@ -36,6 +38,8 @@ export class QuickNotesService {
         this.showloader = false
       },
       error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.error(error);
       },
       complete: () => {
