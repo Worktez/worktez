@@ -30,9 +30,9 @@ const { startSchedular } = require("./tark/startSchedular");
  */
 // exports.scheduledFn = functions.https.onRequest((req, res) => {
 //   cors(req, res, () => {
-    exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
-    startSchedular();
-    });
+exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
+  startSchedular();
+});
 //   });
 // });
 
