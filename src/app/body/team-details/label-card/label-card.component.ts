@@ -11,6 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+import { ThrowStmt } from '@angular/compiler';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
@@ -18,6 +19,7 @@ import { Label } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { EventEmitter } from 'stream';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-label-card',
@@ -38,6 +40,9 @@ export class LabelCardComponent implements OnInit {
   deletedLabelEnabled: boolean=false;
   labelToDelete: Label = null;
   labelToEdit: Label = null;
+  showPriorityIcons: boolean =false;
+  showDifficultyIcons: boolean = false;
+  showStatusIcons: boolean = false;
 
   public labelDataObservable: Label
 
@@ -45,6 +50,20 @@ export class LabelCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTeamLabelsByScope();
+    if(this.scope=='Priority'){
+      this.showPriorityIcons=true;
+    }
+    else if (this.scope=='Difficulty') {
+      this.showDifficultyIcons=true;
+    }
+    else if( this.scope=="Status"){
+      this.showStatusIcons=true;
+    }
+    else{
+      this.showPriorityIcons=false;
+      this.showDifficultyIcons=false;
+      this.showStatusIcons=false;
+    }
   }
 
   getTeamLabelsByScope() {

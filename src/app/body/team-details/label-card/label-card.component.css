@@ -12,14 +12,27 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #editPageTaskContainer,
+.card { 
+    box-shadow: var(--box-shadow-bottom);
+    background: var(--secondary-bg);
+    color: var(--text);
+    border: 1px solid var(--scrollbar-color);
+    border-radius: 5px;
+}
+
 .modal-content {
     border: var(--primary-border);
     background-color: var(--secondary-bg);
     color: var(--text);
-}
+
+    }
 
 .icons {
     cursor: pointer;
+}
+.list-group-item{
+    background: var(--primary-bg);
+    color: var(--text);
 }
 
 .btn{
@@ -33,10 +46,10 @@
 .btn:hover {
     background-color: var(--hover);
 }
-
+/* 
 .clr {
     background-color: white;
-}
+} */
 
 .header {
     font-weight: bold;

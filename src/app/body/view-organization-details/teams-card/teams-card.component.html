@@ -13,10 +13,79 @@
 ***********************************************************/ -->
 <div class="card" *ngIf="team.TeamStatus != -1">
     <div class="card-body pt-4">
-        <div class="row">
-            <div class="col-3 ml-4 mb-4">
-                <app-speed-images [emails]="team.TeamMembers.slice(0,3)"></app-speed-images>
+        <ng-container>
+            <div class="row">
+                <div class="col-auto float-left">
+                    <h2 class="card-title my-0" (click)="openTeamDetails()" style="cursor: pointer;">{{ team.TeamName }}</h2>
+                    <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
+                </div>
+                    <span class="material-icons float-left ml-0 mt-2" type="button" (click)="openTeamDetails()" style="cursor: pointer;">settings</span>
+    
             </div>
+                        
+            <div class="row mt-1">
+                <div class="col-md-7 pr-0">
+                    <button class="btn btn-primary" *ngIf="projectLinked" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
+                    title="Edit Organisation" data-bs-toggle="tooltip">
+                    <img src="../../../assets/gitIcon.svg" class="mx-0" alt="git" height="25" width="25"><span>{{repoLink}}</span>
+                    <span class="material-icons pt-1 float-right trash" style="font-size: 14px;">edit</span></button>
+
+                <button class="btn btn-primary" *ngIf="!projectLinked" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
+                    title="Add Organisation">
+                    <img src="../../../assets/gitIcon.svg" alt="git" height="25" width="25">
+                    Integrate Github</button>
+                </div>
+                <div class="col-md-5 mx-0 pl-0">
+                    <button class="add-member" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)"
+                    title="Add Member">
+                    <span class="material-icons pl-1" style="position: relative;top: 3px;">person_add</span>
+                    Add Member</button>
+                 </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <h4 class="card-title mt-2 " data-toggle="tooltip" data-placement="top" title="Team Manager">
+                        <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons>
+                        {{ team.TeamManagerEmail }}
+                    </h4>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <div class="col-md-6 totalTeamTasks">
+                    <h4 class="mt-1 heading"> 
+                        <span class="material-icons mr-1" style="position: relative;top: 3px;">task</span>Total Team Tasks  
+                    </h4>
+                    <button class="counterBtns ml-5" disabled="disabled">{{team.TotalTeamTasks}}</button>
+                </div>
+                <div class="col-md-6 currentSprintId">
+                    <h3 class="heading" >
+                        <span class="material-icons mr-1" style="position: relative;top: 5px;">sports_score</span>Current Sprint ID  
+                    </h3>
+                    <button class="counterBtns ml-5" disabled="disabled">{{ team.CurrentSprintId }}</button>
+                </div>
+            </div>
+
+            <div class="row mt-3 ">
+                <div class="col-md-6">
+                    <h4 class="mt-1 heading">
+                        <span class="material-icons mr-1" style="position: relative;top: 3px;">groups</span>Team Members  
+                    </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="card-title mt-2">
+                    <app-profile-pictures [emails]="team.TeamMembers"></app-profile-pictures>
+                    </h4>
+                </div>
+            </div>
+        </ng-container>
+        <!-- <div class="row">
             <div class="dropdown">
                 <button class="btn btn-primary" *ngIf="projectLinked" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
                     data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
@@ -85,7 +154,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
     <app-add-member [teamId]="teamToAddMember.TeamId" [teamName]="teamToAddMember.TeamName"
         [teamMembers]="teamToAddMember.TeamMembers" [teamManager]="teamToAddMember.TeamManager"
@@ -98,6 +167,6 @@
         (addedProject)="addedProject($event)">
     </app-github-link>
 </ng-container>
-<ng-container *ngIf="updateTeamEnabled">
+<!-- <ng-container *ngIf="updateTeamEnabled">
     <app-update-team (teamUpdated)="teamUpdated($event)" [teamToUpdate]="teamToUpdate"></app-update-team>
-</ng-container>
+  </ng-container> -->
