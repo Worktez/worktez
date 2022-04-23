@@ -29,12 +29,42 @@ export class HomeComponent implements OnInit {
   testimonials = [
     {
       Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
-      Name: "ABC",
-      Content: "Happy to use worktez"
+      Name: "Vivek Kumar",
+      Content: "Happy to use worktez, It was an amazing experience to use this tool, also it made our work very quick, transparent and powered."
     },
     {
       Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
       Name: "XYZ",
+      Content: "Happy to use worktez"
+    },
+    {
+      Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
+      Name: "PQR",
+      Content: "Happy to use worktez"
+    },
+    {
+      Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
+      Name: "PQR",
+      Content: "Happy to use worktez"
+    },
+    {
+      Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
+      Name: "PQR",
+      Content: "Happy to use worktez"
+    },
+    {
+      Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
+      Name: "PQR",
+      Content: "Happy to use worktez"
+    },
+    {
+      Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
+      Name: "PQR",
+      Content: "Happy to use worktez"
+    },
+    {
+      Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
+      Name: "PQR",
       Content: "Happy to use worktez"
     },
     {
@@ -53,10 +83,10 @@ export class HomeComponent implements OnInit {
   }
 
   scrollLeft() {
-    this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft - 200), block: "start", inline: "nearest" });
+    this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft - 400), block: "start", inline: "nearest" });
   }
 
   scrollRight() {
-    this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft + 200), block: "start", inline: "nearest" });
+    this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft + 400), block: "start", inline: "nearest" });
   }
 }

@@ -28,13 +28,13 @@ const { startSchedular } = require("./tark/startSchedular");
  * @param {any} "121***"
  * @returns {any}
  */
-// exports.scheduledFn = functions.https.onRequest((req, res) => {
-//   cors(req, res, () => {
-exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
-  startSchedular();
+exports.scheduledFn = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    // exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
+    startSchedular();
+    // });
+  });
 });
-//  });
-// });
 
 /**
  * Description

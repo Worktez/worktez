@@ -23,14 +23,11 @@
 const { getAllUserProject } = require("../lib");
 
 exports.getProjectList = function(request, response) {
-    console.log("coming to getting project list");
     const uid = request.body.data.Uid;
 
     let status = 200;
     const resultData = [];
     let result;
-
-    console.log("Reading Data of Project");
 
     getAllUserProject(uid).then((snapshot) => {
         if (snapshot == undefined) {

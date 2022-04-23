@@ -31,7 +31,7 @@ import { PopupHandlerService } from '../../services/popup-handler/popup-handler.
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
-import { GitRepoData } from 'src/app/Interface/githubOrgData';
+import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
 
 @Component( {
   selector: 'app-task-details',
@@ -68,7 +68,7 @@ export class TaskDetailsComponent implements OnInit {
   addedWatcher: boolean = false;
   newWatcher: string = "";
   prLink: string;
-  prData: GitRepoData[] = [];
+  prData: GitPrData[] = [];
 
   dataReady: boolean = false
   activityDataReady: boolean = false
@@ -79,8 +79,11 @@ export class TaskDetailsComponent implements OnInit {
 
   activityData: Activity[]
   linkData: Link[]
+  prLinked: boolean = false;
+  prApiLink: string;
 
-  constructor ( public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+
+  constructor (private httpService: HttpServiceService, public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -95,10 +98,32 @@ export class TaskDetailsComponent implements OnInit {
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
   }
-
+  
+  checkPrLinked(){
+    if(this.task.PrLink!=undefined && this.task.PrNumber != undefined){
+      if(this.task.PrLink=="" || this.task.PrApiLink=="" || this.task.PrNumber==null ){
+        this.prLinked=false;
+      }
+      else{
+        this.prLink=this.task.PrLink;
+        this.prApiLink=this.task.PrApiLink;
+        this.getPrDetails();
+        this.prLinked=true;
+      }
+    }
+  }
+  getPrDetails() {
+    this.httpService.getPrDetails(this.prApiLink.slice(29)).pipe(map(data => {
+      const prData = data as GitPrData[];     
+      return prData;
+    })).subscribe(data => {
+      this.prData = data;
+    });
+  }
   getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
+      console.log("Checking org domain in getTaskDetails 1: ", this.orgDomain);
       this.getTaskDetail();
       this.getActivityData();
       this.getLinkData();
@@ -107,6 +132,7 @@ export class TaskDetailsComponent implements OnInit {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();
+          console.log("Checking org domain in getTaskDetails 2: ", this.orgDomain);
           this.getTaskDetail();
           this.getActivityData();
           this.getLinkData();
@@ -128,6 +154,7 @@ export class TaskDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.task = data;
+        this.checkPrLinked()
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
         }
@@ -152,6 +179,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getActivityData () {
+    this.activityDataReady = false;
     const callable = this.functions.httpsCallable("activity/getActivity");
      callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
@@ -205,11 +233,10 @@ export class TaskDetailsComponent implements OnInit {
       const callable = this.functions.httpsCallable('tasks/comment');
       const appKey = this.backendService.getOrganizationAppKey();
 
-      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+      callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
           this.getActivityData();
           this.comment = "";
-          return;
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
@@ -265,20 +292,24 @@ export class TaskDetailsComponent implements OnInit {
     this.deleteTaskEnabled = false;
   }
 
-  addedLink( data: { completed: boolean } ) {
+  addedPrLink( data: { completed: boolean, prLink: string, prApiLink: string } ) {
     this.linkEnabled = false;
+    this.prLinked=data.completed;
+    this.prLink=data.prLink;
+    this.prApiLink=data.prApiLink;
+    this.getPrDetails();
     this.getLinkData();
+
   }
 
-  async reopenTask () {
+  reopenTask () {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    await callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+    callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
       next: (data) => {
         console.log("Successful");
         this.getTaskPageData();
-        return;
       },
       error: (error) => {
         this.errorHandlerService.showError = true;
@@ -320,10 +351,9 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  async addWatcher() {
-    
+  addWatcher() {
     const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
-    await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
+    callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
       next: (data) => {
         console.log("Successful");
         
@@ -336,7 +366,7 @@ export class TaskDetailsComponent implements OnInit {
         console.log( "Error", error );
       },
       complete: () => console.info('Successful')
-  });
+    });
   }
 
   linkPr() {

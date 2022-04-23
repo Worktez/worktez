@@ -33,7 +33,6 @@ exports.getUserAppSettings = function(request, response) {
     let result;
 
     const promise1 = getUser(uid, username).then((data) => {
-        console.log("Getting User Data");
         if (data == undefined) {
             console.log("User doesn't exist");
             result = { data: { status: "Ok", userData: undefined } };

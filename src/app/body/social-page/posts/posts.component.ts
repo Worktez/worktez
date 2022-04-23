@@ -120,7 +120,6 @@ export class PostsComponent implements OnInit {
   }
 
   getCreatorDetails(){
-    console.log(this.post.Uid)
     if(this.post.Uid=="defaultUser"){
       this.user = defaultUser;
     }else {

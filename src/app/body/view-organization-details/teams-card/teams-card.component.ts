@@ -40,10 +40,25 @@ export class TeamsCardComponent implements OnInit {
   updateTeamEnabled: boolean = false
   teamToUpdate: Team
   componentName:string ="ORGANIZATION-DETAILS"
+  githubProjectAdded: boolean=false;
+  repoLink: string;
+  projectLinked: boolean= false;
   constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
-  ngOnInit(): void {}
-
+  ngOnInit(): void {
+    this.checkGitProject();
+  }
+  checkGitProject(){
+    if(this.team.ProjectLink!=undefined){
+      if(this.team.ProjectLink==""){
+        this.projectLinked=false;
+      }
+      else{
+        this.projectLinked=true;
+        this.repoLink=this.team.ProjectLink;
+      }
+    }
+  }
   updateTeam(team: Team) {
     this.teamToUpdate = team;
     this.updateTeamEnabled = true;
@@ -92,9 +107,13 @@ export class TeamsCardComponent implements OnInit {
     this.typeLink = "Username";
   }
 
-  addedProject(data: { completed: boolean, memberEmail: string }) {
+  addedProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
     this.githubDetails.emit(true);
     this.addProjectEnabled = false;
+    if(data.completed==true){
+    this.projectLinked=data.completed;
+    this.repoLink=data.projLink;
+    }
   }
   teamUpdated(data: { completed: boolean }) {
     this.updateTeamEnabled = false;

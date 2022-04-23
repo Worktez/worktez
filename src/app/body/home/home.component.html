@@ -228,6 +228,15 @@
         <div class="row p-5 align-middle align-items-center">
             <div class="col"></div>
             <div class="col-8 showCase d-flex justify-content-center" #imageContainer>
+            <div class="col-1"></div>
+            <div class="col-1 text-center d-flex justify-content-center">
+                <span class="mover" (click)="scrollLeft()">
+                    <mat-icon fontSet="material-icons-outlined" class="arrow align-middle">
+                        arrow_back_ios
+                    </mat-icon>
+                </span>
+            </div>
+            <div class="col-8 showCase py-4" #imageContainer>
                 <ng-container *ngFor="let item of testimonials">
                     <app-testimonial-card [image]="item.Image" [name]="item.Name" [content]="item.Content"></app-testimonial-card>
                 </ng-container>
@@ -235,4 +244,34 @@
             <div class="col"></div>
         </div>
     </section>
+            <div class="col-1 text-center d-flex justify-content-center">
+                <span class="mover rounded" (click)="scrollRight()">
+                    <mat-icon fontSet="material-icons-outlined" class="arrow align-middle" (click)="scrollRight()">
+                        arrow_forward_ios
+                    </mat-icon>
+                </span>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </section>
+    <!-- <section id="updates">
+        <div class="row" style="padding: 3% 20%;">
+            <div class="col-md-8 col-8">
+                <div class="updatesText">
+                    <h1 style="font-weight: bold;">Keep yourself updated.</h1>
+                    <p>We'll keep you posted about all our upgrades!</p>
+                    <p>Go afar with newsletter.</p>
+                </div >
+            </div>
+            <div class="col-md-3 col-3">
+                <div class="updatesForm" style="white-space:nowrap! important;" >
+                    <input type="text" placeholder="Enter your email address " style="size:25px; min-width: 250px; white-space:nowrap;">    
+                    <button class="btn" style="border-radius: 90%; background-color: white">
+                        <span class="material-icons">arrow_forward</span>
+                    </button>        
+                </div>             
+            </div>
+        </div>
+        <div class="col-md-1 col-1"></div>
+    </section> -->
 </div>
