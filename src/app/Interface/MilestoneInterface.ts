@@ -23,5 +23,3 @@ export interface Milestones {
     TotalTasks: [];
     CreatorUid: [];
   }
-
-export interface MilesonesId extends Milestones {id: string;}

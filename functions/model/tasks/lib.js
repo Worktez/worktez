@@ -159,11 +159,8 @@ exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filter
         query = query.where("TeamId", "==", teamId);
     }
     if (milestoneId != "") {
-        console.log(milestoneId);
         query = query.where("MilestoneId", "==", milestoneId);
     }
-    console.log("OrgDomain", orgDomain);
-    console.log("Milestone :::: ", milestoneId);
 
     const getAllTasksPromise = query.get();
 

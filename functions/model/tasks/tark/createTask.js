@@ -115,8 +115,6 @@ exports.createNewTask = function(request, response) {
             if (!watchers.includes(reporter)) {
                 watchers.push(reporter);
             }
-            console.log("watchers list:", watchers);
-            console.log("MilestoneID", milestoneId);
             if (!milestoneId) {
                 milestoneId = "0";
             }
