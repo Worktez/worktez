@@ -23,6 +23,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
+import { Milestones } from 'src/app/Interface/MilestoneInterface';
 
 
 declare var jQuery:any;
@@ -74,6 +75,8 @@ export class CreateNewTaskComponent implements OnInit {
   showClose: boolean = false;
   currentSprintNumber: number
   backlogSprintNumber: number
+  milestoneData:Milestones[] = []
+  selectedMilestoneId:string = ""
 
   constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
@@ -119,6 +122,7 @@ export class CreateNewTaskComponent implements OnInit {
           );
           this.enableLoader = false;
     }); 
+    this.getMilestoneData(teamId);
   }
 
   showBacklog(){
@@ -181,8 +185,7 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskId = this.popupHandlerService.parentTaskId;
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
-
-    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl }).subscribe({
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl, MilestoneId: this.selectedMilestoneId }).subscribe({
       next: (data) => {
         console.log("Successful created task");
         this.enableLoader=false;
@@ -202,6 +205,29 @@ export class CreateNewTaskComponent implements OnInit {
     jQuery('#createNewTask').modal('hide');
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
+  }
+
+  getMilestoneData(teamId) {
+    console.log(teamId);
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable("milestone/getAllMilestones");
+    callable({ OrgDomain: orgDomain, TeamId: teamId }).pipe(
+      map(actions => {
+        return actions.data as Milestones[];
+      })).subscribe({
+        next: (data)=>{
+          if (data) {
+            this.milestoneData = data;
+          }
+        },
+        error:(error)=>{
+          console.error(error);
+        },
+        complete:()=>{
+          console.log(this.milestoneData);
+          console.info("Fetched Milestones Data Successfully");
+        }
+      })
   }
 
 }

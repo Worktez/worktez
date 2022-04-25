@@ -31,11 +31,12 @@ exports.getTasks = function(request, response) {
     const filterDifficulty = request.body.data.FilterDifficulty;
     const filterStatus = request.body.data.FilterStatus;
     const filterProject = request.body.data.FilterProject;
+    const milestoneId = request.body.data.MilestoneId;
     const tasksData = [];
     let status = 200;
     let result;
 
-    const getTasksPromise = getAllTasks(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject).then((taskCol) => {
+    const getTasksPromise = getAllTasks(orgDomain, teamId, sprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject, "", "", milestoneId).then((taskCol) => {
         taskCol.forEach((taskDoc) => {
             tasksData.push(taskDoc.data());
         });

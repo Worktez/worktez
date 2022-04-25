@@ -15,6 +15,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
+import { Location } from '@angular/common';
 import { Label, Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -33,14 +34,17 @@ export class TeamDetailsComponent implements OnInit {
   teamId: string;
   teamDataReady: boolean = false;
   componentName:string ="ORGANIZATION-DETAILS";
-  team: Team
+  team: Team;
+  teamToUpdate: Team;
+  updateTeamEnabled: boolean = false;
+  addMemberEnabled: boolean = false;
 
-  constructor(private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService) { }
+  constructor(private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
 
-    this.ComponentName = this.teamId;
+    this.ComponentName = "TEAM DETAILS";
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.ComponentName);
 
@@ -55,7 +59,7 @@ export class TeamDetailsComponent implements OnInit {
     }
     
   }
-
+  
   getTeamData() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("teams/getTeamData");
@@ -79,7 +83,40 @@ export class TeamDetailsComponent implements OnInit {
         complete: () => console.info("Completed getting Team Data...")
       });
   }
+  updateTeam(team: Team) {
+    this.teamToUpdate = team;
+    this.updateTeamEnabled = true;
+  }
+  addMember() {
+    this.addMemberEnabled = true;
+  }
+  addedMember(data: { completed: boolean, memberEmail: string}) {
+    this.addMemberEnabled = false;
+  }
 
+  teamUpdated(data: { completed: boolean }) {
+    this.updateTeamEnabled = false;
+  }
+  selectedAssignee(item) {
+    console.log(item)
+  }
+  
+
+  async deleteTeam() {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/deleteTeam');
+    await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+      next: (data) => {
+        this.team.TeamStatus = -1;
+      },
+      error: (error) => {
+        console.error("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful ')
+  });
+  }
   createDefaultLabels() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/createDefaultLabel');
@@ -99,4 +136,8 @@ export class TeamDetailsComponent implements OnInit {
       complete: () => console.info('Successful ')
   });
   }
+  close () {
+    this.location.back()
+  }
+
 }

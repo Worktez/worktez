@@ -1,0 +1,46 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+*    
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+
+<div *ngIf="milestoneDataReady">
+        <div class="row p-5">
+            <ng-container>
+                <div class="col-md-12 p-3">
+                  <div class="card text-center p-1">
+                    <h1>{{milestoneData.MilestoneId}}</h1>
+                    <h3>Title : {{milestoneData.Title}}</h3>
+                    <h4>Description : {{milestoneData.Description}}</h4>
+                    <h4>TeamId :{{milestoneData.TeamId}}</h4>
+                    <p><b>Total Tasks : </b>{{totalTasks}}</p>
+                    <p><b>Total Completed Tasks : </b>{{totalCompletedTasks}}</p>
+                  </div>
+                </div>
+            </ng-container>
+          </div>
+      </div>
+      <hr>
+<h1 class="text-center">Tasks</h1>
+<div class="row p-4">
+<ng-container *ngFor="let task of taskData">
+    
+    <div class="card col-md-4 pt-2" (click)="openTaskDetails(task.Id)">
+      <h3>{{task.Id}}</h3>
+        <h1>Title : {{task.Title}}</h1>
+        <h2>Description : {{task.Description}}</h2>
+    </div>
+</ng-container>
+</div>
+
+<ng-container *ngIf="showLoader">
+    <app-loader></app-loader>
+</ng-container>

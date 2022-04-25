@@ -155,6 +155,8 @@ import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MilestoneComponent } from './body/milestone/milestone.component';
+import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 
 @NgModule({
   declarations: [
@@ -277,6 +279,8 @@ import { CookieService } from 'ngx-cookie-service';
     OrgDpComponent,
     KanbanCardComponent,
     TestimonialCardComponent,
+    MilestoneComponent,
+    MilestoneDetailsComponent,
   ],
   imports: [
     BrowserModule,

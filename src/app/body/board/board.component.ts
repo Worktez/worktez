@@ -49,25 +49,15 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-    console.log("0");
 
     if(this.startService.showTeamsData) {
-      console.log("1");
       this.readSprintData();
     } else {
-      console.log("2");
-      this.startService.userDataStateObservable.subscribe((data) => {
-        console.log("3");
-        if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            console.log("4");
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
             if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                console.log("5");
-                if(data) {
-                  this.readSprintData();
-                }
-              });
+              this.readSprintData();
             }
           });
         }
