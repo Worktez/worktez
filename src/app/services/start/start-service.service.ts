@@ -163,6 +163,7 @@ export class StartServiceService {
 
   readApplicationData() {
     this.showTeamsData = false;
+    console.log("check 1 false");
     this.applicationDataState.next(false);
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
@@ -190,7 +191,7 @@ export class StartServiceService {
         this.role = "Member";
       }
       this.showTeamsData = true;
-      console.log("p3");
+      console.log("p3 : true");
       this.applicationDataState.next(true);
       return this.teamData;
     });
