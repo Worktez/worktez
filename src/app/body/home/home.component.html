@@ -226,8 +226,6 @@
     </section>
     <section id="testimonial">
         <div class="row p-5 align-middle align-items-center">
-            <div class="col"></div>
-            <div class="col-8 showCase d-flex justify-content-center" #imageContainer>
             <div class="col-1"></div>
             <div class="col-1 text-center d-flex justify-content-center">
                 <span class="mover" (click)="scrollLeft()">
@@ -241,9 +239,6 @@
                     <app-testimonial-card [image]="item.Image" [name]="item.Name" [content]="item.Content"></app-testimonial-card>
                 </ng-container>
             </div>
-            <div class="col"></div>
-        </div>
-    </section>
             <div class="col-1 text-center d-flex justify-content-center">
                 <span class="mover rounded" (click)="scrollRight()">
                     <mat-icon fontSet="material-icons-outlined" class="arrow align-middle" (click)="scrollRight()">
