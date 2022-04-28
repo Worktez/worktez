@@ -30,7 +30,6 @@ exports.addContributor = function(request, response) {
     const title = request.body.data.title;
     const name = request.body.data.name;
 
-    console.log(about);
 
     let status = 200;
     let result;
