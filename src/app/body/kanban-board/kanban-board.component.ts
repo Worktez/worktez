@@ -146,6 +146,7 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   putDataInTasksArray(tasksData: Tasks[]) {
+    this.tasks = [];
     this.selectedStatusLabels.forEach((label) => {
       let tasksarr = [];
       tasksData.forEach((task) => {
