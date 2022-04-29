@@ -31,4 +31,10 @@
 
 select {
     width: 100px;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+.form-control{
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
