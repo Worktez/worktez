@@ -83,7 +83,7 @@ export class TaskDetailsComponent implements OnInit {
   prApiLink: string;
 
 
-  constructor (private httpService: HttpServiceService, public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor (private httpService: HttpServiceService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -123,7 +123,6 @@ export class TaskDetailsComponent implements OnInit {
   getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
-      console.log("Checking org domain in getTaskDetails 1: ", this.orgDomain);
       this.getTaskDetail();
       this.getActivityData();
       this.getLinkData();
@@ -132,7 +131,6 @@ export class TaskDetailsComponent implements OnInit {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();
-          console.log("Checking org domain in getTaskDetails 2: ", this.orgDomain);
           this.getTaskDetail();
           this.getActivityData();
           this.getLinkData();

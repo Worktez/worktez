@@ -1,0 +1,14 @@
+<ng-container *ngIf="Border; else noBorder">
+    <div class='Border' [style.color]="colorCode" [style.border-color]="colorCode">
+        <span class="material-icons icon" data-toggle="tooltip" data-placement="top" title="icon">
+            {{icon.IconName}}
+        </span>
+    </div>
+</ng-container>
+<ng-template #noBorder>
+    <div class='icon' [style.color]="colorCode" >
+        <span class="material-icons icon" data-toggle="tooltip" data-placement="top" title="icon">
+            {{icon.IconName}}
+        </span>
+    </div>
+</ng-template>

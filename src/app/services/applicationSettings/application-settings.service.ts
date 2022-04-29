@@ -16,7 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Notification } from 'src/app/Interface/NotificationInterface';
-import { Team, Sprint } from '../../Interface/TeamInterface';
+import { Team, Sprint, Label } from '../../Interface/TeamInterface';
 import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
 import { UserServiceService } from '../user-service/user-service.service';
@@ -31,14 +31,12 @@ export class ApplicationSettingsService {
   team: Team;
 
   public status: string[] = []
-
   public priority: string[] = []
-
   public difficulty: string[] = []
-
   public type: string[] = []
-
   public project: string[] = []
+
+  public labels: Label[] = []
 
   public teamData: Observable<Team>;
 
@@ -50,6 +48,8 @@ export class ApplicationSettingsService {
 
   teamDataReady: boolean = false;
   teamAvailable: boolean = false;
+
+  labelDataReady: boolean = false;
 
   constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
@@ -63,12 +63,13 @@ export class ApplicationSettingsService {
           if(this.team == undefined) {
             this.team = data
             this.teamAvailable = true;
-            this.status = this.team.StatusLabels;
-            this.priority = this.team.PriorityLabels;
-            this.difficulty = this.team.DifficultyLabels;
+            this.status = this.team.Status;
+            this.priority = this.team.Priority;
+            this.difficulty = this.team.Difficulty;
             this.type = this.team.Type;
             this.project = this.backendService.organizationDetails.TeamsId;
             this.projectLink= this.team.ProjectLink;
+            this.getLabelProperties(this.team.Scope, this.team.TeamName);
           }
 
           data.TeamMembers.forEach(element => {
@@ -85,6 +86,25 @@ export class ApplicationSettingsService {
       }));
     
     return this.teamData;
+  }
+
+  getLabelProperties(scope: string[], teamName: string) {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable("teams/getLabelsInScopes");
+    callable({OrganizationDomain: orgDomain, TeamName: teamName, Scope: scope}).pipe(map(actions => {
+        return actions.resultData as Label[];
+    })).subscribe({
+      next: (data) => {
+        this.labels = data;
+        this.labelDataReady = true;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info("completed fetching labels");
+      }
+    });
   }
 
   getSprintsDetails(SprintNumber: number) {

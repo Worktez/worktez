@@ -99,10 +99,10 @@ export class CreateNewTaskComponent implements OnInit {
   readTeamData(teamId :string){
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-          this.priorityLabels = team.PriorityLabels;
-          this.statusLabels = team.StatusLabels;
+          this.priorityLabels = team.Priority;
+          this.statusLabels = team.Status;
           this.type = team.Type;
-          this.difficultyLabels = team.DifficultyLabels;
+          this.difficultyLabels = team.Difficulty;
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;

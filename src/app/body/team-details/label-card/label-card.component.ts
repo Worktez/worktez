@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
 import { Label } from 'src/app/Interface/TeamInterface';
@@ -37,9 +37,6 @@ export class LabelCardComponent implements OnInit {
   deletedLabelEnabled: boolean=false;
   labelToDelete: Label = null;
   labelToEdit: Label = null;
-  showPriorityIcons: boolean =false;
-  showDifficultyIcons: boolean = false;
-  showStatusIcons: boolean = false;
 
   public labelDataObservable: Label
 
@@ -47,20 +44,6 @@ export class LabelCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTeamLabelsByScope();
-    if(this.scope=='Priority'){
-      this.showPriorityIcons=true;
-    }
-    else if (this.scope=='Difficulty') {
-      this.showDifficultyIcons=true;
-    }
-    else if( this.scope=="Status"){
-      this.showStatusIcons=true;
-    }
-    else{
-      this.showPriorityIcons=false;
-      this.showDifficultyIcons=false;
-      this.showStatusIcons=false;
-    }
   }
 
   getTeamLabelsByScope() {

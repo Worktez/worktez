@@ -21,7 +21,8 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const {getLabelById, updateLabel} =require("../lib");
+const {getLabelById, updateLabel, updateTeamDetails} =require("../lib");
+const admin = require("firebase-admin");
 
 exports.deleteLabel= function(request, response) {
   const orgDomain = request.body.data.OrgDomain;
@@ -38,7 +39,25 @@ exports.deleteLabel= function(request, response) {
       const updateLabelToJson = {
         Status: "DELETED",
       };
+
       updateLabel(updateLabelToJson, orgDomain, teamName, docId);
+
+      const scope = labelData.Scope;
+      const displayName = labelData.DisplayName;
+
+      const inputJson = {};
+
+      if (scope == "Priority") {
+        inputJson["Priority"] = admin.firestore.FieldValue.arrayRemove(displayName);
+      } else if (scope == "Difficulty") {
+        inputJson["Difficulty"] = admin.firestore.FieldValue.arrayRemove(displayName);
+      } else if (scope == "Status") {
+        inputJson["Status"] = admin.firestore.FieldValue.arrayRemove(displayName);
+      } else if (scope == "Type") {
+        inputJson["Type"] = admin.firestore.FieldValue.arrayRemove(displayName);
+      }
+
+      updateTeamDetails(inputJson, orgDomain, teamName);
     }
   }).catch((error) => {
     status = 500;

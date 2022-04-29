@@ -1,0 +1,10 @@
+.icon {
+    padding: right 16px;
+    
+}
+.Border {
+    text-align: center;
+    border-style: dashed;
+    border-width: 1px;  
+    padding-top: 4px;    
+}

@@ -12,8 +12,8 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 
-<div class="container-fluid m-2 p-2" id="teamDetailsContainer" *ngIf="teamDataReady">
-  <div class="card">
+<div class="container-fluid m-2 p-2" id="teamDetailsContainer" *ngIf="!showLoader">
+  <div class="card" *ngIf="teamDataReady">
     <div class="row mx-3 mt-3 pr-2">
       <div class="col-auto">
       <h1 class="ml-3 mb-0">{{team.TeamName}}</h1>
@@ -72,6 +72,10 @@
 
     </div>
 </div>
+<ng-container *ngIf="showLoader">
+  <app-loader></app-loader>
+</ng-container>
+
 <ng-container *ngIf="updateTeamEnabled">
   <app-update-team (teamUpdated)="teamUpdated($event)" [teamToUpdate]="teamToUpdate"></app-update-team>
 </ng-container>
