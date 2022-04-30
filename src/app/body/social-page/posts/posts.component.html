@@ -26,8 +26,10 @@
     <div class="card-body mt-5">
         <p>{{post.Post}}</p>
         <hr>
+        <br>
         <div class="row">
-            <button class="btn m-auto px-3 py-1" (click)="onReact(post.PostId)"  id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">grade</mat-icon>Star</button> 
+            <button class="btn m-auto px-3 py-1" (click)="onReact(post.PostId);toggleColor()" 
+                id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3" [ngClass]="{'button-color': showColor, 'button-transparent' : !showColor}">grade</mat-icon >Star</button> 
             <button class="btn m-auto px-3 py-1" (click)="showCommentBox(post.PostId)" id="commentButton1"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat</mat-icon>Comment</button>
         </div>
     </div>
