@@ -35,14 +35,27 @@
                         <div class="form-row">
                             <div class="form-group col-md-6 col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Icon Name</span>
-                                <input type="text" class="form-control form-control-sm" [(ngModel)]="iconName" [ngModelOptions]="{standalone: true}" placeholder="Enter Icon Name">
+                                <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="iconName" [ngModelOptions]="{standalone: true}" placeholder="Enter Icon Name"> -->
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control form-control-sm" [formControl]="iconName" placeholder="Enter Icon Name" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                       <app-icons-base (selectedIconName)="selectedIconName($event)"></app-icons-base>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group col-md-6 col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Color Code</span>
-                                <input type="text" class="form-control form-control-sm" [(ngModel)]="colorCode" [ngModelOptions]="{standalone: true}" placeholder="Enter color code">
+                                <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="colorCode" [ngModelOptions]="{standalone: true}" placeholder="Enter color code"> -->
+                                <div class="dropdown">
+                                    <input type="text" autocomplete="off" class="form-control form-control-sm" [formControl]="colorCode" placeholder="Enter color code" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
+                                       <!-- <app-icons-base (selectedIconName)="selectedIconName($event)"></app-icons-base> -->
+                                       <app-colors-base (selectedColorName)="selectedColorName($event)"></app-colors-base>
+                                    </div>
+                                </div>
                             </div>
                         </div>                
-                <div class="modal-footer mt-n1">
+                <div class="modal-footer mt-1">
                     <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Label</button>                   
                 </div>
                 <app-loader *ngIf="enableLoader"></app-loader>

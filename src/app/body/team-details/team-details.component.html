@@ -12,25 +12,28 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 
-<div class="container-fluid m-2 p-2" id="teamDetailsContainer" *ngIf="!showLoader">
-  <div class="card" *ngIf="teamDataReady">
-    <div class="row mx-3 mt-3 pr-2">
-      <div class="col-auto">
-      <h1 class="ml-3 mb-0">{{team.TeamName}}</h1>
-      <h3 class="ml-3 card-subtitle text-muted mb-0">{{ team.TeamDescription }}</h3>
-      <h3 class="ml-3 card-subtitle font-weight-bold">Team Id: {{ team.TeamId }}</h3>
-     </div>
-      <span class="material-icons mr-2 p-2" type="button" data-toggle="modal"
-        data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts"
-        data-bs-toggle="tooltip">edit</span>
+<ng-container *ngIf="!showLoader">
+  <div class="card p-4" *ngIf="teamDataReady">
+    helo
+    <div class="row">
+      <div class="col">
+        <h1>{{team.TeamName}}</h1>
+        <h3>{{ team.TeamDescription }}</h3>
+        <h3>Team Id: {{ team.TeamId }}</h3>
+      </div>
+      <div class="col">
+        <span class="material-icons mr-2 p-2" type="button" data-toggle="modal" data-target="#updateTeam"
+          (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">edit
+        </span>
 
-      <span class="material-icons mr-2 trash p-2" type="button" (click)="deleteTeam()"
-      title="delete Team" data-bs-toggle="tooltip">delete</span>
-     <div class="col text-right">
-      <span class="material-icons float-right" (click)="close()" style="cursor: pointer;">close</span>
-     </div>
+        <span class="material-icons mr-2 trash p-2" type="button" (click)="deleteTeam()" title="delete Team"
+          data-bs-toggle="tooltip">delete</span>
+      </div>
+      <div class="col text-right">
+        <span class="material-icons float-right" (click)="close()" style="cursor: pointer;">close</span>
+      </div>
     </div>
-    <hr>    
+    <hr>
 
     <div class="card-body mx-4">
       <div class="row">
@@ -39,19 +42,21 @@
             <div class="col pt-0">
               <h2>Team Members</h2>
             </div>
-            <button class="btn mr-3" (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member">Add Member</button>
+            <button class="btn mr-3" (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-toggle="modal" data-target="#memberModal" title="add-member">Add Member</button>
           </div>
           <div class="row">
             <div class="col-7">
               <ng-container *ngFor="let item of team.TeamMembers">
                 <div class="col mb-3">
-                  <app-suggestion-bucket [email]="item"  [showEmail] = "false" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                  <app-suggestion-bucket [email]="item" [showEmail]="false" (selectedEmail)="selectedAssignee($event)">
+                  </app-suggestion-bucket>
                 </div>
               </ng-container>
             </div>
           </div>
         </div>
-        
+
         <div class="col-md-8 part teamLabels">
           <div class="row px-2">
             <div class="col pt-0">
@@ -67,11 +72,11 @@
             </ng-container>
           </div>
         </div>
-        </div>
       </div>
-
     </div>
-</div>
+
+  </div>
+</ng-container>
 <ng-container *ngIf="showLoader">
   <app-loader></app-loader>
 </ng-container>
@@ -80,5 +85,7 @@
   <app-update-team (teamUpdated)="teamUpdated($event)" [teamToUpdate]="teamToUpdate"></app-update-team>
 </ng-container>
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
-  <app-add-member [teamId]="teamId" [teamName]="team.TeamName" [teamMembers]="team.TeamMembers" [teamManager]="team.TeamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="true" (addedMember)="addedMember($event)"></app-add-member>
+  <app-add-member [teamId]="teamId" [teamName]="team.TeamName" [teamMembers]="team.TeamMembers"
+    [teamManager]="team.TeamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="true"
+    (addedMember)="addedMember($event)"></app-add-member>
 </ng-container>

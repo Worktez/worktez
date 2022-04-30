@@ -156,6 +156,8 @@ import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
 import { GetIconComponent } from './icons/get-icon/get-icon.component';
+import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.component';
+import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
 
 @NgModule({
   declarations: [
@@ -279,6 +281,8 @@ import { GetIconComponent } from './icons/get-icon/get-icon.component';
     MilestoneDetailsComponent,
     GenerateIconComponent,
     GetIconComponent,
+    IconsBaseComponent,
+    ColorsBaseComponent,
   ],
   imports: [
     BrowserModule,
