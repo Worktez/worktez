@@ -1,0 +1,102 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="card" *ngIf="filtersReady">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h2 class="m-0">Custom Filter Page</h2>
+            </div>
+            <div class="d-flex col-md-2 justify-content-end">
+                <div class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ng-container>
+                <div class="card-body">
+                    <div class="card" style="width: 20rem;height: 50vh;">
+                        <div class="card-body">
+                            <h5 class="card-title">Filter</h5>
+                            <div class="col-4 text-right">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons"
+                                    (click)="setFilterToEdit()" data-toggle="modal" data-target="#openEditProperties">
+                                    edit
+                                </mat-icon>
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons"
+                                    (click)="setFilterToDelete()" data-toggle="modal" data-target="#deletedLabel">
+                                    delete
+                                </mat-icon>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of the card's content.</p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="col">
+            <ng-container>
+                <div class="col-md-10">
+                    <div class="col col-md-3" id="createfilter">
+                        <app-create-filter [teamName]="teamName"></app-create-filter>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="showEditFilterProp" id="openEditProperties">
+    <app-edit-filter [customFilter]="filterToEdit" [teamName]="teamName"
+        (editFilterCompleted)="editFilterCompleted($event)" (getTeamFiltersByScope)="getTeamFiltersByScope()"
+        [filterType]="filterType"></app-edit-filter>
+</ng-container>
+<ng-container *ngIf="deletedFilterEnabled" id="exampleModalCenterLabel">
+    <div class="modal fade" id="deletedFilter" tabindex="-1" role="dialog" aria-labelledby="deletedFilterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered  p-0" role="document">
+            <div class="modal-content">
+                <nav class="modal-header navbar  navbar-dark" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <h5 class="active nav-link head" id="exampleModalDelFilter">Are You Sure?</h5>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons text-light">close</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="container modal-body" id="editPageTaskContainer">
+                    <ng-container>
+                        <div class="row">
+                            <div class="col">You are about to delete this Filter.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3 pb-2 px-4">
+                                <button class="btn" id="button" type="button" (click)="deletedFilter()">Delete</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

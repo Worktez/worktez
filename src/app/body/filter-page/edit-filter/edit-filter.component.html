@@ -1,0 +1,75 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="modal fade" id="openEditProperties" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="row modal-content">
+            <div class="modal-header pt-3">
+                <div class="col-2 col-md-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="material-icons" (click)="editFilterDone()">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="container-fluid modal-body px-5" id="openEditPropertiesContainer">
+                <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
+                    <div class="row">
+                        <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Filter Name</span>
+                            <input type="text" class="form-control" value={{this.filterName}}
+                                [(ngModel)]="customFilter.Filter" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Description</span>
+                            <input type="text" class="form-control" value={{description}} readonly
+                                [(ngModel)]="description" [ngModelOptions]="{standalone: true}">
+                        </div>
+
+
+                    </div>
+                    <div class="row py-3">
+                        <button type="submit" class="btn col-md-12" id="button"
+                            [disabled]="enableLoader">Submit</button>
+                    </div>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Filter Edited Successfully !
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal"
+                                (click)="editFilterDone()">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -155,6 +155,9 @@ import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 import { CookieService } from 'ngx-cookie-service';
+import { FilterPageComponent } from './body/filter-page/filter-page.component';
+import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
+import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
 
 @NgModule({
   declarations: [
@@ -277,6 +280,9 @@ import { CookieService } from 'ngx-cookie-service';
     OrgDpComponent,
     KanbanCardComponent,
     TestimonialCardComponent,
+    FilterPageComponent,
+    EditFilterComponent,
+    CreateFilterComponent,
   ],
   imports: [
     BrowserModule,
