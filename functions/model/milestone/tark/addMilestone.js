@@ -37,15 +37,16 @@ exports.addMilestone = function(request, response) {
     const orgDomain = request.body.data.OrgDomain;
     const creationDate = request.body.data.CreationDate;
     const creationTime = request.body.data.CreationTime;
+    const startDate = request.body.data.StartDate;
+    const endDate = request.body.data.EndDate;
     const teamId = request.body.data.TeamId;
-    const totalTasks = 0;
-    const totalCompletedTask = 0;
+
 
     const promise = getAllMilestonesData(orgDomain).then((data) => {
        this.milestoneData = data;
         const milestoneId = "M" + (this.milestoneData.length + 1);
 
-        setMilestone(uid, orgDomain, title, description, milestoneId, teamId, totalTasks, totalCompletedTask, creationDate, creationTime).catch(
+        setMilestone(uid, orgDomain, title, description, milestoneId, teamId, creationDate, creationTime, startDate, endDate).catch(
             (error) => {
                 result = { data: error };
                 status = 500;

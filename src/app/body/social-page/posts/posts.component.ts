@@ -43,6 +43,7 @@ export class PostsComponent implements OnInit {
   content: string = ""
   reactionStatus : boolean = false;
   public comments: Comment[];
+  showColor : boolean = false
   
   @Input('post') post : Post;
   @Output() addCommentCompleted = new EventEmitter<boolean>();
@@ -55,7 +56,7 @@ export class PostsComponent implements OnInit {
 
   showCommentBox(postId: string) {
     this.showCommentList = true;
-    this.showAddComment = true
+    this.showAddComment = !this.showAddComment
     this.getComments(postId);
   }
 
@@ -128,4 +129,10 @@ export class PostsComponent implements OnInit {
       })[0];
     }
     }
+    toggleColor(){
+      this.showColor = !this.showColor;
+      console.log(this.showColor);
+    }
   }
+  
+ 

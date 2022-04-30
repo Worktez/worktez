@@ -66,6 +66,10 @@ h3 {
   cursor: pointer;
 }
 
+.button-color{
+  color: blueviolet;
+}
+
 mat-icon {
   color: var(--text);
 }

@@ -28,6 +28,7 @@ export class PopupHandlerService {
   quickNotesTitle: string = ""
   quickNotesDescription: string = ""
   addLabelEnabled: boolean = false
+  milestoneId:string = ""
   
   constructor() { }
 
@@ -44,6 +45,7 @@ export class PopupHandlerService {
     this.parentTaskUrl = "default"
     this.quickNotesDescription = ""
     this.quickNotesTitle = ""
+    this.milestoneId = ""
   }
 
 }
