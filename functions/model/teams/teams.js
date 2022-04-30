@@ -29,7 +29,7 @@ const {editLabel} = require("./tark/editLabel");
 const {addLabel} = require("./tark/addLabel");
 const {addProjLink} = require("./tark/addProjLink");
 const {createDefaultLabels} = require("./tark/createDefaultLabels");
-const { getLabelsInScopes } = require("./tark/getTeamLabelsInScope");
+const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 
 /**
  * Description
