@@ -12,7 +12,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
@@ -20,6 +20,12 @@ import { Milestones } from 'src/app/Interface/MilestoneInterface';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { Location } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { ToolsService } from 'src/app/services/tool/tools.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-milestone-details',
@@ -28,33 +34,63 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 })
 export class MilestoneDetailsComponent implements OnInit {
 
-  milestoneId: string = "";
-  orgDomain: string = "";
-  teamIds: string[] = [];
-  taskData: Tasks[] = [];
-  milestoneData:Milestones
-  taskDataReady:boolean;
-  milestoneDataReady:boolean;
-  showLoader:boolean;
-  totalTasks:number = 0;
-  totalCompletedTasks:number =0;
+  componentName: string = "MILESTONE";
+  milestoneId: string;
+  orgDomain: string;
+  teamIds: string[];
+  taskData: Tasks[];
+  allTasks: Tasks[];
+  completedTasks: any[] = [];
+  incompleteTasks: any[] = [];
+  milestoneData: Milestones
+  taskDataReady: boolean;
+  milestoneDataReady: boolean;
+  showLoader: boolean;
+  totalTasks: number = 0;
+  totalCompletedTasks: number = 0;
+  displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
+  modalDisplayColumsn = ['Id', 'Title'];
+  appkey: string = "";
+  addTaskActive: boolean = true;
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
-  constructor(private route: ActivatedRoute,private router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public navbarHandler: NavbarHandlerService) { }
-
-  ngOnInit(): void {
-    this.navbarHandler.resetNavbar();
-    this.navbarHandler.addToNavbar(this.milestoneId);
-    this.milestoneId = this.route.snapshot.params['MilestoneId'];
-    this.orgDomain = this.backendService.getOrganizationDomain();
-    this.showLoader = true;
-    this.taskDataReady = false;
-    this.milestoneDataReady = false;
-    this.getMilestoneDetails();
-    this.getTasks();
+  constructor(private route: ActivatedRoute, private router: Router, private functions: AngularFireFunctions, public startService: StartServiceService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, private location: Location, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public popupHandlerService: PopupHandlerService) {
   }
 
+  ngOnInit(): void {
+    this.milestoneId = this.route.snapshot.params['MilestoneId'];
+    this.navbarHandler.addToNavbar(this.milestoneId);
+    if (this.startService.showTeams) {
+      this.appkey = this.authService.getAppKey();
+      this.backendService.getOrgDetails(this.appkey);
+      this.orgDomain = this.backendService.getOrganizationDomain();
+      this.showLoader = true;
+      this.taskDataReady = false;
+      this.milestoneDataReady = false;
+      this.getMilestoneDetails();
+      this.getTasks();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if (data) {
+          this.appkey = this.authService.getAppKey();
+          this.backendService.getOrgDetails(this.appkey).subscribe(()=>{
+            this.orgDomain = this.backendService.getOrganizationDomain();
+            this.showLoader = true;
+            this.taskDataReady = false;
+            this.milestoneDataReady = false;
+            this.getMilestoneDetails();
+            this.getTasks();
+          });
+   
+        }
+      });
+    }
+  }
+
+  backToMilestones() {
+    this.location.back()
+  }
   getTasks() {
     this.showLoader = true;
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
@@ -64,8 +100,19 @@ export class MilestoneDetailsComponent implements OnInit {
         return actions.data as Tasks[];
       })).subscribe({
         next: (data) => {
+          this.taskData = [];
+          this.completedTasks = [];
+          this.incompleteTasks = [];
+
           this.taskData = data;
-          console.log(this.taskData);
+          this.taskData.forEach((element) => {
+            if (element.Status == 'Completed') {
+              this.completedTasks.push(element);
+            }
+            else {
+              this.incompleteTasks.push(element);
+            }
+          })
         },
         error: (error) => {
           console.log(error);
@@ -78,6 +125,70 @@ export class MilestoneDetailsComponent implements OnInit {
         }
       });
   }
+  activateAdd(){
+  this.addTaskActive = true;
+  this.getAllTasks();
+  }
+
+  getAllTasks(){
+    this.showLoader = true;
+    const callable = this.functions.httpsCallable("tasks/getAllTasks");
+
+    callable({ OrgDomain: this.orgDomain, TeamId: this.milestoneData.TeamId }).pipe(
+      map(actions => {
+        return actions.data as Tasks[];
+      })).subscribe({
+        next: (data) => {
+          const temp = data;
+          this.allTasks = temp.filter((element)=>{
+            if(element.MilestoneId != this.milestoneId){
+              return element;
+            }
+          });
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          console.info("Fetched All Tasks Successfully");
+          this.taskDataReady = true;
+          this.showLoader = false;
+        }
+      });
+  }
+  setMilestoneWidth = function () {
+    //Calculations are adjusted for UI Improvisations
+    var width = (100 / (this.taskData.length)).toString() + "%";
+    return width;
+  };
+  setProgressWidth() {
+    //Calculations are adjusted for UI Improvisations
+    var width = ((((this.totalCompletedTasks - 1) / (this.totalTasks)) * 100)+3).toString() + "%";
+    return width;
+  }
+
+ async addTask(task){
+    this.showLoader = true
+    const todayDate = this.toolsService.date();
+    const time = this.toolsService.time();
+    const appKey = this.backendService.getOrganizationAppKey();
+      const callable = this.functions.httpsCallable('tasks/editTask');
+      await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: todayDate, Time: time, ChangedData: "Milestone Added", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.reporterName, MilestoneId: this.milestoneId}).subscribe({
+
+        next: (data) => {
+          this.showLoader = false;
+          this.addTaskActive = false;
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          this.showLoader = false;
+          console.error(error);
+        },
+        complete: () => this.getTasks()
+    });
+    
+  }
 
   getMilestoneDetails() {
     this.showLoader = true;
@@ -87,14 +198,13 @@ export class MilestoneDetailsComponent implements OnInit {
       map(actions => {
         return actions.data as Milestones;
       })).subscribe({
-        next:(data)=>{
+        next: (data) => {
           this.milestoneData = data;
-          console.log(this.milestoneData);
         },
-        error:(error)=>{
+        error: (error) => {
           console.log(error);
         },
-        complete:()=>{
+        complete: () => {
           console.info("Fetched MilestoneDetails Successfully");
           this.milestoneDataReady = true;
           this.showLoader = false;
@@ -103,20 +213,22 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
 
-  openTaskDetails(taskId){
+  openTaskDetails(taskId) {
     this.router.navigate(['/TaskDetails', taskId]);
   }
 
-  getNumberData(){
-    this.totalTasks= this.taskData.length;
+  getNumberData() {
+    this.totalTasks = this.taskData.length;
     this.taskData.forEach(element => {
-      if(element.Status == "Completed"){
-        console.log(this.totalCompletedTasks);
-            this.totalCompletedTasks = this.totalCompletedTasks+ 1;
+      if (element.Status == "Completed") {
+        this.totalCompletedTasks = this.totalCompletedTasks + 1;
       }
-      console.log("comp", this.totalCompletedTasks);
     });
   }
 
-
+  createTask(){
+    this.popupHandlerService.createNewTaskEnabled= true;
+    this.popupHandlerService.resetTaskIds();
+    this.popupHandlerService.milestoneId = this.milestoneId;
+  }
 }

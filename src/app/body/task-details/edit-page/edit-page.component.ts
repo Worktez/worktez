@@ -68,7 +68,7 @@ export class EditPageComponent implements OnInit {
     this.time = this.toolsService.time();
     this.readTeamMembers(this.task.TeamId);
     this.previousAssignee = this.task.Assignee;
-    this.getMilestoneData(this.task.TeamId);
+    // this.getMilestoneData(this.task.TeamId);
     this.assigneeName.setValue(this.task.Assignee);
     this.reporterName.setValue(this.task.Reporter);
     this.editTask = this.task;
@@ -189,8 +189,6 @@ export class EditPageComponent implements OnInit {
 
   async editPage() {
     this.enableLoader = true
-    
-
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(this.task.Status === "Completed")) {
         const callable = this.functions.httpsCallable('tasks/editTask');
@@ -232,28 +230,28 @@ export class EditPageComponent implements OnInit {
     window.location.reload();
   }
 
-  getMilestoneData(teamId) {
-    console.log(teamId);
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("milestone/getAllMilestones");
-    callable({ OrgDomain: orgDomain, TeamId: teamId }).pipe(
-      map(actions => {
-        return actions.data as Milestones[];
-      })).subscribe({
-        next: (data)=>{
-          if (data) {
-            this.milestoneData = data;
-          }
-        },
-        error:(error)=>{
-          console.error(error);
-        },
-        complete:()=>{
-          console.log(this.milestoneData);
-          console.info("Fetched Milestones Data Successfully");
-        }
-      })
-  }
+//   getMilestoneData(teamId) {
+//     console.log(teamId);
+//     const orgDomain = this.backendService.getOrganizationDomain();
+//     const callable = this.functions.httpsCallable("milestone/getAllMilestones");
+//     callable({ OrgDomain: orgDomain, TeamId: teamId }).pipe(
+//       map(actions => {
+//         return actions.data as Milestones[];
+//       })).subscribe({
+//         next: (data)=>{
+//           if (data) {
+//             this.milestoneData = data;
+//           }
+//         },
+//         error:(error)=>{
+//           console.error(error);
+//         },
+//         complete:()=>{
+//           console.log(this.milestoneData);
+//           console.info("Fetched Milestones Data Successfully");
+//         }
+//       })
+//   }
 
 }
 

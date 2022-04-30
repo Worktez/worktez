@@ -12,35 +12,188 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 
-<div *ngIf="milestoneDataReady">
-        <div class="row p-5">
-            <ng-container>
-                <div class="col-md-12 p-3">
-                  <div class="card text-center p-1">
-                    <h1>{{milestoneData.MilestoneId}}</h1>
-                    <h3>Title : {{milestoneData.Title}}</h3>
-                    <h4>Description : {{milestoneData.Description}}</h4>
-                    <h4>TeamId :{{milestoneData.TeamId}}</h4>
-                    <p><b>Total Tasks : </b>{{totalTasks}}</p>
-                    <p><b>Total Completed Tasks : </b>{{totalCompletedTasks}}</p>
-                  </div>
-                </div>
-            </ng-container>
-          </div>
-      </div>
-      <hr>
-<h1 class="text-center">Tasks</h1>
-<div class="row p-4">
-<ng-container *ngFor="let task of taskData">
+<div *ngIf="milestoneDataReady" class="container-fluid">
+  <div class="row header">
+    <div class="col-8">
+      <h2>Milestone Details</h2>
+    </div>
     
+    <div class="col-3">
+      
+      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary"  (click)="activateAdd()" data-toggle="modal"
+        data-target="#exampleModalCenter">
+        Add a Task
+      </button></div>
+      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewTask"  (click)="createTask()">
+        Create a Task
+      </button></div>
+    </div>
+    <div class="col-1">
+      <span class="btn material-icons float-right" (click)="backToMilestones()">close</span>
+
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <ng-container>
+      <div class="col-md-4">
+        <div class="card p-4">
+          <h1>{{milestoneData.Title}}</h1>
+
+          <h4 class="heading">
+            <span class="material-icons mr-1"
+              style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
+          </h4>
+          <h4 class="mt-1 heading">
+            <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestoneData.TeamId}}
+          </h4>
+          <div class="row pt-2">
+            <div class="col-md-5 col">
+              <p><b>Total Tasks : </b>{{totalTasks}}</p>
+              <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 12px;">
+                <span class="material-icons" style="font-size: 15px">date_range</span>Start Date:
+              </h6>
+              <h6 class="row card-text" id="sprintStartDate" style="font-size: 12px">
+                {{ milestoneData.StartDate }}
+              </h6>
+            </div>
+            <div class="col-md-7 col">
+              <p><b>Total Completed Tasks : </b>{{totalCompletedTasks}}</p>
+
+              <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 12px">
+                <span class="material-icons" style="font-size: 15px">date_range</span>End Date:
+              </h6>
+              <h6 class="row card-text" id="sprintEndDate" style="font-size: 12px">
+                {{ milestoneData.EndDate }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <h1 class="text-center mt-4">Task Tracker</h1>
+        <div class="process-wrapper" *ngIf="taskData.length>0">
+          <div id="progress-bar-container">
+            <ul>
+              <!-- <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
+                <div class="step-inner">{{milestoneData.StartDate}}</div>
+              </li> -->
+              <ng-container *ngFor="let item of completedTasks">
+                <a (click)="openTaskDetails(item.Id)">
+                  <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
+                    <div class="step-inner">{{item.Id}}</div>
+                  </li>
+                </a>
+              </ng-container>
+              <ng-container *ngFor="let item of incompleteTasks">
+                <a (click)="openTaskDetails(item.Id)">
+                  <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
+                    <div class="step-inner">{{item.Id}}</div>
+                  </li>
+                </a>
+              </ng-container>
+              <!-- <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
+              <div class="step-inner">{{milestoneData.EndDate}}</div>
+            </li> -->
+            </ul>
+
+            <div id="line">
+              <div id="line-progress" [ngStyle]="{'width': setProgressWidth()}"></div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="taskData.length == 0">
+          <h3 class="text-center pt-5">No Tasks to Show!</h3>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div *ngIf="taskData.length>0">
+    <hr>
+    <h1 class="text-center">Tasks</h1>
+    <div class=" card d-flex justify-content-center" style="width: 90%; margin: auto; position: relative;">
+      <!-- <ng-container *ngFor="let task of taskData">
     <div class="card col-md-4 pt-2" (click)="openTaskDetails(task.Id)">
       <h3>{{task.Id}}</h3>
-        <h1>Title : {{task.Title}}</h1>
-        <h2>Description : {{task.Description}}</h2>
+      <h1>Title : {{task.Title}}</h1>
+      <h2>Description : {{task.Description}}</h2>
     </div>
-</ng-container>
+  </ng-container> -->
+      <ng-container *ngIf="taskDataReady">
+        <app-data-table [dataForTable]="taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
+      </ng-container>
+    </div>
+  </div>
 </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" style="z-index: 1050" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content card">
+        <div class="modal-header">
+          <h2 class="modal-title font-weight-bold" id="exampleModalLongTitle">
+            Add a Task
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div *ngIf="addTaskActive">
+              <div class="m-1 border-bottom">
+                <div class="row p-1">
+                    <div class="col-2">
+                      TaskId
+                    </div>
+                    <div class="col-5">
+                        Title
+                    </div>
+                    <div class="col-5">
+                      Assignee
+                    </div>
+                </div>
+              </div>
+              <ng-container *ngFor="let task of allTasks">
+                
+                <div class="m-1 border-bottom" (click)="addTask(task)" style="cursor: pointer;">
+                  <div class="row p-1">
+                      <div class="col-2">
+                        {{task.Id}}
+                      </div>
+                      <div class="col-5">
+                          {{task.Title}}
+                      </div>
+                      <div class="col-5">
+                        <app-suggestion-bucket [email]="task.Assignee"  [showEmail] = "false"></app-suggestion-bucket>
+                      </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </form>
+          <div *ngIf="!addTaskActive">
+            <div class="row mx-5">
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline
+                </mat-icon>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+            <h1 class="text-center">Task Added Successfully</h1>
+
+          </div>
+        </div>
+      </div>
+      <ng-template *ngIf="showLoader">
+        <app-loader></app-loader>
+      </ng-template>
+    </div>
+  </div>
+
 
 <ng-container *ngIf="showLoader">
-    <app-loader></app-loader>
+  <app-loader></app-loader>
 </ng-container>
