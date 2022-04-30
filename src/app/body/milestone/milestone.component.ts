@@ -78,11 +78,6 @@ export class MilestoneComponent implements OnInit {
 
   }
 
-  // setMilestoneWidth = function () {
-  //   var width = (100 / this.milestoneList.length).toString() + "%";
-  //   return width;
-  // };
-
   getMilestoneData() {
     this.showLoader = true;
     this.teamIds = this.backendService.getOrganizationTeamIds();
