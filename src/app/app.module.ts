@@ -155,10 +155,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { FilterPageComponent } from './body/filter-page/filter-page.component';
 import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
 import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
-import { MilestoneComponent } from './body/milestone/milestone.component';
-import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
-import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
-import { GetIconComponent } from './icons/get-icon/get-icon.component';
 
 @NgModule({
   declarations: [
@@ -281,10 +277,6 @@ import { GetIconComponent } from './icons/get-icon/get-icon.component';
     FilterPageComponent,
     EditFilterComponent,
     CreateFilterComponent,
-    MilestoneComponent,
-    MilestoneDetailsComponent,
-    GenerateIconComponent,
-    GetIconComponent,
   ],
   imports: [
     BrowserModule,
