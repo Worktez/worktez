@@ -152,6 +152,10 @@ import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MilestoneComponent } from './body/milestone/milestone.component';
+import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
+import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
+import { GetIconComponent } from './icons/get-icon/get-icon.component';
 import { FilterPageComponent } from './body/filter-page/filter-page.component';
 import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
 import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
@@ -274,6 +278,10 @@ import { CreateFilterComponent } from './body/filter-page/create-filter/create-f
     OrgDpComponent,
     KanbanCardComponent,
     TestimonialCardComponent,
+    MilestoneComponent,
+    MilestoneDetailsComponent,
+    GenerateIconComponent,
+    GetIconComponent,
     FilterPageComponent,
     EditFilterComponent,
     CreateFilterComponent,
