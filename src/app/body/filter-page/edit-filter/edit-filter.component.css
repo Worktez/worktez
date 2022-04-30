@@ -1,7 +1,7 @@
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
-* Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+* Author: Simran Nigam <nigamsimran14@gmail.com>
 * 
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
@@ -11,15 +11,16 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-export interface Milestones {
-    MilestoneId: string;
-    CreationDate: string;
-    CreationTime: string;
-    Description: string;
-    TeamId: string;
-    Title: string;
-    TotalCompletedTasks: string;
-    TotalTasks: [];
-    CreatorUid: string;
-  }
+#button {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    outline: none;
+    box-shadow: none;
+    background-color: var(--secondary-color);
+}
 

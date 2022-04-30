@@ -156,6 +156,9 @@ import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
 import { GetIconComponent } from './icons/get-icon/get-icon.component';
+import { FilterPageComponent } from './body/filter-page/filter-page.component';
+import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
+import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
 
 @NgModule({
   declarations: [
@@ -279,6 +282,9 @@ import { GetIconComponent } from './icons/get-icon/get-icon.component';
     MilestoneDetailsComponent,
     GenerateIconComponent,
     GetIconComponent,
+    FilterPageComponent,
+    EditFilterComponent,
+    CreateFilterComponent,
   ],
   imports: [
     BrowserModule,

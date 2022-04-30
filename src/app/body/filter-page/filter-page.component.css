@@ -1,25 +1,24 @@
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
-* Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
 * 
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
+* Author: Simran Nigam <nigamsimran14@gmail.com>
 * 
 * This program is distributed in the hope that it will be useful, 
 * but WITHOUT ANY WARRANTY; without even the implied warranty of 
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-export interface Milestones {
-    MilestoneId: string;
-    CreationDate: string;
-    CreationTime: string;
-    Description: string;
-    TeamId: string;
-    Title: string;
-    TotalCompletedTasks: string;
-    TotalTasks: [];
-    CreatorUid: string;
-  }
+#filterPage{
+width:100px;
+height: 100vh;
 
+}
+
+@media only screen and (max-width: 600px) {
+    #createfilter {
+        display: none;
+    }   
+  }
