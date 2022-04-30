@@ -23,9 +23,7 @@
                 <div class="col-8">
                     <span class="label float-left pr-0 mr-0">{{item.DisplayName}}</span>
                     <span class="value float-left pl-1">
-                        <app-priority-icons *ngIf="showPriorityIcons" [Priority]="item.DisplayName"></app-priority-icons>
-                        <app-difficulty-icons *ngIf="showDifficultyIcons" [Difficulty]="item.DisplayName"></app-difficulty-icons>
-                        <app-status-icons *ngIf="showStatusIcons" [Status]="item.DisplayName"></app-status-icons>
+                        <app-generate-icon [icon]="item"></app-generate-icon>
                     </span>
                 </div>
                 <div class="col-4 float-right">

@@ -33,7 +33,7 @@ exports.createDefaultLabels = function(request, response) {
     let status = 200;
     let result = { data: "Error in adding default labels" };
 
-    const promise1 = createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels).then((team) => {
+    const promise1 = createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels).then(() => {
         console.log("Labels created successfully!");
         status = 200;
         result = { data: "Labels created successfully!" };
@@ -43,12 +43,12 @@ exports.createDefaultLabels = function(request, response) {
     });
 
     const Promises = [promise1];
-    return Promise.all(Promises).then(() => {
+    Promise.all(Promises).then(() => {
         return response.status(status).send(result);
     })
-        .catch((error) => {
-            result = { data: error };
-            console.error("Error: ", error);
-            return response.status(status).send(result);
-        });
+    .catch((error) => {
+        result = { data: error };
+        console.error("Error: ", error);
+        return response.status(status).send(result);
+    });
 };

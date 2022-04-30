@@ -120,7 +120,7 @@ exports.createNewTask = function(request, response) {
             }
             updateTeamDetails(updateTeamJson, orgDomain, project);
             setTask(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, taskStatus, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, team.TeamId, type, 0, 0, creationDate, watchers, milestoneId);
-        }).error((error) => {
+        }).catch((error) => {
             status = 500;
             console.log("Error:", error);
         });
@@ -207,7 +207,7 @@ exports.createNewTask = function(request, response) {
             console.log("Error:", error);
         });
     });
-   return Promise.resolve(promise1).then(() => {
+    return Promise.resolve(promise1).then(() => {
             result = { data: "Task Created Successfully", childTaskId: taskId};
             console.log("Task Created Successfully");
             return response.status(status).send(result);

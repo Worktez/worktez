@@ -33,9 +33,9 @@ export interface Team {
     TeamManagerEmail: string;
     TeamMembers: string[];
     Type: string[];
-    StatusLabels: string[];
-    PriorityLabels: string[];
-    DifficultyLabels: string[];
+    Status: string[];
+    Priority: string[];
+    Difficulty: string[];
     TotalTeamTasks: number;
     OrganizationId: string;
     CurrentSprintId: number;

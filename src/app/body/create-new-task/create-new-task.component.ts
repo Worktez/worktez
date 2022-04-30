@@ -89,6 +89,8 @@ export class CreateNewTaskComponent implements OnInit {
     this.parentTaskId = this.popupHandlerService.parentTaskId;
     this.title = this.popupHandlerService.quickNotesTitle;		
     this.description = this.popupHandlerService.quickNotesDescription;
+    console.log(this.popupHandlerService.milestoneId);
+    this.selectedMilestoneId = this.popupHandlerService.milestoneId;
   }
 
   private _filter(value: string): string[] {
@@ -99,10 +101,10 @@ export class CreateNewTaskComponent implements OnInit {
   readTeamData(teamId :string){
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-          this.priorityLabels = team.PriorityLabels;
-          this.statusLabels = team.StatusLabels;
+          this.priorityLabels = team.Priority;
+          this.statusLabels = team.Status;
           this.type = team.Type;
-          this.difficultyLabels = team.DifficultyLabels;
+          this.difficultyLabels = team.Difficulty;
           this.teamMembers=team.TeamMembers;
           this.teamName=team.TeamName;
           this.sprintNumber = team.CurrentSprintId;
@@ -122,7 +124,6 @@ export class CreateNewTaskComponent implements OnInit {
           );
           this.enableLoader = false;
     }); 
-    this.getMilestoneData(teamId);
   }
 
   showBacklog(){
@@ -206,28 +207,4 @@ export class CreateNewTaskComponent implements OnInit {
     jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
   }
-
-  getMilestoneData(teamId) {
-    console.log(teamId);
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("milestone/getAllMilestones");
-    callable({ OrgDomain: orgDomain, TeamId: teamId }).pipe(
-      map(actions => {
-        return actions.data as Milestones[];
-      })).subscribe({
-        next: (data)=>{
-          if (data) {
-            this.milestoneData = data;
-          }
-        },
-        error:(error)=>{
-          console.error(error);
-        },
-        complete:()=>{
-          console.log(this.milestoneData);
-          console.info("Fetched Milestones Data Successfully");
-        }
-      })
-  }
-
 }

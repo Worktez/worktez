@@ -90,7 +90,7 @@ const routes: Routes = [
   { path: 'termsandcondition', component: TermsAndConditionComponent},
   { path: 'releasenotes', component: ReleaseNotesComponent },
   { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
-  { path: 'Milestone', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];

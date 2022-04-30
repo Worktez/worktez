@@ -13,9 +13,8 @@
 ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-import { Label ,Team} from 'src/app/Interface/TeamInterface'
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -33,16 +32,18 @@ export class AddLabelComponent implements OnInit {
   @Input ('teamName') teamName:string; 
   @ViewChild('form') form: NgForm;
   @Output()  addLabelCompleted = new EventEmitter;
-  colorCode: string;
+
+  iconName = new FormControl();
+  colorCode = new FormControl();
+
   displayName: string;
-  iconName: string;
   scope: string;
 
   showClose: boolean = false;
   enableLoader: boolean = false
   addLabelEnabled: boolean=false;
 
-  constructor( public popupHandlerService: PopupHandlerService ,private authService: AuthService ,public backendService: BackendService, private functions:AngularFireFunctions ,public errorHandlerService: ErrorHandlerService) { }
+  constructor( public popupHandlerService: PopupHandlerService, private authService: AuthService ,public backendService: BackendService, private functions:AngularFireFunctions ,public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.addLabelEnabled=true;
@@ -52,7 +53,8 @@ export class AddLabelComponent implements OnInit {
      this.enableLoader=true;
      const orgDomain = this.backendService.getOrganizationDomain();
      const callable = this.functions.httpsCallable('teams/addLabel');
-     callable({ColorCode:this.colorCode, DisplayName:this.displayName, IconName:this.iconName , Scope:this.scope, OrgDomain: orgDomain ,TeamName: this.teamName}).subscribe({
+     console.log(this.colorCode.value);
+     callable({ColorCode:this.colorCode.value, DisplayName:this.displayName, IconName:this.iconName.value, Scope:this.scope, OrgDomain: orgDomain ,TeamName: this.teamName}).subscribe({
        next:() => {
          console.log("Added New Label");
 
@@ -67,7 +69,27 @@ export class AddLabelComponent implements OnInit {
        }
        
      });
-  } 
+  }
+
+  selectedIconName(item) {
+    if(item.selected == false) {
+      this.iconName.setValue("");
+      this.close();
+    } else {
+      this.iconName.setValue(item.data);
+    }
+  }
+
+  selectedColorName(item) {
+    if(item.selected == false) {
+      this.colorCode.setValue("");
+      this.close();
+    } else {
+      var temp = item.data as string
+      temp = temp.slice(1);
+      this.colorCode.setValue(temp);
+    }
+  }
 
   close(){
     jQuery('#addLabel').modal('hide');

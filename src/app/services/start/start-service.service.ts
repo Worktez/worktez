@@ -147,7 +147,6 @@ export class StartServiceService {
           this.applicationSettingsService.editedTeamId = this.selectedTeamId;
         }
         this.backendService.organizationsData.subscribe(data => {
-          console.log("p1");
           this.readApplicationData();
         });
         this.authService.myTeamsListObservable.subscribe(data => {
@@ -167,8 +166,6 @@ export class StartServiceService {
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-      console.log("p2");
-      console.log(teams);
       this.teamData = teams;
       if (this.teamData.TeamId == this.selectedTeamId) {
         if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
@@ -190,7 +187,6 @@ export class StartServiceService {
         this.role = "Member";
       }
       this.showTeamsData = true;
-      console.log("p3");
       this.applicationDataState.next(true);
       return this.teamData;
     });

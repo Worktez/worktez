@@ -1,0 +1,11 @@
+<div class="row px-2">
+    <ng-container *ngFor="let item of iconsToShow">
+        <div class="col py-2" (click)="selectedIcon(item)">
+            <div class="iconsBox p-2 text-center">
+                <mat-icon class="icon" fontSet="material-icons-outlined">
+                    {{item}}
+                </mat-icon>
+            </div>
+        </div>
+    </ng-container>
+</div>

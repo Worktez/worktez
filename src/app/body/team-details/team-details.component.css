@@ -14,15 +14,12 @@
 ***********************************************************/ -->
 .card {
     color: var(--text);
-    background: var(--primary-bg);
-    border: 1px solid var(--scrollbar-color);
-    border-radius: 10px;
 }
+
 hr {
-    margin: 0% 3%;
-    border: none;
     border-bottom: 2px solid var(--scrollbar-color);
 }
+
 .btn {
     background-color: var(--primary-color);
     width: auto;
@@ -46,9 +43,6 @@ hr {
 }
 
 @media only screen and (max-width: 600px) {
-    .container-fluid {
-        padding: 4px 10px 0px 0px;
-    }   
     .part {
         padding: 1px 10px 1px 10px;
         border: none;

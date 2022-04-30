@@ -26,18 +26,17 @@
                 <div class="row">
                     <div class="col-md-8 col-9">
                         <div class="row">
-                            <div class="status labels mx-2">
+                            <div class="status labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <app-status-icons [Status]="task.Status" [Border]="true"></app-status-icons>
+                                <app-get-icon [DisplayName]="task.Status" [Border]="true"></app-get-icon>
                             </div>
-                            <div class="priority labels mx-2">
+                            <div class="priority labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Priority &nbsp;&nbsp;</span>
-                                <app-priority-icons [Priority]="task.Priority" [Border]="true"></app-priority-icons>
+                                <app-get-icon [DisplayName]="task.Priority" [Border]="true"></app-get-icon>
                             </div>
-                            <div class="difficulty labels mx-2">
+                            <div class="difficulty labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Difficulty</span>
-                                <app-difficulty-icons [Difficulty]="task.Difficulty" [Border]="true">
-                                </app-difficulty-icons>
+                                <app-get-icon [DisplayName]="task.Difficulty" [Border]="true"></app-get-icon>
                             </div>
                         </div>
                     </div>
