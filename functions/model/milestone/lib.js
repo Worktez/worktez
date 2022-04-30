@@ -18,7 +18,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
- const { db } = require("../application/lib");
+const { db } = require("../application/lib");
 
  /**
  * Description
@@ -28,23 +28,23 @@
  * @param {any} description
  * @param {any} milestoneId
  * @param {any} teamId
- * @param {any} totalTasks
- * @param {any} totalCompletedTasks
  * @param {any} creationDate
  * @param {any} creationTime
+ * @param {any} startDate
+ * @param {any} endDate
  * @return {any}
  */
-exports.setMilestone = function(uid, orgDomain, title, description, milestoneId, teamId, totalTasks, totalCompletedTasks, creationDate, creationTime) {
+exports.setMilestone = function(uid, orgDomain, title, description, milestoneId, teamId, creationDate, creationTime, startDate, endDate) {
     const addMilestonePromise = db.collection("Organizations").doc(orgDomain).collection("Milestones").doc(milestoneId).set({
         CreatorUid: uid,
         TeamId: teamId,
         MilestoneId: milestoneId,
         Title: title,
         Description: description,
-        TotalTasks: totalTasks,
-        TotalCompletedTasks: totalCompletedTasks,
         CreationDate: creationDate,
         CreationTime: creationTime,
+        StartDate: startDate,
+        EndDate: endDate,
     });
     return Promise.resolve(addMilestonePromise);
 };
