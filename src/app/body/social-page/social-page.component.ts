@@ -17,6 +17,7 @@ import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { map } from 'rxjs';
 import { Post } from 'src/app/Interface/SocialInterface';
 import { AuthService } from 'src/app/services/auth.service';
@@ -31,6 +32,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 })
 export class SocialPageComponent implements OnInit {
 
+  componentName: string = "SOCIAL-PAGE"
   showloader: boolean = false
   dataReady: boolean = false
   createPostEnabled: boolean = false
@@ -39,7 +41,7 @@ export class SocialPageComponent implements OnInit {
 
   PostId: string
 
-  constructor(private router: Router, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService) { }
+  constructor(private router: Router, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -51,7 +53,8 @@ export class SocialPageComponent implements OnInit {
     callable({}).pipe(map(res=>{
       const data = res.data as Post[];
       return data
-    })).subscribe((data)=>{
+    })).subscribe({
+      next:(data)=>{
       if(data) {
         this.posts = data;
         this.posts.forEach(element => {
@@ -63,7 +66,12 @@ export class SocialPageComponent implements OnInit {
       }
       this.showloader = false
       this.loadRecentActivity();
-    });
+    },
+    error:(error)=>{
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      console.error(error);
+    } });
   }
 
   createPost() {

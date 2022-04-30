@@ -13,7 +13,6 @@
 ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-import { Label ,Team} from 'src/app/Interface/TeamInterface'
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -51,7 +50,6 @@ export class AddLabelComponent implements OnInit {
  submit(){
      this.enableLoader=true;
      const orgDomain = this.backendService.getOrganizationDomain();
-     console.log(this.teamName)
      const callable = this.functions.httpsCallable('teams/addLabel');
      callable({ColorCode:this.colorCode, DisplayName:this.displayName, IconName:this.iconName , Scope:this.scope, OrgDomain: orgDomain ,TeamName: this.teamName}).subscribe({
        next:() => {

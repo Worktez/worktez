@@ -50,12 +50,12 @@ exports.addProjLink = function(request, response) {
     });
 
     const Promises = [promise1];
-    return Promise.all(Promises).then(() => {
-            return response.status(status).send(result);
-        })
-        .catch((error) => {
-            result = { data: error };
-            console.error("Error updating Team", error);
-            return response.status(status).send(result);
-        });
+    Promise.all(Promises).then(() => {
+        return response.status(status).send(result);
+    })
+    .catch((error) => {
+        result = { data: error };
+        console.error("Error updating Team", error);
+        return response.status(status).send(result);
+    });
 };

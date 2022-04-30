@@ -40,30 +40,45 @@ export class TeamsCardComponent implements OnInit {
   updateTeamEnabled: boolean = false
   teamToUpdate: Team
   componentName:string ="ORGANIZATION-DETAILS"
+  githubProjectAdded: boolean=false;
+  repoLink: string;
+  projectLinked: boolean= false;
   constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
-  ngOnInit(): void {}
-
-  updateTeam(team: Team) {
-    this.teamToUpdate = team;
-    this.updateTeamEnabled = true;
+  ngOnInit(): void {
+    this.checkGitProject();
   }
-
-  async deleteTeam() {
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/deleteTeam');
-    await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
-      next: (data) => {
-        this.team.TeamStatus = -1;
-      },
-      error: (error) => {
-        console.error("Error", error);
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      },
-      complete: () => console.info('Successful ')
-  });
+  checkGitProject(){
+    if(this.team.ProjectLink!=undefined){
+      if(this.team.ProjectLink==""){
+        this.projectLinked=false;
+      }
+      else{
+        this.projectLinked=true;
+        this.repoLink=this.team.ProjectLink;
+      }
+    }
   }
+  // updateTeam(team: Team) {
+  //   this.teamToUpdate = team;
+  //   this.updateTeamEnabled = true;
+  // }
+
+  // async deleteTeam() {
+  //   const orgDomain = this.backendService.getOrganizationDomain();
+  //   const callable = this.functions.httpsCallable('teams/deleteTeam');
+  //   await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+  //     next: (data) => {
+  //       this.team.TeamStatus = -1;
+  //     },
+  //     error: (error) => {
+  //       console.error("Error", error);
+  //       this.errorHandlerService.showError = true;
+  //       this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+  //     },
+  //     complete: () => console.info('Successful ')
+  // });
+  // }
 
   openTeamDetails() {
     this.router.navigate(['TeamDetails', this.team.TeamId]);
@@ -92,11 +107,15 @@ export class TeamsCardComponent implements OnInit {
     this.typeLink = "Username";
   }
 
-  addedProject(data: { completed: boolean, memberEmail: string }) {
+  addedProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
     this.githubDetails.emit(true);
     this.addProjectEnabled = false;
+    if(data.completed==true){
+    this.projectLinked=data.completed;
+    this.repoLink=data.projLink;
+    }
   }
-  teamUpdated(data: { completed: boolean }) {
-    this.updateTeamEnabled = false;
-  }
+  // teamUpdated(data: { completed: boolean }) {
+  //   this.updateTeamEnabled = false;
+  // }
 }

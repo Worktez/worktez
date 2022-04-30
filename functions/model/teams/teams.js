@@ -1,5 +1,5 @@
-/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -27,7 +27,9 @@ const {getLabelByScope} = require("./tark/getTeamLabels");
 const {deleteLabel} = require("./tark/deleteLabel");
 const {editLabel} = require("./tark/editLabel");
 const {addLabel} = require("./tark/addLabel");
+const {addProjLink} = require("./tark/addProjLink");
 const {createDefaultLabels} = require("./tark/createDefaultLabels");
+const { getLabelsInScopes } = require("./tark/getTeamLabelsInScope");
 
 /**
  * Description
@@ -70,7 +72,6 @@ fastify.post("/deleteTeam", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getTeamData", (req, res) => {
-  console.log("calling gettingTeamData api");
   getTeamData(req, res);
 });
 
@@ -96,6 +97,9 @@ fastify.post("/updateTeam", (req, res) => {
   updateTeam(req, res);
 });
 
+fastify.post("/addProjLink", (req, res) => {
+  addProjLink(req, res);
+});
 
 /**
  * Description
@@ -128,6 +132,17 @@ fastify.post("/addLabel", (req, res) => {
  */
 fastify.post("/getLabelByScope", (req, res) => {
   getLabelByScope(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getLabelByScope"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getLabelsInScopes", (req, res) => {
+  getLabelsInScopes(req, res);
 });
 
 /**

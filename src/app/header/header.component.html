@@ -76,6 +76,13 @@
                                 Create
                             </a>
                         </li>
+                        <ng-container *ngIf="startService.userReady">
+                            <li class="nav-item px-1">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="milestoneGraph()">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">interests</mat-icon> Milestones
+                                </a>
+                            </li>
+                        </ng-container>
                         <li class="nav-item dropdown" *ngIf="startService.teamIdExists">
                             <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">

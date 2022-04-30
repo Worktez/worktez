@@ -56,7 +56,6 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   getOrganizationDetails() {
     this.showLoader = true;
-    const appKey = this.authService.getAppKey();
     this.teams = [];
     this.backendService.organizationsData.subscribe(data => {
       this.organization = data;

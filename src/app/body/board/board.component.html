@@ -39,7 +39,7 @@
                             <p class="board-text">The Sprint does not exist</p>
                         </ng-container>
                         <ng-container *ngIf="sprintNotExist == false">
-                            <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="startService.currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                            <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
                         </ng-container>
                     </div>
                     <div class="col-md-8 col mb-2">

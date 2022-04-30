@@ -44,6 +44,19 @@
 .add-team {
     color: var(--text);
 }
+.create-team {
+    background-color: var(--input-field);
+    color: var(--text);
+    width: auto;
+    height: 37px;
+    font-size: 12px;
+    border-radius:5px;
+	text-align: left;
+    border: none !important;
+    box-shadow: none;
+    outline: 0 none;
+}
+
 
 .heading {
     color: var(--text);

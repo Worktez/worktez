@@ -1,0 +1,79 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+*    
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+
+<h1 class="text-center p-3">Our Milestones</h1>
+<button type="button" class="btn btn-primary float-left mr-4" data-toggle="modal" data-target="#exampleModalCenter">
+  Add a Milestone
+</button>
+
+<button class="btn btn-success" (click)="getMilestoneData()">get data</button>
+
+
+  <!-- Button trigger modal -->
+<div *ngIf="milestoneData.length > 0">
+  <div class="row p-5">
+      <ng-container *ngFor="let milestone of milestoneData">
+          <div class="col-md-4 p-3">
+            <a (click)="getMilestoneDetails(milestone.MilestoneId)">
+            <div class="card text-center p-1">
+              <h1>{{milestone.MilestoneId}}</h1>
+              <h3>Title : {{milestone.Title}}</h3>
+              <h4>Description : {{milestone.Description}}</h4>
+              <h4>Team Id :{{milestone.TeamId}}</h4>
+            </div>
+          </a>
+          </div>
+      </ng-container>
+    </div>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" style="z-index: 9999" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">
+            Add a Milestone
+          </h3>
+          <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="addMilestoneActive">
+            <input type="text" [(ngModel)]="title" [ngModelOptions]="{ standalone: true }" class="form-control p-3"
+              id="recipient-name" placeholder="Enter the title" /><br>
+              <select class="form-control form-control-sm" [(ngModel)]="teamId" [ngModelOptions]="{standalone: true}">
+                <option [ngValue]="null" [disabled]="true">Select Team ID</option>
+                <ng-container *ngFor='let id of teamIds'>
+                    <option>{{ id }}</option>
+                </ng-container>
+            </select><br>
+            <input type="text" [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"
+              class="form-control p-3" id="recipient-name" placeholder="Enter the Description of the Milestone" />
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" (click)="addMilestone()">
+                Save
+              </button>
+            </div>
+          </div>
+          <div *ngIf="!addMilestoneActive">
+<h1 class="text-center">Successfully Added Milestone</h1>
+
+          </div>
+        </div>
+      </div>
+      <ng-template *ngIf="showLoader">
+        <app-loader></app-loader>
+    </ng-template>

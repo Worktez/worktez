@@ -197,8 +197,6 @@ export class ProfileComponent implements OnInit {
     else{
       const data = this.userService.getUserNameData(this.username);
       if(data != null) {
-        console.log(data);
-        console.log(data.email);
         this.displayName = data.displayName;
         this.email = data.email;
         this.uid = data.uid;
