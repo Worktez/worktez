@@ -12,6 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -25,9 +26,9 @@ export class ThemeService {
 
   public presentThemeSubject = new BehaviorSubject('theme-light');
   presentTheme$: Observable<string> = this.presentThemeSubject.asObservable();
-  constructor() {}
+  constructor(private cookieService: CookieService) {}
 
-  changeTheme(theme) {
+  changeTheme(theme: string) {
     if(theme == "theme-light") {
       this.fontColor = "#000000"
       this.bgColor = "#FFFFFF"
@@ -35,6 +36,8 @@ export class ThemeService {
       this.fontColor = "#FFFFFF"
       this.bgColor = "#000000"
     }
+
+    this.cookieService.set("userAppTheme", theme);
     this.presentThemeSubject.next(theme);
   }
 }
