@@ -23,7 +23,7 @@
                 </select>
             </ng-container>
             <ng-template #showDifficultyIcon>
-                <app-difficulty-icons [Difficulty]="task.Difficulty"></app-difficulty-icons>
+                <app-get-icon [DisplayName]="task.Difficulty" [Border]="false"></app-get-icon>
             </ng-template>
         </div>
         <div class="col"></div>
@@ -42,7 +42,7 @@
                 </select>
             </ng-container>
             <ng-template #showPriorityIcon>
-                <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
+                <app-get-icon [DisplayName]="task.Priority" [Border]="false"></app-get-icon>
             </ng-template>
         </div>
         <div class="col"></div>
