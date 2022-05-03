@@ -38,3 +38,28 @@
 .add-member:hover {
     cursor: pointer;
 }
+
+#myModalLabel{
+    text-align: left;
+}
+
+.modal-dialog {
+    height: 100%;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    color: var(--primary-color);
+}
+
+.close{
+    color:var(--text);
+}
+
+.btn-default{
+    color:var(--text);
+}

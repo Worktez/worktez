@@ -24,7 +24,7 @@
                     <span class="caret"></span></button>
             </div>
             <div class="col-md">
-                <span class="material-icons mr-2 float-right trash p-2" type="button" (click)="deleteTeam()"
+                <span class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
                     title="delete Team" data-bs-toggle="tooltip">delete</span>
                 <span class="material-icons mr-2 p-2 float-right" type="button" data-toggle="modal"
                     data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts"
@@ -72,19 +72,35 @@
                             <h4>Team Members</h4>
                         </div>
                     </div>
-                   <app-profile-pictures [emails]="team.TeamMembers"></app-profile-pictures>
+                <app-profile-pictures [emails]="team.TeamMembers"></app-profile-pictures>
                 </h4>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">Confirmation Message</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger" role="alert">Are you sure you want to delete this team?</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click) = "deleteTeam()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
     <app-add-member [teamId]="teamToAddMember.TeamId" [teamName]="teamToAddMember.TeamName"
         [teamMembers]="teamToAddMember.TeamMembers" [teamManager]="teamToAddMember.TeamManager"
         [teamDescription]="teamToAddMember.TeamDescription" [isUpdateTeam]="true" (addedMember)="addedMember($event)">
     </app-add-member>
 </ng-container>
-
 <ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
     <app-github-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
         (addedProject)="addedProject($event)">
@@ -93,3 +109,4 @@
 <ng-container *ngIf="updateTeamEnabled">
     <app-update-team (teamUpdated)="teamUpdated($event)" [teamToUpdate]="teamToUpdate"></app-update-team>
 </ng-container>
+
