@@ -12,8 +12,8 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="card" style="width: 18rem;" *ngIf="labelsReady">
-    <div class="card-header">{{scope}}    
-    <mat-icon fontSet="material-icons" style="cursor: pointer;" (click)="addLabel()" data-toggle="modal" data-target="#addLabel">
+    <div class="card-header">{{scope}} 
+    <mat-icon fontSet="material-icons" class="float-right pb-2" style="cursor: pointer; font-size: 22px;" (click)="addLabel()" data-toggle="modal" data-target="#addLabel">
         add
     </mat-icon></div>
     <ul class="list-group list-group-flush">
@@ -21,10 +21,13 @@
         <li class="list-group-item">
             <div class="row">
                 <div class="col-8">
-                    {{item.DisplayName}}
+                    <span class="label float-left pr-0 mr-0">{{item.DisplayName}}</span>
+                    <span class="value float-left pl-1">
+                        <app-generate-icon [icon]="item"></app-generate-icon>
+                    </span>
                 </div>
-                <div class="col-4 text-right">
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
+                <div class="col-4 float-right">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle px-2 mr-2 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
                         edit 
                     </mat-icon>
                     <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons" (click)="setLabelTodelete(item)" data-toggle="modal" data-target="#deletedLabel">

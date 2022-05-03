@@ -42,6 +42,7 @@ export class BoardComponent implements OnInit {
   today: any = new Date();
   EDate: any;
   SDate: any;
+  currentSprintNumber: number;
 
   constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
@@ -52,15 +53,11 @@ export class BoardComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.readSprintData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
             if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  this.readSprintData();
-                }
-              });
+              this.readSprintData();
             }
           });
         }
@@ -93,14 +90,25 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
+      console.log("checking 0");
       if(this.startService.selectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
         });
         if (sprints) {
+          console.log("checking 1");
           this.sprintData = sprints;
+          this.currentSprintNumber=this.sprintData.SprintNumber;
+          
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
+          if(this.currentSprintNumber==-1){
+      
+            this.currentSprintName="Backlog";
+          }
+          else if(this.currentSprintNumber==-2){
+            this.currentSprintName="Deleted";
+          }
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
           this.DaysUp = Math.abs((this.today - this.SDate)/(1000 * 60 * 60 * 24));
@@ -120,6 +128,7 @@ export class BoardComponent implements OnInit {
         }
       });
     } else {
+      console.log("checking 2");
       this.startService.readApplicationData();
       this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data) {
@@ -144,8 +153,17 @@ export class BoardComponent implements OnInit {
     else if(filterSprintNumber<-2){
       filterSprintNumber=-2;
     }
+    this.currentSprintNumber=filterSprintNumber;
     this.startService.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
+    if(filterSprintNumber==-1){
+      
+      this.currentSprintName="Backlog";
+    }
+    else if(filterSprintNumber==-2){
+      this.currentSprintName="Deleted";
+    }
+    
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }

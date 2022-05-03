@@ -35,6 +35,21 @@
     font-size: 48px;
 
 }
+#Active{
+    background-color: var(--secondary-color);
+    font-size: 9px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#Backlog{
+    background-color: var(--primary-color);
+    font-size: 9px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 .clr {
     border: none;

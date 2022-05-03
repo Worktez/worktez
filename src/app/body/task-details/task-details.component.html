@@ -26,18 +26,17 @@
                 <div class="row">
                     <div class="col-md-8 col-9">
                         <div class="row">
-                            <div class="status labels mx-2">
+                            <div class="status labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <app-status-icons [Status]="task.Status" [Border]="true"></app-status-icons>
+                                <app-get-icon [DisplayName]="task.Status" [Border]="true"></app-get-icon>
                             </div>
-                            <div class="priority labels mx-2">
+                            <div class="priority labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Priority &nbsp;&nbsp;</span>
-                                <app-priority-icons [Priority]="task.Priority" [Border]="true"></app-priority-icons>
+                                <app-get-icon [DisplayName]="task.Priority" [Border]="true"></app-get-icon>
                             </div>
-                            <div class="difficulty labels mx-2">
+                            <div class="difficulty labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Difficulty</span>
-                                <app-difficulty-icons [Difficulty]="task.Difficulty" [Border]="true">
-                                </app-difficulty-icons>
+                                <app-get-icon [DisplayName]="task.Difficulty" [Border]="true"></app-get-icon>
                             </div>
                         </div>
                     </div>
@@ -50,9 +49,11 @@
                                     alt="user">
                             </a> -->
                             <div class="pt-2 pr-2">
-                                    <img  src="../../../assets/git.png" height="35" class="rounded-circle" width="35"
+                                    <img  src="../../../assets/git.png" *ngIf="!prLinked" height="35" class="rounded-circle" width="35"
                                     alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel"
                                     (click)="linkPr()">
+                                    <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status p-2" data-toggle="tooltip" data-placement="top" title="view PR">
+                                       PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span></a>
                             </div>
                             <div class="logWork pt-3 pr-2"
                                 *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
@@ -65,7 +66,7 @@
                                         title="Menu">more_horiz</span>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                         <div class="reopenTask "
-                                            *ngIf="startService.userReady && task.Status=='Completed'">
+                                            *ngIf="startService.userReady && task.Status=='Completed' && !showLoader">
                                             <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
                                                 Task</button>
                                         </div>
@@ -303,7 +304,9 @@
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
-        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task"></app-git>
+        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" (addedPrLink)="addedPrLink($event)"></app-git>
     </ng-container>
 </ng-container>
-<app-loader *ngIf="!(gotTaskData)"></app-loader>
+<ng-container *ngIf="showLoader || !(gotTaskData)">
+    <app-loader></app-loader>
+</ng-container>

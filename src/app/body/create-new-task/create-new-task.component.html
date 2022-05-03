@@ -30,7 +30,7 @@
                         <div class="col">
                             {{ todayDate }}
                         </div>
-                        <div class="col d-flex justify-content-end">
+                        <div class="col d-flex justify-content-end" *ngIf="!showClose" >
                             <span id="Active" class="p-2 m-2" (click)="activeSprint()" *ngIf="sprintNumber!=currentSprintNumber">Active Sprint</span>
                             <span id="Backlog" class="p-2 m-2" (click)="showBacklog()" *ngIf="sprintNumber!=backlogSprintNumber">Backlog</span>
                         </div>
@@ -149,6 +149,12 @@
                                 </select>
                             </div>
                         </div>
+                        <ng-container>
+                        <div *ngIf="selectedMilestoneId != ''">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone</span>
+                            <input type="text" disabled min="0" class="form-control form-control-sm" [(ngModel)]="selectedMilestoneId" [ngModelOptions]="{standalone: true}" placeholder="Milestone">
+                        </div>
+                    </ng-container>
 
                 
                 <div class="modal-footer mt-n1">

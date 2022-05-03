@@ -16,30 +16,21 @@
 <div class="card pb-3">
     <div class="card-header mb-3">
         <div class="row p-2">
-            <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{user.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="ml-3 col">
-                <h3>{{user.displayName}} <br><span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer at Random Company</span><br>
+                <h3>{{user.displayName}} <br><span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer</span><br>
                 <span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">4h</span></h3>
-            </div>
-            <div>
-                <button class="btn m-auto"><mat-icon fontSet="material-icons" class="align-middle">add</mat-icon>Follow</button> 
             </div>
         </div>
     </div>
     <div class="card-body mt-5">
         <p>{{post.Post}}</p>
         <hr>
+        <br>
         <div class="row">
-            <button class="btn m-auto px-3 py-1" (click)="onReact(post.PostId)"  id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">thumb_up</mat-icon></button> 
-            <button class="btn m-auto px-3 py-1" (click)="showCommentBox(post.PostId)" id="commentButton1" data-toggle="button"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat</mat-icon></button>
-            <button class="btn m-auto px-3 py-1" id="shareIcon"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">share</mat-icon></button>
-            <button class="btn m-auto px-3 py-1" id="SendIcon"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">send</mat-icon></button>
-        </div>
-        <div class="row">
-            <span class="m-auto">Like</span>
-            <span class="m-auto">Comment</span>
-            <span class="m-auto">Share</span>
-            <span class="m-auto">Send</span>
+            <button class="btn m-auto px-3 py-1" (click)="onReact(post.PostId);toggleColor()" 
+                id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3" [ngClass]="{'button-color': showColor, 'button-transparent' : !showColor}">grade</mat-icon >Star</button> 
+            <button class="btn m-auto px-3 py-1" (click)="showCommentBox(post.PostId)" id="commentButton1"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat</mat-icon>Comment</button>
         </div>
     </div>
 </div>

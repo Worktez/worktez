@@ -109,14 +109,24 @@
 }
 
 .showCase {
-    background-color: #11171B;
+    background-color: transparent;
     display: flex;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: hidden;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
-    padding-left: 10%;
-    padding-top: 2%;
+}
+
+.arrow {
+    font-size: 34px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.arrow:hover {
+    font-size: 40px;
+    font-weight: bolder;
+    color: var(--primary-color);
 }
 
 @media only screen and (max-width: 600px) {
@@ -148,5 +158,13 @@
 
     #featureContent {
         width: 100%;
+    }
+
+    .arrow {
+        font-size: 20px;
+    }
+
+    .arrow:hover {
+        font-size: 24px;
     }
 }

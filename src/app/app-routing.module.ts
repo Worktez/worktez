@@ -49,6 +49,8 @@ import { ReleaseNotesComponent } from './body/release-notes/release-notes.compon
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 import { TeamDetailsComponent } from './body/team-details/team-details.component';
+import { MilestoneComponent } from './body/milestone/milestone.component';
+import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
@@ -88,6 +90,8 @@ const routes: Routes = [
   { path: 'termsandcondition', component: TermsAndConditionComponent},
   { path: 'releasenotes', component: ReleaseNotesComponent },
   { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

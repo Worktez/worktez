@@ -13,6 +13,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
+import { newArray } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
@@ -36,6 +37,7 @@ export class SocialPageComponent implements OnInit {
   dataReady: boolean = false
   createPostEnabled: boolean = false
   public posts: Post[]
+  public recentPosts: Post[]
 
   PostId: string
 
@@ -51,7 +53,8 @@ export class SocialPageComponent implements OnInit {
     callable({}).pipe(map(res=>{
       const data = res.data as Post[];
       return data
-    })).subscribe((data)=>{
+    })).subscribe({
+      next:(data)=>{
       if(data) {
         this.posts = data;
         this.posts.forEach(element => {
@@ -61,13 +64,14 @@ export class SocialPageComponent implements OnInit {
           this.dataReady = true;
         });
       }
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.error(error);
-      }
       this.showloader = false
-    });
+      this.loadRecentActivity();
+    },
+    error:(error)=>{
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      console.error(error);
+    } });
   }
 
   createPost() {
@@ -80,4 +84,20 @@ export class SocialPageComponent implements OnInit {
     this.loadSocialPageData();
   }
 
+  loadRecentActivity(){
+    const newarray = this.posts.filter((data)=>{
+      if(data.Uid == this.authService.userAppSetting.uid) {
+        return data;
+      }
+    });
+    if(newarray.length) {
+      this.recentPosts = newarray.reverse();
+      this.recentPosts.splice(3)
+    } else {
+      console.log("User Not Found Loading empty User")
+      return this.recentPosts[0]
+    }
+  }
+
 }
+

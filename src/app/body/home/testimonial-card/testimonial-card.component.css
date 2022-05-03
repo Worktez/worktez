@@ -2,6 +2,13 @@
     background-color: #20282E;
     color: #ffffff;
     border: none;
+    width: 17rem;
+    height: 20rem;
+    border-radius: 15px;
+}
+
+.card-title {
+    font-size: 20px;
 }
 
 .card-text {
@@ -11,4 +18,18 @@
 .imageCheck {
     position: absolute;
     top: -25px;
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 10rem;
+        height: 13rem;
+    }
+    .card-title {
+        font-size: 12px;
+    }
+
+    .card-text {
+        font-size: 10px;
+    }
 }

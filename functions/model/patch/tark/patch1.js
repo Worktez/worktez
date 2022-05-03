@@ -43,7 +43,6 @@ exports.patch1 = function(request, response) {
         totalSprints = teamDoc.CurrentSprintId;
         teamName = teamDoc.TeamName;
         orgId = teamDoc.OrganizationId;
-        console.log("Executing Promise1 of Patch1");
         for (i = -2; i <= totalSprints; i++) {
             if (i != 0) {
                 fullSprintId = createSprintId(i);

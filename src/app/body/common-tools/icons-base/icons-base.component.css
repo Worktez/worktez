@@ -1,0 +1,12 @@
+.iconsBox {
+    background-color: var(--secondary-bg);
+}
+
+.iconsBox:hover {
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-bg);
+}
+
+.icon { 
+    font-size: 30px;
+}

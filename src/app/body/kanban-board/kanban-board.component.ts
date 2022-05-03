@@ -84,6 +84,8 @@ export class KanbanBoardComponent implements OnInit {
     this.applicationSettingsService.editedTeamId = teamId;
     this.startService.selectedTeamId = teamId;
     this.authService.userAppSetting.SelectedTeamId = teamId;
+    this.startService.readApplicationData();
+    this.filterSprintNumber = this.startService.currentSprintNumber;
     this.startService.changeTeam = true;
     this.sprintNotExist = false;
     this.showContent = false;
@@ -144,6 +146,7 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   putDataInTasksArray(tasksData: Tasks[]) {
+    this.tasks = [];
     this.selectedStatusLabels.forEach((label) => {
       let tasksarr = [];
       tasksData.forEach((task) => {

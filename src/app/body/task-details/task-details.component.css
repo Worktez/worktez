@@ -91,7 +91,16 @@ nav {
     font-size: 30px;
     color: var(--text);
 }
-
+.btn-status{
+    background-color: var(--secondary-bg);
+    color: var(--text); 
+    border: dashed;
+    border-width: 1px;
+    font-size: 12px;
+    border-color: var(--primary-color);
+    box-shadow: none;
+    outline: 0 none;
+}
 a .active .nav-link{
     background-color: var(--dropdown-hover) !important;
     color: var(--button-text-hover) !important;  

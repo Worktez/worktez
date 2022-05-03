@@ -249,7 +249,6 @@ export class SetupComponent implements OnInit {
         next: (result) => {
           this.progressPercentage = 42;
           console.log("Created Patch2 document");
-          console.log(result);
         },
         error: (error) => {
           console.log(error);
@@ -263,7 +262,6 @@ export class SetupComponent implements OnInit {
           this.progressPercentage = 50;
           console.log("Created Patch3 document");
           this.showLoader = false;
-          console.log(result);
         },
         error: (error) => {
           console.log(error);

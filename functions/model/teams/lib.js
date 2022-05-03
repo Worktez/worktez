@@ -48,9 +48,9 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         TeamManagerEmail: teamManagerEmail,
         TeamMembers: teamMembers,
         Type: type,
-        StatusLabels: statusLabels,
-        PriorityLabels: priorityLabels,
-        DifficultyLabels: difficultyLabels,
+        Status: statusLabels,
+        Priority: priorityLabels,
+        Difficulty: difficultyLabels,
         TotalTeamTasks: 0,
         OrganizationId: orgId,
         TeamId: teamId,
@@ -58,6 +58,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         CurrentSprintId: 0,
         LabelCounters: 0,
         Scope: scope,
+        ProjectLink: string = "",
     });
     return Promise.resolve(setTeam);
 };
@@ -187,7 +188,6 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
  * @return {any}
  */
  exports.getLabelById = function(orgDomain, teamName, docId) {
-     console.log(orgDomain, teamName, docId);
     const getLabelByIdPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).get().then((doc) => {
         const data = doc.data();
         return data;
@@ -212,4 +212,23 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
     });
     return Promise.resolve(getTeamPromise);
 };
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} scope
+ * @return {any}
+ */
+ exports.getLabelInScopes = function(orgDomain, teamName, scope) {
+    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Scope", "in", scope).where("Status", "==", "OK").get().then((doc) => {
+        const data = [];
+        doc.forEach((team) => {
+            data.push(team.data());
+        });
+        return data;
+    });
+    return Promise.resolve(getTeamPromise);
+};
+
 

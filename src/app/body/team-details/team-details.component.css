@@ -1,0 +1,60 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+.card {
+    color: var(--text);
+}
+
+hr {
+    border-bottom: 2px solid var(--scrollbar-color);
+}
+
+.btn {
+    background-color: var(--primary-color);
+    width: auto;
+    height: 37px;
+    overflow-wrap: break-word;
+    color: #ffffff;
+    border-radius:5px;
+	text-align: left;
+    font-size: 12px;
+
+    border: none !important;
+    box-shadow: none;
+    outline: 0 none;
+
+}
+.scopeLabels{
+    margin: 1% 5% 1% 5%;
+}
+.teamLabels{
+    border-left: 2px solid var(--scrollbar-color); height: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .part {
+        padding: 1px 10px 1px 10px;
+        border: none;
+    }
+    h1 {
+        font-size: 14px;
+        font-weight: 600;
+    }
+    #headerLabel {
+        font-size: 10px;
+    }
+    .scopeLabels{
+        margin: auto;
+    }
+}

@@ -46,8 +46,6 @@ import { LoginHandlerComponent } from './header/login-handler/login-handler.comp
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
-import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
-import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
@@ -82,7 +80,6 @@ import { ActivityComponent } from './body/task-details/activity/activity.compone
 import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
 import { Patch4Component } from './patches/patch4/patch4.component';
 import { WarningComponent } from './body/common-tools/warning/warning.component';
-import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
 import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluation.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
@@ -155,6 +152,12 @@ import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MilestoneComponent } from './body/milestone/milestone.component';
+import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
+import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
+import { GetIconComponent } from './icons/get-icon/get-icon.component';
+import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.component';
+import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
 
 @NgModule({
   declarations: [
@@ -176,8 +179,6 @@ import { CookieService } from 'ngx-cookie-service';
     LoginHandlerComponent,
     UserCardComponent,
     MyDashBoardComponent,
-    PriorityIconsComponent,
-    StatusIconsComponent,
     FilterTaskComponent,
     NavbarComponent,
     ChartComponent,
@@ -213,7 +214,6 @@ import { CookieService } from 'ngx-cookie-service';
     ViewOrganizationDetailsComponent,
     Patch4Component,
     WarningComponent,
-    DifficultyIconsComponent,
     TasksEvaluationComponent,
     ListPatchesComponent,
     PatchCardsComponent,
@@ -277,6 +277,12 @@ import { CookieService } from 'ngx-cookie-service';
     OrgDpComponent,
     KanbanCardComponent,
     TestimonialCardComponent,
+    MilestoneComponent,
+    MilestoneDetailsComponent,
+    GenerateIconComponent,
+    GetIconComponent,
+    IconsBaseComponent,
+    ColorsBaseComponent,
   ],
   imports: [
     BrowserModule,

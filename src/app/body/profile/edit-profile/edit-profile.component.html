@@ -32,10 +32,15 @@
                                 <input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}"
                                     class="form-control" id="recipient-name">
                             </div>
-                            <div class="col-6 align-middle"><a *ngIf="!userAvailable" class="btn btn-primary" id="check_availability" (click)="checkAvailability()" style="background-color: #5c60ec;">check
+                            <div class="col-6 align-middle"><a class="btn btn-primary" id="check_availability" (click)="checkAvailability()" style="background-color: #5c60ec;">check
                                 availability</a></div>
                         </div>
-                        <a *ngIf="userAvailable" class="btn btn-success">Username available</a>
+                        <a *ngIf="userAvailable" > 
+                            <div class="alert alert-success d-flex align-items-center" role="alert">
+                                <mat-icon aria-hidden="false" id="CheckIcon">check_circle_outline</mat-icon>
+                                <div> Username available</div>
+                            </div>
+                        </a>
                     </div>
                     <div class="form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Phonenumber</span>

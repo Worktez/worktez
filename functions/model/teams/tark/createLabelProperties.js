@@ -23,7 +23,7 @@
 
 const { setLabelProperties, getTeam, updateTeamDetails } = require("../lib");
 
-exports.createLableProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels) {
+exports.createLabelProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels) {
     let scope;
     let displayName;
     let iconName;
@@ -74,17 +74,19 @@ exports.createLableProperties = function(orgDomain, teamName, type, statusLabels
         setLabelProperties(orgDomain, teamName, docID, displayName, scope, iconName, colorCode);
     });
 
-    getTeam(orgDomain, teamName).then((team) => {
+    const promise = getTeam(orgDomain, teamName).then((team) => {
         if (team) {
             const updateJson = {
                 LabelCounters: docNumber,
             };
             updateTeamDetails(updateJson, orgDomain, teamName);
-            console.log("Team Updated Successfully");
         }
     }).catch((error) => {
-        console.log("Error: ", error);
+        console.error("Error: ", error);
+        return error;
     });
+
+    return Promise.resolve(promise);
 };
 
 const highData = {
@@ -103,8 +105,18 @@ const lowData = {
 };
 
 const bugData = {
-    ColorCode: "42a5f5",
-    IconName: "keyboard_arrow_down",
+    ColorCode: "7f0000",
+    IconName: "bug_report",
+};
+
+const storyData = {
+    ColorCode: "ff6f00",
+    IconName: "change_history",
+};
+
+const subtaskData = {
+    ColorCode: "64dd17",
+    IconName: "subtitles",
 };
 
 const iceBoxData = {
@@ -114,22 +126,22 @@ const iceBoxData = {
 
 const readyData = {
     ColorCode: "673ab7",
-    IconName: "inventory_2",
+    IconName: "not_started",
 };
 
 const inPrgressData = {
     ColorCode: "fc6a03",
-    IconName: "inventory_2",
+    IconName: "arrow_circle_up",
 };
 
 const blockedData = {
     ColorCode: "f44336",
-    IconName: "inventory_2",
+    IconName: "block",
 };
 
 const completeData = {
     ColorCode: "00ff00",
-    IconName: "inventory_2",
+    IconName: "check_circle_outline",
 };
 
 const getIconDetails = function(element) {
@@ -142,9 +154,9 @@ const getIconDetails = function(element) {
     } else if (element === "Bug") {
         return bugData;
     } else if (element === "Story") {
-        return bugData;
+        return storyData;
     } else if (element === "Sub Task") {
-        return bugData;
+        return subtaskData;
     } else if (element === "Ice Box") {
         return iceBoxData;
     } else if (element === "Ready to start") {
