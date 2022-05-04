@@ -37,12 +37,16 @@
                     Integrate Github</button>
                 </div>
                 <div class="col-md-5 mx-0 pl-0">
-                    <button class="add-member" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    <div class="btn-group" >
+                        <button class="add-member text-nowrap" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
                     data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)"
                     title="Add Member">
-                    <span class="material-icons pl-1" style="position: relative;top: 3px;">person_add</span>
+                            <span class="material-icons pl-1" style="position: relative;top: 3px;">person_add</span>
                     Add Member</button>
-                 </div>
+                            <span class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
+                    title="delete Team"  data-bs-toggle="tooltip">delete</span>
+                    </div> 
+                </div>
             </div>
             <div class="row mt-2">
                 <div class="col">
@@ -97,3 +101,21 @@
         (addedProject)="addedProject($event)">
     </app-github-link>
 </ng-container>
+
+<div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="DeleteModalLabel">Confirmation Message</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        <div class="modal-body">
+            <div class="alert alert-danger" role="alert">Are you sure you want to delete this team?</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" (click) = "deleteTeam()">Delete</button>
+        </div>
+        </div>
+    </div>
+</div>
