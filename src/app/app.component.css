@@ -50,7 +50,7 @@ body {
     --scrollbar-color: rgba(84, 84, 84, 0.17);
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
-    --home-bg: #5C60EC;
+    --home-bg: #5559D9;
     --font: 'Poppins', sans-serif;
 }
 
@@ -83,6 +83,6 @@ body {
     --scrollbar-color: rgba(255, 255, 255, 0.51);
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
-    --home-bg: #5C60EC;
+    --home-bg: #5559D9;
     --font: 'Poppins', sans-serif;
 }
