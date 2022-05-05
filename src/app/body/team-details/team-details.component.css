@@ -12,7 +12,11 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-.card {
+#contentBox {
+    background-color: var(--primary-color);
+}
+
+h1, h2, h3 {
     color: var(--text);
 }
 
@@ -21,40 +25,18 @@ hr {
 }
 
 .btn {
-    background-color: var(--primary-color);
-    width: auto;
-    height: 37px;
-    overflow-wrap: break-word;
-    color: #ffffff;
-    border-radius:5px;
-	text-align: left;
-    font-size: 12px;
-
-    border: none !important;
-    box-shadow: none;
-    outline: 0 none;
-
+    color: var(--text);
 }
-.scopeLabels{
-    margin: 1% 5% 1% 5%;
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }
+
 .teamLabels{
     border-left: 2px solid var(--scrollbar-color); height: auto;
 }
 
 @media only screen and (max-width: 600px) {
-    .part {
-        padding: 1px 10px 1px 10px;
-        border: none;
-    }
-    h1 {
-        font-size: 14px;
-        font-weight: 600;
-    }
-    #headerLabel {
-        font-size: 10px;
-    }
-    .scopeLabels{
-        margin: auto;
-    }
+    
 }

@@ -17,7 +17,6 @@
     </div>
     <div class="card-body pt-0">
         <ng-container *ngIf="!showLoader && !noData">
-            <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
             <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="5"></app-data-table>
         </ng-container>
 
