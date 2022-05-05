@@ -21,7 +21,7 @@
     width: 350px;
     max-width: 590px;
 }
-.btn {
+.btn-primary {
     background-color: var(--primary-color);
     width: 90%;
     height: auto;
@@ -102,4 +102,29 @@
     #headerLabel {
         font-size: 10px;
     }
+}
+
+#DeleteModalLabel{
+    text-align: left;
+}
+
+.modal-dialog {
+    height: 100%;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    color: var(--primary-color);
+}
+
+.close{
+    color:var(--text);
+}
+
+.btn-default{
+    color:var(--text) !important;
 }
