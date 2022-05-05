@@ -14,7 +14,7 @@
 <div class="container p-4">
     <div class="row align-items-center justify-content-center m-0 p-2">
         <div class="col-md-11 col-8">
-            <h3 class="font-weight-bold">Create New Organization</h3>
+            <h1 class="font-weight-bold" style="width: 30%;margin: auto;">Create New Organization</h1>
         </div>
         <div class="col-md-1 col-4">
             <div class="pl-lg-0" id="navbarTexts">
@@ -65,8 +65,8 @@
                 </div>
             </div>
             <div class="form-group row align-items-center justify-content-center">
-                <div class="offset-6 col text-right">
-                    <button type="submit" class="btn" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit</button>
+                <div>
+                    <button type="submit" class="btn px-4" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit</button>
                 </div>
             </div>
         </ng-container>
