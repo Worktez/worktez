@@ -31,9 +31,11 @@
                     <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
                 </div>
             </ng-container>
+            <ng-template #loader>
+                <div class="col d-flex justify-content-center">
+                    <app-loader></app-loader>
+                </div>
+            </ng-template>
         </div>
     </div>
 </div>
-<ng-template #loader>
-    <app-loader></app-loader>
-</ng-template>
