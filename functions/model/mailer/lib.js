@@ -56,8 +56,6 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
                     valueArray.recipientName = userData.displayName;
                     let message = "";
                     if (element == taskData.Assignee) {
-                        console.log(valueArray);
-                        console.log(mailType);
                         generateTemplate(mailType, valueArray).then((data) => {
                             message = data;
                             sendMail(element, message[0], message[1]);
@@ -94,7 +92,6 @@ exports.profileMailer = function(mailType, uid, email, displayName) {
         valueArray.push(email);
         valueArray.push(displayName);
         valueArray.push(userData.Username);
-        console.log(valueArray);
         generateTemplate(mailType, valueArray).then((data) => {
             const message = data;
             sendMail(email, message[0], message[1]);
