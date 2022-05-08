@@ -86,7 +86,7 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngFor="let education of educations; let i = index">
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)" style="font-size: 16px;">edit</span>
+                                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)" style="font-size: 16px;">edit</span>
                                 <div class="row">
                                     <div class="col-12">
                                         <h3>{{ education.InstituteName }}</h3>
@@ -119,7 +119,7 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngFor="let experience of experiences; let i = index">
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
+                                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
                                 <h3>{{ experience.Position }}</h3>
                                 <div class="row text-muted">
                                     <div class="col-5">
@@ -150,7 +150,7 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngFor="let project of projects; let i = index">
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" style="font-size: 16px;">edit</span>
+                                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" style="font-size: 16px;">edit</span>
                                 <div class="row">
                                     <div class="col-12">
                                         <h3>{{ project.ProjectName }}</h3>

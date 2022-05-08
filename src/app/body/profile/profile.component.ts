@@ -17,11 +17,13 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ActivatedRoute } from '@angular/router';
-import { MyEducationData, MyExperienceData, MyProjectData, User } from 'src/app/Interface/UserInterface';
+import { MyEducationData, MyExperienceData, MyProjectData, User, UserAppSetting } from 'src/app/Interface/UserInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { FileData } from 'src/app/Interface/FileInterface';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -76,7 +78,7 @@ export class ProfileComponent implements OnInit {
 
   userData : User[]
 
-  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {}
+  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {}
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
@@ -220,12 +222,41 @@ export class ProfileComponent implements OnInit {
         this.sameUser = false;
       }
       else{
-        this.username = this.authService.userAppSetting.Username;
-        this.readUser();
-      }
+        const callable = this.functions.httpsCallable("users/getUserByUsername");
+        callable({Username : this.username}).pipe(map(res => {
+          const data = res.userData as UserAppSetting;
+          return { ...data }
+      })).subscribe({
+        next: (data:UserAppSetting) => {
+          console.log(data);
+          this.displayName = data.displayName;
+          this.email = data.email;
+          this.uid = data.uid;
+          this.aboutMe = data.AboutMe;
+          this.photoURL = data.photoURL;
+          this.phoneNumber = data.phoneNumber;
+          this.linkedInProfile = data.LinkedInProfile;
+          this.githubProfile = data.LinkedInProfile;
+          this.dateOfJoining = data.DateOfJoining;
+          this.skills = data.Skills;
+          this.website = data.Website;
+          if (this.website.includes("https://") == false) {
+            this.website = "https://" + this.website;
+          }
+          this.readUserEducation(this.uid);
+          this.readUserExperience(this.uid);
+          this.readUserProject(this.uid);
+  
+          this.sameUser = false;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => console.info('Getting Task successful')
+      });
     }
-    
   }
+}
 
   readUserProfilePic(uid: string) {
     this.authService.getUserProfilePic(uid).subscribe(fileData => {
