@@ -122,6 +122,20 @@ exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentNa
 
 /**
  * Description
+ * @param {any} uid
+ * @return {any}
+ */
+ exports.getFileInUser = function(uid) {
+    let query = db.collection("Users").doc(uid).collection("ProfilePic");
+    query = query.where("FileStatus", "==", "OK");
+
+    const getProfilePicToUserDocumentPromise = query.get();
+
+    return Promise.resolve(getProfilePicToUserDocumentPromise);
+};
+
+/**
+ * Description
  * @param {any} orgDomain
  * @return {any}
  */

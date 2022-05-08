@@ -21,7 +21,7 @@ import { MyEducationData, MyExperienceData, MyProjectData, User } from 'src/app/
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
-import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { FileData } from 'src/app/Interface/FileInterface';
 
 @Component({
   selector: 'app-profile',
@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
   educationModalMode: string
   educationModalData: MyEducationData
   workModalMode: string
-  workModalData: MyEducationData
+  workModalData: MyExperienceData
   projectModalMode: string
   projectModalData: MyProjectData
 
@@ -66,17 +66,17 @@ export class ProfileComponent implements OnInit {
   
   sameUser: boolean = true;
 
-  educations: MyEducationData;
-  experiences: MyExperienceData;
-  projects: MyProjectData;
+  imageUrl: string = "";
+  profilePicFile: FileData;
+  imageReady: boolean = false
+
+  educations: MyEducationData[];
+  experiences: MyExperienceData[];
+  projects: MyProjectData[];
 
   userData : User[]
 
-  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private functions: AngularFireFunctions ) {4
-    this.route.paramMap.subscribe((params) => {
-      this.ngOnInit();
-    });
-   }
+  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {}
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
@@ -94,8 +94,8 @@ export class ProfileComponent implements OnInit {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.readUser();
-          this.organizationName = this.backendService.getOrganizationName();
           this.startService.applicationDataStateObservable.subscribe((data)=> {
+            this.organizationName = this.backendService.getOrganizationName();
             this.teamName = this.startService.teamName;
             this.managerEmail = this.startService.managerEmail;
             this.role = this.startService.role;
@@ -191,6 +191,7 @@ export class ProfileComponent implements OnInit {
       this.readUserEducation(this.uid);
       this.readUserExperience(this.uid);
       this.readUserProject(this.uid);
+      this.readUserProfilePic(this.uid);
 
       this.sameUser = true;
     }
@@ -214,6 +215,7 @@ export class ProfileComponent implements OnInit {
         this.readUserEducation(this.uid);
         this.readUserExperience(this.uid);
         this.readUserProject(this.uid);
+        this.readUserProfilePic(this.uid);
 
         this.sameUser = false;
       }
@@ -223,6 +225,16 @@ export class ProfileComponent implements OnInit {
       }
     }
     
+  }
+
+  readUserProfilePic(uid: string) {
+    this.authService.getUserProfilePic(uid).subscribe(fileData => {
+      if(fileData[fileData.length-1] != undefined) {
+        this.imageUrl = fileData[fileData.length-1].FileUrl;
+        this.profilePicFile = fileData[fileData.length-1];
+      }
+      this.imageReady = true
+    });
   }
 
   readUserEducation(uid: string) {

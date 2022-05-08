@@ -80,7 +80,7 @@ exports.generateTemplate = function(mailType, valueArray) {
     mailSubject = "Experience updated on Worktez";
     htmlContent = "<tr><td style=\"padding-left:30px;text-align:center;\"><p>" + "Hi $$$ your profile has been updated Successfully!" + "</p></td></tr><tr style=\"text-align:center;\" rowspan=\"1\"><td><a href=\"https://worktez.com/profile/$$$$" + "\" target=\"_blank\" style=\"background-color: #dc3226; color: white; text-decoration:none; padding: 15px;border-radius:50px;border:red;cursor:pointer;\">View comment</a><p style=\"color:#666;\">Please click the button to view the comment.";
   } else if (mailType == "Update_Pic_Profile") {
-    templateName = "updatePic";
+    templateName = "updatePic.html";
     mailSubject = "Profile Pic updated on Worktez";
     htmlContent = "<tr><td style=\"padding-left:30px;text-align:center;\"><p>" + "Hi $$$ your profile has been updated Successfully!" + "</p></td></tr><tr style=\"text-align:center;\" rowspan=\"1\"><td><a href=\"https://worktez.com/profile/$$$$" + "\" target=\"_blank\" style=\"background-color: #dc3226; color: white; text-decoration:none; padding: 15px;border-radius:50px;border:red;cursor:pointer;\">View comment</a><p style=\"color:#666;\">Please click the button to view the comment.";
   } else if (mailType == "Update_Project_Profile") {

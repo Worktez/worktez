@@ -257,7 +257,11 @@ exports.getMyTeamCollection = function(uid, orgAppKey) {
         doc.forEach((user) => {
             data = user.data();
         });
-        return data.Teams;
+        if (data != undefined) {
+            return data.Teams;
+        }
+
+        return undefined;
     });
     return Promise.resolve(promise);
 };
