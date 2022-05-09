@@ -88,7 +88,6 @@ export class EditProfileComponent implements OnInit {
 
   editProfileDone() {
     this.editProfileCompleted.emit({ completed: true });
-    window.location.reload()
   }
 
   async checkAvailability() {
