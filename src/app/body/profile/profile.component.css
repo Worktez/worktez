@@ -11,6 +11,13 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.editPrfilePic {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    z-index: 1;
+}
+
 #profileTheme {
     color: var(--text);
 }

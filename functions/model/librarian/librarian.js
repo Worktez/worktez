@@ -29,6 +29,7 @@ const { getFilesInOrgDocument } = require("./tark/getFilesInOrgDocuments");
 const { uploadFileToContributorsDocuments } = require("./tark/uploadFileToContributorsDocuments");
 const { uploadProfilePicToUserDoc } = require("./tark/uploadUserProfilePic");
 const { deleteFilesInOrg } = require("./tark/deleteFilesInOrg");
+const { getFilesInUser } = require("./tark/getFilesInUser");
 
 /**
  * Description
@@ -127,6 +128,17 @@ fastify.post("/uploadLogoFile", (req, res) => {
  */
 fastify.post("/uploadUserProfilePic", (req, res) => {
     uploadProfilePicToUserDoc(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/uploadUserProfilePic"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getFilesInUser", (req, res) => {
+    getFilesInUser(req, res);
 });
 
 /**
