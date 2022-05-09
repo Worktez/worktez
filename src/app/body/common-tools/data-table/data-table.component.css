@@ -15,6 +15,7 @@
   width: 100%;
   background-color: transparent;
   color: var(--text);
+  font-family: var(--font);
 }
 
 mat-paginator,
@@ -22,14 +23,17 @@ td {
   background-color: transparent;
   color: var(--text);
   border: transparent;
+  font-family: var(--font);
 }
 
 th {
   color: var(--button-text);
+  font-family: var(--font);
 }
 
 tr {
   cursor: pointer;
+  font-family: var(--font);
 }
 
 .mat-row:hover .mat-cell {

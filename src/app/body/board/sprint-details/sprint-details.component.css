@@ -17,12 +17,14 @@
     box-shadow: var(--box-shadow-bottom);
     border: none;
     height: 90%;
+    font-family: var(--font);
 }
 
 .card-header, .btn {
     color: var(--text);
     text-decoration: var(--text);
     background-color: var(--secondary-bg);
+    font-family: var(--font);
 }
 
 .buttons { 

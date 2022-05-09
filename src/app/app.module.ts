@@ -159,6 +159,8 @@ import { GetIconComponent } from './icons/get-icon/get-icon.component';
 import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.component';
 import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
 
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -303,7 +305,8 @@ import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base
     MatSortModule,
     MatInputModule,
     MatFormFieldModule,
-    DragDropModule
+    DragDropModule,
+    ImageCropperModule
   ],
   providers: [
     AuthService,

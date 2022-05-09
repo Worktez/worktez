@@ -13,6 +13,7 @@
 ***********************************************************/
 #mOrgContainer {
     background-color: var(--header-bg);
+    font-family: var(--font);
 }
 
 .card {

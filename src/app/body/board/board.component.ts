@@ -90,14 +90,12 @@ export class BoardComponent implements OnInit {
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      console.log("checking 0");
       if(this.startService.selectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
         });
         if (sprints) {
-          console.log("checking 1");
           this.sprintData = sprints;
           this.currentSprintNumber=this.sprintData.SprintNumber;
           
@@ -128,7 +126,6 @@ export class BoardComponent implements OnInit {
         }
       });
     } else {
-      console.log("checking 2");
       this.startService.readApplicationData();
       this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data) {

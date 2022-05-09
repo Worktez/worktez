@@ -13,4 +13,6 @@
 ***********************************************************/
 #loader {
     color: var(--primary-color);
+    position: absolute;
+    z-index: 1;
 }

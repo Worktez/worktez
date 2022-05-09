@@ -13,11 +13,13 @@
 ***********************************************************/
 #navbarMenu {
     color: var(--button-text);
+    font-family: var(--font);
 }
 
 .container {
     background-color: var(--secondary-bg);
     box-shadow: var(--box-shadow-bottom);
+    font-family: var(--font);
 }
 
 .btn {
@@ -28,6 +30,7 @@
 #dropdownButton {
     background-color: var(--button-bg);
     color: var(--button-text);
+    font-family: var(--font);
 }
 
 #filterSprintNumberInput {

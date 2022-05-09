@@ -8,7 +8,10 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-admin.initializeApp();
+
+if (admin.apps.length === 0) {
+    admin.initializeApp();
+}
 
 const { users } = require("./model/users/users");
 const { tasks } = require("./model/tasks/tasks");
