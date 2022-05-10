@@ -23,14 +23,20 @@ export class ReleaseNotesBodyComponent implements OnInit {
   bodyArray: Array<string>
   versionName: string;
   releaseDate: string;
-  featuresArray: Array<string>
+  updatesArray: Array<string>
   constructor() {
 
    }
 
   ngOnInit(): void {
     this.bodyArray=this.body.split("\n")
-    this.featuresArray=this.bodyArray.slice(this.bodyArray.indexOf('## Feature Release:\r'),this.bodyArray.indexOf('## Release Credit:\r'))
+    this.updatesArray=this.bodyArray.slice(this.bodyArray.indexOf('## Feature Release:\r'),this.bodyArray.indexOf('## Release Credit:\r'))
+    const featIndex = this.updatesArray.indexOf('### Features:\r');
+    this.updatesArray[featIndex]= 'Features :';
+  
+    const bugIndex = this.updatesArray.indexOf('### Bugs:\r');
+    this.updatesArray[bugIndex]= 'Bugs :';
+  
     this.versionName = this.bodyArray[2]
     this.versionName=this.versionName.replace('**','')
     this.versionName=this.versionName.replace('**','')
@@ -39,7 +45,11 @@ export class ReleaseNotesBodyComponent implements OnInit {
     this.releaseDate=this.releaseDate.replace('**','')
     this.releaseDate=this.releaseDate.replace('**','')
 
-    this.featuresArray[0]=this.featuresArray[0].replace('##','')
+    this.updatesArray[0]=this.updatesArray[0].replace('##','')
+
+    // this.featuresArray= this.updatesArray.slice(featIndex, bugIndex);
+    
+    // console.log(this.featuresArray);
   }
   
 }
