@@ -46,10 +46,6 @@ export class ReleaseNotesBodyComponent implements OnInit {
     this.releaseDate=this.releaseDate.replace('**','')
 
     this.updatesArray[0]=this.updatesArray[0].replace('##','')
-
-    // this.featuresArray= this.updatesArray.slice(featIndex, bugIndex);
-    
-    // console.log(this.featuresArray);
   }
   
 }
