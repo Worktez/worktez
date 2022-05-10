@@ -17,6 +17,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { DataTableDataSource } from './data-table-datasource';
 
 @Component({
@@ -38,7 +39,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = [];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, public applicationSettingService: ApplicationSettingsService) {
     this.dataSource = new DataTableDataSource();
   }
 

@@ -22,6 +22,7 @@
 @media only screen and (max-width: 1920px) {
     .page {
         font-family: var(--font);
+        padding-bottom: 5%;
         max-height: auto;
         overflow-y:auto;
         overflow-x: hidden;
