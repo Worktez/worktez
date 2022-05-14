@@ -16,8 +16,7 @@
             <div class="pl-4 pt-1"><h4>My Tasks</h4></div>
     </div>
     <div class="card-body pt-0">
-        <ng-container *ngIf="!showLoader && !noData">
-            <!-- <app-task-cards [tasks]="tasksData" [parentComponent]="parentComponent"></app-task-cards> -->
+        <ng-container *ngIf="!showLoader && !noData && applicationSettingService.labelDataReady">
             <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="5"></app-data-table>
         </ng-container>
 

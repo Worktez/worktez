@@ -64,6 +64,10 @@ export class TaskECardComponent implements OnInit {
     this.router.navigate(['/TaskDetails', id]);
   }
 
+  clickOut(){
+    this.taskIdToEdit="";
+  }
+
   editTask(task: Tasks, sprintNumber: number) {
     this.showLoader = true;
     let result;

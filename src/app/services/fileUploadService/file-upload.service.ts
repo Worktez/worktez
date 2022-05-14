@@ -45,7 +45,9 @@ export class FileUploadService {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload, basePath, folderName).then((data) => {
-            this.readFiles(this.backendService.getOrganizationDomain(), folderName);
+            if(this.backendService.getOrganizationDomain()) {
+              this.readFiles(this.backendService.getOrganizationDomain(), folderName);
+            }
           });
         });
       })
@@ -74,7 +76,7 @@ export class FileUploadService {
           
         },
         complete: () => console.info('Successful ')
-    });
+      });
 
     } else if (folderName == "ProfilePic") {
       const callable = this.functions.httpsCallable('librarian/uploadUserProfilePic');
@@ -127,7 +129,7 @@ export class FileUploadService {
     this.fileUploadStatus = false;
   }
 
-  private async deleteFileFromDB(fileName, taskId, taskFileDocumentName) {
+  private async deleteFileFromDB(fileName: string, taskId: string, taskFileDocumentName: string) {
     const appKey = this.backendService.getOrganizationAppKey();
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -181,7 +183,6 @@ export class FileUploadService {
 
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
-
       if (id == "Documents") {
         const callable = this.functions.httpsCallable("librarian/getFilesInOrgDocument");
         callable({ OrgDomain: orgDomain }).pipe(
@@ -195,8 +196,7 @@ export class FileUploadService {
               console.error(error);
             },
             complete: () => console.log("Getting Organisation Files Data Complete")
-          }
-          );
+          });
       } else {
         const callable = this.functions.httpsCallable("librarian/getFilesInTask");
         callable({ OrgDomain: orgDomain, Id: id }).pipe(
@@ -210,8 +210,7 @@ export class FileUploadService {
               console.error(error);
             },
             complete: () => console.log("Getting Task Details Page Files Data Complete")
-          }
-          );
+          });
       }
     }
   }

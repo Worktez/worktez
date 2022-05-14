@@ -11,15 +11,46 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/-->
-<!-- <div class="modal-header p-4">
-    <h2 class="modal-title" id="exampleModalLabel">Edit Profile Pic2</h2>
-</div> -->
-<div class="modal-body">
-    <div class="row">
-        <div class="col-12 p-2">
-            <img [src]="imageInput" id="image" style="height: 400px;" #image crossorigin>
-        </div>
-
-        <button class="btn btn-primary col-md-12" (click)="setProfilePic()">Set Profile Pic</button>
+<div class="row p-2">
+    <div class="col-12">
+        <ng-container *ngIf="!imageUrl; else imageUrlFound">
+            <image-cropper
+            [imageChangedEvent]="imgChangeEvt"
+            [maintainAspectRatio]="true" 
+            [aspectRatio]="4 / 4"
+            [resizeToWidth]="256" 
+            format="png" 
+            (imageCropped)="cropImg($event)" 
+            (imageLoaded)="imgLoad()"
+            (cropperReady)="initCropper()" 
+            (loadImageFailed)="imgFailed()"
+            crossorigin>
+            </image-cropper>
+        </ng-container>
+        <ng-template #imageUrlFound>
+            <image-cropper
+            [imageURL]="imageUrl"
+            [maintainAspectRatio]="true" 
+            [aspectRatio]="4 / 4"
+            [resizeToWidth]="256" 
+            format="png" 
+            (imageCropped)="cropImg($event)" 
+            (imageLoaded)="imgLoad()"
+            (cropperReady)="initCropper()" 
+            (loadImageFailed)="imgFailed()"
+            crossorigin>
+            </image-cropper>
+        </ng-template>
+    </div>
+</div>
+<div class="row p-2" *ngIf="showSaveButton">
+    <div class="col d-flex justify-content-center">
+        <button class="btn" id="button" (click)="cropPhotoDone()">Save</button>
+    </div>
+</div>
+<div class="row p-2">
+    <div class="col d-flex justify-content-center">
+        <label type="button" for="image" class="btn" id="button">Choose Photo</label>
+        <input type="file" id="image" style="display: none;" (change)="onFileChange($event)">
     </div>
 </div>

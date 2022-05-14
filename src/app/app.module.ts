@@ -159,6 +159,10 @@ import { GetIconComponent } from './icons/get-icon/get-icon.component';
 import { FilterPageComponent } from './body/filter-page/filter-page.component';
 import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
 import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
+import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.component';
+import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
+
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -285,6 +289,8 @@ import { CreateFilterComponent } from './body/filter-page/create-filter/create-f
     FilterPageComponent,
     EditFilterComponent,
     CreateFilterComponent,
+    IconsBaseComponent,
+    ColorsBaseComponent,
   ],
   imports: [
     BrowserModule,
@@ -305,7 +311,8 @@ import { CreateFilterComponent } from './body/filter-page/create-filter/create-f
     MatSortModule,
     MatInputModule,
     MatFormFieldModule,
-    DragDropModule
+    DragDropModule,
+    ImageCropperModule
   ],
   providers: [
     AuthService,

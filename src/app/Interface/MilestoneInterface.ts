@@ -18,8 +18,7 @@ export interface Milestones {
     Description: string;
     TeamId: string;
     Title: string;
-    TotalCompletedTasks: string;
-    TotalTasks: [];
     CreatorUid: string;
+    StartDate: string;
+    EndDate: string;
   }
-

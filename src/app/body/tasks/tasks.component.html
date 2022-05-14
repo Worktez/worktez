@@ -13,13 +13,21 @@
 ***********************************************************/ -->
 <div id="taskPage">
     <div class="container">
-        <div class="row align-items-center pt-1 pl-4" id="navbarMenu">
-            <div class="col-8 pt-3">
+        <div class="row p-2" id="navbarMenu">
+            <div class="col-8 pt-1">
                 <h4>Tasks</h4>
             </div>
             <div class="col text-right">
-                <span [ngClass]="{'toggleFilter':showFilter}" class="btn material-icons" data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">filter_list</span>
-                <span class="btn material-icons" (click)="backToDashboard()">close</span>
+                <span [ngClass]="{'toggleFilter':showFilter}" class="btn"  data-toggle="tooltip" data-placement="top" title="Filter Menu" (click)="showFilterOptions()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        filter_list
+                    </mat-icon>
+                </span>
+                <span class="btn" (click)="backToDashboard()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        close
+                    </mat-icon>
+                </span>
             </div>
         </div>
         <ng-container *ngIf="showFilter">
@@ -31,9 +39,11 @@
                     <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
                 </div>
             </ng-container>
+            <ng-template #loader>
+                <div class="col d-flex justify-content-center">
+                    <app-loader></app-loader>
+                </div>
+            </ng-template>
         </div>
     </div>
 </div>
-<ng-template #loader>
-    <app-loader></app-loader>
-</ng-template>

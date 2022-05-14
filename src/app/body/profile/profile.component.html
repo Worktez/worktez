@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="px-5" id="profileTheme" *ngIf="startService.showTeams">
+<div class="px-5" id="profileTheme">
     <div class="row">
         <div class="col"></div>
         <div class="col-6">
@@ -26,8 +26,10 @@
                 <div class="row">
                     <div class="col">
                         <img class="mt-3 ml-3 rounded-circle" src={{photoURL}} onerror="this.src = '../../assets/defaultavatar.jpg' " alt="{{displayName}}" width="100" height="100" style=" border-radius: 50%;">
-                        <span *ngIf="sameUser" type="button" class="m-3" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
-                            <span class="material-icons" style="font-size: 20px;">edit</span>
+                        <span *ngIf="sameUser" type="button" class="btn align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                edit
+                            </mat-icon> 
                         </span>
                         <div class="card-body">
                             <h2 class="card-title" style="color: var(--primary-color);">{{displayName}}</h2>
@@ -78,7 +80,7 @@
                         <div class="col-md">
                             <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">add</span>
                             <h2>Education</h2>
-                            <ng-container *ngIf="(educations)?.length == 0">
+                            <ng-container *ngIf="educations?.length == 0">
                                 <div class="row">
                                     <div class="col-12 mt-3">
                                         <h3>Add your Education Qualifications</h3>
@@ -86,7 +88,7 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngFor="let education of educations; let i = index">
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)" style="font-size: 16px;">edit</span>
+                                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)" style="font-size: 16px;">edit</span>
                                 <div class="row">
                                     <div class="col-12">
                                         <h3>{{ education.InstituteName }}</h3>
@@ -111,7 +113,7 @@
                         <div class="col-md">
                             <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">add</span>
                             <h2>Work Experience</h2>
-                            <ng-container *ngIf="(experiences)?.length == 0">
+                            <ng-container *ngIf="experiences?.length == 0">
                                 <div class="row">
                                     <div class="col-12 mt-3">
                                         <h3>Add your Work Experience</h3>
@@ -119,7 +121,7 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngFor="let experience of experiences; let i = index">
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
+                                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
                                 <h3>{{ experience.Position }}</h3>
                                 <div class="row text-muted">
                                     <div class="col-5">
@@ -142,7 +144,7 @@
                         <div class="col-md">
                             <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">add</span>
                             <h2>Projects</h2>
-                            <ng-container *ngIf="(projects)?.length == 0">
+                            <ng-container *ngIf="projects?.length == 0">
                                 <div class="row">
                                     <div class="col-12 mt-3">
                                         <h3>Add your Projects</h3>
@@ -150,7 +152,7 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngFor="let project of projects; let i = index">
-                                <span type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" style="font-size: 16px;">edit</span>
+                                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" style="font-size: 16px;">edit</span>
                                 <div class="row">
                                     <div class="col-12">
                                         <h3>{{ project.ProjectName }}</h3>
@@ -175,7 +177,7 @@
                         <div class="col-md">
                             <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()" style="font-size: 16px;">edit</span>
                             <h2>Skills</h2>
-                            <ng-container *ngIf="(skills)?.length == 0">
+                            <ng-container *ngIf="skills?.length == 0">
                                 <div class="row">
                                     <div class="col-12 mt-3">
                                         <h3>Add your Skills</h3>
@@ -219,6 +221,6 @@
     <app-edit-workexperience [uid]="uid " [displayName]="displayName " [email]="email " [workModalData]="workModalData " [workModalMode]="workModalMode " (editWorkCompleted)="editWorkCompleted($event)"></app-edit-workexperience>
 </ng-container>
 
-<ng-container *ngIf="editProfilePicEnabled" id="profilePicModal">
-    <app-edit-profile-pic [uid]="uid" [email]="email" [displayName]="displayName" (editProfilePicCompleted)="editProfilePicCompleted($event)"></app-edit-profile-pic>
+<ng-container *ngIf="editProfilePicEnabled && imageReady" id="profilePicModal">
+    <app-edit-profile-pic [uid]="uid" [email]="email" [displayName]="displayName" [imageUrl]="imageUrl" (editProfilePicCompleted)="editProfilePicCompleted($event)"></app-edit-profile-pic>
 </ng-container>

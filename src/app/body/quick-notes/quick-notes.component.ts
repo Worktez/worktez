@@ -31,7 +31,7 @@ export class QuickNotesComponent implements OnInit {
   showAddNote: boolean = false
   openEditNote: boolean = false
   selectedNote: QuickNote;
-
+  enableLoader: boolean = false
   constructor(private quickNotes: QuickNotesService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
 
   ngOnInit(): void {
@@ -74,11 +74,12 @@ export class QuickNotesComponent implements OnInit {
   deleteNote(docId: string) {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
-    
+    this.enableLoader = true
     callable({Uid: uid, DocId: docId}).subscribe({
       next: (data) => {
         this.showList();
         console.log("Successfull");
+        this.enableLoader = false
       },
       error: (error) => {
         console.log("Error", error);
