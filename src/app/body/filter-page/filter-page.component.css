@@ -11,14 +11,11 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-#filterPage{
-width:100px;
-height: 100vh;
-
+.btn {
+    color: var(--text);
 }
 
-@media only screen and (max-width: 600px) {
-    #createfilter {
-        display: none;
-    }   
-  }
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}

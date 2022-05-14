@@ -11,19 +11,13 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-#button {
+.btn {
+    color: #ffffff;
     background-color: var(--primary-color);
-    color: white;
+    width: 100%;
 }
 
-#button:focus,
-#button:active,
-#button:hover {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--secondary-color);
-}
-
-.form-control{
-    padding: 0.375rem 0.75re;
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }

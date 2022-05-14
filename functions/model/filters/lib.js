@@ -35,10 +35,11 @@ const {db} = require("../application/lib");
  * @param {any} status
  * @return {any}
  */
-exports.setFilterProperties = function(orgDomain, teamName, docId, filterName, scope) {
+exports.setFilterProperties = function(orgDomain, teamName, docId, filterName, description, filterJson) {
   const setFilterProperties = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("CustomFilter").doc(docId).set({
     FilterName: filterName,
-    Scope: scope,
+    Description: description,
+    FilterJson: filterJson,
     Status: "OK",
     Id: docId,
   });

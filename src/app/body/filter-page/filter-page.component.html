@@ -11,50 +11,37 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="card" *ngIf="filtersReady">
-    <div class="card-header">
-        <div class="row">
-            <div class="col-md-10">
-                <h2 class="m-0">Custom Filter Page</h2>
-            </div>
-            <div class="d-flex col-md-2 justify-content-end">
-                <div class="row">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <ng-container>
-                <div class="card-body">
-                    <div class="card" style="width: 20rem;height: 50vh;">
-                        <div class="card-body">
-                            <h5 class="card-title">Filter</h5>
-                            <div class="col-4 text-right">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons"
+    <div class="row p-2">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">Filter 1</div>
+                        <div class="col text-right">
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle"
                                     (click)="setFilterToEdit()" data-toggle="modal" data-target="#openEditProperties">
                                     edit
                                 </mat-icon>
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle px-1 icons"
+                            </span>
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle"
                                     (click)="setFilterToDelete()" data-toggle="modal" data-target="#deletedLabel">
                                     delete
                                 </mat-icon>
-                            </div>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
+                            </span>
                         </div>
                     </div>
                 </div>
-            </ng-container>
-        </div>
-        <div class="col">
-            <ng-container>
-                <div class="col-md-10">
-                    <div class="col col-md-3" id="createfilter">
-                        <app-create-filter [teamName]="teamName"></app-create-filter>
-                    </div>
+                <div class="card-body">
+                  <h5 class="card-title">Special title treatment</h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
-            </ng-container>
+            </div>
+        </div>
+        <div class="col-4">
+            <app-create-filter [teamName]="teamName"></app-create-filter>
         </div>
     </div>
 </div>

@@ -21,10 +21,6 @@
 // eslint-disable-next-line max-len
 const {functions, cors, fastify, requestHandler} = require("../application/lib");
 const {createFilter} = require("./tark/createFilter");
-const {deleteFilter} = require("./tark/deleteFilter");
-const {editFilter} = require("./tark/editFilter");
-const {createFilterProperties} = require("./tark/createFilterProperties");
-const {getFilterById} = require("./lib");
 
 /**
  * Description
@@ -39,55 +35,11 @@ fastify.post("/createFilter", (req, res) => {
 
 /**
  * Description
- * @param {any} "/getFilter"
  * @param {any} req
  * @param {any} res
  * @returns {any}
  */
-fastify.post("/getFilter", (req, res) => {
-  getFilterById(req, res);
-});
-
-/**
- * Description
- * @param {any} "/deleteFilter"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/deleteFilter", (req, res) => {
-  deleteFilter(req, res);
-});
-
-/**
- * Description
- * @param {any} "/createFilterProperties"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/createFilterProperties", (req, res) => {
-  createFilterProperties(req, res);
-});
-
-/**
- * Description
- * @param {any} "/editFilter"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/editFilter", (req, res) => {
-  editFilter(req, res);
-});
-
-/**
- * Description
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-exports.filterPage = functions.https.onRequest((req, res) => {
+exports.filters = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {
       if (err) throw err;

@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { FormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -45,9 +45,9 @@ export class CreateFilterComponent implements OnInit {
   currentSprintNumber: number
   assignee: string = ""
   project: string = ""
-  priority: string = ""
-  status: string = ""
-  difficulty: string = ""
+  priority: string = null
+  status: string = null
+  difficulty: string = null
   sprint: number = 0 
   description: string = ""
   filterName: string = ""
@@ -133,25 +133,24 @@ export class CreateFilterComponent implements OnInit {
 
  submit(){
    this.enableLoader=true;
-   const orgDomain = this.backendService.getOrganizationDomain();
-   console.log(this.filterName);
-   console.log(this.description);
-   console.log(this.assigneeName.value);
-   console.log(this.priority);
-   console.log(this.difficulty);
-   console.log(this.status);
-   console.log(this.sprintNumber);
+   console.log(this.assigneeName.value)
    this.addFilter();
-  
 }
 
 addFilter(){
-  this.enableLoader=true;
   const orgDomain = this.backendService.getOrganizationDomain();
-  console.log(orgDomain);
-  const callable = this.functions.httpsCallable('filterPage/createFilter');
-  callable({FilterName:this.filterName, Description:this.description, orgDomain:orgDomain}).subscribe({
+  const callable = this.functions.httpsCallable('filters/createFilter');
+  callable({FilterName:this.filterName, Description:this.description, Difficulty: this.difficulty, Priority: this.priority, Status: this.status, SprintNumber: this.sprintNumber, OrgDomain: orgDomain, TeamName: this.teamName, Assignee: this.assigneeName.value}).subscribe({
     next:() => {
+      this.enableLoader = false;
+      this.assignee = ""
+      this.project = ""
+      this.priority = null
+      this.status = null
+      this.difficulty = null
+      this.sprint = 0 
+      this.description = ""
+      this.filterName = ""
       console.log("Added New Filter");
     },
     error: (error) => {
@@ -164,7 +163,8 @@ addFilter(){
   })
 }
 
-onProjectChange(){
-  console.log("update teams");
-}
+  onProjectChange(){
+    console.log("update teams");
+    this.readTeamData(this.project);
+  }
 }
