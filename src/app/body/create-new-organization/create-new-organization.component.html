@@ -51,9 +51,7 @@
                         <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>
                     </ng-container>
                     <ng-template #uploadedImg>
-                        <span id="files" class="material-icons">image</span>
-                        <label>{{fileName}}</label>
-                        <span class="material-icons menu" id="delete" (click)="delete()">delete</span>
+                        <img src="{{orgLogoURL}}" alt="" srcset="" width="50" height="50">
                     </ng-template>
                 </div>
             </div>
