@@ -93,10 +93,10 @@ export class CreateNewOrganizationComponent implements OnInit {
     });
   }
 
-  uploadedLogo(data: { completed: boolean, logoFile: FileUpload }) {
+  uploadedLogo(data: { completed: boolean, logoFile: FileUpload, photoUrl: string }) {
     this.logoUploaded = data.completed;
     this.orgLogo = data.logoFile;
-    this.orgLogoURL = data.logoFile.url;
+    this.orgLogoURL = data.photoUrl;
     this.fileName = data.logoFile.file.name;
   }
 
