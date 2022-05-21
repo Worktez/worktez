@@ -14,30 +14,63 @@
     <div class="row p-2">
         <div class="col-8">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col">Filter 1</div>
-                        <div class="col text-right">
-                            <span class="btn">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle"
-                                    (click)="setFilterToEdit()" data-toggle="modal" data-target="#openEditProperties">
-                                    edit
-                                </mat-icon>
-                            </span>
-                            <span class="btn">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle"
-                                    (click)="setFilterToDelete()" data-toggle="modal" data-target="#deletedLabel">
-                                    delete
-                                </mat-icon>
-                            </span>
+                <ul class="list-group list-group-flush">
+                    <ng-container *ngFor="let item of filters">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">{{item.FilterName}}</div>
+                                <div class="col text-right">
+                                    <span class="btn">
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle"
+                                            (click)="setFilterToEdit(item)" data-toggle="modal"
+                                            data-target="#openEditProperties">
+                                            edit
+                                        </mat-icon>
+                                    </span>
+                                    <span class="btn">
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle"
+                                            (click)="setFilterToDelete(item)" data-toggle="modal"
+                                            data-target="#deletedFilter">
+                                            delete
+                                        </mat-icon>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">Filter Description </div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.Description}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Priority</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.Priority}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Task Status</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.Status}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Difficulty</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.Difficulty}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Sprint Number</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.SprintNumber}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ul>
             </div>
         </div>
         <div class="col-4">
@@ -47,8 +80,8 @@
 </div>
 <ng-container *ngIf="showEditFilterProp" id="openEditProperties">
     <app-edit-filter [customFilter]="filterToEdit" [teamName]="teamName"
-        (editFilterCompleted)="editFilterCompleted($event)" (getTeamFiltersByScope)="getTeamFiltersByScope()"
-        [filterType]="filterType"></app-edit-filter>
+        (editFilterCompleted)="editFilterCompleted($event)" (getTeamFilters)="getTeamFilters()"
+        ></app-edit-filter>
 </ng-container>
 <ng-container *ngIf="deletedFilterEnabled" id="exampleModalCenterLabel">
     <div class="modal fade" id="deletedFilter" tabindex="-1" role="dialog" aria-labelledby="deletedFilterTitle"
@@ -58,13 +91,13 @@
                 <nav class="modal-header navbar  navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <h5 class="active nav-link head" id="exampleModalDelFilter">Are You Sure?</h5>
+                            <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons text-light">close</span>
+                                <span aria-hidden="true" class="material-icons">close</span>
                             </button>
                         </li>
                     </ul>

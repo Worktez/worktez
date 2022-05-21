@@ -55,7 +55,7 @@ exports.setFilterProperties = function(orgDomain, teamName, docId, filterName, d
  */
 exports.getFilterById = function(orgDomain, teamName, docId) {
   console.log(orgDomain, teamName, docId);
-  const getFilterById = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(docId).get().then((doc) => {
+  const getFilterById = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("CustomFilter").doc(docId).get().then((doc) => {
     const data = doc.data();
     return data;
   });
@@ -69,7 +69,27 @@ exports.getFilterById = function(orgDomain, teamName, docId) {
  * @param {any} docId
  * @return {any}
  */
+exports.getFilters = function(orgDomain, teamName) {
+  console.log(orgDomain, teamName);
+  const getFilterPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("CustomFilter").where("Status", "==", "OK").get().then((doc) => {
+    const data = [];
+    doc.forEach((filter) => {
+      data.push(filter.data());
+    });
+    return data;
+  });
+  return Promise.resolve(getFilterPromise);
+};
+
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} docId
+ * @return {any}
+ */
 exports.updateFilter = function(inputJson, orgDomain, teamName, docId) {
-  const editFilterPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("FilterProperties").doc(docId).update(inputJson);
+  const editFilterPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("CustomFilter").doc(docId).update(inputJson);
   return Promise.resolve(editFilterPromise);
 };

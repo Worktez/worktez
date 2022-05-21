@@ -133,7 +133,6 @@ export class CreateFilterComponent implements OnInit {
 
  submit(){
    this.enableLoader=true;
-   console.log(this.assigneeName.value)
    this.addFilter();
 }
 

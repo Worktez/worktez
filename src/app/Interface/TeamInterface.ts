@@ -53,3 +53,18 @@ export interface Label {
     Status: string;
     Id: string;
 }
+
+export interface FiterProp{
+    Difficulty:string;
+    Priority:string;
+    Status:string;
+    SprintNumber: number;
+    Assignee: string;
+}
+export interface CustomFilter {
+    FilterJson: FiterProp;
+    FilterName: string;
+    Description: string;
+    Id: string;
+    Status: string;
+}

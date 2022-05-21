@@ -21,6 +21,9 @@
 // eslint-disable-next-line max-len
 const {functions, cors, fastify, requestHandler} = require("../application/lib");
 const {createFilter} = require("./tark/createFilter");
+const { getFilter } = require("./tark/getFilter");
+const {editFilter} = require("./tark/editFilter");
+const {deleteFilter} = require("./tark/deleteFilter");
 
 /**
  * Description
@@ -31,6 +34,39 @@ const {createFilter} = require("./tark/createFilter");
  */
 fastify.post("/createFilter", (req, res) => {
   createFilter(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getFilter"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getFilter", (req, res) => {
+  getFilter(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/editFilter"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/editFilter", (req, res) => {
+  editFilter(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/deleteFilter"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/deleteFilter", (req, res) => {
+  deleteFilter(req, res);
 });
 
 /**

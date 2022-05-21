@@ -103,12 +103,4 @@ export interface QuickNote {
     Title: string;
 }
 
-export interface CustomFilter {
-    FilterName: string;
-    Description: string;
-    FilterType: string;
-    FilterId: string;
-    Status: string;
-}
-
  

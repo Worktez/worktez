@@ -16,7 +16,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="row modal-content">
             <div class="modal-header pt-3">
-                <div class="col-2 col-md-2">
+                <div class="col">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" class="material-icons" (click)="editFilterDone()">close</span>
                     </button>
@@ -26,17 +26,40 @@
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row">
                         <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Assignee Name</span>
+                            <input type="text" class="form-control" value={{assignee}}
+                                [(ngModel)]="customFilter.FilterJson.Assignee" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-8 pl-2">
                             <span id="openEditProperties">Filter Name</span>
-                            <input type="text" class="form-control" value={{this.filterName}}
-                                [(ngModel)]="customFilter.Filter" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" value={{filterName}}
+                                [(ngModel)]="customFilter.FilterName" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-8 pl-2">
                             <span id="openEditProperties">Description</span>
-                            <input type="text" class="form-control" value={{description}} readonly
-                                [(ngModel)]="description" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="form-control" value={{description}} 
+                                [(ngModel)]="customFilter.Description" [ngModelOptions]="{standalone: true}">
                         </div>
-
-
+                        <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Priority</span>
+                            <input type="text" class="form-control" value={{priority}} 
+                                [(ngModel)]="customFilter.FilterJson.Priority" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Difficulty</span>
+                            <input type="text" class="form-control" value={{difficulty}} 
+                                [(ngModel)]="customFilter.FilterJson.Difficulty" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Status</span>
+                            <input type="text" class="form-control" value={{status}} 
+                                [(ngModel)]="customFilter.FilterJson.Status" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-8 pl-2">
+                            <span id="openEditProperties">Sprint Number</span>
+                            <input type="text" class="form-control" value={{sprintNumber}} 
+                                [(ngModel)]="customFilter.FilterJson.SprintNumber" [ngModelOptions]="{standalone: true}">
+                        </div>
                     </div>
                     <div class="row py-3">
                         <button type="submit" class="btn col-md-12" id="button"
