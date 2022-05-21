@@ -38,7 +38,7 @@ export class SprintDetailsComponent implements OnInit {
 
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
-
+  completedSprintEnabled: boolean = false;
   showLoader:boolean = false
   sprintDataReady: boolean = false
 
@@ -72,6 +72,10 @@ export class SprintDetailsComponent implements OnInit {
         })
     });
   }
+
+  setSprintToComplete(){
+    this.completedSprintEnabled=true;
+    }
     
   changeSprintNumber() {
     this.currentSprint.emit(this.filterSprintNumber);

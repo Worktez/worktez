@@ -46,7 +46,7 @@
             (click)="changeSprintStatus('Under Progress')">
             Under Progress
           </button>
-          <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">
+          <button class="dropdown-item" type="button" (click)="setSprintToComplete()" data-toggle="modal" data-target="#changeSprintStatus">
             Completed
           </button>
         </div>
@@ -182,3 +182,39 @@
     <app-loader></app-loader>
   </ng-container>
 </ng-container>
+<ng-container *ngIf="completedSprintEnabled" id="exampleModalCenterLabel">
+  <div class="modal fade" id="changeSprintStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalDelTitle"
+  aria-hidden="true" >
+  <div class="modal-dialog modal-dialog-centered p-0" role="document">
+  <div class="modal-content">
+  <nav class="modal-header navbar navbar-dark" id="navbarMenu">
+  <ul class="navbar-nav mr-auto">
+  <li class="nav-item">
+  <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
+  </li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+  <li class="nav-item">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true" class="material-icons">close</span>
+  </button>
+  </li>
+  </ul>
+  </nav>
+  <div class="container modal-body" id="editPageTaskContainer">
+  <ng-container>
+  <div class="row">
+  <div class="col">You are about to change Sprint Status to completed! </div>
+  </div>
+  <div class="row">
+  <div class="col-md-9"></div>
+  <div class="col-md-3 pb-2 px-4">
+  <button class="btn" type="button" id="button" type="button" (click)="changeSprintStatus('Completed')">Change</button>
+  </div>
+  </div>
+  </ng-container>
+  </div>
+  </div>
+  </div>
+  </div>
+  </ng-container>
