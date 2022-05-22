@@ -1,3 +1,4 @@
+/* eslint-disable no-const-assign */
 /* eslint-disable linebreak-style */
 /* eslint-disable require-jsdoc */
 /* eslint-disable  object-curly-spacing*/
@@ -20,12 +21,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable no-const-assign */
 const {getTeam, updateTeamDetails} = require("../../teams/lib");
 const {setFilterProperties} = require("../lib");
 
-/* eslint-disable no-unused-vars */
 exports.createFilter = function(request, response) {
   const filterName = request.body.data.FilterName;
   const description = request.body.data.Description;
@@ -36,8 +34,6 @@ exports.createFilter = function(request, response) {
   const orgDomain = request.body.data.OrgDomain;
   const teamName = request.body.data.TeamName;
   const assignee = request.body.data.Assignee;
-
-  console.log(filterName, description, difficulty, priority, taskStatus, sprintNumber, orgDomain, teamName, assignee);
 
   let result;
   const status = 200;
@@ -71,7 +67,7 @@ exports.createFilter = function(request, response) {
 
   Promise.resolve(promise).then(() => {
     result = {data: {status: "OK"}};
-    console.log("Filter edited Successfully");
+    console.log("Filter created Successfully");
     return response.status(status).send(result);
   }).catch((error) => {
     result = {data: error};

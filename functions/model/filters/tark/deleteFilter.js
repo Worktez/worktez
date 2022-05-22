@@ -27,9 +27,8 @@ const {getFilterById, updateFilter} = require("../lib");
 
 exports.deleteFilter = function(request, response) {
   const orgDomain = request.body.data.OrgDomain;
-  const teamName = request.body.teamName;
+  const teamName = request.body.data.TeamName;
   const docId = request.body.data.Id;
-
   let result;
   const status = 200;
 
