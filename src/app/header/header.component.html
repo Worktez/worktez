@@ -15,10 +15,9 @@
     <ng-container *ngIf="startService.userReady ; else homePageHeader">
         <nav class="navbar navbar-expand-lg sticky-top header">
             <a class="navbar-brand text-white px-1" (click)="home()">
-                <img src="../../assets/logo.png" width="40" height="24">
+                <img src="../../assets/logo.png" width="40" height="24"> 
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
             </button>
             <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
@@ -26,8 +25,7 @@
                     <ul class="navbar-nav">
                         <ng-container *ngIf="authService.myOrgCollectionsData| async">
                             <li class="nav-item dropdown">
-                                <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link" id="navbarDropdownCreate" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                         corporate_fare
                                     </mat-icon>
@@ -38,9 +36,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                                     <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
-                                        <a class="dropdown-item"
-                                            *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain"
-                                            (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
+                                        <a class="dropdown-item" *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain" (click)="setNewOrg(item.OrgDomain, item.OrgAppKey, item.DefaultTeam)">{{item.OrgDomain}}</a>
                                     </ng-container>
                                 </div>
                             </li>
@@ -57,19 +53,9 @@
                             </a>
                         </li>
                     </ng-container>
-                    <ng-container>
-                        <li class="nav-item px-1">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="filterPage()">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                    filter_list
-                                </mat-icon>Filter Page
-                            </a>
-                        </li>
-                    </ng-container>
                     <ng-container *ngIf="(backendService.organizationsData | async)">
                         <li class="nav-item px-1" *ngIf="startService.teamIdExists">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()"
-                                data-toggle="modal" data-target="#createNewTask">
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()" data-toggle="modal" data-target="#createNewTask">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     add_box
                                 </mat-icon>
@@ -84,8 +70,7 @@
                             </li>
                         </ng-container>
                         <li class="nav-item dropdown" *ngIf="startService.teamIdExists">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     dashboard
                                 </mat-icon>
@@ -103,8 +88,7 @@
                         </li>
                         <ng-container *ngIf="(authService.organizationAvailable) && startService.userReady">
                             <li class="nav-item px-1">
-                                <a class="nav-link" id="navbarDropdownBoards" role="button"
-                                    (click)="organizationDetails()">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="organizationDetails()">
                                     <label>My Organization</label>
                                 </a>
                             </li>
@@ -112,8 +96,7 @@
                     </ng-container>
                     <ng-container *ngIf="!(authService.organizationAvailable) && startService.userReady ">
                         <li class="nav-item px-1">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button"
-                                (click)="createNewOrganization()">
+                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
                                 <label>Create New Organization</label>
                             </a>
                         </li>

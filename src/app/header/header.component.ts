@@ -93,10 +93,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/']);
   }
   
-  filterPage(){
-    this.router.navigate(['/FilterPage']);
-  }
-
   kanbanBoard() {
     this.router.navigate(['/KanbanBoard']);
   }

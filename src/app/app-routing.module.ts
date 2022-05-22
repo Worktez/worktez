@@ -49,7 +49,6 @@ import { ReleaseNotesComponent } from './body/release-notes/release-notes.compon
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
 import { TeamDetailsComponent } from './body/team-details/team-details.component';
-import { FilterPageComponent } from './body/filter-page/filter-page.component';
 import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 
@@ -65,7 +64,6 @@ const routes: Routes = [
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
   { path: '', component: SocialPageComponent},
-  { path: 'FilterPage', component: FilterPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
