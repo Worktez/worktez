@@ -13,10 +13,11 @@
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
-import { CustomFilter } from 'src/app/Interface/UserInterface';
+import { CustomFilter } from 'src/app/Interface/TeamInterface';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-edit-filter',
@@ -29,25 +30,25 @@ export class EditFilterComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('customFilter') customFilter:CustomFilter;
   @Input('teamName') teamName: string;
-  description: string;
-  filterName: string;
   @Output() editFilterCompleted = new EventEmitter<{ completed:boolean }>();
-  @Output() getTeamFiltersByScope = new EventEmitter();
+  @Input() getTeamFilters = new EventEmitter();
   enableLoader: boolean = false;  
   showClose: boolean=false;
 
-  constructor(private functions: AngularFireFunctions, private authService: AuthService, private backendService: BackendService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions, private authService: AuthService, private backendService: BackendService, public errorHandlerService: ErrorHandlerService, public StartService: StartServiceService) { }
 
   ngOnInit(): void {
   }
 
   submit(){
     this.enableLoader=true;
+
     const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('filterPage/editFilter');
-    callable({FilterName: this.customFilter.FilterName, Status: this.customFilter.Status, Id: this.customFilter.FilterId, TeamNmae: this.teamName, OrgDomain: orgDomain}).subscribe({
+    this.teamName =  this.StartService.teamName;
+    const callable = this.functions.httpsCallable('filters/editFilter');
+    callable({FilterName: this.customFilter.FilterName, FilterJson: this.customFilter.FilterJson, Description:this.customFilter.Description, Id: this.customFilter.Id, TeamName: this.teamName, OrgDomain: orgDomain,Status: this.customFilter.Status}).subscribe({
       next: (data) => {
-          this.getTeamFiltersByScope.emit();
+          this.getTeamFilters.emit();
           this.enableLoader=false;
           this.showClose=true;
       },
@@ -63,6 +64,7 @@ export class EditFilterComponent implements OnInit {
 
   editFilterDone(){
     this.editFilterCompleted.emit({ completed:true });
+    this.getTeamFilters.emit();
   }
 
   backToFilterPage(){

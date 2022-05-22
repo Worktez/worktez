@@ -20,16 +20,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable max-len */
 const {getFilterById, updateFilter} = require("../lib");
 
 exports.editFilter = function(request, response) {
   const filterName = request.body.data.FilterName;
+  const description = request.body.data.Description;
+  const filterJson = request.body.data.FilterJson;
   const orgDomain = request.body.data.OrgDomain;
   const teamName = request.body.data.TeamName;
-  const scope = request.body.data.Scope;
-  const docId = request.body.data.DocId;
-
+  const docId = request.body.data.Id;
   let result;
   let status = 200;
 
@@ -39,7 +38,8 @@ exports.editFilter = function(request, response) {
     } else {
       const inputJson = {
         FilterName: filterName,
-        Scope: scope,
+        Description: description,
+        FilterJson: filterJson,
       };
       updateFilter(inputJson, orgDomain, teamName, docId);
     }
