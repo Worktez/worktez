@@ -38,7 +38,7 @@ export class SprintDetailsComponent implements OnInit {
 
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
-
+  completedSprintEnabled: boolean = false;
   showLoader:boolean = false
   sprintDataReady: boolean = false
 
@@ -79,6 +79,10 @@ export class SprintDetailsComponent implements OnInit {
 
   startNewSprint() {
     this.popupHandlerService.createNewSprintEnabled= true;
+  }
+
+  setSprintToComplete(){
+    this.completedSprintEnabled=true;
   }
 
   showTasks() {
