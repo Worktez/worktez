@@ -10,12 +10,13 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="card" *ngIf="filtersReady">
-    <div class="row p-2">
-        <div class="col-8">
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <ng-container *ngFor="let item of filters">
+
+<div class="row p-2" *ngIf="filtersReady">
+    <div class="col-8">
+        <div class="row">
+            <ng-container *ngFor="let item of filters">
+                <div class="col p-3">
+                    <div class="card">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col">{{item.FilterName}}</div>
@@ -68,14 +69,14 @@
                                     <h3 class="card-title">{{item.FilterJson.SprintNumber}}</h3>
                                 </div>
                             </div>
-                        </div>
-                    </ng-container>
-                </ul>
-            </div>
+                        </div>  
+                    </div>
+                </div>
+            </ng-container>
         </div>
-        <div class="col-4">
-            <app-create-filter [teamName]="teamName"></app-create-filter>
-        </div>
+    </div>
+    <div class="col-4">
+        <app-create-filter [teamName]="teamName"></app-create-filter>
     </div>
 </div>
 <ng-container *ngIf="showEditFilterProp" id="openEditProperties">
