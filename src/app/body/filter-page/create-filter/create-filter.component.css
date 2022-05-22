@@ -4,31 +4,27 @@
 * 
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
-* 
-* 
+* Author: Simran Nigam <nigamsimran14@gmail.com> 
+*
 * This program is distributed in the hope that it will be useful, 
 * but WITHOUT ANY WARRANTY; without even the implied warranty of 
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.btn {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
 
 .container {
     background-color: var(--secondary-bg);
-    color: var(--text);
-    border-radius: 6px; 
-    min-height: 350px;
-    padding: 1.1rem;
-    justify-content: space-evenly;
-    padding-top: 0 !important;
-}
-
-.team-details{
-    display: grid;
-    grid-template-columns:auto auto;
-}
-
-.close {
-    color: var(--text);
+    border-radius: 5px;
 }
 
 .form-row {
@@ -40,7 +36,7 @@
     margin-bottom: 0;
 }
 
-.form-control, .card {
+.form-control {
     background-color: var(--input-field);
     color: var(--text);
     border: none;
@@ -50,33 +46,20 @@
     margin: 5px !important;
 }
 
-.btn {
-    color: var(--text);
-}
-
-#button {
-    background-color: var(--primary-color);
-    color: #ffffff;
-    margin: 20px;
-}
-
-.btn:hover,
-#button:focus,
-#button:active,
-#button:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-    border: none;
-}
-
+select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
 }
 
-.member-email {
-    background-color: var(--secondary-header-bg);
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
     color: var(--text);
-    border-radius: 18px;
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
 }
