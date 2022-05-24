@@ -163,6 +163,7 @@ import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.co
 import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
 
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milestone.component';
 
 @NgModule({
   declarations: [
@@ -291,6 +292,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     CreateFilterComponent,
     IconsBaseComponent,
     ColorsBaseComponent,
+    AddMilestoneComponent,
   ],
   imports: [
     BrowserModule,
