@@ -1,0 +1,58 @@
+#button {
+    background-color: var(--primary-color);
+}
+
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px;
+    justify-content: space-evenly;
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
+}

@@ -11,31 +11,28 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="d-flex justify-content-center m-2"><button type="button" id="button" class="btn btn-primary" data-toggle="modal"
-    data-target="#exampleModalCenter" (click)="acitivateAdd()">
-    Add a Milestone
-  </button></div>
+<div class="d-flex justify-content-center m-2">
+  <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="acitivateAdd()">Add Milestone</button>
+</div>
 <div id="milestoneContainer" class="m-4">
-
-
   <div *ngIf="milestoneData.length == 0">
     <h3 class="text-center p-5"><b>No Milestones Available</b></h3>
   </div>
 
   <!-- Button trigger modal -->
-  <div *ngIf="milestoneData.length > 0">
-    <div class="row p-4">
+    <div class="row p-4" *ngIf="milestoneData.length > 0">
       <ng-container *ngFor="let milestone of milestoneData">
         <div class="col-md-4 p-3">
-          <a (click)="getMilestoneDetails(milestone.MilestoneId)">
-            <div class="card p-4">
-              <h1>{{milestone.Title}}</h1>
-              <h3>{{milestone.MilestoneId}}</h3>
-
-              <h4 class="heading">
-                <span class="material-icons mr-1"
-                  style="position: relative;top: 3px;">description</span>{{milestone.Description}}
-              </h4>
+            <div class="card p-4" (click)="getMilestoneDetails(milestone.MilestoneId)">
+              <h1>{{milestone.MilestoneId}} {{milestone.Title}}</h1>
+              <div class="row">
+                <div class="col">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                      description
+                    </mat-icon>
+                    {{milestone.Description}}
+                </div>
+              </div>
               <h4 class="mt-1 heading">
                 <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestone.TeamId}}
               </h4>
@@ -58,94 +55,8 @@
                 </div>
               </div>
             </div>
-
-          </a>
         </div>
       </ng-container>
     </div>
-  </div>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" style="z-index: 1050" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title font-weight-bold" id="exampleModalLongTitle">
-            Add a Milestone
-          </h2>
-          <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div *ngIf="addMilestoneActive">
-              <div class="form-row my-2">
-                <div class="form-group col-md-6 col">
-                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
-                  <input type="text" [(ngModel)]="title" [ngModelOptions]="{ standalone: true }"
-                    class="form-control p-3" id="recipient-name" placeholder="Enter the title" required />
-                </div>
-                <div class="form-group col-md-6 col ml-auto">
-                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
-                  <select class="form-control form-control-sm" [(ngModel)]="teamId"
-                    [ngModelOptions]="{standalone: true}">
-                    <option [ngValue]="null" [disabled]="true">Select Team ID</option>
-                    <ng-container *ngFor='let id of teamIds'>
-                      <option>{{ id }}</option>
-                    </ng-container>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-2">
-                <div class="form-group col-md-12 col">
-                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
-                  <textarea required type="text" [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"
-                    class="form-control p-3" id="recipient-name"
-                    placeholder="Enter the Description of the Milestone"></textarea>
-                </div>
-              </div>
-              <div class="form-row my-2">
-                <div class="form-group col-md-6 col">
-                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
-                  <input required class="form-control" type="text" onfocus="(this.type='date')"
-                    onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
-                    min="{{todayDate}}" placeholder="Select The Start Date ">
-                </div>
-                <div class="form-group col-md-6 col ml-auto">
-                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
-                  <input required class="form-control" type="text" onfocus="(this.type='date')"
-                    onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
-                    min="{{todayDate}}" placeholder="Select The End Date ">
-                </div>
-              </div>
-
-
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="validateMilestone()">
-                  Save
-                </button>
-              </div>
-            </div>
-          </form>
-          <div *ngIf="!addMilestoneActive">
-            <div class="row mx-5">
-              <div class="col-md-4"></div>
-              <div class="col-md-4">
-                <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline
-                </mat-icon>
-              </div>
-              <div class="col-md-4"></div>
-            </div>
-            <h1 class="text-center">Successfully Added Milestone</h1>
-
-          </div>
-        </div>
-      </div>
-      <ng-template *ngIf="showLoader">
-        <app-loader></app-loader>
-      </ng-template>
-    </div>
-  </div>
 </div>
+<app-add-milestone *ngIf="addMilestoneActive" [teamIds]="teamIds" [teamId]="teamId" ></app-add-milestone>

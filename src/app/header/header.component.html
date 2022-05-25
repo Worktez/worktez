@@ -17,10 +17,13 @@
             <a class="navbar-brand text-white px-1" (click)="home()">
                 <img src="../../assets/logo.png" width="40" height="24">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            <span class="navbar-toggler btn" data-toggle="collapse" data-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span>
-            </button>
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    menu
+                </mat-icon>
+                <!-- <span class="navbar-toggler-icon material-icons" style="color: var(--text);">menu</span> -->
+            </span>
             <div class="collapse navbar-collapse pl-3 pt-2" id="navbarText">
                 <ng-container *ngIf="(backendService.organizationsData | async)">
                     <ul class="navbar-nav">
