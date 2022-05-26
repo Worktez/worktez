@@ -50,7 +50,15 @@
 #button:focus,
 #button:active,
 #button:hover {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.btn {
+    color: var(--primary-color);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }

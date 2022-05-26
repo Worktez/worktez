@@ -12,15 +12,37 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #quickNotesButton{
-    background:#5c60ec;
+    background: var(--primary-color);
     display: block;
-    border-radius:50px;
-	text-align:center;
-	box-shadow: 0px 3px 45px #5C60EC4F;
+    border-radius: 50px;
+	text-align: center;
+	box-shadow: 0px 3px 45px var(--dropdown-hover);
     position: fixed;
     bottom: 80px;
     right: 40px;
     border: none !important;
+}
+
+#quickNotesButton:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    display: block;
+    border-radius: 50px;
+	text-align: center;
+	box-shadow: 0px 3px 45px var(--dropdown-hover);
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+    border: none !important;
+}
+
+.btn {
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }
 
 .card {

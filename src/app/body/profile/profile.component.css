@@ -11,11 +11,14 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-.editPrfilePic {
-    position: absolute;
-    top: 30%;
-    left: 25%;
+.btn {
+    color: var(--text);
     z-index: 1;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }
 
 #profileTheme {

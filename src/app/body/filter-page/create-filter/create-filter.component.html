@@ -1,0 +1,111 @@
+<!-- /***********************************************************
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* Author: Simran Nigam <nigamsimran14@gmail.com>
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container p-4">
+<div class="form-row pb-2">
+    <div class="form-group col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Filter Name</span>
+        <input type="text" class="form-control form-control-sm" id="fname" name="fname" placeholder="Enter filter name" [(ngModel)]="filterName"
+            [ngModelOptions]="{standalone: true}">
+    </div>
+</div>
+<div class="form-row pb-2">
+    <div class="form-group col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
+        <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" placeholder="Write a Filter Description..."></textarea>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Assignee</span>
+        <div class="dropdown">
+            <input type="text" autocomplete="off" class="form-control form-control-sm"
+                [formControl]="assigneeName" placeholder="Enter Assignee's Name" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                    <ng-container *ngIf="appSettings.teamDataReady; else loader">
+                        <app-suggestion-bucket [email]="item" [showEmail]="true"
+                            (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                    </ng-container>
+                    <ng-template #loader>
+                        <app-loader></app-loader>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <select data-style="btn-default" class="form-control" [(ngModel)]="project" (change)="onProjectChange()"
+            [ngModelOptions]="{standalone: true}">
+            <ng-container *ngFor="let item of teamIds">
+                <option>{{item}}</option>
+            </ng-container>
+        </select>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Priority</span>
+        <select class="form-control form-control-sm" [(ngModel)]="priority"
+            [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="null" [disabled]="true">Select Priority</option>
+            <ng-container *ngFor='let label of priorityLabels'>
+                <option>{{ label }}</option>
+            </ng-container>
+        </select>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
+        <select class="form-control form-control-sm" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="null" [disabled]="true">Select Status</option>
+            <ng-container *ngFor='let label of statusLabels'>
+                <option>{{ label }}</option>
+            </ng-container>
+        </select>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Difficulty</span>
+        <select class="form-control form-control-sm" [(ngModel)]="difficulty"
+            [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
+            <ng-container *ngFor='let label of difficultyLabels'>
+                <option>{{ label }}</option>
+            </ng-container>
+        </select>
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Sprint Number</span>
+        <input type="number" class="form-control form-control-sm" [(ngModel)]="sprintNumber"
+            [ngModelOptions]="{standalone: true}" placeholder="Sprint Number">
+    </div>
+</div>
+<div class="row pb-2">
+    <div class="col">
+        <button type="submit" class="btn" id="button" [disabled]="enableLoader" (click)="submit()">Filter</button>
+    </div>
+</div>
+
+<ng-container *ngIf="enableLoader">
+    <app-loader></app-loader>
+</ng-container>
+
+</div>

@@ -1,0 +1,122 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Simran Nigam <nigamsimran14@gmail.com>
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+
+<div class="row p-2" *ngIf="filtersReady">
+    <div class="col-8">
+        <div class="row">
+            <ng-container *ngFor="let item of filters">
+                <div class="col p-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col">{{item.FilterName}}</div>
+                                <div class="col text-right">
+                                    <span class="btn">
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle"
+                                            (click)="setFilterToEdit(item)" data-toggle="modal"
+                                            data-target="#openEditProperties">
+                                            edit
+                                        </mat-icon>
+                                    </span>
+                                    <span class="btn">
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle"
+                                            (click)="setFilterToDelete(item)" data-toggle="modal"
+                                            data-target="#deletedFilter">
+                                            delete
+                                        </mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">Filter Description </div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.Description}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Priority</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.Priority}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Task Status</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.Status}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Difficulty</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.Difficulty}}</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"> Sprint Number</div>
+                                <div class="col">
+                                    <h3 class="card-title">{{item.FilterJson.SprintNumber}}</h3>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-4">
+        <app-create-filter [teamName]="teamName"></app-create-filter>
+    </div>
+</div>
+<ng-container *ngIf="showEditFilterProp" id="openEditProperties">
+    <app-edit-filter [customFilter]="filterToEdit" [teamName]="teamName"
+        (editFilterCompleted)="editFilterCompleted($event)" (getTeamFilters)="getTeamFilters()"
+        ></app-edit-filter>
+</ng-container>
+<ng-container *ngIf="deletedFilterEnabled" id="exampleModalCenterLabel">
+    <div class="modal fade" id="deletedFilter" tabindex="-1" role="dialog" aria-labelledby="deletedFilterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered  p-0" role="document">
+            <div class="modal-content">
+                <nav class="modal-header navbar  navbar-dark" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="material-icons">close</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="container modal-body" id="editPageTaskContainer">
+                    <ng-container>
+                        <div class="row">
+                            <div class="col">You are about to delete this Filter.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3 pb-2 px-4">
+                                <button class="btn" id="button" type="button" (click)="deletedFilter()">Delete</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

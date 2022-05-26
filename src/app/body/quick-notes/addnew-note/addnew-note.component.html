@@ -14,24 +14,26 @@
 <div class="card" style="width: 36rem">
     <div class="card-header">
         <div class="row">
-            <div class="col-8">
+            <div class="col-8 d-flex justify-content-center">
                 <input type="text" class="form-control form-control-sm" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" (ngModelChange)="setChange()" placeholder="Enter Note Title"/>
             </div>
-            <div class="col-3" id="create">
-                <a (click)="createTask()" data-toggle="modal" data-target="#createNewTask" title="Create a task with the given Title and Description">Create a Task</a>
-            </div>
-            <div class="col-1">
-                <mat-icon fontSet="material-icons" id="icon" class="float-right align-middle" (click)="close()">
-                    close
-                </mat-icon>
+            <div class="col-4 d-flex justify-content-end">
+                <span class="btn">
+                    <a (click)="createTask()" data-toggle="modal" data-target="#createNewTask" title="Create a task with the given Title and Description">Create Task</a>
+                </span>
+                <span class="btn">
+                    <mat-icon fontSet="material-icons" id="icon" class="align-middle" (click)="close()">
+                        close
+                    </mat-icon>
+                </span>
             </div>
         </div>
     </div>
     <div class="card-body">
         <textarea type="text" class="form-control form-control-sm" rows="8" [(ngModel)]="notesContent" [ngModelOptions]="{ standalone: true }" (ngModelChange)="setTitle()" placeholder="Write a note..."></textarea>
         <div class="row pt-4">
-            <div class="col">
-                <button class="btn btn-success float-right" (click)="addNote()">save</button>
+            <div class="col d-flex justify-content-end">
+                <button class="btn" (click)="addNote()">save</button>
             </div>
         </div>
     </div>
