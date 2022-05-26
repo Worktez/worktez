@@ -36,7 +36,16 @@ exports.addMember = function(request, response) {
     let result;
     let status = 200;
 
-    if (add != "") {
+    let found= teamMembers.lastIndexOf(add);
+    if (found==-1){
+         
+    alert("member already exists");
+        result = { data: "Member not found" };
+        console.log("add member did not work");
+        console.error("Error while adding member");
+        status = 500;
+    }
+    else {
         teamMembers.push(add);
         const updateJson = {
             TeamMembers: teamMembers,
@@ -45,10 +54,11 @@ exports.addMember = function(request, response) {
         sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member added Successfully" };
         console.log("Member added Successfully");
-    } else {
+    } /*else {
         result = { data: "Member not found" };
+        console.log("add member did not work");
         console.error("Error while adding member");
         status = 500;
     }
-    return response.status(status).send(result);
+    */return response.status(status).send(result);
 };
