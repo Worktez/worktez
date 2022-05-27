@@ -164,6 +164,8 @@ import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base
 
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milestone.component';
+import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
+import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -293,6 +295,8 @@ import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milest
     IconsBaseComponent,
     ColorsBaseComponent,
     AddMilestoneComponent,
+    MilestoneCardComponent,
+    AddTaskComponent,
   ],
   imports: [
     BrowserModule,

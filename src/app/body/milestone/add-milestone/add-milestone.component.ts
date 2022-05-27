@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 
@@ -16,6 +17,7 @@ export class AddMilestoneComponent implements OnInit {
 
   @Input("teamId") teamId: string;
   @Input("teamIds") teamIds: string[];
+  @Output() getMilestones: EventEmitter<string> = new EventEmitter();
 
   title: string = ""
   description: string = ""
@@ -23,9 +25,9 @@ export class AddMilestoneComponent implements OnInit {
   startDate: string
   endDate: string
   todayDate: string
-  addMilestoneActive: boolean = false;
+  addMilestoneActive: boolean = true;
 
-  constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService) { }
+  constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolService.date();
@@ -74,9 +76,9 @@ export class AddMilestoneComponent implements OnInit {
         this.teamId = "";
         this.startDate = "";
         this.endDate = "";
-        // emit and call get milestone
+        this.getMilestones.emit();
         // also make getMilestoneActive false
-        this.addMilestoneActive = true
+        this.popupHandlerService.addMilestoneActive = false
         this.showLoader = false;
       }
     });
