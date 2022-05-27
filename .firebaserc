@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": ""                                    
+    "default": "worktrolly"                                    
   },
   "targets": {
     "worktrolly": {
