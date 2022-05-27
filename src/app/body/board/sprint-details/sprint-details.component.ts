@@ -90,7 +90,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   ActiveSprint() {
-    this.currentSprint.emit(this.currentSprintNumber);
+    this.currentSprint.emit(this.startService.currentSprintNumber);
   }
 
   showBacklog() {
