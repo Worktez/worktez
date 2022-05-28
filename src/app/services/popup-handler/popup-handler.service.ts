@@ -29,6 +29,8 @@ export class PopupHandlerService {
   quickNotesDescription: string = ""
   addLabelEnabled: boolean = false
   milestoneId:string = ""
+  addMilestoneActive:boolean = true;
+  addTaskActive:boolean = true;
   
   constructor() { }
 
