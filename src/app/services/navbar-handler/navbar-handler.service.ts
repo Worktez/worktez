@@ -79,6 +79,5 @@ export class NavbarHandlerService {
     this.navbarList = []
     this.currentTab = ""
     this.navbarString = ""
-    console.log("Navbar Resert");
   }
 }
