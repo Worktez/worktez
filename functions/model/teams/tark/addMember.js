@@ -36,14 +36,10 @@ exports.addMember = function(request, response) {
     let result;
     let status = 200;
 
-    let found= teamMembers.lastIndexOf(add);
-    if (found==-1){
+    let found= teamMembers.includes(add);
+    if (found){
          
     alert("member already exists");
-        result = { data: "Member not found" };
-        console.log("add member did not work");
-        console.error("Error while adding member");
-        status = 500;
     }
     else {
         teamMembers.push(add);
@@ -56,7 +52,6 @@ exports.addMember = function(request, response) {
         console.log("Member added Successfully");
     } /*else {
         result = { data: "Member not found" };
-        console.log("add member did not work");
         console.error("Error while adding member");
         status = 500;
     }
