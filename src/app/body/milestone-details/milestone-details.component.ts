@@ -61,7 +61,7 @@ export class MilestoneDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.milestoneId = this.route.snapshot.params['MilestoneId'];
-    this.navbarHandler.addToNavbar("Milestones / "+ this.milestoneId);
+    this.navbarHandler.addToNavbar(this.milestoneId);
     if (this.startService.showTeams) {
       this.appkey = this.authService.getAppKey();
       this.backendService.getOrgDetails(this.appkey);
