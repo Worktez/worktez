@@ -13,42 +13,61 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
-<div class="card pb-3">
-    <div class="card-header mb-3">
-        <div class="row p-2">
-            <img src="{{user.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="ml-3 col">
-                <h3>{{user.displayName}} <br><span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer</span><br>
-                <span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">4h</span></h3>
+<div class="card mb-3">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                <app-suggestion-bucket [email]="user.email" [showEmail]="false"></app-suggestion-bucket>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <p>{{post.Post}}</p>
+        <hr>
+        <div class="row pt-2">
+            <div class="col d-flex justify-content-center">
+                <span class="btn" (click)="onReact(post.PostId); toggleColor()" [ngClass]="{'reacted': showColor}">
+                    <ng-container *ngIf="showColor; else normalIcon">
+                        <mat-icon fontSet="material-icons" class="align-middle pr-3">grade</mat-icon>
+                    </ng-container>
+                    <ng-template #normalIcon>
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">grade</mat-icon>
+                    </ng-template>
+                    Star
+                </span>
+            </div>
+            <div class="col d-flex justify-content-center">
+                <span class="btn" (click)="showCommentBox(post.PostId)">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">chat</mat-icon>Comment
+                </span>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col">
+                <ng-container *ngIf="showAddComment">
+                    <div class="row pb-2">
+                        <div class="col-9">
+                            <input type="text" class="form-control" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
+                        </div>
+                        <div class="col-3">
+                            <span class="btn btnSend" [disabled]="enableLoader" (click)="addComment(post.PostId)">Send</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <ng-container *ngIf="dataReady; else loader">
+                        <ng-container *ngIf="comments?.length == 0">
+                            No comments to show
+                        </ng-container>
+                        <ng-container *ngFor="let comment of comments">
+                            <app-comments [comment]="comment"></app-comments>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #loader>
+                        <app-loader></app-loader>
+                    </ng-template>
+                </ng-container>
             </div>
         </div>
     </div>
-    <div class="card-body mt-5">
-        <p>{{post.Post}}</p>
-        <hr>
-        <br>
-        <div class="row">
-            <button class="btn m-auto px-3 py-1" (click)="onReact(post.PostId);toggleColor()" 
-                id="likeButton"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3" [ngClass]="{'button-color': showColor, 'button-transparent' : !showColor}">grade</mat-icon >Star</button> 
-            <button class="btn m-auto px-3 py-1" (click)="showCommentBox(post.PostId)" id="commentButton1"><mat-icon fontSet="material-icons-outlined" class="align-middle mr-3">chat</mat-icon>Comment</button>
-        </div>
-    </div>
-</div>
-<div class="card mt-1 mb-3" id="comments">
-    <ng-container *ngIf="showAddComment">
-        <div class="row mt-2">
-            <h2 class="ml-4">Comments</h2>
-            <p class="ml-auto mr-5">Most Relevant</p>
-        </div>
-    <div class="col m-2">
-        <ng-container *ngFor="let comment of comments">
-            <app-comments [comment]="comment"></app-comments>
-        </ng-container>
-    </div>
-    <hr>
-    <div class="row ml-2">
-        <input type="text" class="form-control form-control-md commentBox" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
-        <button class="btn btn-success px-3 mt-2" id="commentButton" (click)="openAddComment(post.PostId)">Send</button>
-    </div>
-    </ng-container>
 </div>

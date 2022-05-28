@@ -21,6 +21,41 @@
     border: 1px solid var(--scrollbar-color);
     border-radius: 10px;
     height: 100%;
+    cursor: pointer;
+}
+
+h3{
+    color:var(--text) !important;
+    font-weight: bold;
+}
+
+.modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px;
+    justify-content: space-evenly;
+}
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+
+.close {
+    color: var(--text);
 }
 #SuccessIcon{
     color: var(--secondary-color);
@@ -45,6 +80,7 @@
 #button {
     background-color: var(--primary-color);
     color: white;
+    border: none;
 }
 
 #button:focus,
@@ -53,4 +89,8 @@
     outline: none;
     box-shadow: none;
     background-color: var(--secondary-color);
+}
+
+.noMilstones{
+    color: var(--text);
 }

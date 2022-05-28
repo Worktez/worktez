@@ -18,74 +18,36 @@ hr {
 }
 
 h3 {
-  color:#5C60EC;
+  color: var(--primary-color);
 }
 
+.commentbox {
+  width: 14rem;
+}
 
-.commentBox {
-  background-color: var(--primary-bg);
+.btn {
   color: var(--text);
-  border: none;
-  border-radius: 10px;
-  margin: 10px;
-  width: 70%;
+  width: 10rem;
 }
 
-#commentButton {
-  background-color: var(--primary-color);
-  border-radius: 13px;
-  width: 20%;
-  height: 5%;
-}
-
-#commentButton:hover{
-  cursor: pointer;
-} 
-
-#commentButton1 {
-  color: var(--text);
-  background-color: var(--secondary-bg);
-  border: var(--primary-border);
-}
-
-#commentButton1:hover {
+.btn:hover {
   background-color: var(--dropdown-hover);
   color: var(--button-text-hover);
-  cursor: pointer;
 }
 
-#likeButton {
-  color: var(--text);
-  background-color: var(--secondary-bg);
-  border: var(--primary-border);
+.reacted {
+  color: var(--primary-color);
 }
 
-#likeButton:hover {
-  background-color: var(--dropdown-hover);
-  color: var(--button-text-hover);
-  cursor: pointer;
-}
-
-.button-color{
-  color: blueviolet;
-}
-
-mat-icon {
-  color: var(--text);
-}
-
-#comments {
+.btnSend {
   width: 100%;
+  background-color: var(--primary-color);
+  color: #ffffff;
 }
 
-/* #comments::-webkit-scrollbar {
-  width: 6px;              
+@media only screen and (max-width: 400px) {
+  .btn {
+    width: 7rem;
+    font-size: 12px;
+  }
 }
-#comments::-webkit-scrollbar-track {
-  background: var(--secondary-bg);        
-}
-#comments::-webkit-scrollbar-thumb {
-  border-radius: 1rem;
-  background-color: #00d2ff;
-  background-image: linear-gradient(to top, #3a7bd5 0%, #5C60EC 100%);
-}  */

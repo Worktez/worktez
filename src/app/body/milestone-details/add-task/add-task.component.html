@@ -1,0 +1,81 @@
+<!-- /***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+<div class="modal fade" id="exampleModalCenter" style="z-index: 1050; " tabindex="-1" role="dialog"
+aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content card">
+    <div class="modal-header">
+      <h2 class="modal-title font-weight-bold" id="exampleModalLongTitle">
+        Add a Task
+      </h2>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" class="material-icons">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="max-height: 500px;overflow-y: auto;">
+      <form>
+        <div *ngIf="popupHandlerService.addTaskActive">
+          <div class="m-1 border-bottom">
+            <div class="row p-1">
+                <div class="col-2">
+                  TaskId
+                </div>
+                <div class="col-5">
+                    Title
+                </div>
+                <div class="col-5">
+                  Assignee
+                </div>
+            </div>
+          </div>
+          <ng-container *ngIf="allTasks">
+              <h3 *ngIf="allTasks.length ==0" class="text-center">No Tasks to Show!</h3>
+          </ng-container>
+          <ng-container *ngFor="let task of allTasks">
+            <div class="m-1 border-bottom task" (click)="addTask(task)" style="cursor: pointer;">
+              <div class="row p-1">
+                  <div class="col-2">
+                    {{task.Id}}
+                  </div>
+                  <div class="col-5">
+                      {{task.Title}}
+                  </div>
+                  <div class="col-5">
+                    <app-suggestion-bucket [email]="task.Assignee"  [showEmail] = "false"></app-suggestion-bucket>
+                  </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </form>
+      <div *ngIf="!popupHandlerService.addTaskActive">
+        <div class="row mx-5">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline
+            </mat-icon>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+        <h1 class="text-center">Task Added Successfully</h1>
+
+      </div>
+    </div>
+  </div>
+  <ng-template *ngIf="showLoader">
+    <app-loader></app-loader>
+  </ng-template>
+</div>
+</div>
+

@@ -85,6 +85,7 @@ export class DataTableDataSource extends DataSource<Tasks> {
         case 'Status': return compare(a.Status, b.Status, isAsc);
         case 'Priority': return compare(a.Priority, b.Priority, isAsc);
         case 'Difficulty': return compare(a.Difficulty, b.Difficulty, isAsc);
+        case 'SprintNumber': return compare(a.SprintNumber, b.SprintNumber, isAsc);
         case 'Id': return compare(a.Id, b.Id, isAsc);
         case 'Title': return compare(a.Title, b.Title, isAsc);
         case 'WorkDone': return compare(a.WorkDone, b.WorkDone, isAsc);

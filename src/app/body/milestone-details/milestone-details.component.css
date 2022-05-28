@@ -112,7 +112,6 @@
     background: #eee;
     height: 6px;
     position: absolute;
-
     top: 57px;
     z-index: 1;
     border-radius: 50px;
@@ -133,6 +132,7 @@
 #button {
     background-color: var(--primary-color);
     color: white;
+    border: none;
 }
 
 #button:focus,
@@ -148,13 +148,22 @@
     font-size: 55px;
 }
 
+.task:hover {
+    background: var(--primary-bg);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+}
 .card {
-    box-shadow: var(--box-shadow-bottom);
     background: var(--secondary-bg);
     color: var(--text);
-    border: 1px solid var(--scrollbar-color);
+    border: none;
     border-radius: 10px;
     height: 100%;
+}
+.close {
+    color: var(--text);
+}
+.close:hover{
+    cursor: pointer;
 }
 
 
