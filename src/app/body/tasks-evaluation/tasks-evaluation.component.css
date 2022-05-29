@@ -31,6 +31,20 @@
     background-color: var(--secondary-bg);
 }
 
+.dropdown-item{
+    color: var(--text);
+}
+
+#teamDropdownButton:hover, .dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
+}
+
+#dropdownUserCard {
+    background-color: var(--secondary-bg);
+    border-color: var(--primary-color);
+    color: var(--text); 
+}
 .list-group, .list-group-item {
     background-color: var(--secondary-bg);
 }
@@ -76,4 +90,8 @@
     color: var(--text);
     background-color: var(--secondary-bg);
     border: none;
+}
+.btn:focus{
+    box-shadow: none;
+    outline: 0 none;
 }

@@ -49,7 +49,7 @@
         <div class="row">
             <ng-container *ngIf="isAssigneeChecked">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="Enter Assignee Name" [(ngModel)]="assignee" />
+                    <input type="text" class="form-control" style="font-size: 12px;" placeholder="Enter Assignee Name" [(ngModel)]="assignee" />
                 </div>
             </ng-container>
             <ng-container *ngIf="isProjectChecked">
@@ -61,8 +61,8 @@
                     </select>
                 </div>
             </ng-container>
-            <ng-container *ngIf="isPriorityChecked">
-                <div class="col">
+            <ng-container *ngIf="isPriorityChecked" style="font-size: 10px;">
+                <div class="col" >
                     <select data-style="btn-default" class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
                         <option value="" selected disabled>Select Priority</option>
                         <ng-container  *ngFor="let item of appSettings.priority">
@@ -93,11 +93,11 @@
             </ng-container>
             <ng-container *ngIf="isSprintChecked">
                 <div class="col">
-                    <input placeholder="Select Sprint" class="form-control" type="number" id="filterSprintNumberInput" [(ngModel)]="sprint">
+                    <input placeholder="Select Sprint" class="form-control" style="font-size: 10px;" type="number" id="filterSprintNumberInput" [(ngModel)]="sprint">
                 </div>
             </ng-container>
             <div class="col">
-                <button type="submit" class="btn" id="button" (click)="filterByProperties()">Filter</button>
+                <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="filterByProperties()">Filter</button>
             </div>
         </div>
     </div>
