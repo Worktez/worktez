@@ -40,6 +40,7 @@ export class MilestoneDetailsComponent implements OnInit {
   teamIds: string[];
   taskData: Tasks[];
   allTasks: Tasks[];
+  sprintNumber: number;
   completedTasks: any[] = [];
   incompleteTasks: any[] = [];
   milestoneData: Milestones
@@ -68,6 +69,7 @@ export class MilestoneDetailsComponent implements OnInit {
       this.showLoader = true;
       this.taskDataReady = false;
       this.milestoneDataReady = false;
+      this.sprintNumber = this.startService.teamCurrentSprintNumber;
       this.getMilestoneDetails();
       this.getTasks();
     } else {
@@ -79,6 +81,7 @@ export class MilestoneDetailsComponent implements OnInit {
             this.showLoader = true;
             this.taskDataReady = false;
             this.milestoneDataReady = false;
+            this.sprintNumber = this.startService.currentSprintNumber;
             this.getMilestoneDetails();
             this.getTasks();
           });
@@ -94,7 +97,6 @@ export class MilestoneDetailsComponent implements OnInit {
   getTasks() {
     this.showLoader = true;
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
-
     callable({ OrgDomain: this.orgDomain, MilestoneId: this.milestoneId }).pipe(
       map(actions => {
         return actions.data as Tasks[];
@@ -126,7 +128,7 @@ export class MilestoneDetailsComponent implements OnInit {
       });
   }
   activateAdd(){
-  this.addTaskActive = true;
+    this.popupHandlerService.addTaskActive = true;
   this.getAllTasks();
   }
 
@@ -134,7 +136,7 @@ export class MilestoneDetailsComponent implements OnInit {
     this.showLoader = true;
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
 
-    callable({ OrgDomain: this.orgDomain, TeamId: this.milestoneData.TeamId }).pipe(
+    callable({ OrgDomain: this.orgDomain, TeamId: this.milestoneData.TeamId, SprintNumber: this.sprintNumber, FilterStatus:"Incomplete"}).pipe(
       map(actions => {
         return actions.data as Tasks[];
       })).subscribe({
@@ -167,28 +169,7 @@ export class MilestoneDetailsComponent implements OnInit {
     return width;
   }
 
- async addTask(task){
-    this.showLoader = true
-    const todayDate = this.toolsService.date();
-    const time = this.toolsService.time();
-    const appKey = this.backendService.getOrganizationAppKey();
-      const callable = this.functions.httpsCallable('tasks/editTask');
-      await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: todayDate, Time: time, ChangedData: "Milestone Added", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.reporterName, MilestoneId: this.milestoneId}).subscribe({
 
-        next: (data) => {
-          this.showLoader = false;
-          this.addTaskActive = false;
-        },
-        error: (error) => {
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-          this.showLoader = false;
-          console.error(error);
-        },
-        complete: () => this.getTasks()
-    });
-    
-  }
 
   getMilestoneDetails() {
     this.showLoader = true;

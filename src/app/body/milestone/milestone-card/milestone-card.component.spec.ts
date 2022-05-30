@@ -1,10 +1,10 @@
-/** *********************************************************
+/***********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author: Vivek Kumar <vvksindia@gmail.com>
+ * Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
- *
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,21 +13,21 @@
  ***********************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddMilestoneComponent } from './add-milestone.component';
+import { MilestoneCardComponent } from './milestone-card.component';
 
-describe('AddMilestoneComponent', () => {
-  let component: AddMilestoneComponent;
-  let fixture: ComponentFixture<AddMilestoneComponent>;
+describe('MilestoneCardComponent', () => {
+  let component: MilestoneCardComponent;
+  let fixture: ComponentFixture<MilestoneCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddMilestoneComponent ]
+      declarations: [ MilestoneCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddMilestoneComponent);
+    fixture = TestBed.createComponent(MilestoneCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

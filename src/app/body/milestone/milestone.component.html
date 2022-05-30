@@ -11,52 +11,37 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
+<ng-container *ngIf="milestoneDataReady; else loader">
+<div class="btn-group">
+  <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+  <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+      <ng-container *ngFor="let item of startService.teams">
+          <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+      </ng-container>
+  </div>
 <div class="d-flex justify-content-center m-2">
   <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="acitivateAdd()">Add Milestone</button>
 </div>
+  
+</div>
 <div id="milestoneContainer" class="m-4">
   <div *ngIf="milestoneData.length == 0">
-    <h3 class="text-center p-5"><b>No Milestones Available</b></h3>
+    <h3 class="text-center pt-5">No Milestones to Show!</h3>
+    <ng-template *ngIf="showLoader">
+      <app-loader></app-loader>
+    </ng-template>  
+  
   </div>
-
-  <!-- Button trigger modal -->
     <div class="row p-4" *ngIf="milestoneData.length > 0">
       <ng-container *ngFor="let milestone of milestoneData">
-        <div class="col-md-4 p-3">
-            <div class="card p-4" (click)="getMilestoneDetails(milestone.MilestoneId)">
-              <h1>{{milestone.MilestoneId}} {{milestone.Title}}</h1>
-              <div class="row">
-                <div class="col">
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                      description
-                    </mat-icon>
-                    {{milestone.Description}}
-                </div>
-              </div>
-              <h4 class="mt-1 heading">
-                <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestone.TeamId}}
-              </h4>
-              <div class="row pt-2">
-                <div class="col-md-6 col">
-                  <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 12px;">
-                    <span class="material-icons" style="font-size: 15px">date_range</span>Start Date:
-                  </h6>
-                  <h6 class="row card-text" id="sprintStartDate" style="font-size: 12px">
-                    {{ milestone.StartDate }}
-                  </h6>
-                </div>
-                <div class="col-md-6 col">
-                  <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 12px">
-                    <span class="material-icons" style="font-size: 15px">date_range</span>End Date:
-                  </h6>
-                  <h6 class="row card-text" id="sprintEndDate" style="font-size: 12px">
-                    {{ milestone.EndDate }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-        </div>
+ <div class="col-md-4 p-3">
+
+       <app-milestone-card [milestone]="milestone"></app-milestone-card></div>
       </ng-container>
     </div>
 </div>
-<app-add-milestone *ngIf="addMilestoneActive" [teamIds]="teamIds" [teamId]="teamId" ></app-add-milestone>
+<app-add-milestone *ngIf="addMilestoneActive" [teamIds]="teamIds" [teamId]="teamId" (getMilestones)="getMilestoneData()"></app-add-milestone>
+</ng-container>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>  

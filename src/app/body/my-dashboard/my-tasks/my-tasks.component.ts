@@ -40,7 +40,7 @@ export class MyTasksComponent implements OnInit {
     this.dataTableService.readTaskDataForDashboard().subscribe((data) => {
       if(data.length) {
         this.tasksData = data;
-        this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
+        this.displayColoumns = ['Status', 'Priority', 'SprintNumber', 'Id', 'Title', 'WorkDone'];
         this.showLoader = false;
         this.noData = false;
       } else {

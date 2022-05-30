@@ -1,4 +1,16 @@
-  <!-- Modal -->
+  <!-- /** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author: Vivek Kumar <vvksindia@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
   <div class="modal fade" id="exampleModalCenter" style="z-index: 1050" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -18,7 +30,7 @@
         </span>
         </div>
         <div class="modal-body">
-          <form *ngIf="!addMilestoneActive">
+          <form *ngIf="popupHandlerService.addMilestoneActive">
               <div class="form-row my-2">
                 <div class="form-group col-md-6 col">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
@@ -62,7 +74,7 @@
                 <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="showLoader" aria-label="Close" (click)="validateMilestone()">Create New Milestone</button>
               </div>
           </form>
-          <div *ngIf="addMilestoneActive">
+          <div *ngIf="!popupHandlerService.addMilestoneActive">
             <div class="row mx-5">
               <div class="col-md-4"></div>
               <div class="col-md-4">
