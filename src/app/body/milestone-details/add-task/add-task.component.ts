@@ -30,6 +30,7 @@ export class AddTaskComponent implements OnInit {
   @Input("milestoneId") milestoneId:string;
   @Output() getTasks: EventEmitter<string> = new EventEmitter();
   showLoader: boolean = false;
+  componentName = "MILESTONES"
   constructor(public popupHandlerService: PopupHandlerService, public toolsService:ToolsService, public backendService:BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public authService: AuthService) { }
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class AddTaskComponent implements OnInit {
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode("Milestone", "InternalError","Api");
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           this.showLoader = false;
           console.error(error);
         },  
