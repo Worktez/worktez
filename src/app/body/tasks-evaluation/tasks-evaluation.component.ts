@@ -25,6 +25,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { Router } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -50,7 +51,7 @@ export class TasksEvaluationComponent implements OnInit {
 
   nextSprintTasksToFetch: number;
 
-  constructor(public userService: UserServiceService, public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
+  constructor(public userService: UserServiceService, public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -104,7 +105,10 @@ export class TasksEvaluationComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: (() => {
+          this.cookieService.set("userSelectedTeamId", teamId);
+          console.info('Successful updated Selected Team in db');
+        })
     });
   }
 

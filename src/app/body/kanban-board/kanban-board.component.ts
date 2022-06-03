@@ -10,6 +10,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-kanban-board',
@@ -34,7 +35,7 @@ export class KanbanBoardComponent implements OnInit {
   currentSprintNumber: number;
   filterSprintNumber: number;
 
-  constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService) { }
+  constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -63,7 +64,7 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   readData() {
-    this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
+     this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
     this.currentSprintNumber = this.startService.currentSprintNumber;
@@ -101,7 +102,10 @@ export class KanbanBoardComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: (() => {
+          this.cookieService.set("userSelectedTeamId", teamId);
+          console.info('Successful updated Selected Team in db');
+        })
     });
   }
 

@@ -15,6 +15,7 @@
  import { Component, OnInit } from "@angular/core";
  import { AngularFireFunctions } from "@angular/fire/compat/functions";
  import { Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
  import { map, Observable } from "rxjs";
  import { Milestones } from "src/app/Interface/MilestoneInterface";
 import { ApplicationSettingsService } from "src/app/services/applicationSettings/application-settings.service";
@@ -41,7 +42,7 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
    teamId: string;
    
    
-   constructor(private functions: AngularFireFunctions, private router: Router, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public applicationSettingsService: ApplicationSettingsService) { }
+   constructor(private functions: AngularFireFunctions, private router: Router, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService) { }
  
    ngOnInit(): void {
      this.showLoader = true;
@@ -54,7 +55,6 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
        this.teamIds = this.backendService.getOrganizationTeamIds();
        this.getMilestoneData();
        this.teamId = this.authService.getTeamId();
-      //  this.showLoader = false;
      } else {
        this.startService.userDataStateObservable.subscribe((data) => {
          if (data) {
@@ -64,7 +64,6 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
            });
            this.getMilestoneData();
            this.teamId = this.authService.getTeamId();
-          //  this.showLoader = false;
          }
        });
      }
@@ -93,6 +92,7 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
         },
         complete: (()=>{
           this.getMilestoneData();
+          this.cookieService.set("userSelectedTeamId", teamId);
           this.showLoader = false;
         })
     });
