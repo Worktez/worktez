@@ -2,6 +2,15 @@
     color: var(--text);
 }
 
+.dropdown-item{
+    color: var(--text);
+}
+
+#filterMenu, #dropdownUserCard {
+    background-color: var(--secondary-bg);
+    border-color: var(--primary-color);
+    color: var(--text); 
+}
 #tasksContainer {
     background-color: var(--secondary-bg);
 }
@@ -54,5 +63,19 @@
 }
 
 #filterButton {
-    background-color: var(--primary-bg);
+    background-color: var(--primary-color);
+    color: white;
+}
+input:focus,
+textarea:focus {
+    box-shadow: none;
+    outline: 0 none;
+}
+.btn:focus{
+    box-shadow: none;
+    outline: 0 none;
+}
+#teamDropdownButton:hover, #filterDropdownButton:hover, .dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
 }

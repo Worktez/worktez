@@ -110,6 +110,7 @@ export class TasksComponent implements OnInit {
   }
 
   applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string, Sprint: number }) {
+    this.showFilter=false;
     this.filterTaskService.saveFilterData(data.Assignee, data.Project, data.Priority, data.Difficulty, data.Status, data.Sprint)
     if (data.Project != this.teamId) {
       this.teamId = data.Project

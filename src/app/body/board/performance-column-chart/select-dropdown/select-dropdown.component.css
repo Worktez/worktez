@@ -11,14 +11,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-#dropdownSelectCard {
+.dropdown-menu{
+    font-size: 12px
+}
+ #dropdownSelectCard {
     color: var(--text);
     background-color: var(--secondary-bg);
     border-color: var(--primary-color);
 }
 
 #dropdownMenuButton {
-    color: var(---text);
+    color: var(--text);
 }
 
 #dropdownMenuButton:hover {
@@ -27,6 +30,6 @@
 }
 
 #button {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
 }

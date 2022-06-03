@@ -18,13 +18,13 @@
         </mat-icon>
     </span>
     <div class="dropdown-menu dropdown-menu-right p-0" id="dropdownRangeCard">
-        <div class="container p-3">
+        <div class="container p-2">
             <div class="row m-0 align-items-center" id="header">
-                <div class="col p-1">
-                    <h4>Custom Sprint Range</h4>
+                <div class="col px-1">
+                    <h5>Custom Sprint Range</h5>
                 </div>
             </div>
-            <div class="row p-1 align-items-center">
+            <div class="row px-1 align-items-center">
                 <div class="col-12">
                     <input type="number" min="1" class="form-control" placeholder="Start Range" [(ngModel)]="sprintRange1" [ngModelOptions]="{standalone: true}">
                 </div>
@@ -34,9 +34,9 @@
                     <input type="number" min="2" class="form-control" placeholder="End Range" [(ngModel)]="sprintRange2" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
-            <div class="row p-1">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-block" id="button" (click)="validateRange()">Submit</button>
+            <div class="row px-1">
+                <div class="col text-left">
+                    <button type="submit" class="btn ml-2 mt-1" id="button" (click)="validateRange()">Submit</button>
                 </div>
             </div>
         </div>
