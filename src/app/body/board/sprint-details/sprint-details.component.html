@@ -72,25 +72,7 @@
 
   <div class="card">
     <div class="card-header">
-      <div class="dropdown float-right">
-        <span class="btn" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-          <mat-icon fontSet="material-icons-outlined" class="align-middle">
-            filter_list
-          </mat-icon>
-        </span>
-        <div class="dropdown-menu dropdown-menu-right py-2 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-          <div class="input-group">
-            <h5>Sprint No.</h5>
-            <input class="form-control" style="font-size: 10px" type="number" id="filterSprintNumberInput"
-              [(ngModel)]="filterSprintNumber" />
-            <button id="filterButton" class="btn" style="font-size: 10px" (click)="changeSprintNumber()">
-              Filter
-            </button>
-          </div>
-        </div>
-      </div>
-      <nav class="navbar navbar-expand-lg p-0" id="navbarMenu">
+      <nav class="navbar navbar-expand-lg float-left p-0" id="navbarMenu">
         <ul class="nav mr-auto">
           <li class="nav-item">
             <h6 class="active nav-link navbar-text" id="head" style="font-size: 15px">
@@ -104,6 +86,33 @@
           </li>
         </ul>
       </nav>
+      <div class="dropdown dropdown-menu-right float-right max-width-auto">
+        <span class="btn" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle">
+            filter_list
+          </mat-icon>
+        </span>
+        <div class="dropdown-menu dropdown-menu-right py-2 px-4 " id="filterMenu" aria-labelledby="dropdownMenuButton">
+          <div class="input-group">
+            <div class="row align-items-center">
+              <div class="col-5 px-0 pt-3">
+                <h5>Sprint No.</h5>
+              </div>
+              <div class="col-7 px-1">
+                <input class="form-control" style="font-size: 10px" type="number" id="filterSprintNumberInput"
+                [(ngModel)]="filterSprintNumber" />
+              </div>
+              <div class="col-12 text-right pt-1">
+                <button id="filterButton" class="btn " style="font-size: 10px" (click)="changeSprintNumber()">
+                  Filter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <div class="card-body px-4">
       <div class="row">
