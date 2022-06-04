@@ -36,11 +36,26 @@
                 <div class="container p-4" cdkDropList (cdkDropListDropped)="onDrop($event, selectedStatusLabels[i])" [cdkDropListData]="tasksArr" id="tasksContainer">
                     <ng-container *ngIf="tasksArr.length; else emptyLabelContainer">
                         <div class="row title" [ngStyle]="{'color': getColor(selectedStatusLabels[i])}">
-                            <div class="col-8">
-                                {{selectedStatusLabels[i]}} 
+                            <div class="col-8 justify-content-center pl-4 pt-2">
+                                {{selectedStatusLabels[i]}}
                             </div>
-                            <div class="d-flex col-4 justify-content-end">
-                                <app-status-icons [Status]="selectedStatusLabels[i]"></app-status-icons>
+                            <div class="d-flex col-4">
+                                <app-status-icons [Status]="selectedStatusLabels[i]">
+                                    <div class="nav-item dropdown">
+                                        <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown">
+                                            <mat-icon fontSet="material-icons-outlined">
+                                                expand_more
+                                            </mat-icon>
+                                        </a>
+                                        <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards" >
+                                            <ng-container *ngFor="let status of statusLabels">
+                                                
+                                                    <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
+                                                
+                                            </ng-container>
+                                        </div>
+                                    </div> 
+                                </app-status-icons>
                             </div>
                         </div>
                         <ng-container *ngFor="let task of tasksArr">
@@ -54,11 +69,24 @@
                     </ng-container>
                     <ng-template #emptyLabelContainer>
                         <div class="row title" [ngStyle]="{'color': getColor(selectedStatusLabels[i])}">
-                            <div class="col-8">
-                                {{selectedStatusLabels[i]}} 
+                            <div class="col-8 justify-content-center pl-4 pt-2">
+                                {{selectedStatusLabels[i]}}
                             </div>
-                            <div class="col-4">
-                                <app-status-icons [Status]="selectedStatusLabels[i]"></app-status-icons>
+                            <div class="d-flex col-4">
+                                <app-status-icons [Status]="selectedStatusLabels[i]">
+                                    <div class="nav-item dropdown">
+                                        <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown">
+                                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                                expand_more
+                                            </mat-icon>
+                                        </a>
+                                        <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards" >
+                                            <ng-container *ngFor="let status of statusLabels">
+                                                    <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
+                                            </ng-container>
+                                        </div>
+                                    </div> 
+                                </app-status-icons>
                             </div>
                         </div>
                     </ng-template>

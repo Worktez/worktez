@@ -33,6 +33,9 @@ export class KanbanBoardComponent implements OnInit {
   currentSprintName: string;
   currentSprintNumber: number;
   filterSprintNumber: number;
+  currentStatusLabels: string[];
+  currentSelectedStatusLabels: string;
+  allTasks : Tasks[];
 
   constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService) { }
 
@@ -63,9 +66,9 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   readData() {
-    this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
+    this.selectedStatusLabels = this.statusLabels.slice(0,4);
     this.currentSprintNumber = this.startService.currentSprintNumber;
     if(this.currentSprintNumber==-1){
       this.currentSprintName= "Backlog";
@@ -105,6 +108,12 @@ export class KanbanBoardComponent implements OnInit {
     });
   }
 
+  changeStatusLabels(newStatus, existingStatus){
+    let x = this.selectedStatusLabels.indexOf(existingStatus)
+    this.selectedStatusLabels[x] = newStatus;
+    this.putDataInTasksArray(this.allTasks);
+  }
+
   changeSprintNumber() {
     if(this.filterSprintNumber==0){
       this.filterSprintNumber=-1;
@@ -134,6 +143,7 @@ export class KanbanBoardComponent implements OnInit {
     callable({OrgDomain: orgDomain, TeamId: this.selectedTeamId, SprintNumber: this.currentSprintNumber }).subscribe ({
       next: (data) => {
         this.putDataInTasksArray(data.data);
+        this.allTasks = data.data;
         this.showLoader = false;
         console.log("read tasks successfully!")
       },

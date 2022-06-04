@@ -56,3 +56,18 @@
 #filterButton {
     background-color: var(--primary-bg);
 }
+
+.dropdown-menu {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
+    color: var(--button-text);
+    font-size: 12px;
+}
+
+.dropdown-item:hover {
+    color: var(--hover);
+    background-color: var(--button-hover-bg);
+    cursor: pointer;
+}
