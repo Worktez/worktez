@@ -33,7 +33,7 @@
         <textarea type="text" class="form-control form-control-sm" rows="8" [(ngModel)]="notesContent" [ngModelOptions]="{ standalone: true }" (ngModelChange)="setTitle()" placeholder="Write a note..."></textarea>
         <div class="row pt-4">
             <div class="col d-flex justify-content-end">
-                <button class="btn" (click)="addNote()">save</button>
+                <button class="btn saveButton" (click)="addNote()">save</button>
             </div>
         </div>
     </div>

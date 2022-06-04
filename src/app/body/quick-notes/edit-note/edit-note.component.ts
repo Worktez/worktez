@@ -74,7 +74,7 @@ export class EditNoteComponent implements OnInit {
     this.editNoteCompleted.emit(true);
   }
 
-  addNote(){
+  addAnotherNote(){
     this.addNewNote.emit();
   }
 

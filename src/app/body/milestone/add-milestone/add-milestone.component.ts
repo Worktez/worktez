@@ -26,7 +26,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 })
 export class AddMilestoneComponent implements OnInit {
 
-  componentName: string = "AddMilestone"
+  componentName: string = "MILESTONES"
 
   @Input("teamId") teamId: string;
   @Input("teamIds") teamIds: string[];
@@ -64,7 +64,7 @@ export class AddMilestoneComponent implements OnInit {
       this.addMilestone();
     }
     else
-      console.log("Log-Work failed due to validation error");
+      console.log("Add Milestone Failed due to Validation Error");
   }
 
   addMilestone() {

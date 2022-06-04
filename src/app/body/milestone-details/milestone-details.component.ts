@@ -34,7 +34,7 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 })
 export class MilestoneDetailsComponent implements OnInit {
 
-  componentName: string = "MILESTONE";
+  componentName: string = "MILESTONES";
   milestoneId: string;
   orgDomain: string;
   teamIds: string[];

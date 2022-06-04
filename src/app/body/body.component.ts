@@ -12,6 +12,8 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
 import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
 import { AuthService } from '../services/auth.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
@@ -29,10 +31,14 @@ export class BodyComponent implements OnInit {
   showlogin: boolean = false;
   teamDataChecked: boolean= false;
   userDataReady: boolean = false;
-
-  constructor(public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  uid:string = ""
+  appTheme:string = ""
+  public useEmulator = environment.useEmulators;
+  constructor(public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
+    this.appTheme = this.cookieService.get("userAppTheme")
+    this.uid = this.cookieService.get("useruid")
   }
 
   sprintCreated( completed: boolean ) {
