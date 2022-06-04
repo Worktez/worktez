@@ -24,9 +24,17 @@
     color: var(--text);
 }
 
-#dropdownMenuButton:hover {
+#dropdownMenuButton:hover, #button:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover); 
+}
+select{
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+select:focus{
+    box-sizing: none;
+    outline: none;
 }
 
 #button {

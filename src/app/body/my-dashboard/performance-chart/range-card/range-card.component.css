@@ -16,7 +16,7 @@
     color: var(--text);
 }
 
-#dropdownMenuButton:hover {
+#dropdownMenuButton:hover, #button:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover); 
 }
@@ -40,11 +40,9 @@ input {
     font-size: 10px;
 }
 
-input:focus,
-
-textarea:focus {
-    box-shadow: none;
-    outline: 0 none;
+input:focus, textarea:focus {
     background-color: var(--primary-bg);
     color: var(--text);
+    box-shadow: none;
+    outline: 0 none;
 }
