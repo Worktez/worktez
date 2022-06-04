@@ -33,8 +33,8 @@
                                     class="form-control" id="recipient-name" (input)="checkAvailabilityLive()">
                             </div>
                         </div>
-                            <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!userName"> Please enter a username </p>
-                            <p style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="userAvailable"> Username is Available</p>
+                            <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(userName)"> Please enter a username </p>
+                            <p style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(userAvailable) && (userName)"> Username is Available</p>
                             <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(userAvailable) && !(userNameIsSame)" >
                                 {{userName}} is already taken</p>
 
