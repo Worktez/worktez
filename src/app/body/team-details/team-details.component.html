@@ -58,8 +58,17 @@
           <div class="row">
             <div class="col">
               <ng-container *ngFor="let item of team.TeamMembers">
-                <app-suggestion-bucket [email]="item" [showEmail]="false" (selectedEmail)="selectedAssignee($event)">
-                </app-suggestion-bucket>
+                <div class="row">
+                  <div class="col">
+                    <app-suggestion-bucket [email]="item" [showEmail]="false" (selectedEmail)="selectedAssignee($event)">
+                    </app-suggestion-bucket>
+                  </div>
+                  <div class="col-2">
+                    <span class="btn" (click)="removeMemberDB(item)">
+                      <mat-icon  font-set="material-icons" class="material-icons align-middle text-danger">close</mat-icon>
+                    </span>
+                  </div>
+                </div>
               </ng-container>
             </div>
           </div>
