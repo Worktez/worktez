@@ -12,38 +12,60 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content p-4">
-            <div class="modal-header p-4">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
                 <ng-container *ngIf="projectModalMode == 'add'">
-                    <h2 class="modal-title" id="exampleModalLabel">Add Your Project</h2>
+                    <div class="row px-3 pb-0 pt-3">
+                        <div class="col-md-10 col-10">
+                            <h2>Add Your Project</h2>
+                        </div>
+                        <div class="col-md-1 col-2 text-right ">
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editProjectDone()" title="Close">
+                                    close
+                                </mat-icon>
+                            </span>
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="projectModalMode == 'edit'">
-                    <h2 class="modal-title" id="exampleModalLabel">Edit Project</h2>
+                    <div class="row px-3 pb-0 pt-2">
+                        <div class="col-md-10 col-10">
+                            <h2>Edit Project</h2>
+                        </div>
+                        <div class="col-md-1 col-2 text-right ">
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editProjectDone()" title="Close">
+                                    close
+                                </mat-icon>
+                            </span>
+                        </div>
+                    </div>
                 </ng-container>
-                <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editProjectDone()" style="color: var(--secondary-color);">close</span>
-            </div>
             <div class="modal-body">
                 <form *ngIf="!enableLoader">
                     <div class="form-group mb-4">
-                        <!-- <label for="recipient-name" class="col-form-label">Display Name</label> -->
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project Name</span>
                         <input type="text" [(ngModel)]="projectName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Project Name">
                     </div>
 
-                    <div class="form-group my-4">
+                    <div class="form-group">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project Description</span>
                         <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" placeholder="Write a Project Description..."></textarea>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col ml-auto">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
                             <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}" placeholder="Select The Start Date ">
                         </div>
                         <div class="col-md-6 col ml-auto">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
                             <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
                         </div>
                     </div>
 
-                    <div class="row px-4 py-4">
+                    <div class="row px-4 pt-2">
                         <ng-container *ngIf="projectModalMode == 'add'">
                             <button type="submit" class="btn btn-lg btn-block" id="button" (click)="addProject()">Add Project</button>
                         </ng-container>
