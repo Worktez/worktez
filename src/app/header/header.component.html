@@ -35,11 +35,11 @@
                                         corporate_fare
                                     </mat-icon>
                                     {{backendService.organizationDetails.OrganizationName}}
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                    <mat-icon *ngIf="(authService.myOrgCollectionsData | async)?.length > 1" fontSet="material-icons-outlined" class="align-middle pr-4">
                                         expand_more
                                     </mat-icon>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                                <div *ngIf="(authService.myOrgCollectionsData | async)?.length > 1" class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                                     <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
                                         <a class="dropdown-item"
                                             *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain"
