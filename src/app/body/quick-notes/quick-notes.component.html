@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <button class="btn btn-success" id="quickNotesButton" (click)="showList()">
-    <mat-icon fontSet="material-icons" class="align-middle">
+    <mat-icon fontSet="material-icons-outlined" class="align-middle">
         notes
     </mat-icon>
     Quick Note
@@ -25,9 +25,11 @@
                     Notes
                 </div>
                 <div class="col ml-auto">
-                    <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
-                        close
-                    </mat-icon>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
+                            close
+                        </mat-icon>
+                    </span>
                 </div>
             </div>
           </div>
@@ -55,9 +57,11 @@
                     <app-loader></app-loader>
                 </ng-template>
                 <li class="list-group-item ml-auto">
-                    <mat-icon fontSet="material-icons" class="align-middle" (click)="openAddNote()">
-                        add
-                    </mat-icon>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons" class="align-middle" (click)="openAddNote()">
+                            add
+                        </mat-icon>
+                    </span>
                 </li>
             </ul>
             <app-loader *ngIf="enableLoader"></app-loader>

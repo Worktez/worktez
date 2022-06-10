@@ -76,12 +76,12 @@ label:hover {
     cursor: pointer;
 }
 
-button {
-    background-color: var(--secondary-color);
-    color: white;
+.btn {
+    background-color: var(--primary-color);
+    color: #ffffff;
 }
 
-button:hover {
-    background-color: var(--primary-color);
-    color: white;
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }

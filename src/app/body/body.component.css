@@ -19,9 +19,48 @@
     cursor: default;
 } */
 
+#themeButton{
+    background: var(--primary-color);
+    display: block;
+    border-radius: 50px;
+    color: #ffffff !important;
+	text-align: center;
+	box-shadow: 0px 3px 45px var(--dropdown-hover);
+    position: fixed;
+    bottom: 80px;
+    left: 40px;
+    border: none !important;
+}
+
+#themeButton:hover {
+    background-color: var(--primary-color);
+    display: block;
+    border-radius: 50px;
+	text-align: center;
+	box-shadow: 0px 3px 45px var(--dropdown-hover);
+    position: fixed;
+    bottom: 80px;
+    left: 40px;
+    border: none !important;
+}
+
+.btn {
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.btn{
+    border-radius: 50px;
+}
+
 @media only screen and (max-width: 1920px) {
     .page {
         font-family: var(--font);
+        padding-bottom: 5%;
         max-height: auto;
         overflow-y:auto;
         overflow-x: hidden;

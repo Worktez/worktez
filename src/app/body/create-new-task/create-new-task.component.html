@@ -17,15 +17,17 @@
             <div class="modal-content p-2">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col">
-                            <h2 class="modal-title " id="createNewTaskTitle"><strong>Create New Task</strong></h2>
+                        <div class="col-md-10 col-10">
+                            <h2>Create New Task</h2>
                         </div>
-                        <div class="col">
-                            <button type="button" class="close" (click)="close()" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons">close</span>
-                            </button>
+                            <div class="col-md-2 col-2 text-right ">
+                                <span class="btn">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
                         </div>
-                    </div>
                     <div class="row p-2 align-item-center">
                         <div class="col">
                             {{ todayDate }}
@@ -157,9 +159,8 @@
                     </ng-container>
 
                 
-                <div class="modal-footer mt-n1">
+                <div class="modal-footer mt-1">
                     <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
-                    
                 </div>
                 <app-loader *ngIf="enableLoader"></app-loader>
                     </form>

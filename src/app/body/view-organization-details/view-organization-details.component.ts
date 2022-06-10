@@ -31,7 +31,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   organization: Organizations;
   teams: Team[] = []
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
   sameUser: boolean = true;
@@ -55,6 +55,8 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   getOrganizationDetails() {
+    const appKey = this.authService.getAppKey();
+    this.backendService.getOrgDetails(appKey);
     this.showLoader = true;
     this.teams = [];
     this.backendService.organizationsData.subscribe(data => {

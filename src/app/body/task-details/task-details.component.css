@@ -87,10 +87,15 @@ nav {
 }
 
 .btn {
-    padding: 2px;
-    font-size: 30px;
     color: var(--text);
 }
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+
 .btn-status{
     background-color: var(--secondary-bg);
     color: var(--text); 

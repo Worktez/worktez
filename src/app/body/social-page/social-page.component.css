@@ -2,15 +2,22 @@
   border-radius: 10px;
 }
 
+/* .currentUserInfo {
+  display: block;
+} */
+
 .card {
   background-color: var(--secondary-bg);
   color: var(--text);
 }
 
 @media only screen and (max-width: 600px) {
-  #whatsNew {
+  .whatsNew {
       display: none;
-  }   
+  }
+  .currentUserInfo {
+    display: none;
+  }
 }
 
 .btn {

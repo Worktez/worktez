@@ -348,7 +348,8 @@
           <Error code="01" description="VALIDATION_ERROR"></Error>
         </ExternalError>
       </SubSystem>
-        <SubComponent name="SOCIAL-PAGE" code="30">
+  </SubComponent>
+  <SubComponent name="SOCIAL-PAGE" code="30">
       <SubSystem code="0000">
         <InternalError code="00">
           <Error code="02" description="SERVER_ERROR"></Error>
@@ -359,6 +360,15 @@
         </ExternalError>
       </SubSystem>
   </SubComponent>
+  <SubComponent name="MILESTONES" code="31">
+      <SubSystem code="0000">
+        <InternalError code="00">
+          <Error code="02" description="SERVER_ERROR"></Error>
+          <Api code="03" description= "API_ERROR"></Api>
+        </InternalError>
+        <ExternalError code="01">
+          <Error code="01" description="VALIDATION_ERROR"></Error>
+        </ExternalError>
+      </SubSystem>
   </SubComponent>
-  
 </Component>

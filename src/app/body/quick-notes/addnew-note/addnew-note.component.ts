@@ -43,7 +43,6 @@ export class AddnewNoteComponent implements OnInit {
     this.popupHandlerService.resetTaskIds();
     this.popupHandlerService.quickNotesTitle = this.title;
     this.popupHandlerService.quickNotesDescription = this.notesContent;
-    this.addNote();
     }
 
   addNote() {

@@ -40,9 +40,14 @@ export class CreatePostComponent implements OnInit {
       { label: "company", value: this.company },
     { label: "post", value: this.post },
     ];
-    this.createPost();
-    this.enableLoader=false;
-    this.createPostCompleted.emit({ completed: true });
+    if(this.post){
+      this.createPost(); 
+      this.enableLoader=false  
+      this.createPostCompleted.emit({ completed: true });
+    }
+    else{
+      console.log("error")
+    }
   }
 
   createPost() {

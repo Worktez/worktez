@@ -20,6 +20,11 @@
     color: var(--text);
 }
 
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
 #button {
     background-color: var(--primary-color);
     color: #ffffff;

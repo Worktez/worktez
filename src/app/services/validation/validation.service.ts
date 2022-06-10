@@ -54,7 +54,7 @@ export class ValidationService {
                 return (this.checkAssignee(value));
             }
             case 'reporter': {
-                return (this.checkAssignee(value));
+                return (this.checkReporter(value));
             }
             case 'creationDate': {
                 return (this.checkCreationDate(value));
@@ -258,7 +258,20 @@ export class ValidationService {
             return (true);
         else {
             let errorType = this.componentName + "_VALIDATION_ASSIGNEE";
-            this.errorHandlerService.addError("VALIDATION_ASSIGNEE", "Assignee field is required")
+            this.errorHandlerService.addError(errorType, "Assignee field is required")
+            return (false);
+        }
+    }
+
+    async checkReporter(value: String) {
+        const control = new FormControl(value, Validators.required);
+        const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const result = regularExpression.test(String(value).toLowerCase());
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_REPORTER";
+            this.errorHandlerService.addError(errorType, "Reporter field is required")
             return (false);
         }
     }
@@ -298,9 +311,13 @@ export class ValidationService {
 
     async checkStartDate(value: String) {
         const control = new FormControl(value, Validators.required);
-        if (control.errors === null)
+        const regularExpression = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
             return (true);
         else {
+            console.log(this.componentName);
+
             let errorType = this.componentName + "_VALIDATION_STARTDATE";
             this.errorHandlerService.addError(errorType, "Start-Date field is required")
             return (false);
@@ -309,7 +326,9 @@ export class ValidationService {
 
     async checkEndDate(value: String) {
         const control = new FormControl(value, Validators.required);
-        if (control.errors === null)
+        const regularExpression = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
             return (true);
         else {
             let errorType = this.componentName + "_VALIDATION_ENDDATE";
