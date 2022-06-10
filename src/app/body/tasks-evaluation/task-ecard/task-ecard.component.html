@@ -9,7 +9,7 @@
         &nbsp;
         <span class="value" (click)="showEditTask(task.Id, 'Status')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Status'; else showStatusIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Status" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (blur)="clickOut()">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Status" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Status</option>
                     <ng-container *ngFor='let label of statusLabels'>
                         <option>{{ label }}</option>
@@ -26,7 +26,7 @@
         &nbsp;
         <span class="value" (click)="showEditTask(task.Id, 'Priority')" style="cursor: pointer;" >
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Priority';else showPriorityIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Priority" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (blur)="clickOut()">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Priority" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Priority</option>
                     <ng-container *ngFor='let label of priorityLabels'>
                         <option>{{ label }}</option>
@@ -43,7 +43,7 @@
         &nbsp;
         <span class="value" (click)="showEditTask(task.Id, 'Difficulty')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Difficulty'; else showDifficultyIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (blur)="clickOut()">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
                     <ng-container *ngFor='let label of difficultyLabels'>
                         <option>{{ label }}</option>
