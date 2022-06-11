@@ -66,6 +66,20 @@
     background-color: var(--primary-color);
     color: white;
 }
+.dropdown-menu {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
+    color: var(--button-text);
+    font-size: 12px;
+}
+
+.dropdown-item:hover {
+    color: var(--hover);
+    background-color: var(--button-hover-bg);
+    cursor: pointer;
+}
 input{
     background-color: var(--primary-bg);
     color: var(--text);
@@ -76,7 +90,7 @@ input:focus{
     color: var(--text);
     box-shadow: none;
     outline: none;
-},
+}
 .btn:focus{
     box-shadow: none;
     outline: 0 none;
