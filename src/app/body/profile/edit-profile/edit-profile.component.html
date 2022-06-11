@@ -14,9 +14,17 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content ">
-            <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel"><strong>Edit Profile</strong> </h2>
-                <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editProfileDone()" style="color: #6f7580;">close</span>
+            <div class="row px-3 pb-0 pt-2">
+                <div class="col-md-10 col-10">
+                    <h2>Edit Profile</h2>
+                </div>
+                <div class="col-md-1 col-2 text-right ">
+                    <span class="btn">
+                        <mat-icon  data-dismiss="modal"  fontSet="material-icons-outlined" class="align-middle "(click)="editProfileDone()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
+                </div>
             </div>
             <div class="modal-body">
                 <form *ngIf="!enableLoader">
@@ -64,7 +72,7 @@
                         <!-- <label for="recipient-website" class="col-form-label">Website</label> -->
                         <!-- <input type="text" class="form-control" id="recipient-website" [(ngModel)]="website" [ngModelOptions]="{standalone: true}"> -->
                     <!-- </div> -->
-                    <div class="my-1 form-group text-center success">
+                    <div class="my-1 form-group text-center success pt-1">
                         <button type="submit" class="btn btn-lg btn-block" id="button" (click)="editProfile()">Save Changes</button>
                     </div>
                 </form>
