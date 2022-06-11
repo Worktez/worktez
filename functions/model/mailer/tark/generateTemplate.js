@@ -79,7 +79,7 @@ exports.generateTemplate = function(mailType, valueArray) {
     if (templateName == "comment.html") {
       mailSubject = "New Comment on Worktez Task - " + valueArray.taskId;
       data = data.replace("$taskId$", valueArray.taskId);
-      data = data.replace("$link$", '"' + "https://worktez.com/TaskDetails/"+ valueArray.taskId + '"');
+      data = data.replace("$link$", "\"" + "https://worktez.com/TaskDetails/"+ valueArray.taskId + "\"");
       if (valueArray.watcher) {
         data = data.replace("$receipient$", valueArray.recipientName);
         if (valueArray.doer != valueArray.recipientName) {
@@ -98,11 +98,11 @@ exports.generateTemplate = function(mailType, valueArray) {
     } else if (templateName == "watcher.html" || templateName == "logTask.html") {
       data = data.replace("$recipientName$", valueArray.recipientName);
       data = data.replace("$taskId$", valueArray.taskId);
-      data = data.replace("$link$", '"' + "https://worktez.com/TaskDetails/"+ valueArray.taskId + '"');
+      data = data.replace("$link$", "\"" + "https://worktez.com/TaskDetails/"+ valueArray.taskId + "\"");
     } else if (templateName == "createTask.html") {
       mailSubject = "New Task created on Worktez";
       data = data.replace("$taskId$", valueArray.taskId);
-      data = data.replace("$link$", '"' + "https://worktez.com/TaskDetails/"+ valueArray.taskId + '"');
+      data = data.replace("$link$", "\"" + "https://worktez.com/TaskDetails/"+ valueArray.taskId + "\"");
       if (valueArray.watcher) {
         data = data.replace("$recipientName$", valueArray.recipientName);
         data = data.replace("$assignee$", valueArray.AssigneeEmail);
@@ -122,7 +122,7 @@ exports.generateTemplate = function(mailType, valueArray) {
       }
     } else if (templateName == "deleteTask.html" || templateName == "editTask.html" ) {
       data = data.replace("$taskId$", valueArray.taskId);
-      data = data.replace("$link$", '"' + "https://worktez.com/TaskDetails/"+ valueArray.taskId + '"');
+      data = data.replace("$link$", "\"" + "https://worktez.com/TaskDetails/"+ valueArray.taskId + "\"");
       if (valueArray.watcher) {
         data = data.replace("$recipientName$", valueArray.recipientName);
         if (valueArray.doer != valueArray.recipientName) {
