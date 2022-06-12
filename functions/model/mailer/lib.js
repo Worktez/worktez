@@ -121,3 +121,22 @@ exports.verificationMailer = function(mailType, teamName, teamManagerEmail, user
         sendMail(userEmail, message[0], message[1]);
     });
 };
+/**
+ * Description
+ * @param {any} mailType
+ * @param {any} userName
+ * @param {any} userEmail
+ * @param {any} userContact
+ * @param {any} userOrg
+ */
+ exports.demoRequestMailer = function(mailType, userName, userEmail, userContact, userOrg) {
+    const valueArray = [];
+    valueArray.push(userName);
+    valueArray.push(userEmail);
+    valueArray.push(userContact);
+    valueArray.push(userOrg);
+    generateTemplate(mailType, valueArray).then((data) => {
+        const message = data;
+        sendMail("admin@worktez.com", message[0], message[1]);
+    });
+};
