@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl, NgForm } from '@angular/forms';
+import { UntypedFormControl, NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -35,10 +35,10 @@ export class CreateFilterComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
 
-  assigneeName = new FormControl();
+  assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: Observable<string[]>;
 
-  reporterName = new FormControl();
+  reporterName = new UntypedFormControl();
   filteredOptionsReporter: Observable<string[]>;
 
   defaultProject: string
