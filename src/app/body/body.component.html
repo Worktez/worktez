@@ -35,9 +35,10 @@
         <app-quick-notes *ngIf="startService.userReady" ></app-quick-notes>
     </ng-container>
 
-    <ng-container class="float-left theme" *ngIf="useEmulator">
-        <div class="btn btn-rounded"  id="themeButton">
-        <app-theme [appTheme]="appTheme" [uid]="uid" ></app-theme></div>
+    <ng-container class="float-left theme" *ngIf="useEmulator && startService.showTeamsData">
+        <div id="themeButton">
+            <div class="switch">
+        <app-theme [appTheme]="appTheme" [uid]="uid" [showOnlyButton]="true"></app-theme></div></div>
     </ng-container>
 
     <ng-template #loader>
