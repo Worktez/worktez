@@ -12,17 +12,16 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #home {
-    background-color: var(--home-bg);
+    background-color: #ffffff;
 }
 
 #headingLine {
-    background-color: var(--home-bg);
     width: 80%;
     height: 85%;
-    color: #ffffff;
-    font-size: 40px;
-    font-family: var(--font);
-    line-height: 100%;
+    color: #4E4E4E;
+    font-size: 35px;
+    /* font-family: var(--font); */
+    line-height: 3rem;
 }
 
 #conceptArt {
@@ -30,78 +29,98 @@
 }
 
 .demoButton {
-    background-color: #ffffff;
-    color: #767373;
+    background-color: var(--primary-color);
+    color: #ffffff;
     display: block;
     border-radius:50px;
 	text-align:center;
     border: none !important;
 }
 
-#services {
+.boxShadow {
+    width: 12rem;
+    border-radius:20px;
+	text-align:center;
+    border: none !important;
+    box-shadow: 0px 7px 7px 1px #bfc1c8;
+}
+
+#services,
+#features {
     background-color: #ffffff;
 }
 
 .serviceButton {
-    background-color: var(--primary-color);
-    width: 120px;
-    color: #ffffff;
-    border-radius:5px;
 	text-align:center;
     border: none !important;
-    font-size: 12px;
+    font-size: 18px;
+}
+
+#gitText {
+    color: #E84D31;
+}
+
+#kanbanText {
+    color: #00867D;
+}
+
+#dashboardText {
+    color: #2979FF;
+}
+
+#qnText {
+    color: #FFA000;
+}
+
+#ttText {
+    color: #4042E2;
+}
+
+#milestionesText {
+    color: #087F23;
 }
 
 .icons {
-    width: 100px;
-    height: 100px;
+    width: 5rem;
+    height: 5rem;
 }
 
-#features{
-    background-image: url(../../../assets/background.svg);
-    background-repeat: no-repeat;
-    background-color: #ffffff;
-}
-
-#featureHeading {
+.featureHeading {
     font-size: 24px;
-    font-weight: bold;
-    padding-left: 2%;
 }
 
 #featureContent {
-    color: #373535;
-    font-style: italic;
-    width: 80%;
-    font-size: 20px;
-    line-height: 100%;
+    color: #767676;
+    font-size: 16px;
+    line-height: 1.5rem;
 }
 
 #howItWorks {
-    background-color: var(--primary-color);
-    height: 300px;
+    background-color: #4006BA;
+    height: 25rem;
 }
 
 #hiwContent {
     color: #ffffff;
+    font-size: 24px;
 }
 
-#testimonialBg {
+.getStarted {
     background-color: #ffffff;
+    color: #4006BA;
+    display: block;
+    border-radius:50px;
+	text-align:center;
+    border: none !important;
 }
 
 #testimonialHeading {
-    color: #2C2C2C;
-    font-size: 20px;
-    font-weight: 400;
-}
-
-#testimonialTag {
-    color: #2C2C2C;
+    color: #4006BA;
+    font-size: 28px;
 }
 
 #testimonial {
-    background-color: #11171B;
+    background-color: #ffffff;
 }
 
 #mover {
@@ -120,7 +139,7 @@
 .arrow {
     font-size: 34px;
     cursor: pointer;
-    color: #ffffff;
+    color: #4006BA;
 }
 
 .arrow:hover {
@@ -139,13 +158,17 @@
         display: none;
     }
 
+    .boxShadow {
+        width: 8rem;
+    }
+
     .icons {
         width: 50px;
         height: 50px;
     }
 
-    #serviceButton {
-        width: 80px;
+    .serviceButton {
+        font-size: 10px;
     }
 
     .art {
