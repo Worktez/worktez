@@ -50,7 +50,7 @@ exports.editTask = function(request, response) {
     const editedSprintName = createSprintName(editedSprintNumber);
     const type = request.body.data.Type;
     const reporter = request.body.data.Reporter;
-    const milestoneId = request.body.data.MilestoneId;
+    let milestoneId = request.body.data.MilestoneId;
     let result;
     let status = 200;
     let assigneeName = "";
@@ -195,6 +195,10 @@ exports.editTask = function(request, response) {
                 return Promise.resolve(storyPointSameSprintPromise);
             });
             promises.push(updateSprintPromise);
+        }
+
+        if(milestoneId == undefined) {
+            milestoneId=""
         }
 
         const updateTaskJson = {
