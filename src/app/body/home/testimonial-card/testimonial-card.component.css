@@ -1,10 +1,10 @@
 .card {
-    background-color: #20282E;
-    color: #ffffff;
+    background-color: #ffffff;
     border: none;
     width: 17rem;
-    height: 20rem;
+    height: 15rem;
     border-radius: 15px;
+    box-shadow: 0px 7px 7px 1px #bfc1c8;
 }
 
 .card-title {
@@ -12,7 +12,7 @@
 }
 
 .card-text {
-    color: #ffffff;
+    font-size: 12px;
 }
 
 .imageCheck {

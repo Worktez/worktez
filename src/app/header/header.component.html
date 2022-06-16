@@ -35,11 +35,11 @@
                                         corporate_fare
                                     </mat-icon>
                                     {{backendService.organizationDetails.OrganizationName}}
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                    <mat-icon *ngIf="(authService.myOrgCollectionsData | async)?.length > 1" fontSet="material-icons-outlined" class="align-middle pr-4">
                                         expand_more
                                     </mat-icon>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                                <div *ngIf="(authService.myOrgCollectionsData | async)?.length > 1" class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                                     <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
                                         <a class="dropdown-item"
                                             *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain"
@@ -129,37 +129,42 @@
         </nav>
     </ng-container>
     <ng-template #homePageHeader>
-        <nav id="navbar" class="navbar header">
-            <a class="navbar-brand" href="#">
-                <img id="brand_img" src="../../assets/worktezLogo.jpg" alt="Worktez">
-            </a>
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#services">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#aboutUs">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#features">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#testimonial">Testimonials</a>
-                </li>
-                <ng-container *ngIf="!(authService.organizationAvailable) && startService.userReady">
-                    <li class="nav-item px-1">
-                        <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
-                            <label>Create New Organization</label>
+        <div class="header pb-2">
+            <div class="row header">
+                <div class="col-md-2 col-1"></div>
+                <div class="col">
+                    <nav id="navbar" class="navbar">
+                        <a class="navbar-brand" href="#">
+                            <img id="brand_img" src="../../assets/worktezName.png" alt="Worktez">
                         </a>
-                    </li>
-                </ng-container>
-                <li class="nav-item">
-                    <app-login-handler></app-login-handler>
-                </li>
-            </ul>
-        </nav>
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#aboutUs">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#testimonial">Testimonials</a>
+                            </li>
+                            <ng-container *ngIf="!(authService.organizationAvailable) && startService.userReady">
+                                <li class="nav-item px-1">
+                                    <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
+                                        <label>Create New Organization</label>
+                                    </a>
+                                </li>
+                            </ng-container>
+                            <li class="nav-item">
+                                <app-login-handler></app-login-handler>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-2 col-1"></div>
+            </div>
+        </div>
     </ng-template>
 </div>
