@@ -34,9 +34,14 @@ exports.addMember = function(request, response) {
     const teamId = request.body.data.TeamId;
 
     let result;
-    let status = 200;
+    const status = 200;
 
-    if (add != "") {
+    const found= teamMembers.includes(add);
+    if (found) {
+        sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
+        result = { data: "Member already existing" };
+        console.log("Member already existing");
+    } else {
         teamMembers.push(add);
         const updateJson = {
             TeamMembers: teamMembers,
@@ -45,10 +50,10 @@ exports.addMember = function(request, response) {
         sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member added Successfully" };
         console.log("Member added Successfully");
-    } else {
+    } /* else {
         result = { data: "Member not found" };
         console.error("Error while adding member");
         status = 500;
     }
-    return response.status(status).send(result);
+    */return response.status(status).send(result);
 };
