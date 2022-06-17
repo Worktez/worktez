@@ -19,29 +19,23 @@
     cursor: default;
 } */
 
-#themeButton{
+#themeButton {
+    height: 50px;
+    width: 50px;
     background: var(--primary-color);
-    display: block;
-    border-radius: 50px;
+    border-radius: 50%;
+    display: inline-block;
     color: #ffffff !important;
-	text-align: center;
-	box-shadow: 0px 3px 45px var(--dropdown-hover);
+    text-align: center;
     position: fixed;
-    bottom: 80px;
-    left: 40px;
+    bottom: 50px;
+    left: 10px;
     border: none !important;
 }
 
-#themeButton:hover {
-    background-color: var(--primary-color);
-    display: block;
-    border-radius: 50px;
-	text-align: center;
-	box-shadow: 0px 3px 45px var(--dropdown-hover);
-    position: fixed;
-    bottom: 80px;
-    left: 40px;
-    border: none !important;
+.switch {
+    padding-top: 10px;
+    padding-left: 5px;
 }
 
 .btn {
@@ -66,4 +60,10 @@
         overflow-x: hidden;
         cursor: default;
     }
+}
+
+@media only screen and (max-width: 800px) {
+    #themeButton{
+        visibility: hidden;
+  }
 }
