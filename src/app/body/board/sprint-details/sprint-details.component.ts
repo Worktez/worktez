@@ -94,7 +94,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   showDeleted() {
-    this.currentSprint.emit(-2);
+    this.currentSprint.emit(this.currentSprintNumber);
   }
 
   async autoSchedule() {
