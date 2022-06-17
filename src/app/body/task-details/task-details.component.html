@@ -29,7 +29,7 @@
             <div class="col-md-6 part">
                 <div class="row">
                     <div class="col-md-6 col-6">
-                        <div class="row">
+                        <div class="row"*ngIf="activityDataReady">
                             <div class="status labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <app-get-icon [DisplayName]="task.Status" [Border]="true"></app-get-icon>
@@ -135,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" >
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <h5 id="label">{{task.Id}}</h5>
                 <h4 id="value">{{task.Title}}</h4>
@@ -154,7 +154,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
+                <div class="row mt-4"*ngIf="activityDataReady; else loader">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-4">
@@ -266,9 +266,11 @@
                                         </div>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngFor="let activity of activityData">
-                                    <app-activity [activity]="activity"></app-activity>
-                                </ng-container>
+                                <ng-container *ngIf="activityDataReady; else loader">
+                                    <ng-container  *ngFor="let activity of activityData" >
+                                        <app-activity [activity]="activity"></app-activity>
+                                    </ng-container>
+                                </ng-container>                            
                             </div>
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true" >
                                 <div class="form-row p-3">

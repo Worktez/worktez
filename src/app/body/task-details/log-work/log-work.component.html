@@ -13,28 +13,30 @@
 ***********************************************************/ -->
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="row modal-content">
-            <div class="modal-header pt-3">
-                <div class="col-1 col-md-1"></div>
-                <div class="col-8 col-md-8 pl-2">
-                    <h4 class="modal-title" id="ModalLabel">Log Work</h4>
+        <div class="modal-content">
+            <div class="modal-body pb-0">
+                <div class="row">
+                    <div class="col-md-10 col-10">
+                        <h2>Create New Task</h2>
+                    </div>
+                    <div class="col-md-2 col-2 text-right ">
+                        <span class="btn">
+                            <mat-icon data-dismiss="modal" fontSet="material-icons-outlined" class="align-middle "(click)="workDone()" title="Close">
+                                close
+                            </mat-icon>
+                        </span>
+                    </div>
                 </div>
-                <div class="col-2 col-md-2">
-                    <button type="button" class="close col-md" data-dismiss="modal" (click)="workDone()" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons">close</span>
-                    </button>
-                </div>
-                <div class="col-1 col-md-1"></div>
             </div>
-            <div class="container-fluid modal-body" id="logWorkPage">
+            <div class="container-fluid modal-body px-4" id="logWorkPage">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
-                    <div class="row pt-2 px-4">
+                    <div class="row pb-2">
                         <div class="col">
                             <label id="TaskID">Task ID:</label>
                             <span style="font-weight: bold;"> {{task.Id}}</span>
                         </div>
                     </div>
-                    <div class="row pt-2 px-4">
+                    <div class="row ">
                         <div class="col col-md">
                             <span id="logHead" class="form-inline">Log Hours:</span>
                             <input type="number" min="1" class="form-control" placeholder="Log Hours(Hr)" [(ngModel)]="logHours" [ngModelOptions]="{standalone: true}">
@@ -44,7 +46,7 @@
                             <input type="number" min="1" max="100" class="form-control" placeholder="Work Completed(%)" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
                         </div>
                     </div>
-                    <div class="row pt-2 px-4">
+                    <div class="row pt-2 ">
                         <div class="col col-md">
                             <span id="logHead">Task Status:</span>
                             <select class="custom-select form-control" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
@@ -54,19 +56,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row pt-2 px-4">
+                    <div class="row pt-2">
                         <div class="col col-md">
                             <label for="comment" class="form-label" id="logHead">Comment: </label>
                             <span id="logHead"> {{todayDate}} | {{time}}</span>
                         </div>
                     </div>
-                    <div class="row pt-2 px-4">
+                    <div class="row">
                         <div class="col col-md">
                             <textarea class="form-control md clr" rows="2" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></textarea>
                         </div>
                     </div>
                     <br>
-                    <div class="row pt-2 px-4">
+                    <div class="row">
                         <div class="col col-md">
                             <button class="btn form-control" type="submit" id="logWorkSubmit" [disabled]="enableLoader">Submit</button>
                         </div>
@@ -91,7 +93,7 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="workDone()" style="margin-left: 10px;">Close</button>
+                            <button class="btn btn-success" id="logWorkSubmit" type="button" data-dismiss="modal" (click)="workDone()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
