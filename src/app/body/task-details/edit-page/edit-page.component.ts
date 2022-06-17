@@ -139,6 +139,7 @@ export class EditPageComponent implements OnInit {
 
   async submit() {
     let data = [{ label: "priority", value: this.editTask.Priority },
+    { label: "title", value: this.editTask.Title},
     { label: "estimatedTime", value: this.editTask.EstimatedTime },
     { label: "difficulty", value: this.editTask.Difficulty },
     { label: "description", value: this.editTask.Description },
