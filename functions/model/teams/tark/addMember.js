@@ -57,5 +57,3 @@ exports.addMember = function(request, response) {
     }
     */return response.status(status).send(result);
 };
-
-
