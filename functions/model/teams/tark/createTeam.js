@@ -48,7 +48,6 @@ exports.createTeam = function(request, response) {
     const scope = ["Priority", "Difficulty", "Status", "Type"];
     let orgId;
     const teamStatus = 1;
-    console.log("data", request.body.data);
 
     let status = 200;
     let result = { data: "Error in Creating Team" };
