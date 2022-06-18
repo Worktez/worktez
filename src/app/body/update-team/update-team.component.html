@@ -147,6 +147,29 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-md-12 col">
+                                    <h5 class="modal-title">Setup Milestone Status labels*</h5>
+                                </div>
+                            </div>
+                            <div class="form-row justify-content-start pl-4">
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus1" name="MilestoneStatus" (change)="getLabels($event)" value="Ice Box" checked />
+                                    <label class="form-check-label" for="MilestoneStatus1">Ice Box</label>
+                                </div>
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus2" name="MilestoneStatus" (change)="getLabels($event)" value="Ready to start" checked />
+                                    <label class="form-check-label" for="MilestoneStatus2">Ready to start</label>
+                                </div>
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus3" name="MilestoneStatus" (change)="getLabels($event)" value="Under Progress" checked />
+                                    <label class="form-check-label" for="MilestoneStatus3">Under Progress</label>
+                                </div>
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus4" name="MilestoneStatus" (change)="getLabels($event)" value="Completed" checked />
+                                    <label class="form-check-label" for="MilestoneStatus4">Completed</label>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12 col">
                                     <h5 class="modal-title">Setup Difficulty labels*</h5>
                                 </div>
                             </div>

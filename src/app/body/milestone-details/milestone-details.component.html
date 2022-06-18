@@ -17,21 +17,51 @@
     <div class="col-8">
       <h2>Milestone Details</h2>
     </div>
-    
+
     <div class="col-3">
-      
-      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary"  (click)="activateAdd()" data-toggle="modal"
-        data-target="#exampleModalCenter">
-        Add Task
-      </button></div>
-      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewTask"  (click)="createTask()">
-        Create Task
-      </button></div>
+
+      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" (click)="activateAdd()"
+          data-toggle="modal" data-target="#exampleModalCenter">
+          Add Task
+        </button></div>
+      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#createNewTask" (click)="createTask()">
+          Create Task
+        </button></div>
     </div>
+
+    <!-- <div class="row pb-2">
+      <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone Status</span>
+        <select class="form-control form-control-sm" [(ngModel)]="milestoneStatus"
+          [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
+          <ng-container *ngFor='let label of milestoneStatusLabels'>
+            <option>{{ label }}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div> -->
     <div class="col-1">
       <span class="close material-icons float-right" (click)="backToMilestones()">close</span>
 
     </div>
+    <div class="row ml-3">
+      <span id="label">milestone Status</span>
+      <div class="col">
+      <select class="custom-select" [(ngModel)]="milestoneData.MilestoneStatus " [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="null" [disabled]="true" >Select Milestone Status</option>
+          <ng-container *ngFor="let item of milestoneStatusLabels">
+              <option>{{item}}</option>
+          </ng-container>
+      </select>
+      </div>
+      <div class="col">
+      <span type="button" id="button" class="btn btn-primary" (click)="submit()">
+        Submit
+      </span>
+    </div>
+  </div>
   </div>
   <hr>
 
@@ -40,11 +70,17 @@
       <div class="col-md-4">
         <div class="card p-4">
           <h1>{{milestoneData.Title}}</h1>
-
-          <h4 class="heading">
-            <span class="material-icons mr-1"
-              style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
-          </h4>
+          <div class="row pt-2">
+            <div class="col-md-5 col">
+              <h4 class="heading">
+                <span class="material-icons mr-1"
+                  style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
+              </h4>
+            </div>
+            <div class="col-md-5 col">
+                 <p><b>Milestone Status:</b>{{milestoneData.MilestoneStatus}}</p>
+            </div>
+          </div>
           <h4 class="mt-1 heading">
             <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestoneData.TeamId}}
           </h4>
