@@ -34,7 +34,6 @@ export class WhatsNewComponent implements OnInit {
               const endIndex = this.bodyArray.indexOf('## Release Credit:\r');     
               if(startIndex != -1){
                this.updatesArray=this.bodyArray.slice(startIndex,endIndex);
-               console.log(this.updatesArray);
                return this.updatesArray;
               }
 
