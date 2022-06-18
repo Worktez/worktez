@@ -12,39 +12,43 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 export class WhatsNewComponent implements OnInit {
   componentName: string = "WHATS NEW"
   versionName: string;
-  bodyArray: Array<string>
-  updatesArray: Array<string> 
+  bodyArray: string[] = []
+  updatesArray: string[] = []
   releaseData: GitData[]
 
   constructor(private httpService: HttpServiceService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-    try{
+
       this.httpService.getReleaseDetails().pipe(map(data => {
         const objData = data as GitData[];
-        this.releaseData = objData;
-        this.bodyArray=data[0]['body'].split("\n")
-        this.updatesArray=this.bodyArray.slice(this.bodyArray.indexOf('### Features:\r'),this.bodyArray.indexOf('## Release Credit:\r'))
-        const featIndex = this.updatesArray.indexOf('### Features:\r');
-        this.updatesArray[featIndex]= 'Features :';
-
-        const bugIndex = this.updatesArray.indexOf('### Bugs:\r');
-        this.updatesArray[bugIndex]= 'Bugs :';
-        this.versionName = this.bodyArray[2]
-        this.versionName=this.versionName.replace('**','')
-        this.versionName=this.versionName.replace('**','')
+        return objData;
       
-        this.updatesArray[0]=this.updatesArray[0].replace('###','')
-      })).subscribe(data => {
+      })).subscribe({
+        next:(data) => {
+          this.releaseData = data;
+          for(const key in this.releaseData) {
+            if (this.releaseData[key]) {
+              this.bodyArray = this.releaseData[key].body.split("\n");
+              const startIndex = this.bodyArray.indexOf('### Features:\r');
+              const endIndex = this.bodyArray.indexOf('## Release Credit:\r');     
+              if(startIndex != -1){
+               this.updatesArray=this.bodyArray.slice(startIndex,endIndex);
+               return this.updatesArray;
+              }
 
-      });
-    } catch (error) {
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
-    }  
+            }
+          }
+        },
+          error: (error) => {
  
+          },
+          complete: () => {
+           console.log("completed fetching data");
+          }
+       });
+             
 }
-
 
 
 }

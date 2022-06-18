@@ -35,8 +35,9 @@ body {
     --primary-border: 1px solid rgba(84, 84, 84, 0.17);
     --dropdown-hover: #DDDEF4;
     --hover: #5C60EC;
-    --box-shadow-top: 0px 0px 3px 0px #0C0F7112;
-    --box-shadow-bottom: 0px 0px 3px 0px #0C0F7112;
+    --box-shadow-top: 0px 0px 3px 0px #ebecefa5;
+    --box-shadow-bottom: 0px 0px 3px 0px #ebecefa5;
+    --box-shadow-color: #ebecefa5;
     --button-bg: none;
     --button-hover-bg: #fff;
     --progress-bg: #5C60EC;
