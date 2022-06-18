@@ -6,23 +6,13 @@
     </div>
     <div class="card-body whatsnew" style="overflow-y: scroll;">
      <ng-container *ngIf="releaseData" >
-         <ng-container *ngFor="let data of releaseData">
-            <div class="container">
+         <ng-container *ngFor="let data of updatesArray">
                 <div class="row">
                     <div class="col">
-                       <hr>
+                        {{data}}                       
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <h3 class="font-weight-bold text-muted" >&emsp;{{updatesArray[0]}}</h3>
-                        <ul><p *ngFor="let arr of updatesArray; let i = index">
-                            &emsp;{{updatesArray[i+1]}}
-                        </p></ul>
-                        
-                    </div>
-                </div>
-            </div>
+                <hr>
          </ng-container>
      </ng-container>
         <!-- <ng-container *ngIf="noData">
