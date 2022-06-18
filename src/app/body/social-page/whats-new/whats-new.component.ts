@@ -28,20 +28,34 @@ export class WhatsNewComponent implements OnInit {
         next:(data) => {
           this.releaseData = data;
           for(const key in this.releaseData) {
+            this.bodyArray = [];
             if (this.releaseData[key]) {
-              this.bodyArray = this.releaseData[key].body.split("\n");
-              const startIndex = this.bodyArray.indexOf('### Features:\r');
-              const endIndex = this.bodyArray.indexOf('## Release Credit:\r');     
-              if(startIndex != -1){
-               this.updatesArray=this.bodyArray.slice(startIndex,endIndex);
-               return this.updatesArray;
+              const stmp = this.releaseData[key].body.indexOf("### Features:");
+              if(stmp != -1) {
+                const etmp = this.releaseData[key].body.indexOf("## ", stmp+4);
+                var temp = this.releaseData[key].body.slice(stmp, etmp);
+                temp = temp.slice(temp.indexOf("\n")+1, temp.lastIndexOf("\r")-1);
+                this.bodyArray = temp.split("\n");
               }
-
+            }
+            if(this.bodyArray.length) {
+              for (const key in this.bodyArray) {
+                if (this.bodyArray[key].length) {
+                  const element = this.bodyArray[key];
+                  this.updatesArray.push(element.substring(3));
+                  if(this.updatesArray.length >= 20) {
+                    break;
+                  }
+                }
+              }
+            }
+            if(this.updatesArray.length >= 20) {
+              break;
             }
           }
         },
           error: (error) => {
- 
+            console.error(error);
           },
           complete: () => {
            console.log("completed fetching data");
