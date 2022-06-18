@@ -41,12 +41,19 @@ export class SprintDetailsComponent implements OnInit {
   completedSprintEnabled: boolean = false;
   showLoader:boolean = false
   sprintDataReady: boolean = false
+  activeSprintNumber: number;
 
   constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
       this.sprintDataReady = true;
+      if(this.startService.currentSprintNumber == 0){
+        this.activeSprintNumber = -1;
+      }
+      else{
+        this.activeSprintNumber = this.startService.currentSprintNumber;
+      }
     });
     this.filterSprintNumber=this.startService.teamCurrentSprintNumber ;
   }

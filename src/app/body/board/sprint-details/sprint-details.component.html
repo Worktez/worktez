@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="completionBtn" *ngIf="sprintData.SprintNumber === startService.currentSprintNumber && sprintData.Status === 'Completed'">
+      <div class="completionBtn" *ngIf="sprintData.SprintNumber === activeSprintNumber && sprintData.Status === 'Completed'">
         <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal"
           data-target="#createNewSprint">
          Start New Sprint
