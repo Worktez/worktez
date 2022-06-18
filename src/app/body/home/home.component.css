@@ -42,7 +42,7 @@
     border-radius:20px;
 	text-align:center;
     border: none !important;
-    box-shadow: 0px 7px 7px 1px #bfc1c8;
+    box-shadow: 0px 7px 6px 1px #ebecefa5;
 }
 
 #services,
@@ -97,7 +97,7 @@
 
 #howItWorks {
     background-color: #4006BA;
-    height: 25rem;
+    height: 100%;
 }
 
 #hiwContent {
@@ -129,12 +129,24 @@
 
 .showCase {
     background-color: transparent;
-    display: flex;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
 }
+
+.showCase::-webkit-scrollbar {
+    height: 6px;              
+}
+
+.showCase::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+}
+.showCase::-webkit-scrollbar-thumb:horizontal {
+    border-radius: 2rem;
+    background-color: #4006BA;
+    /* background-image: linear-gradient(to top, #ff0000 0%, #5C60EC 100%); */
+} 
 
 .arrow {
     font-size: 34px;

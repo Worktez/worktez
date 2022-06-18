@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     {
       Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
       Name: "Vivek Kumar",
-      Content: "Happy to use worktez, It was an amazing experience to use this tool, also it made our work very quick, transparent and powered."
+      Content: "Happy to use worktez, It made our work very quick, transparent and powered."
     },
     {
       Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
