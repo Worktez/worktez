@@ -197,10 +197,6 @@ exports.editTask = function(request, response) {
             promises.push(updateSprintPromise);
         }
 
-        if(milestoneId == undefined) {
-            milestoneId=""
-        }
-
         const updateTaskJson = {
             Title: title,
             Description: description,
