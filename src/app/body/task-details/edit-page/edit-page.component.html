@@ -70,7 +70,8 @@
                                 </div>
                                 <div class="col px-2 ml-auto px-2" id="creatorEditPageTask">
                                     <span id="label">Task Type</span>
-                                    <select class="form-select form-control  p-0" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Type">
+                                    <select class="form-select form-control form-control-sm p-0" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Type">
+                                        <option [ngValue]="null" [disabled]="true">Select Task Type</option>
                                         <ng-container *ngFor='let item of applicationSetting.type'>
                                             <option>{{ item }}</option>
                                         </ng-container>
