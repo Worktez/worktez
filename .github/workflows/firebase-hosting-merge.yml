@@ -17,7 +17,7 @@ jobs:
       - run: node createEnv.js
         env:
           FIREBASE_DETAILS: '${{ secrets.FIREBASE_DETAILS }}'
-      - run: npm install
+      - run: npm install --force
       - run: npm install -g @angular/cli
       - run: ng build --configuration production
       - run: cd functions/ && npm install
