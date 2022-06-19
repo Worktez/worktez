@@ -53,7 +53,9 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
                     valueArray.doer = customParameter;
                     valueArray.taskId = taskId;
                     valueArray.AssigneeEmail = taskData.Assignee;
-                    valueArray.recipientName = userData.displayName;
+                    if(userData){                   
+                        valueArray.recipientName = userData.displayName;
+                    }
                     let message = "";
                     if (element == taskData.Assignee) {
                         generateTemplate(mailType, valueArray).then((data) => {
