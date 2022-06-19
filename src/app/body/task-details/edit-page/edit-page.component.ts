@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl, NgForm } from '@angular/forms';
+import { UntypedFormControl, NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../../services/validation/validation.service';
@@ -31,10 +31,10 @@ import { Milestones } from 'src/app/Interface/MilestoneInterface';
 })
 export class EditPageComponent implements OnInit {
 
-  assigneeName = new FormControl();
+  assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: string[];
 
-  reporterName = new FormControl();
+  reporterName = new UntypedFormControl();
   filteredOptionsReporter: string[];
 
   componentName: string = "EDIT-TASK";
@@ -139,6 +139,7 @@ export class EditPageComponent implements OnInit {
 
   async submit() {
     let data = [{ label: "priority", value: this.editTask.Priority },
+    { label: "title", value: this.editTask.Title},
     { label: "estimatedTime", value: this.editTask.EstimatedTime },
     { label: "difficulty", value: this.editTask.Difficulty },
     { label: "description", value: this.editTask.Description },

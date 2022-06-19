@@ -28,6 +28,7 @@ const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrgan
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 const { createLabelProperties } = require("./createLabelProperties");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { getUser, updateUser } = require("../../users/lib")
 
 
 exports.createTeam = function(request, response) {
@@ -91,13 +92,23 @@ exports.createTeam = function(request, response) {
     const promise2 = getOrg(orgDomain).then((orgDoc) => {
         orgId = orgDoc.OrganizationId;
         setSprint(orgDomain, teamName, "Deleted", orgId, teamId, -2, "-");
-        setSprint(orgDomain, teamName, "Backlog", orgId, teamId, -1, "-");
+        setSprint(orgDomain, teamName, "Backlog", orgId, teamId, -1, "Completed");
     }).catch((error) => {
         status = 500;
         console.log("Error:", error);
     });
 
-    const Promises = [promise1, promise2];
+    const promise3 = getUser(uid, "").then((userDoc) => {
+        const userUpdateJson = {
+            SelectedTeamId: teamId,
+        };
+        updateUser(userUpdateJson, uid);
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
+    });
+
+    const Promises = [promise1, promise2, promise3];
     return Promise.all(Promises).then(() => {
             if (status != 500) {
                 result = { data: "Team Created Successfully" };

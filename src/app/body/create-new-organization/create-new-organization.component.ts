@@ -23,6 +23,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { app } from 'firebase-functions/v1';
+import { CookieService } from 'ngx-cookie-service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-create-new-organization',
@@ -48,7 +51,7 @@ export class CreateNewOrganizationComponent implements OnInit {
   fileName: string
   percentage: number = 0;
 
-  constructor(private navbarHandler: NavbarHandlerService, public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService) { }
+  constructor(private navbarHandler: NavbarHandlerService, public startService: StartServiceService,public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService, public cookieService: CookieService) { }
   ngOnInit(): void {
     this.orgAdmin = this.authService.getUserEmail();
     this.orgAdminUid = this.authService.getLoggedInUser()
@@ -84,6 +87,7 @@ export class CreateNewOrganizationComponent implements OnInit {
         this.orgId = result[2];
         this.uploadLogo();
         this.enableLoader = false;
+        this.startService.startApplication();
         this.router.navigate(["CreateNewTeam"]);
       },
       error: (error) => {

@@ -28,245 +28,296 @@
 </ng-container>
 <div id="homePage" data-spy="scroll" data-target="#navbar" data-offset="0">
     <section id="home" class="pb-2">
-        <div class="row py-5">
+        <div class="row py-3">
             <div class="col-md-2 col-1"></div>
-            <div class="col pt-4">
+            <div class="col pt-5">
                 <div id="showContent">
                     <h1 id="headingLine">
-                        A milestone project with the power of DevOps
+                        Milestone your project with the power of DevOps
                     </h1>
                     <br/>
-                    <button class="btn demoButton">Request a demo</button>
+                    <button class="btn demoButton" role="button" (click)="requestDemo()"
+                    data-toggle="modal" data-target="#requestDemo">Request a demo</button>
                 </div> 
             </div>
-            <div class="col">
-                <img id="conceptArt" src="../../../assets/Group 773.svg" alt="graphs" width="100%" height="100%"> 
+            <div class="col" id="conceptArt">
+                <img id="conceptArt" src="../../../assets/worktezArt.svg" alt="graphs" width="100%" height="100%"> 
             </div>
             <div class="col-md-2 col-1"></div>
         </div>
     </section>
-    <section id="services" class="p-5">
-        <div class="row align-middle pb-3">
-            <div class="col">
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-5 col-10 text-center">
-                        <img class="icons" class="icons" src="../../../assets/Group 765.svg" alt="graphs" >
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-6 col-10 text-center">
-                        <button class="btn serviceButton">Git Integration</button>
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-5 col-10 text-center">
-                        <img class="icons" src="../../../assets/Group 505.svg" alt="graphs" >
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-6 col-10 text-center">
-                        <button class="btn serviceButton">Kanban Board</button>
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-5 col-10 text-center">
-                        <img class="icons" src="../../../assets/Group 770.svg" alt="graphs" >
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-                <div class="row align-middle py-2">
-                    <div class="col"></div>
-                    <div class="col-6 text-center">
-                        <button class="btn serviceButton">Dashboard</button>
-                    </div>
-                    <div class="col"></div>
-                </div>
+    <section id="services" class="p-2">
+        <div class="row py-4">
+            <div class="col text-center" id="headingLine">
+                Why Worktez DevOps?
             </div>
         </div>
-        <div class="row align-middle pt-3">
+        <div class="row pt-2">
+            <div class="col-md-3 col-1"></div>
             <div class="col">
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-5 col-10 text-center">
-                        <img class="icons" src="../../../assets/Group 761.svg" alt="graphs" >
+                <div class="row align-middle py-3">
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/gitIconC.svg" alt="graphs" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="gitText">Git Integration</button>
+                                </div>
+                            </div>
+                        </span>
                     </div>
-                    <div class="col-md col-1"></div>
-                </div>
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-6 col-10 text-center">
-                        <button class="btn serviceButton">Quick Notes</button>
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/kanbanIcon.svg" alt="graphs" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="kanbanText">Kanban Board</button>
+                                </div>
+                            </div>
+                        </span>
                     </div>
-                    <div class="col-md col-1"></div>
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/dashboardIcon.svg" alt="graphs" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="dashboardText">Dashboard</button>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-3 col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-1"></div>
             <div class="col">
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-5 col-10 text-center">
-                        <img class="icons" src="../../../assets/Group.svg" alt="graphs" >
+                <div class="row align-middle py-3">
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/qnIcon.svg" alt="graphs" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="qnText">Quick Notes</button>
+                                </div>
+                            </div>
+                        </span>
                     </div>
-                    <div class="col-md col-1"></div>
-                </div>
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-6 col-10 text-center">
-                        <button class="btn serviceButton">Tech Tags</button>
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/ttIcon.svg" alt="graphs" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="ttText">Tech Tag</button>
+                                </div>
+                            </div>
+                        </span>
                     </div>
-                    <div class="col-md col-1"></div>
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/milestionesIcon.svg" alt="graphs" width="100%" height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="milestionesText">Milestones</button>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-5 col-10 text-center">
-                        <img class="icons" src="../../../assets/+.svg" alt="graphs" >
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-                <div class="row align-middle py-2">
-                    <div class="col-md col-1"></div>
-                    <div class="col-md-6 col-10 text-center">
-                        <button class="btn serviceButton">More+</button>
-                    </div>
-                    <div class="col-md col-1"></div>
-                </div>
-            </div>
+            <div class="col-md-3 col-1"></div>
         </div>
     </section>
-    <section id="features">
-        <div class="row p-5 align-middle">
-            <div class="col-1"></div>
-            <div class="col">
-                <img class="icons" class="icons" src="../../../assets/Group 765.svg" alt="graphs" >
-                <span id="featureHeading">Github Integration</span>
-                <p id="featureContent" class="py-2">Monitor end-to-end project development process from creating pull requests, raising issues to automating releases.</p>
+    <section id="features" class="py-4">
+        <img src="../../../assets/featureSep.svg" alt="graphs" width="100%">
+        <div class="row pt-5">
+            <div class="col text-center" id="headingLine">
+                Features & Services
             </div>
-            <div class="col art"></div>
-            <div class="col-1"></div>
         </div>
-        <div class="row p-5 align-middle">
-            <div class="col-1"></div>
-            <div class="col art">
-                <img id="conceptArt" src="../../../assets/Group 794.svg" alt="graphs" width="100%" height="100%">
-            </div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
             <div class="col">
-                <img class="icons" src="../../../assets/Group 505.svg" alt="graphs" >
-                <span id="featureHeading">Kanban Board</span>
-                <p id="featureContent" class="py-2">It is meant to define, improve and manage services delivering knowledgeable work.</p>
-            </div>
-            <div class="col-1"></div>
-        </div>
-        <div class="row p-5 align-middle">
-            <div class="col-1"></div>
-            <div class="col">
-                <img class="icons" src="../../../assets/Group 770.svg" alt="graphs" >
-                <span id="featureHeading">Dashboard</span>
-                <p id="featureContent" class="py-2">We aspire to assist you in visualising agile sprint based workflows via single page compositions helping you in refining efficiency and revamping constantly.</p>
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/gitIconC.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="gitText">Github Integration</span>
+                        <p id="featureContent" class="py-2">Collaborate for better code and keep up with pull requests in just a click.</p>
+                    </div>
+                </div>
             </div>
             <div class="col art">
-                <img id="conceptArt" src="../../../assets/Group 756.svg" alt="graphs" width="100%" height="100%">
+                <img id="conceptArt" src="../../../assets/gitFeatureIllustration.svg" alt="graphs" width="100%" height="100%">
             </div>
-            <div class="col-1"></div>
+            <div class="col-md-2 col-1"></div>
         </div>
-        <div class="row p-5 align-middle">
-            <div class="col-1"></div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
             <div class="col art">
-                <img id="conceptArt" src="../../../assets/Group 756.svg" alt="graphs" width="100%" height="100%">
+                <img id="conceptArt" src="../../../assets/kanbanBoardIllustrations.svg" alt="graphs" width="100%" height="100%">
             </div>
             <div class="col">
-                <img class="icons" src="../../../assets/Group.svg" alt="graphs" >
-                <span id="featureHeading">Tech Tag</span>
-                <p id="featureContent" class="py-2">Share your technical achievements and be a part of a community that is social yet job/work oriented.</p>
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/kanbanIcon.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="kanbanText">Kanban Board</span>
+                        <p id="featureContent" class="py-2">Adapt modern planning boards for genz team, with flexible kanban and backlog board, for powerful team interaction.</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-1"></div>
+            <div class="col-md-2 col-1"></div>
         </div>
-        <div class="row p-5 align-middle">
-            <div class="col-1"></div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
             <div class="col">
-                <img class="icons" src="../../../assets/Group 761.svg" alt="graphs" >
-                <span id="featureHeading">Quick Notes</span>
-                <p id="featureContent" class="py-2">Jot down fleeting ideas which are best for encapsulating minutes of meetings or quick call reminders.</p>
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/dashboardIcon.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="dashboardText">Dashboard</span>
+                        <p id="featureContent" class="py-2">Analyze and visualize the team reports, with right planning for your ideas for unparalled development workflow.</p>
+                    </div>
+                </div>
             </div>
-            <div class="col art"></div>
-            <div class="col-1"></div>
+            <div class="col art">
+                <img id="conceptArt" src="../../../assets/dashboardIllustration.svg" alt="graphs" width="100%" height="100%">
+            </div>
+            <div class="col-md-2 col-1"></div>
+        </div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
+            <div class="col art">
+                <img id="conceptArt" src="../../../assets/milestonesIllustration.svg" alt="graphs" width="100%" height="100%">
+            </div>
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/milestionesIcon.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="milestionesText">Milestones</span>
+                        <p id="featureContent" class="py-2">Give your ideas a milestone improving tracebility to bigger migrations and new feature implementations with your team.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-1"></div>
+        </div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/ttIcon.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="ttText">Tech Tag</span>
+                        <p id="featureContent" class="py-2">Work with genz community,  for more social and balanced work culture. Gelling with modern meme culture.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col art">
+                <img id="conceptArt" src="../../../assets/ttIllustration.svg" alt="graphs" width="100%" height="100%">
+            </div>
+            <div class="col-md-2 col-1"></div>
+        </div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
+            <div class="col art">
+                <img id="conceptArt" src="../../../assets/qnIllustration.svg" alt="graphs" width="100%" height="100%">
+            </div>
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/qnIcon.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="qnText">Quick Notes</span>
+                        <p id="featureContent" class="py-2">Catpture important key points over srum meets, calls and progresively take faster decisions for healthy code.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-1"></div>
         </div>
     </section>
     <section id="howItWorks">
         <div class="row p-5">
-            <div class="col">
+            <div class="col d-flex justify-content-center">
                 <span id="hiwContent">
                     Ready to transform how you work?
                 </span>
             </div>
         </div>
-    </section>
-    <section id="testimonialBg">
-        <div class="row p-5">
-            <div class="col text-center">
-                <span id="testimonialHeading">
-                    Why businesses love <img class="icons" src="../../../assets/logo.svg" alt="graphs" >
-                </span>
-                <p id="testimonialTag" class="pt-4">Statements from our past customer, describing how our product helped them</p>
+        <div class="row align-items-center">
+            <div class="col d-flex justify-content-center">
+                <img class="conceptArt" src="../../../assets/workflowGraph.svg" alt="graphs" width="50%" height="50%">
+            </div>
+        </div>
+        <div class="row py-4">
+            <div class="col d-flex justify-content-center">
+                <button class="btn getStarted">Get Started</button>
             </div>
         </div>
     </section>
-    <section id="testimonial">
-        <div class="row p-5 align-middle align-items-center">
-            <div class="col-1"></div>
-            <div class="col-1 text-center d-flex justify-content-center">
+    <section id="testimonial" class="py-4">
+        <div class="row p-5">
+            <div class="col text-center">
+                <span id="testimonialHeading">
+                    Why businesses love worktez?
+                </span>
+            </div>
+        </div>
+        <div class="row px-md-5 px-3 py-3 align-middle align-items-center">
+            <div class="col-md-1 col-0"></div>
+            <div class="col-md-1 col-1 text-center d-flex justify-content-center">
                 <span class="mover" (click)="scrollLeft()">
                     <mat-icon fontSet="material-icons-outlined" class="arrow align-middle">
                         arrow_back_ios
                     </mat-icon>
                 </span>
             </div>
-            <div class="col-8 showCase py-4" #imageContainer>
+            <div class="col-md-8 col-10 showCase py-4 d-flex" #imageContainer>
                 <ng-container *ngFor="let item of testimonials">
                     <app-testimonial-card [image]="item.Image" [name]="item.Name" [content]="item.Content"></app-testimonial-card>
                 </ng-container>
             </div>
-            <div class="col-1 text-center d-flex justify-content-center">
+            <div class="col-md-1 col-1 text-center d-flex justify-content-center">
                 <span class="mover rounded" (click)="scrollRight()">
                     <mat-icon fontSet="material-icons-outlined" class="arrow align-middle" (click)="scrollRight()">
                         arrow_forward_ios
                     </mat-icon>
                 </span>
             </div>
-            <div class="col-1"></div>
+            <div class="col-md-1 col-0"></div>
         </div>
     </section>
-    <!-- <section id="updates">
-        <div class="row" style="padding: 3% 20%;">
-            <div class="col-md-8 col-8">
-                <div class="updatesText">
-                    <h1 style="font-weight: bold;">Keep yourself updated.</h1>
-                    <p>We'll keep you posted about all our upgrades!</p>
-                    <p>Go afar with newsletter.</p>
-                </div >
-            </div>
-            <div class="col-md-3 col-3">
-                <div class="updatesForm" style="white-space:nowrap! important;" >
-                    <input type="text" placeholder="Enter your email address " style="size:25px; min-width: 250px; white-space:nowrap;">    
-                    <button class="btn" style="border-radius: 90%; background-color: white">
-                        <span class="material-icons">arrow_forward</span>
-                    </button>        
-                </div>             
-            </div>
-        </div>
-        <div class="col-md-1 col-1"></div>
-    </section> -->
 </div>

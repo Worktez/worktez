@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Location } from '@angular/common';
 import { Label, Team } from 'src/app/Interface/TeamInterface';
@@ -46,7 +46,7 @@ export class TeamDetailsComponent implements OnInit {
   showLoader: boolean = false;
   enableLoader: boolean = false;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -184,7 +184,7 @@ export class TeamDetailsComponent implements OnInit {
   });
   }
   close () {
-    this.location.back()
+    this.router.navigate(['ViewOrganizationDetails']);
   }
 
 }

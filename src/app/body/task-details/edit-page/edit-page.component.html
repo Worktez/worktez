@@ -70,12 +70,12 @@
                                 </div>
                                 <div class="col px-2 ml-auto px-2" id="creatorEditPageTask">
                                     <span id="label">Task Type</span>
-                                    <input type="text" class="form-control" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" list="typeSuggestion">
-                                    <datalist id="typeSuggestion">
+                                    <select class="form-select form-control form-control-sm p-0" [(ngModel)]="editTask.Type" [ngModelOptions]="{standalone: true}" placeholder="Enter Task Type">
+                                        <option [ngValue]="null" [disabled]="true">Select Task Type</option>
                                         <ng-container *ngFor='let item of applicationSetting.type'>
                                             <option>{{ item }}</option>
                                         </ng-container>
-                                    </datalist>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row pt-3">

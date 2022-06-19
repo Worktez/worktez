@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl, NgForm } from '@angular/forms';
+import { UntypedFormControl, NgForm } from '@angular/forms';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ToolsService } from '../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -35,10 +35,10 @@ declare var jQuery:any;
 })
 export class CreateNewTaskComponent implements OnInit {
 
-  assigneeName = new FormControl();
+  assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: Observable<string[]>;
 
-  reporterName = new FormControl();
+  reporterName = new UntypedFormControl();
   filteredOptionsReporter: Observable<string[]>;
 
   @ViewChild('form') form: NgForm;
