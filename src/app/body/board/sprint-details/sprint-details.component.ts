@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -123,5 +123,9 @@ export class SprintDetailsComponent implements OnInit {
         },
         complete: () => console.info('Successful')
     });
+  }
+  @ViewChild('closeModal') private closeModal: ElementRef;
+  public hideModel() {
+        this.closeModal.nativeElement.click();      
   }
 }
