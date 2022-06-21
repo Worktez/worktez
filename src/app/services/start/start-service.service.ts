@@ -155,6 +155,7 @@ export class StartServiceService {
         });
       } else {
         this.teamIdExists = false;
+        this.applicationDataState.next(true);
         console.log("TeamId doesn't exists");
       }
     }

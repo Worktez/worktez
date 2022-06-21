@@ -14,12 +14,17 @@
 .header {
     background-color: var(--header-bg);
     color: var(--text);
-    box-shadow: 1px 1px 4px 1px #bfc1c8;
+    box-shadow: 1px 1px 4px 1px var(--box-shadow-color);
 }
 
-.headerBox {
-    box-shadow: var(--box-shadow-bottom);
+.sHeader {
+    background-color: var(--header-bg);
+    /* box-shadow: 1px 1px 4px 1px #ebecefa5; */
 }
+
+/* .headerBox {
+    box-shadow: var(--box-shadow-bottom);
+} */
 
 .collapse {
     background-color: var(--header-bg);

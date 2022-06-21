@@ -53,7 +53,9 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
                     valueArray.doer = customParameter;
                     valueArray.taskId = taskId;
                     valueArray.AssigneeEmail = taskData.Assignee;
-                    valueArray.recipientName = userData.displayName;
+                    if(userData){                   
+                        valueArray.recipientName = userData.displayName;
+                    }
                     let message = "";
                     if (element == taskData.Assignee) {
                         generateTemplate(mailType, valueArray).then((data) => {
@@ -119,5 +121,24 @@ exports.verificationMailer = function(mailType, teamName, teamManagerEmail, user
     generateTemplate(mailType, valueArray).then((data) => {
         const message = data;
         sendMail(userEmail, message[0], message[1]);
+    });
+};
+/**
+ * Description
+ * @param {any} mailType
+ * @param {any} userName
+ * @param {any} userEmail
+ * @param {any} userContact
+ * @param {any} userOrg
+ */
+ exports.demoRequestMailer = function(mailType, userName, userEmail, userContact, userOrg) {
+    const valueArray = [];
+    valueArray.push(userName);
+    valueArray.push(userEmail);
+    valueArray.push(userContact);
+    valueArray.push(userOrg);
+    generateTemplate(mailType, valueArray).then((data) => {
+        const message = data;
+        sendMail("admin@worktez.com", message[0], message[1]);
     });
 };

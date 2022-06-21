@@ -1,6 +1,6 @@
 {
   "name": "worktrolly",
-  "version": "3.0",
+  "version": "4.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -49,9 +49,9 @@
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "@types/xml2js": "^0.4.8",
-    "codelyzer": "^6.0.0",
+    "codelyzer": "^0.0.28",
     "eslint": "~8.3.0",
-    "firebase-tools": "^10.2.2",
+    "firebase-tools": "^11.1.0",
     "fuzzy": "^0.1.3",
     "inquirer": "^8.2.0",
     "inquirer-autocomplete-prompt": "^1.0.1",

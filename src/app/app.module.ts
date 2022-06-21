@@ -166,6 +166,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milestone.component';
 import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
 import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
+import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
 
 @NgModule({
   declarations: [
@@ -297,6 +298,7 @@ import { AddTaskComponent } from './body/milestone-details/add-task/add-task.com
     AddMilestoneComponent,
     MilestoneCardComponent,
     AddTaskComponent,
+    RequestADemoComponent,
   ],
   imports: [
     BrowserModule,

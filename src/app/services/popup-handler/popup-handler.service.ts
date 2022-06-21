@@ -31,7 +31,7 @@ export class PopupHandlerService {
   milestoneId:string = ""
   addMilestoneActive:boolean = true;
   addTaskActive:boolean = true;
-  
+  requestDemoEnabled:boolean = false;
   constructor() { }
 
   resetPopUps() {

@@ -54,7 +54,7 @@
             <app-loader></app-loader>
         </ng-template>
     </div>
-    <div class="row px-4" *ngIf="startService.showTeams">
+    <div class="row px-4" *ngIf="startService.showTeams && startService.currentSprintNumber != 0">
         <ng-container *ngIf="showContent">
             <div class="col-md-6 col-12 pb-2">
                 <ng-container *ngIf="sprintNotExist == false">

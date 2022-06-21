@@ -25,6 +25,7 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { CookieService } from 'ngx-cookie-service';
 
 declare var jQuery:any;
 
@@ -50,12 +51,12 @@ export class CreateNewTeamComponent implements OnInit {
   teamMembers: string[] = [];
   enableLoader: boolean = false;
 
-  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarService.resetNavbar();
     this.navbarService.addToNavbar(this.componentName);
-
+    this.teamAdmin = this.authService.getUserEmail(); 
     if(!this.startService.teamIdExists && this.startService.userAppSettingsReady) {
       this.loadData();
     } else {
@@ -76,11 +77,12 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   loadData() {
-    this.appKey = this.authService.getAppKey();
-    this.backendService.getOrgDetails(this.appKey);
-    this.organizationDomain = this.backendService.getOrganizationDomain();
-    this.teamAdmin = this.authService.getUserEmail();
-    this.uid = this.authService.getLoggedInUser();
+    this.appKey = this.cookieService.get('userSelectedOrgAppKey');
+    this.backendService.getOrgDetails(this.appKey).subscribe(()=>{
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+      this.teamAdmin = this.authService.getUserEmail();
+      this.uid = this.authService.getLoggedInUser();
+    });
   }
 
   handleIdInput() {
@@ -150,6 +152,7 @@ export class CreateNewTeamComponent implements OnInit {
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
       next: (data) => {
       this.enableLoader = false;
+      this.startService.startApplication();
       this.router.navigate(['TeamDetails',this.teamId]);
       console.log("Successful created new team");
       },
@@ -158,7 +161,10 @@ export class CreateNewTeamComponent implements OnInit {
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.error(error);
       },
-      complete: () => console.info('Successful ')
+      complete: () =>{ 
+        console.info('Successful ');
+        this.cookieService.set('userSelectedTeamId', this.teamId);
+    }
     });
   }
 
