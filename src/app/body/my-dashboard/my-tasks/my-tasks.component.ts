@@ -13,6 +13,7 @@
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { DataTableService } from 'src/app/services/dataTable/data-table.service';
 
 @Component({
@@ -32,14 +33,14 @@ export class MyTasksComponent implements OnInit {
 
   displayColoumns = [];
 
-  constructor(private dataTableService: DataTableService) { }
+  constructor(private dataTableService: DataTableService, public applicationSettingService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.showLoader = true;
     this.dataTableService.readTaskDataForDashboard().subscribe((data) => {
       if(data.length) {
         this.tasksData = data;
-        this.displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
+        this.displayColoumns = ['Status', 'Priority', 'SprintNumber', 'Id', 'Title', 'WorkDone'];
         this.showLoader = false;
         this.noData = false;
       } else {

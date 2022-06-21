@@ -38,15 +38,22 @@ export class SprintDetailsComponent implements OnInit {
 
   componentName: string = "SPRINT-DETAILS"
   filterSprintNumber: number;
-
+  completedSprintEnabled: boolean = false;
   showLoader:boolean = false
   sprintDataReady: boolean = false
+  activeSprintNumber: number;
 
   constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
       this.sprintDataReady = true;
+      if(this.startService.currentSprintNumber == 0){
+        this.activeSprintNumber = -1;
+      }
+      else{
+        this.activeSprintNumber = this.startService.currentSprintNumber;
+      }
     });
     this.filterSprintNumber=this.startService.teamCurrentSprintNumber ;
   }
@@ -81,12 +88,16 @@ export class SprintDetailsComponent implements OnInit {
     this.popupHandlerService.createNewSprintEnabled= true;
   }
 
+  setSprintToComplete(){
+    this.completedSprintEnabled=true;
+  }
+
   showTasks() {
     this.router.navigate(['/Tasks', this.sprintData.TeamId, this.currentSprintName])
   }
 
   ActiveSprint() {
-    this.currentSprint.emit(this.currentSprintNumber);
+    this.currentSprint.emit(this.startService.currentSprintNumber);
   }
 
   showBacklog() {

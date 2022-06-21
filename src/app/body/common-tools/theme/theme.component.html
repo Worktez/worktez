@@ -13,16 +13,17 @@
 ***********************************************************/-->
 <div class="custom-control custom-switch custom-switch-md" *ngIf="presentThemeReady">
   <div class="row">
-    <div class="col-3 pl-5">
+    <div *ngIf="!showOnlyButton" class="col-3">
       <span class="material-icons">dark_mode</span>
     </div>
-    <div class="col">
+    <div *ngIf="!showOnlyButton" class="col">
       <h4>Dark Mode</h4>
     </div>
     <div class="col-2">
-      <input type="checkbox" [disabled]="showloader" class="custom-control-input" id="customSwitches" [(ngModel)]="enableDarkTheme" (click)="changeThemeSwitch()">
-  <label class="custom-control-label" for="customSwitches" style="font-weight: bold;">
-  </label>
+      <input type="checkbox" [disabled]="showloader" class="custom-control-input" id="customSwitches"
+        [(ngModel)]="enableDarkTheme" (click)="changeThemeSwitch()">
+      <label class="custom-control-label" for="customSwitches" style="font-weight: bold;">
+      </label>
     </div>
   </div>
 </div>

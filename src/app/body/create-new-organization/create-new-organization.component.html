@@ -11,65 +11,65 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container p-4">
-    <div class="row align-items-center justify-content-center m-0 p-2">
+<div class="container mt-4">
+    <div class="row p-3">
         <div class="col-md-11 col-8">
-            <h3 class="font-weight-bold">Create New Organization</h3>
+            <h3>Create New Organization</h3>
         </div>
-        <div class="col-md-1 col-4">
-            <div class="pl-lg-0" id="navbarTexts">
-                <ul class="nav navbar-nav ml-auto align-items-center">
-                    <li class=" active py-1 justify-content-between">
-                        <span type="button" class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="close" (click)="close()">close</span>
-                    </li>
-                </ul>
-            </div>
+        <div class="col-md-1 col-4 text-right">
+            <span class="btn">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal"
+                  data-target="#updateTeam" (click)="close()" title="manage accounts" data-bs-toggle="tooltip">
+                  close
+                </mat-icon>
+            </span>
         </div>
     </div>
-    <form id="form" class="p-md-5 p-4 align-items-center justify-content-center">
-        <ng-container>
-            <div class="form-group row">
-                <div class="col-md-8">
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Organization Name*" [(ngModel)]="orgName" [ngModelOptions]="{standalone: true}">
-                        </div>
-                    </div>
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Organization Domain*" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
-                        </div>
-                    </div>
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Organization Email*" [(ngModel)]="orgEmail" [ngModelOptions]="{standalone: true}">
-                        </div>
+    <form id="form">
+        <div class="form-group row px-2">
+            <div class="col-md-8 col">
+                <div class="form-group row pt-2">
+                    <div class="col-sm-8">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Name</span>
+                        <input type="text" class="form-control" placeholder="Organization Name*" [(ngModel)]="orgName" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group col p-2" id="uploadButtonContainer">
-                        <ng-container *ngIf="!logoUploaded; else uploadedImg">
-                            <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>
-                        </ng-container>
-                        <ng-template #uploadedImg>
-                            <span id="files" class="material-icons">image</span>
-                            <label>{{fileName}}</label>
-                            <span class="material-icons menu" id="delete" (click)="delete()">delete</span>
-                        </ng-template>
+                <div class="form-group row pt-2">
+                    <div class="col-sm-8">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Domain</span>
+                        <input type="text" class="form-control" placeholder="Organization Domain*" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <div class="col-sm-8">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Email</span>
+                        <input type="text" class="form-control" placeholder="Organization Email*" [(ngModel)]="orgEmail" [ngModelOptions]="{standalone: true}">
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-10">
-                    <textarea type="text" class="form-control" placeholder="Enter Organization Description*" rows="3" [(ngModel)]="orgDescription" [ngModelOptions]="{standalone: true}"></textarea>
+            <app-loader *ngIf="enableLoader"></app-loader>
+            <div class="col-md-2 col">
+                <div class="form-group col p-2" id="uploadButtonContainer">
+                    <ng-container *ngIf="!logoUploaded; else uploadedImg">
+                        <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>
+                    </ng-container>
+                    <ng-template #uploadedImg>
+                        <img src="{{orgLogoURL}}" alt="" srcset="" width="50" height="50">
+                    </ng-template>
                 </div>
             </div>
-            <div class="form-group row align-items-center justify-content-center">
-                <div class="offset-6 col text-right">
-                    <button type="submit" class="btn" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit</button>
-                </div>
+        </div>
+        <div class="form-group row px-2">
+            <div class="col">
+                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Description</span>
+                <textarea type="text" class="form-control" placeholder="Enter Organization Description*" rows="3" [(ngModel)]="orgDescription" [ngModelOptions]="{standalone: true}"></textarea>
             </div>
-        </ng-container>
-        <app-loader *ngIf="enableLoader"></app-loader>
+        </div>
+        <div class="form-group row p-2">
+            <div class="col text-right">
+                <button type="submit" class="btn" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit
+                </button>
+            </div>
+        </div>
     </form>
 </div>

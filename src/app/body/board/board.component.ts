@@ -21,6 +21,7 @@ import { FeatureCardComponent } from './feature-card/feature-card.component';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-board',
@@ -44,7 +45,7 @@ export class BoardComponent implements OnInit {
   SDate: any;
   currentSprintNumber: number;
 
-  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -83,21 +84,22 @@ export class BoardComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: (() => {
+          this.cookieService.set("userSelectedTeamId", teamId);
+          console.info('Successful updated Selected Team in db');
+        })
     });
   }
 
   readSprintData() {
     this.showContent = false;
     if (this.startService.teamCurrentSprintNumber != 0) {
-      console.log("checking 0");
       if(this.startService.selectedTeamId == this.applicationSettingsService.team.TeamId) {
         this.applicationSettingsService.getSprintsDetails(this.startService.teamCurrentSprintNumber).subscribe(sprints => {
         this.child.forEach(child => {
           child.highlightSelectedTeam(this.startService.selectedTeamId);
         });
         if (sprints) {
-          console.log("checking 1");
           this.sprintData = sprints;
           this.currentSprintNumber=this.sprintData.SprintNumber;
           
@@ -128,7 +130,6 @@ export class BoardComponent implements OnInit {
         }
       });
     } else {
-      console.log("checking 2");
       this.startService.readApplicationData();
       this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data) {

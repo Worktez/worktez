@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Location } from '@angular/common';
 import { Label, Team } from 'src/app/Interface/TeamInterface';
@@ -32,7 +32,10 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 export class TeamDetailsComponent implements OnInit {
   ComponentName: string;
 
+  organizationDomain: string
   teamId: string;
+  teamName: string;
+  teamMembers: string[] = [];
   teamDataReady: boolean = false;
   componentName:string ="TEAM-DETAILS";
   team: Team;
@@ -41,8 +44,9 @@ export class TeamDetailsComponent implements OnInit {
   addMemberEnabled: boolean = false;
 
   showLoader: boolean = false;
+  enableLoader: boolean = false;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -103,6 +107,36 @@ export class TeamDetailsComponent implements OnInit {
     this.addMemberEnabled = false;
   }
 
+  async removeMemberDB(remove: string) {
+    this.enableLoader = true;
+    const callable = this.functions.httpsCallable('teams/removeMember');
+    if (this.organizationDomain == undefined) {
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+    }
+    
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamMembers: this.team.TeamMembers, Remove: remove}).subscribe({
+      next: (data) => {
+        console.log(remove);
+        this.enableLoader = false;
+        const index = this.teamMembers.indexOf(remove);
+        if (index != -1) {
+          this.teamMembers.splice(index, 1);
+          console.log("Successfully removed member");
+        } else {
+          console.log("Error- Cannot remove member. Member not found");
+        }
+        this.getTeamData();
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        
+      },
+      complete: () => console.info('Successful ')
+  });
+  }
+
   teamUpdated(data: { completed: boolean }) {
     this.updateTeamEnabled = false;
   }
@@ -150,7 +184,7 @@ export class TeamDetailsComponent implements OnInit {
   });
   }
   close () {
-    this.location.back()
+    this.router.navigate(['ViewOrganizationDetails']);
   }
 
 }

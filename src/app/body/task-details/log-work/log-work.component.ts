@@ -61,6 +61,11 @@ export class LogWorkComponent implements OnInit {
     { label: "logHours", value: this.logHours },
     { label: "workCompleted", value: this.logWorkDone },
     { label: "comment", value: this.logWorkComment }];
+    
+    if(this.logWorkStatus=="Completed"){
+      this.logWorkDone=100;
+    }
+    
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });

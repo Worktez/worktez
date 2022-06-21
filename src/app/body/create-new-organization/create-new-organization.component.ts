@@ -22,6 +22,10 @@ import { Location } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { app } from 'firebase-functions/v1';
+import { CookieService } from 'ngx-cookie-service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-create-new-organization',
@@ -47,10 +51,12 @@ export class CreateNewOrganizationComponent implements OnInit {
   fileName: string
   percentage: number = 0;
 
-  constructor(public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService) { }
+  constructor(private navbarHandler: NavbarHandlerService, public startService: StartServiceService,public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService, public cookieService: CookieService) { }
   ngOnInit(): void {
     this.orgAdmin = this.authService.getUserEmail();
     this.orgAdminUid = this.authService.getLoggedInUser()
+    this.navbarHandler.resetNavbar()
+    this.navbarHandler.addToNavbar(this.componentName);
    }
 
   async submit() {
@@ -66,7 +72,6 @@ export class CreateNewOrganizationComponent implements OnInit {
       return res;
     });
     if (condition && this.logoUploaded) {
-      console.log("Inputs are valid");
       this.createNewOrganization();
     }
     else {
@@ -82,6 +87,7 @@ export class CreateNewOrganizationComponent implements OnInit {
         this.orgId = result[2];
         this.uploadLogo();
         this.enableLoader = false;
+        this.startService.startApplication();
         this.router.navigate(["CreateNewTeam"]);
       },
       error: (error) => {
@@ -91,10 +97,10 @@ export class CreateNewOrganizationComponent implements OnInit {
     });
   }
 
-  uploadedLogo(data: { completed: boolean, logoFile: FileUpload }) {
+  uploadedLogo(data: { completed: boolean, logoFile: FileUpload, photoUrl: string }) {
     this.logoUploaded = data.completed;
     this.orgLogo = data.logoFile;
-    this.orgLogoURL = data.logoFile.url;
+    this.orgLogoURL = data.photoUrl;
     this.fileName = data.logoFile.file.name;
   }
 

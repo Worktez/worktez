@@ -10,9 +10,10 @@ import { defaultUser, User } from 'src/app/Interface/UserInterface';
   styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent implements OnInit {
+  @Input("comment") comment: Comment;
 
   user: User;
-  @Input("comment") comment: Comment;
+  commentDataReady: boolean = false;
 
   constructor(public authService: AuthService, private userService: UserServiceService) { }
 
@@ -21,14 +22,13 @@ export class CommentsComponent implements OnInit {
   }
 
   getCreatorDetails(){
-    console.log(this.comment.Uid)
-    if(this.comment.Uid=="defaultUser"){
+    if(this.comment.Uid=="defaultUser") {
       this.user = defaultUser;
-    }else {
+    } else {
       this.user = this.userService.users.filter((obj) => {
-      return obj.uid == this.comment.Uid
-    })[0];
+        return obj.uid == this.comment.Uid
+      })[0];
+    }
+    this.commentDataReady = true;
   }
- }
-
 }

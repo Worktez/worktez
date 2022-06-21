@@ -17,15 +17,19 @@
             <div class="col-10">
                 <h2>Task Details</h2>
             </div>
-            <div class="col-2">
-                <span class="btn material-icons float-right" (click)="backToTasks()">close</span>
+            <div class="col-2 text-right">
+                <span class="btn" (click)="backToTasks()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        close
+                    </mat-icon>
+                </span>
             </div>
         </div>
         <div class="row pt-1">
             <div class="col-md-6 part">
                 <div class="row">
-                    <div class="col-md-8 col-9">
-                        <div class="row">
+                    <div class="col-md-6 col-6">
+                        <div class="row"*ngIf="activityDataReady">
                             <div class="status labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
                                 <app-get-icon [DisplayName]="task.Status" [Border]="true"></app-get-icon>
@@ -40,66 +44,65 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-3">
-                        <div class="row float-right">
-                            <!-- <a data-bs-toggle="tooltip" data-bs-placement="top" class="pt-3" data-toggle="modal"
-                                data-target="#gitPrModel" (click)="linkPr()" title="Add Github PR"
-                                data-bs-toggle="tooltip">
-                                <img src="../../../assets/git.png" height="35" class="rounded-circle" width="35"
-                                    alt="user">
-                            </a> -->
-                            <div class="pt-2 pr-2">
-                                    <img  src="../../../assets/git.png" *ngIf="!prLinked" height="35" class="rounded-circle" width="35"
-                                    alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel"
-                                    (click)="linkPr()">
-                                    <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status p-2" data-toggle="tooltip" data-placement="top" title="view PR">
-                                       PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span></a>
-                            </div>
-                            <div class="logWork pt-3 pr-2"
-                                *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
-                                <span class="material-icons" data-toggle="modal" title="Log Work" data-target="#Modal"
-                                    (click)="logWorkPage()">post_add</span>
-                            </div>
-                            <div class="menu pt-3">
+                    <div class="col-md-6 col-6 py-2 d-flex justify-content-end">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <span class="btn">
+                                    <img src="../../../assets/git.png" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
+                                    alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel" (click)="linkPr()">
+                                    <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status" data-toggle="tooltip" data-placement="top" title="view PR">
+                                        PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
+                                    </a>
+                                </span>
+                            </li>
+                            <li class="nav-item" *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
+                                <span class="btn" data-toggle="modal" title="Log Work" data-target="#Modal" (click)="logWorkPage()">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                        post_add
+                                    </mat-icon>
+                                </span>
+                            </li>
+                            <li class="nav-item">
                                 <div class="dropdown">
-                                    <span class="material-icons dropdown" data-toggle="dropdown"
-                                        title="Menu">more_horiz</span>
+                                    <span class="btn dropdown" data-toggle="dropdown"
+                                        title="Menu">
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                            more_horiz
+                                        </mat-icon>
+                                    </span>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                         <div class="reopenTask "
                                             *ngIf="startService.userReady && task.Status=='Completed' && !showLoader">
-                                            <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen
-                                                Task</button>
+                                            <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen Task</button>
                                         </div>
                                         <div class="editTask"
                                             *ngIf="startService.userReady && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
-                                                data-target="#exampleModalCenter" (click)="editTask()">Edit
-                                                Task</button>
+                                                data-target="#exampleModalCenter" (click)="editTask()">Edit Task</button>
                                         </div>
-                                        <div class="cloneTask "
+                                        <div class="cloneTask"
                                             *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 (click)="CloneTaskPage()">Clone Task</button>
                                         </div>
-                                        <div class="addLink "
+                                        <div class="addLink"
                                             *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#linkModal" (click)="addLink()">Add Link</button>
                                         </div>
-                                        <div class="addSubtask "
+                                        <div class="addSubtask"
                                             *ngIf="startService.userReady && task.Status!=='Completed'">
                                             <button class="dropdown-item" type="button" (click)="addSubtask()"
                                                 data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
-                                        <div class="delete " *ngIf="startService.userReady && task.SprintNumber !== -2">
+                                        <div class="delete" *ngIf="startService.userReady && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
-                                                data-target="#exampleModalDel" (click)="deleteTask()">Delete
-                                                Task</button>
+                                                data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -132,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" >
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <h5 id="label">{{task.Id}}</h5>
                 <h4 id="value">{{task.Title}}</h4>
@@ -151,7 +154,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
+                <div class="row mt-4"*ngIf="activityDataReady; else loader">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-4">
@@ -263,9 +266,11 @@
                                         </div>
                                     </div>
                                 </ng-container>
-                                <ng-container *ngFor="let activity of activityData">
-                                    <app-activity [activity]="activity"></app-activity>
-                                </ng-container>
+                                <ng-container *ngIf="activityDataReady; else loader">
+                                    <ng-container  *ngFor="let activity of activityData" >
+                                        <app-activity [activity]="activity"></app-activity>
+                                    </ng-container>
+                                </ng-container>                            
                             </div>
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true" >
                                 <div class="form-row p-3">

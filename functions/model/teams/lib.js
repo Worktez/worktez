@@ -57,6 +57,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         TeamStatus: teamStatus,
         CurrentSprintId: 0,
         LabelCounters: 0,
+        FilterCounter: 0,
         Scope: scope,
         ProjectLink: string = "",
     });

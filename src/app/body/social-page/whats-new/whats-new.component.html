@@ -1,26 +1,20 @@
 <div class="card ">
     <div class="card-header">
-            <h3 style="color:#5C60EC">Worktez Updates
+            <h3 style="color:#5C60EC; font-size: medium;">Worktez Updates
             <mat-icon fontSet="material-icons" class="float-right mr-3">timeline</mat-icon>
             </h3>
     </div>
     <div class="card-body whatsnew" style="overflow-y: scroll;">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, consectetur?</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, odit!</p>
-      <hr>
+     <ng-container *ngIf="releaseData" >
+         <ng-container *ngFor="let data of updatesArray">
+                <div class="row">
+                    <div class="col">                        
+                        {{data}}
+                    </div>
+                </div>
+                <hr>
+         </ng-container>
+     </ng-container>
         <!-- <ng-container *ngIf="noData">
             <p class="pt-4">
                 No Data Found

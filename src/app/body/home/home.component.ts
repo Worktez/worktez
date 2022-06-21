@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
     {
       Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
       Name: "Vivek Kumar",
-      Content: "Happy to use worktez, It was an amazing experience to use this tool, also it made our work very quick, transparent and powered."
+      Content: "Happy to use worktez, It made our work very quick, transparent and powered."
     },
     {
       Image: "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p.jpg",
@@ -76,12 +77,15 @@ export class HomeComponent implements OnInit {
 
   public useEmulator = environment.useEmulators;
 
-  constructor(private navbarHandler: NavbarHandlerService, public authService: AuthService, public router: Router) { }
+  constructor(public popupHandlerService: PopupHandlerService, private navbarHandler: NavbarHandlerService, public authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
   }
 
+  requestDemo() {
+    this.popupHandlerService.requestDemoEnabled = true;
+  }
   scrollLeft() {
     this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft - 400), block: "start", inline: "nearest" });
   }

@@ -13,6 +13,7 @@
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -31,13 +32,13 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   organization: Organizations;
   teams: Team[] = []
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
   sameUser: boolean = true;
   editProfilePicEnabled: boolean = false;
 
-  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -55,6 +56,8 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   getOrganizationDetails() {
+    const appKey =  this.cookieService.get("userSelectedOrgAppKey");
+    this.backendService.getOrgDetails(appKey);
     this.showLoader = true;
     this.teams = [];
     this.backendService.organizationsData.subscribe(data => {

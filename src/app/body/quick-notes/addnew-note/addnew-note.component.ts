@@ -43,22 +43,21 @@ export class AddnewNoteComponent implements OnInit {
     this.popupHandlerService.resetTaskIds();
     this.popupHandlerService.quickNotesTitle = this.title;
     this.popupHandlerService.quickNotesDescription = this.notesContent;
-    this.addNote();
     }
 
   addNote() {
+    this.enableLoader = true
     const uid = this.authService.getLoggedInUser();
     const date = this.toolService.date();
     const time = this.toolService.time();
-    this.enableLoader = true
 
     if(this.title != "" && this.notesContent != "" ) {
       const callable = this.functions.httpsCallable("quickNotes/addNote");
       callable({Uid: uid, Title: this.title, Note: this.notesContent, LastUpdatedDate: date, LastUpdatedTime: time }).pipe(map(res=>{
         return res
       })).subscribe((data) => {
-        this.enableLoader = false
         this.addNoteCompleted.emit(true);
+        this.enableLoader = false
       });
     }
   }

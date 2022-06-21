@@ -24,7 +24,6 @@ export class GetIconComponent implements OnInit {
   getlabelProperties() {
     if(this.applicationSettingService.labels.length != 0) {
       const labels = this.applicationSettingService.labels;
-      console.log(labels)
       labels.forEach(label => {
         if(label.DisplayName == this.displayName) {
           this.icon = label;

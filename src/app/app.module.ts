@@ -156,8 +156,17 @@ import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
 import { GetIconComponent } from './icons/get-icon/get-icon.component';
+import { FilterPageComponent } from './body/filter-page/filter-page.component';
+import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
+import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
 import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.component';
 import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
+
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milestone.component';
+import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
+import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
+import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
 
 @NgModule({
   declarations: [
@@ -281,8 +290,15 @@ import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base
     MilestoneDetailsComponent,
     GenerateIconComponent,
     GetIconComponent,
+    FilterPageComponent,
+    EditFilterComponent,
+    CreateFilterComponent,
     IconsBaseComponent,
     ColorsBaseComponent,
+    AddMilestoneComponent,
+    MilestoneCardComponent,
+    AddTaskComponent,
+    RequestADemoComponent,
   ],
   imports: [
     BrowserModule,
@@ -303,7 +319,8 @@ import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base
     MatSortModule,
     MatInputModule,
     MatFormFieldModule,
-    DragDropModule
+    DragDropModule,
+    ImageCropperModule
   ],
   providers: [
     AuthService,

@@ -44,7 +44,10 @@ export class BackendService {
   }
 
   getOrganizationDomain() {
-    return this.organizationDetails.OrganizationDomain;
+    if(this.organizationDetails)
+      return this.organizationDetails.OrganizationDomain;
+    
+    return;
   }
 
   getOrganizationAppKey() {

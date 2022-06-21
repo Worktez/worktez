@@ -8,7 +8,10 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-admin.initializeApp();
+
+if (admin.apps.length === 0) {
+    admin.initializeApp();
+}
 
 const { users } = require("./model/users/users");
 const { tasks } = require("./model/tasks/tasks");
@@ -27,6 +30,8 @@ const { linker } = require("./model/linker/linker");
 const { quickNotes } = require("./model/quickNotes/quickNotes");
 const { socialPage } = require("./model/socialPage/socialPage");
 const { milestone } = require("./model/milestone/milestone");
+const { filters } = require("./model/filters/filters");
+const { requestDemo } = require("./model/requestDemo/requestDemo");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -46,3 +51,5 @@ exports.quickNotes = quickNotes;
 exports.socialPage = socialPage;
 exports.scheduledFnManually = scheduledFnManually;
 exports.milestone = milestone;
+exports.filters = filters;
+exports.requestDemo = requestDemo;

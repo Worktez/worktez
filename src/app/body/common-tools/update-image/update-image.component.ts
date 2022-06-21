@@ -11,12 +11,12 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import Cropper from 'cropperjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { FileUpload } from 'src/app/Interface/FileInterface';
 
 @Component({
   selector: 'app-update-image',
@@ -25,57 +25,58 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 })
 export class UpdateImageComponent implements OnInit {
 
-  @ViewChild("image", { static: false }) public imageElement: ElementRef;
+  @Input('imageUrl') imageUrl: string;
 
-  @Input("imageUrl") imageInput: string;
-  @Input("uid") uid: string;
-  @Input("email") email: string;
-  @Input("displayName") displayName: string;
+  @Output() cropPhotoCompleted = new EventEmitter<{ completed: boolean, photoUrl: string, file: FileUpload }>();
 
-  @Output() cropPhotoCompleted = new EventEmitter<{ completed: boolean }>();
-
-  cropper: Cropper;
   componentName: string = "UPDATE-IMAGE"
   croppedImage: string;
   percentage: number;
   basePath: string;
 
-  constructor(public backendService: BackendService, public uploadService: FileUploadService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  imgChangeEvt: any = '';
+  cropImgPreview: any = '';
 
-  ngOnInit(): void { }
+  selectedFile: FileList
 
-  ngAfterViewInit() {
-    this.cropper = new Cropper(this.imageElement.nativeElement, {
-      zoomable: false,
-      scalable: false,
-      aspectRatio: 1,
-      crop: () => {
-        const canvas = this.cropper.getCroppedCanvas();
-        this.croppedImage = canvas.toDataURL("image/png");
-      },
-    });
-  }
+  currentFileUpload: FileUpload
+  showSaveButton: boolean
 
-  setProfilePic() {
-      const callable = this.functions.httpsCallable('users/updateProfilePic');
+  constructor(public backendService: BackendService, public uploadService: FileUploadService, public errorHandlerService: ErrorHandlerService) { }
 
-      callable({ Uid: this.uid, PhotoURL: this.croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
-        next: (data) => {
-          console.log("Successful");
-        },
-        error: (error) => {
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
-          console.error(error);
-        },
-        complete: () => console.info('Successful updated image')
-      });
-
-    this.cropPhotoDone();
+  ngOnInit(): void {
+    if(this.imageUrl == "") {
+      this.showSaveButton = false
+    } else {
+      this.showSaveButton = true
+    }
   }
 
   cropPhotoDone() {
-    this.cropPhotoCompleted.emit({ completed: true });
+    this.cropPhotoCompleted.emit({ completed: true, photoUrl: this.croppedImage, file: this.currentFileUpload });
+  }
+  
+  onFileChange(event: any): void {
+      this.imageUrl = ""
+      this.imgChangeEvt = event;
+      this.selectedFile = event.target.files;
+      const file = this.selectedFile.item(0);
+      this.currentFileUpload = new FileUpload(file);
+      this.showSaveButton = true
+  }
+  cropImg(e: ImageCroppedEvent) {
+      this.cropImgPreview = e.base64;
+      this.croppedImage = this.cropImgPreview;
+  }
+  imgLoad() {
+      // display cropper tool
+  }
+  initCropper() {
+      // init cropper
+  }
+  
+  imgFailed() {
+      // error msg
   }
 
 }

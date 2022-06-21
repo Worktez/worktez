@@ -23,7 +23,6 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ToolsService } from '../../../services/tool/tools.service';
 import { map } from 'rxjs';
 import { defaultUser, User } from 'src/app/Interface/UserInterface';
-import { object } from 'firebase-functions/v1/storage';
 
 
 @Component({
@@ -34,7 +33,6 @@ import { object } from 'firebase-functions/v1/storage';
 export class PostsComponent implements OnInit {
 
   showCommentList: boolean = false
-  public CommentObservable: Observable<Comment[]>
   showAddComment: boolean = false
   enableLoader: boolean;
   todayDate: string;
@@ -44,6 +42,8 @@ export class PostsComponent implements OnInit {
   reactionStatus : boolean = false;
   public comments: Comment[];
   showColor : boolean = false
+
+  dataReady: boolean = false;
   
   @Input('post') post : Post;
   @Output() addCommentCompleted = new EventEmitter<boolean>();
@@ -60,16 +60,15 @@ export class PostsComponent implements OnInit {
     this.getComments(postId);
   }
 
-  openAddComment(postId: string) {
+  addComment(postId: string) {
     const uid = this.authService.getLoggedInUser();
     const date = this.toolService.date();
     const time = this.toolService.time();
     this.enableLoader = true;
 
     if(this.content != "" ) {
-
       const callable = this.functions.httpsCallable("socialPage/addPostComment");
-      const res = callable({Uid: uid, Content: this.content, LastUpdatedDate: date, LastUpdatedTime: time, PostId: postId}).pipe(map(res=>{
+      callable({Uid: uid, Content: this.content, LastUpdatedDate: date, LastUpdatedTime: time, PostId: postId}).pipe(map(res=>{
         return res
       })).subscribe((data) => {
         this.enableLoader = false;
@@ -77,6 +76,8 @@ export class PostsComponent implements OnInit {
         this.content = "";
         this.getComments(postId);
       });
+    } else {
+      this.enableLoader = false;
     }
   }
   
@@ -84,7 +85,7 @@ export class PostsComponent implements OnInit {
     this.showAddComment = false;
   }
 
-  async onReact(postId: string) {
+  onReact(postId: string) {
     this.enableLoader = true;
     const uid = this.authService.getLoggedInUser();
 
@@ -93,7 +94,7 @@ export class PostsComponent implements OnInit {
       this.todayDate = this.toolService.date();
       this.time = this.toolService.time();
 
-      await callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).subscribe({
+      callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).subscribe({
         next: (data) => {
         },
         error: (error) => {
@@ -103,24 +104,29 @@ export class PostsComponent implements OnInit {
         },
         complete: () => console.info('Successful')
     });
-     
   }
 
   getComments(postId: string) {
       const callable = this.functions.httpsCallable("socialPage/getComments");
-      const res = callable({PostId: postId}).pipe(map(res=>{
+      callable({PostId: postId}).pipe(map(res=>{
         const data = res.data as Comment[];
         return data
       })).subscribe((data) => {
         if (data) {
           this.enableLoader= true;
           this.comments = data;
+          this.comments.forEach(element => {
+            this.userService.checkAndAddToUsersUsingUid(element.Uid);
+          });
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
+            this.dataReady = true;
+          });
         }
         this.enableLoader = false;
       });
   }
 
-  getCreatorDetails(){
+  getCreatorDetails() {
     if(this.post.Uid=="defaultUser"){
       this.user = defaultUser;
     }else {
@@ -128,11 +134,9 @@ export class PostsComponent implements OnInit {
         return obj.uid == this.post.Uid
       })[0];
     }
-    }
-    toggleColor(){
-      this.showColor = !this.showColor;
-      console.log(this.showColor);
-    }
   }
-  
- 
+
+  toggleColor(){
+    this.showColor = !this.showColor;
+  }
+}
