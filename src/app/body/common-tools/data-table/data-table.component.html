@@ -39,7 +39,7 @@
   <!-- Current Sprint Number Column -->
   <ng-container matColumnDef="SprintNumber">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>SprintNumber</th>
-    <td mat-cell *matCellDef="let row">{{row.SprintNumber}}</td>
+    <td mat-cell *matCellDef="let row"><span *ngIf="row.SprintNumber==-1; else sprintNumber">Backlog</span><span *ngIf="row.SprintNumber!=-1">{{row.SprintNumber}}</span></td>
   </ng-container>
 
   <!-- TaskId Column -->

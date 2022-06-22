@@ -16,6 +16,7 @@ export class GenerateIconComponent implements OnInit {
 
   ngOnInit(): void {
     this.colorCode = "#" + this.icon.ColorCode;
+    console.log(this.icon);
   }
 
 }

@@ -152,6 +152,7 @@ export class TaskDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.task = data;
+        console.log(this.task);
         this.checkPrLinked()
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
