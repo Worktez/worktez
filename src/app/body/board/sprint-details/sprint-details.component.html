@@ -205,9 +205,11 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" class="material-icons">close</span>
-              </button>
+              <span class="btn">
+                <mat-icon class="close" data-dismiss="modal" aria-label="Close" fontSet="material-icons-outlined" class="align-middle " title="Close">
+                close
+                </mat-icon>
+            </span>
             </li>
           </ul>
         </nav>
@@ -219,8 +221,8 @@
             <div class="row">
               <div class="col-md-9"></div>
               <div class="col-md-3 pb-2 px-4">
-                <button class="btn" type="button" id="button" type="button"
-                  (click)="changeSprintStatus('Completed')">Change</button>
+                <button class="btn" type="button" id="changeBtn" type="button"
+                  (click)="changeSprintStatus('Completed')">Confirm</button>
               </div>
             </div>
           </ng-container>
