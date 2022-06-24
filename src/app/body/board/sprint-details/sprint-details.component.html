@@ -219,8 +219,8 @@
             <div class="row">
               <div class="col-md-9"></div>
               <div class="col-md-3 pb-2 px-4">
-                <button class="btn" type="button" id="button" type="button"
-                  (click)="changeSprintStatus('Completed')">Change</button>
+                <button class="btn" type="button" id="button" data-dismiss="modal" aria-label="Close"
+                  (click)="changeSprintStatus('Completed');hideModel()">Confirm</button>
               </div>
             </div>
           </ng-container>
