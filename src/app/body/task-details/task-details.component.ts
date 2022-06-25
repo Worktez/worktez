@@ -89,7 +89,7 @@ export class TaskDetailsComponent implements OnInit {
     this.newWatcher = this.authService.getUserEmail();
     this.creationDate = this.toolsService.date();
     this.time = this.toolsService.time();
-
+        
     this.Id = this.route.snapshot.params[ 'taskId' ];
     this.url = window.location.href;
 
@@ -297,6 +297,7 @@ export class TaskDetailsComponent implements OnInit {
     this.prApiLink=data.prApiLink;
     this.getPrDetails();
     this.getLinkData();
+    this.getTaskDetail();
 
   }
 
@@ -370,7 +371,9 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   linkPr() {
+    this.popupHandlerService.addPrActive = true;
     this.gitPrEnabled = true;
+    // this.showLoader = true;
   }
 
   

@@ -50,7 +50,7 @@ exports.editTask = function(request, response) {
     const editedSprintName = createSprintName(editedSprintNumber);
     const type = request.body.data.Type;
     const reporter = request.body.data.Reporter;
-    const milestoneId = request.body.data.MilestoneId;
+    let milestoneId = request.body.data.MilestoneId;
     let result;
     let status = 200;
     let assigneeName = "";

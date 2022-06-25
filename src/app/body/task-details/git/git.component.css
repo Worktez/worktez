@@ -40,7 +40,7 @@
 .btn-secondary{
     background-color: var(--primary-bg);
     color: var(--text);
-    font-size: 14px;
+    font-size: 15px;
     border: none;
     border-radius: 5%;
     text-overflow: auto;
@@ -49,17 +49,20 @@
     outline: 0 none;
 }
 .btn-status{
-    background-color: var(--primary-bg);
     color: var(--text);
     border: none;
-    font-size: 14px;
-    border-radius: 5%;
-    width: 25%;
+    font-size: 15px;
+    border-radius: 2%;
+    width: 100%;
     text-overflow: auto;
     white-space: nowrap;
     box-shadow: none;
     outline: 0 none;
 }
+.prlist{
+    font-size: 11px;
+}
+
 #SuccessIcon{
     color: var(--secondary-color);
     font-size: 55px;
