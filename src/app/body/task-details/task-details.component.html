@@ -224,12 +224,15 @@
                                         </tr>
                                     </ng-container>
                                     <ng-container *ngFor="let link of linkData">
-                                        <tr>
-                                            <td colspan="3"><span data-toggle="tooltip" data-placement="top"
+                                        <tr *ngIf="link.LinkStatus != 'Deleted'">
+                                            <td colspan="2"><span data-toggle="tooltip" data-placement="top"
                                                     title="task.id">{{link.LinkID}}</span></td>
                                             <td colspan="3">{{link.LinkType}}</td>
-                                            <td colspan="6"><a href={{link.LinkURL}}
+                                            <td colspan="5"><a href={{link.LinkURL}}
                                                     target="_blank">{{link.LinkURL}}</a></td>
+                                            <td colspan="2"><mat-icon (click)="removeLink(link.LinkID, link.LinkType)" fontSet="material-icons-outlined" class="align-middle text-danger">
+                                                close
+                                            </mat-icon> </td>        
                                         </tr>
                                     </ng-container>
                                 </tbody>
