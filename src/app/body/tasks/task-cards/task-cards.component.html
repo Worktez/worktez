@@ -38,14 +38,14 @@
                 <ng-container *ngFor="let item of tasks">
                     <tr (click)="openTaskDetails(item.Id)">
                         <td colspan="1">
-                            <app-status-icons [Status]="item.Status" [Border]="false"></app-status-icons>
+                            <app-get-icon [DisplayName]="item.Status" [Border]="false"></app-get-icon>
                         </td>
                         <td colspan="1">
-                            <app-priority-icons [Priority]="item.Priority" [Border]="false"></app-priority-icons>
+                            <app-get-icon [DisplayName]="item.Priority" [Border]="false"></app-get-icon>
                         </td>
                         <ng-container *ngIf="parentComponent == 'Tasks'"> 
                             <td colspan="1">
-                                <app-difficulty-icons [Difficulty]="item.Difficulty" [Border]="false"></app-difficulty-icons>
+                                <app-get-icon [DisplayName]="item.Difficulty" [Border]="false"></app-get-icon>
                             </td>
                         </ng-container>
                         <td colspan="1"><span style="font-weight:bold;" data-toggle="tooltip" data-placement="top" title="task.id">{{item.Id}}</span></td>
