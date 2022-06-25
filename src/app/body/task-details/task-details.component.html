@@ -42,6 +42,10 @@
                                 <span id="headerLabel">Difficulty</span>
                                 <app-get-icon [DisplayName]="task.Difficulty" [Border]="true"></app-get-icon>
                             </div>
+                            <div class="difficulty labels mx-2" *ngIf="applicationSettingService.labelDataReady">
+                                <span id="headerLabel">Task Type</span>
+                                <app-get-icon [DisplayName]="task.Type" [Border]="true"></app-get-icon>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-6 py-2 d-flex justify-content-end">
@@ -50,7 +54,7 @@
                                 <span class="btn">
                                     <img src="../../../assets/git.png" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
                                     alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel" (click)="linkPr()">
-                                    <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status" data-toggle="tooltip" data-placement="top" title="view PR">
+                                    <a *ngIf="prLinked" data-target="#gitPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
                                         PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
                                     </a>
                                 </span>
@@ -309,7 +313,7 @@
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
-        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" (addedPrLink)="addedPrLink($event)"></app-git>
+        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-git>
     </ng-container>
 </ng-container>
 <ng-container *ngIf="showLoader || !(gotTaskData)">

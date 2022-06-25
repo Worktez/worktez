@@ -27,18 +27,40 @@
                             </button>
                     </ul>
                 </div>
-                    <form *ngIf="!showClose && !noRepoLinked && !noPrExist">
+                    <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
                         <div class="card">
-                            <div class="card-header">
-                                Select A Pull Request
+                            <ng-container *ngFor="let item of prData; let prIndex=index;">
+                                <div *ngIf="PrNumber == item.number" >
+                                    <div class="card-header">
+                                        <strong>Selected PR:</strong> 
+                                    </div>  
+                                    <ul class="list-group list-group-flush">
+                                        <ng-container>
+                                            <li class="list-group-item">
+                                                <a href="{{item.html_url}}" class="btn btn-status text-wrap text-left">    
+                                                    {{item.title}}
+                                                    <div class="prlist"> PrNumber  #{{PrNumber}} and Pr Status : {{item.state}}</div></a>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                            </div>
+                            </ng-container>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="class-header p-3 ml-1">
+                                <strong>Select A Pull Request: </strong> 
                             </div>
                             <ul class="list-group list-group-flush">
                                 <ng-container *ngFor="let item of prData; let prIndex=index;">
-                                    <li (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
-                                        <button class="btn-primary p-2 mr-2" > #{{item.number}} </button>
-                                        <button class="btn btn-secondary p-2 ml-0 mr-0 text-left">{{item.title}}</button>
-                                        <a href="{{item.html_url}}" target="_blank" class="btn btn-status p-2 ml-2 mr-0" data-toggle="tooltip" data-placement="top" title="view PR">
-                                            status: <span class="text-capitalize">{{item.state}}</span></a>
+                                    <li *ngIf="PrNumber != item.number" (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
+                                        <div >
+                                            
+                                        <div class="btn btn-status text-wrap text-left">
+                                            {{item.title}}
+                                            <div class="prlist"> PrNumber:  #{{item.number}} and Pr Status : {{item.state}}</div>
+                                        </div>
+                                    </div> 
                                     </li>
                                 </ng-container>
                             </ul>
@@ -61,7 +83,7 @@
                     </div>
                 </ng-container>
                 
-               <ng-container *ngIf="showClose">
+               <ng-container *ngIf="!PopupHandlerService.addPrActive">
                     <div *ngIf="prLinked">
                        <div class="row mx-5">
                         <div class="col-md-4"></div>

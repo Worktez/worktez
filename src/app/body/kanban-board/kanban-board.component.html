@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <app-status-icons [Status]="selectedStatusLabels[i]">
+                                <ng-container [Status]="selectedStatusLabels[i]">
                                     <div class="nav-item dropdown">
                                         <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown">
                                             <mat-icon fontSet="material-icons-outlined">
@@ -58,7 +58,7 @@
                                             </ng-container>
                                         </div>
                                     </div> 
-                                </app-status-icons>
+                                </ng-container>
                             </div>
                         </div>
                         <ng-container *ngFor="let task of tasksArr">
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                <app-status-icons [Status]="selectedStatusLabels[i]">
+                                <ng-container [Status]="selectedStatusLabels[i]">
                                     <div class="nav-item dropdown">
                                         <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown">
                                             <mat-icon fontSet="material-icons-outlined">
@@ -88,13 +88,11 @@
                                         </a>
                                         <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards" >
                                             <ng-container *ngFor="let status of statusLabels">
-
                                                     <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
-
                                             </ng-container>
                                         </div>
                                     </div> 
-                                </app-status-icons>
+                                </ng-container>
                             </div>
                         </div>
                     </ng-template>

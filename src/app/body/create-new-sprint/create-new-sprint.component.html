@@ -15,26 +15,37 @@
     <div class="modal fade"  id="createNewSprint" tabindex="-1" role="dialog" aria-labelledby="createNewSprintTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                <h4 class="modal-title" id="createNewSprintTitle">Create New Sprint</h4>
-                <button type="button" class="close" (click)= "close()" aria-label="Close">
-                    <span aria-hidden="true" class="material-icons">close</span>
-                </button>
+                <div class="modal-header pr-0 pt-0 ">
+                    <h4 class="modal-title mt-2" id="createNewSprintTitle">Create New Sprint</h4>
+                    <span class="btn ">
+                        <mat-icon class="close" data-dismiss="modal" aria-label="Close" fontSet="material-icons-outlined" class="align-middle " title="Close">
+                        close
+                        </mat-icon>
+                    </span>                       
                 </div>
                 <div class="modal-body container-fluid">
                     <form *ngIf="!enableLoader" #form="ngForm">
                         <div class="form-row">
-                            <div class="form-group col-md-5 col-4 ml-auto">
+                            <div class="form-group col-3">
+                                <span class="text-muted" id="label">Project</span>
                                 <select class="form-control" [(ngModel)]="selectedTeamId" [ngModelOptions]="{standalone: true}" (ngModelChange)="readApplicationData()">
                                     <option *ngFor="let team of teams" [selected]="team == selectedTeamId" [ngClass]=" team == userTeam ? 'font-weight-bold font-italic' : '' ">{{team}}</option>
-                                </select>
+                                </select> 
                             </div>
-                            <div class="form-control form-group col-md-3 col-3 ml-auto">Sprint: {{ nextSprintId }}</div>
-                            <div class="form-control form-group col-md-4 col-5 ml-auto">No. of Task: {{ taskNo }}</div>
+                            <div class="form-group m-1 col-4">
+                                <span class="ml-2 text-muted" id="label">Sprint Number </span>
+                                <div class="form-control form-control-sm">{{ nextSprintId }}</div>
+                            </div>
+                            <div class="form-group m-1 col-4">
+                                <span class="ml-2 text-muted" id="label">No. of Task </span>
+                                <div class="form-control form-control-sm">{{ taskNo }}</div>
+                            </div>
+
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 col">
-                                <select class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+                            <div class="form-group col-12">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
+                                <select class="form-control form-control-sm" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                                     <option [ngValue]="null" [disabled]="true">Select Status</option>
                                     <option>Ready to Start</option>
                                     <option>Under Progress</option>
@@ -43,10 +54,12 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-6 col ml-auto">                       
+                            <div class="col-md-6 col-6 "> 
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start date</span>                      
                                 <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The Start Date ">
                             </div>
-                            <div class="col-md-6 col ml-auto">                        
+                            <div class="col-md-6 col-6 ">    
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End date</span>                    
                                 <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
                             </div>
                         </div>
@@ -74,7 +87,7 @@
                         <div class="row pt-2">
                             <div class="col-md-4"></div>
                             <div class="col-md-4 pt-2 px-4">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="close();load()">Close</button>
+                                <button class="btn " type="button" id="button" data-dismiss="modal" (click)="close();load()">Close</button>
                             </div>
                             <div class="col-md-4"></div>
                         </div>
