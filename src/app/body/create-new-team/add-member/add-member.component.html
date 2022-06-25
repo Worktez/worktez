@@ -15,17 +15,20 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="container modal-body align-items-center px-4" id="addMemberPage">
-                <div class="row p-4">
-                    <ul class="navbar-nav mr-auto">
+                <div class="row p-2">
+                    <ul class="navbar-nav mr-auto pt-0">
                         <li class="nav-item">
                             <h4 class="active nav-link head bold" id="memberModalLabel">Add Member</h4>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="false" class="material-icons text" (click)="added()">close</span>
-                            </button>
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal"aria-label="Close"
+                                  (click)="added()" >
+                                  close
+                                </mat-icon>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -41,10 +44,8 @@
                             <input type="email" class="form-control form-email" [(ngModel)]="memberEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Email Address">
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-12 pb-2 px-4">
-                            <button class="btn" type="submit" id="addButton" [disabled]="enableLoader">Submit</button>
-                        </div>
+                    <div class="row">
+                            <button class="btn btn-secondary " type="submit" id="button" [disabled]="enableLoader">Submit</button>
                     </div>
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
@@ -55,7 +56,7 @@
                     <div class="row">
                         <div class="col-md-9"></div>
                         <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="added()">Close</button>
+                            <button class="btn btn-secondary" id="button" type="button" data-dismiss="modal" (click)="added()">Close</button>
                         </div>
                     </div>
                 </ng-container>

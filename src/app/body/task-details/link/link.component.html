@@ -22,9 +22,12 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="material-icons" (click)="close()">close</span>
-                        </button>
+                        <span class="btn">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal"aria-label="Close"
+                              (click)="close()">
+                              close
+                            </mat-icon>
+                        </span>
                     </li>
                 </ul>
             </nav>
@@ -50,7 +53,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-12 pb-2 px-4">
-                            <button class="btn btn-lg btn-block" type="submit" id="addButton" [disabled]="enableLoader">Add</button>
+                            <button class="btn btn-block"  type="submit" id="button" [disabled]="enableLoader">Add</button>
                         </div>
                     </div>
                     <app-loader *ngIf="enableLoader"></app-loader>
