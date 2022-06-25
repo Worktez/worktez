@@ -94,8 +94,6 @@ export class CreateNewOrganizationComponent implements OnInit {
     this.orgLogo = data.logoFile;
     this.orgLogoURL = data.photoUrl;
     this.fileName = data.logoFile.file.name;
-    console.log(this.enableLoader);
-    console.log(this.logoUploaded);
   }
 
   delete() {
