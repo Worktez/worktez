@@ -30,7 +30,7 @@
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 6px;
-    min-height: 350px;
+    min-height: 200PX;
     justify-content: space-evenly;
     padding-top: 0 !important;
 }

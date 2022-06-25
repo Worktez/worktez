@@ -22,9 +22,11 @@
                         </ng-container>
                             Update Team
                     </h2>
-                    <button type="button" class="close" (click)= "close()" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons">close</span>
-                    </button>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="close()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
                 </div>
                 <div class="modal-body container-fluid pt-0">
                     <form #form="ngForm">
