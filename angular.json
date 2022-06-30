@@ -137,7 +137,4 @@
     }
   },
   "defaultProject": "worktrolly-ui",
-  "cli": {
-    "analytics": false
-  }
 }
