@@ -21,7 +21,7 @@
  ***********************************************************/
 
  const { getTask, updateTask } = require("../../tasks/lib");
- const { removeLinkDoc } = require("../lib")
+ const { removeLinkDoc, getLinkData } = require("../lib")
  
  exports.removeLink = function(request, response) {
      const orgDomain = request.body.data.OrgDomain;
@@ -38,23 +38,19 @@
              result = {data: {status: 500}};
          } else {
             console.log('this is hitting')
-             const linkCounter = taskDetail.LinkCounter - 1;
              removeLinkDoc(orgDomain, taskId, linkId);
-             let inputJson;
-             if(linkType == "PR"){
-                inputJson = {
-                    LinkCounter: linkCounter,
-                    PrNumber: null,
-                    PrLink: "",
-                    PrApiLink: "",
-                };
-             }else{
-                inputJson = {
-                    LinkCounter: linkCounter,
-                };
-             }
+             const p1 = getLinkData(orgDomain, taskId, linkId).then((linkDetail)=>{
+                const linkdata = linkDetail.data();
+                if(linkType == "PR" && linkdata.LinkURL == taskDetail.PrLink){
+                    const inputJson = {
+                        PrNumber: null,
+                        PrLink: "",
+                        PrApiLink: "",
+                    };
+                    updateTask(inputJson, orgDomain, taskId);
+                 }
+             })
             
-             updateTask(inputJson, orgDomain, taskId);
          }
      }).catch((error) => {
          status = 500;

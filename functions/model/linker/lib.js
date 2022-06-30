@@ -63,8 +63,24 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
  * @return {any}
  */
  exports.removeLinkDoc = function(orgDomain, taskId, linkID) {
-    const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).set({
+    const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).update({
         LinkStatus : "Deleted",
     });
     return Promise.resolve(setLinkDetails);
 };
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} taskId
+ * @param {any} linkID
+ * @return {any}
+ */
+
+exports.getLinkData = function(orgDomain, taskId, linkId){
+    console.log(orgDomain)
+    console.log(taskId)
+    console.log(linkId)
+    const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkId).get();
+    return Promise.resolve(getLinkDetails);
+}
