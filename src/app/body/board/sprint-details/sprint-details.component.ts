@@ -42,6 +42,7 @@ export class SprintDetailsComponent implements OnInit {
   showLoader:boolean = false
   sprintDataReady: boolean = false
   activeSprintNumber: number;
+  today: any = new Date();
 
   constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
 
@@ -63,8 +64,10 @@ export class SprintDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     const uid = this.authService.getLoggedInUser();
+    console.log(this.today);
 
-    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid }).subscribe({
+
+    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid , Date: this.today}).subscribe({
         next: (data) => {
           console.log("Successful updated ");
         },
@@ -76,6 +79,10 @@ export class SprintDetailsComponent implements OnInit {
         complete: () => this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
           this.sprintData = data;
           this.showLoader = false;
+          if(sprintStatus=='Completed'){
+            this.sprintData.EndDate=this.today.toLocaleDateString("hu-HU").replace('.','-').replace('.','-').replace('.','');
+            this.workPercentage=100
+          }
         })
     });
   }
