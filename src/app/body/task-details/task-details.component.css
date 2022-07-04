@@ -78,6 +78,7 @@ nav {
 #value {
     color: var(--text);
     font-weight: bolder;
+    font-size: auto;
 }
 
 .part {

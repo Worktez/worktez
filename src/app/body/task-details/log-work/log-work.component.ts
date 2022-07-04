@@ -38,7 +38,9 @@ export class LogWorkComponent implements OnInit {
   logWork: Tasks
   logWorkDone: number
   logWorkStatus: string
-  logHours: number
+  totalLoggedTime: number
+  loggedTimeHrs: number
+  loggedTimeMins: number
   logWorkComment: string
   todayDate: string
   time: string
@@ -53,12 +55,41 @@ export class LogWorkComponent implements OnInit {
     this.logWorkStatus = this.task.Status;
     this.logWorkDone = this.task.WorkDone;
   }
-
+  handleMinsHrs(){
+    if(this.loggedTimeMins<0){
+      if(this.loggedTimeHrs==undefined || this.loggedTimeHrs==0){
+        this.loggedTimeMins=0
+      }
+      else{
+        this.loggedTimeHrs-=1
+        this.loggedTimeMins=59
+      }
+    }
+    else if(this.loggedTimeMins>=60){
+      this.loggedTimeMins=0;
+      if(this.loggedTimeHrs==undefined){
+        this.loggedTimeHrs=1;
+      }
+      else{
+        this.loggedTimeHrs+=1;
+      }
+    }
+    else if(this.loggedTimeHrs<0){
+      this.loggedTimeHrs=0
+    }
+  }
   async submit() {
+    if(this.loggedTimeHrs== undefined && this.loggedTimeMins!=undefined){
+      this.loggedTimeHrs=0
+    }
+    else if(this.loggedTimeMins== undefined && this.loggedTimeHrs!= undefined){
+      this.loggedTimeMins=0
+    }
+    this.totalLoggedTime=this.toolsService.changeToDecimalTime(this.loggedTimeHrs,this.loggedTimeMins);
     let labels = ['status', 'logHours', 'workCompleted', 'comment'];
-    let values = [this.logWorkStatus, this.logHours, this.logWorkDone, this.logWorkComment];
+    let values = [this.logWorkStatus, this.totalLoggedTime, this.logWorkDone, this.logWorkComment];
     let data = [{ label: "status", value: this.logWorkStatus },
-    { label: "logHours", value: this.logHours },
+    { label: "logHours", value: this.totalLoggedTime },
     { label: "workCompleted", value: this.logWorkDone },
     { label: "comment", value: this.logWorkComment }];
     
@@ -82,7 +113,7 @@ export class LogWorkComponent implements OnInit {
     const callable = this.functions.httpsCallable('tasks/log');
     const appKey = this.backendService.getOrganizationAppKey();
 
-    await callable({AppKey: appKey, Assignee:this.task.Assignee, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.logHours, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+    await callable({AppKey: appKey, Assignee:this.task.Assignee, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: this.totalLoggedTime, LogWorkDone: this.logWorkDone, LogWorkStatus: this.logWorkStatus, LogWorkComment: this.logWorkComment, Date: this.todayDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
       next: (data) => {
         this.enableLoader = false;
         this.showClose = true;
