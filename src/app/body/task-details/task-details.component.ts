@@ -212,7 +212,6 @@ export class TaskDetailsComponent implements OnInit {
         return actions.data as Link[];
     })).subscribe({
       next: (data) => {
-        console.log("Data Link", data);
         this.linkData=data;
       },
       error: (error) => {
@@ -223,7 +222,6 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   removeLink(linkId, linkType){
-    console.log(linkId, linkType, this.orgDomain, this.Id)
     const callable = this.functions.httpsCallable('linker/removeLink');
     callable({ OrgDomain: this.orgDomain, TaskId: this.Id, LinkType: linkType, LinkId:linkId  }).subscribe({
       next: (data) => {
@@ -232,7 +230,6 @@ export class TaskDetailsComponent implements OnInit {
       error: (error) => {
         this.errorHandlerService.showError = true;
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
-        console.log("Error", error);
         console.error(error);
       },
       complete: () => {

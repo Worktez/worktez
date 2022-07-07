@@ -50,7 +50,7 @@ fastify.post("/setLink", (req, res) => {
 /**
  * Description
  * @param {any} "/removeLink"
- * @param {any} (req
+ * @param {any} req
  * @param {any} res
  * @returns {any}
  */

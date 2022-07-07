@@ -29,15 +29,12 @@
      const linkId = request.body.data.LinkId;
      const linkType = request.body.data.LinkType;
 
-    console.log(orgDomain, taskId, linkId , linkType)
- 
      let status = 200;
      let result;
      const promise = getTask(taskId, orgDomain).then((taskDetail) => {
          if (taskDetail == undefined) {
              result = {data: {status: 500}};
          } else {
-            console.log('this is hitting')
              removeLinkDoc(orgDomain, taskId, linkId);
              const p1 = getLinkData(orgDomain, taskId, linkId).then((linkDetail)=>{
                 const linkdata = linkDetail.data();

@@ -78,9 +78,6 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
  */
 
 exports.getLinkData = function(orgDomain, taskId, linkId){
-    console.log(orgDomain)
-    console.log(taskId)
-    console.log(linkId)
     const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkId).get();
     return Promise.resolve(getLinkDetails);
 }
