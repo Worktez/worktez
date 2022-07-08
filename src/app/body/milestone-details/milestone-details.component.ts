@@ -38,6 +38,8 @@ export class MilestoneDetailsComponent implements OnInit {
 
   componentName: string = "MILESTONES";
   milestoneId: string;
+  milestoneIdToEdit: string = "";
+  fieldToEdit: string = "";
   orgDomain: string;
   teamIds: string[];
   taskData: Tasks[];
@@ -110,6 +112,17 @@ export class MilestoneDetailsComponent implements OnInit {
   backToMilestones() {
     this.location.back()
   }
+
+  clickOut() {
+    this.milestoneIdToEdit="";
+    this.submit();
+  }
+
+  showEditMilestone(milestoneId: string, fieldToEdit: string) {
+    this.milestoneIdToEdit = milestoneId;
+    this.fieldToEdit = fieldToEdit;
+  }
+
   getTasks() {
     this.showLoader = true;
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
@@ -184,6 +197,8 @@ export class MilestoneDetailsComponent implements OnInit {
       next: (data) => {
         this.milestoneData.MilestoneStatus=data.milestoneStatus;
           this.showLoader=true;
+          this.milestoneIdToEdit =  "";
+          this.showLoader = false;
       },
       error: (error) => {
         this.errorHandlerService.showError = true;

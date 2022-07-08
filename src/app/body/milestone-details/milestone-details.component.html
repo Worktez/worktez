@@ -30,38 +30,11 @@
         </button></div>
     </div>
 
-    <!-- <div class="row pb-2">
-      <div class="col">
-        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone Status</span>
-        <select class="form-control form-control-sm" [(ngModel)]="milestoneStatus"
-          [ngModelOptions]="{standalone: true}">
-          <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
-          <ng-container *ngFor='let label of milestoneStatusLabels'>
-            <option>{{ label }}</option>
-          </ng-container>
-        </select>
-      </div>
-    </div> -->
     <div class="col-1">
       <span class="close material-icons float-right" (click)="backToMilestones()">close</span>
 
     </div>
-    <div class="row ml-3">
-      <span id="label">milestone Status</span>
-      <div class="col">
-      <select class="custom-select" [(ngModel)]="milestoneData.MilestoneStatus " [ngModelOptions]="{standalone: true}">
-          <option [ngValue]="null" [disabled]="true" >Select Milestone Status</option>
-          <ng-container *ngFor="let item of milestoneStatusLabels">
-              <option>{{item}}</option>
-          </ng-container>
-      </select>
-      </div>
-      <div class="col">
-      <span type="button" id="button" class="btn btn-primary" (click)="submit()">
-        Submit
-      </span>
-    </div>
-  </div>
+
   </div>
   <hr>
 
@@ -77,9 +50,23 @@
                   style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
               </h4>
             </div>
-            <div class="col-md-5 col">
-                 <p><b>Milestone Status:</b>{{milestoneData.MilestoneStatus}}</p>
-            </div>
+                 <div class="col-md-5 col" (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
+                  <span class="label"><b>Status:</b></span>
+                  &nbsp;
+                  <span class="value" (click)="showEditMilestone( milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
+                      <ng-container *ngIf="milestoneIdToEdit == milestoneData.MilestoneId && fieldToEdit == 'MilestoneStatus'; else showMilestoneStatusIcon">
+                          <select class="form-control form-control-sm" [(ngModel)]="milestoneData.MilestoneStatus" [ngModelOptions]="{standalone: true}" (change)="editStatus()" (mouseleave)="clickOut()">
+                              <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
+                              <ng-container *ngFor="let item of milestoneStatusLabels">
+                                <option>{{item}}</option>
+                            </ng-container>
+                          </select>
+                      </ng-container>
+                      <ng-template #showMilestoneStatusIcon>
+                        {{milestoneData.MilestoneStatus}}
+                      </ng-template>
+                  </span>
+              </div>
           </div>
           <h4 class="mt-1 heading">
             <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestoneData.TeamId}}
