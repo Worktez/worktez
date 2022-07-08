@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez

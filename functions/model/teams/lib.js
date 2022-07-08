@@ -1,11 +1,5 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable valid-jsdoc */
-/* eslint-disable no-undef */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-
+/* eslint-disable linebreak-style */
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -19,6 +13,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
+
+/* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
 
 const { db } = require("../application/lib");
 
