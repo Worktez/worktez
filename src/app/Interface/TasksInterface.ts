@@ -48,4 +48,5 @@ export interface Link {
   LinkURL: string;
   OrganizationID: string;
   TaskID: string;
+  LinkStatus: string;
 }
