@@ -36,13 +36,17 @@ export class EditFilterComponent implements OnInit {
   @Input() getTeamFilters = new EventEmitter();
   assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: Observable<string[]>;
+  assignee: string
   enableLoader: boolean = false;  
   showClose: boolean=false;
+  project: string = null
   teamMembers: string[] = []
 
   constructor(private functions: AngularFireFunctions, private authService: AuthService, private backendService: BackendService, public errorHandlerService: ErrorHandlerService, public StartService: StartServiceService, public applicationSetting: ApplicationSettingsService) { }
 
   ngOnInit(): void {
+    this.project = this.authService.getTeamId();
+    this.readTeamData(this.project);
   }
 
   private _filter(value: string): string[]{
@@ -59,7 +63,6 @@ export class EditFilterComponent implements OnInit {
   }
 
   readTeamData(teamId :string){
-    this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
           this.teamMembers=team.TeamMembers;
           this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(

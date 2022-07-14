@@ -27,6 +27,11 @@
     color: white;
 }
 
+.btn {
+    color: var(--text);
+}
+
+
 .btn:hover,
 #button:focus,
 #button:active,
@@ -48,11 +53,6 @@
     background-color: var(--primary-bg);
 }
 
-.card {
-    background-color: var(--secondary-bg);
-    color: var(--text);
-    width: 24rem
-}
 
 #font {
     font-size: 20px;
