@@ -127,29 +127,6 @@ export class EditPageComponent implements OnInit {
           });
     }); 
   }
-  handleMinsHrs(){
-    if(this.estimatedTimeMins<0){
-      if(this.estimatedTimeHrs==undefined || this.estimatedTimeHrs==0){
-        this.estimatedTimeMins=0
-      }
-      else{
-        this.estimatedTimeHrs-=1
-        this.estimatedTimeMins=59
-      }
-    }
-    else if(this.estimatedTimeMins>=60){
-      this.estimatedTimeMins=0;
-      if(this.estimatedTimeHrs==undefined){
-        this.estimatedTimeHrs=1;
-      }
-      else{
-        this.estimatedTimeHrs+=1;
-      }
-    }
-    else if(this.estimatedTimeHrs<0){
-      this.estimatedTimeHrs=0
-    }
-  }
 
   selectedAssignee(item) {
     if(item.selected == false) {
@@ -172,9 +149,15 @@ export class EditPageComponent implements OnInit {
   async submit() {
     if(this.estimatedTimeHrs == undefined && this.estimatedTimeMins != undefined){
       this.estimatedTimeHrs=0
+      if(this.estimatedTimeMins<0){
+        this.estimatedTimeMins=0
+      }
     }
     else if(this.estimatedTimeMins == undefined && this.estimatedTimeHrs!= undefined){
       this.estimatedTimeMins=0
+      if(this.estimatedTimeHrs<0){
+        this.estimatedTimeHrs=0
+      }
     }
     this.editTask.EstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "priority", value: this.editTask.Priority },

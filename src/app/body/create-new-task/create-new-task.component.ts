@@ -100,30 +100,7 @@ export class CreateNewTaskComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
-  handleMinsHrs(){
-    console.log("triggered");
-    if(this.estimatedTimeMins<0){
-      if(this.estimatedTimeHrs==undefined || this.estimatedTimeHrs==0){
-        this.estimatedTimeMins=0
-      }
-      else{
-        this.estimatedTimeHrs-=1
-        this.estimatedTimeMins=59
-      }
-    }
-    else if(this.estimatedTimeMins>=60){
-      this.estimatedTimeMins=0;
-      if(this.estimatedTimeHrs==undefined){
-        this.estimatedTimeHrs=1;
-      }
-      else{
-        this.estimatedTimeHrs+=1;
-      }
-    }
-    else if(this.estimatedTimeHrs<0){
-      this.estimatedTimeHrs=0
-    }
-  }
+  
   readTeamData(teamId :string){
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
@@ -181,9 +158,15 @@ export class CreateNewTaskComponent implements OnInit {
   async submit() {
     if(this.estimatedTimeHrs == undefined && this.estimatedTimeMins != undefined){
       this.estimatedTimeHrs=0
+      if(this.estimatedTimeMins<0){
+        this.estimatedTimeMins=0
+      }
     }
     else if(this.estimatedTimeMins == undefined && this.estimatedTimeHrs!= undefined){
       this.estimatedTimeMins=0
+      if(this.estimatedTimeHrs<0){
+        this.estimatedTimeHrs=0
+      }
     }
     this.totalEstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "title", value: this.title },

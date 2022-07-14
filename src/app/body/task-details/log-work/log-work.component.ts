@@ -55,35 +55,18 @@ export class LogWorkComponent implements OnInit {
     this.logWorkStatus = this.task.Status;
     this.logWorkDone = this.task.WorkDone;
   }
-  handleMinsHrs(){
-    if(this.loggedTimeMins<0){
-      if(this.loggedTimeHrs==undefined || this.loggedTimeHrs==0){
+  async submit() {
+    if(this.loggedTimeHrs == undefined && this.loggedTimeMins != undefined){
+      this.loggedTimeHrs=0
+      if(this.loggedTimeMins<0){
         this.loggedTimeMins=0
       }
-      else{
-        this.loggedTimeHrs-=1
-        this.loggedTimeMins=59
-      }
     }
-    else if(this.loggedTimeMins>=60){
-      this.loggedTimeMins=0;
-      if(this.loggedTimeHrs==undefined){
-        this.loggedTimeHrs=1;
-      }
-      else{
-        this.loggedTimeHrs+=1;
-      }
-    }
-    else if(this.loggedTimeHrs<0){
-      this.loggedTimeHrs=0
-    }
-  }
-  async submit() {
-    if(this.loggedTimeHrs== undefined && this.loggedTimeMins!=undefined){
-      this.loggedTimeHrs=0
-    }
-    else if(this.loggedTimeMins== undefined && this.loggedTimeHrs!= undefined){
+    else if(this.loggedTimeMins == undefined && this.loggedTimeHrs!= undefined){
       this.loggedTimeMins=0
+      if(this.loggedTimeHrs<0){
+        this.loggedTimeHrs=0
+      }
     }
     this.totalLoggedTime=this.toolsService.changeToDecimalTime(this.loggedTimeHrs,this.loggedTimeMins);
     let labels = ['status', 'logHours', 'workCompleted', 'comment'];

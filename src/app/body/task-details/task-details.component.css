@@ -74,10 +74,11 @@ nav {
 #label{
     color: var(--table-header);
     margin-right:8px;
+    font-weight:600 ;
 }
 #value {
     color: var(--text);
-    font-weight: bolder;
+    /* font-weight: bolder; */
     font-size: auto;
 }
 
