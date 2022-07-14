@@ -15,8 +15,11 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="row modal-content">
-            <div class="modal-header pt-3">
-                <div class="col">
+            <div class="modal-header pt-3 pb-0">
+                <div class="col-6 col-md-6 pl-2">
+                    <h5 class="modal-title pl-3" id="openEditProperties">Edit Task</h5>
+                </div>
+                <div class="col-6 col-md-6 pl-3">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" class="material-icons" (click)="editFilterDone()">close</span>
                     </button>
@@ -25,40 +28,56 @@
             <div class="container-fluid modal-body px-5" id="openEditPropertiesContainer">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row">
-                        <div class="col-md-8 pl-2">
-                            <span id="openEditProperties">Assignee Name</span>
-                            <input type="text" class="form-control" value={{assignee}}
-                                [(ngModel)]="customFilter.FilterJson.Assignee" [ngModelOptions]="{standalone: true}">
-                        </div>
-                        <div class="col-md-8 pl-2">
+                        <div class="col-md-4 pl-2">
                             <span id="openEditProperties">Filter Name</span>
                             <input type="text" class="form-control" value={{filterName}}
                                 [(ngModel)]="customFilter.FilterName" [ngModelOptions]="{standalone: true}">
                         </div>
-                        <div class="col-md-8 pl-2">
+                        <div class="col-md-8 pr-2">
+                            <span id="openEditProperties">Assignee Name</span>
+                            <input type="text" class="form-control" value={{assignee}}
+                                [(ngModel)]="customFilter.FilterJson.Assignee" [ngModelOptions]="{standalone: true}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 px-2">
                             <span id="openEditProperties">Description</span>
                             <input type="text" class="form-control" value={{description}} 
                                 [(ngModel)]="customFilter.Description" [ngModelOptions]="{standalone: true}">
                         </div>
-                        <div class="col-md-8 pl-2">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 px-2">
                             <span id="openEditProperties">Priority</span>
-                            <input type="text" class="form-control" value={{priority}} 
-                                [(ngModel)]="customFilter.FilterJson.Priority" [ngModelOptions]="{standalone: true}">
+                            <select class="custom-select" [(ngModel)]="customFilter.FilterJson.Priority" [ngModelOptions]="{standalone: true}">
+                                <option selected disabled value="">Select Priority</option>
+                                <ng-container *ngFor="let item of applicationSetting.priority">
+                                    <option>{{item}}</option>
+                                </ng-container>
+                            </select>
                         </div>
-                        <div class="col-md-8 pl-2">
+                        <div class="col-md-6 pl-2">
                             <span id="openEditProperties">Difficulty</span>
-                            <input type="text" class="form-control" value={{difficulty}} 
-                                [(ngModel)]="customFilter.FilterJson.Difficulty" [ngModelOptions]="{standalone: true}">
+                            <select class="custom-select" [(ngModel)]="customFilter.FilterJson.Difficulty" [ngModelOptions]="{standalone: true}">
+                                <option selected disabled value="">Select Difficulty</option>
+                                <ng-container *ngFor="let item of applicationSetting.difficulty">
+                                    <option>{{item}}</option>
+                                </ng-container>
+                            </select>
                         </div>
-                        <div class="col-md-8 pl-2">
-                            <span id="openEditProperties">Status</span>
-                            <input type="text" class="form-control" value={{status}} 
-                                [(ngModel)]="customFilter.FilterJson.Status" [ngModelOptions]="{standalone: true}">
-                        </div>
-                        <div class="col-md-8 pl-2">
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 pl-2">
+                        <span id="openEditProperties">Status</span>
+                        <select class="custom-select form-control" value={{this.customFilter.FilterJson.Status}} [(ngModel)]="customFilter.FilterJson.Status" [ngModelOptions]="{standalone: true}">
+                            <ng-container *ngFor="let item of applicationSetting.status">
+                                <option>{{item}}</option>
+                            </ng-container>
+                        </select>
+                       </div>
+                        <div class="col-md-6 pl-2">
                             <span id="openEditProperties">Sprint Number</span>
-                            <input type="text" class="form-control" value={{sprintNumber}} 
-                                [(ngModel)]="customFilter.FilterJson.SprintNumber" [ngModelOptions]="{standalone: true}">
+                            <input type="number" min="-1" class="form-control" [(ngModel)]="customFilter.FilterJson.SprintNumber" [ngModelOptions]="{standalone: true}">
                         </div>
                     </div>
                     <div class="row py-3">
