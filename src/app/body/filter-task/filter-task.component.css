@@ -23,6 +23,12 @@ input {
     color: var(--text);
 }
 
+#assigneeSuggestion,
+input {
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
 select:focus,
 input:focus {
     background-color: var(--primary-bg);

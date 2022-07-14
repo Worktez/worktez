@@ -49,12 +49,27 @@
         <div class="row">
             <ng-container *ngIf="isAssigneeChecked">
                 <div class="col">
-                    <input type="text" class="form-control" style="font-size: 12px;" placeholder="Enter Assignee Name" [(ngModel)]="assignee" />
+                    <div class="col">
+                        <input type="text" autocomplete="off" class="form-control" style="font-size: 12px;"
+                        [formControl]="assigneeName" placeholder="Enter Assignee's Name" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [(ngModel)]="assignee"/>
+                    <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
+                            <ng-container *ngIf="appSettings.teamDataReady; else loader">
+                                <app-suggestion-bucket [email]="item" [showEmail]="true"
+                                    (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                            </ng-container>
+                            <ng-template #loader>
+                                <app-loader></app-loader>
+                            </ng-template>
+                        </ng-container>
+                    </div>
+                    </div>
                 </div>
             </ng-container>
             <ng-container *ngIf="isProjectChecked">
                 <div class="col">
-                    <select data-style="btn-default" class="form-control" [(ngModel)]="project" (change)="onProjectChange()" [ngModelOptions]="{standalone: true}">
+                    <select data-style="btn-default" class="form-control form-control-sm" [(ngModel)]="project" (change)="onProjectChange()" [ngModelOptions]="{standalone: true}">
                         <ng-container  *ngFor="let item of backendService.organizationDetails.TeamsId">
                             <option>{{item}}</option>
                         </ng-container>
@@ -63,8 +78,8 @@
             </ng-container>
             <ng-container *ngIf="isPriorityChecked" style="font-size: 10px;">
                 <div class="col" >
-                    <select data-style="btn-default" class="form-control" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
-                        <option value="" selected disabled>Select Priority</option>
+                    <select data-style="btn-default" class="form-control form-control-sm" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
+                        <option [ngValue]="Null" [disabled]="true">Select Priority</option>
                         <ng-container  *ngFor="let item of appSettings.priority">
                             <option>{{item}}</option>
                         </ng-container>
@@ -73,8 +88,8 @@
             </ng-container>
             <ng-container *ngIf="isStatusChecked">
                 <div class="col">
-                    <select data-style="btn-default" class="form-control" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
-                        <option value="" selected disabled>Select Status</option>
+                    <select data-style="btn-default" class="form-control form-control-sm" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+                        <option [ngValue]="Null" [disabled]="true">Select Status</option>
                         <ng-container  *ngFor="let item of appSettings.status">
                             <option>{{item}}</option>
                         </ng-container>
@@ -83,8 +98,8 @@
             </ng-container>
             <ng-container *ngIf="isDifficultyChecked">
                 <div class="col">
-                    <select class="form-control" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
-                        <option value="" selected disabled>Select Difficulty</option>
+                    <select class="form-control form-control-sm" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
+                        <option [ngValue]="Null" [disabled]="true">Select Difficulty</option>
                         <ng-container  *ngFor="let item of appSettings.difficulty">
                             <option>{{item}}</option>
                         </ng-container>
