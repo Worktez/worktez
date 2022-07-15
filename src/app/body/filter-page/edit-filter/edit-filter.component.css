@@ -27,10 +27,6 @@
     color: white;
 }
 
-.btn {
-    color: var(--text);
-}
-
 
 .btn:hover,
 #button:focus,
