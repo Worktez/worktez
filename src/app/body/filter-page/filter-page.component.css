@@ -33,5 +33,5 @@
 .card {
     background-color: var(--secondary-bg);
     color: var(--text);
-    width: 24rem
+    width: 384px
 }
