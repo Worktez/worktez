@@ -17,21 +17,24 @@
     <div class="col-8">
       <h2>Milestone Details</h2>
     </div>
-    
+
     <div class="col-3">
-      
-      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary"  (click)="activateAdd()" data-toggle="modal"
-        data-target="#exampleModalCenter">
-        Add Task
-      </button></div>
-      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewTask"  (click)="createTask()">
-        Create Task
-      </button></div>
+
+      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" (click)="activateAdd()"
+          data-toggle="modal" data-target="#exampleModalCenter">
+          Add Task
+        </button></div>
+      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#createNewTask" (click)="createTask()">
+          Create Task
+        </button></div>
     </div>
+
     <div class="col-1">
       <span class="close material-icons float-right" (click)="backToMilestones()">close</span>
 
     </div>
+
   </div>
   <hr>
 
@@ -40,11 +43,31 @@
       <div class="col-md-4">
         <div class="card p-4">
           <h1>{{milestoneData.Title}}</h1>
-
-          <h4 class="heading">
-            <span class="material-icons mr-1"
-              style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
-          </h4>
+          <div class="row pt-2">
+            <div class="col-md-5 col">
+              <h4 class="heading">
+                <span class="material-icons mr-1"
+                  style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
+              </h4>
+            </div>
+                 <div class="col-md-5 col" (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
+                  <span class="label"><b>Status:</b></span>
+                  &nbsp;
+                  <span class="value" (click)="showEditMilestone( milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
+                      <ng-container *ngIf="milestoneIdToEdit == milestoneData.MilestoneId && fieldToEdit == 'MilestoneStatus'; else showMilestoneStatusIcon">
+                          <select class="form-control form-control-sm" [(ngModel)]="milestoneData.MilestoneStatus" [ngModelOptions]="{standalone: true}" (change)="editStatus()" (mouseleave)="clickOut()">
+                              <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
+                              <ng-container *ngFor="let item of milestoneStatusLabels">
+                                <option>{{item}}</option>
+                            </ng-container>
+                          </select>
+                      </ng-container>
+                      <ng-template #showMilestoneStatusIcon>
+                        {{milestoneData.MilestoneStatus}}
+                      </ng-template>
+                  </span>
+              </div>
+          </div>
           <h4 class="mt-1 heading">
             <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestoneData.TeamId}}
           </h4>

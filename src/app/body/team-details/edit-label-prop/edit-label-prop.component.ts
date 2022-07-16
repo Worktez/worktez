@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, Input, OnInit, Output, ViewChild , EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { NgForm } from '@angular/forms';
+import { NgForm, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Label ,Team} from 'src/app/Interface/TeamInterface';
 import { AuthService } from 'src/app/services/auth.service';
@@ -34,6 +34,8 @@ export class EditLabelPropComponent implements OnInit {
   @Input('teamName') teamName: string;
   @Output() editLabelCompleted = new EventEmitter<{ completed: boolean }>();
   @Output() getTeamLabelsByScope = new EventEmitter();
+  iconName = new UntypedFormControl();
+  colorCode = new UntypedFormControl();
   enableLoader: boolean = false;
   showClose: boolean=false;
 
@@ -61,6 +63,26 @@ export class EditLabelPropComponent implements OnInit {
       },
       complete: () => console.info('Successful ')
     });
+  }
+
+  selectedIconName(item){
+    if(item.selected == false){
+      this.iconName.setValue("");
+      this.editLabelDone();
+    } else {
+      this.iconName.setValue(item.data);
+    }
+  }
+
+  selectedColorName(item) {
+    if(item.selected == false){
+      this.colorCode.setValue("");
+      this.editLabelDone();
+    }else {
+      var temp = item.data as string
+      temp = temp.slice(1);
+      this.colorCode.setValue(temp);
+    }
   }
 
   editLabelDone(){

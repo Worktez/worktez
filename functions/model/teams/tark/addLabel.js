@@ -60,7 +60,12 @@ exports.addLabel = function(request, response) {
         const type = team.Type;
         type.push(displayName);
         inputJson["Type"] = type;
+      } else if (scope == "MilestoneStatus") {
+        const milestoneStatus = team.MilestoneStatus;
+        milestoneStatus.push(displayName);
+        inputJson["MilestoneStatus"] = milestoneStatus;
       }
+
 
       updateTeamDetails(inputJson, orgDomain, teamName);
       setLabelProperties(orgDomain, teamName, id, displayName, scope, iconName, colorCode);

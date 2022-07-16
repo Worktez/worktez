@@ -63,7 +63,7 @@ export class TasksComponent implements OnInit {
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
-    } else if (this.currentSprintName == "S-2") {
+    } else if (this.currentSprintName == "Deleted") {
       this.currentSprintNumber = -2;
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
@@ -110,7 +110,6 @@ export class TasksComponent implements OnInit {
   }
 
   applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string, Sprint: number }) {
-    this.showFilter=false;
     this.filterTaskService.saveFilterData(data.Assignee, data.Project, data.Priority, data.Difficulty, data.Status, data.Sprint)
     if (data.Project != this.teamId) {
       this.teamId = data.Project

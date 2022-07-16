@@ -141,42 +141,48 @@
         </div>
         <div class="row" >
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
-                <h5 id="label">{{task.Id}}</h5>
-                <h4 id="value">{{task.Title}}</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                    <h3 id="label">{{task.Title}}</h3>  
+                    </div>
+                    <div class="col">
+                        <h5 id="label" class="float-right">{{task.Id}}</h5>
+                    </div>
+                </div>
                 <div class="row mt-2">
                     <div class="col-md-4 ">
                         <span id="label">Sprint Number:</span>
                         <span id="value">{{task.SprintNumber}}</span>
                     </div>
-                    <div class="col-md-4 ">
+                    <div class="col-md-3 ">
                         <span id="label">Story Point:</span>
                         <span id="value">{{task.StoryPointNumber}}</span>
                     </div>
-                    <div class="col-md-4 ">
+                    <div class="col-md-5 ">
                         <span id="label">Estimated Time:</span>
-                        <span id="value">{{task.EstimatedTime}}</span>
+                        <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
                     </div>
                 </div>
 
                 <div class="row mt-4"*ngIf="activityDataReady; else loader">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-12">
                                 <span id="label" data-toggle="tooltip" data-placement="top"
-                                    title="Remaining Time">RT</span>
-                                <br>
-                                <span id="value">{{task.EstimatedTime - task.LogWorkTotalTime}}</span>
+                                    title="Remaining Time">Remaining Time: </span>
+                                <span id="value" *ngIf="!remainingTimeHrs==0">{{remainingTimeHrs}} Hrs </span><span id="value" *ngIf="!(remainingTimeMins==0)">{{remainingTimeMins}} Mins</span>
+                                <span id="value" *ngIf="totalRemainingTime==0"> {{totalRemainingTime}} Hrs</span>
                             </div>
-                            <div class="col-4">
-                                <span id="label" data-toggle="tooltip" data-placement="top" title="Left Time">LT</span>
-                                <br>
-                                <span id="value"> {{task.LogWorkTotalTime}}</span>
+                            <div class="col-12">
+                                <span id="label" data-toggle="tooltip" data-placement="top" title="Logged Time">Logged Time: </span>
+                                <span id="value" *ngIf="loggedTimeHrs>0">{{loggedTimeHrs}} Hrs </span><span id="value" *ngIf="loggedTimeMins>0">{{loggedTimeMins}} Mins</span>
+                                <span id="value" *ngIf="task.LogWorkTotalTime==0"> {{task.LogWorkTotalTime}} Hrs</span>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12">
                                 <span id="label" data-toggle="tooltip" data-placement="top"
-                                    title="Estimated Time">ET</span>
-                                <br>
-                                <span id="value">{{task.EstimatedTime}}</span>
+                                    title="Estimated Time">Estimated Time: </span>
+                                <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
+                                <span id="value" *ngIf="task.EstimatedTime==0"> {{task.EstimatedTime}} Hrs</span>
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -186,10 +192,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4 float-right">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3 float-right">
                         <span id="label">Work Done:</span>
-                        <span id="value">{{task.WorkDone}}</span>
+                        <span id="value">{{task.WorkDone}} %</span>
                         <app-work-completion [workDone]="task.WorkDone"></app-work-completion>
                     </div>
                 </div>
@@ -228,12 +234,15 @@
                                         </tr>
                                     </ng-container>
                                     <ng-container *ngFor="let link of linkData">
-                                        <tr>
-                                            <td colspan="3"><span data-toggle="tooltip" data-placement="top"
+                                        <tr *ngIf="link.LinkStatus != 'Deleted'">
+                                            <td colspan="2"><span data-toggle="tooltip" data-placement="top"
                                                     title="task.id">{{link.LinkID}}</span></td>
                                             <td colspan="3">{{link.LinkType}}</td>
-                                            <td colspan="6"><a href={{link.LinkURL}}
+                                            <td colspan="5"><a href={{link.LinkURL}}
                                                     target="_blank">{{link.LinkURL}}</a></td>
+                                            <td colspan="2"><mat-icon (click)="removeLink(link.LinkID, link.LinkType)" fontSet="material-icons-outlined" class="align-middle text-danger">
+                                                close
+                                            </mat-icon> </td>        
                                         </tr>
                                     </ng-container>
                                 </tbody>
@@ -263,7 +272,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
                                 aria-labelledby="all-activities-tab"
-                                style="overflow-y:auto; overflow-x: hidden; max-height: 450px; min-height: 450px;">
+                                style="overflow-y:auto; overflow-x: hidden; white-space: pre-line; max-height: 450px; min-height: 450px;">
                                 <ng-container *ngIf="(activityData)?.length==0">
                                     <div class="row">
                                         <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.

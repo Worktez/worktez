@@ -171,7 +171,9 @@ export class TeamDetailsComponent implements OnInit {
     const statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
     const priorityLabels: string[] = ["High", "Medium", "Low"];
     const difficultyLabels: string[] = ["High", "Medium", "Low"];
-    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels}).subscribe({
+    const milestoneStatusLabels: string[] = ["Ice Box", "Completed", "Under Progress", "Ready to start"];
+
+    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels,  MilestoneStatusLabels: milestoneStatusLabels}).subscribe({
       next: (data) => {
         this.showLoader = false
       },

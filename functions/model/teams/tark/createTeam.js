@@ -41,11 +41,12 @@ exports.createTeam = function(request, response) {
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
+    const milestoneStatusLabels = request.body.data.MilestoneStatusLabels;
     const uid = request.body.data.Uid;
     const orgAppKey = request.body.data.OrganizationAppKey;
     const orgDomain = request.body.data.OrganizationDomain;
     const teamName = request.body.data.TeamName;
-    const scope = ["Priority", "Difficulty", "Status", "Type"];
+    const scope = ["Priority", "Difficulty", "Status", "Type", "MilestoneStatus"];
     let orgId;
     const teamStatus = 1;
 
@@ -65,8 +66,8 @@ exports.createTeam = function(request, response) {
 
         const prom1 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
-                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus).then((data)=>{
-                    createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels);
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then((data)=>{
+                    createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
                     setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
                     setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
                 });
