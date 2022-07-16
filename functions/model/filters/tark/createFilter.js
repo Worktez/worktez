@@ -1,5 +1,5 @@
-/* eslint-disable no-const-assign */
 /* eslint-disable linebreak-style */
+/* eslint-disable no-const-assign */
 /* eslint-disable require-jsdoc */
 /* eslint-disable  object-curly-spacing*/
 // /* eslint-disable no-undef */
