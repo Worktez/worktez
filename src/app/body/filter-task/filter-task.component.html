@@ -13,6 +13,7 @@
 ***********************************************************/ -->
 <div class="row">
     <div class="col-md-2 col-1">
+        <br>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Filter Options
@@ -50,6 +51,7 @@
             <ng-container *ngIf="isAssigneeChecked">
                 <div class="col">
                     <div class="col">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Assignee</span>
                         <input type="text" autocomplete="off" class="form-control" style="font-size: 12px;"
                         [formControl]="assigneeName" placeholder="Enter Assignee's Name" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [(ngModel)]="assignee"/>
@@ -69,6 +71,7 @@
             </ng-container>
             <ng-container *ngIf="isProjectChecked">
                 <div class="col">
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project</span>
                     <select data-style="btn-default" class="form-control form-control-sm" [(ngModel)]="project" (change)="onProjectChange()" [ngModelOptions]="{standalone: true}">
                         <ng-container  *ngFor="let item of backendService.organizationDetails.TeamsId">
                             <option>{{item}}</option>
@@ -78,6 +81,7 @@
             </ng-container>
             <ng-container *ngIf="isPriorityChecked" style="font-size: 10px;">
                 <div class="col" >
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Priority</span>
                     <select data-style="btn-default" class="form-control form-control-sm" [(ngModel)]="priority" [ngModelOptions]="{standalone: true}">
                         <option [ngValue]="Null" [disabled]="true">Select Priority</option>
                         <ng-container  *ngFor="let item of appSettings.priority">
@@ -88,6 +92,7 @@
             </ng-container>
             <ng-container *ngIf="isStatusChecked">
                 <div class="col">
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
                     <select data-style="btn-default" class="form-control form-control-sm" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                         <option [ngValue]="Null" [disabled]="true">Select Status</option>
                         <ng-container  *ngFor="let item of appSettings.status">
@@ -98,6 +103,7 @@
             </ng-container>
             <ng-container *ngIf="isDifficultyChecked">
                 <div class="col">
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Difficulty</span>
                     <select class="form-control form-control-sm" [(ngModel)]="difficulty" [ngModelOptions]="{standalone: true}">
                         <option [ngValue]="Null" [disabled]="true">Select Difficulty</option>
                         <ng-container  *ngFor="let item of appSettings.difficulty">
@@ -108,15 +114,19 @@
             </ng-container>
             <ng-container *ngIf="isSprintChecked">
                 <div class="col">
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Sprint</span>
                     <input placeholder="Select Sprint" class="form-control" style="font-size: 10px;" type="number" id="filterSprintNumberInput" [(ngModel)]="sprint">
                 </div>
             </ng-container>
             <div class="col">
+                <br>
                 <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="filterByProperties()">Filter</button>
             </div>
         </div>
     </div>
+    <br>
 </div>
+<br>
 <ng-container *ngIf="showLoader">
 <app-loader></app-loader>
 </ng-container>

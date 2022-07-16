@@ -54,8 +54,6 @@ export class FilterTaskComponent implements OnInit {
       this.project = this.authService.getTeamId();
       this.teamIds = this.backendService.getOrganizationTeamIds();
       this.readTeamData(this.project);
-      this.project = this.defaultProject
-      this.onProjectChange();
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
@@ -66,8 +64,6 @@ export class FilterTaskComponent implements OnInit {
                   this.project = this.authService.getTeamId();
                   this.teamIds = this.backendService.getOrganizationTeamIds();
                   this.readTeamData(this.project);
-                  this.project = this.defaultProject
-                  this.onProjectChange();
                 }
               });
             }
@@ -94,6 +90,7 @@ export class FilterTaskComponent implements OnInit {
   readTeamData(teamId: string){
     this.showLoader = true;
     this.appSettings.getTeamDetails(teamId).subscribe(team => {
+      this.showLoader = false;
       this.teamMembers = team.TeamMembers;
       this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
         startWith(''),
