@@ -89,6 +89,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   setSprintToComplete(){
+    
     this.completedSprintEnabled=true;
   }
 

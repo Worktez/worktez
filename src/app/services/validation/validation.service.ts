@@ -199,7 +199,7 @@ export class ValidationService {
     }
 
     async checkEstimatedTime(value: number) {
-        const control = new UntypedFormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.pattern("^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$")]);
         if (control.errors === null)
             return (true);
         else {
@@ -352,7 +352,7 @@ export class ValidationService {
     }
 
     async checkLogHours(value: number) {
-        const control = new UntypedFormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.pattern("^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$")]);
         if (control.errors === null)
             return (true);
         else {
