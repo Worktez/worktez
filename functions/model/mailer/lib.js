@@ -53,7 +53,6 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
                     valueArray.doer = customParameter;
                     valueArray.taskId = taskId;
                     valueArray.AssigneeEmail = taskData.Assignee;
-
                     if (userData) {
                         valueArray.recipientName = userData.displayName;
                     }
