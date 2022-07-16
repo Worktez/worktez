@@ -41,6 +41,9 @@ export class ValidationService {
             case 'difficulty': {
                 return (this.checkDifficulty(value));
             }
+            case 'milestoneStatus': {
+                return (this.checkMilestoneStatus(value));
+            }
             case 'description': {
                 return (this.checkDescription(value));
             }
@@ -213,6 +216,17 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_DIFFICULTY";
             this.errorHandlerService.addError(errorType, "Difficulty field is required")
+            return (false);
+        }
+    }
+
+    async checkMilestoneStatus(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_MILESTONESTATUS";
+            this.errorHandlerService.addError(errorType, "MilestoneStatus field is required")
             return (false);
         }
     }
