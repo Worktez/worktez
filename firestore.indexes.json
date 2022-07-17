@@ -35,6 +35,15 @@
       ]
     },
     {
+      "collectionGroup": "Tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "SprintNumber", "order": "ASCENDING" },
+        { "fieldPath": "TeamId", "order": "ASCENDING" },
+        { "fieldPath": "Status", "order": "ASCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "Notifications",
       "queryScope": "COLLECTION",
       "fields": [
