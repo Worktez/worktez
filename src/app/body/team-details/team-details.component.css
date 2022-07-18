@@ -24,8 +24,29 @@ hr {
     border-bottom: 2px solid var(--scrollbar-color);
 }
 
+#DeleteModalLabel{
+    text-align: left;
+}
+
+.modal-dialog {
+    height: 100%;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    color: var(--primary-color);
+}
+
 .btn {
     color: var(--text);
+}
+
+.btn-danger{
+    color: #ffff;
 }
 
 .btn:hover {
