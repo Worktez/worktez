@@ -37,7 +37,7 @@ exports.editTask = function(request, response) {
     const priority = request.body.data.Priority;
     const difficulty = request.body.data.Difficulty;
     const assignee = request.body.data.Assignee;
-    const estimatedTime = request.body.data.EstimatedTime;
+    const estimatedTime = parseFloat(request.body.data.EstimatedTime);
     const taskStatus = request.body.data.Status;
     const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
     const oldStoryPointNumber = parseInt(request.body.data.OldStoryPointNumber);
@@ -50,7 +50,7 @@ exports.editTask = function(request, response) {
     const editedSprintName = createSprintName(editedSprintNumber);
     const type = request.body.data.Type;
     const reporter = request.body.data.Reporter;
-    let milestoneId = request.body.data.MilestoneId;
+    const milestoneId = request.body.data.MilestoneId;
     let result;
     let status = 200;
     let assigneeName = "";

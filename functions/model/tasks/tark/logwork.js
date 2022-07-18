@@ -33,7 +33,7 @@ exports.logWork = function(request, response) {
     const appKey = request.body.data.AppKey;
     const logStatus = request.body.data.LogWorkStatus;
     const taskId = request.body.data.LogTaskId;
-    const logHours = parseInt(request.body.data.LogHours);
+    const logHours = parseFloat(request.body.data.LogHours);
     const workDone = parseInt(request.body.data.LogWorkDone);
     const sprintNumber = parseInt(request.body.data.SprintNumber);
     const logWorkComment = request.body.data.LogWorkComment;
@@ -56,8 +56,8 @@ exports.logWork = function(request, response) {
         const orgDomain = orgDetails.OrganizationDomain;
 
         const promise1 = getTask(taskId, orgDomain).then((taskDoc) => {
-            logWorkTotalTime = parseInt(taskDoc.LogWorkTotalTime);
-            logWorkTotalTime = parseInt(logWorkTotalTime) + parseInt(logHours);
+            logWorkTotalTime = parseFloat(taskDoc.LogWorkTotalTime);
+            logWorkTotalTime = parseFloat(logWorkTotalTime) + parseFloat(logHours);
 
             if (logStatus === "Completed") {
                 const dd = String(today.getDate()).padStart(2, "0");

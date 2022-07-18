@@ -60,6 +60,8 @@ export class EditPageComponent implements OnInit {
   backlogSprintNumber: number
   milestoneData=[]
   milestoneId:string
+  estimatedTimeHrs: number
+  estimatedTimeMins: number
 
   constructor(private functions: AngularFireFunctions,  public applicationSetting: ApplicationSettingsService,private authService: AuthService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
@@ -73,6 +75,13 @@ export class EditPageComponent implements OnInit {
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
     this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type, this.task.Status, this.task.Title, this.task.Reporter, this.task.MilestoneId];
+    [this.estimatedTimeHrs, this.estimatedTimeMins] = this.toolsService.changeToHourMinsTime(this.editTask.EstimatedTime);
+    if(this.estimatedTimeHrs == 0 && this.estimatedTimeMins != 0){
+      this.estimatedTimeHrs=undefined
+    }
+    else if(this.estimatedTimeMins == 0 && this.estimatedTimeHrs!= 0){
+      this.estimatedTimeMins=undefined
+    }
   }
   
   private _filter(value: string): string[] {
@@ -138,6 +147,19 @@ export class EditPageComponent implements OnInit {
   }
 
   async submit() {
+    if(this.estimatedTimeHrs == undefined && this.estimatedTimeMins != undefined){
+      this.estimatedTimeHrs=0
+      if(this.estimatedTimeMins<0){
+        this.estimatedTimeMins=0
+      }
+    }
+    else if(this.estimatedTimeMins == undefined && this.estimatedTimeHrs!= undefined){
+      this.estimatedTimeMins=0
+      if(this.estimatedTimeHrs<0){
+        this.estimatedTimeHrs=0
+      }
+    }
+    this.editTask.EstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "priority", value: this.editTask.Priority },
     { label: "title", value: this.editTask.Title},
     { label: "estimatedTime", value: this.editTask.EstimatedTime },

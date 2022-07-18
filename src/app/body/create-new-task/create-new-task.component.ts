@@ -26,6 +26,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { Milestones } from 'src/app/Interface/MilestoneInterface';
 
 
+
 declare var jQuery:any;
 
 @Component({
@@ -52,7 +53,9 @@ export class CreateNewTaskComponent implements OnInit {
   description: string
   watcherName: string[]
   creatorName : string
-  estimatedTime: number
+  estimatedTimeHrs: number
+  estimatedTimeMins: number
+  totalEstimatedTime: number
   project: string = null
   priority: string = null
   difficulty: string = null
@@ -97,7 +100,7 @@ export class CreateNewTaskComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
-
+  
   readTeamData(teamId :string){
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
@@ -153,10 +156,23 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   async submit() {
+    if(this.estimatedTimeHrs == undefined && this.estimatedTimeMins != undefined){
+      this.estimatedTimeHrs=0
+      if(this.estimatedTimeMins<0){
+        this.estimatedTimeMins=0
+      }
+    }
+    else if(this.estimatedTimeMins == undefined && this.estimatedTimeHrs!= undefined){
+      this.estimatedTimeMins=0
+      if(this.estimatedTimeHrs<0){
+        this.estimatedTimeHrs=0
+      }
+    }
+    this.totalEstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
-    { label: "estimatedTime", value: this.estimatedTime },
+    { label: "estimatedTime", value: this.totalEstimatedTime },
     { label: "difficulty", value: this.difficulty },
     { label: "description", value: this.description },
     { label: "creator", value: this.creatorName },
@@ -186,7 +202,7 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskId = this.popupHandlerService.parentTaskId;
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
-    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl, MilestoneId: this.selectedMilestoneId }).subscribe({
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.totalEstimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl, MilestoneId: this.selectedMilestoneId }).subscribe({
       next: (data) => {
         console.log("Successful created task");
         this.enableLoader=false;
