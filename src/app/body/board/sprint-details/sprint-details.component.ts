@@ -21,6 +21,9 @@ import { Sprint } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { AuthService } from '../../../services/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ToolsService } from 'src/app/services/tool/tools.service';
+
+
 
 
 @Component({
@@ -42,11 +45,12 @@ export class SprintDetailsComponent implements OnInit {
   showLoader:boolean = false
   sprintDataReady: boolean = false
   activeSprintNumber: number;
-  today: any = new Date();
+  todayDate: string;
 
-  constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public toolsService: ToolsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.todayDate = this.toolsService.date();
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
       this.sprintDataReady = true;
       if(this.startService.currentSprintNumber == 0){
@@ -57,6 +61,7 @@ export class SprintDetailsComponent implements OnInit {
       }
     });
     this.filterSprintNumber=this.startService.teamCurrentSprintNumber ;
+    
   }
 
   changeSprintStatus(sprintStatus: string) {
@@ -64,10 +69,10 @@ export class SprintDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     const uid = this.authService.getLoggedInUser();
-    console.log(this.today);
+   
 
 
-    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid , Date: this.today}).subscribe({
+    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid, Date: this.todayDate}).subscribe({
         next: (data) => {
           console.log("Successful updated ");
         },
@@ -80,8 +85,9 @@ export class SprintDetailsComponent implements OnInit {
           this.sprintData = data;
           this.showLoader = false;
           if(sprintStatus=='Completed'){
-            this.sprintData.EndDate=this.today.toLocaleDateString("hu-HU").replace('.','-').replace('.','-').replace('.','');
-            this.workPercentage=100
+            this.sprintData.EndDate=  this.todayDate = this.toolsService.date().split('/').reverse().join('-');
+            this.workPercentage=100;
+          
           }
         })
     });
