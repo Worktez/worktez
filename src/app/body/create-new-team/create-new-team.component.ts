@@ -26,6 +26,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Conditional } from '@angular/compiler';
 
 declare var jQuery:any;
 
@@ -50,6 +51,7 @@ export class CreateNewTeamComponent implements OnInit {
   teamManagerEmail: string;
   teamMembers: string[] = [];
   enableLoader: boolean = false;
+  teamChanged:boolean = false
 
   constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
@@ -75,6 +77,17 @@ export class CreateNewTeamComponent implements OnInit {
       }
     }
   }
+
+  setTeamId(){
+    if(!this.teamChanged){
+    this.teamId = this.teamName.slice(0, 3);
+    }
+  }
+
+  setChange(){
+    this.teamChanged = true;
+}
+
 
   loadData() {
     this.appKey = this.cookieService.get('userSelectedOrgAppKey');
@@ -123,12 +136,19 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   addMember() {
-    this.addMemberEnabled = true;
+    var condition = (this.validationService.checkTeamMemberEmails(this.teamMembers)).then(res => {
+      return res;
+    });
+    if (condition){
+      this.addMemberEnabled = true;
+    }
+    else(
+      console.log("error")
+    )
   }
 
   addedMember(data: { completed: boolean, memberEmail: string}) {
     if (data.memberEmail) {
-      this.teamMembers.push(data.memberEmail);
     }
     this.addMemberEnabled = false;
   }
