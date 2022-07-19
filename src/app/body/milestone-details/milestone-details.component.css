@@ -129,18 +129,18 @@
     border-radius: 50px;
     transition: all ease 0.9s;
 }
+
 #button {
     background-color: var(--primary-color);
     color: white;
-    border: none;
 }
 
 #button:focus,
 #button:active,
 #button:hover {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
 }
 
 #SuccessIcon{
@@ -189,4 +189,13 @@
     .container-fluid {
         padding: 4px 40px 0px 40px;
     }  
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }

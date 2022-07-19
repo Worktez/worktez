@@ -73,7 +73,7 @@
                                         <ng-container *ngFor="let item of teamMembers">
                                             <div class="col-md-5 member-email mx-2 mt-2 p-2">
                                                 {{item}}
-                                                <span aria-hidden="true" class="material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMember(item)">close</span>
+                                                <span aria-hidden="true" class="btn material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMember(item)">close</span>
                                             </div>
                                         </ng-container>
                                         <ng-container *ngIf="!teamMembers.length">

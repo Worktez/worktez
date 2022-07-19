@@ -151,7 +151,7 @@ export class BoardComponent implements OnInit {
     if(filterSprintNumber==0){
       filterSprintNumber=-1;
     }
-    else if(filterSprintNumber<-2){
+    else if(filterSprintNumber==-2){
       filterSprintNumber=-2;
     }
     this.currentSprintNumber=filterSprintNumber;
@@ -163,6 +163,7 @@ export class BoardComponent implements OnInit {
     }
     else if(filterSprintNumber==-2){
       this.currentSprintName="Deleted";
+      
     }
     
     this.applicationSettingsService.editedSprintId = filterSprintNumber;

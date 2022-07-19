@@ -26,7 +26,6 @@ export class SelectDropdownComponent implements OnInit {
   selectedOption: string = "Team";
 
   ngOnInit(): void {
-    console.log(this.teamMembers);
   }
 
   setSelectedOption() {
