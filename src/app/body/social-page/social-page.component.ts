@@ -22,7 +22,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-social-page',
@@ -42,12 +41,11 @@ export class SocialPageComponent implements OnInit {
 
   PostId: string
 
-  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, private router: Router) { }
+  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.authService.getUserSettings();
-    this.load();
     this.authService.userAppSettingObservable.subscribe((data)=>{
       this.pageReady = true;
       this.loadSocialPageData();
@@ -95,9 +93,6 @@ export class SocialPageComponent implements OnInit {
     this.loadSocialPageData();
   }
 
-  load(){
-   this.router.navigate(['']);
-  }
 
   loadRecentActivity(){
     const newarray = this.posts.filter((data)=>{
