@@ -115,8 +115,7 @@ export class StartServiceService {
 
   loadNext(SelectedOrgAppKey: string, SelectedTeamId: string, uid: string, AppTheme: string) {
     this.userAppSettingsReady = true;
-    this.authService.landingToSocial = false
-    if (SelectedOrgAppKey != "") {
+    if (SelectedOrgAppKey != undefined && SelectedOrgAppKey != "") {
       this.authService.organizationAvailable = true;
       this.authService.getListedOrganizationData(uid);
       this.backendService.getOrgDetails(SelectedOrgAppKey);
@@ -125,14 +124,11 @@ export class StartServiceService {
       this.quickNotes.getQuickNotes();
     } else {
       this.authService.organizationAvailable = false;
+        this.router.navigate(['/Social']);
     }
     if (SelectedOrgAppKey) {
-      if(!this.authService.landingToSocial) {
-        this.authService.landingToSocial = true;
-        if(this.currentUrl == '/') {
-          this.router.navigate(['/MyDashboard']);
-        }
-          
+      if(this.currentUrl == '/') {
+        this.router.navigate(['/MyDashboard']);
       }
       if(SelectedTeamId != "") {
         this.selectedTeamId = SelectedTeamId;
@@ -158,6 +154,8 @@ export class StartServiceService {
         this.applicationDataState.next(true);
         console.log("TeamId doesn't exists");
       }
+    } else {
+        this.router.navigate(['/Social']);
     }
   }
 
