@@ -42,7 +42,11 @@
                                 <span id="headerLabel">Difficulty</span>
                                 <app-get-icon [DisplayName]="task.Difficulty" [Border]="true"></app-get-icon>
                             </div>
-                        </div>
+                            <div class="difficulty labels mx-2" *ngIf="applicationSettingService.labelDataReady">
+                                <span id="headerLabel">Task Type</span>
+                                <app-get-icon [DisplayName]="task.Type" [Border]="true"></app-get-icon>
+                            </div>
+                        </div>    
                     </div>
                     <div class="col-md-6 col-6 py-2 d-flex justify-content-end">
                         <ul class="nav">
@@ -50,7 +54,8 @@
                                 <span class="btn">
                                     <img src="../../../assets/git.png" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
                                     alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel" (click)="linkPr()">
-                                    <a *ngIf="prLinked" href="{{prLink}}" target="_blank" class="btn btn-status" data-toggle="tooltip" data-placement="top" title="view PR">
+                                    <a *ngIf="prLinked" data-target="#gitPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
+                                   
                                         PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
                                     </a>
                                 </span>
@@ -137,6 +142,14 @@
         </div>
         <div class="row" >
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
+                <div class="row">
+                    <div class="col-md-4">
+                    <h3 id="label">{{task.Title}}</h3>  
+                    </div>
+                    <div class="col">
+                        <h5 id="label" class="float-right">{{task.Id}}</h5>
+                    </div>
+                </div>
                 <h5 id="label">{{task.Id}}</h5>
                 <h4 id="value">{{task.Title}}</h4>
                 <div class="row mt-2">
@@ -144,20 +157,20 @@
                         <span id="label">Sprint Number:</span>
                         <span id="value">{{task.SprintNumber}}</span>
                     </div>
-                    <div class="col-md-4 ">
+                    <div class="col-md-3 ">
                         <span id="label">Story Point:</span>
                         <span id="value">{{task.StoryPointNumber}}</span>
                     </div>
-                    <div class="col-md-4 ">
+                    <div class="col-md-5 ">
                         <span id="label">Estimated Time:</span>
-                        <span id="value">{{task.EstimatedTime}}</span>
+                        <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
                     </div>
                 </div>
 
                 <div class="row mt-4"*ngIf="activityDataReady; else loader">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-12">
                                 <span id="label" data-toggle="tooltip" data-placement="top"
                                     title="Remaining Time">RT</span>
                                 <br>
@@ -170,9 +183,9 @@
                             </div>
                             <div class="col-4">
                                 <span id="label" data-toggle="tooltip" data-placement="top"
-                                    title="Estimated Time">ET</span>
-                                <br>
-                                <span id="value">{{task.EstimatedTime}}</span>
+                                title="Estimated Time">Estimated Time: </span>
+                                <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
+                                <span id="value" *ngIf="task.EstimatedTime==0"> {{task.EstimatedTime}} Hrs</span>
                             </div>
                         </div>
                         <div class="row mt-4">
@@ -182,10 +195,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4 float-right">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3 float-right">
                         <span id="label">Work Done:</span>
-                        <span id="value">{{task.WorkDone}}</span>
+                        <span id="value">{{task.WorkDone}}%</span>
                         <app-work-completion [workDone]="task.WorkDone"></app-work-completion>
                     </div>
                 </div>
@@ -234,9 +247,9 @@
                                             <td colspan="3">{{link.LinkType}}</td>
                                             <td colspan="6"><a href={{link.LinkURL}}
                                                     target="_blank">{{link.LinkURL}}</a></td>
-                                                    <td colspan="2"><mat-icon (click)="removeLink(link.LinkID, link.LinkType)" fontSet="material-icons-outlined" class="align-middle text-danger">
-                                                        close
-                                                    </mat-icon> </td>          
+                                             <td colspan="2"><mat-icon (click)="removeLink(link.LinkID, link.LinkType)" fontSet="material-icons-outlined" class="align-middle text-danger">
+                                                 close
+                                             </mat-icon> </td>         
                                         </tr>
                                     </ng-container>
                                 </tbody>
@@ -266,7 +279,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active px-2" id="activities" role="tabpanel"
                                 aria-labelledby="all-activities-tab"
-                                style="overflow-y:auto; overflow-x: hidden; max-height: 450px; min-height: 450px;">
+                                style="overflow-y:auto; overflow-x: hidden; white-space: pre-line; max-height: 450px; min-height: 450px;">
                                 <ng-container *ngIf="(activityData)?.length==0">
                                     <div class="row">
                                         <div class="col text-center pt-2" id="noActivityDesc">No Activity Available.
@@ -316,7 +329,7 @@
         <app-link [taskId]="Id" [orgDomain]="orgDomain" (addedLink)="addedLink($event)"></app-link>
     </ng-container>
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
-        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" (addedPrLink)="addedPrLink($event)"></app-git>
+        <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-git>
     </ng-container>
 </ng-container>
 <ng-container *ngIf="showLoader || !(gotTaskData)">
