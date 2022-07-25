@@ -29,11 +29,12 @@ exports.createDefaultLabels = function(request, response) {
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
+    const milestoneStatusLabels = request.body.data.MilestoneStatusLabels;
 
     let status = 200;
     let result = { data: "Error in adding default labels" };
 
-    const promise1 = createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels).then(() => {
+    const promise1 = createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels).then(() => {
         console.log("Labels created successfully!");
         status = 200;
         result = { data: "Labels created successfully!" };

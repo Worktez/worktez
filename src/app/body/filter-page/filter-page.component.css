@@ -11,6 +11,16 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+#deletedFilter,
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text);
+    border-radius: 6px;
+    min-height: 30px;
+    justify-content: space-evenly;
+}
+
+
 .btn {
     color: var(--text);
 }
@@ -23,5 +33,5 @@
 .card {
     background-color: var(--secondary-bg);
     color: var(--text);
-    width: 24rem
+    width: 384px
 }

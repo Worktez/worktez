@@ -21,7 +21,7 @@
 const { addMilestone } = require("../milestone/tark/addMilestone");
 const { getAllMilestones } = require("../milestone/tark/getAllMilestones");
 const { getMilestone } = require("../milestone/tark/getMilestone");
-
+const { editMilestone } = require("../milestone/tark/editMilestone");
 
  /**
  * Description
@@ -54,6 +54,17 @@ fastify.post("/getMilestone", (req, res) => {
  */
 fastify.post("/getAllMilestones", (req, res) => {
   getAllMilestones(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/editMilestone"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/editMilestone", (req, res) => {
+  editMilestone(req, res);
 });
 
 
