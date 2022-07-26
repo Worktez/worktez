@@ -8,6 +8,7 @@ export interface Post{
   CommentCounter: number;
   PostId: string;
   Status: string;
+  ImagesUrl:[];
 }
 
 export interface Comment {
@@ -17,4 +18,5 @@ export interface Comment {
   Content: string;
   Status: string;
   PostId: string;
+  ImagesUrl:[];
 }
