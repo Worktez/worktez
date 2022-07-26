@@ -206,11 +206,11 @@ export class ProfileComponent implements OnInit {
         this.aboutMe = data.AboutMe;
         this.photoURL = data.photoURL;
         this.phoneNumber = data.phoneNumber;
-        this.linkedInProfile = data.LinkedInProfile;
-        this.githubProfile = data.LinkedInProfile;
-        this.dateOfJoining = data.DateOfJoining;
-        this.skills = data.Skills;
-        this.website = data.Website;
+        // this.linkedInProfile = data.LinkedInProfile;
+        // this.githubProfile = data.LinkedInProfile;
+        // this.dateOfJoining = data.DateOfJoining;
+        // this.skills = data.Skills;
+        // this.website = data.Website;
         if (this.website.includes("https://") == false) {
           this.website = "https://" + this.website;
         }

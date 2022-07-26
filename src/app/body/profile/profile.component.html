@@ -32,7 +32,8 @@
                             </mat-icon> 
                         </span>
                         <div class="card-body">
-                            <h2 class="card-title" style="color: var(--primary-color);">{{displayName}}</h2>
+                            <h2 class="card-title mb-0" style="color: var(--primary-color);">{{displayName}}</h2>
+                            <h4 class="card-title mt-0" *ngIf="aboutMe">{{aboutMe}}</h4>
                             <h4 class="card-title" *ngIf="role">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</h4>
                             <h4 class="card-title" *ngIf="phoneNumber">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">

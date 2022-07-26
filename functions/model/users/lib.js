@@ -137,7 +137,8 @@ exports.getAllUsersInEmail = function(emails) {
     const data = [];
     const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
         doc.forEach((user) => {
-            data.push(user.data());
+            const userBasic = (({ uid, displayName, email, Username, AboutMe, photoURL }) => ({ uid, displayName, email, Username, AboutMe, photoURL }))(user.data());
+            data.push(userBasic);
         });
         return data;
     });
@@ -153,7 +154,8 @@ exports.getAllUsersInUids = function(uids) {
     const data = [];
     const promise = db.collection("Users").where("uid", "in", uids).get().then((doc) => {
         doc.forEach((user) => {
-            data.push(user.data());
+            const userBasic = (({ uid, displayName, email, Username, AboutMe, photoURL }) => ({ uid, displayName, email, Username, AboutMe, photoURL }))(user.data());
+            data.push(userBasic);
         });
         return data;
     });
