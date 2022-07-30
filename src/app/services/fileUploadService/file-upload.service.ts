@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Injectable,Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
@@ -30,6 +30,7 @@ export class FileUploadService {
   taskId: string = "";
 
   filesData: FileData[]
+
   constructor(private storage: AngularFireStorage, private functions: AngularFireFunctions, private backendService: BackendService, private authService: AuthService, private toolsService: ToolsService) { }
 
   pushFileToTaskStorage(fileUpload: FileUpload, basePath: string, folderName: string): Observable<number> {
@@ -87,18 +88,6 @@ export class FileUploadService {
          
         },
         complete: () => console.info('Successful')
-    });
-
-  } else if(folderName == 'postImages'  ) {
-    const callable = this.functions.httpsCallable('librarian/uploadPostImages');
-    await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Uid: this.authService.user.uid, Date: todayDate, Time: time }).subscribe({
-      next: (data) => {
-        console.log("Successful ");
-      },
-      error: (error) => {
-
-      },
-      complete: () => console.info('Successful')
     });
     } else {
       const appKey = this.backendService.getOrganizationAppKey();

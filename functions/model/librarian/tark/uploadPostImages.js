@@ -54,7 +54,7 @@
        BasePath: basePath,
        FileStatus: "OK",
      };
-     setPostImages(updateUserFileJson, PostId, imageFileName);
+     setPostImages(updateUserFileJson, postId, imageFileName);
    }).catch((error) => {
      status = 500;
      console.log("Error:", error);

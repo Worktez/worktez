@@ -27,15 +27,13 @@ const { db } = require("../application/lib");
  * @param {any} postId
  * @param {any} lastUpdatedDate
  * @param {any} lastUpdatedTime
- * @param {any} photoURLs
  * @return {any}
  */
-exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime, photoURLs) {
+exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) {
     const addPostPromise = db.collection("Social").doc(postId).set({
         Uid: uid,
         Post: post,
         PostId: postId,
-        ImagesUrl: photoURLs,
         Reach: 0,
         Reactions: 0,
         // ReactionCounter: 0,

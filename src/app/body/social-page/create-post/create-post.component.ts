@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { FormControl, NgForm } from '@angular/forms';
 import { ToolsService } from 'src/app/services/tool/tools.service';
@@ -9,9 +9,6 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
-import { event } from 'firebase-functions/v1/analytics';
-import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
-import { FileUpload } from 'src/app/Interface/FileInterface';
 
 
 declare var jQuery:any;
@@ -32,55 +29,12 @@ export class CreatePostComponent implements OnInit {
   post : string;
   company: string;
   enableLoader: boolean;
-  urls = [];
-  choosePhoto: boolean = true
-  selectedFile: FileList
 
-  basePath:string;
-  currentFileUpload: FileUpload;
-  fileName: string;
-  percentage: number = 0
 
-  postId : string;
-  date : string;
-  
-  constructor(private functions: AngularFireFunctions, private toolService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService, public uploadService: FileUploadService) { }
+  constructor(private functions: AngularFireFunctions, private toolService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
   ngOnInit(): void {
-    this.choosePhoto = true;
-    this.urls = [];
-    const uid = this.authService.user.uid
-    this.basePath = '/Social/' + 'posts/' + uid + '/postImages'  ;
-  }
-  
+  } 
 
-  onSelectFile(event){
-        this.selectedFile = event.target.files;
-        const file = this.selectedFile.item(0);
-
-        this.currentFileUpload = new FileUpload(file);
-        this.fileName = this.currentFileUpload.file.name;
-
-        this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, 'postImages')
-        .subscribe({
-          next: (percentage) =>{
-            this.percentage = Math.round(percentage);
-          },
-          error: (error) => {
-            console.error(error);
-          },
-          complete: () => console.log("Getting Percentage Data Complete")
-        }
-        );
-
-        var reader = new FileReader();
-        reader.onload = (event: any) => {
-
-          this.urls.push(event.target.result)
-        }
-        reader.readAsDataURL(file);
-      
-  }
-  
   async submit() {
     let data = [
       { label: "company", value: this.company },
@@ -103,7 +57,7 @@ export class CreatePostComponent implements OnInit {
     const time = this.toolService.time();
 
     const callable = this.functions.httpsCallable('socialPage/addPost');
-    callable({Uid: uid, Post: this.post, Urls: this.urls, LastUpdatedDate: date, LastUpdatedTime: time  }).subscribe({
+    callable({Uid:uid, Post: this.post, LastUpdatedDate: date, LastUpdatedTime: time  }).subscribe({
       next: (data) => {
         console.log("Successfully");
       },
@@ -123,20 +77,4 @@ export class CreatePostComponent implements OnInit {
       jQuery('#form').trigger("reset");
       this.createPostCompleted.emit({ completed: true });
     }
-
-    removeImg(remove: string) {
-      const index = this.urls.indexOf(remove);
-      if (index != -1) {
-        this.urls.splice(index, 1);
-      } else {
-        console.error("Error - Cannot remove image. Image not found");
-      }
-    }
-
   } 
-
-
-function generateBase64String(arg0: string): any {
-  throw new Error('Function not implemented.');
-}
-  

@@ -29,11 +29,10 @@ const { incrementNumberofPostsforUser } = require("../../users/tark/incrementUse
 exports.addPost = function(request, response) {
     const uid = request.body.data.Uid;
     const post = request.body.data.Post;
-    const postId = request.body.data.PostId;
 
     const lastUpdatedDate = request.body.data.LastUpdatedDate;
     const lastUpdatedTime = request.body.data.LastUpdatedTime;
-    const photoURLs = request.body.data.Urls;
+
     let result;
     let status = 200;
 
@@ -44,7 +43,7 @@ exports.addPost = function(request, response) {
             postcounter = postcounter + 1;
             const postId = "P" + postcounter;
 
-            setPost(uid, post, postId, lastUpdatedDate, lastUpdatedTime, photoURLs).then((postData) => {
+            setPost(uid, post, postId, lastUpdatedDate, lastUpdatedTime).then((postData) => {
                 incrementNumberofPostsforUser(uid);
             }).catch((error) => {
                 result = { data: error };

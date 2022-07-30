@@ -132,17 +132,6 @@ fastify.post("/uploadUserProfilePic", (req, res) => {
 
 /**
  * Description
- * @param {any} "/uploadPostImages"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
- fastify.post("/uploadPostImages", (req, res) => {
-    uploadPostImagesDoc(req, res);
-});
-
-/**
- * Description
  * @param {any} "/uploadUserProfilePic"
  * @param {any} req
  * @param {any} res
