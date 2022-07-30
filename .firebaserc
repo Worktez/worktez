@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "worktez-demo-ef35b"
+    "default": "worktrolly"
   },
   "targets": {
     "worktrolly": {
