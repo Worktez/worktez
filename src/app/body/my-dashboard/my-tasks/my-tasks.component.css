@@ -23,3 +23,8 @@
     color: var(--text);
     border: none;
 }
+
+.card-body#pageSize{
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
