@@ -26,7 +26,6 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CookieService } from 'ngx-cookie-service';
-import { Conditional } from '@angular/compiler';
 
 declare var jQuery:any;
 

@@ -19,7 +19,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-add-member',
