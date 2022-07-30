@@ -168,7 +168,7 @@ export class TasksEvaluationComponent implements OnInit {
   }
 
   editTask(task: Tasks, sprintNumber: number) {
-    this.showLoader = true;
+    this.showLoader = false;
     let result;
     if (sprintNumber == null) {
       sprintNumber = task.SprintNumber;
@@ -199,7 +199,7 @@ export class TasksEvaluationComponent implements OnInit {
   } 
 
   onDrop(event: CdkDragDrop<Tasks[]>) {
-    this.showLoader = true;
+    this.showLoader = false;
     console.log(event.previousContainer === event.container);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

@@ -182,7 +182,7 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<Tasks[]>, status: string) {
-    this.showLoader = true;
+    this.showLoader = false;
     var result;
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
