@@ -3,13 +3,15 @@
     <div class="card-body">
         <div class="row py-1">
             <div class="col-3 d-flex justify-content-center">
-                <img class="rounded-circle" width="80" height="80" src="../../../../assets/defaultavatar.jpg" alt="Card image cap">
+                <img class="rounded-circle" width="80" height="80" src="{{image}}" alt="Card image cap">
             </div>
             <div class="col d-flex justify-content-center">
                 <div>
                     <span class="card-title">{{name}}</span>
                     <br>
-                    <span class="card-text">{{content}}</span>
+                    <span class="card-text text-muted">{{position}}</span>
+                    <br>
+                    <span class="card-text" style="overflow: scroll;">{{content}}</span>
                 </div>
             </div>
         </div>
