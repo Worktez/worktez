@@ -98,7 +98,7 @@ export class AddMemberComponent implements OnInit {
   }
 
   added() {
-    this.addedMember.emit({ completed: true, memberEmail: this.memberEmail});
+    this.addedMember.emit({ completed: true, memberEmail: this.memberEmail });
   }
 
   close(){
