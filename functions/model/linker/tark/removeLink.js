@@ -23,7 +23,7 @@
 
  const { getTask, updateTask } = require("../../tasks/lib");
  const { removeLinkDoc, getLinkData } = require("../lib");
- 
+
  exports.removeLink = function(request, response) {
      const orgDomain = request.body.data.OrgDomain;
      const taskId = request.body.data.TaskId;

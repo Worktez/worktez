@@ -38,7 +38,7 @@ export class SuggestionBucketComponent implements OnInit {
   showMoreDetail: boolean = false;
   showUser: boolean = false
   showText: boolean = false
-
+  
   constructor(public userService: UserServiceService,  public router: Router) { }
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class SuggestionBucketComponent implements OnInit {
       this.displayName = null
     }
   }
-
+  
   selectedOption(value: boolean) {
     this.selectedEmail.emit({ selected: value, data: this.email });
   }

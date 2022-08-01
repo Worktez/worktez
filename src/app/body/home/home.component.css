@@ -13,6 +13,7 @@
 ***********************************************************/
 #home {
     background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #headingLine {
@@ -20,7 +21,7 @@
     height: 85%;
     color: #4E4E4E;
     font-size: 35px;
-    /* font-family: var(--font); */
+    font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 3rem;
 }
 
@@ -34,6 +35,7 @@
     display: block;
     border-radius:50px;
 	text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     border: none !important;
 }
 
@@ -42,42 +44,51 @@
     border-radius:20px;
 	text-align:center;
     border: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     box-shadow: 0px 7px 6px 1px #ebecefa5;
 }
 
 #services,
 #features {
     background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .serviceButton {
 	text-align:center;
     border: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 18px;
 }
 
 #gitText {
     color: #E84D31;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #kanbanText {
     color: #00867D;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #dashboardText {
     color: #2979FF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #qnText {
     color: #FFA000;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #ttText {
     color: #4042E2;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #milestionesText {
     color: #087F23;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .icons {
@@ -87,11 +98,13 @@
 
 .featureHeading {
     font-size: 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #featureContent {
     color: #767676;
     font-size: 16px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.5rem;
 }
 
@@ -103,6 +116,7 @@
 #hiwContent {
     color: #ffffff;
     font-size: 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .getStarted {
@@ -111,6 +125,7 @@
     display: block;
     border-radius:50px;
 	text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     border: none !important;
 }
 
@@ -121,6 +136,7 @@
 
 #testimonial {
     background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #mover {
@@ -135,18 +151,9 @@
     scroll-behavior: smooth;
 }
 
-.showCase::-webkit-scrollbar {
-    height: 6px;              
+.showCase::-webkit-scrollbar {        
+    display: none;  
 }
-
-.showCase::-webkit-scrollbar-track {
-    background: var(--secondary-bg);
-}
-.showCase::-webkit-scrollbar-thumb:horizontal {
-    border-radius: 2rem;
-    background-color: #4006BA;
-    /* background-image: linear-gradient(to top, #ff0000 0%, #5C60EC 100%); */
-} 
 
 .arrow {
     font-size: 34px;
