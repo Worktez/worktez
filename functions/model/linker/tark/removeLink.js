@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable  object-curly-spacing*/
 // /* eslint-disable no-undef */
 /* eslint-disable eol-last */
@@ -21,7 +22,7 @@
  ***********************************************************/
 
  const { getTask, updateTask } = require("../../tasks/lib");
- const { removeLinkDoc, getLinkData } = require("../lib")
+ const { removeLinkDoc, getLinkData } = require("../lib");
  
  exports.removeLink = function(request, response) {
      const orgDomain = request.body.data.OrgDomain;
@@ -38,7 +39,7 @@
              removeLinkDoc(orgDomain, taskId, linkId);
              const p1 = getLinkData(orgDomain, taskId, linkId).then((linkDetail)=>{
                 const linkdata = linkDetail.data();
-                if(linkType == "PR" && linkdata.LinkURL == taskDetail.PrLink){
+                if (linkType == "PR" && linkdata.LinkURL == taskDetail.PrLink) {
                     const inputJson = {
                         PrNumber: null,
                         PrLink: "",
@@ -46,8 +47,7 @@
                     };
                     updateTask(inputJson, orgDomain, taskId);
                  }
-             })
-            
+             });
          }
      }).catch((error) => {
          status = 500;

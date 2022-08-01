@@ -11,23 +11,29 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="row p-1 option align-items-center" *ngIf="userService.userReady">
+<div *ngIf="userService.userReady" class="user-tooltip">
     <ng-container *ngIf="showUser">
-        <div class="col-2" (click)="showUserProfile()" >
+        <div class="row p-1 option align-items-center tooltip-item">
+        <div class="col-2 text-right" (click)="showUserProfile()">
             <img src="{{photoUrl}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle" width="25" height="25">
         </div>
-        <ng-container *ngIf="!showOnlyProfilePic">
-            <div class="col pl-3" (click)="selectedOption(true)">
-                <ng-container *ngIf="userName">
-                    <span id="username">
-                        {{userName}}
-                    </span>
-                    <br>
-                </ng-container>
-                <span *ngIf="showEmail" id="email">
-                    {{email}}
-                </span>
-            </div>
-        </ng-container>
+        <div *ngIf="!showOnlyProfilePic" class="col-9 text-left" (click)="selectedOption(true)">
+            <span *ngIf="displayName" id="displayname" style="font-size: 11px; display: inline;">
+                {{displayName}}
+            </span>
+        <span *ngIf="showEmail" id="email">
+            {{email}}
+        </span>
+    </div>
+    </div>
+    <div *ngIf="showUserBasic" class="tooltip-content clearfix">
+        <img src="{{photoUrl}}" onerror= "this.src = '../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle m-2" width="100" height="100">
+        <h4 class="pt-2 mb-0" style="color: var(--primary-color);" (click)="showUserProfile()">{{user.displayName}}</h4>
+        <h5 class="aboutMe">{{user.AboutMe}}</h5>
+        <h5 class="text-muted">
+            <mat-icon fontSet="material-icons-outlined" class="align-middle" style="font-size: 20px;">
+            email
+            </mat-icon>{{user.email}}</h5>    
+        </div>
     </ng-container>
 </div>

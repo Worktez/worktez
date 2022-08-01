@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserAppSetting } from 'src/app/Interface/UserInterface';
+import { UserBasicSetting } from 'src/app/Interface/UserInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 
@@ -28,15 +28,17 @@ export class SuggestionBucketComponent implements OnInit {
   @Input("showOnlyProfilePic") showOnlyProfilePic: boolean = false;
 
   @Input("showEmail") showEmail: boolean;
+  @Input("showUserBasic") showUserBasic: boolean;
   @Output() selectedEmail = new EventEmitter<{ selected: boolean, data: string }>();
 
-  userName: string;
+  displayName: string;
   photoUrl: string;
-  user: UserAppSetting;
+  user: UserBasicSetting;
 
   showMoreDetail: boolean = false;
   showUser: boolean = false
-  
+  showText: boolean = false
+
   constructor(public userService: UserServiceService,  public router: Router) { }
 
   ngOnInit(): void {
@@ -47,14 +49,14 @@ export class SuggestionBucketComponent implements OnInit {
   readTeamMemberName(){
     const data = this.userService.getUserData(this.email);
     if(data != undefined) {
-      this.userName = data.displayName;
+      this.displayName = data.displayName;
       this.photoUrl = data.photoURL;
       this.user = data
       this.showUser = true
     } else {
       this.showEmail = true
       this.showUser = true
-      this.userName = null
+      this.displayName = null
     }
   }
 

@@ -69,7 +69,7 @@
                             <li class="nav-item">
                                 <div class="dropdown">
                                     <span class="btn dropdown" data-toggle="dropdown"
-                                        title="Menu">
+                                    title="Menu">
                                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                             more_horiz
                                         </mat-icon>
@@ -101,7 +101,7 @@
                                         </div>
                                         <div class="delete" *ngIf="startService.userReady && task.SprintNumber !== -2">
                                             <button class="dropdown-item" type="button" data-toggle="modal"
-                                                data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
+                                            data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
                                         </div>
                                     </div>
                                 </div>
@@ -143,12 +143,14 @@
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <div class="row">
                     <div class="col-md-4">
-                    <h3 id="label">{{task.Title}}</h3>  
+                    <h3 id="label">{{task.Title}}</h3>
                     </div>
                     <div class="col">
                         <h5 id="label" class="float-right">{{task.Id}}</h5>
                     </div>
                 </div>
+                <h5 id="label">{{task.Id}}</h5>
+                <h4 id="value">{{task.Title}}</h4>
                 <div class="row mt-2">
                     <div class="col-md-4 ">
                         <span id="label">Sprint Number:</span>
@@ -170,7 +172,7 @@
                             <div class="col-12">
                                 <span id="label" data-toggle="tooltip" data-placement="top"
                                     title="Remaining Time">Remaining Time: </span>
-                                <span id="value" *ngIf="!remainingTimeHrs==0">{{remainingTimeHrs}} Hrs </span><span id="value" *ngIf="!(remainingTimeMins==0)">{{remainingTimeMins}} Mins</span>
+                                    <span id="value" *ngIf="!remainingTimeHrs==0">{{remainingTimeHrs}} Hrs </span><span id="value" *ngIf="!(remainingTimeMins==0)">{{remainingTimeMins}} Mins</span>
                                 <span id="value" *ngIf="totalRemainingTime==0"> {{totalRemainingTime}} Hrs</span>
                             </div>
                             <div class="col-12">
@@ -181,7 +183,7 @@
                             <div class="col-12">
                                 <span id="label" data-toggle="tooltip" data-placement="top"
                                     title="Estimated Time">Estimated Time: </span>
-                                <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
+                                    <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
                                 <span id="value" *ngIf="task.EstimatedTime==0"> {{task.EstimatedTime}} Hrs</span>
                             </div>
                         </div>
@@ -225,24 +227,33 @@
                                         <th colspan="3">Link ID</th>
                                         <th colspan="3">Link Type</th>
                                         <th colspan="6">Link URL</th>
+                                        <th colspan="3">
+                                            <mat-icon id="icon" fontSet="material-icons-outlined" data-toggle="modal"
+                                                data-target="#linkModal" (click)="addLink()">
+                                                add_circle</mat-icon>
+                                        </th>
                                     </tr>
+
                                 </thead>
                                 <tbody>
                                     <ng-container *ngIf="(linkData)?.length==0">
                                         <tr>
-                                            <td colspan="9" class="text-center">No links available</td>
+                                            <td colspan="20" class="text-center">No links available</td>
                                         </tr>
                                     </ng-container>
                                     <ng-container *ngFor="let link of linkData">
                                         <tr *ngIf="link.LinkStatus != 'Deleted'">
-                                            <td colspan="2"><span data-toggle="tooltip" data-placement="top"
+                                            <td colspan="3"><span data-toggle="tooltip" data-placement="top"
                                                     title="task.id">{{link.LinkID}}</span></td>
                                             <td colspan="3">{{link.LinkType}}</td>
-                                            <td colspan="5"><a href={{link.LinkURL}}
+                                            <td colspan="6"><a href={{link.LinkURL}}
                                                     target="_blank">{{link.LinkURL}}</a></td>
-                                            <td colspan="2"><mat-icon (click)="removeLink(link.LinkID, link.LinkType)" fontSet="material-icons-outlined" class="align-middle text-danger">
-                                                close
-                                            </mat-icon> </td>        
+                                            <td colspan="2">
+                                                <mat-icon (click)="removeLink(link.LinkID, link.LinkType)"
+                                                    fontSet="material-icons-outlined" class="align-middle text-danger">
+                                                    close
+                                                </mat-icon>
+                                            </td>        
                                         </tr>
                                     </ng-container>
                                 </tbody>
@@ -282,8 +293,8 @@
                                 <ng-container *ngIf="activityDataReady; else loader">
                                     <ng-container  *ngFor="let activity of activityData" >
                                         <app-activity [activity]="activity"></app-activity>
-                                    </ng-container>
-                                </ng-container>                            
+                                    </ng-container>                                  
+                                </ng-container>                       
                             </div>
                             <ng-container *ngIf="activeAllBtn == true || activeCommentBtn == true" >
                                 <div class="form-row p-3">
