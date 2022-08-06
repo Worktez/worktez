@@ -42,9 +42,13 @@ export class PostsComponent implements OnInit {
   reactionStatus : boolean = false;
   public comments: Comment[];
   showColor : boolean = false
-
   dataReady: boolean = false;
-  
+  componentName:string ="POSTS"
+  public posts: Post[];
+  public recentPosts: Post[] = [];
+  showloader: boolean = false;
+  pageReady:boolean = false;
+
   @Input('post') post : Post;
   @Output() addCommentCompleted = new EventEmitter<boolean>();
 
@@ -52,6 +56,10 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCreatorDetails();
+    this.authService.userAppSettingObservable.subscribe((data)=>{
+      this.pageReady = true;
+      this.loadSocialPageData();      
+    });
   }
 
   showCommentBox(postId: string) {
@@ -138,5 +146,74 @@ export class PostsComponent implements OnInit {
 
   toggleColor(){
     this.showColor = !this.showColor;
+  }
+  
+  deletePost(postId: string) {
+    const uid = this.authService.getLoggedInUser();
+      const callable = this.functions.httpsCallable("socialPage/deletePost");
+      this.enableLoader = true
+        
+      callable({Uid: uid, PostId: postId}).subscribe({
+        next: (data) => {
+          this.loadSocialPageData();
+          console.log("Successfull");
+          this.enableLoader = false
+          this.post.PostStatus = -1;
+        },
+        
+        error: (error) => {
+          console.log("Error", error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful deleted post in db')
+      });
+  }
+
+  loadSocialPageData() {
+    this.showloader = true;
+    const callable = this.functions.httpsCallable("socialPage/getAllPosts");
+    callable({}).pipe(map(res=>{
+      const data = res.data as Post[];
+      console.log(data);
+      return data
+    })).subscribe({
+      next:(data)=>{
+        if(data) {
+          this.posts = data;
+          this.posts.forEach(element => {
+            this.userService.checkAndAddToUsersUsingUid(element.Uid);
+          });
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
+            this.dataReady = true;
+          });
+          this.loadRecentActivity();
+        }
+      },
+      error:(error)=>{
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete:()=>{
+        this.showloader = false;
+      }
+    });
+  }
+  
+  loadRecentActivity(){
+    const newarray = this.posts.filter((data)=>{
+      if(this.authService.userAppSetting != undefined && data.Uid == this.authService.userAppSetting.uid) {
+        return data;
+      }
+    });
+    if(newarray.length) {
+      this.recentPosts = newarray.reverse();
+      this.recentPosts.splice(3)
+    } else {
+      console.log("User Not Found Loading empty User")
+      return this.recentPosts[0]
+    }
   }
 }
