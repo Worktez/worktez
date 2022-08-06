@@ -119,7 +119,6 @@ export class FilterTaskComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.filters = data;
-        console.log(this.filters[0].FilterName);
         this.filtersReady = true;
       },
       error: (error) => {
@@ -183,6 +182,5 @@ export class FilterTaskComponent implements OnInit {
         this.filterProperty.emit({ Assignee: this.assignee, Priority: this.priority, Difficulty: this.difficulty, Status: this.status, Project: this.project, Sprint: this.sprint });
       }
     }
-    console.log(this.filters['FilterName']);
   }
 }
