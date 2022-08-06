@@ -72,6 +72,13 @@ export class QuickNotesComponent implements OnInit {
   }
 
   deleteNote(docId: string) {
+    for(let i=0; i<this.quickNotes.notes.length; i++){
+      console.log(this.quickNotes.notes[i].DocId)
+      
+      if(this.quickNotes.notes[i].DocId==docId){ 
+      delete this.quickNotes.notes[i]; 
+      }
+      }
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
     this.enableLoader = true
