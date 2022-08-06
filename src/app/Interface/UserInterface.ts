@@ -39,6 +39,15 @@ export interface UserAppSetting extends User {
     UserCommentCounter: number;
 }
 
+export interface UserBasicSetting extends User{
+    uid: string;
+    Username: string;
+    displayName: string;
+    email: string;
+    photoURL: string;
+    AboutMe: string
+}
+
 export interface MyOrganizationData {
     DefaultTeam: string;
     OrgAppKey: string;

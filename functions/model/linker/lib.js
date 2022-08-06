@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -64,7 +65,7 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
  */
  exports.removeLinkDoc = function(orgDomain, taskId, linkID) {
     const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).update({
-        LinkStatus : "Deleted",
+        LinkStatus: "Deleted",
     });
     return Promise.resolve(setLinkDetails);
 };
@@ -77,7 +78,7 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
  * @return {any}
  */
 
-exports.getLinkData = function(orgDomain, taskId, linkId){
+exports.getLinkData = function(orgDomain, taskId, linkId) {
     const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkId).get();
     return Promise.resolve(getLinkDetails);
-}
+};
