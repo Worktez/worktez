@@ -3,6 +3,7 @@ export interface Post{
   CreationTime: string;
   CreationDate: string;
   Post: string;
+  PostStatus: number;
   Reach: number;
   Reactions: number;
   CommentCounter: number;
@@ -17,4 +18,5 @@ export interface Comment {
   Content: string;
   Status: string;
   PostId: string;
+  PostStatus: number;
 }
