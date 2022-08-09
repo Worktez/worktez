@@ -91,6 +91,8 @@ export class StartServiceService {
   }
 
   loadUserAppSettings() {
+    if(this.currentUrl == '/')
+    this.router.navigate(['/Home']);
     const userSelectedOrgAppKeyCookie = this.cookieService.get("userSelectedOrgAppKey");
     const userSelectedTeamId = this.cookieService.get("userSelectedTeamId");
 
