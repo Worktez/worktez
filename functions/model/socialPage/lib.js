@@ -53,7 +53,7 @@ exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime, 
  */
 exports.getAllPosts = function() {
     const query = db.collection("Social");
-    const getAllPosts = query.get();
+    const getAllPosts = query.where("Status","==","OK").get();
     return Promise.resolve(getAllPosts);
 };
 
@@ -67,6 +67,18 @@ exports.getPost = function(postId) {
         return postDoc.data();
     });
     return Promise.resolve(getPostDetails);
+};
+
+/**
+ * Description
+ * @param {any} updatePostToJson
+ * @param {any} PostId
+ * @param {any} uid
+ * @return {any}
+ */
+ exports.deleteUserPost = function(updatePostToJson, postId) {
+    const deletePostPromise = db.collection("Social").doc(postId).update(updatePostToJson);
+    return Promise.resolve(deletePostPromise);
 };
 
 /**

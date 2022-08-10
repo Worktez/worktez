@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="row">
+<div class="row" *ngIf="filtersReady">
     <div class="col-md-2 col-1">
         <br>
         <div class="dropdown">
@@ -120,8 +120,25 @@
             </ng-container>
             <div class="col">
                 <br>
-                <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="filterByProperties()">Filter</button>
+                <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="filterByProperties()">Apply</button>
             </div>
+            <ng-container >
+                <div class="row">
+            <div class="col">
+                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="dropdownMenuButton" >Custom Filter</span>
+                <select class="form-control form-control-sm" [(ngModel)]="this.filters.FilterName" [ngModelOptions]="{standalone: true}" >
+                    <option [ngValue]="Null" [disabled]="true">Select Filter</option>
+                    <ng-container *ngFor='let item of this.filters'>
+                        <option>{{ item.FilterName }}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="col">
+                <br>
+                        <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="customfilterByProperties(this.filters.FilterName)">Apply</button>
+            </div>
+        </div>
+        </ng-container>
         </div>
     </div>
     <br>

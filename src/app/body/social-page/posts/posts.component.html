@@ -13,13 +13,25 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
-<div class="card mb-3">
+<div class="card mb-3"  *ngIf="post.PostStatus != -1">
+
     <div class="card-header">
+         
         <div class="row">
             <div class="col">
                 <app-suggestion-bucket [email]="user.email" [showEmail]="false"></app-suggestion-bucket>
             </div>
             <div class="col"></div>
+            <div class="col">
+                <div class="dropdown text-right" *ngIf="post.Uid == this.authService.getLoggedInUser()">
+                    <mat-icon role="button" type="button" class="btn dropdown" style="width:51px;height: 39px;" data-toggle="dropdown"> 
+                        <span class="material-icons">more_vert</span>
+                    </mat-icon>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <button class="dropdown-item" type="button" (click)="deletePost(post.PostId)">Delete</button>   
+                    </div>    
+                </div> 
+            </div>   
         </div>
     </div>
     <div class="card-body">
