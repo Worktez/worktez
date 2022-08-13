@@ -3,11 +3,13 @@ export interface Post{
   CreationTime: string;
   CreationDate: string;
   Post: string;
+  PostStatus: number;
   Reach: number;
   Reactions: number;
   CommentCounter: number;
   PostId: string;
   Status: string;
+  ImagesUrl:[];
 }
 
 export interface Comment {
@@ -17,4 +19,6 @@ export interface Comment {
   Content: string;
   Status: string;
   PostId: string;
+  ImagesUrl:[];
+  PostStatus: number;
 }
