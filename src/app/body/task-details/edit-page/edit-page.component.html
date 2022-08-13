@@ -47,8 +47,7 @@
                         </div>
                         <div class="col-md-4 pr-2">
                             <span id="label">Project Name</span>
-                            <input type="text" readonly class="form-control" id="non-editable"
-                                value={{this.task.Project}} [(ngModel)]="task.Project"
+                            <input type="text" readonly class="form-control" id="non-editable" value={{this.task.Project}} [(ngModel)]="task.Project"
                                 [ngModelOptions]="{standalone: true}">
                         </div>
                     </div>
@@ -59,8 +58,7 @@
                                 <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <ng-container *ngFor='let item of filteredOptionsAssignee'>
-                                        <app-suggestion-bucket [email]="item" [showEmail]="true"
-                                            (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
+                                        <app-suggestion-bucket [email]="item" [showEmail]="true" (selectedEmail)="selectedAssignee($event)"></app-suggestion-bucket>
                                     </ng-container>
                                 </div>
                             </div>
@@ -76,8 +74,7 @@
                             <input type="text" autocomplete="off" class="form-control" [formControl]="reporterName" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"aria-expanded="false">
                             <div id="reporterSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <ng-container *ngFor='let item of filteredOptionsReporter'>
-                                    <app-suggestion-bucket [email]="item" [showEmail]="true"
-                                        (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
+                                    <app-suggestion-bucket [email]="item" [showEmail]="true" (selectedEmail)="selectedReporter($event)"></app-suggestion-bucket>
                                 </ng-container>
                             </div>
                         </div>
