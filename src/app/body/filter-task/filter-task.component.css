@@ -56,3 +56,13 @@ input:focus {
     background-color: var(--secondary-bg);
     border-color: var(--primary-color);
 }
+
+.form-control {
+    display: inline-block;
+}
+
+.dropdown-menu{
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+}

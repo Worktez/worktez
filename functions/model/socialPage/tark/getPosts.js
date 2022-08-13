@@ -39,9 +39,11 @@ exports.getPosts = function(request, response) {
 
     const promises = [getPostsPromise];
     Promise.all(promises).then(() => {
-            result = { data: { status: "OK", data: postsData } };
-            console.log("Got Posts Sucessfully");
-            return response.status(status).send(result);
+            if (postsData) {
+                result = { data: { status: "OK", data: postsData } };
+                console.log("Got Posts Sucessfully");
+                return response.status(status).send(result);
+            }
         })
         .catch((error) => {
             console.error("Error Getting Posts", error);

@@ -122,6 +122,18 @@ exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentNa
 
 /**
  * Description
+ * @param {any} inputJson
+ * @param {any} uid
+ * @param {any} imageFileName
+ * @return {any}
+ */
+ exports.setPostImages = function(inputJson, uid, imageFileName) {
+    const setPostImagesPromise = db.collection("Social").doc(postId).collection("postImages").doc(imageFileName).set(inputJson);
+    return Promise.resolve(setPostImagesPromise);
+};
+
+/**
+ * Description
  * @param {any} uid
  * @return {any}
  */
