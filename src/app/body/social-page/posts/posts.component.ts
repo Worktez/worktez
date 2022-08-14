@@ -23,6 +23,8 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ToolsService } from '../../../services/tool/tools.service';
 import { map } from 'rxjs';
 import { defaultUser, User } from 'src/app/Interface/UserInterface';
+import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
+import { FileUpload } from 'src/app/Interface/FileInterface';
 
 
 @Component({
@@ -43,6 +45,8 @@ export class PostsComponent implements OnInit {
   public comments: Comment[];
   showColor : boolean = false
   dataReady: boolean = false;
+
+  
   componentName:string ="POSTS"
   public posts: Post[];
   public recentPosts: Post[] = [];
@@ -50,11 +54,13 @@ export class PostsComponent implements OnInit {
   pageReady:boolean = false;
 
   @Input('post') post : Post;
+  @Input('Image') Image: string;
+  images:[];
   @Output() addCommentCompleted = new EventEmitter<boolean>();
-
-  constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService,  public uploadService: FileUploadService) { }
 
   ngOnInit(): void {
+    this.images = this.post.ImagesUrl;
     this.getCreatorDetails();
     this.authService.userAppSettingObservable.subscribe((data)=>{
       this.pageReady = true;
@@ -88,7 +94,6 @@ export class PostsComponent implements OnInit {
       this.enableLoader = false;
     }
   }
-  
   close() {
     this.showAddComment = false;
   }
