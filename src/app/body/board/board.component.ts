@@ -44,6 +44,8 @@ export class BoardComponent implements OnInit {
   EDate: any;
   SDate: any;
   currentSprintNumber: number;
+  isBacklog: boolean= false;
+  isActive:boolean= true;
 
   constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
@@ -102,15 +104,19 @@ export class BoardComponent implements OnInit {
         if (sprints) {
           this.sprintData = sprints;
           this.currentSprintNumber=this.sprintData.SprintNumber;
+          this.isBacklog=false;
           
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
           if(this.currentSprintNumber==-1){
       
             this.currentSprintName="Backlog";
+            this.isBacklog=true;
+            this.isActive=false;
           }
           else if(this.currentSprintNumber==-2){
             this.currentSprintName="Deleted";
           }
+         
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
           this.DaysUp = Math.abs((this.today - this.SDate)/(1000 * 60 * 60 * 24));
@@ -157,13 +163,19 @@ export class BoardComponent implements OnInit {
     this.currentSprintNumber=filterSprintNumber;
     this.startService.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
+    
     if(filterSprintNumber==-1){
       
       this.currentSprintName="Backlog";
+      this.isBacklog=true;
+      this.isActive=false;
     }
     else if(filterSprintNumber==-2){
       this.currentSprintName="Deleted";
-      
+    }
+    else if(filterSprintNumber==0){
+      this.currentSprintName="Active";
+      this.isBacklog=false;
     }
     
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
