@@ -7,8 +7,7 @@
         </div>
     </div>
     <div class="card-body" *ngIf="!showLoader">
-        <app-chart [data]="data" [columnNames]='["Day", "StoryPoint"]' [hAxisTitle]='"Days"' [vAxisTitle]='"StoryPoint"'
-            [height]='300'></app-chart>
+        <app-chart [data]="data" [columnNames]='["Day", "StoryPoint"]' [hAxisTitle]='"Days"' [vAxisTitle]='"StoryPoint"' [height]='300'></app-chart>
     </div>
     <ng-container *ngIf="showLoader">
         <app-loader></app-loader>

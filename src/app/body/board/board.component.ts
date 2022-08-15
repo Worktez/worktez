@@ -163,7 +163,6 @@ export class BoardComponent implements OnInit {
     this.currentSprintNumber=filterSprintNumber;
     this.startService.teamCurrentSprintNumber = filterSprintNumber;
     this.currentSprintName = "S" + this.startService.teamCurrentSprintNumber;
-    
     if(filterSprintNumber==-1){
       
       this.currentSprintName="Backlog";

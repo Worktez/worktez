@@ -21,7 +21,7 @@ export class SprintBurndownChartComponent implements OnInit {
   @Input("teamId") teamId: string;
   @Input("sprintStartDate") sprintStartDate: any;
   @Input("sprintEndDate") sprintEndDate: any;
-  data = []; 
+  data = [];
   todayDate: string;
 
   ngOnInit(): void {
