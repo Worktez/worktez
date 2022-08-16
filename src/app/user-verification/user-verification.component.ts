@@ -29,6 +29,7 @@ export class UserVerificationComponent implements OnInit {
   userEmail: string
   teamId: string
   userDataReady: boolean = false;
+  teamList: string[]
 
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -41,6 +42,17 @@ export class UserVerificationComponent implements OnInit {
     this.authService.afauth.user.subscribe((data) => {
       this.userDataReady = true;
     });
+  }
+
+  verifyTeamId() {
+    this.authService.myTeamsListObservable.subscribe(data => {
+      this.teamList = data;
+      if (data.includes(this.teamId)) {
+        console.error("Error! Already added to the team");
+      } else {
+        this.verifyUser();
+      }
+    })
   }
 
   verifyUser() {
