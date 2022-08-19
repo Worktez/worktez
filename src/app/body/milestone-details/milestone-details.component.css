@@ -131,8 +131,8 @@
 }
 
 #button {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: white;
+    color: var(--text);
 }
 
 #button:focus,
@@ -193,6 +193,7 @@
 
 .btn {
     color: var(--text);
+    border: none;
 }
 
 .btn:hover {
