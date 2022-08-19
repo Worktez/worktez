@@ -105,8 +105,16 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
+    this.checkSameUser();
   }
-
+  checkSameUser(){
+    if (this.authService.userAppSetting.Username == this.username){
+      this.sameUser=true;
+    }
+    else{
+      this.sameUser=false;
+    }
+  }
   editProfile() {
     this.editProfileEnabled = true;
   }
