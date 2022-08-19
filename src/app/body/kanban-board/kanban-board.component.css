@@ -8,7 +8,6 @@
 
 #filterMenu, #dropdownUserCard {
     background-color: var(--secondary-bg);
-    border-color: var(--primary-color);
     color: var(--text); 
 }
 #tasksContainer {

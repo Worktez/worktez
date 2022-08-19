@@ -130,10 +130,10 @@
     transition: all ease 0.9s;
 }
 
-#button {
+/* /* #button {
     background-color: white;
     color: var(--text);
-}
+} */
 
 #button:focus,
 #button:active,
@@ -193,10 +193,11 @@
 
 .btn {
     color: var(--text);
-    border: none;
+    background-color: var(--secondary-bg);
 }
 
 .btn:hover {
-    background-color: var(--dropdown-hover);
+    background-color: var(--button-text-hover);
     color: var(--button-text-hover);
 }
+
