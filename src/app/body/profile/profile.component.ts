@@ -182,8 +182,9 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = false;
     this.readUser();
   }
-  
-  editProfilePicCompleted(data: { completed: boolean }) {
+   
+  editProfilePicCompleted(data: { completed: boolean, photoUrl: string }) { 
+    this.authService.userAppSetting.photoURL = data.photoUrl;
     this.readUser();
   }
 
