@@ -91,6 +91,8 @@ export class StartServiceService {
   }
 
   loadUserAppSettings() {
+    if(this.currentUrl == '/')
+    this.router.navigate(['/Home']);
     const userSelectedOrgAppKeyCookie = this.cookieService.get("userSelectedOrgAppKey");
     const userSelectedTeamId = this.cookieService.get("userSelectedTeamId");
 
@@ -164,6 +166,7 @@ export class StartServiceService {
     this.applicationDataState.next(false);
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
+    this.applicationSettingsService.getNotificationsList(1);
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
       if (this.teamData.TeamId == this.selectedTeamId) {

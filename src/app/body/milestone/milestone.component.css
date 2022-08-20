@@ -78,8 +78,7 @@ h3{
 }
 
 #button {
-    background-color: var(--primary-color);
-    color: white;
+    color:var(--text);
 }
 
 #button:focus,
@@ -91,7 +90,8 @@ h3{
 }
 
 .btn {
-    color: var(--text);
+    color: var(--button-text);
+    background-color: var(--secondary-bg);
 }
 
 .btn:hover {
@@ -114,6 +114,7 @@ h3{
 }
 
 #dropdownUserCard {
-    background-color: var(--dropdown-hover); 
-    border-color: var(--primary-color);
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
+
