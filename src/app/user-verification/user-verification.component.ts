@@ -29,6 +29,7 @@ export class UserVerificationComponent implements OnInit {
   userEmail: string
   teamId: string
   userDataReady: boolean = false;
+  teamList: string[]
 
   constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -39,9 +40,29 @@ export class UserVerificationComponent implements OnInit {
     this.teamId = this.route.snapshot.params['teamId'];
 
     this.authService.afauth.user.subscribe((data) => {
-      this.userDataReady = true;
+      if(data){
+        this.userDataReady = true;
+        if(this.userEmail == data.email){
+          const callable = this.functions.httpsCallable('users/checkIfUserAlreadyAMember');
+          callable({OrganizationDomain:this.organizationDomain, TeamName:this.teamName, UserEmail: this.userEmail, TeamId: this.teamId}).subscribe({
+            next: (data) => {
+              if(data == "true"){
+                this.router.navigate(['/Social']);
+                console.log("Successful");
+              } else {
+                console.log("Member does dot exist")
+              }
+              
+            },
+            complete: () => console.info('Successful')
+          })
+        }
+      } else {
+        this.router.navigate(['/login']);
+      }
     });
   }
+
 
   verifyUser() {
     const callable = this.functions.httpsCallable('users/verify');
