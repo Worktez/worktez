@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -53,7 +54,7 @@ exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime, 
  */
 exports.getAllPosts = function() {
     const query = db.collection("Social");
-    const getAllPosts = query.where("Status","==","OK").get();
+    const getAllPosts = query.where("Status", "==", "OK").get();
     return Promise.resolve(getAllPosts);
 };
 

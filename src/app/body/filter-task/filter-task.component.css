@@ -54,7 +54,6 @@ input:focus {
 
 #dropdownMenu {
     background-color: var(--secondary-bg);
-    border-color: var(--primary-color);
 }
 
 .form-control {

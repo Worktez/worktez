@@ -72,5 +72,4 @@ select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
 }
