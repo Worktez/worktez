@@ -181,7 +181,6 @@ export class PostsComponent implements OnInit {
     const callable = this.functions.httpsCallable("socialPage/getAllPosts");
     callable({}).pipe(map(res=>{
       const data = res.data as Post[];
-      console.log(data);
       return data
     })).subscribe({
       next:(data)=>{
