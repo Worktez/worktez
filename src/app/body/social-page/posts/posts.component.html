@@ -21,7 +21,6 @@
             <div class="col">
                 <app-suggestion-bucket [email]="user.email" [showEmail]="false" [showUserBasic]="true"></app-suggestion-bucket>
             </div>
-            <div class="col"></div>
             <div class="col">
                 <div class="dropdown text-right" *ngIf="post.Uid == this.authService.getLoggedInUser()">
                     <mat-icon role="button" type="button" class="btn dropdown" style="width:51px;height: 39px;" data-toggle="dropdown"> 
@@ -64,10 +63,10 @@
             <div class="col">
                 <ng-container *ngIf="showAddComment">
                     <div class="row pb-2">
-                        <div class="col-9">
+                        <div class="col-7">
                             <input type="text" class="form-control" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
                         </div>
-                        <div class="col-3">
+                        <div class="col-5">
                             <span class="btn btnSend" [disabled]="enableLoader" (click)="addComment(post.PostId)">Send</span>
                         </div>
                     </div>
