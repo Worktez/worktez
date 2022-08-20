@@ -24,6 +24,8 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
 import { Milestones } from 'src/app/Interface/MilestoneInterface';
+import { MilestoneServiceService } from 'src/app/services/milestone-service.service';
+import { Router } from '@angular/router';
 
 
 
@@ -81,7 +83,7 @@ export class CreateNewTaskComponent implements OnInit {
   milestoneData:Milestones[] = []
   selectedMilestoneId:string = ""
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService, public milestoneService: MilestoneServiceService, private route: Router) { }
   ngOnInit(): void {
     this.teamIds=this.backendService.getOrganizationTeamIds();
     this.project = this.authService.getTeamId();
@@ -213,7 +215,14 @@ export class CreateNewTaskComponent implements OnInit {
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.error(error);
       },
-      complete: () => console.info('Successfully created task')
+      complete: () =>{
+        const orgDomain = this.backendService.getOrganizationDomain();
+        console.info('Successfully created task');
+        const path = this.route.url;
+      if (path.includes('/MilestoneDetails')) {
+        this.milestoneService.getTasks(orgDomain, this.selectedMilestoneId);
+      } 
+      } 
     });
 
 }

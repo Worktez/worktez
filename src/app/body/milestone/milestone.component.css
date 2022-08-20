@@ -18,10 +18,10 @@
     box-shadow: var(--box-shadow-bottom);
     background: var(--secondary-bg);
     color: var(--text);
-    border: 1px solid var(--scrollbar-color);
     border-radius: 10px;
     height: 100%;
     cursor: pointer;
+    border: none !important;
 }
 
 h3{
