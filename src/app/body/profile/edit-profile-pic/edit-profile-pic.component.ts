@@ -45,7 +45,7 @@ export class EditProfilePicComponent implements OnInit {
   private currentFileUpload: FileUpload;
   public fileName: string
 
-  @Output() editProfilePicCompleted = new EventEmitter<{ completed: boolean }>();
+  @Output() editProfilePicCompleted = new EventEmitter<{ completed: boolean, photoUrl: string}>();
 
   constructor(public uploadService: FileUploadService, private functions: AngularFireFunctions, private errorHandlerService: ErrorHandlerService) {}
 
@@ -67,6 +67,7 @@ export class EditProfilePicComponent implements OnInit {
   cropPhotoCompleted(data: { completed: boolean, photoUrl: string, file: FileUpload }) {
     this.enableCropper = false;
     
+    this.imageUrlTemp = data.photoUrl;
     this.currentFileUpload = data.file;
     if(data.file != undefined) {
       this.fileName = this.currentFileUpload.file.name;
@@ -79,6 +80,7 @@ export class EditProfilePicComponent implements OnInit {
       });
     }
     this.setProfilePic(data.photoUrl);
+
   }
 
   setProfilePic(croppedImage) {
@@ -102,6 +104,6 @@ export class EditProfilePicComponent implements OnInit {
   editProfilePicDone() {
     this.showClose = true;
     this.choosePhoto = false;
-    this.editProfilePicCompleted.emit({ completed: true });
+    this.editProfilePicCompleted.emit({ completed: true, photoUrl: this.imageUrlTemp});
   }
 }
