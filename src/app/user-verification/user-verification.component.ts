@@ -68,7 +68,7 @@ export class UserVerificationComponent implements OnInit {
     const callable = this.functions.httpsCallable('users/verify');
       callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
         next: (data) => {
-          this.router.navigate(['/Social']);
+          this.router.navigate(['/']);
           console.log("Successful");
         },
         error: (error) => {
