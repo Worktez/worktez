@@ -36,13 +36,13 @@ export class AddTaskComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async addTask(task){
+  addTask(task){
     this.showLoader = true
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
     const appKey = this.backendService.getOrganizationAppKey();
       const callable = this.functions.httpsCallable('tasks/editTask');
-      await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: todayDate, Time: time, ChangedData: "Milestone Added", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.reporterName, MilestoneId: this.milestoneId}).subscribe({
+      callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: todayDate, Time: time, ChangedData: "Milestone Added", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.reporterName, MilestoneId: this.milestoneId}).subscribe({
 
         next: (data) => {
           this.showLoader = false;

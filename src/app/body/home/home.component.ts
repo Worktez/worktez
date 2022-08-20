@@ -55,10 +55,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
   }
-
+  
   requestDemo() {
     this.popupHandlerService.requestDemoEnabled = true;
   }
+
   scrollLeft() {
     this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft - 400), block: "start", inline: "nearest" });
   }

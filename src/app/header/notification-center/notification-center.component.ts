@@ -33,8 +33,6 @@ export class NotificationCenterComponent implements OnInit {
   OpenNotifBox: boolean = true;
   display: string;
 
-  
-
   constructor(public toolService: ToolsService, public functions: AngularFireFunctions, public backendService: BackendService, public authService: AuthService, public applicationSettingService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
@@ -42,18 +40,25 @@ export class NotificationCenterComponent implements OnInit {
 
   loadNotifications(notificationStatus) {
     this.showLoader = true;
-    console.log(this.showNotificationsList)
-    this.showNotificationsList = !(this.showNotificationsList);
-    this.showOldNotificationsList = false;
-    if (this.showNotificationsList) 
-    {
-      this.applicationSettingService.getNotificationsList(notificationStatus).subscribe((data) => {
+    this.applicationSettingService.getNotificationsList(notificationStatus).subscribe((data) => {
+      this.notificationsList = data;
+      this.showNotificationsList = !(this.showNotificationsList);
+      this.showOldNotificationsList = false;
+      this.showLoader = false;
+    });
+  }
+
+  showNotification() {
+    this.applicationSettingService.notificationListObservable.subscribe((data) => {
+      console.log(data);
+      if(!data) {
+        this.loadNotifications(1);
+      } else {
         this.notificationsList = data;
-        this.showLoader = false;
-        if (notificationStatus == 1)
-          this.resetActiveNotificationCounter();
-      });
-    }
+        this.showNotificationsList = !(this.showNotificationsList);
+        this.showOldNotificationsList = false;
+      }
+    });
   }
 
   resetActiveNotificationCounter() {
