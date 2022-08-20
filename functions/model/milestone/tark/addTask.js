@@ -33,7 +33,6 @@ const { addTask } = require("../lib");
  * @return {any}
  */
 exports.addTaskToMilestone = function(request,response){
-    console.log("dsfkjsadnfkjanskjdfnkjn");
     console.log( request.body.data);
     const uid = request.body.data.Uid;
     const milestoneId = request.body.data.MilestoneId;
@@ -43,7 +42,6 @@ exports.addTaskToMilestone = function(request,response){
     const time = request.body.data.Time;
     let result;
     let status = 200;
-    console.log("my data", request.body.data)
 
     const promise = addTask(milestoneId, taskId, orgDomain).then(()=>{
         addActivity("Edited", "Edited Milestone Id", taskId, date, time, orgDomain, uid);

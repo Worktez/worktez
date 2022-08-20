@@ -17,7 +17,6 @@ export class MilestoneServiceService {
 
 
   getTasks(orgDomain, milestoneId) {
-    console.log("get tasks in service");
     this.taskDataState.next(false)
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
     callable({ OrgDomain: orgDomain, MilestoneId: milestoneId }).pipe(
