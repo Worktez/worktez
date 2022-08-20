@@ -1,5 +1,6 @@
- 
- /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
+
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-undef */
@@ -32,7 +33,7 @@ const { addTask } = require("../lib");
  * @param {any} response
  * @return {any}
  */
-exports.addTaskToMilestone = function(request,response){
+exports.addTaskToMilestone = function(request, response) {
     console.log( request.body.data);
     const uid = request.body.data.Uid;
     const milestoneId = request.body.data.MilestoneId;

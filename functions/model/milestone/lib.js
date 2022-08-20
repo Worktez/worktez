@@ -108,10 +108,10 @@ exports.getAllMilestonesData = function(orgDomain, teamId="") {
  * @param {any} taskId
  * @return
  */
-exports.addTask = function(milestoneId, taskId, orgDomain){
+exports.addTask = function(milestoneId, taskId, orgDomain) {
     console.log(milestoneId, taskId, orgDomain);
     const promise =db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update({
         MilestoneId: milestoneId,
     });
     return Promise.resolve(promise);
-}
+};
