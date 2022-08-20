@@ -14,9 +14,11 @@
 <div class=" m-5 p-5" id="mOrgContainer" *ngIf="!showLoader">
     <div class="row p-2">
         <div class="col-3">
-            <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg">
-            <span *ngIf="sameUser" type="button" class="m-3" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
-                <span class="material-icons" style="font-size: 20px;">edit</span>
+            <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
+            <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    edit
+                </mat-icon>
             </span>
         </div>
     </div>

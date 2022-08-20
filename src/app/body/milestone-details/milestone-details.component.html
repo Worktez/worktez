@@ -20,11 +20,11 @@
 
     <div class="col-3">
 
-      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" (click)="activateAdd()"
+      <div class="float-right m-1"><button type="button" id="button" class="btn" (click)="activateAdd()"
           data-toggle="modal" data-target="#exampleModalCenter">
           Add Task
         </button></div>
-      <div class="float-right m-1"><button type="button" id="button" class="btn btn-primary" data-toggle="modal"
+      <div class="float-right m-1"><button type="button" id="button" class="btn" data-toggle="modal"
           data-target="#createNewTask" (click)="createTask()">
           Create Task
         </button></div>
@@ -94,19 +94,19 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-8"  *ngIf="taskDataReady">
         <h1 class="text-center mt-4">Task Tracker</h1>
-        <div class="process-wrapper" *ngIf="taskData.length > 0">
+        <div class="process-wrapper" *ngIf="milestoneService.taskData.length > 0">
           <div id="progress-bar-container">
             <ul>
-              <ng-container *ngFor="let item of completedTasks">
+              <ng-container *ngFor="let item of milestoneService.completedTasks">
                 <a (click)="openTaskDetails(item.Id)">
                   <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
                     <div class="step-inner">{{item.Id}}</div>
                   </li>
                 </a>
               </ng-container>
-              <ng-container *ngFor="let item of incompleteTasks">
+              <ng-container *ngFor="let item of milestoneService.incompleteTasks">
                 <a (click)="openTaskDetails(item.Id)">
                   <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
                     <div class="step-inner">{{item.Id}}</div>
@@ -120,22 +120,22 @@
             </div>
           </div>
         </div>
-        <div *ngIf="taskData.length == 0">
+        <div *ngIf="milestoneService.taskData.length == 0">
           <h3 class="text-center pt-5">No Tasks to Show!</h3>
         </div>
       </div>
     </ng-container>
   </div>
-  <div *ngIf="taskData.length>0">
     <hr>
+      <ng-container *ngIf="milestoneService.taskDataStateObservable">
+        <div *ngIf="milestoneService.taskData.length>0">
     <h1 class="text-center">Tasks</h1>
     <div class=" card d-flex justify-content-center" style="width: 90%; margin: auto; position: relative;">
-      <ng-container *ngIf="taskDataReady">
-        <app-data-table [dataForTable]="taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
-      </ng-container>
+        <app-data-table [dataForTable]="milestoneService.taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
     </div>
   </div>
-</div>
+  </ng-container>
+  </div>
 <app-add-task [allTasks]="allTasks" [milestoneId]="milestoneId" (getTasks)="getTasks()"></app-add-task>
 <ng-container *ngIf="showLoader">
   <app-loader></app-loader>
