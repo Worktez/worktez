@@ -17,20 +17,24 @@
             <div class="modal-header pt-3">
                 <div class="col-6 col-md-6 pl-2">
                     <h4 class="modal-title pl-3" id="exampleModalCenterLabel">Edit Task</h4>
-                    <span class="pl-3" id="date">{{ todayDate }}</span>
+                    <span class="pl-3 pt-2" id="date">{{ todayDate }}</span>
                 </div>
-                <div  class="col-4 col-md-4 pl-2" *ngIf="!showClose">
-                    <span id="Active" class=" p-2  md-4" (click)="activeSprint()" *ngIf="editTask.SprintNumber!=currentSprintNumber">Active Sprint</span>
-                    <span id="Backlog" class="p-2 md-2" (click)="showBacklog()" *ngIf="editTask.SprintNumber!=backlogSprintNumber"> Backlog </span>
-                </div>
-                <div class="col-2 col-md-2">
+                <div class="col-6 col-md-6 text-right">
                     <span class="btn">
                         <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal"aria-label="Close"
                           (click)="editTaskDone()">
                           close
                         </mat-icon>
                     </span>
-                </div>
+                    <div class="row justify-content-end pt-2 pr-2">
+                        <div class="col-8 col-md-8 pl-2" *ngIf="!showClose">
+                            <span id="Active" class=" p-2  md-4 " (click)="activeSprint()"
+                                *ngIf="editTask.SprintNumber!=currentSprintNumber">Active Sprint</span>
+                            <span id="Backlog" class="p-2 md-2" (click)="showBacklog()"
+                                *ngIf="editTask.SprintNumber!=backlogSprintNumber">
+                                Backlog</span>
+                        </div>
+                    </div>
             </div>
             <div class="container-fluid modal-body px-5" id="editPageTaskContainer">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
