@@ -40,26 +40,35 @@ export class UserVerificationComponent implements OnInit {
     this.teamId = this.route.snapshot.params['teamId'];
 
     this.authService.afauth.user.subscribe((data) => {
-      this.userDataReady = true;
+      if(data){
+        this.userDataReady = true;
+        if(this.userEmail == data.email){
+          const callable = this.functions.httpsCallable('users/checkIfUserAlreadyAMember');
+          callable({OrganizationDomain:this.organizationDomain, TeamName:this.teamName, UserEmail: this.userEmail, TeamId: this.teamId}).subscribe({
+            next: (data) => {
+              if(data == "true"){
+                this.router.navigate(['/Social']);
+                console.log("Successful");
+              } else {
+                console.log("Member does dot exist")
+              }
+              
+            },
+            complete: () => console.info('Successful')
+          })
+        }
+      } else {
+        this.router.navigate(['/login']);
+      }
     });
   }
 
-  verifyTeamId() {
-    this.authService.myTeamsListObservable.subscribe(data => {
-      this.teamList = data;
-      if (data.includes(this.teamId)) {
-        console.error("Error! Already added to the team");
-      } else {
-        this.verifyUser();
-      }
-    })
-  }
 
   verifyUser() {
     const callable = this.functions.httpsCallable('users/verify');
       callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
         next: (data) => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/Social']);
           console.log("Successful");
         },
         error: (error) => {
