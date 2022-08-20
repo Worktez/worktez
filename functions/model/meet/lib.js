@@ -76,3 +76,41 @@ exports.updateMeetDetails= function(updateJson) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };
+
+/**
+ * Description
+ * @param {any} meetDocId
+ * @param {any} attendees
+ * @param {any} title
+ * @param {any} startTime
+ * @param {any} endTime
+ * @param {any} hostName
+ * @param {any} description
+ * @param {any} date
+ * @return {any}
+ */
+exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date) {
+  const setMeetDoc = db.collection("Meet.Worktez").doc(meetDocId).set({
+    MeetDocId: meetDocId,
+    Attendees: attendees,
+    Title: title,
+    StartTime: startTime,
+    EndTime: endTime,
+    HostName: hostName,
+    Description: description,
+    Date: date,
+  });
+  return Promise.resolve(setMeetDoc);
+};
+
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} title
+ * @return {any}
+ */
+exports.updateMeetDetailsAtWorktez= function(updateJson) {
+  const updateMeet = db.collection("Meet.Worktez").doc(meetDocId).update(updateJson);
+  return Promise.resolve(updateMeet);
+};
+

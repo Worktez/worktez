@@ -44,6 +44,7 @@ export class ScheduleMeetComponent implements OnInit {
   teamMembers: string[] =[]
   enableLoader: boolean = false;
   isUpdateMeet: boolean = false;
+  link: string;
 
   constructor(public popupHandlerService: PopupHandlerService, public toolsService: ToolsService, private backendService: BackendService,  private authService: AuthService , public applicationSetting: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService) { }
 
@@ -150,9 +151,15 @@ export class ScheduleMeetComponent implements OnInit {
         },
         complete: () => {
           console.info(' successfully scheduled meet')
+          this.generateLink();
         }
       })
     }
+  }
+
+  generateLink(){
+    this.link ="https://meet.jit.si/"+ this.title +"/Meet-woktez";
+    return this.link;
   }
 
   close(){
