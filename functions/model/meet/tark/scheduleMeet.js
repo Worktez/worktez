@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const {getApplicationData, updateApplication} = require("../../application/lib");
+const {getApplicationData, updateApplication, generateBase64String, milliSeconds} = require("../../application/lib");
 const {setMeet} = require("../lib");
 const {setUserMeet} = require("../lib");
 
@@ -14,7 +14,7 @@ exports.scheduleMeet = function(request, response) {
   const description = request.body.data.Description;
   const date = request.body.data.Date;
   const uid = request.body.data.Uid;
-  console.log(orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date);
+
   let status = 200;
   let result;
 
@@ -25,8 +25,9 @@ exports.scheduleMeet = function(request, response) {
     };
 
     const meetDocId = "m" + meetCounter;
-    setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid);
-    setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date);
+    const roomId = generateBase64String( milliSeconds+title);
+    setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId);
+    setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
     updateApplication(appDetailsUpdateJson);
   }).catch((error) => {
     status = 500;

@@ -10,4 +10,5 @@ export interface Meet {
     EndTime: string;
     OrgDomain: string;
     Uid: string;
+    
 }

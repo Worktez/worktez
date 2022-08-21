@@ -1,15 +1,15 @@
 /*********************************************************** 
-* Copyright (C) 2022 
-* Worktez 
-* 
-* This program is free software; you can redistribute it and/or 
-* modify it under the terms of the MIT License 
-* 
-* 
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-* See the MIT License for more details. 
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
 ***********************************************************/
 .modal-header {
     border-bottom: none !important;
@@ -34,7 +34,13 @@
     margin-bottom: 0;
 }
 
-.form-control {
+.member-email {
+    background-color: var(--secondary-header-bg);
+    color: var(--text);
+    border-radius: 18px;
+}
+
+.form-control, .card{
     background-color: var(--input-field);
     color: var(--text);
     border: none;
@@ -49,12 +55,13 @@
     color: white;
 }
 
+.btn:hover,
 #button:focus,
 #button:active,
 #button:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
-    cursor: pointer;
+    border: none;
 }
 
 .btn {
@@ -110,39 +117,4 @@ input:focus {
 #SuccessIcon{
     color: var(--secondary-color);
     font-size: 55px;
-}
-
-.timepicker-overlay {
-    z-index: 1000000000 !important;
-}
-
-#picker{
-    background-color: var(--text);
-    color: var(--secondary-bg); 
-}
-
-.clock-face_number{
-    background-color: var(--text);
-    color: var(--secondary-bg);
-}
-
-.timepicker-backdrop-overlay {
-    z-index: 100 !important;
-}
-
-::ng-deep ngx-material-timepicker-content{
-  --body-background-color: #fff;
-  --primary-font-family: 'Roboto',sans-serif;
-  --button-color: #000 !important;
-  --dial-active-color: #fff;
-  --dial-inactive-color: rgba(255, 255, 255, .5);
-  --dial-background-color: #000 !important;
-  --dial-editable-active-color: #000 !important;
-  --dial-editable-background-color: #fff;
-  --clock-face-time-active-color: #fff;
-  --clock-face-time-inactive-color: #6c6c6c;
-  --clock-face-inner-time-inactive-color: #929292;
-  --clock-face-time-disabled-color: #c5c5c5;
-  --clock-face-background-color: #f0f0f0;
-  --clock-hand-color: #000 !important;
 }

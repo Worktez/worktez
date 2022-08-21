@@ -1,6 +1,22 @@
+
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm, UntypedFormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,9 +45,7 @@ export class ScheduleMeetComponent implements OnInit {
   date: string;
   todayDate: string;
   estimatedTimeHrs: number
-  estimatedTimeMins: number
   estimatedTimeHrs1: number
-  estimatedTimeMins1: number
   totalEstimatedTime: number
   showClose: boolean = false
   addAttendeeEnabled: boolean = false;
@@ -46,7 +60,7 @@ export class ScheduleMeetComponent implements OnInit {
   isUpdateMeet: boolean = false;
   link: string;
 
-  constructor(public popupHandlerService: PopupHandlerService, public toolsService: ToolsService, private backendService: BackendService,  private authService: AuthService , public applicationSetting: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService) { }
+  constructor(public popupHandlerService: PopupHandlerService, public toolsService: ToolsService, private backendService: BackendService,  private authService: AuthService , public applicationSetting: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, private router: Router) { }
 
   ngOnInit(): void {
     this.teamIds = this.backendService.getOrganizationTeamIds();
@@ -106,17 +120,12 @@ export class ScheduleMeetComponent implements OnInit {
   }
 
   async submit(){
-    const startTime = this.estimatedTimeHrs + ":" + this.estimatedTimeMins;
-    const endTime = this.estimatedTimeHrs1 + ":" + this.estimatedTimeMins1;
-
+    const startTime = this.estimatedTimeHrs ;
+    const endTime = this.estimatedTimeHrs1 ;
     let data = [{ label: "title", value: this.title}, 
                 {label: "description", value: this.description}, 
                 {label: "startTime" , value: startTime},
                 {label: "endTime" , value: endTime} ];
-                // {label: "hostName", value: this.hostName.value}, 
-                // {label: "date", value: this.date},
-                // {label: "teamMembers", value: this.teamMembers} ];
-                console.log(data, this.componentName);
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       return res;
     });
@@ -129,16 +138,14 @@ export class ScheduleMeetComponent implements OnInit {
   }
 
   createNewMeet(){
-    const startTime = this.estimatedTimeHrs + ":" + this.estimatedTimeMins;
-    const endTime = this.estimatedTimeHrs1 + ":" + this.estimatedTimeMins1;
+    const startTime = this.estimatedTimeHrs ;
+    const endTime = this.estimatedTimeHrs1 ;
     const uid = this.authService.user.uid;
     this.enableLoader = true;
     const teamId = this.authService.getTeamId();
-    console.log(teamId, startTime, endTime);
     const callable = this.functions.httpsCallable('meet/scheduleMeet');
       if (this.orgDomain == undefined) {
         this.orgDomain = this.backendService.getOrganizationDomain();
-      console.log(this.orgDomain,teamId, this.teamMembers, this.title, this.description, this.hostName.value, this.date,this.toolsService.time(), startTime, endTime);
       callable({OrgDomain:this.orgDomain, TeamId:teamId, TeamMembers:this.teamMembers, Title:this.title, Description:this.description, HostName:this.hostName.value, Date: this.date, StartTime: startTime, EndTime: endTime, Uid: uid}).subscribe({
         next: (data) => {
           this.enableLoader = false;
@@ -151,16 +158,11 @@ export class ScheduleMeetComponent implements OnInit {
         },
         complete: () => {
           console.info(' successfully scheduled meet')
-          this.generateLink();
         }
       })
     }
   }
-
-  generateLink(){
-    this.link ="https://meet.jit.si/"+ this.title +"/Meet-woktez";
-    return this.link;
-  }
+  
 
   close(){
       jQuery('#scheduleMeet').modal('hide');

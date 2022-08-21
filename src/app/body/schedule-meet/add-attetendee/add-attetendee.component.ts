@@ -1,3 +1,17 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
@@ -34,7 +48,6 @@ export class AddAttetendeeComponent implements OnInit {
   }
 
   submit(){
-    console.log(this.attendeeEmail);
     if(this.attendeeEmail){
       if(this.isUpdateMeet == true){
         this.addUpdateMeet();
@@ -47,7 +60,6 @@ export class AddAttetendeeComponent implements OnInit {
   addUpdateMeet(){
     this.orgDomain = this.backendService.getOrganizationDomain();
     this.enableLoader = true;
-    console.log(this.orgDomain, this.title, this.authservice.user.email, this.teamMembers, this.attendeeEmail, this.description,  this.teamId)
     const callable = this.functions.httpsCallable('meet/addAttendee');
     callable({OrgDomain:this.orgDomain, Title:this.title, TeamMembers:this.teamMembers, Add: this.attendeeEmail, Host: this.authservice.user.email, Description:this.description, TeamId: this.teamId}).subscribe({
       next: (data) => {

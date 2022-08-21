@@ -1,11 +1,25 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
 #navbarMenu,
 .modal-header {
     background-color: var(--primary-color);
 }
 .modal {
-   width: 20%;
-   position: fixed;
-   left: 40%;
+   width: 30%;
+   position: absolute;
+   margin-left: 650px;
 }
 
 #addAttendeePage,

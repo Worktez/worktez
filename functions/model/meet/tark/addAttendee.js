@@ -2,12 +2,7 @@
 const {updateMeetDetails} = require("../lib");
 
 exports.addAttendee = function(request, response) {
-  // const orgDomain = request.body.data.OrgDomain;
-  // const teamId = request.body.data.TeamId;
   const teamMembers = request.body.data.TeamMembers;
-  // const host = request.body.data.Host;
-  // const description = request.body.data.Description;
-  // const title = request.body.data.Title;
   const add = request.body.data.Add;
 
   let result;

@@ -1,7 +1,7 @@
 <!-- /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
-* 
+* Author : Simran Nigam <nigamsimran14@gmail.com>
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
 * 
@@ -21,7 +21,7 @@
                         <div class="col-md-10 col-10">
                             <h2>Schedule A Meet</h2>
                         </div>
-                        <div class="col-md-2 col-2 text-right ">
+                        <div class="col-md-2 col-2 text-right">
                             <span class="btn">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle " (click)="close()"
                                     title="Close">
@@ -32,17 +32,12 @@
                     </div>
                     <form #form="ngForm" *ngIf="!showClose">
                         <div class="form-row my-2">
-                            <div class="form-group col-md-6 col">
+                            <div class="form-group col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
                                 <input type="text" class="form-control form-control-sm" [(ngModel)]="title"
                                     [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
                             </div>
-                            <div class="form-group col-md-6 col ml-auto">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Date</span>
-                                <input class="form-control" type="text" onfocus="(this.type = 'date')"
-                                    onblur="(this.type='text')" [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
-                                    min="{{todayDate}}" placeholder="Select the Date">
-                            </div>
+
                         </div>
                         <div class="form-row mb-2">
                             <div class="form-group col-md-12 col">
@@ -107,27 +102,23 @@
                             </div>
                         </div>
                         <div class="form-row mb-2">
+                            <div class="form-group col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
+                                <input class="form-control" type="text" onfocus="(this.type = 'date')"
+                                    onblur="(this.type='text')" [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
+                                    min="{{todayDate}}" placeholder="Select the Date">
+                            </div>
+                        </div>
+                        <div class="form-row mb-2">
                             <div class="col-md-6 px-2">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Time</span>
-                            <div class="row">
-                                <div class="col-6">
-                                    <input type="number" min="0" max="23"  class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs" [ngModelOptions]="{standalone: true}" placeholder="Hrs">
-                                </div>
-                                <div class="col-6">
-                                    <input type="number" min="0" max="59" class="form-control form-control-sm" [(ngModel)]="estimatedTimeMins" [ngModelOptions]="{standalone: true}" placeholder="Mins"> 
-                                </div>
-                            </div> 
+                            <span class="ml-2 text-muted" style="font-size:0.7rem;" id="label">Local 24 Hrs Clock </span>
+                            <input type="time" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs" [ngModelOptions]="{standalone: true}" placeholder="Hrs:Mins" >
                             </div>
                             <div class="col-md-6 px-2">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Time</span>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <input type="number" min="0" max="23"  class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs1" [ngModelOptions]="{standalone: true}" placeholder="Hrs">
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="number" min="0" max="59" class="form-control form-control-sm" [(ngModel)]="estimatedTimeMins1" [ngModelOptions]="{standalone: true}" placeholder="Mins"> 
-                                    </div>
-                                </div> 
+                                <span class="ml-2 text-muted" style="font-size:0.7rem;" id="label">Local 24 Hrs Clock </span>
+                                <input type="time" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs1" [ngModelOptions]="{standalone: true}" placeholder="Hrs:Mins" >                     
                             </div>
                             <!-- <div class="col-6 pr-1">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Time</span>

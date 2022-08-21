@@ -15,9 +15,10 @@ const {db} = require("../application/lib");
  * @param {any} hostName
  * @param {any} description
  * @param {any} date
+ * @param {any} roomId
  * @return {any}
  */
-exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid) {
+exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId) {
   const setMeetDoc = db.collection("Meet").doc(meetDocId).set({
     MeetDocId: meetDocId,
     OrgDomain: orgDomain,
@@ -29,6 +30,7 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
     HostName: hostName,
     Description: description,
     Date: date,
+    RoomId: roomId,
   });
   return Promise.resolve(setMeetDoc);
 };
@@ -46,9 +48,10 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
  * @param {any} hostName
  * @param {any} description
  * @param {any} date
+ * @param {any} roomId
  * @return {any}
  */
-exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid) {
+exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId) {
   const setMeetDoc1 = db.collection("Users").doc(uid).collection("Meet").doc(meetDocId).set({
     MeetDocId: meetDocId,
     OrgDomain: orgDomain,
@@ -61,6 +64,7 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
     Description: description,
     Date: date,
     Uid: uid,
+    RoomId: roomId,
   });
   return Promise.resolve(setMeetDoc1);
 };

@@ -1,3 +1,4 @@
+
 /* eslint-disable max-len */
 const {getApplicationData, updateApplication} = require("../../application/lib");
 const {setMeetAtWorktez} = require("../lib");
@@ -10,8 +11,6 @@ exports.scheduleMeetAtWorktez = function(request, response) {
   const hostName = request.body.data.HostName;
   const description = request.body.data.Description;
   const date = request.body.data.Date;
-
-  console.log(attendees, title, startTime, endTime, hostName, description, date);
 
   let status = 200;
   let result;
