@@ -40,8 +40,7 @@ export class AuthService {
   user: User;
   userAppSetting: UserAppSetting;
   public userName:string = "";
-  public landingToSocial: boolean = false;
-
+ 
   educations: MyEducationData[];
   public educationCollectionData: Observable<MyEducationData[]>
 
@@ -74,7 +73,6 @@ export class AuthService {
 
   createUserData(user: User) {
     const callable = this.functions.httpsCallable('users/createNewUser');
-    console.log("create new user from ui");
     callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
       next: (data) => {
         console.log("Successful ");

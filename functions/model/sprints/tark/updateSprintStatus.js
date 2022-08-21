@@ -32,6 +32,7 @@ exports.updateSprintStatus = function(request, response) {
     const appKey = request.body.data.AppKey;
     const teamId = request.body.data.TeamId;
     const uid = request.body.data.Uid;
+    const date = request.body.data.Date;
     let orgDomain;
     let result;
     let status = 200;
@@ -55,6 +56,7 @@ exports.updateSprintStatus = function(request, response) {
                     updateSprintStatusInputJson = {
                         Status: sprintStatus,
                         EndStoryPoint: sprintDoc.CompletedStoryPoint,
+                        EndDate: date,
                     };
                     message = "Updated Sprint Status As Completed";
                 }

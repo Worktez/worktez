@@ -58,8 +58,6 @@ export class EditPageComponent implements OnInit {
   sprintNumber: number
   currentSprintNumber: number
   backlogSprintNumber: number
-  milestoneData=[]
-  milestoneId:string
   estimatedTimeHrs: number
   estimatedTimeMins: number
 
@@ -172,7 +170,7 @@ export class EditPageComponent implements OnInit {
       return res;
     });
     if (condition) {
-      this.newVal = [this.editTask.Description, this.assigneeName.value, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber, this.editTask.Type, this.editTask.Status, this.editTask.Title, this.reporterName.value, this.milestoneId];
+      this.newVal = [this.editTask.Description, this.assigneeName.value, this.editTask.EstimatedTime, this.editTask.Priority, this.editTask.Difficulty, this.editTask.StoryPointNumber, this.editTask.Type, this.editTask.Status, this.editTask.Title, this.reporterName.value];
       this.generateChanges();
       console.log("Inputs are valid");
       this.editPage();
@@ -202,8 +200,6 @@ export class EditPageComponent implements OnInit {
       this.changedData = this.changedData + " title,";
     if(this.prevVal[9] != this.newVal[9])
       this.changedData = this.changedData + " reporter,";
-    if(this.prevVal[10] != this.newVal[10])
-      this.changedData = this.changedData + " milestoneId"
     if (this.changedData != "")
       this.changedData = "Edited-" + this.changedData;
     this.changedData = this.changedData.substring(0, this.changedData.length - 1) + "."
@@ -214,7 +210,7 @@ export class EditPageComponent implements OnInit {
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(this.task.Status === "Completed")) {
         const callable = this.functions.httpsCallable('tasks/editTask');
-        await callable({Title: this.editTask.Title, Status: this.editTask.Status, AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.assigneeName.value, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, OldStoryPointNumber: this.prevVal[5], PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type, Reporter: this.reporterName.value, MilestoneId: this.milestoneId}).subscribe({
+        await callable({Title: this.editTask.Title, Status: this.editTask.Status, AppKey: appKey, Id: this.editTask.Id, Description: this.editTask.Description, Priority: this.editTask.Priority, Difficulty: this.editTask.Difficulty, Assignee: this.assigneeName.value, EstimatedTime: this.editTask.EstimatedTime, Project: this.task.Project, SprintNumber: this.editTask.SprintNumber, StoryPointNumber: this.editTask.StoryPointNumber, OldStoryPointNumber: this.prevVal[5], PreviousId: this.previousSprintId, CreationDate: this.editTask.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: this.changedData, Uid: this.authService.user.uid, Type:this.editTask.Type, Reporter: this.reporterName.value}).subscribe({
           next: (data) => {
             this.enableLoader = false;
             this.showClose = true;

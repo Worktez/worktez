@@ -64,7 +64,7 @@ const routes: Routes = [
   { path: 'TasksEvaluation', component: TasksEvaluationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
-  { path: '', component: SocialPageComponent},
+  { path: 'Social', component: SocialPageComponent},
   { path: 'FilterPage', component: FilterPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },

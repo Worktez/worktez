@@ -29,6 +29,9 @@ exports.getPerformanceChartData = function(request, response) {
   const teamId = data.TeamId;
   const assignee = data.Assignee;
   const sprintRange = data.SprintNumberRange;
+  const sprintRange1 = sprintRange["SprintRange1"];
+  const sprintRange2 = sprintRange["SprintRange2"];
+
   let teamName;
   let result;
   let status = 200;
@@ -60,7 +63,10 @@ exports.getPerformanceChartData = function(request, response) {
         result = {data: {status: "ERROR", data: "undefined"}};
       } else {
         for (const i in doc) {
-          responseData.push([i, doc[i]]);
+          const j=i.slice(1);
+          if (j>=sprintRange1 && j<=sprintRange2) { 
+            responseData.push([i, doc[i]]);
+          }
         }
         console.log(responseData);
         result = { data: { status: "OK", data: responseData } };

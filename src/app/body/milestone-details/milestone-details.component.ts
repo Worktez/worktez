@@ -28,6 +28,7 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
+import { MilestoneServiceService } from 'src/app/services/milestone-service.service';
 
 @Component({
   selector: 'app-milestone-details',
@@ -42,7 +43,6 @@ export class MilestoneDetailsComponent implements OnInit {
   fieldToEdit: string = "";
   orgDomain: string;
   teamIds: string[];
-  taskData: Tasks[];
   allTasks: Tasks[];
   changedData: string = ""
   prevVal = []
@@ -51,8 +51,6 @@ export class MilestoneDetailsComponent implements OnInit {
   milestoneStatus: string = "Ready to start"
   milestoneStatusLabels: string[]
   sprintNumber: number;
-  completedTasks: any[] = [];
-  incompleteTasks: any[] = [];
   milestoneData: Milestones
   taskDataReady: boolean;
   milestoneDataReady: boolean;
@@ -66,7 +64,7 @@ export class MilestoneDetailsComponent implements OnInit {
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
-  constructor(private route: ActivatedRoute, private router: Router, private functions: AngularFireFunctions, public startService: StartServiceService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, private location: Location, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService, public validationService: ValidationService) {
+  constructor(private route: ActivatedRoute, private router: Router, private functions: AngularFireFunctions, public startService: StartServiceService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, private location: Location, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService, public validationService: ValidationService, public milestoneService: MilestoneServiceService) {
   }
 
   ngOnInit(): void {
@@ -84,7 +82,11 @@ export class MilestoneDetailsComponent implements OnInit {
       this.milestoneDataReady = false;
       this.sprintNumber = this.startService.teamCurrentSprintNumber;
       this.getMilestoneDetails();
-      this.getTasks();
+      this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
+      this.milestoneService.taskDataStateObservable.subscribe(()=>{
+        this.getNumberData();
+        this.taskDataReady = true;
+      });
       this.prevVal = [this.milestoneData.MilestoneStatus];
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
@@ -97,7 +99,12 @@ export class MilestoneDetailsComponent implements OnInit {
             this.milestoneDataReady = false;
             this.sprintNumber = this.startService.currentSprintNumber;
             this.getMilestoneDetails();
-            this.getTasks();
+            console.log("hit in else");
+            this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
+            this.milestoneService.taskDataStateObservable.subscribe(()=>{
+                  this.getNumberData();
+                  this.taskDataReady = true;
+            });
             this.project = this.authService.getTeamId();
             this.teamIds = this.backendService.getOrganizationTeamIds();
             this.readTeamData(this.project); 
@@ -124,36 +131,9 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
   getTasks() {
-    this.showLoader = true;
-    const callable = this.functions.httpsCallable("tasks/getAllTasks");
-    callable({ OrgDomain: this.orgDomain, MilestoneId: this.milestoneId }).pipe(
-      map(actions => {
-        return actions.data as Tasks[];
-      })).subscribe({
-        next: (data) => {
-          this.taskData = [];
-          this.completedTasks = [];
-          this.incompleteTasks = [];
-
-          this.taskData = data;
-          this.taskData.forEach((element) => {
-            if (element.Status == 'Completed') {
-              this.completedTasks.push(element);
-            }
-            else {
-              this.incompleteTasks.push(element);
-            }
-          })
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => {
-          console.info("Fetched Tasks Successfully");
-          this.taskDataReady = true;
-          this.showLoader = false;
-          this.getNumberData();
-        }
+    this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
+      this.milestoneService.taskDataStateObservable.subscribe(()=>{
+        this.getNumberData();
       });
   }
   activateAdd(){
@@ -231,7 +211,7 @@ export class MilestoneDetailsComponent implements OnInit {
 
   setMilestoneWidth = function () {
     //Calculations are adjusted for UI Improvisations
-    var width = (100 / (this.taskData.length)).toString() + "%";
+    var width = (100 / (this.milestoneService.taskData.length)).toString() + "%";
     return width;
   };
   setProgressWidth() {
@@ -244,7 +224,6 @@ export class MilestoneDetailsComponent implements OnInit {
     this.showLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
          this.milestoneStatusLabels = team.MilestoneStatus;
-         console.log(team);
     });
     this.showLoader =false;
   }
@@ -278,8 +257,8 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
   getNumberData() {
-    this.totalTasks = this.taskData.length;
-    this.taskData.forEach(element => {
+    this.totalTasks = this.milestoneService.taskData.length;
+    this.milestoneService.taskData.forEach(element => {
       if (element.Status == "Completed") {
         this.totalCompletedTasks = this.totalCompletedTasks + 1;
       }

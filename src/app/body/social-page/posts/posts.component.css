@@ -45,9 +45,23 @@ h3 {
   color: #ffffff;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .btn {
     width: 7rem;
     font-size: 12px;
   }
+}
+
+.dropdown-item {
+  color: var(--text);
+  font-size: 12px;
+}
+.dropdown-item:hover {
+  background-color: var(--secondary-bg);
+  color: var(--button-text-hover); 
+}
+
+.dropdown-menu {
+  color: var(--text);
+  background-color: var(--secondary-bg);
 }

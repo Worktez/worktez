@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit {
   }
 
   socialPage() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/Social']);
   }
   
   filterPage(){

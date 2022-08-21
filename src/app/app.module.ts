@@ -168,6 +168,7 @@ import { AddTaskComponent } from './body/milestone-details/add-task/add-task.com
 import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
 import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.component';
 import { AddAttetendeeComponent } from './body/schedule-meet/add-attetendee/add-attetendee.component';
+import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 
 @NgModule({
   declarations: [
@@ -302,6 +303,7 @@ import { AddAttetendeeComponent } from './body/schedule-meet/add-attetendee/add-
     RequestADemoComponent,
     ScheduleMeetComponent,
     AddAttetendeeComponent,
+    NotificationCardComponent,
   ],
   imports: [
     BrowserModule,

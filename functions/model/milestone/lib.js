@@ -100,17 +100,18 @@ exports.getAllMilestonesData = function(orgDomain, teamId="") {
     const editMilestonePromise = db.collection("Organizations").doc(orgDomain).collection("Milestones").doc(milestoneId).update(MilestoneStatus);
     return Promise.resolve(editMilestonePromise);
   };
-// exports.getTaskData = function(orgDomain, milestoneId) {
-//     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
-//     query = query.where("MilestoneId", "==", milestoneId);
-//     const promise = query.get().then((doc) => {
-//         const data=[];
-//         doc.forEach((element) => {
-//             if (element.exists) {
-//                 data.push( element.data());
-//             }
-//         });
-//         return data;
-//     });
-//     return Promise.resolve(promise);
-// };
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} milestoneId
+ * @param {any} taskId
+ * @return
+ */
+exports.addTask = function(milestoneId, taskId, orgDomain) {
+    console.log(milestoneId, taskId, orgDomain);
+    const promise =db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update({
+        MilestoneId: milestoneId,
+    });
+    return Promise.resolve(promise);
+};
