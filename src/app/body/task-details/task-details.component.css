@@ -74,10 +74,12 @@ nav {
 #label{
     color: var(--table-header);
     margin-right:8px;
+    font-weight:600 ;
 }
 #value {
     color: var(--text);
-    font-weight: bolder;
+    /* font-weight: bolder; */
+    font-size: auto;
 }
 
 .part {
@@ -102,7 +104,6 @@ nav {
     border: dashed;
     border-width: 1px;
     font-size: 12px;
-    border-color: var(--primary-color);
     box-shadow: none;
     outline: 0 none;
 }

@@ -25,6 +25,9 @@
     <ng-container *ngIf="popupHandlerService.createNewTaskEnabled">
         <app-create-new-task (taskCreated)="taskCreated($event)"></app-create-new-task>
     </ng-container>
+    <ng-container *ngIf="popupHandlerService.scheduleMeetEnabled">
+        <app-schedule-meet (meetScheduled)="meetScheduled($event)"></app-schedule-meet>
+    </ng-container>
 
     <ng-container *ngIf="popupHandlerService.createPostEnabled">
         <app-create-post></app-create-post>

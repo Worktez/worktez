@@ -38,33 +38,14 @@ mat-icon {
     background-color: var(--secondary-bg);
     box-shadow: var(--box-shadow-bottom);
 }
-
-a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 12px;
-}
-
-
-#notificationBox:hover {
-    border: 1px solid var(--button-text-hover);
-}
-
-#message {
-    font-size: 12px;
-    text-align: justify;
-    margin: 10px;
-}
-
 /* #date {
     font-size: 12px;
 } */
 
-.notificationCenter {
+#notificationCenter {
     width: 20rem;
     position:absolute;
     right: 1rem;
-    top: 3rem;
     height:15rem;
     overflow-y: scroll;
     overflow-x: hidden;

@@ -85,10 +85,13 @@ export class SetupComponent implements OnInit {
             const type = ["Bug", "Story", "Sub Task"];
             const status = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
             const difficulty = ["High", "Medium", "Low"];
+            const milestoneStatus = ["Ice Box", "Completed", "Under Progress", "Ready to start"]
+ 
+
             this.progressPercentage = 15;
   
-            this.createNewTeamWithLabels("create", organizationDomain, "Development", "Dev", "test", organizationAdmin, ["member1@gmail.com", this.email], this.email, type, status, priority, difficulty, orgAppKey);
-            this.createNewTeamWithLabels("create", organizationDomain, "Marketing", "Mar", "test2", organizationAdmin, ["member2@gmail.com", this.email], this.email, type, status, priority, difficulty, orgAppKey)
+            this.createNewTeamWithLabels("create", organizationDomain, "Development", "Dev", "test", organizationAdmin, ["member1@gmail.com", this.email], this.email, type, status, priority, difficulty,  milestoneStatus, orgAppKey);
+            this.createNewTeamWithLabels("create", organizationDomain, "Marketing", "Mar", "test2", organizationAdmin, ["member2@gmail.com", this.email], this.email, type, status, priority, difficulty,  milestoneStatus, orgAppKey)
           },
           error: (error) => {
             console.log(error);
@@ -101,11 +104,11 @@ export class SetupComponent implements OnInit {
       
   }
   
-  createNewTeamWithLabels( modeTo: string, organizationDomain: string, teamName: string, teamId: string, teamDescription: string, teamManagerEmail: string, teamMembers: string[], teamAdmin: string, type: string[], statusLabels: string[], priorityLabels: string[], difficultyLabels: string[], organizationAppKey: any ) {
+  createNewTeamWithLabels( modeTo: string, organizationDomain: string, teamName: string, teamId: string, teamDescription: string, teamManagerEmail: string, teamMembers: string[], teamAdmin: string, type: string[], statusLabels: string[], priorityLabels: string[], difficultyLabels: string[], milestoneStatusLabels: string[], organizationAppKey: any ) {
       if (modeTo == "create")
       {
         const callable = this.functions.httpsCallable('teams/createTeam');
-        callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, TypeLabels: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).subscribe({
+        callable({OrganizationDomain: organizationDomain, TeamName: teamName, TeamId: teamId, TeamDescription: teamDescription, TeamManagerEmail: teamManagerEmail, TeamMembers: teamMembers, TeamAdmin: teamAdmin, TypeLabels: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels, MilestoneStatusLabels: milestoneStatusLabels, OrganizationAppKey: organizationAppKey, Uid: this.uid }).subscribe({
           next: (result) => {
             console.log("Successful");
             this.progressPercentage = 20;

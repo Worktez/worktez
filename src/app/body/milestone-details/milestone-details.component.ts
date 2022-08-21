@@ -26,6 +26,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
+import { MilestoneServiceService } from 'src/app/services/milestone-service.service';
 
 @Component({
   selector: 'app-milestone-details',
@@ -36,13 +39,18 @@ export class MilestoneDetailsComponent implements OnInit {
 
   componentName: string = "MILESTONES";
   milestoneId: string;
+  milestoneIdToEdit: string = "";
+  fieldToEdit: string = "";
   orgDomain: string;
   teamIds: string[];
-  taskData: Tasks[];
   allTasks: Tasks[];
+  changedData: string = ""
+  prevVal = []
+  newVal = []
+  project: string = ""
+  milestoneStatus: string = "Ready to start"
+  milestoneStatusLabels: string[]
   sprintNumber: number;
-  completedTasks: any[] = [];
-  incompleteTasks: any[] = [];
   milestoneData: Milestones
   taskDataReady: boolean;
   milestoneDataReady: boolean;
@@ -56,13 +64,16 @@ export class MilestoneDetailsComponent implements OnInit {
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
-  constructor(private route: ActivatedRoute, private router: Router, private functions: AngularFireFunctions, public startService: StartServiceService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, private location: Location, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public popupHandlerService: PopupHandlerService) {
+  constructor(private route: ActivatedRoute, private router: Router, private functions: AngularFireFunctions, public startService: StartServiceService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, private location: Location, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService, public validationService: ValidationService, public milestoneService: MilestoneServiceService) {
   }
 
   ngOnInit(): void {
     this.milestoneId = this.route.snapshot.params['MilestoneId'];
     this.navbarHandler.addToNavbar(this.milestoneId);
     if (this.startService.showTeams) {
+      this.project = this.authService.getTeamId();
+      this.teamIds = this.backendService.getOrganizationTeamIds();
+      this.readTeamData(this.project); 
       this.appkey = this.authService.getAppKey();
       this.backendService.getOrgDetails(this.appkey);
       this.orgDomain = this.backendService.getOrganizationDomain();
@@ -71,7 +82,12 @@ export class MilestoneDetailsComponent implements OnInit {
       this.milestoneDataReady = false;
       this.sprintNumber = this.startService.teamCurrentSprintNumber;
       this.getMilestoneDetails();
-      this.getTasks();
+      this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
+      this.milestoneService.taskDataStateObservable.subscribe(()=>{
+        this.getNumberData();
+        this.taskDataReady = true;
+      });
+      this.prevVal = [this.milestoneData.MilestoneStatus];
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
@@ -83,7 +99,16 @@ export class MilestoneDetailsComponent implements OnInit {
             this.milestoneDataReady = false;
             this.sprintNumber = this.startService.currentSprintNumber;
             this.getMilestoneDetails();
-            this.getTasks();
+            console.log("hit in else");
+            this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
+            this.milestoneService.taskDataStateObservable.subscribe(()=>{
+                  this.getNumberData();
+                  this.taskDataReady = true;
+            });
+            this.project = this.authService.getTeamId();
+            this.teamIds = this.backendService.getOrganizationTeamIds();
+            this.readTeamData(this.project); 
+            this.prevVal = [this.milestoneData.MilestoneStatus];
           });
    
         }
@@ -94,37 +119,21 @@ export class MilestoneDetailsComponent implements OnInit {
   backToMilestones() {
     this.location.back()
   }
-  getTasks() {
-    this.showLoader = true;
-    const callable = this.functions.httpsCallable("tasks/getAllTasks");
-    callable({ OrgDomain: this.orgDomain, MilestoneId: this.milestoneId }).pipe(
-      map(actions => {
-        return actions.data as Tasks[];
-      })).subscribe({
-        next: (data) => {
-          this.taskData = [];
-          this.completedTasks = [];
-          this.incompleteTasks = [];
 
-          this.taskData = data;
-          this.taskData.forEach((element) => {
-            if (element.Status == 'Completed') {
-              this.completedTasks.push(element);
-            }
-            else {
-              this.incompleteTasks.push(element);
-            }
-          })
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => {
-          console.info("Fetched Tasks Successfully");
-          this.taskDataReady = true;
-          this.showLoader = false;
-          this.getNumberData();
-        }
+  clickOut() {
+    this.milestoneIdToEdit="";
+    this.submit();
+  }
+
+  showEditMilestone(milestoneId: string, fieldToEdit: string) {
+    this.milestoneIdToEdit = milestoneId;
+    this.fieldToEdit = fieldToEdit;
+  }
+
+  getTasks() {
+    this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
+      this.milestoneService.taskDataStateObservable.subscribe(()=>{
+        this.getNumberData();
       });
   }
   activateAdd(){
@@ -158,9 +167,51 @@ export class MilestoneDetailsComponent implements OnInit {
         }
       });
   }
+
+  editStatus(){
+    this.showLoader=true;
+
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('milestone/editMilestone');
+    callable({MilestoneId:this.milestoneId, OrgDomain:orgDomain,MilestoneStatus:this.milestoneData.MilestoneStatus}).subscribe({
+      next: (data) => {
+        this.milestoneData.MilestoneStatus=data.milestoneStatus;
+          this.showLoader=true;
+          this.milestoneIdToEdit =  "";
+          this.showLoader = false;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName,"InternalError","Api");
+        this.showLoader = false;
+        console.error(error);
+      },
+      complete: () => console.info('Successful')
+    });
+  }
+  submit() {
+    let data = [{ label: "milestoneStatus", value: this.milestoneData.MilestoneStatus }];
+     
+      this.newVal = [this.milestoneData.MilestoneStatus];
+      this.generateChanges();
+      console.log("Inputs are valid");
+      this.editStatus();
+      this.showLoader=true;
+      this.getMilestoneDetails();
+    
+  }
+
+  generateChanges() {
+    if (this.prevVal[0] != this.newVal[0])
+      this.changedData = this.changedData + " milestoneStatus,";
+    if (this.changedData != "")
+      this.changedData = "Edited-" + this.changedData;
+    this.changedData = this.changedData.substring(0, this.changedData.length - 1) + "."
+  }
+
   setMilestoneWidth = function () {
     //Calculations are adjusted for UI Improvisations
-    var width = (100 / (this.taskData.length)).toString() + "%";
+    var width = (100 / (this.milestoneService.taskData.length)).toString() + "%";
     return width;
   };
   setProgressWidth() {
@@ -169,7 +220,14 @@ export class MilestoneDetailsComponent implements OnInit {
     return width;
   }
 
-
+  readTeamData(teamId :string){
+    this.showLoader = true;
+    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
+         this.milestoneStatusLabels = team.MilestoneStatus;
+    });
+    this.showLoader =false;
+  }
+ 
 
   getMilestoneDetails() {
     this.showLoader = true;
@@ -199,8 +257,8 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
   getNumberData() {
-    this.totalTasks = this.taskData.length;
-    this.taskData.forEach(element => {
+    this.totalTasks = this.milestoneService.taskData.length;
+    this.milestoneService.taskData.forEach(element => {
       if (element.Status == "Completed") {
         this.totalCompletedTasks = this.totalCompletedTasks + 1;
       }

@@ -50,6 +50,7 @@ export class CreateNewTeamComponent implements OnInit {
   teamManagerEmail: string;
   teamMembers: string[] = [];
   enableLoader: boolean = false;
+  teamChanged:boolean = false
 
   constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
@@ -76,6 +77,17 @@ export class CreateNewTeamComponent implements OnInit {
     }
   }
 
+  setTeamId(){
+    if(!this.teamChanged){
+    this.teamId = this.teamName.slice(0, 3);
+    }
+  }
+
+  setChange(){
+    this.teamChanged = true;
+}
+
+
   loadData() {
     this.appKey = this.cookieService.get('userSelectedOrgAppKey');
     this.backendService.getOrgDetails(this.appKey).subscribe(()=>{
@@ -93,6 +105,8 @@ export class CreateNewTeamComponent implements OnInit {
   statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
+  milestoneStatusLabels: string[] = ["Ice Box", "Completed", "Under Progress", "Ready to start"]
+
 
   async submit() {
     if (this.teamName!=undefined || this.teamId!=undefined || this.teamManagerEmail!=undefined){
@@ -123,12 +137,19 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   addMember() {
-    this.addMemberEnabled = true;
+    var condition = (this.validationService.checkTeamMemberEmails(this.teamMembers)).then(res => {
+      return res;
+    });
+    if (condition){
+      this.addMemberEnabled = true;
+    }
+    else(
+      console.log("error")
+    )
   }
 
   addedMember(data: { completed: boolean, memberEmail: string}) {
     if (data.memberEmail) {
-      this.teamMembers.push(data.memberEmail);
     }
     this.addMemberEnabled = false;
   }
@@ -149,7 +170,7 @@ export class CreateNewTeamComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
       next: (data) => {
       this.enableLoader = false;
       this.startService.startApplication();

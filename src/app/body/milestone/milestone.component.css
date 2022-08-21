@@ -18,10 +18,10 @@
     box-shadow: var(--box-shadow-bottom);
     background: var(--secondary-bg);
     color: var(--text);
-    border: 1px solid var(--scrollbar-color);
     border-radius: 10px;
     height: 100%;
     cursor: pointer;
+    border: none !important;
 }
 
 h3{
@@ -78,8 +78,7 @@ h3{
 }
 
 #button {
-    background-color: var(--primary-color);
-    color: white;
+    color:var(--text);
 }
 
 #button:focus,
@@ -91,7 +90,8 @@ h3{
 }
 
 .btn {
-    color: var(--text);
+    color: var(--button-text);
+    background-color: var(--secondary-bg);
 }
 
 .btn:hover {
@@ -102,3 +102,19 @@ h3{
 .noMilstones{
     color: var(--text);
 }
+
+.dropdown-item {
+    font-size: 12px;
+    color: var(--text);
+}
+
+.dropdown-item:hover{
+    color: var(--button-text-hover);
+    background-color: var(--dropdown-hover);
+}
+
+#dropdownUserCard {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+

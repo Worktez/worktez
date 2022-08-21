@@ -22,7 +22,6 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule } from '@angular/common/http';
-
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
@@ -167,6 +166,9 @@ import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milest
 import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
 import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
 import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
+import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.component';
+import { AddAttetendeeComponent } from './body/schedule-meet/add-attetendee/add-attetendee.component';
+import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 
 @NgModule({
   declarations: [
@@ -299,6 +301,9 @@ import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.comp
     MilestoneCardComponent,
     AddTaskComponent,
     RequestADemoComponent,
+    ScheduleMeetComponent,
+    AddAttetendeeComponent,
+    NotificationCardComponent,
   ],
   imports: [
     BrowserModule,

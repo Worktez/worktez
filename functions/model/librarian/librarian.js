@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -128,6 +129,17 @@ fastify.post("/uploadLogoFile", (req, res) => {
  */
 fastify.post("/uploadUserProfilePic", (req, res) => {
     uploadProfilePicToUserDoc(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/uploadPostImages"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/uploadPostImages", (req, res) => {
+    uploadPostImagesDoc(req, res);
 });
 
 /**

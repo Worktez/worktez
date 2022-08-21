@@ -24,6 +24,9 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';
 import { Milestones } from 'src/app/Interface/MilestoneInterface';
+import { MilestoneServiceService } from 'src/app/services/milestone-service.service';
+import { Router } from '@angular/router';
+
 
 
 declare var jQuery:any;
@@ -52,7 +55,9 @@ export class CreateNewTaskComponent implements OnInit {
   description: string
   watcherName: string[]
   creatorName : string
-  estimatedTime: number
+  estimatedTimeHrs: number
+  estimatedTimeMins: number
+  totalEstimatedTime: number
   project: string = null
   priority: string = null
   difficulty: string = null
@@ -78,7 +83,7 @@ export class CreateNewTaskComponent implements OnInit {
   milestoneData:Milestones[] = []
   selectedMilestoneId:string = ""
 
-  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService, public milestoneService: MilestoneServiceService, private route: Router) { }
   ngOnInit(): void {
     this.teamIds=this.backendService.getOrganizationTeamIds();
     this.project = this.authService.getTeamId();
@@ -97,7 +102,7 @@ export class CreateNewTaskComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
-
+  
   readTeamData(teamId :string){
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
@@ -153,10 +158,23 @@ export class CreateNewTaskComponent implements OnInit {
   }
 
   async submit() {
+    if(this.estimatedTimeHrs == undefined && this.estimatedTimeMins != undefined){
+      this.estimatedTimeHrs=0
+      if(this.estimatedTimeMins<0){
+        this.estimatedTimeMins=0
+      }
+    }
+    else if(this.estimatedTimeMins == undefined && this.estimatedTimeHrs!= undefined){
+      this.estimatedTimeMins=0
+      if(this.estimatedTimeHrs<0){
+        this.estimatedTimeHrs=0
+      }
+    }
+    this.totalEstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
     { label: "priority", value: this.priority },
-    { label: "estimatedTime", value: this.estimatedTime },
+    { label: "estimatedTime", value: this.totalEstimatedTime },
     { label: "difficulty", value: this.difficulty },
     { label: "description", value: this.description },
     { label: "creator", value: this.creatorName },
@@ -186,7 +204,7 @@ export class CreateNewTaskComponent implements OnInit {
     const parentTaskId = this.popupHandlerService.parentTaskId;
     const parentTaskUrl = this.popupHandlerService.parentTaskUrl;
     const callable = this.functions.httpsCallable('tasks/createNewTask');
-    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.estimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl, MilestoneId: this.selectedMilestoneId }).subscribe({
+    callable({TeamId: teamId, AppKey: appKey, Title: this.title, Description: this.description, Priority: this.priority, Difficulty: this.difficulty, Creator: this.creatorName, Assignee: this.assigneeName.value, Reporter: this.reporterName.value, EstimatedTime: this.totalEstimatedTime, Status: this.status, Project: this.teamName, SprintNumber: this.sprintNumber, StoryPointNumber: this.storyPoint, CreationDate: this.todayDate, Time: this.time, Uid: this.authService.userAppSetting.uid, Type: this.taskType, ParentTaskId: parentTaskId, ParentTaskUrl: parentTaskUrl, MilestoneId: this.selectedMilestoneId }).subscribe({
       next: (data) => {
         console.log("Successful created task");
         this.enableLoader=false;
@@ -197,7 +215,14 @@ export class CreateNewTaskComponent implements OnInit {
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.error(error);
       },
-      complete: () => console.info('Successfully created task')
+      complete: () =>{
+        const orgDomain = this.backendService.getOrganizationDomain();
+        console.info('Successfully created task');
+        const path = this.route.url;
+      if (path.includes('/MilestoneDetails')) {
+        this.milestoneService.getTasks(orgDomain, this.selectedMilestoneId);
+      } 
+      } 
     });
 
 }

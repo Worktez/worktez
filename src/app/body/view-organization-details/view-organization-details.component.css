@@ -16,6 +16,11 @@
     font-family: var(--font);
 }
 
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
 .card {
     color: var(--text);
     background-color: var(--secondary-bg);
@@ -72,5 +77,8 @@ hr {
 #orgImg {
     height: 122px;
     width: 122px;
-    border-radius: 50%;
+}
+
+span{
+    color: var(--text);
 }

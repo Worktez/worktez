@@ -23,7 +23,7 @@
                 <div class="modal-body">
                     <form *ngIf="!enableLoader">
                         <div class="form-group mb-4">
-                            <label type="button" for="image" class="col-form-label btn btn-primary col-12">Choose Photo</label>
+                            <label type="button" for="image" class="col-form-label btn col-12" id="button">Choose Photo</label>
                             <input type="file" id="image" style="display: none;" #image (change)="detectImage($event)">
                         </div>
                     </form>
