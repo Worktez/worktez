@@ -47,7 +47,6 @@ export class AddMemberComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.memberEmail);
     if (this.memberEmail) {
       if (this.isUpdateTeam == true) {
         this.addUpdateTeam();
