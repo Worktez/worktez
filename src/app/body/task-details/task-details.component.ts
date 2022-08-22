@@ -324,9 +324,9 @@ export class TaskDetailsComponent implements OnInit {
     this.logWorkEnabled = false;
   }
 
-  editTaskCompleted ( data: { completed: boolean, estimatedTime: number } ) {
+  editTaskCompleted ( data: { completed: boolean, task: Tasks } ) {
     console.log(data);
-    this.getTimeDetails();
+    this.getTaskPageData();
   }
 
   deleteTaskCompleted ( data: { completed: boolean } ) {
