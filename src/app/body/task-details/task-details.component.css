@@ -104,7 +104,6 @@ nav {
     border: dashed;
     border-width: 1px;
     font-size: 12px;
-    border-color: var(--primary-color);
     box-shadow: none;
     outline: 0 none;
 }

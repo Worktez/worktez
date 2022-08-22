@@ -43,9 +43,10 @@
         </ng-template>
     </div>
 </div>
+<app-loader *ngIf="enableLoader"></app-loader>
 <div class="row p-2" *ngIf="showSaveButton">
     <div class="col d-flex justify-content-center">
-        <button class="btn" id="button" (click)="cropPhotoDone()">Save</button>
+        <button class="btn" id="button" (click)="cropPhotoDone()">Save</button>    
     </div>
 </div>
 <div class="row p-2">

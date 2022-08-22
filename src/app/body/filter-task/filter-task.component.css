@@ -58,6 +58,8 @@ input:focus {
     /*background-color: var(--secondary-bg);*/
     border-color: var(--primary-color);
     background: var(--primary-bg);
+    background-color: var(--secondary-bg);
+
 }
 
 .form-control {
