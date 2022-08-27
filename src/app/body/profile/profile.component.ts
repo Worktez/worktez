@@ -66,7 +66,7 @@ export class ProfileComponent implements OnInit {
   website: string;
   username: string;
   
-  sameUser: boolean = true;
+  sameUser: boolean;
 
   imageUrl: string = "";
   profilePicFile: FileData;
@@ -98,6 +98,7 @@ export class ProfileComponent implements OnInit {
       this.teamName = this.startService.teamName;
       this.managerEmail = this.startService.managerEmail;
       this.role = this.startService.role;
+      this.checkSameUser();
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
@@ -107,11 +108,11 @@ export class ProfileComponent implements OnInit {
             this.teamName = this.startService.teamName;
             this.managerEmail = this.startService.managerEmail;
             this.role = this.startService.role;
+            this.checkSameUser();
           });
         }
       });
     }
-    this.checkSameUser();
   }
   checkSameUser(){
     if (this.authService.userAppSetting.Username == this.username){
