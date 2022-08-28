@@ -18,38 +18,56 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { updatedUserPerformanceChartData } = require("../../performanceChart/tark/updatedUserPerformanceChartData");
-const { updatePerformanceChartData } = require("../../performanceChart/tark/updatePerformanceChartData");
-const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
-const { getTeamUseTeamId } = require("../../teams/lib");
 const { getAllSchedular } = require("../lib");
-const { updateAutoSprintStatus } = require("../../sprints/tark/updateAutoSprintStatus");
+const { getOrgUseAppKey } = require("../../organization/lib");
+const { getTeamUseTeamId, setSchedularJob } = require("../../teams/lib");
+const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
+const { updatePerformanceChartData } = require("../../performanceChart/tark/updatePerformanceChartData");
+// const { updateAutoSprintStatus } = require("../../performanceChart/tark/")
 
 exports.startSchedular = function() {
-  getAllSchedular("", "", "", "", "").then((sched) => {
+  const p = getAllSchedular("", "").then((sched) => {
     if (sched) {
       sched.forEach((schDoc) => {
-        const type = schDoc.data().Type;
-        
-        getTeamUseTeamId(schDoc.data().OrgDomain, schDoc.data().TeamId).then((team) => {
-          const currentSprintID = team.CurrentSprintId;
-          const teamName = team.TeamName;
-          const sprintRange = {
-            SprintRange1: currentSprintID - 4,
-            SprintRange2: currentSprintID,
-          };
+        // const orgId = schDoc.data().OrgId;
+        const orgAppKey = schDoc.data().OrgAppKey;
 
-          if (type == "SprintEvaluationChart") {
-            updateSprintEvaluationGraphData(schDoc.data().OrgDomain, schDoc.data().TeamId, sprintRange);
-          // } else if (type == "UserPerformanceChart") {
-          //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
-          } else if (type == "PerformanceChart") {
-            updatePerformanceChartData(schDoc.data().OrgDomain, schDoc.data().TeamId, schDoc.data().Assignee, sprintRange);
-          } else if (type == "AutoSprintCompletion") {
-            updateAutoSprintStatus(schDoc.data().OrgAppKey, schDoc.data().TeamId);
-          }
-        }).catch((error)=>{
-          console.log("Error:", error);
+        getOrgUseAppKey(orgAppKey).then((data) => {
+          const teamIds = data.TeamsId;
+          const orgDomain = data.OrganizationDomain;
+          teamIds.forEach((teamId) => {
+            getTeamUseTeamId(orgDomain, teamId).then((team) => {
+              if (team.SchedularJob == undefined) {
+                const teamName = team.TeamName;
+                setSchedularJob(orgDomain, teamName);
+              } else {
+                const sprintEvalChart = team.SchedularJob.SprintEvaluationChart;
+                const performanceChart = team.SchedularJob.PerformanceChart;
+                // const userPerformanceChart = team.SchedularJob.UserPerformanceChart;
+
+                const currentSprintID = team.CurrentSprintId;
+                const sprintRange = {
+                  SprintRange1: currentSprintID - 4,
+                  SprintRange2: currentSprintID,
+                };
+                if (sprintEvalChart) {
+                  updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
+                // } else if (type == "UserPerformanceChart") {
+                //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
+                } 
+                
+                if (performanceChart) {
+                  updatePerformanceChartData(orgDomain, teamId, "Team", sprintRange);
+                } 
+                // else if (userPerformanceChart) {
+                // updateAutoSprintStatus(schDoc.data().OrgAppKey, schDoc.data().TeamId);
+                // }
+              }
+              
+              return null;
+            });
+          });
+          return null;
         });
       });
     }
@@ -57,6 +75,5 @@ exports.startSchedular = function() {
   }).catch((error) => {
     console.log("Error:", error);
   });
-  // updatedUserPerformanceChartData(lastUpdated, orgDomain, assignee, uid, sprintRange);
-  return null;
+  return Promise.resolve(p);
 };

@@ -35,18 +35,13 @@ exports.addMember = function(request, response) {
 
     let result;
     const status = 200;
-
     const found= teamMembers.includes(add);
     if (found) {
         sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member already existing" };
         console.log("Member already existing");
     } else {
-        teamMembers.push(add);
-        const updateJson = {
-            TeamMembers: teamMembers,
-        };
-        updateTeamDetails(updateJson, orgDomain, teamName);
+        teamMembers.push(add);        
         sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member added Successfully" };
         console.log("Member added Successfully");
@@ -55,5 +50,11 @@ exports.addMember = function(request, response) {
         console.error("Error while adding member");
         status = 500;
     }
-    */return response.status(status).send(result);
+    
+    */
+    const updateJson = {
+        TeamMembers: teamMembers,
+    };
+    updateTeamDetails(updateJson, orgDomain, teamName);
+    return response.status(status).send(result);
 };
