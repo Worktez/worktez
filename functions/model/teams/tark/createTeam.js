@@ -28,7 +28,6 @@ const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrgan
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 const { createLabelProperties } = require("./createLabelProperties");
 const { getUser, updateUser } = require("../../users/lib");
-const { setSchedular } = require("../../scheduledFunctions/lib");
 
 
 exports.createTeam = function(request, response) {
