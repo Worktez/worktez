@@ -53,7 +53,8 @@ body {
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
     --home-bg: #5559D9;
-    --font: 'Poppins', sans-serif;
+    --font: 'Plus Jakarta Sans', sans-serif;
+    /* font-family: 'Plus Jakarta Sans', sans-serif; */
 }
 
 .theme-dark {
@@ -87,5 +88,5 @@ body {
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
     --home-bg: #5559D9;
-    --font: 'Poppins', sans-serif;
+    --font: 'Plus Jakarta Sans', sans-serif;
 }
