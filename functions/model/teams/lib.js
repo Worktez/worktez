@@ -234,4 +234,22 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
     return Promise.resolve(getTeamPromise);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} scope
+ * @return {any}
+ */
+ exports.setSchedularJob = function(orgDomain, teamName) {
+    const inputJson = {
+        "SchedularJob": {
+            "SprintEvaluationChart": true,
+            "PerformanceChart": true,
+            "UserPerformanceChart": true,
+        },
+    };
+    const setTeamSchedularJobsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).update(inputJson);
+    return Promise.resolve(setTeamSchedularJobsPromise);
+};
 

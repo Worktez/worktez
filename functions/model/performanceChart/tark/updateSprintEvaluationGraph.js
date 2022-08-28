@@ -31,19 +31,19 @@ exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintRang
         let storyPointArray=[];
         const inputJson = {};
 
-        getTeamUseTeamId(orgDomain, teamId).then((team) => {
+        const p = getTeamUseTeamId(orgDomain, teamId).then((team) => {
             teamName = team.TeamName;
             if (sprintRange["SprintRange1"]<=0) {
                 sprintRange["SprintRange1"] = 1;
             }
-            getAllSprints(orgDomain, teamName, sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((sprints) => {
+            const p = getAllSprints(orgDomain, teamName, sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((sprints) => {
                 sprints.forEach((sprintDoc) => {
                     fullSprintName = createSprintName(sprintDoc.SprintNumber);
                     storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
                     inputJson[fullSprintName] = storyPointArray;
                 });
 
-                getOrganizationsChartDetails(orgDomain, teamId, "SprintEvaluationGraph").then((data) => {
+                const p = getOrganizationsChartDetails(orgDomain, teamId, "SprintEvaluationGraph").then((data) => {
                     if (data != undefined) {
                         updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
                     } else {
@@ -53,12 +53,13 @@ exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintRang
                 }).catch((err) => {
                     console.log(err);
                 });
-                return null;
+                return Promise.resolve(p);
             }).catch((err) => {
                 console.log(err);
             });
-            return null;
+            return Promise.resolve(p);
         }).catch((error) => {
             console.log(error);
         });
+        return Promise.resolve(p);
 };
