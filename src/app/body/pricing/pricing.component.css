@@ -1,0 +1,78 @@
+.page {
+    background-color: var(--secondary-bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.heading1 {
+    color: #4E4E4E;
+    font-size: 25px;
+    font-family: var(--font); 
+}
+
+.heading2 {
+    /* color: transparent; */
+    color: #4E4E4E;
+    font-size: 40px;
+    font-family: var(--font);
+    line-height: 3rem;
+    /* background: #4042E2;
+    background: linear-gradient(to right, #4042E2,#E94E32,#00867D,#2368FF);
+    background-clip: text; */
+}
+
+.tablehead {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.tablebody {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+#featureCard {
+    background-color: #4042E2;
+    border-top-left-radius: 20px 20px;
+    border-right: 6px solid #ffffff;
+}
+
+#basicCard {
+    background-color: #00867D;
+    border-right: 3px solid #ffffff;
+}
+
+#standardCard {
+    background-color: #E94E32;
+    border-left: 3px solid #ffffff;
+}
+
+#entCard {
+    background-color: #2368FF;
+    border-top-right-radius: 20px 20px;
+    border-left: 6px solid #ffffff;
+}
+.table {
+    border-radius: 20px;
+    /* border: 1px solid var(--box-shadow-color); */
+    box-shadow: 4px 5px 10px 10px #ebecefa5;
+}
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.demoButton {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    display: block;
+    border-radius:50px;
+	text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+    #ebox {
+        display: none;
+    }
+}
