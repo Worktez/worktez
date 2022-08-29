@@ -49,6 +49,7 @@ export class SocialPageComponent implements OnInit {
     this.authService.userAppSettingObservable.subscribe((data)=>{
       this.pageReady = true;
       this.loadSocialPageData();
+      
     });
   }
 
@@ -91,6 +92,7 @@ export class SocialPageComponent implements OnInit {
     this.createPostEnabled = false;
     this.loadSocialPageData();
   }
+
 
   loadRecentActivity(){
     const newarray = this.posts.filter((data)=>{

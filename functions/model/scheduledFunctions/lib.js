@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -30,13 +31,10 @@ const { db } = require("../application/lib");
  * @param {any} orgDomain
  * @return {any}
  */
-exports.setSchedular = function(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain) {
+exports.setSchedular = function(schedularDocId, orgAppKey, orgId) {
     const inputJson = {
-        Type: type,
         OrgAppKey: orgAppKey,
-        TeamId: teamId,
-        OrgDomain: orgDomain,
-        Assignee: assignee,
+        OrgId: orgId,
     };
     const setSchedularDoc = db.collection("SchedularOrg").doc(schedularDocId).set(inputJson);
     return Promise.resolve(setSchedularDoc);
@@ -56,29 +54,17 @@ exports.getSchedular = function(schedularDocId) {
 
 /**
  * Description
- * @param {any} type
  * @param {any} orgAppKey
- * @param {any} assignee
- * @param {any} teamId
- * @param {any} orgDomain
+ * @param {any} orgId
  * @return {any}
  */
-exports.getAllSchedular = function(type, orgAppKey, assignee, teamId, orgDomain) {
+exports.getAllSchedular = function(orgAppKey, orgId) {
     let query = db.collection("SchedularOrg");
-    if (type != "") {
-        query = query.where("Type", "==", type);
+    if (orgId != "") {
+        query = query.where("OrgId", "==", orgId);
     }
     if (orgAppKey != "") {
         query = query.where("OrgAppKey", "==", orgAppKey);
-    }
-    if (assignee != "") {
-        query = query.where("Assignee", "==", assignee);
-    }
-    if (teamId != "") {
-        query = query.where("TeamId", "==", teamId);
-    }
-    if (orgDomain != "") {
-        query = query.where("OrgDomain", "==", orgDomain);
     }
     const getAllScheduledPromises = query.get();
 

@@ -167,6 +167,8 @@ import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milest
 import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
 import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
 import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
+import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
+import { PricingComponent } from './body/pricing/pricing.component';
 
 @NgModule({
   declarations: [
@@ -299,6 +301,8 @@ import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.comp
     MilestoneCardComponent,
     AddTaskComponent,
     RequestADemoComponent,
+    NotificationCardComponent,
+    PricingComponent,
   ],
   imports: [
     BrowserModule,

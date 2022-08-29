@@ -55,6 +55,8 @@ exports.deleteLabel= function(request, response) {
         inputJson["Status"] = admin.firestore.FieldValue.arrayRemove(displayName);
       } else if (scope == "Type") {
         inputJson["Type"] = admin.firestore.FieldValue.arrayRemove(displayName);
+      } else if (scope == "MilestoneStatus") {
+        inputJson["MilestoneStatus"] = admin.firestore.FieldValue.arrayRemove(displayName);
       }
 
       updateTeamDetails(inputJson, orgDomain, teamName);

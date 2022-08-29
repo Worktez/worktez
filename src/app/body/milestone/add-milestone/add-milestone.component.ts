@@ -13,6 +13,7 @@
  ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
@@ -38,22 +39,25 @@ export class AddMilestoneComponent implements OnInit {
   startDate: string
   endDate: string
   todayDate: string
+  milestoneStatus: string
   addMilestoneActive: boolean = true;
 
-  constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolService.date();
   }
 
   async validateMilestone() {
-    let labels = ['title','project', 'description', 'startDate', 'endDate'];
-    let values = [this.title, this.teamId, this.description, this.startDate, this.endDate];
+    let labels = ['title','project', 'description', 'startDate', 'endDate', 'milestoneStatus'];
+    let values = [this.title, this.teamId, this.description, this.startDate, this.endDate, this.milestoneStatus];
     let data = [{ label: "title", value: this.title },
     { label: "project", value: this.teamId },
     { label: "description", value: this.description },
     { label: "startDate", value: this.startDate },
-    { label: "endDate", value: this.endDate }];
+    { label: "endDate", value: this.endDate },
+    { label: "milestoneStatus", value: this.milestoneStatus},
+  ];
     
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
       
@@ -75,7 +79,7 @@ export class AddMilestoneComponent implements OnInit {
     const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
     const uid = this.authService.getLoggedInUser();
 
-    callable({ Uid: uid, OrgDomain: orgDomain, Title: this.title, Description: this.description, TeamId: this.teamId, CreationDate: date, CreationTime: time, StartDate:this.startDate, EndDate: this.endDate }).subscribe({
+    callable({ Uid: uid, OrgDomain: orgDomain, Title: this.title, Description: this.description, TeamId: this.teamId, CreationDate: date, CreationTime: time, StartDate:this.startDate, EndDate: this.endDate, MilestoneStatus: this.milestoneStatus }).subscribe({
       next: (data) => {
         console.log("Successful Next");
       },
@@ -89,6 +93,7 @@ export class AddMilestoneComponent implements OnInit {
         this.teamId = "";
         this.startDate = "";
         this.endDate = "";
+        this.milestoneStatus = "";
         this.getMilestones.emit();
         // also make getMilestoneActive false
         this.popupHandlerService.addMilestoneActive = false

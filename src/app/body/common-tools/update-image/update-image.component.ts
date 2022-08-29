@@ -41,6 +41,8 @@ export class UpdateImageComponent implements OnInit {
 
   currentFileUpload: FileUpload
   showSaveButton: boolean
+  
+  enableLoader: boolean = false
 
   constructor(public backendService: BackendService, public uploadService: FileUploadService, public errorHandlerService: ErrorHandlerService) { }
 
@@ -53,7 +55,9 @@ export class UpdateImageComponent implements OnInit {
   }
 
   cropPhotoDone() {
+    this.enableLoader = true;
     this.cropPhotoCompleted.emit({ completed: true, photoUrl: this.croppedImage, file: this.currentFileUpload });
+    this.enableLoader = false;
   }
   
   onFileChange(event: any): void {

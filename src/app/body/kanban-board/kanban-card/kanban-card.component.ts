@@ -43,6 +43,10 @@ export class KanbanCardComponent implements OnInit {
     this.fieldToEdit = fieldToEdit;
   }
 
+  clickOut(){
+    this.taskIdToEdit="";
+  }
+
   editTask(task: Tasks, sprintNumber: number) {
     this.showLoader = true;
     let result;

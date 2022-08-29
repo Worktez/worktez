@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TestimonialCardComponent implements OnInit {
   @Input("image") image: string;
   @Input("name") name: string;
+  @Input("position") position: string;
   @Input("content") content: string;
 
   constructor() { }
