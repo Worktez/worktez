@@ -149,7 +149,7 @@ exports.generateTemplate = function(mailType, valueArray) {
       data = data.replace("$recipientName$", valueArray[2]);
       data = data.replace("$name$", valueArray[1]);
       data = data.replace("$teamName$", valueArray[0]);
-      data = data.replace("$link$", '"'+"https://worktez.com/verifyUser/"+valueArray[3]+ "/" + valueArray[0]+ "/" + valueArray[4]+"/"+valueArray[2]) + '"';
+      data = data.replace("$link$", "\"" + "https://worktez.com/verifyUser/"+valueArray[3]+ "/" + valueArray[0]+ "/" + valueArray[4]+"/"+valueArray[2] + "\"");
     } else if (templateName == "demoRequest.html") {
       mailSubject = "New Demo Request - Worktez";
       data = data.replace("$userName$", valueArray[0]);

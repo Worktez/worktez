@@ -1,5 +1,11 @@
-/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
+/* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,12 +19,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable no-undef */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 
 const { db } = require("../application/lib");
 
@@ -35,12 +35,13 @@ const { db } = require("../application/lib");
  * @param {any} statusLabels
  * @param {any} priorityLabels
  * @param {any} difficultyLabels
+ * @param {any} milestoneStatusLabels
  * @param {any} orgId
  * @param {any} teamId
  * @param {any} teamStatus
  * @return {any}
  */
-exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, orgId, teamId, teamStatus) {
+exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus) {
     const setTeam = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).set({
         TeamName: teamName,
         TeamDescription: teamDescription,
@@ -51,6 +52,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
         Status: statusLabels,
         Priority: priorityLabels,
         Difficulty: difficultyLabels,
+        MilestoneStatus: milestoneStatusLabels,
         TotalTeamTasks: 0,
         OrganizationId: orgId,
         TeamId: teamId,
@@ -232,4 +234,22 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
     return Promise.resolve(getTeamPromise);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} scope
+ * @return {any}
+ */
+ exports.setSchedularJob = function(orgDomain, teamName) {
+    const inputJson = {
+        "SchedularJob": {
+            "SprintEvaluationChart": true,
+            "PerformanceChart": true,
+            "UserPerformanceChart": true,
+        },
+    };
+    const setTeamSchedularJobsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).update(inputJson);
+    return Promise.resolve(setTeamSchedularJobsPromise);
+};
 

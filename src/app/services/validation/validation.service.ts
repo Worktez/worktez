@@ -41,6 +41,9 @@ export class ValidationService {
             case 'difficulty': {
                 return (this.checkDifficulty(value));
             }
+            case 'milestoneStatus': {
+                return (this.checkMilestoneStatus(value));
+            }
             case 'description': {
                 return (this.checkDescription(value));
             }
@@ -137,7 +140,12 @@ export class ValidationService {
             case 'url':{
                 return(this.checkURL(value));
             }
-
+            case 'startTime': {
+                return(this.checkStartTime(value));
+            }
+            case 'endTime' : {
+                return(this.checkEndTime(value));
+            }
 
         }
     }
@@ -196,7 +204,7 @@ export class ValidationService {
     }
 
     async checkEstimatedTime(value: number) {
-        const control = new UntypedFormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.pattern("^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$")]);
         if (control.errors === null)
             return (true);
         else {
@@ -213,6 +221,17 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_DIFFICULTY";
             this.errorHandlerService.addError(errorType, "Difficulty field is required")
+            return (false);
+        }
+    }
+
+    async checkMilestoneStatus(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_MILESTONESTATUS";
+            this.errorHandlerService.addError(errorType, "MilestoneStatus field is required")
             return (false);
         }
     }
@@ -309,6 +328,34 @@ export class ValidationService {
         }
     }
 
+    async checkStartTime(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            console.log(this.componentName);
+            let errorType = this.componentName + "_VALIDATION_STARTTIME";
+            this.errorHandlerService.addError(errorType, "Start-Time field is required")
+            return (false);
+        }
+    }
+
+    async checkEndTime(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            console.log(this.componentName);
+            let errorType = this.componentName + "_VALIDATION_STARTTIME";
+            this.errorHandlerService.addError(errorType, "End-Time field is required")
+            return (false);
+        }
+    }
+
     async checkStartDate(value: String) {
         const control = new UntypedFormControl(value, Validators.required);
         const regularExpression = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
@@ -338,7 +385,7 @@ export class ValidationService {
     }
 
     async checkLogHours(value: number) {
-        const control = new UntypedFormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.pattern("^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$")]);
         if (control.errors === null)
             return (true);
         else {

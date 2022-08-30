@@ -14,10 +14,16 @@
 #button {
     background-color: var(--primary-color);
     color: white;
-    
+
 }
 
 select,
+input {
+    background-color: var(--primary-bg);
+    color: var(--text);
+}
+
+#assigneeSuggestion,
 input {
     background-color: var(--primary-bg);
     color: var(--text);
@@ -48,5 +54,14 @@ input:focus {
 
 #dropdownMenu {
     background-color: var(--secondary-bg);
-    border-color: var(--primary-color);
+}
+
+.form-control {
+    display: inline-block;
+}
+
+.dropdown-menu{
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
 }

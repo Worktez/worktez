@@ -262,7 +262,7 @@
                     </div>
                     <div class="col pl-4">
                         <span class="featureHeading" id="qnText">Quick Notes</span>
-                        <p id="featureContent" class="py-2">Catpture important key points over srum meets, calls and progresively take faster decisions for healthy code.</p>
+                        <p id="featureContent" class="py-2">Capture important key points over scrum meets, calls and progresively take faster decisions for healthy code.</p>
                     </div>
                 </div>
             </div>
@@ -307,7 +307,7 @@
             </div>
             <div class="col-md-8 col-10 showCase py-4 d-flex" #imageContainer>
                 <ng-container *ngFor="let item of testimonials">
-                    <app-testimonial-card [image]="item.Image" [name]="item.Name" [content]="item.Content"></app-testimonial-card>
+                    <app-testimonial-card [image]="item.Image" [name]="item.Name" [position]="item.Position" [content]="item.Content" ></app-testimonial-card>
                 </ng-container>
             </div>
             <div class="col-md-1 col-1 text-center d-flex justify-content-center">

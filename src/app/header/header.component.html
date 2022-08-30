@@ -112,6 +112,27 @@
                                 </a>
                             </li>
                         </ng-container>
+                        <ng-container>
+                            <li class="nav-item dropdown" *ngIf="startService.teamIdExists">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                        video_call
+                                    </mat-icon>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right meetScrollBar" aria-labelledby="navbarDropdownBoards" id="notificationCenter">
+                                    <div class="text-center align-middle" >
+                                        <div>
+                                            <a class="dropdown-item ScheduleBtn ScheduleBtn-outline-secondary" style="margin-bottom: 2rem;" (click)="ScheduleMeet()" data-toggle="modal" data-target="#scheduleMeet">Schedule a Meet</a>
+                                        </div>
+                                        <ng-container>
+                                            <app-show-meet-details></app-show-meet-details>
+                                        </ng-container>
+                                        <!-- <a  class=" dropdown-item" >Show Scheduled Meets</a> -->
+                                    </div>    
+                                </div>
+                            </li>
+                        </ng-container>
                     </ng-container>
                     <ng-container *ngIf="!(authService.organizationAvailable) && startService.userReady ">
                         <li class="nav-item px-1">
@@ -138,6 +159,9 @@
                             <img id="brand_img" src="../../assets/worktezName.png" alt="Worktez">
                         </a>
                         <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/Pricing">Pricing</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/Home#services">Services</a>
                             </li>

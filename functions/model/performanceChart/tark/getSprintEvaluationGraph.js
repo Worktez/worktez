@@ -42,7 +42,7 @@ exports.getSprintEvaluationGraph = function(request, response) {
       if (doc == undefined) {
         getOrg(orgDomain).then((data) => {
           const orgAppKey = data.AppKey;
-          setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
+          // setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
           startSchedular();
         });
         result = {data: {status: "ERROR", data: "undefined"}};

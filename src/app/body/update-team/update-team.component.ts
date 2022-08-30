@@ -86,7 +86,7 @@ export class UpdateTeamComponent implements OnInit {
   statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
-
+  milestoneStatusLabels: string[] = ["Ice Box", "Completed", "Under Progress", "Ready to start"]
   labelFunc(checked: boolean, value: string, array: string[]) {
     if (checked === false) {
       for (var i = 0; i < array.length; i++) {
@@ -116,6 +116,10 @@ export class UpdateTeamComponent implements OnInit {
     if (labelName === "Difficulty") {
       this.labelFunc(isChecked, labelValue, this.difficultyLabels)
     };
+    if (labelName === "MilestoneStatus") {
+      this.labelFunc(isChecked, labelValue, this.milestoneStatusLabels)
+    };
+ 
   }
 
   async nextChildStep() {
@@ -178,7 +182,7 @@ export class UpdateTeamComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels }).subscribe({
+    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamManagerEmail: this.teamManagerEmail, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels }).subscribe({
       next: (data) => {
       this.enableLoader = false;
       jQuery('#updateTeam').modal('hide');

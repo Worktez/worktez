@@ -43,7 +43,7 @@ exports.createNewTask = function(request, response) {
     const creator = request.body.data.Creator;
     const assignee = request.body.data.Assignee;
     const reporter = request.body.data.Reporter;
-    const estimatedTime = parseInt(request.body.data.EstimatedTime);
+    const estimatedTime = parseFloat(request.body.data.EstimatedTime);
     const taskStatus = request.body.data.Status;
     const project = request.body.data.Project;
     const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
@@ -86,7 +86,11 @@ exports.createNewTask = function(request, response) {
         // });
 
         const p2 = getUserUseEmail(creator).then((data) => {
-            senderName = data.displayName;
+            if (data!=undefined) {
+                senderName = data.displayName;
+            } else {
+                senderName = "ABC";
+            }
             return senderName;
         }).catch((error) => {
             console.error(error);

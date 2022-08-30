@@ -34,6 +34,7 @@ export class ApplicationSettingsService {
   public priority: string[] = []
   public difficulty: string[] = []
   public type: string[] = []
+  public milestoneStatus: string[] = []
   public project: string[] = []
 
   public labels: Label[] = []
@@ -66,6 +67,7 @@ export class ApplicationSettingsService {
             this.status = this.team.Status;
             this.priority = this.team.Priority;
             this.difficulty = this.team.Difficulty;
+            this.milestoneStatus = this.team.MilestoneStatus;
             this.type = this.team.Type;
             this.project = this.backendService.organizationDetails.TeamsId;
             this.projectLink= this.team.ProjectLink;
@@ -119,10 +121,10 @@ export class ApplicationSettingsService {
 
   getNotificationsList(notificationStatus: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("notifications/getNotifications");
-    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
-        return actions as Notification[];
-    }));
+    // const callable = this.functions.httpsCallable("notifications/getNotifications");
+    // this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
+    //     return actions as Notification[];
+    // }));
     return this.notificationListObservable;
   }
 }

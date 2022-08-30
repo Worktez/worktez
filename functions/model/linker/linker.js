@@ -22,6 +22,7 @@
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 
 const { getLinkDetails } = require("./tark/getLinkDetails");
+const { removeLink } = require("./tark/removeLink");
 const { setLinkDetails } = require("./tark/setLinkDetails");
 
 /**
@@ -44,6 +45,17 @@ fastify.post("/getLink", (req, res) => {
  */
 fastify.post("/setLink", (req, res) => {
   setLinkDetails(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/removeLink"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/removeLink", (req, res) => {
+  removeLink(req, res);
 });
 
 /**

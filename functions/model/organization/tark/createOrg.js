@@ -23,6 +23,7 @@
 const { functions, getApplicationData, updateApplication, generateBase64String } = require("../../application/lib");
 const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("../lib");
 const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = require("../../users/lib");
+const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;
@@ -93,6 +94,11 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         status = 500;
         console.log("Error:", error);
     });
+
+    const schedularInput = {
+        SelectedOrgAppKey: appKey,
+    };
+    setSchedularUnit(schedularInput, orgId);
 
     let result;
     const promises = [promise1, promise2, promise3, promise4];

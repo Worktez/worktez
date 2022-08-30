@@ -21,10 +21,10 @@
 const { getApplicationData, updateApplication } = require("../../application/lib");
 const { setSchedular, getAllSchedular } = require("../lib");
 
-exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain) {
-    getAllSchedular(type, orgAppKey, assignee, teamId, orgDomain).then((snapshot)=>{
+exports.setSchedularUnit = function(schedularInput, orgId) {
+    getAllSchedular(schedularInput.SelectedOrgAppKey, orgId).then((snapshot)=>{
         if (snapshot.docs.length != 0) {
-            console.log("Job already exists");
+            console.log("SCheduled Jobs already exists");
         } else {
             getApplicationData().then((appData) => {
                 const totalNumberOfSchedularOrg = appData.TotalNumberSchedularOrg + 1;
@@ -33,7 +33,7 @@ exports.setSchedularUnit = function(type, orgAppKey, assignee, teamId, orgDomain
                 };
                 const schedularDocId = "so" + totalNumberOfSchedularOrg;
                 updateApplication(appDetailsUpdateJson);
-                setSchedular(schedularDocId, type, orgAppKey, assignee, teamId, orgDomain);
+                setSchedular(schedularDocId, schedularInput.SelectedOrgAppKey, orgId);
             }).catch((error) => {
                 console.log("Error:", error);
             });

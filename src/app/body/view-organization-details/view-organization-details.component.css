@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #mOrgContainer {
-    background-color: var(--header-bg);
+    background-color: var(--primary-bg);
     font-family: var(--font);
 }
 
@@ -23,7 +23,6 @@
 
 .card-title {
     color: var(--text);
-    text-align: right;
 }
 
 .nav-link {
@@ -72,5 +71,22 @@ hr {
 #orgImg {
     height: 122px;
     width: 122px;
-    border-radius: 50%;
+}
+
+span{
+    color: var(--text);
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.extra {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
 }

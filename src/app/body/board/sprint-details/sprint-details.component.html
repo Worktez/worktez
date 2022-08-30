@@ -112,28 +112,29 @@
           </div>
         </div>
       </div>
-
     </div>
     <div class="card-body px-4">
       <div class="row">
-        <div class="col-md-6 col">
-          <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 12px">
-            <span class="material-icons" style="font-size: 15px">date_range</span>Start Date:
-          </h6>
-          <h6 class="row card-text" id="sprintStartDate" style="font-size: 12px">
-            {{ sprintData.StartDate }}
-          </h6>
-        </div>
-        <div class="col-md-6 col">
-          <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 12px">
-            <span class="material-icons" style="font-size: 15px">date_range</span>End Date:
-          </h6>
-          <h6 class="row card-text" id="sprintEndDate" style="font-size: 12px">
-            {{ sprintData.EndDate }}
-          </h6>
+        <div class="col text-center">
+          <span type="button" class="btn ml-2 align-bottom" id="StartDate">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                date_range
+              </mat-icon>
+              Start Date: <span id="sprintStartDate">{{ sprintData.StartDate }}</span> 
+          </span>
         </div>
       </div>
-      <div class="row py-4">
+      <div class="row">
+        <div class="col text-center">
+          <span type="button" class="btn ml-2 align-bottom" id="EndDate">
+            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+              date_range
+            </mat-icon>
+            End Date: <span id="sprintStartDate">{{ sprintData.EndDate }}</span> 
+        </span>
+        </div>
+      </div>
+      <div class="row py-3">
         <div class="col-12">
           <ng-container *ngIf="sprintData.SprintNumber > 0">
             <div class="row" id="sprintStatus">
@@ -162,7 +163,7 @@
           </ng-container>
         </div>
       </div>
-      <div class="row py-2">
+      <div class="row pt-4">
         <div class="col-md-7 col">
           <h6 class="row card-title" style="font-weight: bold; font-size: 12px">
             <span class="material-icons" style="font-size: 18px">format_list_numbered</span>&nbsp;&nbsp;Total Tasks:
