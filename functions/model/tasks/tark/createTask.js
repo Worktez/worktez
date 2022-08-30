@@ -86,7 +86,11 @@ exports.createNewTask = function(request, response) {
         // });
 
         const p2 = getUserUseEmail(creator).then((data) => {
-            senderName = data.displayName;
+            if (data!=undefined) {
+                senderName = data.displayName;
+            } else {
+                senderName = "ABC";
+            }
             return senderName;
         }).catch((error) => {
             console.error(error);

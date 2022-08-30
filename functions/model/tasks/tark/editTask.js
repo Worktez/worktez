@@ -24,10 +24,12 @@
 const { createSprintName } = require("../../application/lib");
 const { addActivity } = require("../../activity/tark/addActivity");
 const { getOrgUseAppKey } = require("../../organization/lib");
-const { getSprint, updateSprint, setSprint } = require("../../sprints/lib");
+const { getSprint, updateSprint } = require("../../sprints/lib");
 const { getTask, updateTask } = require("../lib");
 const { taskMailer } = require("../../mailer/lib");
 const { getUser } = require("../../users/lib");
+const { updateSprintData } = require("../../sprints/tark/updateSprint");
+const { getTeamUseTeamId } = require("../../teams/lib");
 
 
 exports.editTask = function(request, response) {
@@ -68,111 +70,23 @@ exports.editTask = function(request, response) {
      const editTaskPromise = getOrgUseAppKey(appKey).then((orgDetail) => {
         const orgDomain = orgDetail.OrganizationDomain;
         const orgId = orgDetail.OrganizationId;
-
+        let currentSprint;
         if (editedSprintNumber != previousId) {
             comment += "Moved to sprint " + editedSprintName + ". ";
 
             const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
                 const project = taskDoc.Project;
-
-                const prevSprintPromise = getSprint(orgDomain, project, previousSprintName).then((prevSprint) => {
-                    if (prevSprint != undefined) {
-                        let totalUnCompletedTask = prevSprint.TotalUnCompletedTask;
-                        let totalNumberOfTask = prevSprint.TotalNumberOfTask;
-
-                        totalUnCompletedTask -= 1;
-                        totalNumberOfTask -= 1;
-
-                        let updatePrevSprintJson;
-                        if (parseInt(prevSprint.SprintNumber) > 0) {
-                            if (prevSprint.Status == "Not Started" || prevSprint.Status == "Ready to Start") {
-                                const startStoryPointNumber = parseInt(prevSprint.StartStoryPoint) - oldStoryPointNumber;
-                                updatePrevSprintJson = {
-                                    TotalNumberOfTask: totalNumberOfTask,
-                                    TotalUnCompletedTask: totalUnCompletedTask,
-                                    StartStoryPoint: startStoryPointNumber,
-                                };
-                            } else if (prevSprint.Status == "Under Progress") {
-                                const midStoryPointNumber = parseInt(prevSprint.MidStoryPoint) - oldStoryPointNumber;
-                                updatePrevSprintJson = {
-                                    TotalNumberOfTask: totalNumberOfTask,
-                                    TotalUnCompletedTask: totalUnCompletedTask,
-                                    MidStoryPoint: midStoryPointNumber,
-                                };
-                            } else {
-                                updatePrevSprintJson = {
-                                    TotalNumberOfTask: totalNumberOfTask,
-                                    TotalUnCompletedTask: totalUnCompletedTask,
-                                };
-                            }
-                        } else {
-                            updatePrevSprintJson = {
-                                TotalNumberOfTask: totalNumberOfTask,
-                                TotalUnCompletedTask: totalUnCompletedTask,
-                            };
-                        }
-
-                        updateSprint(updatePrevSprintJson, orgDomain, project, previousSprintName);
-                    }
+                const teamId = taskDoc.TeamId;
+                getTeamUseTeamId(orgDomain, teamId).then((data)=>{
+                    currentSprint = data.CurrentSprintId;
+                    updateSprintData(teamId, project, orgDomain, previousSprintName, oldStoryPointNumber, storyPointNumber, editedSprintNumber, orgId, editedSprintName, currentSprint);
                 });
-                return Promise.resolve(prevSprintPromise);
+                return null;
             }).catch((error) => {
                 status = 500;
                 console.log("Error:", error);
             });
             promises.push(p1);
-
-            const p2 = getTask(taskId, orgDomain).then((taskDoc) => {
-                const project = taskDoc.Project;
-                const teamId = taskDoc.TeamId;
-
-                const newSprintPromise = getSprint(orgDomain, project, editedSprintName).then((newSprint) => {
-                    if (newSprint != undefined) {
-                        let totalUnCompletedTask = newSprint.TotalUnCompletedTask;
-                        let totalNumberOfTask = newSprint.TotalNumberOfTask;
-
-                        totalUnCompletedTask += 1;
-                        totalNumberOfTask += 1;
-
-                        let updateNewSprintJson;
-                        if (parseInt(newSprint.SprintNumber) > 0) {
-                            if (newSprint.Status == "Not Started" || newSprint.Status == "Ready to Start") {
-                                const startStoryPointNumber = storyPointNumber + parseInt(newSprint.StartStoryPoint);
-                                updateNewSprintJson = {
-                                    TotalNumberOfTask: totalNumberOfTask,
-                                    TotalUnCompletedTask: totalUnCompletedTask,
-                                    StartStoryPoint: startStoryPointNumber,
-                                };
-                            } else if (newSprint.Status == "Under Progress") {
-                                const midStoryPointNumber = storyPointNumber + parseInt(newSprint.MidStoryPoint);
-                                updateNewSprintJson = {
-                                    TotalNumberOfTask: totalNumberOfTask,
-                                    TotalUnCompletedTask: totalUnCompletedTask,
-                                    MidStoryPoint: midStoryPointNumber,
-                                };
-                            } else {
-                                updateNewSprintJson = {
-                                    TotalNumberOfTask: totalNumberOfTask,
-                                    TotalUnCompletedTask: totalUnCompletedTask,
-                                };
-                            }
-                        } else {
-                            updateNewSprintJson = {
-                                TotalNumberOfTask: totalNumberOfTask,
-                                TotalUnCompletedTask: totalUnCompletedTask,
-                            };
-                        }
-                        updateSprint(updateNewSprintJson, orgDomain, project, editedSprintName);
-                    } else {
-                        setSprint(orgDomain, project, editedSprintName, orgId, teamId, editedSprintNumber, "Not Started", 1, 1, storyPointNumber);
-                    }
-                });
-                return Promise.resolve(newSprintPromise);
-            }).catch((error) => {
-                status = 500;
-                console.log("Error:", error);
-            });
-            promises.push(p2);
         }
 
         if (oldStoryPointNumber != storyPointNumber && previousId == editedSprintNumber) {
@@ -180,18 +94,22 @@ exports.editTask = function(request, response) {
                 const teamName = taskDoc.Project;
                 let updateNewSprintJson;
                 const storyPointSameSprintPromise = getSprint(orgDomain, teamName, previousSprintName).then((sprintDoc) => {
-                    if (sprintDoc.Status == "Not Started" || sprintDoc.Status == "Ready to Start") {
+                    getTeamUseTeamId(orgDomain, taskDoc.TeamId).then((data)=>{
+                        currentSprint = data.CurrentSprintId;
+                    if (sprintDoc.Status == "Not Started") {
                         const startStoryPointNumber = parseInt(sprintDoc.StartStoryPoint) - oldStoryPointNumber + storyPointNumber;
                         updateNewSprintJson = {
                             StartStoryPoint: startStoryPointNumber,
                         };
-                    } else if (sprintDoc.Status == "Under Progress") {
+                    } else if (sprintDoc.SprintNumber == currentSprint) {
+                        console.log(currentSprint, sprintDoc.SprintNumber);
                         const midStoryPointNumber = parseInt(sprintDoc.MidStoryPoint) - oldStoryPointNumber + storyPointNumber;
                         updateNewSprintJson = {
                             MidStoryPoint: midStoryPointNumber,
                         };
                     }
                     updateSprint(updateNewSprintJson, orgDomain, teamName, previousSprintName);
+                });
                 });
                 return Promise.resolve(storyPointSameSprintPromise);
             });
@@ -212,7 +130,6 @@ exports.editTask = function(request, response) {
             Status: taskStatus,
             Reporter: reporter,
             LastUpdatedDate: date,
-            // MilestoneId: milestoneId,
         };
 
         const p3 = getUser(uid, "").then((data) => {

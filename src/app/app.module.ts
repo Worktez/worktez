@@ -170,6 +170,7 @@ import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.compon
 import { AddAttetendeeComponent } from './body/schedule-meet/add-attetendee/add-attetendee.component';
 import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
+import { PricingComponent } from './body/pricing/pricing.component';
 
 @NgModule({
   declarations: [
@@ -306,6 +307,7 @@ import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-d
     AddAttetendeeComponent,
     NotificationCardComponent,
     ShowMeetDetailsComponent,
+    PricingComponent,
   ],
   imports: [
     BrowserModule,

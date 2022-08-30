@@ -68,8 +68,8 @@ fastify.post("/scheduleMeetAtWorktez", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
-fastify.post("/getMeetDetails",(req,res) => {
-  getMeetDetails(req,res);
+fastify.post("/getMeetDetails", (req, res) => {
+  getMeetDetails(req, res);
 });
 
 /**

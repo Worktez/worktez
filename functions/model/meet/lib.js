@@ -105,12 +105,12 @@ exports.updateMeetDetails= function(updateJson) {
 
 /**
  * Description
- * @param {any} 
+ * @param {any}
  * @param {any}
  * @return {any}
  */
 exports.getMeetDetails=function(uid) {
-    let query = db.collection("Users").doc(uid).collection("Meet");
+    const query = db.collection("Users").doc(uid).collection("Meet");
 
     // query = query.where("HostName", "==", "OK");
     const promise = query.get().then((doc) => {

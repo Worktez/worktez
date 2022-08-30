@@ -12,72 +12,94 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="card" *ngIf="team.TeamStatus != -1">
-    <div class="card-body pt-4">
-        <ng-container>
+    <div class="card-body">
             <div class="row">
-                <div class="col-md-10 float-left">
-                    <h2 class="card-title my-0" (click)="openTeamDetails()" style="cursor: pointer;">{{ team.TeamName }}</h2>
-                    <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
+                <div class="col-6">
+                    <h2 class="card-title" (click)="openTeamDetails()">{{ team.TeamName }}</h2>
                 </div>
-                    <span class="material-icons float-right ml-0 mt-2" type="button" (click)="openTeamDetails()" style="cursor: pointer;">settings</span>
+                <div class="col-6 text-center">
+                    <span type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#deleteTeam"
+                    title="delete Team"  data-bs-toggle="tooltip">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            delete
+                        </mat-icon>
+                    </span>
+                    <span type="button" class="btn ml-2 align-bottom" (click)="openTeamDetails()">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            settings
+                        </mat-icon>
+                    </span>
+                </div>
             </div>
-                        
-            <div class="row mt-1">
-                <div class="col-md-7 pr-0">
-                    <button class="btn btn-primary" *ngIf="projectLinked" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
-                    title="Edit Organisation" data-bs-toggle="tooltip">
-                    <img src="../../../assets/gitIcon.svg" class="mx-0" alt="git" height="25" width="25"><span>{{repoLink}}</span>
-                    <span class="material-icons pt-1 float-right trash" style="font-size: 14px;">edit</span></button>
-
-                <button class="btn btn-primary" *ngIf="!projectLinked" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
-                    title="Add Organisation">
-                    <img src="../../../assets/gitIcon.svg" alt="git" height="25" width="25">
-                    Integrate Github</button>
+            <div class="row">
+                <div class="col">
+                    <h3 class="card-subtitle">{{ team.TeamDescription }}</h3>
                 </div>
-                <div class="col-md-5 mx-0 pl-0">
-                    <div class="btn-group">
-                    <button class="add-member text-nowrap" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)"
-                    title="Add Member">
-                    <span class="material-icons pl-1" style="position: relative;top: 3px;">person_add</span>
-                    Add Member</button>
-                    <span class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
-                    title="delete Team"  data-bs-toggle="tooltip">delete</span>
-                    </div>
-                 </div>
+            </div>
+                
+            <div class="row mt-1">
+                <div class="col">
+                    <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            person_add
+                        </mat-icon>
+                        Add Member
+                    </button>
+                </div>
+                <div class="col">
+                    <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
+                        title="Add Organisation">
+                        <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
+                        <span *ngIf="!repoLink">Integrate Github</span>
+                        <span *ngIf="repoLink">
+                            {{repoLink}}
+                        </span>
+                    </button>
+                </div>
             </div>
             <div class="row mt-2">
                 <div class="col">
                     <h4 class="card-title mt-2 " data-toggle="tooltip" data-placement="top" title="Team Manager">
-                        <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons>
+                        Admin: 
+                        <!-- <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons> -->
                         {{ team.TeamManagerEmail }}
                     </h4>
                 </div>
             </div>
-            
-
             <div class="row">
                 <div class="col-md-6 totalTeamTasks">
-                    <h4 class="mt-1 heading"> 
-                        <span class="material-icons mr-1" style="position: relative;top: 3px;">task</span>Total Team Tasks  
-                    </h4>
-                    <button class="counterBtns ml-5" disabled="disabled">{{team.TotalTeamTasks}}</button>
+                    <button class="btn extra2" type="button">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            task
+                        </mat-icon>
+                        Total Team Tasks : {{team.TotalTeamTasks}}
+                    </button>
+                    <!-- <span type="button" class="btn extra ml-2 align-bottom" (click)="openTeamDetails()">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            task
+                        </mat-icon>
+                    </span> Total Team Tasks
+                    <button class="counterBtns ml-5" disabled="disabled"></button> -->
                 </div>
                 <div class="col-md-6 currentSprintId">
-                    <h3 class="heading" >
-                        <span class="material-icons mr-1" style="position: relative;top: 5px;">sports_score</span>Current Sprint ID  
-                    </h3>
-                    <button class="counterBtns ml-5" disabled="disabled">{{ team.CurrentSprintId }}</button>
+                    <button class="btn extra2" type="button">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            sports_score
+                        </mat-icon>
+                        Current Sprint ID : {{ team.CurrentSprintId }}
+                    </button>
                 </div>
             </div>
 
-            <div class="row mt-3 ">
-                <div class="col-md-6">
-                    <h4 class="mt-1 heading">
-                        <span class="material-icons mr-1" style="position: relative;top: 3px;">groups</span>Team Members  
-                    </h4>
+            <div class="row mt-3">
+                <div class="col">
+                    <span type="button" class="btn ml-2 align-bottom" (click)="openTeamDetails()">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            groups
+                        </mat-icon>
+                        Team Members :
+                    </span> 
                 </div>
             </div>
             <div class="row">
@@ -87,7 +109,6 @@
                     </h4>
                 </div>
             </div>
-        </ng-container>
 
         <div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
             <div class="modal-dialog">

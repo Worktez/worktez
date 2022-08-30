@@ -50,10 +50,9 @@ export class MyDashBoardComponent implements OnInit {
   }
 
   // runSchedular() {
-  //     const callable = this.functions.httpsCallable('scheduledFn');
-  //     const result = callable({}).subscribe((data) => {
+  //     const callable = this.functions.httpsCallable('scheduledFnManually/startSchedular');
+  //     callable({}).subscribe((data) => {
   //       console.log("Created Schedular document");
-  //       console.log(result);
   //     });
   // }
 }

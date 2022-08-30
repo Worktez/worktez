@@ -21,13 +21,12 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const admin = require("firebase-admin");
-const { setTeam, getTeam } = require("../lib");
+const { setTeam, getTeam, setSchedularJob } = require("../lib");
 const { getOrg, updateOrg } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 const { createLabelProperties } = require("./createLabelProperties");
-const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { getUser, updateUser } = require("../../users/lib");
 
 
@@ -68,8 +67,9 @@ exports.createTeam = function(request, response) {
             if (team == undefined) {
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then((data)=>{
                     createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
-                    setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
-                    setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
+                    // setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
+                    // setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
+                    setSchedularJob(orgDomain, teamName);
                 });
                 teamMembers.forEach((element) => {
                     sendVerificationEmail(teamName, teamManagerEmail, teamDescription, element, orgDomain, teamId);
