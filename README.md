@@ -1,4 +1,4 @@
-# WORKTEZ - An Agile Project Management Tool
+# WORKTEZ - Milestone your project with the power of DevOps
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/67370801/149733068-2071c2e2-45b5-4fa8-9355-98f0702fb689.png"> <br>

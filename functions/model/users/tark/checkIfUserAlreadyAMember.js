@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const {getUserUseEmail, getMyOrgCollectionDoc} = require("../lib");
 
 exports.checkIfUserAlreadyAMember = function(request, response) {
