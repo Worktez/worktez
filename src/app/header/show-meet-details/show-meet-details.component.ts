@@ -1,4 +1,18 @@
-import { Component, Input, EventEmitter, OnInit, Output } from '@angular/core';
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Aditya Khedekar <aditya3034@gmail.com>
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+
+import { Component, Input, OnInit } from '@angular/core';
 import { Meet } from 'src/app/Interface/MeetInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +31,6 @@ export class ShowMeetDetailsComponent implements OnInit {
 
   meetData:Meet[]=[];
 
-  @Output() getMeet: EventEmitter<string> = new EventEmitter();
   @Input('meet') meet:Meet;
   constructor(public authService: AuthService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) {}
 
