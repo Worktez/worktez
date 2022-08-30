@@ -105,6 +105,31 @@ exports.updateMeetDetails= function(updateJson) {
 
 /**
  * Description
+ * @param {any} 
+ * @param {any}
+ * @return {any}
+ */
+exports.getMeetDetails=function(uid) {
+    let query = db.collection("Users").doc(uid).collection("Meet");
+
+    // query = query.where("HostName", "==", "OK");
+    const promise = query.get().then((doc) => {
+        const data=[];
+        // console.log(doc);
+        doc.forEach((element) => {
+            if (element.exists) {
+                data.push( element.data());
+            }
+        });
+        return data;
+    });
+
+    return Promise.resolve(promise);
+};
+
+
+/**
+ * Description
  * @param {any} meetDocId
  * @param {any} attendees
  * @param {any} title
@@ -139,4 +164,3 @@ exports.updateMeetDetailsAtWorktez= function(updateJson) {
   const updateMeet = db.collection("Meet.Worktez").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };
-
