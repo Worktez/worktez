@@ -11,79 +11,72 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class=" m-5 p-5" id="mOrgContainer" *ngIf="!showLoader">
-    <div class="row p-2">
-        <div class="col-3">
-            <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
-            <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
-                <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                    edit
-                </mat-icon>
-            </span>
-        </div>
-    </div>
-    <div class="row p-2 my-1">
-        <div class="col-6">
-            <div class="h2 heading" style="border: none;background: none;">
-                {{ organization.OrganizationName }}
-                <h3 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h3>
+<div class="row" id="mOrgContainer" *ngIf="!showLoader">
+    <div class="col-md-2 col-1"></div>
+    <div class="col">
+        <div class="row">
+            <div class="col-3">
+                <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
+                <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        edit
+                    </mat-icon>
+                </span>
+            </div>
+            <div class="col">
+                <div class="h2 heading" style="border: none;background: none;">
+                    {{ organization.OrganizationName }}
+                    <h3 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h3>
+                </div>
+                <h4 class="card-title">
+                    <label for="email">Organization Email: </label>
+                    {{ organization.OrganizationEmail }}
+                </h4>
+                <h4 class="card-title">
+                    <label for="email">Organization Admin Email: </label>
+                    {{ organization.OrganizationDomain }}
+                </h4>
             </div>
         </div>
-        <div class="col-2"></div>
-        <div class="col">
-            <h4 class="card-title">
-                <app-profile-icons [profileIcon]="'email'"></app-profile-icons>
-                {{ organization.OrganizationEmail }}
-            </h4>
-            <h4 class="card-title">
-                <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
-                {{ organization.OrganizationDomain }}
-            </h4>
-        </div>
-    </div>
-    <hr>
-    <div class="row p-2">
-        <div class="col-md-7">
-            <ul class="nav">
-                <li class="nav-item mx-2">
-                    <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
-                        Teams
-                    </a>
-                </li>
-                <li class="nav-item mx-2">
-                    <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
-                        Documents
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="col pl-0">
-            <button class="create-team float-right" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-            data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()"
-            title="Create a New Team">
-            <span class="material-icons pl-1" style="position: relative;top: 3px;">group_add</span>
-            Create New Team</button>
-         </div>
-        <!-- <div class="col-2">
-            <span type="button" class="material-icons float-right p-2 add-team" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()">group_add</span>
-        </div> -->
-    </div>
-    <div class="row p-2">
-        <ng-container *ngIf="showTeamsDetails">
-            <!-- <div class="container"> -->
-            <div class="row">
-                <ng-container *ngFor="let team of teams">
-                    <div class="col-md-auto my-3 team-cards">
-                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
-                    </div>
-                </ng-container>
+        <hr>
+        <div class="row p-2">
+            <div class="col-md-7">
+                <ul class="nav">
+                    <li class="nav-item mx-2">
+                        <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
+                            Teams
+                        </a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
+                            Documents
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <!-- </div> -->
-        </ng-container>
-        <ng-container *ngIf="showOrgDocuments">
-            <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
-        </ng-container>
+            <div class="col pl-0 text-right">
+                <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        group_add
+                    </mat-icon>
+                    Create New Team
+                </button>
+             </div>
+        </div>
+        <div class="row p-2">
+            <ng-container *ngIf="showTeamsDetails">
+                    <ng-container *ngFor="let team of teams">
+                        <div class="col-md-auto my-3 team-cards">
+                            <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
+                        </div>
+                    </ng-container>
+            </ng-container>
+            <ng-container *ngIf="showOrgDocuments">
+                <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
+            </ng-container>
+        </div>
     </div>
+    <div class="col-md-2 col-1"></div>
 </div>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>

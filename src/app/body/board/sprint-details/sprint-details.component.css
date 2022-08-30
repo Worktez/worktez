@@ -112,6 +112,10 @@
     color: var(--secondary-color);
 }
 
+#sprintStartDate {
+    color: var(--text);
+}
+
 #EndDate {
     color: var(--danger-color);
 }
