@@ -24,7 +24,7 @@
 const { createSprintName } = require("../../application/lib");
 const { addActivity } = require("../../activity/tark/addActivity");
 const { getOrgUseAppKey } = require("../../organization/lib");
-const { getSprint, updateSprint, setSprint } = require("../../sprints/lib");
+const { getSprint, updateSprint } = require("../../sprints/lib");
 const { getTask, updateTask } = require("../lib");
 const { taskMailer } = require("../../mailer/lib");
 const { getUser } = require("../../users/lib");
@@ -73,7 +73,7 @@ exports.editTask = function(request, response) {
         let currentSprint;
         if (editedSprintNumber != previousId) {
             comment += "Moved to sprint " + editedSprintName + ". ";
-           
+
             const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
                 const project = taskDoc.Project;
                 const teamId = taskDoc.TeamId;
@@ -91,8 +91,6 @@ exports.editTask = function(request, response) {
 
         if (oldStoryPointNumber != storyPointNumber && previousId == editedSprintNumber) {
             const updateSprintPromise = getTask(taskId, orgDomain).then((taskDoc) => {
-               
-                
                 const teamName = taskDoc.Project;
                 let updateNewSprintJson;
                 const storyPointSameSprintPromise = getSprint(orgDomain, teamName, previousSprintName).then((sprintDoc) => {
