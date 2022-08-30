@@ -140,7 +140,12 @@ export class ValidationService {
             case 'url':{
                 return(this.checkURL(value));
             }
-
+            case 'startTime': {
+                return(this.checkStartTime(value));
+            }
+            case 'endTime' : {
+                return(this.checkEndTime(value));
+            }
 
         }
     }
@@ -319,6 +324,34 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_STORYPOINT";
             this.errorHandlerService.addError(errorType, "Story-Point field is required")
+            return (false);
+        }
+    }
+
+    async checkStartTime(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            console.log(this.componentName);
+            let errorType = this.componentName + "_VALIDATION_STARTTIME";
+            this.errorHandlerService.addError(errorType, "Start-Time field is required")
+            return (false);
+        }
+    }
+
+    async checkEndTime(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            console.log(this.componentName);
+            let errorType = this.componentName + "_VALIDATION_STARTTIME";
+            this.errorHandlerService.addError(errorType, "End-Time field is required")
             return (false);
         }
     }
