@@ -26,6 +26,7 @@ const {scheduleMeet} = require("./tark/scheduleMeet");
 const {addAttendee} = require("./tark/addAttendee");
 const {scheduleMeetAtWorktez} = require("./tark/scheduleMeetAtworktez");
 const {addAttendeeAtWorktez} = require("./tark/addAttendeeAtworktez");
+const { getMeetDetails } = require("./tark/getMeetDetails");
 
 /**
  * Description
@@ -58,6 +59,17 @@ fastify.post("/addAttendee", (req, res) => {
  */
 fastify.post("/scheduleMeetAtWorktez", (req, res) => {
   scheduleMeetAtWorktez(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getMeetDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getMeetDetails",(req,res) => {
+  getMeetDetails(req,res);
 });
 
 /**
