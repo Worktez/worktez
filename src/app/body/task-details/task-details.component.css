@@ -35,10 +35,6 @@
     color: var(--text);
     background-color: var(--secondary-bg);
 }
-.pt-4, .py-4{
-    padding-top: 1.5rem !important;
-
-}
 
 span{
     cursor: pointer;

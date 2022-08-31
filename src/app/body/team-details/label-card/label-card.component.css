@@ -14,20 +14,19 @@
 #editPageTaskContainer,
 .card {
     color: var(--text);
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid var(--primary-bg);
 }
 
 .card-header {
-    background-color: var(--primary-bg);
+    background-color: var(--secondary-bg);
 }
 
 .modal-content {
     border: var(--primary-border);
     background-color: var(--secondary-bg);
     color: var(--text);
-
-    }
+}
 
 .icons {
     cursor: pointer;

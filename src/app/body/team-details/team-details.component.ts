@@ -43,7 +43,7 @@ export class TeamDetailsComponent implements OnInit {
   updateTeamEnabled: boolean = false;
   addMemberEnabled: boolean = false;
 
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   enableLoader: boolean = false;
 
   constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
@@ -107,14 +107,14 @@ export class TeamDetailsComponent implements OnInit {
     this.addMemberEnabled = false;
   }
 
-  async removeMemberDB(remove: string) {
+  removeMemberDB(remove: string) {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('teams/removeMember');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
     
-    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamMembers: this.team.TeamMembers, Remove: remove}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamMembers: this.team.TeamMembers, Remove: remove}).subscribe({
       next: (data) => {
         console.log(remove);
         this.enableLoader = false;
@@ -134,7 +134,7 @@ export class TeamDetailsComponent implements OnInit {
         
       },
       complete: () => console.info('Successful ')
-  });
+    });
   }
 
   teamUpdated(data: { completed: boolean }) {
