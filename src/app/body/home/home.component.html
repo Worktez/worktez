@@ -36,8 +36,10 @@
                         Milestone your project with the power of DevOps
                     </h1>
                     <br/>
-                    <button class="btn demoButton" role="button" (click)="requestDemo()"
-                    data-toggle="modal" data-target="#requestDemo">Request a demo</button>
+                    <button class="btn demoButton" role="button" (click)="requestDemo()" data-toggle="modal" data-target="#requestDemo">Request a demo</button>
+                    &nbsp;
+                    <button class="btn videoButton" role="button" (click)="watchDemo()" data-toggle="modal" data-target="#watchtDemo"> <mat-icon id="play">play_circle_outline</mat-icon><span class="pl-1" id="watch">Watch a demo</span>
+                    </button>
                 </div> 
             </div>
             <div class="col" id="conceptArt">
@@ -53,7 +55,7 @@
             </div>
         </div>
         <div class="row pt-2">
-            <div class="col-md-3 col-1"></div>
+            <div class="col-md-2 col-1"></div>
             <div class="col">
                 <div class="row align-middle py-3">
                     <div class="col d-flex justify-content-center">
@@ -98,12 +100,27 @@
                             </div>
                         </span>
                     </div>
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/organizeIcon.svg" alt="graphs" width="100%"
+                                        height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="organizeText">Organize</button>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 col-1"></div>
+            <div class="col-md-2 col-1"></div>
         </div>
         <div class="row">
-            <div class="col-md-3 col-1"></div>
+            <div class="col-md-2 col-1"></div>
             <div class="col">
                 <div class="row align-middle py-3">
                     <div class="col d-flex justify-content-center">
@@ -148,9 +165,24 @@
                             </div>
                         </span>
                     </div>
+                    <div class="col d-flex justify-content-center">
+                        <span class="boxShadow p-3">
+                            <div class="row align-middle">
+                                <div class="col text-center">
+                                    <img class="icons" src="../../../assets/meetIcon.svg" alt="graphs" width="100%"
+                                        height="100%">
+                                </div>
+                            </div>
+                            <div class="row align-middle pt-2">
+                                <div class="col text-center">
+                                    <button class="btn serviceButton" id="meetText">Meet</button>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 col-1"></div>
+            <div class="col-md-2 col-1"></div>
         </div>
     </section>
     <section id="features" class="py-4">
@@ -268,6 +300,25 @@
             </div>
             <div class="col-md-2 col-1"></div>
         </div>
+        <div class="row py-4 align-items-center">
+            <div class="col-md-2 col-1"></div>
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <img class="icons" src="../../../assets/meetIcon.svg" alt="graphs" width="100%" height="100%">
+                    </div>
+                    <div class="col pl-4">
+                        <span class="featureHeading" id="meetText">Meet</span>
+                        <p id="featureContent" class="py-2">Work with genz community, for more social and balanced work
+                            culture. Gelling with modern meme culture.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col art">
+                <img id="conceptArt" src="../../../assets/meetIllustration.svg" alt="graphs" width="100%" height="100%">
+            </div>
+            <div class="col-md-2 col-1"></div>
+        </div>
     </section>
     <section id="howItWorks">
         <div class="row p-5">
@@ -284,7 +335,7 @@
         </div>
         <div class="row py-4">
             <div class="col d-flex justify-content-center">
-                <button class="btn getStarted">Get Started</button>
+                <button class="btn getStarted" role="button" (click)="requestDemo()" data-toggle="modal" data-target="#requestDemo">Get Started</button>
             </div>
         </div>
     </section>
