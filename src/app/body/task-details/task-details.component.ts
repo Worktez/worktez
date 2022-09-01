@@ -81,7 +81,15 @@ export class TaskDetailsComponent implements OnInit {
   linkData: Link[]
   prLinked: boolean = false;
   prApiLink: string;
-
+  totalEstimatedTime: number;
+  estimatedTimeHrs: number;
+  estimatedTimeMins: number;
+  totalLoggedTime: number;
+  loggedTimeHrs: number;
+  loggedTimeMins: number;
+  totalRemainingTime: number;
+  remainingTimeHrs: number;
+  remainingTimeMins: number
 
   constructor (private httpService: HttpServiceService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
@@ -152,6 +160,7 @@ export class TaskDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.task = data;
+        this.getTimeDetails();
         this.checkPrLinked()
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
@@ -174,6 +183,22 @@ export class TaskDetailsComponent implements OnInit {
       },
       complete: () => console.info('Getting Task successful')
     });
+  }
+
+  
+  getTimeDetails(){
+    this.totalEstimatedTime=this.task.EstimatedTime;
+    [this.estimatedTimeHrs, this.estimatedTimeMins ]= this.toolsService.changeToHourMinsTime(this.totalEstimatedTime);
+
+    this.totalLoggedTime= this.task.LogWorkTotalTime;
+    [this.loggedTimeHrs, this.loggedTimeMins] = this.toolsService.changeToHourMinsTime(this.totalLoggedTime)
+
+    this.totalRemainingTime= this.totalEstimatedTime - this.task.LogWorkTotalTime;
+    [this.remainingTimeHrs, this.remainingTimeMins] = this.toolsService.changeToHourMinsTime(this.totalRemainingTime)
+
+    if(this.remainingTimeHrs==0 && this.remainingTimeMins==0){
+      this.totalRemainingTime=0
+    }
   }
 
   getActivityData () {
@@ -220,6 +245,24 @@ export class TaskDetailsComponent implements OnInit {
       complete: () => console.info('Getting Sprint Evaluation data successful')
     });
   }
+  
+  removeLink(linkId, linkType){
+    const callable = this.functions.httpsCallable('linker/removeLink');
+    callable({ OrgDomain: this.orgDomain, TaskId: this.Id, LinkType: linkType, LinkId:linkId  }).subscribe({
+      next: (data) => {
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.error(error);
+      },
+      complete: () => {
+        this.getLinkData()
+        this.getTaskDetail()
+        console.info('Successfully created Link')
+      }});
+    }
 
   async addComment() {
     this.activityDataReady = true
