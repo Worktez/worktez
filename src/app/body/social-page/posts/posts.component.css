@@ -45,7 +45,7 @@ h3 {
   color: #ffffff;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .btn {
     width: 7rem;
     font-size: 12px;

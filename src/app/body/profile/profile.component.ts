@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MyEducationData, MyExperienceData, MyProjectData, User, UserAppSetting } from 'src/app/Interface/UserInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
@@ -78,7 +78,13 @@ export class ProfileComponent implements OnInit {
 
   userData : User[]
 
-  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {}
+  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if(event instanceof NavigationEnd){
+        this.ngOnInit();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
@@ -105,8 +111,16 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
+    this.checkSameUser();
   }
-
+  checkSameUser(){
+    if (this.authService.userAppSetting.Username == this.username){
+      this.sameUser=true;
+    }
+    else{
+      this.sameUser=false;
+    }
+  }
   editProfile() {
     this.editProfileEnabled = true;
   }
@@ -168,8 +182,9 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = false;
     this.readUser();
   }
-  
-  editProfilePicCompleted(data: { completed: boolean }) {
+   
+  editProfilePicCompleted(data: { completed: boolean, photoUrl: string }) { 
+    this.authService.userAppSetting.photoURL = data.photoUrl;
     this.readUser();
   }
 

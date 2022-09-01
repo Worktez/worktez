@@ -62,7 +62,7 @@
                 </ng-container>
             </div>
             <div class="col-md-6 col-12 pb-2">
-                <ng-container *ngIf="sprintNotExist == false">
+                <ng-container *ngIf="sprintNotExist == false && isBacklog==false || isActive==true">
                     <app-sprint-burndown-chart [currentSprint]="startService.currentSprintNumber"  [teamId]="startService.selectedTeamId" [sprintStartDate]="SDate" [sprintEndDate]="EDate"></app-sprint-burndown-chart>
                 </ng-container>
             </div>

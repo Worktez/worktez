@@ -13,45 +13,25 @@
 ***********************************************************/ -->
 <div class="btn-group" *ngIf="authService.myOrgCollectionDocData">
     <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}"
-        matBadgeColor="warn" (click)="loadNotifications(1)">notifications</mat-icon>
-    <ng-container *ngIf="showNotificationsList">
-        <div class="notificationCenter">
-            <!-- <div class="card-body"> -->
-                <ng-container *ngIf="!showLoader; else loader">
-                    <!-- <div class="notificationCenter"> -->
-                    <ng-container *ngIf="notificationsList.length == 0">
-                        <!-- <div class="text-center"> -->
-                        No New Notification!!
-                        <!-- </div> -->
-
-                    </ng-container>
-                    <ng-container *ngFor="let item of notificationsList">
-                        <a href="{{item.Link}}">
-                            <div class="row text-center" id="notificationBox">
-                                <div class="col-9" id="message">
-                                    {{item.Message}}
-                                    {{item.CreationDate}}
-                                    {{item.CreationTime}}
-                                </div>
-                                <!-- <div class="col" id="date">
-                                    
-                                    <br>
-                                    
-                                </div> -->
-                            </div>
-                        </a>
-                    </ng-container>
-                    
-                    <ng-container *ngIf="!showOldNotificationsList">
-                    <a class="btn btn-outline-secondary" (click)="showOlderNotifications()" style="margin-top: 2rem;">Show older notifications</a>
-                    <!-- <button (click)="showOlderNotifications()" class="btn btn-success">Show older notifications</button> -->
-                    </ng-container>
-                    <!-- </div> -->
+        matBadgeColor="warn" (click)="showNotification()"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">notifications</mat-icon>
+   
+    <div class="dropdown-menu dropdown-menu-right" id="notificationCenter">
+        <div class="text-center align-middle" >
+            <ng-container *ngIf="!showLoader; else loader">
+                <ng-container *ngIf="notificationsList.length == 0">
+                    No New Notification!!
                 </ng-container>
-                <ng-template #loader>
-                    <app-loader></app-loader>
-                </ng-template>
-            <!-- </div> -->
+                <ng-container *ngFor="let item of notificationsList">
+                    <app-notification-card [notification]="item"></app-notification-card>
+                </ng-container>
+                
+                <ng-container *ngIf="!showOldNotificationsList">
+                <a class="btn btn-outline-secondary" (click)="showOlderNotifications()" style="margin-top: 2rem;">Show older notifications</a>
+                </ng-container>
+            </ng-container>
+            <ng-template #loader>
+                <app-loader></app-loader>
+            </ng-template>
         </div>
-    </ng-container>
+    </div>
 </div>
