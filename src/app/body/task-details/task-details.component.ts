@@ -195,7 +195,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.totalRemainingTime= this.totalEstimatedTime - this.task.LogWorkTotalTime;
     [this.remainingTimeHrs, this.remainingTimeMins] = this.toolsService.changeToHourMinsTime(this.totalRemainingTime)
-
+    
     if(this.remainingTimeHrs==0 && this.remainingTimeMins==0){
       this.totalRemainingTime=0
     }
@@ -245,7 +245,7 @@ export class TaskDetailsComponent implements OnInit {
       complete: () => console.info('Getting Sprint Evaluation data successful')
     });
   }
-  
+
   removeLink(linkId, linkType){
     const callable = this.functions.httpsCallable('linker/removeLink');
     callable({ OrgDomain: this.orgDomain, TaskId: this.Id, LinkType: linkType, LinkId:linkId  }).subscribe({
