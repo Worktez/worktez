@@ -21,6 +21,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
@@ -38,7 +39,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   sameUser: boolean = true;
   editProfilePicEnabled: boolean = false;
 
-  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
+  constructor(public startService: StartServiceService, public rbaService: RBAService,public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();

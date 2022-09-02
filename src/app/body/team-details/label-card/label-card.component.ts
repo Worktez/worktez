@@ -17,6 +17,7 @@ import { map } from 'rxjs';
 import { Label } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-label-card',
@@ -40,7 +41,7 @@ export class LabelCardComponent implements OnInit {
 
   public labelDataObservable: Label
 
-  constructor(private functions: AngularFireFunctions, private backendService: BackendService , public errorHandlerService: ErrorHandlerService) { }
+  constructor(private functions: AngularFireFunctions,public rbaService :RBAService, private backendService: BackendService , public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.getTeamLabelsByScope();

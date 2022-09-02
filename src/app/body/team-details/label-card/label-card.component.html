@@ -13,7 +13,7 @@
 ***********************************************************/ -->
 <div class="card" style="width: 18rem;" *ngIf="labelsReady">
     <div class="card-header">{{scope}}
-        <span class="icons float-right">
+        <span *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="icons float-right">
             <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="addLabel()" data-toggle="modal" data-target="#addLabel">
                 add
             </mat-icon>
@@ -29,7 +29,7 @@
                         <app-generate-icon [icon]="item"></app-generate-icon>
                     </span>
                 </div>
-                <div class="col-6 text-right">
+                <div *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="col-6 text-right">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
                         edit 
                     </mat-icon>
