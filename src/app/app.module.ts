@@ -169,6 +169,7 @@ import { AddTaskComponent } from './body/milestone-details/add-task/add-task.com
 import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
 import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 import { PricingComponent } from './body/pricing/pricing.component';
+import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
 
 @NgModule({
   declarations: [
@@ -303,6 +304,7 @@ import { PricingComponent } from './body/pricing/pricing.component';
     RequestADemoComponent,
     NotificationCardComponent,
     PricingComponent,
+    MembersAccessComponent,
   ],
   imports: [
     BrowserModule,

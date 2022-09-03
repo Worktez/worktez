@@ -1,3 +1,5 @@
+import { ActivatedRoute } from "@angular/router";
+
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
@@ -102,6 +104,15 @@ export const defaultUser = {
     Website: "",
     Username: "",
 };
+
+export interface MemberData{
+    Active: boolean;
+    DateOfAddition: string;
+    DateOfExit: string;
+    isAdmin: boolean;
+    TeamManager: boolean;
+    Teams: [];
+}
 
 export interface QuickNote {
     DocId: string;

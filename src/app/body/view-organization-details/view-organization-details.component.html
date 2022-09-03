@@ -15,7 +15,7 @@
     <div class="row p-2">
         <div class="col-3">
             <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
-            <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+            <span *ngIf="rbaService.isRbaReady && rbaService.isAdmin" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                     edit
                 </mat-icon>
@@ -55,6 +55,11 @@
                         Documents
                     </a>
                 </li>
+                <li class="nav-item mx-2">
+                    <a (click)="switchView('showMemberRoles')" [ngClass]="{'nav-link ': true, 'activeBg': showMemberRoles}" aria-current="page">
+                        Member Access
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="col pl-0">
@@ -84,6 +89,17 @@
             <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
         </ng-container>
     </div>
+    <ng-container *ngIf="showMemberRoles">
+        <!-- <div class="container"> -->
+        <div class="row">
+            <ng-container *ngFor="let member of members">
+                <div class="col-md-auto my-3 team-cards">
+                    <app-members-access [member]="members" (updatedDetails)="updatedDetails($event)"></app-members-access>
+                </div>
+            </ng-container>
+        </div>
+        <!-- </div> -->
+    </ng-container>
 </div>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>

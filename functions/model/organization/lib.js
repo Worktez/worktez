@@ -133,3 +133,64 @@ exports.getOrgRawData = function(orgDomain) {
     });
     return Promise.resolve(getOrgAppDetails);
 };
+
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} email
+ * @param {any} dateOfAddition
+ * @param {any} dateOfExit
+ * @param {any} isAdmin
+ * @param {any} teamManager
+ * @param {any} teams
+ * @return {any}
+ */
+ exports.setOrgMember = function(orgDomain, email, dateOfAddition, dateOfExit, isAdmin, teamManager, teams ) {
+    const createMember = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).set({
+        Active: true,
+        DateOfAddition: dateOfAddition,
+        DateofExit: "xxxx-xx-xx",
+        IsAdmin: isAdmin,
+        TeamManager: teamManager,
+        Teams: teams,
+
+    });
+    return Promise.resolve(createMember);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} email
+ * @return {any}
+ */
+ exports.getOrgMember = function(orgDomain, email) {
+    const MemberDetails = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).get().then((MemberDoc) => {
+        return MemberDoc.data();
+    });
+    return Promise.resolve(MemberDetails);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @return {any}
+ */
+ exports.getAllMembers = function(orgDomain) {
+    const MembersDetails = db.collection("Organizations").doc(orgDomain).collection("Members").get();
+    return Promise.resolve(MembersDetails);
+};
+
+
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} orgDomain
+ * @param {any} email
+ * @return {any}
+ */
+ exports.updateMember = function(inputJson, orgDomain, email) {
+    const updateMemberPromise = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).update(inputJson);
+    return Promise.resolve(updateMemberPromise);
+};

@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { QuickNotesService } from 'src/app/services/quickNotes/quick-notes.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-quick-notes',
@@ -32,7 +33,7 @@ export class QuickNotesComponent implements OnInit {
   openEditNote: boolean = false
   selectedNote: QuickNote;
   enableLoader: boolean = false
-  constructor(private quickNotes: QuickNotesService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
+  constructor(private quickNotes: QuickNotesService,public rbaService: RBAService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
 
   ngOnInit(): void {
   }
@@ -44,9 +45,11 @@ export class QuickNotesComponent implements OnInit {
   }
 
   openAddNote() {
+    this.rbaService.getRbaDetails()
     this.showNotesList = false
     this.openEditNote= false;
     this.showAddNote = true
+
   }
 
   addNoteCompleted(data) {

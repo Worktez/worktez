@@ -21,6 +21,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
@@ -31,25 +32,28 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 export class ViewOrganizationDetailsComponent implements OnInit {
 
   organization: Organizations;
-  teams: Team[] = []
+  teams: Team[] = [];
+  members: [];
   showLoader: boolean = true;
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
+  showMemberRoles: boolean = false;
   sameUser: boolean = true;
   editProfilePicEnabled: boolean = false;
 
-  constructor(public startService: StartServiceService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
+  constructor(public startService: StartServiceService, public rbaService: RBAService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
-
     if(this.startService.showTeams) {
       this.getOrganizationDetails();
+      console.log("if")
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.getOrganizationDetails();
+          console.log("else")
         }
       });
     }
@@ -62,6 +66,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.teams = [];
     this.backendService.organizationsData.subscribe(data => {
       this.organization = data;
+      this.getOrgMembers();
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);
       });
@@ -76,6 +81,13 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.sameUser = true;
   }
 
+  getOrgMembers(){
+    this.rbaService.getAllOrgMembers(this.organization.OrganizationDomain).subscribe(data => {
+      this.members = data
+      console.log(this.members);
+    });
+    
+  }
   createTeam() {
     this.router.navigate(['/CreateNewTeam']);
   }
@@ -93,11 +105,15 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   switchView(data: any){
     this.showTeamsDetails = false;
     this.showOrgDocuments = false;
+    this.showMemberRoles = false
 
     if(data == "showTeamsDetails") {
       this.showTeamsDetails = true;
-    } else {
+    } else if(data == "showOrgDocuments"){
       this.showOrgDocuments = true;
+    }
+    else{
+      this.showMemberRoles = true
     }
   }
 }
