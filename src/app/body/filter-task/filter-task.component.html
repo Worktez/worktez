@@ -125,7 +125,8 @@
             <ng-container >
                 <div class="row">
             <div class="col">
-                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="dropdownMenuButton" >Custom Filter</span>
+                <span class="ml-2 text-muted" style="font-size:0.8rem; display: none;" id="dropdownMenuButton" >Custom Filter</span>
+                <br/>
                 <select class="form-control form-control-sm" [(ngModel)]="this.filters.FilterName" [ngModelOptions]="{standalone: true}" >
                     <option [ngValue]="Null" [disabled]="true">Select Filter</option>
                     <ng-container *ngFor='let item of this.filters'>
