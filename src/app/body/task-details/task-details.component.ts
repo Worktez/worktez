@@ -91,7 +91,6 @@ export class TaskDetailsComponent implements OnInit {
   remainingTimeHrs: number;
   remainingTimeMins: number
 
-
   constructor (private httpService: HttpServiceService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
@@ -185,6 +184,8 @@ export class TaskDetailsComponent implements OnInit {
       complete: () => console.info('Getting Task successful')
     });
   }
+
+  
   getTimeDetails(){
     this.totalEstimatedTime=this.task.EstimatedTime;
     [this.estimatedTimeHrs, this.estimatedTimeMins ]= this.toolsService.changeToHourMinsTime(this.totalEstimatedTime);
@@ -199,6 +200,7 @@ export class TaskDetailsComponent implements OnInit {
       this.totalRemainingTime=0
     }
   }
+
   getActivityData () {
     this.activityDataReady = false;
     const callable = this.functions.httpsCallable("activity/getActivity");
@@ -259,9 +261,8 @@ export class TaskDetailsComponent implements OnInit {
         this.getLinkData()
         this.getTaskDetail()
         console.info('Successfully created Link')
-
-  }});
-  }
+      }});
+    }
 
   async addComment() {
     this.activityDataReady = true
@@ -324,9 +325,10 @@ export class TaskDetailsComponent implements OnInit {
     this.logWorkEnabled = false;
   }
 
-  editTaskCompleted ( data: { completed: boolean, estimatedTime: number } ) {
+  editTaskCompleted ( data: { completed: boolean, task:Tasks } ) {
     console.log(data);
-    this.getTimeDetails();
+    this.getTaskPageData();
+    this.editTaskEnabled = false;
   }
 
   deleteTaskCompleted ( data: { completed: boolean } ) {

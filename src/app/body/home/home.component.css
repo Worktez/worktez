@@ -32,17 +32,25 @@
 .demoButton {
     background-color: var(--primary-color);
     color: #ffffff;
-    display: block;
     border-radius:50px;
-	text-align:center;
+    text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: none !important;
+}
+
+.videoButton {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-radius: 50px;
+    text-align:center;
     font-family: 'Plus Jakarta Sans', sans-serif;
     border: none !important;
 }
 
 .boxShadow {
-    width: 12rem;
+    width: 10rem;
     border-radius:20px;
-	text-align:center;
+    text-align:center;
     border: none !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
     box-shadow: 0px 7px 6px 1px #ebecefa5;
@@ -55,10 +63,10 @@
 }
 
 .serviceButton {
-	text-align:center;
+    text-align:center;
     border: none !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #gitText {
@@ -76,6 +84,11 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+#organizeText {
+    color: #6325AC;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
 #qnText {
     color: #FFA000;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -88,6 +101,11 @@
 
 #milestionesText {
     color: #087F23;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#meetText {
+    color: #2962FF;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -124,7 +142,7 @@
     color: #4006BA;
     display: block;
     border-radius:50px;
-	text-align:center;
+    text-align:center;
     font-family: 'Plus Jakarta Sans', sans-serif;
     border: none !important;
 }

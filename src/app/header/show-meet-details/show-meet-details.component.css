@@ -68,10 +68,12 @@ a {
 
 .Meet-time{
     margin-top: 15px;
+    width: 60px;
     color: var(--text);
 }
 
 .meet-title{
     padding-top: 5px;
     color: var(--text);
+    text-align: center;
 }
