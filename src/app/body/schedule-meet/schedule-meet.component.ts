@@ -34,9 +34,9 @@ declare var jQuery:any;
   styleUrls: ['./schedule-meet.component.css']
 })
 export class ScheduleMeetComponent implements OnInit {
-  hostName = new UntypedFormControl();
-  filteredOptionsHost: Observable<string[]>;
-  
+  attendeeEmails = new UntypedFormControl();
+ // filteredOptionsHost: Observable<string[]>;
+
   @ViewChild('form') form: NgForm;
   @Output() meetScheduled = new EventEmitter<{ completed: boolean }>();
 
@@ -59,18 +59,24 @@ export class ScheduleMeetComponent implements OnInit {
   enableLoader: boolean = false;
   isUpdateMeet: boolean = false;
   link: string;
+  hostName: string;
+  attendeeEmail: string;
+  attendeeEmailsArray: string[] =[]
 
   constructor(public popupHandlerService: PopupHandlerService, public toolsService: ToolsService, private backendService: BackendService,  private authService: AuthService , public applicationSetting: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, private router: Router) { }
 
   ngOnInit(): void {
     this.teamIds = this.backendService.getOrganizationTeamIds();
     this.title = this.popupHandlerService.quickNotesTitle;
+    this.attendeeEmails.setValue("");
     this.description = this.popupHandlerService.quickNotesDescription;
     this.todayDate = this.toolsService.date();
     this.project = this.authService.getTeamId();
     this.time = this.toolsService.time();
+    this.hostName = this.authService.getUserEmail();
     this.readTeamData(this.project);
   }
+ 
 
   private _filter(value:string): string[] {
     const filterValue = value.toLowerCase();
@@ -81,23 +87,26 @@ export class ScheduleMeetComponent implements OnInit {
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
       this.teamMembers = team.TeamMembers;
-      
-      this.filteredOptionsHost = this.hostName.valueChanges.pipe(
-        startWith(''),
-        map(value => this._filter(value)),
-      );
-      this.enableLoader=false;
-    });  
+      this.enableLoader = false; 
+    }); 
   }
-
-  selectedHost(item){
-    if(item.selected == false){
-      this.hostName.setValue("");
+  
+  selectedAttendee(item) {
+    this.attendeeEmail = item.data;
+    if(item.selected == false) {
+      this.attendeeEmails.setValue("");
       this.close();
-    } else {
-      this.hostName.setValue(item.data);
+      this.addedAttendee(item);
+    } else{
+      if(this.attendeeEmails.value == ""){
+        this.attendeeEmails.setValue(item.data);
+      } else {
+        const attendees = this.attendeeEmails.value + ", " + item.data;
+        this.attendeeEmails.setValue(attendees);
+      }
     }
   }
+ 
 
   addAttendee(){
     this.addAttendeeEnabled = true;
@@ -120,6 +129,8 @@ export class ScheduleMeetComponent implements OnInit {
   }
 
   async submit(){
+    const attendeeEmails1 = this.attendeeEmails.value;
+    this.attendeeEmailsArray = attendeeEmails1.split(", ");
     const startTime = this.estimatedTimeHrs ;
     const endTime = this.estimatedTimeHrs1 ;
     let data = [{ label: "title", value: this.title}, 
@@ -146,7 +157,7 @@ export class ScheduleMeetComponent implements OnInit {
     const callable = this.functions.httpsCallable('meet/scheduleMeet');
       if (this.orgDomain == undefined) {
         this.orgDomain = this.backendService.getOrganizationDomain();
-      callable({OrgDomain:this.orgDomain, TeamId:teamId, TeamMembers:this.teamMembers, Title:this.title, Description:this.description, HostName:this.hostName.value, Date: this.date, StartTime: startTime, EndTime: endTime, Uid: uid}).subscribe({
+      callable({OrgDomain:this.orgDomain, TeamId:teamId, TeamMembers:this.attendeeEmailsArray, Title:this.title, Description:this.description, HostName:this.hostName, Date: this.date, StartTime: startTime, EndTime: endTime, Uid: uid}).subscribe({
         next: (data) => {
           this.enableLoader = false;
           this.showClose = true;

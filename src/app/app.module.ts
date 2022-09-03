@@ -167,7 +167,6 @@ import { MilestoneCardComponent } from './body/milestone/milestone-card/mileston
 import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
 import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
 import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.component';
-import { AddAttetendeeComponent } from './body/schedule-meet/add-attetendee/add-attetendee.component';
 import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
@@ -304,7 +303,6 @@ import { PricingComponent } from './body/pricing/pricing.component';
     AddTaskComponent,
     RequestADemoComponent,
     ScheduleMeetComponent,
-    AddAttetendeeComponent,
     NotificationCardComponent,
     ShowMeetDetailsComponent,
     PricingComponent,
