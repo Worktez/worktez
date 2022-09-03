@@ -73,7 +73,7 @@ exports.updateSprintStatus = function(request, response) {
                 setSprintActivity(orgDomain, teamName, currentSprintName, sprintActivityCounter, message, currentDate, currentTime, uid);
                 updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName).then(()=>{
                     updateSprintEvaluationGraphData(orgDomain, teamId, currentSprintName);
-                })
+                });
             });
             return Promise.resolve(getSprintPromise);
         }).catch((error) => {
