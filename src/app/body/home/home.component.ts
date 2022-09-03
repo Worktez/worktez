@@ -60,14 +60,6 @@ export class HomeComponent implements OnInit {
     this.popupHandlerService.requestDemoEnabled = true;
   }
 
-  watchDemo() {
-    Object.assign(document.createElement('a'), {
-      target: '_blank',
-      rel: 'noopener noreferrer',
-      href: 'https://youtu.be/riiBlKkOLug'
-    }).click();
-  }
-
   scrollLeft() {
     this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft - 400), block: "start", inline: "nearest" });
   }

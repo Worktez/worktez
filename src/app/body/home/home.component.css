@@ -32,7 +32,6 @@
 .demoButton {
     background-color: var(--primary-color);
     color: #ffffff;
-    display: inline-block;
     border-radius:50px;
     text-align:center;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -42,26 +41,14 @@
 .videoButton {
     background-color: var(--primary-color);
     color: #ffffff;
-    display: inline-block;
     border-radius: 50px;
     text-align:center;
     font-family: 'Plus Jakarta Sans', sans-serif;
     border: none !important;
 }
 
-#watch {
-    display: inline-flex;
-    vertical-align: middle;
-}
-
-#play {
-    display: inline-flex;
-    vertical-align: middle;
-    color: #ffffff;
-}
-
 .boxShadow {
-    width: 12rem;
+    width: 10rem;
     border-radius:20px;
     text-align:center;
     border: none !important;
@@ -79,7 +66,7 @@
     text-align:center;
     border: none !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #gitText {
