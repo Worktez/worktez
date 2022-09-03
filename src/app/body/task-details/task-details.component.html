@@ -142,27 +142,13 @@
         <div class="row" >
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <div class="row">
-                    <div class="col-md-8">
-                    <h3 id="label">{{task.Title}}</h3>
-                    </div>
                     <div class="col">
-                        <h5 id="label" class="float-right">{{task.Id}}</h5>
+                        <h5 id="label" class="float-left">{{task.Id}}</h5>
                     </div>
                 </div>
-                <h5 id="label">{{task.Id}}</h5>
-                <h4 id="value">{{task.Title}}</h4>
-                <div class="row mt-2">
-                    <div class="col-md-4 ">
-                        <span id="label">Sprint Number:</span>
-                        <span id="value">{{task.SprintNumber}}</span>
-                    </div>
-                    <div class="col-md-3 ">
-                        <span id="label">Story Point:</span>
-                        <span id="value">{{task.StoryPointNumber}}</span>
-                    </div>
-                    <div class="col-md-5 ">
-                        <span id="label">Estimated Time:</span>
-                        <span id="value" *ngIf="estimatedTimeHrs>0">{{estimatedTimeHrs}} Hrs </span><span id="value" *ngIf="estimatedTimeMins>0">{{estimatedTimeMins}} Mins</span>
+                <div class="row">
+                    <div class="col-md-8">
+                    <h3 id="label">{{task.Title}}</h3>
                     </div>
                 </div>
 

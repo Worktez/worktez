@@ -45,7 +45,7 @@
     },
     "ui": {
       "enabled": true,
-      "port": 7000
+      "port": 8000
     },
     "storage": {
       "port": 9199
