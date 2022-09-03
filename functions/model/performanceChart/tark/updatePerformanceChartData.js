@@ -33,10 +33,9 @@ exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprin
     if (assignee == "Team") {
         assignee = "";
     }
-    getTeamUseTeamId(orgDomain, teamId).then((team) => {
+    const p = getTeamUseTeamId(orgDomain, teamId).then((team) => {
         teamName = team.TeamName;
         const teamMembers = team.TeamMembers;
-
         teamMembers.forEach((element) => {
             updatedUserPerformanceChartData(orgDomain, element, sprintRange, teamId, teamName);
         });
@@ -55,9 +54,12 @@ exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprin
                 inputJson["S"+i]=storyPoint;
             }
             setOrganizationsChart(orgDomain, teamName, "PerformanceChart", inputJson);
+            return null;
         });
         return Promise.resolve(promise1);
     }).catch((error) => {
         console.log("Error:", error);
     });
+
+    return Promise.resolve(p);
 };

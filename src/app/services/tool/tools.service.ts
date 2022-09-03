@@ -72,6 +72,8 @@ export class ToolsService {
     }
   }
 
+  
+
   getFormattedDate() {
     return this.date().split('/').reverse().join('-');
   }

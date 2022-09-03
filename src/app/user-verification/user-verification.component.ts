@@ -16,6 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { AuthService } from '../services/auth.service';
+import { StartServiceService } from '../services/start/start-service.service';
 
 @Component({
   selector: 'app-user-verification',
@@ -31,7 +32,7 @@ export class UserVerificationComponent implements OnInit {
   userDataReady: boolean = false;
   teamList: string[]
 
-  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public router: Router) { }
+  constructor(private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public router: Router, private startService: StartServiceService) { }
 
   ngOnInit(): void {
     this.organizationDomain = this.route.snapshot.params['organizationDomain'];
@@ -42,6 +43,8 @@ export class UserVerificationComponent implements OnInit {
     this.authService.afauth.user.subscribe((data) => {
       if(data){
         this.userDataReady = true;
+        console.log(this.userEmail);
+        console.log(data.email);
         if(this.userEmail == data.email){
           const callable = this.functions.httpsCallable('users/checkIfUserAlreadyAMember');
           callable({OrganizationDomain:this.organizationDomain, TeamName:this.teamName, UserEmail: this.userEmail, TeamId: this.teamId}).subscribe({
@@ -68,14 +71,18 @@ export class UserVerificationComponent implements OnInit {
     const callable = this.functions.httpsCallable('users/verify');
       callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, UserEmail: this.userEmail, TeamId: this.teamId }).subscribe({
         next: (data) => {
-          this.router.navigate(['/Social']);
           console.log("Successful");
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         },
-        complete: () => console.info('Successful')
+        complete: () => {
+          console.info('Successful');
+          this.startService.startApplication();
+          this.router.navigate(['/Social']);
+        }
+
     });
   }
 }

@@ -121,10 +121,10 @@ export class ApplicationSettingsService {
 
   getNotificationsList(notificationStatus: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("notifications/getNotifications");
-    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
-        return actions as Notification[];
-    }));
+    // const callable = this.functions.httpsCallable("notifications/getNotifications");
+    // this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
+    //     return actions as Notification[];
+    // }));
     return this.notificationListObservable;
   }
 }

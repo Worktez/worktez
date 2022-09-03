@@ -25,8 +25,8 @@ body {
     --primary-color: #5559D9;
     --secondary-color: #67CB45;
     --header-bg: #ffffff;
-    --text: #545454;
-    --button-text: #545454;
+    --text: #1B1F23;
+    --button-text: #1B1F23;
     --header-text: #838CAB;
     --button-text-hover: #5559D9;
     --primary-bg: #F6F7F9;
@@ -48,12 +48,13 @@ body {
     --danger-color: #c62828;
     --button-bg: #4286f43f;
     --button-text2: #4285F4;
-    --table-header: #545454;
+    --table-header: #1B1F23;
     --scrollbar-color: rgba(84, 84, 84, 0.17);
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
     --home-bg: #5559D9;
-    --font: 'Poppins', sans-serif;
+    --font: 'Plus Jakarta Sans', sans-serif;
+    /* font-family: 'Plus Jakarta Sans', sans-serif; */
 }
 
 .theme-dark {
@@ -87,5 +88,5 @@ body {
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
     --home-bg: #5559D9;
-    --font: 'Poppins', sans-serif;
+    --font: 'Plus Jakarta Sans', sans-serif;
 }

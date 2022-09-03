@@ -36,6 +36,35 @@ exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) =>
 //   });
 // });
 
+// /**
+//  * Description
+//  * @param {any} "121***"
+//  * @returns {any}
+//  */
+// exports.scheduledFnManually = functions.runWith({
+//   // Keep 5 instances warm for this latency-critical function
+//   memory: "256MB",
+//   timeoutSeconds: 540,
+// }).https.onRequest((req, res) => {
+//   cors(req, res, () => {
+//     startSchedular();
+//     return res.status(200).send("Success");
+//   });
+// });
+
+/**
+ * Description
+ * @param {any} "/addScheduler"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/startSchedular", (req, res) => {
+  startSchedular();
+  return res.status(200).send("Success");
+});
+
+
 /**
  * Description
  * @param {any} "/addScheduler"
@@ -53,11 +82,11 @@ fastify.post("/addScheduler", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
-// exports.scheduledFnManually = functions.https.onRequest((req, res) => {
-//   cors(req, res, () => {
-//     fastify.ready((err) => {
-//       if (err) throw err;
-//       requestHandler(req, res);
-//     });
-//   });
-// });
+exports.scheduledFnManually = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
+    });
+  });
+});
