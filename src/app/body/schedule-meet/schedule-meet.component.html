@@ -1,15 +1,15 @@
-<!-- /*********************************************************** 
-* Copyright (C) 2022 
-* Worktez 
+<!-- /***********************************************************
+* Copyright (C) 2022
+* Worktez
 * Author : Simran Nigam <nigamsimran14@gmail.com>
-* This program is free software; you can redistribute it and/or 
-* modify it under the terms of the MIT License 
-* 
-* 
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-* See the MIT License for more details. 
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the MIT License
+*
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the MIT License for more details.
 ***********************************************************/ -->
 <div class="container-fluid" *ngIf="popupHandlerService.scheduleMeetEnabled">
     <div class="modal fade" id="scheduleMeet" tabindex="-1" role="dialog" aria-labelledby="scheduleMeet"
@@ -52,19 +52,7 @@
                                 <div class="dropdown">
                                     <span class="ml-2 text-secondary" style="font-size:0.8rem;" id="label">Host</span>
                                     <input type="text" autocomplete="off" class="form-control form-control-sm"
-                                        [formControl]="hostName" id="dropdownMenuButton" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false" placeholder="Enter Host's Name">
-                                    <div id="hostSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <ng-container *ngIf="applicationSetting.teamDataReady; else loader">
-                                            <ng-container *ngFor='let item of filteredOptionsHost | async'>
-                                                <app-suggestion-bucket [email]="item" [showEmail]="true"
-                                                    (selectedEmail)="selectedHost($event)"></app-suggestion-bucket>
-                                            </ng-container>
-                                        </ng-container>
-                                        <ng-template #loader>
-                                            <app-loader></app-loader>
-                                        </ng-template>
-                                    </div>
+                                        id="dropdownMenuButton" value={{this.hostName}} [(ngModel)]="this.hostName" [ngModelOptions]="{standalone: true}">
                                 </div>
                             </div>
                         </div>
@@ -72,31 +60,17 @@
                             <div class="col-md-12 col ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Attendee
                                     Email</span>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="card" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            data-toggle="modal" data-target="#attendeeModal" title="add-member"
-                                            (click)="addAttendee()" style="height: 10rem;">
-                                            <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
-                                                <div class="row">
-                                                    <ng-container *ngFor="let item of teamMembers">
-                                                        <div class="col-md-5 member-email mx-2 mt-2 p-2">
-                                                            {{item}}
-                                                            <span aria-hidden="true"
-                                                                class="btn material-icons text-danger float-right px-2"
-                                                                style="cursor: pointer;"
-                                                                (click)="removeAttendee(item)">close</span>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="!teamMembers.length">
-                                                        <div class="col text-muted h6 font-weight-normal"
-                                                            style="width: 818px;;">
-                                                            Enter Attensee's Email Id*
-                                                        </div>
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="dropdown">
+                                    <textarea type="text" autocomplete="off" class="form-control form-control-sm"
+                                        [formControl]="attendeeEmails" placeholder="Enter Attendee's Email's"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" rows="5"></textarea>
+                                    <div id="attendeeSuggestion" class="dropdown-menu"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <ng-container *ngFor="let item of teamMembers">
+                                            <app-suggestion-bucket [email]="item" [showEmail]="true"
+                                                (selectedEmail)="selectedAttendee($event)"></app-suggestion-bucket>
+                                        </ng-container>
                                     </div>
                                 </div>
                             </div>
@@ -111,35 +85,19 @@
                         </div>
                         <div class="form-row mb-2">
                             <div class="col-md-6 px-2">
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Time</span>
-                            <span class="ml-2 text-muted" style="font-size:0.7rem;" id="label">Local 24 Hrs Clock </span>
-                            <input type="time" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs" [ngModelOptions]="{standalone: true}" placeholder="Hrs:Mins" >
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Time</span>
+                                <span class="ml-2 text-muted" style="font-size:0.7rem;" id="label">Local 24 Hrs Clock
+                                </span>
+                                <input type="time" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Hrs:Mins">
                             </div>
                             <div class="col-md-6 px-2">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Time</span>
-                                <span class="ml-2 text-muted" style="font-size:0.7rem;" id="label">Local 24 Hrs Clock </span>
-                                <input type="time" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs1" [ngModelOptions]="{standalone: true}" placeholder="Hrs:Mins" >                     
+                                <span class="ml-2 text-muted" style="font-size:0.7rem;" id="label">Local 24 Hrs Clock
+                                </span>
+                                <input type="time" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs1"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Hrs:Mins">
                             </div>
-                            <!-- <div class="col-6 pr-1">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Time</span>
-                                    <input class="form-control form-control-sm" placeholder="Time" [ngxTimepicker]="picker" [ngModelOptions]="{standalone: true}">
-                                <ngx-material-timepicker class="dropdown-menu" aria-labelledby="dropdownMenuButton" #picker></ngx-material-timepicker>
-                                </div>
-                                <div class="col-6 pl-1">
-                                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Time</span>
-                                    <input class="form-control form-control-sm" placeholder="Time" [ngxTimepicker]="picker" [ngModelOptions]="{standalone: true}">
-                                <ngx-material-timepicker class="dropdown-menu" aria-labelledby="dropdownMenuButton" #picker></ngx-material-timepicker>   
-                                </div> -->
-                                <!-- <div class="col-6 pr-1">
-                                    <input type="number" min="0" class="form-control form-control-sm"
-                                        [(ngModel)]="estimatedTimeHrs" [ngModelOptions]="{standalone: true}"
-                                        placeholder="Hrs">
-                                </div>
-                                <div class="col-6 pl-1">
-                                    <input type="number" min="0" max="59" class="form-control form-control-sm"
-                                        [(ngModel)]="estimatedTimeMins" [ngModelOptions]="{standalone: true}"
-                                        placeholder="Mins">
-                                </div> -->
                         </div>
                         <div class="form-row mb-2">
                             <div class="col-md-6 col ml-auto">
@@ -200,6 +158,3 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="addAttendeeEnabled" id="attendeeModalLabel">
-    <app-add-attetendee [teamId]="teamId" [title]="title" [teamMembers]="teamMembers" [hostName]="hostName" [description]="description" [isUpdateMeet]="isUpdateMeet" (addedAttendee)="addedAttendee($event)"></app-add-attetendee>
-</ng-container>
