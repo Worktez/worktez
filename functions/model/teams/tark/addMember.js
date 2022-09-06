@@ -41,7 +41,7 @@ exports.addMember = function(request, response) {
         result = { data: "Member already existing" };
         console.log("Member already existing");
     } else {
-        teamMembers.push(add);        
+        teamMembers.push(add);
         sendVerificationEmail(teamName, teamManager, teamDescription, add, orgDomain, teamId);
         result = { data: "Member added Successfully" };
         console.log("Member added Successfully");
@@ -50,7 +50,7 @@ exports.addMember = function(request, response) {
         console.error("Error while adding member");
         status = 500;
     }
-    
+
     */
     const updateJson = {
         TeamMembers: teamMembers,

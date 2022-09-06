@@ -1,4 +1,4 @@
-/* eslint-disable no-trailing-spaces */
+/* eslint-disable linebreak-style */
 const {getUserUseEmail, getMyOrgCollectionDoc} = require("../lib");
 
 exports.checkIfUserAlreadyAMember = function(request, response) {
@@ -21,7 +21,11 @@ exports.checkIfUserAlreadyAMember = function(request, response) {
         const result = {data: resultData};
         return response.status(status).send(result);
       });
-    }  
+    } else {
+      resultData = "false";
+      const result = {data: resultData};
+      return response.status(status).send(result);
+    }
   }).catch((err) => {
     status = 500;
     resultData = "false";

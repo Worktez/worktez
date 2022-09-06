@@ -76,6 +76,7 @@
                         <button type="submit" class="btn btn-lg btn-block" id="button" (click)="editProfile()">Save Changes</button>
                     </div>
                 </form>
+                <app-loader *ngIf="enableLoader && !showClose"></app-loader> 
                 <ng-container *ngIf="showClose">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
@@ -104,4 +105,3 @@
         </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader && !showClose"></app-loader> -->

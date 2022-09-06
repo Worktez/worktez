@@ -10,14 +10,10 @@
 }
 
 .heading2 {
-    /* color: transparent; */
     color: #4E4E4E;
     font-size: 40px;
     font-family: var(--font);
     line-height: 3rem;
-    /* background: #4042E2;
-    background: linear-gradient(to right, #4042E2,#E94E32,#00867D,#2368FF);
-    background-clip: text; */
 }
 
 .tablehead {
@@ -53,8 +49,7 @@
 }
 .table {
     border-radius: 20px;
-    /* border: 1px solid var(--box-shadow-color); */
-    box-shadow: 4px 5px 10px 10px #ebecefa5;
+    box-shadow: 0px 0px 10px 3px #ebecefa5;
 }
 td {
     text-align: center;

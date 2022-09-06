@@ -25,63 +25,72 @@
 </ng-container>
 <ng-template #homePageHeader>
     <footer class="font-small pt-4" id="page-footer">
-        <div class="container-fluid text-md-left">
         <div class="row">
-            <div class="col-sm-6 col-md-3 mt-3 company-text justify-content-center" style="width: auto;">
-            <h3>WorkTez</h3>
-            <p>A quicker and agile alternative to the tedious project management process.</p>
+            <div class="col-md-2 col-1"></div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-8 col-md-4 company-text">
+                        <h3>WorkTez</h3>
+                        <p>Milestone your project with the power of DevOps.</p>
+                    </div>
+                    <div class="col">
+                        <h3 class="footer-headings">Company</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#!">About Us</a>
+                            </li>
+                            <li>
+                                <a routerLink="/Pricing">Pricing</a>
+                            </li>
+                            <li>
+                                <a href="#!">Features</a>
+                            </li>
+                            <li>
+                                <a href="#!"></a>
+                            </li>
+                            <li>
+                                <a href='https://github.com/Worktez/worktez'>Open Source</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col text-center">
+                        <h3 class="footer-headings">Resources</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                            <a href="https://www.youtube.com/watch?v=riiBlKkOLug">Getting Started</a>
+                            </li>
+                            <li>
+                            <a href="https://www.youtube.com/channel/UC091zGHjjxypHZ7f5MbHVPg">Videos</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col text-right">
+                        <h3 class="footer-headings">Reach Out to Us</h3>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a (click)="requestDemo()"
+                                data-toggle="modal" data-target="#requestDemo">Request a demo</a>
+                            </li>
+                            <li>
+                                <a href = "mailto:support@worktez.com">support@worktez.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <hr>
+                <div class="row footer-copyright pb-5">
+                    <div class="col-md-3 col-3" (click)='termsandcondition()'>Terms & Conditions</div>
+                    <div class="col-md-1 col-1">|</div>
+                    <div class="col-md-3 col-3" (click)='privacy()'>Privacy Policy</div>
+                    <div class="col-md-5 col-5 text-right">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle pt-1" style="font-size: 15px;">
+                            copyright
+                        </mat-icon>
+                            Copyright Worktez 2022. All Rights Reserved</div>
+                </div>
             </div>
-            <div class="col-sm-8 col-md-3 col-3">
-            <h3 class="footer-headings">Company</h3>
-            <ul class="list-unstyled">
-                <li>
-                <a href="#!">Home</a>
-                </li>
-                <li>
-                <a href="#!">About</a>
-                </li>
-                <li>
-                <a href="#!">Features</a>
-                </li>
-                <li>
-                <a href="#!">Testimonials</a>
-                </li>
-                <li>
-                <a href="#!">Signup</a>
-                </li>
-            </ul>
-            </div>
-            <div class="col-sm-8 col-md-3">
-            <h3 class="footer-headings"> OtherLinks</h3>
-            <ul class="list-unstyled">
-                <li>
-                <a href="#!">Contributers</a>
-                </li>
-                <li>
-                <a href="#!">Newsletter</a>
-                </li>
-                <li>
-                <a href="#!">Help</a>
-                </li>
-            </ul>
-            </div>
-            <div class="col-sm-8 col-md-3">
-            <h3 class="footer-headings">Reach Out to Us</h3>
-            <ul class="list-unstyled">
-                <li>
-                <a href="#!">info@worktez.in</a>
-                </li>
-            </ul>
-            </div>
-        </div>
-        </div>
-        <hr style="background-color: white">
-        <div class="row footer-copyright pb-3">
-        <div class="col-md-2 text-light ml-3" style="max-width: fit-content;">Terms & Conditions</div>
-        <div class="col-md-1 text-light" style="max-width: fit-content;">|</div>
-        <div class="col-md-2 text-light" style="max-width: fit-content;">Privacy Policy</div>
-        <div class="col-md-4"></div>
-        <div class="col-md-3 text-light text-right pr-0" style="max-width: fit-content; white-space: nowrap; overflow: hidden;">Copyright 2021 Worktez All Rights Reserved</div>
+            <div class="col-md-2 col-1"></div>
         </div>
     </footer>
 </ng-template>

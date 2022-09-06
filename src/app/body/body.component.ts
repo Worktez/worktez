@@ -49,6 +49,10 @@ export class BodyComponent implements OnInit {
     this.popupHandlerService.createNewTaskEnabled= false;
   }
 
+  meetScheduled( completed: boolean ){
+    this.popupHandlerService.scheduleMeetEnabled = false;
+  }
+
   teamCreated( completed: boolean) {
     this.popupHandlerService.createNewTeamEnabled = false;
   }

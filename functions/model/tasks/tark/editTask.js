@@ -24,12 +24,13 @@
 const { createSprintName } = require("../../application/lib");
 const { addActivity } = require("../../activity/tark/addActivity");
 const { getOrgUseAppKey } = require("../../organization/lib");
-const { getSprint, updateSprint, setSprint } = require("../../sprints/lib");
+const { getSprint, updateSprint } = require("../../sprints/lib");
 const { getTask, updateTask } = require("../lib");
 const { taskMailer } = require("../../mailer/lib");
 const { getUser } = require("../../users/lib");
 const { updateSprintData } = require("../../sprints/tark/updateSprint");
 const { getTeamUseTeamId } = require("../../teams/lib");
+const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 
 
 exports.editTask = function(request, response) {
@@ -62,6 +63,9 @@ exports.editTask = function(request, response) {
     const time = request.body.data.Time;
     const uid = request.body.data.Uid;
     let comment = "Edited task details: ";
+    let teamId;
+    let teamName;
+    // let SprintEditedFlag;
     // const subjectMessage = "your task is edited sucesfully";
 
 
@@ -72,14 +76,20 @@ exports.editTask = function(request, response) {
         const orgId = orgDetail.OrganizationId;
         let currentSprint;
         if (editedSprintNumber != previousId) {
+            // SprintEditedFlag = true;
             comment += "Moved to sprint " + editedSprintName + ". ";
-           
+
             const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
                 const project = taskDoc.Project;
-                const teamId = taskDoc.TeamId;
+                teamId = taskDoc.TeamId;
                 getTeamUseTeamId(orgDomain, teamId).then((data)=>{
+                    teamName = data.TeamName;
+                    console.log(teamName, data);
                     currentSprint = data.CurrentSprintId;
-                    updateSprintData(teamId, project, orgDomain, previousSprintName, oldStoryPointNumber, storyPointNumber, editedSprintNumber, orgId, editedSprintName, currentSprint);
+                    updateSprintData(teamId, project, orgDomain, previousSprintName, oldStoryPointNumber, storyPointNumber, editedSprintNumber, orgId, editedSprintName, currentSprint).then(()=>{
+                        updateSprintEvaluationGraphData(orgDomain, teamId, editedSprintName);
+                        updateSprintEvaluationGraphData(orgDomain, teamId, previousSprintName);
+                    });
                 });
                 return null;
             }).catch((error) => {
@@ -91,12 +101,11 @@ exports.editTask = function(request, response) {
 
         if (oldStoryPointNumber != storyPointNumber && previousId == editedSprintNumber) {
             const updateSprintPromise = getTask(taskId, orgDomain).then((taskDoc) => {
-               
-                
-                const teamName = taskDoc.Project;
+                teamName = taskDoc.Project;
+                teamId = taskDoc.TeamId;
                 let updateNewSprintJson;
                 const storyPointSameSprintPromise = getSprint(orgDomain, teamName, previousSprintName).then((sprintDoc) => {
-                    getTeamUseTeamId(orgDomain, taskDoc.TeamId).then((data)=>{
+                    getTeamUseTeamId(orgDomain, teamId).then((data)=>{
                         currentSprint = data.CurrentSprintId;
                     if (sprintDoc.Status == "Not Started") {
                         const startStoryPointNumber = parseInt(sprintDoc.StartStoryPoint) - oldStoryPointNumber + storyPointNumber;
@@ -110,7 +119,9 @@ exports.editTask = function(request, response) {
                             MidStoryPoint: midStoryPointNumber,
                         };
                     }
-                    updateSprint(updateNewSprintJson, orgDomain, teamName, previousSprintName);
+                    updateSprint(updateNewSprintJson, orgDomain, teamName, previousSprintName).then(()=>{
+                        updateSprintEvaluationGraphData(orgDomain, teamId, previousSprintName);
+                    });
                 });
                 });
                 return Promise.resolve(storyPointSameSprintPromise);
