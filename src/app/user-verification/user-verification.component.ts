@@ -43,6 +43,8 @@ export class UserVerificationComponent implements OnInit {
     this.authService.afauth.user.subscribe((data) => {
       if(data){
         this.userDataReady = true;
+        console.log(this.userEmail);
+        console.log(data.email);
         if(this.userEmail == data.email){
           const callable = this.functions.httpsCallable('users/checkIfUserAlreadyAMember');
           callable({OrganizationDomain:this.organizationDomain, TeamName:this.teamName, UserEmail: this.userEmail, TeamId: this.teamId}).subscribe({

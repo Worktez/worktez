@@ -24,11 +24,8 @@ const { db } = require("../application/lib");
 /**
  * Description
  * @param {any} schedularDocId
- * @param {any} type
  * @param {any} orgAppKey
- * @param {any} assignee
- * @param {any} teamId
- * @param {any} orgDomain
+ * @param {any} orgId
  * @return {any}
  */
 exports.setSchedular = function(schedularDocId, orgAppKey, orgId) {

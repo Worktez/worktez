@@ -20,6 +20,7 @@ export class PopupHandlerService {
 
   createNewSprintEnabled: boolean = false
   createNewTaskEnabled: boolean = false
+  scheduleMeetEnabled: boolean = false
   createNewTeamEnabled: boolean = false
   addNewContributorEnabled: boolean = false
   parentTaskId: string = "default"
@@ -36,6 +37,7 @@ export class PopupHandlerService {
   constructor() { }
 
   resetPopUps() {
+    this.scheduleMeetEnabled = false
     this.createNewSprintEnabled = false
     this.createNewTaskEnabled = false
     this.addLabelEnabled=false

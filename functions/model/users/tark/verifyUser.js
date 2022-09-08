@@ -21,7 +21,6 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { getOrg } = require("../../organization/lib");
-// const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { getTeam } = require("../../teams/lib");
 const { getUserUseEmail, updateUser } = require("../lib");
 const { updateTeamInOrganizations } = require("./updateTeamInOrganizations");

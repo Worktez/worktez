@@ -12,11 +12,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-#contentBox {
-    background-color: var(--primary-color);
-}
 
-h1, h2, h3 {
+h1, h2, h3, h1 {
     color: var(--text);
 }
 
@@ -45,8 +42,17 @@ hr {
     color: var(--text);
 }
 
+.etc {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
+
 .btn-danger{
     color: #ffff;
+}
+
+.extra, .extra:hover {
+    background-color: transparent;
 }
 
 .btn:hover {

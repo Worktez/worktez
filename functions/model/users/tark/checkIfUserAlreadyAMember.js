@@ -21,6 +21,10 @@ exports.checkIfUserAlreadyAMember = function(request, response) {
         const result = {data: resultData};
         return response.status(status).send(result);
       });
+    } else {
+      resultData = "false";
+      const result = {data: resultData};
+      return response.status(status).send(result);
     }
   }).catch((err) => {
     status = 500;
