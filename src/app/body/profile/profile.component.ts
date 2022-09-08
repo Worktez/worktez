@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
   linkedInProfile: string;
   managerEmail: string;
   dateOfJoining: string;
-  skills: string;
+  skills: string[];
   website: string;
   username: string;
   
@@ -130,20 +130,20 @@ export class ProfileComponent implements OnInit {
     this.editProfilePicEnabled = true;
   }
 
-  editEducation(mode: string, educationId: number) {
-    this.educationModalMode = mode;
-    if(educationId >= 0){
-      this.educationModalData = this.educations[educationId];
+  editEducation(data :{mode: string, educationId: number}) {
+    this.educationModalMode = data.mode;
+    if(data.educationId >= 0){
+      this.educationModalData = this.educations[data.educationId];
     } else {
       this.educationModalData = null;
     }
     this.editEducationEnabled = true;
   }
 
-  editProject(mode: string, projectId: number) {
-    this.projectModalMode = mode;
-    if(projectId >= 0){
-      this.projectModalData = this.projects[projectId];
+  editProject(data:{mode: string, projectId: number}) {
+    this.projectModalMode = data.mode;
+    if(data.projectId >= 0){
+      this.projectModalData = this.projects[data.projectId];
     } else {
       this.projectModalData = null
     }
@@ -154,9 +154,9 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = true;
   }
 
-  editWork(mode: string, workId: number) {
-    this.workModalMode = mode;
-    this.workModalData = this.experiences[workId];
+  editWork(data :{mode: string, workId: number}) {
+    this.workModalMode = data.mode;
+    this.workModalData = this.experiences[data.workId];
     this.editWorkEnabled = true;
   }
 

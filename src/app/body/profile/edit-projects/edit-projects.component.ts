@@ -46,7 +46,6 @@ export class EditProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.projectModalMode == "edit") {
-      console.log(this.projectModalData);
       this.projectName = this.projectModalData.ProjectName;
       this.description = this.projectModalData.Description;
       this.startDate = this.projectModalData.Start
@@ -63,7 +62,6 @@ export class EditProjectsComponent implements OnInit {
     { label: "endDate", value: this.endDate }];
     
     var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
-   
       return res;
     });
     if (condition) {
@@ -120,15 +118,14 @@ export class EditProjectsComponent implements OnInit {
       this.showClose = true;
   }
   
-  async submiteditProject() {
+  submiteditProject() {
     if(this.endDate == undefined || this.endDate == ""){
       this.endDate = "Present";
     }
     this.enableLoader = true
-    console.log("Edit");
     const callable = this.functions.httpsCallable('users/updateProject');
   
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate, ProjectId: this.projectModalData.ProjectId }).subscribe({
+      callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, ProjectName: this.projectName, Description: this.description, Start: this.startDate, End: this.endDate, ProjectId: this.projectModalData.ProjectId }).subscribe({
         next: (data) => {
           console.log("Successful");
           this.showClose = true;

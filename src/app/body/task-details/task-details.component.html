@@ -139,14 +139,31 @@
                 </div>
             </div>
         </div>
-        <div class="row" >
+        <div class="row">
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <div class="row">
                     <div class="col-1">
-                        <h5 id="label" class="float-left">{{task.Id}}</h5> 
+                        <span id="labelId">{{task.Id}}</span>
                     </div>
                     <div class="col">
                         <span id="label" class="value">{{task.Title}}</span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">
+                        <span id="label">Sprint Number:</span>
+                        <span id="value">{{task.SprintNumber}}</span>
+                    </div>
+                    <div class="col">
+                        <span id="label">Story Point:</span>
+                        <span id="value">{{task.StoryPointNumber}}</span>
+                    </div>
+                    <div class="col">
+                        <span id="label">Reporter</span>
+                        <span id="value">
+                            <app-suggestion-bucket [email]="task.Reporter" [showEmail] = "false"  (selectedEmail)="selectedAssignee($event)">
+                            </app-suggestion-bucket>
+                        </span>
                     </div>
                 </div>
 

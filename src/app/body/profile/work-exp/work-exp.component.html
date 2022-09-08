@@ -1,0 +1,37 @@
+<div class="card p-4 mb-4">
+    <div class="row pb-2">
+        <div class="col-10">
+            <span>Work Experience</span>
+        </div>
+        <div class="col-2">
+            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">add</span>
+        </div>
+    </div>
+    <ng-container *ngIf="experiences?.length == 0">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <span>Add your Work Experience</span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let experience of experiences; let i = index">
+        <div class="row">
+            <div class="col-10">
+                <span>{{ experience.Position }}</span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
+            </div>
+        </div>
+        <div class="row text-muted">
+            <div class="col-5">
+                <span>{{ experience.OrganizationName }}</span>
+            </div>
+            <div class="col-7">
+                <ul>
+                    <li>{{ experience.Start }} - {{ experience.End }}</li>
+                </ul>
+            </div>
+        </div>
+    </ng-container>
+</div>

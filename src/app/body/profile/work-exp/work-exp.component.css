@@ -1,0 +1,23 @@
+.card {
+    background-color: var(--secondary-bg);
+    width: 100%;
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+h2 {
+    font-size: 14px;
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 23rem;
+    }
+}

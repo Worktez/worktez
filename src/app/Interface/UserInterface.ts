@@ -28,7 +28,7 @@ export interface UserAppSetting extends User {
     GithubProfile: string;
     LinkedInProfile: string;
     DateOfJoining: string;
-    Skills: string;
+    Skills: string[];
     Education: string;
     Experience: string;
     Projects: string;
