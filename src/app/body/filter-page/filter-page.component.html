@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="col-4">
-        <app-create-filter [teamName]="teamName"></app-create-filter>
+        <app-create-filter [teamName]="teamName" (createFilterCompleted)="createFilterCompleted($event)"></app-create-filter>
     </div>
 </div>
 <ng-container *ngIf="showEditFilterProp" id="openEditProperties">
