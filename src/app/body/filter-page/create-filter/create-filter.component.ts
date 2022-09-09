@@ -11,9 +11,9 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component,Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { UntypedFormControl, NgForm } from '@angular/forms';
+import {  UntypedFormControl, NgForm, FormGroup, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -34,6 +34,9 @@ export class CreateFilterComponent implements OnInit {
   componentName: string = "CREATE-FILTER";
 
   @ViewChild('form') form: NgForm;
+  @Output() createFilterCompleted = new EventEmitter<{ completed:boolean }>();
+  @Input() getTeamFilters = new EventEmitter();
+
 
   assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: Observable<string[]>;
@@ -133,15 +136,18 @@ export class CreateFilterComponent implements OnInit {
 
  submit(){
    this.enableLoader=true;
-   this.addFilter();
+   this.createFilter();
 }
 
-addFilter(){
+
+
+
+createFilter(){
   const orgDomain = this.backendService.getOrganizationDomain();
   const callable = this.functions.httpsCallable('filters/createFilter');
   callable({FilterName:this.filterName, Description:this.description, Difficulty: this.difficulty, Priority: this.priority, Status: this.status, SprintNumber: this.sprintNumber, OrgDomain: orgDomain, TeamName: this.teamName, Assignee: this.assigneeName.value}).subscribe({
     next:() => {
-      this.enableLoader = false;
+      this.enableLoader = true;
       this.assignee = ""
       this.project = ""
       this.priority = null
@@ -149,8 +155,9 @@ addFilter(){
       this.difficulty = null
       this.sprint = 0 
       this.description = ""
-      this.filterName = ""
+      this.filterName =""
       console.log("Added New Filter");
+      this.createFilterDone();
     },
     error: (error) => {
       console.error(error);
@@ -161,6 +168,12 @@ addFilter(){
     }
   })
 }
+
+createFilterDone(){
+  console.log(this.getTeamFilters);
+  this.createFilterCompleted.emit({ completed:true });
+}
+
 
   onProjectChange(){
     console.log("update teams");
