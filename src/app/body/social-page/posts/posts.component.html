@@ -64,7 +64,7 @@
                 <ng-container *ngIf="showAddComment">
                     <div class="row pb-2">
                         <div class="col-7">
-                            <input type="text" class="form-control" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" style="background-color: var(--input-field);" placeholder="Enter Comment">
+                            <input type="text" class="form-control" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
                         </div>
                         <div class="col-5">
                             <span  type="submit" class="btn material-icons" [disabled]="enableLoader" (click)="addComment(post.PostId)">
