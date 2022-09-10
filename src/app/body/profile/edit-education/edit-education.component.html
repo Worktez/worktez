@@ -17,7 +17,7 @@
                 <ng-container *ngIf="educationModalMode == 'add'">
                     <div class="row px-3 pb-0 pt-3">
                         <div class="col-md-10 col-10">
-                            <h2>Add Your Education</h2>
+                            <span>Add Your Education</span>
                         </div>
                         <div class="col-md-1 col-2 text-right ">
                             <span class="btn">
@@ -31,7 +31,7 @@
                 <ng-container *ngIf="educationModalMode == 'edit'">
                     <div class="row px-3 pb-0 pt-3">
                         <div class="col-md-10 col-10">
-                            <h2>Edit Education</h2>
+                            <span>Edit Education</span>
                         </div>
                         <div class="col-md-1 col-2 text-right ">
                             <span class="btn">
@@ -84,11 +84,13 @@
                         <div class="col-md-4"></div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2"></div>
+                        <div class="col-md-3"></div>
                         <div class="col-md-8">
-                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Education Updated Successfully !</div>
+                            <div class="row">
+                                <span>Education updated successfully!</span>
+                            </div>
                         </div>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>

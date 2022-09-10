@@ -16,7 +16,7 @@
     <div class="col">
         <div class="row">
             <div class="col-3">
-                <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
+                <img src="{{ organization.OrganizationLogoURL }}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="" id="orgImg" class="rounded-circle">
                 <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         edit

@@ -114,6 +114,7 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+
   checkSameUser(){
     if (this.authService.userAppSetting.Username == this.username){
       this.sameUser=true;
@@ -122,6 +123,7 @@ export class ProfileComponent implements OnInit {
       this.sameUser=false;
     }
   }
+
   editProfile() {
     this.editProfileEnabled = true;
   }
@@ -179,8 +181,9 @@ export class ProfileComponent implements OnInit {
     this.readUserProject(this.uid);
   }
   
-  editSkillsCompleted(data: { completed: boolean }) {
+  editSkillsCompleted(data: { completed: boolean, Skills: string }) {
     this.editSkillsEnabled = false;
+    this.skills.push(data.Skills); 
     this.readUser();
   }
    

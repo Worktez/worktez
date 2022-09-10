@@ -4,13 +4,17 @@
             <span>Projects</span>
         </div>
         <div class="col-2">
-            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">add</span>
+            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    add
+                </mat-icon> 
+            </span>
         </div>
     </div>
     <ng-container *ngIf="projects?.length == 0">
         <div class="row">
             <div class="col-12 mt-3">
-                <span>Add your Projects</span>
+                <span>Add your projects</span>
             </div>
         </div>
     </ng-container>
@@ -20,10 +24,22 @@
                 <span>{{ project.ProjectName }}</span>
             </div>
             <div class="col-2">
-                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" >edit</span>
+                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" >
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
+                        edit
+                    </mat-icon> 
+                </span>
             </div>
         </div>
-        <span class="text-muted">{{ project.Start }} - {{ project.End }}</span>
-        <span class="text-muted">{{ project.Description }}</span>
+        <div class="row text-muted">
+            <div class="col-7" id="projectDescription">
+                <span>{{ project.Description }}</span>
+            </div>
+            <div class="col-5">
+                <ul>
+                    <li>{{ project.Start }} - {{ project.End }}</li>
+                </ul>
+            </div>
+        </div>
     </ng-container>
 </div>
