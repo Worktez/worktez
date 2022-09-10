@@ -43,7 +43,11 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   sameUser: boolean = true;
   editProfilePicEnabled: boolean = false;
 
+<<<<<<< HEAD
   constructor(public startService: StartServiceService, public rbaService: RBAService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
+=======
+  constructor(public startService: StartServiceService, public rbaService: RBAService,public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
+>>>>>>> 89816797404fd17acf9da8ce6282cd5fd994a1d5
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();

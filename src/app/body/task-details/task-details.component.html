@@ -100,7 +100,7 @@
                                                 data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
                                         <div class="delete" *ngIf="startService.userReady && task.SprintNumber !== -2">
-                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                            <button *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="dropdown-item" type="button" data-toggle="modal"
                                             data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
                                         </div>
                                     </div>

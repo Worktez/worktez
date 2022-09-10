@@ -32,6 +32,7 @@ import { PopupHandlerService } from '../../services/popup-handler/popup-handler.
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { HttpServiceService } from 'src/app/services/http-service.service';
 import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -91,7 +92,8 @@ export class TaskDetailsComponent implements OnInit {
   remainingTimeHrs: number;
   remainingTimeMins: number
 
-  constructor (private httpService: HttpServiceService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+
+  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
