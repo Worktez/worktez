@@ -23,6 +23,9 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 const { createOrg } = require("./tark/createOrg");
 const { getOrgData } = require("./tark/getOrganizationData");
 const { updateProfilePic } = require("./tark/updateOrg");
+const { getMemberDetails } = require("./tark/getMember");
+const { getAllOrgMembers } = require("./tark/getAllOrgMembers");
+const { editRole } = require("./tark/changeMemberRole");
 
 /**
  * Description
@@ -55,6 +58,39 @@ fastify.post("/createOrg", (req, res) => {
  */
 fastify.post("/getOrgData", (req, res) => {
   getOrgData(req, res);
+});
+
+ /**
+ * Description
+ * @param {any} "/getMemberDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+  fastify.post("/getMemberDetails", (req, res) => {
+    getMemberDetails(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getMemberDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getAllOrgMembers", (req, res) => {
+  getAllOrgMembers(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/changeMemberRole"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/changeMemberRole", (req, res) => {
+  editRole(req, res);
 });
 
 /**

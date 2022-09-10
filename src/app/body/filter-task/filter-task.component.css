@@ -20,7 +20,8 @@
 select,
 input {
     background-color: var(--primary-bg);
-    color: var(--text);
+    color: #6c757d;
+    border: none;
 }
 
 #assigneeSuggestion,
@@ -39,6 +40,7 @@ input:focus {
     background-color: var(--primary-bg);
     color: var(--text);
     font-size: 12px;
+    border: none;
 }
 
 .dropdown-item {
@@ -53,7 +55,11 @@ input:focus {
 }
 
 #dropdownMenu {
+    /*background-color: var(--secondary-bg);*/
+    border-color: var(--primary-color);
+    background: var(--primary-bg);
     background-color: var(--secondary-bg);
+
 }
 
 .form-control {
@@ -64,4 +70,5 @@ input:focus {
     height: auto;
     max-height: 300px;
     overflow-y: auto;
-}
+    border: none;
+  }

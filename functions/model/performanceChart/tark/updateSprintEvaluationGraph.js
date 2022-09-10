@@ -21,45 +21,72 @@
  ***********************************************************/
 
 const { createSprintName } = require("../../application/lib");
-const { getAllSprints } = require("../../sprints/lib");
+const { getAllSprints, getSprint } = require("../../sprints/lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { updateChart, setOrganizationsChart, getOrganizationsChartDetails } = require("../lib");
 
-exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintRange) {
-        let fullSprintName;
-        let teamName;
-        let storyPointArray=[];
-        const inputJson = {};
-
-        const p = getTeamUseTeamId(orgDomain, teamId).then((team) => {
-            teamName = team.TeamName;
-            if (sprintRange["SprintRange1"]<=0) {
-                sprintRange["SprintRange1"] = 1;
-            }
-            const p = getAllSprints(orgDomain, teamName, sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((sprints) => {
-                sprints.forEach((sprintDoc) => {
-                    fullSprintName = createSprintName(sprintDoc.SprintNumber);
-                    storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
-                    inputJson[fullSprintName] = storyPointArray;
-                });
-
-                const p = getOrganizationsChartDetails(orgDomain, teamId, "SprintEvaluationGraph").then((data) => {
-                    if (data != undefined) {
-                        updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
-                    } else {
-                        setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
-                    }
-                    return null;
-                }).catch((err) => {
-                    console.log(err);
-                });
-                return Promise.resolve(p);
+exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintId) {
+    let storyPointArray = [];
+    const inputJson = {};
+    const p1 = getTeamUseTeamId(orgDomain, teamId).then((data)=>{
+        const teamName = data.TeamName;
+        console.log(orgDomain, teamId, sprintId);
+        const p = getSprint(orgDomain, teamName, sprintId).then((sprintDoc) => {
+            console.log(sprintDoc);
+            storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
+            inputJson[sprintId] = storyPointArray;
+            const promise = getOrganizationsChartDetails(orgDomain, teamName, "SprintEvaluationGraph").then((data) => {
+                if (data != undefined) {
+                    updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+                } else {
+                    setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+                }
+                return null;
             }).catch((err) => {
                 console.log(err);
             });
-            return Promise.resolve(p);
-        }).catch((error) => {
-            console.log(error);
+            return Promise.resolve(promise);
         });
         return Promise.resolve(p);
+    });
+    Promise.resolve(p1);
 };
+
+// exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintRange) {
+//         let fullSprintName;
+//         let teamName;
+//         let storyPointArray=[];
+//         const inputJson = {};
+
+//         const p = getTeamUseTeamId(orgDomain, teamId).then((team) => {
+//             teamName = team.TeamName;
+//             if (sprintRange["SprintRange1"]<=0) {
+//                 sprintRange["SprintRange1"] = 1;
+//             }
+//             const p = getAllSprints(orgDomain, teamName, sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((sprints) => {
+//                 sprints.forEach((sprintDoc) => {
+//                     fullSprintName = createSprintName(sprintDoc.SprintNumber);
+//                     storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
+//                     inputJson[fullSprintName] = storyPointArray;
+//                 });
+
+//                 const p = getOrganizationsChartDetails(orgDomain, teamId, "SprintEvaluationGraph").then((data) => {
+//                     if (data != undefined) {
+//                         updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+//                     } else {
+//                         setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+//                     }
+//                     return null;
+//                 }).catch((err) => {
+//                     console.log(err);
+//                 });
+//                 return Promise.resolve(p);
+//             }).catch((err) => {
+//                 console.log(err);
+//             });
+//             return Promise.resolve(p);
+//         }).catch((error) => {
+//             console.log(error);
+//         });
+//         return Promise.resolve(p);
+// };

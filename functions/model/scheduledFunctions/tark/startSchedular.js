@@ -50,11 +50,11 @@ exports.startSchedular = function() {
                   SprintRange1: currentSprintID - 4,
                   SprintRange2: currentSprintID,
                 };
-                if (sprintEvalChart) {
-                  updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
+                // if (sprintEvalChart) {
+                  // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
                 // } else if (type == "UserPerformanceChart") {
                 //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
-                } 
+                // } 
                 
                 if (performanceChart) {
                   updatePerformanceChartData(orgDomain, teamId, "Team", sprintRange);

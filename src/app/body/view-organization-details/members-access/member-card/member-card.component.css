@@ -1,0 +1,36 @@
+.dropdown-menu {
+    font-size: 12px;
+    /* border-color: var(--primary-color) ; */
+    color: var(--text);
+    background-color: var(--primary-bg);
+}
+.dropdown-item, .details{
+    color: var(--text);
+}
+
+.permissions {
+    font-size: 10px;
+}
+br{
+    padding: none;
+    margin: none;
+}
+
+.dropdown-item:hover{
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+
+.btn{
+    background-color: var(--primary-bg) ;
+    border-radius: 5px;
+    box-shadow: none;
+    color: var(--text);
+}
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
+    cursor: pointer;
+}
