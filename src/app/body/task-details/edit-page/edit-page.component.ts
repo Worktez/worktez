@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl, NgForm } from '@angular/forms';
+import { UntypedFormControl, NgForm } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { ValidationService } from '../../../services/validation/validation.service';
@@ -23,6 +23,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { map, Observable, startWith } from 'rxjs';
+import { Milestones } from 'src/app/Interface/MilestoneInterface';
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit-page.component.html',
@@ -30,10 +31,10 @@ import { map, Observable, startWith } from 'rxjs';
 })
 export class EditPageComponent implements OnInit {
 
-  assigneeName = new FormControl();
+  assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: string[];
 
-  reporterName = new FormControl();
+  reporterName = new UntypedFormControl();
   filteredOptionsReporter: string[];
 
   componentName: string = "EDIT-TASK";
@@ -57,6 +58,8 @@ export class EditPageComponent implements OnInit {
   sprintNumber: number
   currentSprintNumber: number
   backlogSprintNumber: number
+  estimatedTimeHrs: number
+  estimatedTimeMins: number
 
   constructor(private functions: AngularFireFunctions,  public applicationSetting: ApplicationSettingsService,private authService: AuthService,private router: Router, public validationService: ValidationService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
 
@@ -65,13 +68,18 @@ export class EditPageComponent implements OnInit {
     this.time = this.toolsService.time();
     this.readTeamMembers(this.task.TeamId);
     this.previousAssignee = this.task.Assignee;
-
     this.assigneeName.setValue(this.task.Assignee);
     this.reporterName.setValue(this.task.Reporter);
     this.editTask = this.task;
     this.previousSprintId = this.task.SprintNumber;
-    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type, this.task.Status, this.task.Title, this.task.Reporter];
-    
+    this.prevVal = [this.task.Description, this.task.Assignee, this.task.EstimatedTime, this.task.Priority, this.task.Difficulty, this.task.StoryPointNumber, this.task.Type, this.task.Status, this.task.Title, this.task.Reporter, this.task.MilestoneId];
+    [this.estimatedTimeHrs, this.estimatedTimeMins] = this.toolsService.changeToHourMinsTime(this.editTask.EstimatedTime);
+    if(this.estimatedTimeHrs == 0 && this.estimatedTimeMins != 0){
+      this.estimatedTimeHrs=undefined
+    }
+    else if(this.estimatedTimeMins == 0 && this.estimatedTimeHrs!= 0){
+      this.estimatedTimeMins=undefined
+    }
   }
   
   private _filter(value: string): string[] {
@@ -137,7 +145,21 @@ export class EditPageComponent implements OnInit {
   }
 
   async submit() {
+    if(this.estimatedTimeHrs == undefined && this.estimatedTimeMins != undefined){
+      this.estimatedTimeHrs=0
+      if(this.estimatedTimeMins<0){
+        this.estimatedTimeMins=0
+      }
+    }
+    else if(this.estimatedTimeMins == undefined && this.estimatedTimeHrs!= undefined){
+      this.estimatedTimeMins=0
+      if(this.estimatedTimeHrs<0){
+        this.estimatedTimeHrs=0
+      }
+    }
+    this.editTask.EstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "priority", value: this.editTask.Priority },
+    { label: "title", value: this.editTask.Title},
     { label: "estimatedTime", value: this.editTask.EstimatedTime },
     { label: "difficulty", value: this.editTask.Difficulty },
     { label: "description", value: this.editTask.Description },
@@ -185,8 +207,6 @@ export class EditPageComponent implements OnInit {
 
   async editPage() {
     this.enableLoader = true
-    
-
       const appKey = this.backendService.getOrganizationAppKey();
       if (!(this.task.Status === "Completed")) {
         const callable = this.functions.httpsCallable('tasks/editTask');

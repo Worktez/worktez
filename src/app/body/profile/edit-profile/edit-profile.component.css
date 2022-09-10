@@ -18,7 +18,7 @@
 
 .modal-footer {
     border-top: none !important;
-    padding: 1.1rem;
+    padding: 0.0rem;
     padding-bottom: 0 !important;
 }
 
@@ -26,9 +26,15 @@
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 6px; 
-    padding: 1.1rem;
+    padding: 0.75rem;
     justify-content: space-evenly;
     padding-top: 0 !important;
+}
+
+.modal-body {
+    padding-top: 0px !important;
+    padding:1rem;
+    
 }
 
 .close {
@@ -62,23 +68,39 @@
 #button:focus,
 #button:active,
 #button:hover {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+    }
+
+    
+.btn {
+    color: var(--text);
+}
+
+
+.btn:hover,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
 }
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
 }
 
 #SuccessIcon{
     color: var(--secondary-color);
     font-size: 48px;
 }
-
+#CheckIcon{
+    color: var(--secondary-color);
+    width:"24";
+    height:"24";
+}
 #check_availability{
     margin: 0;
   position: absolute;

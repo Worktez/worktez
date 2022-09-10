@@ -14,23 +14,24 @@
 <div class="card" style="width: 36rem;">
     <div class="card-header">
         <div class="row">
-            <div class="col-7">
+            <div class="col-7 d-flex justify-content-center">
                 <input type="text" class="form-control form-control-sm" [(ngModel)]="note.Title"
                     [ngModelOptions]="{standalone: true}" placeholder="Enter Note Title">
             </div>
-            <div class="col-3" id="create">
-                <a (click)="createTask()" data-toggle="modal" data-target="#createNewTask" title="Create a task with the given Title and Description">Create a Task</a>
-            </div>
-            <div class="col-1">
-                <mat-icon fontSet="material-icons" title="Add New Note" class="float-right" id="icon" (click)="addNote()">
-                    add_box
-                </mat-icon>
-            </div>
-
-            <div class="col-1">
-                <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
-                    close
-                </mat-icon>
+            <div class="col-5 d-flex justify-content-end">
+                <span class="btn">
+                    <a (click)="createTask()" data-toggle="modal" data-target="#createNewTask" title="Create a task with the given Title and Description">Create Task</a>
+                </span>
+                <span class="btn">
+                    <mat-icon fontSet="material-icons" title="Add New Note" class="float-right" id="icon" (click)="addAnotherNote()">
+                        add_box
+                    </mat-icon>
+                </span>
+                <span class="btn">
+                    <mat-icon fontSet="material-icons" id="icon" class="align-middle" (click)="close()">
+                        close
+                    </mat-icon>
+                </span>
             </div>
         </div>
     </div>
@@ -39,7 +40,7 @@
             [ngModelOptions]="{standalone: true}" placeholder="Write a note..."></textarea>
         <div class="row pt-4">
             <div class="col">
-                <button class="btn btn-success float-right" (click)="saveNote()">save</button>
+                <button class="btn saveButton float-right" (click)="saveNote()">save</button>
             </div>
         </div>
     </div>

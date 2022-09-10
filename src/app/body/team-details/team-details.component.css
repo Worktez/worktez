@@ -1,0 +1,69 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+
+h1, h2, h3, h1 {
+    color: var(--text);
+}
+
+hr {
+    border-bottom: 2px solid var(--scrollbar-color);
+}
+
+#DeleteModalLabel{
+    text-align: left;
+}
+
+.modal-dialog {
+    height: 100%;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    color: var(--primary-color);
+}
+
+.btn {
+    color: var(--text);
+}
+
+.etc {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
+
+.btn-danger{
+    color: #ffff;
+}
+
+.extra, .extra:hover {
+    background-color: transparent;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.teamLabels{
+    border-left: 2px solid var(--scrollbar-color); height: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    
+}

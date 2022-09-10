@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/-->
-    <div class="row p-4" *ngIf="startService.showTeams">
+    <div class="row board p-4" *ngIf="startService.showTeams">
         <div class="col-md-2 pb-2">
             <div class="vertical-menu">
                 <ng-container *ngFor="let item of startService.teams">
@@ -54,7 +54,7 @@
             <app-loader></app-loader>
         </ng-template>
     </div>
-    <div class="row px-4" *ngIf="startService.showTeams">
+    <div class="row px-4" *ngIf="startService.showTeams && startService.currentSprintNumber != 0">
         <ng-container *ngIf="showContent">
             <div class="col-md-6 col-12 pb-2">
                 <ng-container *ngIf="sprintNotExist == false">
@@ -62,7 +62,7 @@
                 </ng-container>
             </div>
             <div class="col-md-6 col-12 pb-2">
-                <ng-container *ngIf="sprintNotExist == false">
+                <ng-container *ngIf="sprintNotExist == false && isBacklog==false || isActive==true">
                     <app-sprint-burndown-chart [currentSprint]="startService.currentSprintNumber"  [teamId]="startService.selectedTeamId" [sprintStartDate]="SDate" [sprintEndDate]="EDate"></app-sprint-burndown-chart>
                 </ng-container>
             </div>

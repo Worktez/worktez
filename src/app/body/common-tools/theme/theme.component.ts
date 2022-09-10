@@ -24,10 +24,12 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 export class ThemeComponent implements OnInit {
   @Input('appTheme') appTheme: string
   @Input('uid') uid: string
+  @Input('showOnlyButton') showOnlyButton: boolean
   showloader: boolean = false;
   componentName:string ="THEME";
   enableDarkTheme: boolean
   presentThemeReady: boolean=false;
+  
   constructor(public themeService: ThemeService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
@@ -52,12 +54,12 @@ export class ThemeComponent implements OnInit {
 
   }
 
-  async updateTheme(appTheme: string) {
+  updateTheme(appTheme: string) {
     const callable = this.functions.httpsCallable('users/updateTheme');
     this.showloader = true;
     this.themeService.changeTheme(appTheme);
 
-    await callable({Uid: this.uid, AppTheme: appTheme }).subscribe({
+    callable({Uid: this.uid, AppTheme: appTheme }).subscribe({
       next: (data) => {
         console.log("Successful updated theme");
         this.showloader = false;

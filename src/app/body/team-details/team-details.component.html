@@ -11,20 +11,118 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<ng-container *ngIf="teamDataReady">
-  <div class="card">
-    <div class="card-header">
-      {{team.TeamName}}
-    </div>
-    <div class="card-body">
-      <button class="btn btn-primary" (click)="createDefaultLabels()">Add Default Label</button><br><br>
-      <div class="row">
-        <ng-container *ngFor="let item of team.Scope">
+
+<ng-container *ngIf="!showLoader">
+  <ng-container *ngIf="teamDataReady">
+    <div class="row" id="contentBox">
+      <div class="col-md-2 col-1"></div>
+      <div class="col">
+        <div class="row">
           <div class="col">
-            <app-label-card [scope]="item" [teamName]="team.TeamName"></app-label-card>
+            <h1>{{team.TeamName}}</h1>
+            <h3>{{ team.TeamDescription }}</h3>
+            <h3>Team Id: {{ team.TeamId }}</h3>
           </div>
-        </ng-container>
+          <div class="col">
+            <span class="btn ml-2">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal"
+                data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
+                edit
+              </mat-icon>
+            </span>
+            <span class="btn ml-2">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam" title="delete Team" type="button" data-toggle="modal" 
+              data-bs-toggle="tooltip">
+                delete
+              </mat-icon>
+            </span>
+          </div>
+          <div class="col text-right" (click)="close()">
+            <span class="btn">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                close
+              </mat-icon>
+            </span>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <div class="row">
+              <div class="col">
+                <h2>Team Members</h2>
+              </div>
+              <div class="col text-right">
+                <button class="btn etc" (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top"
+                data-toggle="modal" data-target="#memberModal" title="add-member">Add Member</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <ng-container *ngFor="let item of team.TeamMembers">
+                  <div class="row">
+                    <div class="col">
+                      <app-suggestion-bucket [email]="item" [showEmail]="false" (selectedEmail)="selectedAssignee($event)">
+                      </app-suggestion-bucket>
+                    </div>
+                    <div class="col-2 col-md-3">
+                      <span class="btn extra" (click)="removeMemberDB(item)">
+                        <mat-icon  font-set="material-icons" class="material-icons align-middle text-danger">close</mat-icon>
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 col-12 teamLabels">
+            <div class="row">
+              <div class="col">
+                <h2>Team Labels</h2>
+              </div>
+              <div class="col text-right">
+                <button class="btn etc float-right" (click)="createDefaultLabels()">Add Default Label</button>
+              </div>
+            </div>
+            <div class="row scopeLabels">
+              <ng-container *ngFor="let item of team.Scope">
+                <div class="col p-2">
+                  <app-label-card [scope]="item" [teamName]="team.TeamName"></app-label-card>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="col-md-2 col-1"></div>
     </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="showLoader">
+  <app-loader></app-loader>
+</ng-container>
+<div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h2 class="modal-title" id="DeleteModalLabel">Confirmation Message</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+      <div class="modal-body">
+          <div class="alert alert-danger" role="alert">Are you sure you want to delete this team?</div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click) = "deleteTeam()">Delete</button>
+      </div>
+      </div>
   </div>
+</div>
+<ng-container *ngIf="updateTeamEnabled">
+  <app-update-team (teamUpdated)="teamUpdated($event)" [teamToUpdate]="teamToUpdate"></app-update-team>
+</ng-container>
+<ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
+  <app-add-member [teamId]="teamId" [teamName]="team.TeamName" [teamMembers]="team.TeamMembers"
+    [teamManager]="team.TeamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="true"
+    (addedMember)="addedMember($event)"></app-add-member>
 </ng-container>

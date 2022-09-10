@@ -17,20 +17,22 @@
             <div class="modal-content p-2">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col">
-                            <h2 class="modal-title " id="createNewTaskTitle"><strong>Create New Task</strong></h2>
+                        <div class="col-md-10 col-10">
+                            <h2>Create New Task</h2>
                         </div>
-                        <div class="col">
-                            <button type="button" class="close" (click)="close()" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons">close</span>
-                            </button>
+                            <div class="col-md-2 col-2 text-right ">
+                                <span class="btn">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
                         </div>
-                    </div>
                     <div class="row p-2 align-item-center">
                         <div class="col">
                             {{ todayDate }}
                         </div>
-                        <div class="col d-flex justify-content-end">
+                        <div class="col d-flex justify-content-end" *ngIf="!showClose" >
                             <span id="Active" class="p-2 m-2" (click)="activeSprint()" *ngIf="sprintNumber!=currentSprintNumber">Active Sprint</span>
                             <span id="Backlog" class="p-2 m-2" (click)="showBacklog()" *ngIf="sprintNumber!=backlogSprintNumber">Backlog</span>
                         </div>
@@ -137,7 +139,14 @@
                             </div>
                             <div class="col-md-4 col-4 ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Est Time</span>
-                                <input type="number" class="form-control form-control-sm" [(ngModel)]="estimatedTime" [ngModelOptions]="{standalone: true}" placeholder="Enter Est Time">
+                                <div class="row">
+                                    <div class="col-6 pr-1">
+                                        <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="estimatedTimeHrs" [ngModelOptions]="{standalone: true}" placeholder="Hrs">
+                                    </div>
+                                    <div class="col-6 pl-1">
+                                        <input type="number" min="0" max="59" class="form-control form-control-sm" [(ngModel)]="estimatedTimeMins" [ngModelOptions]="{standalone: true}" placeholder="Mins">
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4 col-4 ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Difficulty</span>
@@ -149,11 +158,16 @@
                                 </select>
                             </div>
                         </div>
+                        <ng-container>
+                        <div *ngIf="selectedMilestoneId != ''">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone</span>
+                            <input type="text" disabled min="0" class="form-control form-control-sm" [(ngModel)]="selectedMilestoneId" [ngModelOptions]="{standalone: true}" placeholder="Milestone">
+                        </div>
+                    </ng-container>
 
                 
-                <div class="modal-footer mt-n1">
+                <div class="modal-footer mt-1">
                     <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
-                    
                 </div>
                 <app-loader *ngIf="enableLoader"></app-loader>
                     </form>
@@ -175,7 +189,7 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                            <button class="btn btn-success" type="button" id="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>

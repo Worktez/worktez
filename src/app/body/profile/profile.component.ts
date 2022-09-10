@@ -16,12 +16,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { ActivatedRoute } from '@angular/router';
-import { MyEducationData, MyExperienceData, MyProjectData, User } from 'src/app/Interface/UserInterface';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { MyEducationData, MyExperienceData, MyProjectData, User, UserAppSetting } from 'src/app/Interface/UserInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { FileData } from 'src/app/Interface/FileInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -42,7 +44,7 @@ export class ProfileComponent implements OnInit {
   educationModalMode: string
   educationModalData: MyEducationData
   workModalMode: string
-  workModalData: MyEducationData
+  workModalData: MyExperienceData
   projectModalMode: string
   projectModalData: MyProjectData
 
@@ -60,23 +62,29 @@ export class ProfileComponent implements OnInit {
   linkedInProfile: string;
   managerEmail: string;
   dateOfJoining: string;
-  skills: string;
+  skills: string[];
   website: string;
   username: string;
   
-  sameUser: boolean = true;
+  sameUser: boolean;
 
-  educations: MyEducationData;
-  experiences: MyExperienceData;
-  projects: MyProjectData;
+  imageUrl: string = "";
+  profilePicFile: FileData;
+  imageReady: boolean = false
+
+  educations: MyEducationData[];
+  experiences: MyExperienceData[];
+  projects: MyProjectData[];
 
   userData : User[]
 
-  constructor(public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private functions: AngularFireFunctions ) {4
-    this.route.paramMap.subscribe((params) => {
-      this.ngOnInit();
+  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if(event instanceof NavigationEnd){
+        this.ngOnInit();
+      }
     });
-   }
+  }
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
@@ -90,21 +98,30 @@ export class ProfileComponent implements OnInit {
       this.teamName = this.startService.teamName;
       this.managerEmail = this.startService.managerEmail;
       this.role = this.startService.role;
+      this.checkSameUser();
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.readUser();
-          this.organizationName = this.backendService.getOrganizationName();
           this.startService.applicationDataStateObservable.subscribe((data)=> {
+            this.organizationName = this.backendService.getOrganizationName();
             this.teamName = this.startService.teamName;
             this.managerEmail = this.startService.managerEmail;
             this.role = this.startService.role;
+            this.checkSameUser();
           });
         }
       });
     }
   }
-
+  checkSameUser(){
+    if (this.authService.userAppSetting.Username == this.username){
+      this.sameUser=true;
+    }
+    else{
+      this.sameUser=false;
+    }
+  }
   editProfile() {
     this.editProfileEnabled = true;
   }
@@ -113,20 +130,20 @@ export class ProfileComponent implements OnInit {
     this.editProfilePicEnabled = true;
   }
 
-  editEducation(mode: string, educationId: number) {
-    this.educationModalMode = mode;
-    if(educationId >= 0){
-      this.educationModalData = this.educations[educationId];
+  editEducation(data :{mode: string, educationId: number}) {
+    this.educationModalMode = data.mode;
+    if(data.educationId >= 0){
+      this.educationModalData = this.educations[data.educationId];
     } else {
       this.educationModalData = null;
     }
     this.editEducationEnabled = true;
   }
 
-  editProject(mode: string, projectId: number) {
-    this.projectModalMode = mode;
-    if(projectId >= 0){
-      this.projectModalData = this.projects[projectId];
+  editProject(data:{mode: string, projectId: number}) {
+    this.projectModalMode = data.mode;
+    if(data.projectId >= 0){
+      this.projectModalData = this.projects[data.projectId];
     } else {
       this.projectModalData = null
     }
@@ -137,9 +154,9 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = true;
   }
 
-  editWork(mode: string, workId: number) {
-    this.workModalMode = mode;
-    this.workModalData = this.experiences[workId];
+  editWork(data :{mode: string, workId: number}) {
+    this.workModalMode = data.mode;
+    this.workModalData = this.experiences[data.workId];
     this.editWorkEnabled = true;
   }
 
@@ -166,8 +183,9 @@ export class ProfileComponent implements OnInit {
     this.editSkillsEnabled = false;
     this.readUser();
   }
-  
-  editProfilePicCompleted(data: { completed: boolean }) {
+   
+  editProfilePicCompleted(data: { completed: boolean, photoUrl: string }) { 
+    this.authService.userAppSetting.photoURL = data.photoUrl;
     this.readUser();
   }
 
@@ -191,6 +209,7 @@ export class ProfileComponent implements OnInit {
       this.readUserEducation(this.uid);
       this.readUserExperience(this.uid);
       this.readUserProject(this.uid);
+      this.readUserProfilePic(this.uid);
 
       this.sameUser = true;
     }
@@ -203,26 +222,66 @@ export class ProfileComponent implements OnInit {
         this.aboutMe = data.AboutMe;
         this.photoURL = data.photoURL;
         this.phoneNumber = data.phoneNumber;
-        this.linkedInProfile = data.LinkedInProfile;
-        this.githubProfile = data.LinkedInProfile;
-        this.dateOfJoining = data.DateOfJoining;
-        this.skills = data.Skills;
-        this.website = data.Website;
+        // this.linkedInProfile = data.LinkedInProfile;
+        // this.githubProfile = data.LinkedInProfile;
+        // this.dateOfJoining = data.DateOfJoining;
+        // this.skills = data.Skills;
+        // this.website = data.Website;
         if (this.website.includes("https://") == false) {
           this.website = "https://" + this.website;
         }
         this.readUserEducation(this.uid);
         this.readUserExperience(this.uid);
         this.readUserProject(this.uid);
+        this.readUserProfilePic(this.uid);
 
         this.sameUser = false;
       }
       else{
-        this.username = this.authService.userAppSetting.Username;
-        this.readUser();
-      }
+        const callable = this.functions.httpsCallable("users/getUserByUsername");
+        callable({Username : this.username}).pipe(map(res => {
+          const data = res.userData as UserAppSetting;
+          return { ...data }
+      })).subscribe({
+        next: (data:UserAppSetting) => {
+          console.log(data);
+          this.displayName = data.displayName;
+          this.email = data.email;
+          this.uid = data.uid;
+          this.aboutMe = data.AboutMe;
+          this.photoURL = data.photoURL;
+          this.phoneNumber = data.phoneNumber;
+          this.linkedInProfile = data.LinkedInProfile;
+          this.githubProfile = data.LinkedInProfile;
+          this.dateOfJoining = data.DateOfJoining;
+          this.skills = data.Skills;
+          this.website = data.Website;
+          if (this.website.includes("https://") == false) {
+            this.website = "https://" + this.website;
+          }
+          this.readUserEducation(this.uid);
+          this.readUserExperience(this.uid);
+          this.readUserProject(this.uid);
+  
+          this.sameUser = false;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => console.info('Getting Task successful')
+      });
     }
-    
+  }
+}
+
+  readUserProfilePic(uid: string) {
+    this.authService.getUserProfilePic(uid).subscribe(fileData => {
+      if(fileData[fileData.length-1] != undefined) {
+        this.imageUrl = fileData[fileData.length-1].FileUrl;
+        this.profilePicFile = fileData[fileData.length-1];
+      }
+      this.imageReady = true
+    });
   }
 
   readUserEducation(uid: string) {

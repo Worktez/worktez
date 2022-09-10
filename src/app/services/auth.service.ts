@@ -17,10 +17,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MyEducationData, MyExperienceData, MyOrganizationData, MyProjectData, User, UserAppSetting } from "../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
-import { BackendService } from './backend/backend.service';
 import { ThemeService } from './theme/theme.service';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { FileData } from '../Interface/FileInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -40,16 +40,18 @@ export class AuthService {
   user: User;
   userAppSetting: UserAppSetting;
   public userName:string = "";
-  public landingToSocial: boolean = false;
+ 
+  educations: MyEducationData[];
+  public educationCollectionData: Observable<MyEducationData[]>
 
-  educations: MyEducationData;
-  public educationCollectionData: Observable<MyEducationData>
+  experiences: MyExperienceData[];
+  public experienceCollectionData: Observable<MyExperienceData[]>
 
-  experiences: MyExperienceData;
-  public experienceCollectionData: Observable<MyExperienceData>
+  projects: MyProjectData[];
+  public projectCollectionData: Observable<MyProjectData[]>
 
-  projects: MyProjectData;
-  public projectCollectionData: Observable<MyProjectData>
+  filesData: FileData[];
+  public filesCollectionData: Observable<FileData[]>
 
   constructor(private cookieService: CookieService, public afauth: AngularFireAuth, private functions: AngularFireFunctions, public themeService: ThemeService) { }
 
@@ -69,17 +71,16 @@ export class AuthService {
     await this.afauth.signInWithEmailAndPassword(email, password);
   }
 
-  async createUserData(user: User) {
+  createUserData(user: User) {
     const callable = this.functions.httpsCallable('users/createNewUser');
-      console.log("create new user from ui");
-      const result = await callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
-        next: (data) => {
-          console.log("Successful ");
-        },
-        error: (error) => {
-          console.error("Error", error);
-        },
-        complete: () => console.info('Successful ')
+    callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+      },
+      error: (error) => {
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successful ')
     });
 
   }
@@ -122,7 +123,7 @@ export class AuthService {
     }));
   }
 
-  getMyOrgCollectionDocs(uid, appKey) {
+  getMyOrgCollectionDocs(uid: string, appKey: string) {
     const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
      callable({Uid: uid, OrgAppKey: appKey}).pipe(
       map(actions => {
@@ -151,7 +152,7 @@ export class AuthService {
     const callable = this.functions.httpsCallable("users/getAllEducation");
     this.educationCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
-        this.educations = actions.data as MyEducationData;
+        this.educations = actions.data as MyEducationData[];
         return this.educations;
       }));
       return this.educationCollectionData;
@@ -161,7 +162,7 @@ export class AuthService {
     const callable = this.functions.httpsCallable("users/getAllExperience");
     this.experienceCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
-        this.experiences = actions.data as MyExperienceData;
+        this.experiences = actions.data as MyExperienceData[];
         return this.experiences;
       }));
       return this.experienceCollectionData;
@@ -171,10 +172,20 @@ export class AuthService {
     const callable = this.functions.httpsCallable("users/getAllProject");
     this.projectCollectionData = callable({Uid: uid }).pipe(
       map(actions => {
-        this.projects = actions.data as MyProjectData;
+        this.projects = actions.data as MyProjectData[];
         return this.projects;
       }));
       return this.projectCollectionData;
+  }
+
+  getUserProfilePic(uid: string) {
+    const callable = this.functions.httpsCallable("librarian/getFilesInUser");
+    this.filesCollectionData = callable({UID: uid }).pipe(
+      map(actions => {
+        this.filesData = actions.data as FileData[];
+        return this.filesData;
+      }));
+      return this.filesCollectionData;
   }
 
   getAppKey() {

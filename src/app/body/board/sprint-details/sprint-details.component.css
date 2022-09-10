@@ -17,12 +17,14 @@
     box-shadow: var(--box-shadow-bottom);
     border: none;
     height: 90%;
+    font-family: var(--font);
 }
 
 .card-header, .btn {
     color: var(--text);
     text-decoration: var(--text);
     background-color: var(--secondary-bg);
+    font-family: var(--font);
 }
 
 .buttons { 
@@ -32,16 +34,17 @@
 .dropdown-menu {
     border-color: var(--primary-color) ;
     color: var(--text);
+    font-size: 12px;
     background-color: var(--secondary-bg);
 }
 
 .dropdown-item {
+    font-size: 12px;
     color: var(--text);
 }
 
-.dropdown-item:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover); 
+.close {
+    color: var(--text);
 }
 
 .completedIcon {
@@ -51,16 +54,47 @@
 #statusHeading {
     display:inline-flex;
 }
-
+#filterButton{
+    color: white;
+    background-color: var(--primary-color);
+}
+#filterButton:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
+}
 #button{
     background-color: var(--button-hover-bg);
     color: var(--button-text);
 }
 
 #button:hover,
-#dropdownButton:hover {
+#dropdownButton:hover, .dropdown-item:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover); 
+}
+
+#changeBtn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#changeBtn:focus,
+#changeBtn:active,
+#changeBtn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover,
+#changeBtn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
 }
 
 #Progressgraph {
@@ -78,6 +112,10 @@
     color: var(--secondary-color);
 }
 
+#sprintStartDate {
+    color: var(--text);
+}
+
 #EndDate {
     color: var(--danger-color);
 }
@@ -85,4 +123,29 @@
 .box { 
     padding-left: 20%;
     padding-right: 20%;
+}
+input{
+    background-color: var(--primary-bg);
+    color: var(--text);
+    border: none;
+}
+input:focus{
+    background-color: var(--primary-bg);
+    color: var(--text);
+    box-shadow: none;
+    outline: 0 none;
+}
+
+.modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    justify-content: space-evenly;
 }

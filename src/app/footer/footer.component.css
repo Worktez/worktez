@@ -17,44 +17,62 @@
     width: 100%;
     background-color: var(--primary-bg);
     color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 span {
     cursor: pointer;
     color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 a {
-    color: white;
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 #page-footer {
-    background-color: #26272E !important;
+    background-color: #ffffff !important;
     padding-left: 50px;
     padding-right: 50px;
     width: 100%;
+    box-shadow: 4px 4px #464750;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .footer-headings{
-    font-weight: bold;
-    color: #545454 !important;
+    color: var(--button-text);
+    font-weight:500;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .company-text p, .company-text h3{
-    color: white !important;
+    color: var(--text) !important;
     max-width: 150px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .company-text p{
-    font-size: x-small;
     overflow-wrap: break-word;
     line-height: 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .company-text h3{
-    font-style: italic;
-    font-weight: bold;
-    font-size: large !important;
-    margin-bottom: 0px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+}
+
+.footer-copyright{
+    cursor: pointer;
+}
+
+li{
+    padding-bottom: 5px;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 @media only screen and (max-width: 600px) {
     span {
+        font-size: 11px;
+    }
+    a{
         font-size: 11px;
     }
 }

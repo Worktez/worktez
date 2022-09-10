@@ -38,7 +38,7 @@ export class EditProfileComponent implements OnInit {
   @Input('experience') experience: string
   @Input('projects') projects: string
   @Input('website') website: string
-  @Input('userName') userName: string
+  @Input('userName') oldUserName: string
   @Input('email') email: string
 
   @Output() editProfileCompleted = new EventEmitter<{ completed: boolean }>();
@@ -46,21 +46,22 @@ export class EditProfileComponent implements OnInit {
   enableLoader: boolean = false
   showClose: boolean = false
   public userAvailable: boolean = false;
-  oldUserName: string
-
+  userName: string
+  userNameIsSame: boolean = true;
+  
   constructor(private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,  public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.oldUserName = this.userName;
+    this.userName = this.oldUserName;
     this.email = this.authService.userAppSetting.email;
   }
 
-  async editProfile() {
+  editProfile() {
     if(this.userAvailable == true || this.oldUserName == this.userName) {
       this.enableLoader = true
       const callable = this.functions.httpsCallable('users/updateUser');
 
-        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).subscribe({
+        callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).subscribe({
           next: (data) => {
             console.log("Successful");
             this.showClose = true
@@ -88,23 +89,28 @@ export class EditProfileComponent implements OnInit {
 
   editProfileDone() {
     this.editProfileCompleted.emit({ completed: true });
-    window.location.reload()
   }
 
 
-  async checkAvailability() {
-    this.enableLoader = true;
+  async checkAvailabilityLive() {
+    if(this.userName!=this.oldUserName && this.userName!=""){
+      this.userNameIsSame = false
+    }
+    else{
+      this.userNameIsSame = true
+    }
     const callable = this.functions.httpsCallable('users/checkAvailableUsername');
       await callable({Username: this.userName }).subscribe({
         next: (result) => {
-          if(result == "User Already Available"){
-            this.userAvailable = false;
-            this.enableLoader = false;
+          if(result == "User Already Available"){   
+              this.userAvailable = false;
+
           } else {
             this.userAvailable = true;
             this.enableLoader = false;
           }
         },
+
         error: (error) => {
           console.log(error);
           this.errorHandlerService.showError = true;

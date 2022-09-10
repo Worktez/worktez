@@ -25,8 +25,9 @@ body {
     --primary-color: #5559D9;
     --secondary-color: #67CB45;
     --header-bg: #ffffff;
-    --text: #545454;
-    --button-text: #545454;
+    --text: #1B1F23;
+    --button-text: #1B1F23;
+    --header-text: #838CAB;
     --button-text-hover: #5559D9;
     --primary-bg: #F6F7F9;
     --secondary-bg: #FFFFFF;
@@ -34,8 +35,9 @@ body {
     --primary-border: 1px solid rgba(84, 84, 84, 0.17);
     --dropdown-hover: #DDDEF4;
     --hover: #5C60EC;
-    --box-shadow-top: 0px 0px 3px 0px #0C0F7112;
-    --box-shadow-bottom: 0px 0px 3px 0px #0C0F7112;
+    --box-shadow-top: 0px 0px 3px 0px #ebecefa5;
+    --box-shadow-bottom: 0px 0px 3px 0px #ebecefa5;
+    --box-shadow-color: #ebecefa5;
     --button-bg: none;
     --button-hover-bg: #fff;
     --progress-bg: #5C60EC;
@@ -46,12 +48,13 @@ body {
     --danger-color: #c62828;
     --button-bg: #4286f43f;
     --button-text2: #4285F4;
-    --table-header: #545454;
+    --table-header: #1B1F23;
     --scrollbar-color: rgba(84, 84, 84, 0.17);
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
-    --home-bg: #5C60EC;
-    --font: 'Poppins', sans-serif;
+    --home-bg: #5559D9;
+    --font: 'Plus Jakarta Sans', sans-serif;
+    /* font-family: 'Plus Jakarta Sans', sans-serif; */
 }
 
 .theme-dark {
@@ -60,6 +63,7 @@ body {
     --header-bg: #20282E;
     --text: #fff;
     --button-text: #D4D4D6;
+    --header-text: #838CAB;
     --button-text-hover: #5559D9;
     --primary-bg: #11171B;
     --secondary-bg: #20282E;
@@ -83,6 +87,6 @@ body {
     --scrollbar-color: rgba(255, 255, 255, 0.51);
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
-    --home-bg: #5C60EC;
-    --font: 'Poppins', sans-serif;
+    --home-bg: #5559D9;
+    --font: 'Plus Jakarta Sans', sans-serif;
 }

@@ -12,7 +12,9 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FileUpload } from 'src/app/Interface/FileInterface';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { FileData, FileUpload } from 'src/app/Interface/FileInterface';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 
 @Component({
@@ -26,81 +28,82 @@ export class EditProfilePicComponent implements OnInit {
   @Input('uid') uid: string;
   @Input('email') email: string;
   @Input('displayName') displayName: string;
+  @Input('imageUrl') imageUrl: string;
+  // @Input('profilePicPhoto') profilePicPhoto: FileData;
+
+  componentName: string = "Edit Profile Pic"
 
   choosePhoto: boolean = true
   enableLoader: boolean = false
   showClose: boolean = false
   enableCropper: boolean = false
 
-  selectedFile: FileList
-  imageUrl: string = ""
+  imageUrlTemp: string = "";
 
   percentage: number = 0
   basePath: string;
   private currentFileUpload: FileUpload;
   public fileName: string
 
-  @Output() editProfilePicCompleted = new EventEmitter<{ completed: boolean }>();
+  @Output() editProfilePicCompleted = new EventEmitter<{ completed: boolean, photoUrl: string}>();
 
-  constructor(public uploadService: FileUploadService) { }
+  constructor(public uploadService: FileUploadService, private functions: AngularFireFunctions, private errorHandlerService: ErrorHandlerService) {}
 
   ngOnInit(): void {
-    this.imageUrl = ""
     this.choosePhoto = true;
-    this.enableCropper = false;
+
+    if(this.imageUrl== "") {
+      this.enableCropper = false
+    } else {
+      this.enableCropper = true
+    }
+
+    this.imageUrlTemp = this.imageUrl;
+    console.log(this.imageUrlTemp);
 
     this.basePath = '/Users/' + this.uid + '/ProfilePic';
   }
 
-  detectImage(imageUpload) {
-    this.selectedFile = imageUpload.target.files;
-    const file = this.selectedFile.item(0);
-
-    var reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-
-      this.choosePhoto = false;
-      this.enableCropper = true;
-    }
-    reader.readAsDataURL(file)
-
-  }
-
-  cancel() {
-    this.imageUrl = ""
-    this.choosePhoto = true;
-    this.enableCropper = false;
-  }
-
-  cropPhotoCompleted(data: { completed: boolean }) {
+  cropPhotoCompleted(data: { completed: boolean, photoUrl: string, file: FileUpload }) {
     this.enableCropper = false;
     
-    const file = this.selectedFile.item(0);
-    
-    this.currentFileUpload = new FileUpload(file);
-    this.fileName = this.currentFileUpload.file.name;
-
-    this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "ProfilePic")
-    .subscribe(percentage => {
-      this.percentage = Math.round(percentage);
-    },
-    error => {
-      console.log(error);
+    this.imageUrlTemp = data.photoUrl;
+    this.currentFileUpload = data.file;
+    if(data.file != undefined) {
+      this.fileName = this.currentFileUpload.file.name;
+      this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "ProfilePic")
+      .subscribe(percentage => {
+        this.percentage = Math.round(percentage);
+      },
+      error => {
+        console.log(error);
+      });
     }
-    );
+    this.setProfilePic(data.photoUrl);
 
-    this.editProfilePicDone();
   }
+
+  setProfilePic(croppedImage) {
+    const callable = this.functions.httpsCallable('users/updateProfilePic');
+
+    callable({ Uid: this.uid, PhotoURL: croppedImage, DisplayName: this.displayName, Email: this.email }).subscribe({
+      next: (data) => {
+        console.log("Successful");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful updated image')
+    });
+
+  this.editProfilePicDone();
+}
 
   editProfilePicDone() {
     this.showClose = true;
-    this.editProfilePicCompleted.emit({ completed: true });
-  }
-
-  closeModal() {
-    this.choosePhoto = true;
-    this.showClose = false;
-    this.closeBtn.nativeElement.click();
+    this.choosePhoto = false;
+    this.editProfilePicCompleted.emit({ completed: true, photoUrl: this.imageUrlTemp});
   }
 }

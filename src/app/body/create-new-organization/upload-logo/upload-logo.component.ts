@@ -22,11 +22,13 @@ import { FileUploadService } from 'src/app/services/fileUploadService/file-uploa
 })
 export class UploadLogoComponent implements OnInit {
 
-  @Output() uploadedLogo = new EventEmitter<{ completed: boolean, logoFile: FileUpload }>();
+  @Output() uploadedLogo = new EventEmitter<{ completed: boolean, logoFile: FileUpload, photoUrl: string }>();
 
   private basePath: string;
   private selectedFile: FileList;
   private currentFileUpload: FileUpload;
+
+  imageUrl: string = "";
   percentage: number = 0;
   public fileName: string;
 
@@ -34,18 +36,23 @@ export class UploadLogoComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  detectFiles(event) {
-    this.selectedFile = event.target.files;
-    const file = this.selectedFile.item(0);
+  // detectFiles(event) {
+  //   this.selectedFile = event.target.files;
+  //   const file = this.selectedFile.item(0);
 
-    this.currentFileUpload = new FileUpload(file);
-    this.fileName = this.currentFileUpload.file.name;
-    this.uploadedLogo.emit({ completed: true, logoFile: this.currentFileUpload});
-  }
+  //   this.currentFileUpload = new FileUpload(file);
+  //   this.fileName = this.currentFileUpload.file.name;
+  //   this.uploadedLogo.emit({ completed: true, logoFile: this.currentFileUpload});
+  // }
 
-  changeFileStatus(data: {changeStatus: string, file: FileData} ) {
-    if(data.changeStatus == "delete") {
-      this.uploadService.deleteFile(data.file);
-    }
+  // changeFileStatus(data: {changeStatus: string, file: FileData} ) {
+  //   if(data.changeStatus == "delete") {
+  //     this.uploadService.deleteFile(data.file);
+  //   }
+  // }
+
+  cropPhotoCompleted(data: { completed: boolean, photoUrl: string, file: FileUpload }) {
+    this.currentFileUpload = data.file;
+    this.uploadedLogo.emit({ completed: data.completed, logoFile: this.currentFileUpload, photoUrl: data.photoUrl});
   }
 }

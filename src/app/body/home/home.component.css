@@ -12,17 +12,17 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #home {
-    background-color: var(--home-bg);
+    background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #headingLine {
-    background-color: var(--home-bg);
     width: 80%;
     height: 85%;
-    color: #ffffff;
-    font-size: 40px;
-    font-family: var(--font);
-    line-height: 100%;
+    color: #4E4E4E;
+    font-size: 35px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 3rem;
 }
 
 #conceptArt {
@@ -30,78 +30,131 @@
 }
 
 .demoButton {
-    background-color: #ffffff;
-    color: #767373;
-    display: block;
+    background-color: var(--primary-color);
+    color: #ffffff;
     border-radius:50px;
-	text-align:center;
+    text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     border: none !important;
 }
 
-#services {
+.videoButton {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-radius: 50px;
+    text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: none !important;
+}
+
+.boxShadow {
+    width: 10rem;
+    border-radius:20px;
+    text-align:center;
+    border: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    box-shadow: 0px 7px 6px 1px #ebecefa5;
+}
+
+#services,
+#features {
     background-color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .serviceButton {
-    background-color: var(--primary-color);
-    width: 120px;
-    color: #ffffff;
-    border-radius:5px;
-	text-align:center;
+    text-align:center;
     border: none !important;
-    font-size: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+}
+
+#gitText {
+    color: #E84D31;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#kanbanText {
+    color: #00867D;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#dashboardText {
+    color: #2979FF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#organizeText {
+    color: #6325AC;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#qnText {
+    color: #FFA000;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#ttText {
+    color: #4042E2;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#milestionesText {
+    color: #087F23;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#meetText {
+    color: #2962FF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .icons {
-    width: 100px;
-    height: 100px;
+    width: 5rem;
+    height: 5rem;
 }
 
-#features{
-    background-image: url(../../../assets/background.svg);
-    background-repeat: no-repeat;
-    background-color: #ffffff;
-}
-
-#featureHeading {
+.featureHeading {
     font-size: 24px;
-    font-weight: bold;
-    padding-left: 2%;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #featureContent {
-    color: #373535;
-    font-style: italic;
-    width: 80%;
-    font-size: 20px;
-    line-height: 100%;
+    color: #767676;
+    font-size: 16px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.5rem;
 }
 
 #howItWorks {
-    background-color: var(--primary-color);
-    height: 300px;
+    background-color: #4006BA;
+    height: 100%;
 }
 
 #hiwContent {
     color: #ffffff;
+    font-size: 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-#testimonialBg {
+.getStarted {
     background-color: #ffffff;
+    color: #4006BA;
+    display: block;
+    border-radius:50px;
+    text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: none !important;
 }
 
 #testimonialHeading {
-    color: #2C2C2C;
-    font-size: 20px;
-    font-weight: 400;
-}
-
-#testimonialTag {
-    color: #2C2C2C;
+    color: #4006BA;
+    font-size: 28px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 #testimonial {
-    background-color: #11171B;
+    background-color: #ffffff;
 }
 
 #mover {
@@ -109,14 +162,27 @@
 }
 
 .showCase {
-    background-color: #11171B;
-    display: flex;
-    overflow-x: hidden;
+    background-color: transparent;
+    overflow-x: scroll;
     overflow-y: hidden;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
-    padding-left: 10%;
-    padding-top: 2%;
+}
+
+.showCase::-webkit-scrollbar {        
+    display: none;  
+}
+
+.arrow {
+    font-size: 34px;
+    cursor: pointer;
+    color: #4006BA;
+}
+
+.arrow:hover {
+    font-size: 40px;
+    font-weight: bolder;
+    color: var(--primary-color);
 }
 
 @media only screen and (max-width: 600px) {
@@ -129,13 +195,17 @@
         display: none;
     }
 
+    .boxShadow {
+        width: 8rem;
+    }
+
     .icons {
         width: 50px;
         height: 50px;
     }
 
-    #serviceButton {
-        width: 80px;
+    .serviceButton {
+        font-size: 10px;
     }
 
     .art {
@@ -148,5 +218,13 @@
 
     #featureContent {
         width: 100%;
+    }
+
+    .arrow {
+        font-size: 20px;
+    }
+
+    .arrow:hover {
+        font-size: 24px;
     }
 }

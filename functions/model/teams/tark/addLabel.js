@@ -30,6 +30,7 @@ exports.addLabel = function(request, response) {
   const scope = request.body.data.Scope;
   const orgDomain = request.body.data.OrgDomain;
   const teamName = request.body.data.TeamName;
+  const inputJson = {};
 
   let result;
   let status = 200;
@@ -37,16 +38,37 @@ exports.addLabel = function(request, response) {
   const promise = getTeam(orgDomain, teamName).then((team)=>{
     if (team) {
       let labelCounter=team.LabelCounters;
+
       labelCounter++;
       const id = "L"+ labelCounter;
-      const inputJson={
-        LabelCounters: labelCounter,
-      };
+      inputJson["LabelCounters"] = labelCounter;
+
+      if (scope == "Priority") {
+        const priority = team.Priority;
+        console.log(team.Priority);
+        priority.push(displayName);
+        inputJson["Priority"] = priority;
+      } else if (scope == "Difficulty") {
+        const difficulty = team.Difficulty;
+        difficulty.push(displayName);
+        inputJson["Difficulty"] = difficulty;
+      } else if (scope == "Status") {
+        const status = team.Status;
+        status.push(displayName);
+        inputJson["Status"] = status;
+      } else if (scope == "Type") {
+        const type = team.Type;
+        type.push(displayName);
+        inputJson["Type"] = type;
+      } else if (scope == "MilestoneStatus") {
+        const milestoneStatus = team.MilestoneStatus;
+        milestoneStatus.push(displayName);
+        inputJson["MilestoneStatus"] = milestoneStatus;
+      }
+
+
       updateTeamDetails(inputJson, orgDomain, teamName);
-
-
-      setLabelProperties(orgDomain, teamName, id, displayName, scope, iconName,
-          colorCode);
+      setLabelProperties(orgDomain, teamName, id, displayName, scope, iconName, colorCode);
     } else {
       console.log("Team does not exist");
       status=500;

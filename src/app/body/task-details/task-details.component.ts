@@ -75,21 +75,28 @@ export class TaskDetailsComponent implements OnInit {
 
   gotTaskData: boolean=false;
   showLoader: boolean=false;
-  
 
   activityData: Activity[]
   linkData: Link[]
   prLinked: boolean = false;
   prApiLink: string;
+  totalEstimatedTime: number;
+  estimatedTimeHrs: number;
+  estimatedTimeMins: number;
+  totalLoggedTime: number;
+  loggedTimeHrs: number;
+  loggedTimeMins: number;
+  totalRemainingTime: number;
+  remainingTimeHrs: number;
+  remainingTimeMins: number
 
-
-  constructor (private httpService: HttpServiceService, public startService: StartServiceService, private applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor (private httpService: HttpServiceService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
     this.creationDate = this.toolsService.date();
     this.time = this.toolsService.time();
-
+        
     this.Id = this.route.snapshot.params[ 'taskId' ];
     this.url = window.location.href;
 
@@ -152,6 +159,7 @@ export class TaskDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.task = data;
+        this.getTimeDetails();
         this.checkPrLinked()
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
@@ -176,7 +184,24 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
+  
+  getTimeDetails(){
+    this.totalEstimatedTime=this.task.EstimatedTime;
+    [this.estimatedTimeHrs, this.estimatedTimeMins ]= this.toolsService.changeToHourMinsTime(this.totalEstimatedTime);
+
+    this.totalLoggedTime= this.task.LogWorkTotalTime;
+    [this.loggedTimeHrs, this.loggedTimeMins] = this.toolsService.changeToHourMinsTime(this.totalLoggedTime)
+
+    this.totalRemainingTime= this.totalEstimatedTime - this.task.LogWorkTotalTime;
+    [this.remainingTimeHrs, this.remainingTimeMins] = this.toolsService.changeToHourMinsTime(this.totalRemainingTime)
+    
+    if(this.remainingTimeHrs==0 && this.remainingTimeMins==0){
+      this.totalRemainingTime=0
+    }
+  }
+
   getActivityData () {
+    this.activityDataReady = false;
     const callable = this.functions.httpsCallable("activity/getActivity");
      callable({OrgDomain: this.orgDomain, TaskId: this.Id, ActionType: this.actionType }).pipe(
       map(actions => {
@@ -220,6 +245,24 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
+  removeLink(linkId, linkType){
+    const callable = this.functions.httpsCallable('linker/removeLink');
+    callable({ OrgDomain: this.orgDomain, TaskId: this.Id, LinkType: linkType, LinkId:linkId  }).subscribe({
+      next: (data) => {
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.error(error);
+      },
+      complete: () => {
+        this.getLinkData()
+        this.getTaskDetail()
+        console.info('Successfully created Link')
+      }});
+    }
+
   async addComment() {
     this.activityDataReady = true
 
@@ -230,11 +273,10 @@ export class TaskDetailsComponent implements OnInit {
       const callable = this.functions.httpsCallable('tasks/comment');
       const appKey = this.backendService.getOrganizationAppKey();
 
-      await callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
+      callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
           this.getActivityData();
           this.comment = "";
-          return;
         },
         error: (error) => {
           this.errorHandlerService.showError = true;
@@ -282,7 +324,9 @@ export class TaskDetailsComponent implements OnInit {
     this.logWorkEnabled = false;
   }
 
-  editTaskCompleted ( data: { completed: boolean } ) {
+  editTaskCompleted ( data: { completed: boolean, task:Tasks } ) {
+    console.log(data);
+    this.getTaskPageData();
     this.editTaskEnabled = false;
   }
 
@@ -297,6 +341,7 @@ export class TaskDetailsComponent implements OnInit {
     this.prApiLink=data.prApiLink;
     this.getPrDetails();
     this.getLinkData();
+    this.getTaskDetail();
 
   }
 
@@ -305,7 +350,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+    callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: 0, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
       next: (data) => {
         this.getTaskPageData();
         this.showLoader = false;
@@ -351,10 +396,9 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  async addWatcher() {
-    
+  addWatcher() {
     const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
-    await callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
+    callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
       next: (data) => {
         console.log("Successful");
         
@@ -367,11 +411,13 @@ export class TaskDetailsComponent implements OnInit {
         console.log( "Error", error );
       },
       complete: () => console.info('Successful')
-  });
+    });
   }
 
   linkPr() {
+    this.popupHandlerService.addPrActive = true;
     this.gitPrEnabled = true;
+    // this.showLoader = true;
   }
 
   

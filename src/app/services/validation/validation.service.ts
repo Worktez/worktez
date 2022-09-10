@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Injectable } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({
@@ -41,6 +41,9 @@ export class ValidationService {
             case 'difficulty': {
                 return (this.checkDifficulty(value));
             }
+            case 'milestoneStatus': {
+                return (this.checkMilestoneStatus(value));
+            }
             case 'description': {
                 return (this.checkDescription(value));
             }
@@ -54,7 +57,7 @@ export class ValidationService {
                 return (this.checkAssignee(value));
             }
             case 'reporter': {
-                return (this.checkAssignee(value));
+                return (this.checkReporter(value));
             }
             case 'creationDate': {
                 return (this.checkCreationDate(value));
@@ -137,7 +140,12 @@ export class ValidationService {
             case 'url':{
                 return(this.checkURL(value));
             }
-
+            case 'startTime': {
+                return(this.checkStartTime(value));
+            }
+            case 'endTime' : {
+                return(this.checkEndTime(value));
+            }
 
         }
     }
@@ -163,7 +171,7 @@ export class ValidationService {
     }
 
     async checkTitle(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -174,7 +182,7 @@ export class ValidationService {
     }
 
     async checkStatus(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -185,7 +193,7 @@ export class ValidationService {
     }
 
     async checkPriority(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -196,7 +204,7 @@ export class ValidationService {
     }
 
     async checkEstimatedTime(value: number) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.pattern("^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$")]);
         if (control.errors === null)
             return (true);
         else {
@@ -207,7 +215,7 @@ export class ValidationService {
     }
 
     async checkDifficulty(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -217,8 +225,19 @@ export class ValidationService {
         }
     }
 
+    async checkMilestoneStatus(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_MILESTONESTATUS";
+            this.errorHandlerService.addError(errorType, "MilestoneStatus field is required")
+            return (false);
+        }
+    }
+
     async checkDescription(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -229,7 +248,7 @@ export class ValidationService {
     }
 
     async checkCreator(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -240,7 +259,7 @@ export class ValidationService {
     }
 
     async checkProject(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -251,20 +270,33 @@ export class ValidationService {
     }
 
     async checkAssignee(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const result = regularExpression.test(String(value).toLowerCase());
         if (control.errors === null && result == true)
             return (true);
         else {
             let errorType = this.componentName + "_VALIDATION_ASSIGNEE";
-            this.errorHandlerService.addError("VALIDATION_ASSIGNEE", "Assignee field is required")
+            this.errorHandlerService.addError(errorType, "Assignee field is required")
+            return (false);
+        }
+    }
+
+    async checkReporter(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const result = regularExpression.test(String(value).toLowerCase());
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_REPORTER";
+            this.errorHandlerService.addError(errorType, "Reporter field is required")
             return (false);
         }
     }
 
     async checkCreationDate(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -275,7 +307,7 @@ export class ValidationService {
     }
 
     async checkSprintNumber(value: number) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -286,7 +318,7 @@ export class ValidationService {
     }
 
     async checkStoryPoint(value: number) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -296,11 +328,43 @@ export class ValidationService {
         }
     }
 
-    async checkStartDate(value: String) {
-        const control = new FormControl(value, Validators.required);
-        if (control.errors === null)
+    async checkStartTime(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
             return (true);
         else {
+            console.log(this.componentName);
+            let errorType = this.componentName + "_VALIDATION_STARTTIME";
+            this.errorHandlerService.addError(errorType, "Start-Time field is required")
+            return (false);
+        }
+    }
+
+    async checkEndTime(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            console.log(this.componentName);
+            let errorType = this.componentName + "_VALIDATION_STARTTIME";
+            this.errorHandlerService.addError(errorType, "End-Time field is required")
+            return (false);
+        }
+    }
+
+    async checkStartDate(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            console.log(this.componentName);
+
             let errorType = this.componentName + "_VALIDATION_STARTDATE";
             this.errorHandlerService.addError(errorType, "Start-Date field is required")
             return (false);
@@ -308,8 +372,10 @@ export class ValidationService {
     }
 
     async checkEndDate(value: String) {
-        const control = new FormControl(value, Validators.required);
-        if (control.errors === null)
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+        const result = regularExpression.test(String(value));
+        if (control.errors === null && result == true)
             return (true);
         else {
             let errorType = this.componentName + "_VALIDATION_ENDDATE";
@@ -319,7 +385,7 @@ export class ValidationService {
     }
 
     async checkLogHours(value: number) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.pattern("^(0*[1-9][0-9]*([\.\,][0-9]+)?|0+[\.\,][0-9]*[1-9][0-9]*)$")]);
         if (control.errors === null)
             return (true);
         else {
@@ -330,7 +396,7 @@ export class ValidationService {
     }
 
     async checkWorkCompleted(value: number) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -341,7 +407,7 @@ export class ValidationService {
     }
 
     async checkComment(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -376,7 +442,7 @@ export class ValidationService {
         return (true)
     }
     async checkUserEmail(value: String) {
-        const control = new FormControl(value, [Validators.required, Validators.email]);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.email]);
         if (control.errors === null)
             return (true);
         else {
@@ -386,7 +452,7 @@ export class ValidationService {
         }
     }
     async checkUserName(value: String) {
-        const control = new FormControl(value, [Validators.required, Validators.minLength(3)]);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.minLength(3)]);
         if (control.errors === null)
             return (true);
         else {
@@ -396,7 +462,7 @@ export class ValidationService {
         }
     }
     async checkUserPassword(value: string) {
-        const control = new FormControl(value, [Validators.required, Validators.minLength(6)]);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.minLength(6)]);
         if (control.errors === null)
             return (true);
         else {
@@ -406,7 +472,7 @@ export class ValidationService {
         }
     }
     async checkOrgName(value: string) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -416,7 +482,7 @@ export class ValidationService {
         }
     }
     async checkOrgDomain(value: string) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -426,7 +492,7 @@ export class ValidationService {
         }
     }
     async checkOrgEmail(value: string) {
-        const control = new FormControl(value, [Validators.required, Validators.email]);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.email]);
         if (control.errors === null)
             return (true);
         else {
@@ -436,7 +502,7 @@ export class ValidationService {
         }
     }
     async checkOrgLogo(value: string) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -446,7 +512,7 @@ export class ValidationService {
         }
     }
     async checkTeamName(value: string) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -456,7 +522,7 @@ export class ValidationService {
         }
     }
     async checkTeamId(value: string) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -466,7 +532,7 @@ export class ValidationService {
         }
     }
     async checkTeamDescription(value: string) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -476,7 +542,7 @@ export class ValidationService {
         }
     }
     async checkTeamManagerEmail(value: string) {
-        const control = new FormControl(value, [Validators.required, Validators.email]);
+        const control = new UntypedFormControl(value, [Validators.required, Validators.email]);
         if (control.errors === null)
             return (true);
         else {
@@ -488,7 +554,7 @@ export class ValidationService {
     }
 
     async checkinstituteName(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -499,7 +565,7 @@ export class ValidationService {
     }
 
     async checkdegree(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -510,7 +576,7 @@ export class ValidationService {
     }
      
     async checkprojectName(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -521,7 +587,7 @@ export class ValidationService {
     }
 
     async checkdescription(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -532,7 +598,7 @@ export class ValidationService {
     }
 
     async checkskill(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -543,7 +609,7 @@ export class ValidationService {
     }
 
     async checkposition(value: String) {
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
             return (true);
         else {
@@ -568,7 +634,7 @@ export class ValidationService {
             return (false);
         }
         value.map((member, index) => {
-            const control = new FormControl(member, [Validators.required, Validators.email]);
+            const control = new UntypedFormControl(member, [Validators.required, Validators.email]);
             if (control.errors === null)
                 hasNoError = true
             else {
@@ -580,7 +646,7 @@ export class ValidationService {
     }
 
     async checkURL(value: string[]){
-        const control = new FormControl(value, Validators.required);
+        const control = new UntypedFormControl(value, Validators.required);
         const regularExpression = /^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/;
         const result = regularExpression.test(String(value).toLowerCase());
         if (control.errors === null && result == true)

@@ -23,7 +23,8 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ToolsService } from '../../../services/tool/tools.service';
 import { map } from 'rxjs';
 import { defaultUser, User } from 'src/app/Interface/UserInterface';
-import { object } from 'firebase-functions/v1/storage';
+import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
+import { FileUpload } from 'src/app/Interface/FileInterface';
 
 
 @Component({
@@ -34,7 +35,6 @@ import { object } from 'firebase-functions/v1/storage';
 export class PostsComponent implements OnInit {
 
   showCommentList: boolean = false
-  public CommentObservable: Observable<Comment[]>
   showAddComment: boolean = false
   enableLoader: boolean;
   todayDate: string;
@@ -43,32 +43,46 @@ export class PostsComponent implements OnInit {
   content: string = ""
   reactionStatus : boolean = false;
   public comments: Comment[];
-  
-  @Input('post') post : Post;
-  @Output() addCommentCompleted = new EventEmitter<boolean>();
+  showColor : boolean = false
+  dataReady: boolean = false;
 
-  constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService) { }
+  
+  componentName:string ="POSTS"
+  public posts: Post[];
+  public recentPosts: Post[] = [];
+  showloader: boolean = false;
+  pageReady:boolean = false;
+
+  @Input('post') post : Post;
+  @Input('Image') Image: string;
+  images:[];
+  @Output() addCommentCompleted = new EventEmitter<boolean>();
+  constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService,  public uploadService: FileUploadService) { }
 
   ngOnInit(): void {
+    this.images = this.post.ImagesUrl;
     this.getCreatorDetails();
+    this.authService.userAppSettingObservable.subscribe((data)=>{
+      this.pageReady = true;
+      this.loadSocialPageData();      
+    });
   }
 
   showCommentBox(postId: string) {
     this.showCommentList = true;
-    this.showAddComment = true
+    this.showAddComment = !this.showAddComment
     this.getComments(postId);
   }
 
-  openAddComment(postId: string) {
+  addComment(postId: string) {
     const uid = this.authService.getLoggedInUser();
     const date = this.toolService.date();
     const time = this.toolService.time();
     this.enableLoader = true;
 
     if(this.content != "" ) {
-
       const callable = this.functions.httpsCallable("socialPage/addPostComment");
-      const res = callable({Uid: uid, Content: this.content, LastUpdatedDate: date, LastUpdatedTime: time, PostId: postId}).pipe(map(res=>{
+      callable({Uid: uid, Content: this.content, LastUpdatedDate: date, LastUpdatedTime: time, PostId: postId}).pipe(map(res=>{
         return res
       })).subscribe((data) => {
         this.enableLoader = false;
@@ -76,14 +90,15 @@ export class PostsComponent implements OnInit {
         this.content = "";
         this.getComments(postId);
       });
+    } else {
+      this.enableLoader = false;
     }
   }
-  
   close() {
     this.showAddComment = false;
   }
 
-  async onReact(postId: string) {
+  onReact(postId: string) {
     this.enableLoader = true;
     const uid = this.authService.getLoggedInUser();
 
@@ -92,7 +107,7 @@ export class PostsComponent implements OnInit {
       this.todayDate = this.toolService.date();
       this.time = this.toolService.time();
 
-      await callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).subscribe({
+      callable({PostId: postId, CreationDate: this.todayDate, CreationTime: this.time, Type: "Like", Uid: uid}).subscribe({
         next: (data) => {
         },
         error: (error) => {
@@ -102,24 +117,29 @@ export class PostsComponent implements OnInit {
         },
         complete: () => console.info('Successful')
     });
-     
   }
 
   getComments(postId: string) {
       const callable = this.functions.httpsCallable("socialPage/getComments");
-      const res = callable({PostId: postId}).pipe(map(res=>{
+      callable({PostId: postId}).pipe(map(res=>{
         const data = res.data as Comment[];
         return data
       })).subscribe((data) => {
         if (data) {
           this.enableLoader= true;
           this.comments = data;
+          this.comments.forEach(element => {
+            this.userService.checkAndAddToUsersUsingUid(element.Uid);
+          });
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
+            this.dataReady = true;
+          });
         }
         this.enableLoader = false;
       });
   }
 
-  getCreatorDetails(){
+  getCreatorDetails() {
     if(this.post.Uid=="defaultUser"){
       this.user = defaultUser;
     }else {
@@ -127,5 +147,77 @@ export class PostsComponent implements OnInit {
         return obj.uid == this.post.Uid
       })[0];
     }
+  }
+
+  toggleColor(){
+    this.showColor = !this.showColor;
+  }
+  
+  deletePost(postId: string) {
+    const uid = this.authService.getLoggedInUser();
+      const callable = this.functions.httpsCallable("socialPage/deletePost");
+      this.enableLoader = true
+        
+      callable({Uid: uid, PostId: postId}).subscribe({
+        next: (data) => {
+          this.loadSocialPageData();
+          console.log("Successfull");
+          this.enableLoader = false
+          this.post.PostStatus = -1;
+        },
+        
+        error: (error) => {
+          console.log("Error", error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => console.info('Successful deleted post in db')
+      });
+  }
+
+  loadSocialPageData() {
+    this.showloader = true;
+    const callable = this.functions.httpsCallable("socialPage/getAllPosts");
+    callable({}).pipe(map(res=>{
+      const data = res.data as Post[];
+      return data
+    })).subscribe({
+      next:(data)=>{
+        if(data) {
+          this.posts = data;
+          this.posts.forEach(element => {
+            this.userService.checkAndAddToUsersUsingUid(element.Uid);
+          });
+          this.userService.fetchUserDataUsingUID().subscribe(()=>{
+            this.dataReady = true;
+          });
+          this.loadRecentActivity();
+        }
+      },
+      error:(error)=>{
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete:()=>{
+        this.showloader = false;
+      }
+    });
+  }
+  
+  loadRecentActivity(){
+    const newarray = this.posts.filter((data)=>{
+      if(this.authService.userAppSetting != undefined && data.Uid == this.authService.userAppSetting.uid) {
+        return data;
+      }
+    });
+    if(newarray.length) {
+      this.recentPosts = newarray.reverse();
+      this.recentPosts.splice(3)
+    } else {
+      console.log("User Not Found Loading empty User")
+      return this.recentPosts[0]
     }
   }
+}

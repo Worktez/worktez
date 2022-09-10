@@ -1,15 +1,20 @@
-<div class="row my-3">
-  <img src="{{user.photoURL}}" onerror="this.src = '../../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle m-2" width="50" height="50">
-  <div class="card">
+<ng-container *ngIf="commentDataReady; else loader">
+  <div class="card mt-2">
     <div class="card-header">
       <div class="row">
-        <h3 class="ml-3">{{user.displayName}} <br>
-        <span style="font-size:0.8rem;padding-top:0.8rem;color:#616167">Web Developer at Random Company</span></h3>
-        <button class="btn ml-auto p-0" style="padding-left: 30px;margin-bottom: 35px;"><mat-icon fontSet="material-icons" class="align-middle">more_vert</mat-icon></button> 
+        <div class="col">
+          <app-suggestion-bucket [email]="user.email" [showEmail]="false"></app-suggestion-bucket>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <button class="btn ml-auto p-0" style="padding-left: 30px;margin-bottom: 35px;"><mat-icon fontSet="material-icons" class="align-middle">more_vert</mat-icon></button> 
+        </div>
       </div>
     </div>
     <div class="card-body pt-0">
-      <p>{{comment.Content}}</p>
+      {{comment.Content}}
     </div>
   </div>
-</div>
+</ng-container>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

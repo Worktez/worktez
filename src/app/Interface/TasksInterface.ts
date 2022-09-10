@@ -38,6 +38,7 @@ export interface Tasks {
   PrLink: string;
   PrApiLink: string;
   PrNumber: string;
+  MilestoneId:string;
 }
 
 export interface TasksId extends Tasks {id: string;}
@@ -47,4 +48,5 @@ export interface Link {
   LinkURL: string;
   OrganizationID: string;
   TaskID: string;
+  LinkStatus: string;
 }

@@ -41,7 +41,7 @@ export class DataTableService {
     return this.tasksDataObservable;
   }
 
-  readAllTaskData(teamId, currentSprintNumber, filterAssignee, filterPriority, filterDifficulty, filterStatus, filterProject) {
+  readAllTaskData(teamId: string, currentSprintNumber: number, filterAssignee: string, filterPriority: string, filterDifficulty: string, filterStatus: string, filterProject: string) {
     var orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("tasks/getAllTasks");
     this.tasksDataObservable = callable({OrgDomain: orgDomain, TeamId: teamId, SprintNumber: currentSprintNumber, FilterAssignee: filterAssignee, FilterPriority: filterPriority, FilterDifficulty: filterDifficulty, FilterStatus: filterStatus, FilterProject: filterProject }).pipe(

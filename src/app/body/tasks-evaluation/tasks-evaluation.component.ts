@@ -25,6 +25,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { Router } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tasks-evaluation',
@@ -50,7 +51,7 @@ export class TasksEvaluationComponent implements OnInit {
 
   nextSprintTasksToFetch: number;
 
-  constructor(public userService: UserServiceService, public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router) { }
+  constructor(public userService: UserServiceService, public startService: StartServiceService, public navbarHandlerService: NavbarHandlerService, private functions: AngularFireFunctions, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public authService: AuthService, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService, private router: Router, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -104,7 +105,10 @@ export class TasksEvaluationComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: (() => {
+          this.cookieService.set("userSelectedTeamId", teamId);
+          console.info('Successful updated Selected Team in db');
+        })
     });
   }
 
@@ -164,14 +168,14 @@ export class TasksEvaluationComponent implements OnInit {
   }
 
   editTask(task: Tasks, sprintNumber: number) {
-    this.showLoader = true;
+    this.showLoader = false;
     let result;
     if (sprintNumber == null) {
       sprintNumber = task.SprintNumber;
     }
     const appKey = this.backendService.getOrganizationAppKey();
     const callable = this.functions.httpsCallable('tasks/editTask');
-    return callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter}).subscribe({
+    return callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter, MilestoneId:task.MilestoneId }).subscribe({
       next: (data) => {
         result = data;
         if (result == "OK") {
@@ -180,6 +184,9 @@ export class TasksEvaluationComponent implements OnInit {
           task.SprintNumber = sprintNumber;
           this.showLoader = false;
           this.tasks = this.tasks.filter(arr => arr.length > 0);
+        }
+        if(task.MilestoneId == undefined) {
+          task.MilestoneId = "";
         }
       },
       error: (error) => {
@@ -192,7 +199,7 @@ export class TasksEvaluationComponent implements OnInit {
   } 
 
   onDrop(event: CdkDragDrop<Tasks[]>) {
-    this.showLoader = true;
+    this.showLoader = false;
     console.log(event.previousContainer === event.container);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

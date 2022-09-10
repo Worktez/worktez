@@ -24,6 +24,7 @@ const { addPostComment } = require("./tark/addPostComment");
 const { getPosts } = require("./tark/getPosts");
 const { addReaction } = require("./tark/addReaction");
 const { getComments } = require("./tark/getComments");
+const { deletePost } = require("./tark/deletePost");
 
 /**
  * Description
@@ -56,6 +57,17 @@ fastify.post("/addPostComment", (req, res) => {
  */
 fastify.post("/getAllPosts", (req, res) => {
     getPosts(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/deletePost"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/deletePost", (req, res) => {
+    deletePost(req, res);
 });
 
 /**

@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <button class="btn btn-success" id="quickNotesButton" (click)="showList()">
-    <mat-icon fontSet="material-icons" class="align-middle">
+    <mat-icon fontSet="material-icons-outlined" class="align-middle">
         notes
     </mat-icon>
     Quick Note
@@ -25,18 +25,20 @@
                     Notes
                 </div>
                 <div class="col ml-auto">
-                    <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
-                        close
-                    </mat-icon>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons" class="float-right" id="icon" (click)="close()">
+                            close
+                        </mat-icon>
+                    </span>
                 </div>
             </div>
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
-                <ng-container *ngIf="gotQuickNotes; else loader">
-                <div *ngIf="noNotes;" class="noNotes">No notes Added</div>
+                <ng-container *ngIf="!quickNotes.showloader; else loader">
+                <div *ngIf="quickNotes.noNotes;" class="noNotes">No notes Added</div>
 
-                    <ng-container *ngFor="let item of notes">
+                    <ng-container *ngFor="let item of quickNotes.notes">
                         <li class="list-group-item" id="note">
                             <div class="row">
                                 <div class="col-8" (click)="openNote(item)">
@@ -51,15 +53,15 @@
                         </li>
                     </ng-container>
                 </ng-container>
-                <ng-template #loader>
-                    <app-loader></app-loader>
-                </ng-template>
                 <li class="list-group-item ml-auto">
-                    <mat-icon fontSet="material-icons" class="align-middle" (click)="openAddNote()">
-                        add
-                    </mat-icon>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons" class="align-middle" (click)="openAddNote()">
+                            add
+                        </mat-icon>
+                    </span>
                 </li>
             </ul>
+            <app-loader *ngIf="enableLoader"></app-loader>
         </div>
     </div>
 </ng-container>

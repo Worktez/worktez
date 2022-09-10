@@ -1,0 +1,120 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+*    
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+/* #milestoneContainer {
+    background-color: var(--header-bg);
+} */
+.card {
+    box-shadow: var(--box-shadow-bottom);
+    background: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 10px;
+    height: 100%;
+    cursor: pointer;
+    border: none !important;
+}
+
+h3{
+    color:var(--text) !important;
+    font-weight: bold;
+}
+
+.modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px;
+    justify-content: space-evenly;
+}
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+
+.close {
+    color: var(--text);
+}
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
+}
+
+.heading{
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#StartDate {
+    color: var(--secondary-color);
+}
+
+#EndDate {
+    color: var(--danger-color);
+}
+
+#button {
+    color:var(--text);
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+
+.btn {
+    color: var(--button-text);
+    background-color: var(--secondary-bg);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.noMilstones{
+    color: var(--text);
+}
+
+.dropdown-item {
+    font-size: 12px;
+    color: var(--text);
+}
+
+.dropdown-item:hover{
+    color: var(--button-text-hover);
+    background-color: var(--dropdown-hover);
+}
+
+#dropdownUserCard {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+

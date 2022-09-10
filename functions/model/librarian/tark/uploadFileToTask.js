@@ -17,7 +17,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { setFileToTask} = require("../lib");
+const { setFileToTask } = require("../lib");
 const { getTask, updateTask } = require("../../tasks/lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { addActivity } = require("../../activity/tark/addActivity");

@@ -58,14 +58,13 @@ export class EditSkillsComponent implements OnInit {
     else
       console.log("Log-Work failed due to validation error");
   }
-  async submitaddedskill() {
+  submitaddedskill() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('users/updateSkill');
     
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).subscribe({
+      callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).subscribe({
         next: (data) => {
           console.log("Successful");
-          this.skill = "";
           this.showClose = true;
         },
         error: (error) => {

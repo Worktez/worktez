@@ -31,7 +31,7 @@ export class NavbarHandlerService {
     });
     componentName = componentName.trim();
 
-    if (this.navbarList.indexOf("Board") === -1) {
+    if (this.navbarList.indexOf("Board") === -1 && this.navbarList.indexOf("Milestones") === -1) {
       this.resetNavbar();
     }
     if (this.navbarList.length === 3) {

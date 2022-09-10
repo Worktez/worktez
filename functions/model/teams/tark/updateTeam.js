@@ -29,6 +29,7 @@ exports.updateTeam = function(request, response) {
     const statusLabels = request.body.data.StatusLabels;
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
+    const milestoneStatusLabels = request.body.data.MilestoneStatusLabels;
 
     const orgDomain = request.body.data.OrganizationDomain;
     const teamName = request.body.data.TeamName;
@@ -45,6 +46,7 @@ exports.updateTeam = function(request, response) {
                 StatusLabels: statusLabels,
                 PriorityLabels: priorityLabels,
                 DifficultyLabels: difficultyLabels,
+                MilestoneStatusLabels: milestoneStatusLabels,
             };
             updateTeamDetails(updateJson, orgDomain, teamName);
             result = { data: "Team Updated Successfully" };

@@ -61,9 +61,9 @@ export class TasksComponent implements OnInit {
 
     this.navbarHandler.addToNavbar(this.teamId);
 
-    if (this.currentSprintName == "S-1") {
+    if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
-    } else if (this.currentSprintName == "S-2") {
+    } else if (this.currentSprintName == "Deleted") {
       this.currentSprintNumber = -2;
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));

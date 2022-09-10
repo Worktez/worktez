@@ -46,6 +46,8 @@ const { addProject } = require("./tark/addProject");
 const { updateUserSkill } = require("./tark/updateSkills");
 const { updateProfilePic } = require("./tark/updateProfilePic");
 const { getUserByUid } = require("./tark/getUserByUid");
+const { getUserByUsername } = require("./tark/getUserByUsername");
+const { checkIfUserAlreadyAMember } = require("./tark/checkIfUserAlreadyAMember");
 
 
 /**
@@ -321,6 +323,28 @@ fastify.post("/updateSkill", (req, res) => {
  */
 fastify.post("/updateProfilePic", (req, res) => {
     updateProfilePic(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getUserByUsername"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getUserByUsername", (req, res) => {
+    getUserByUsername(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/checkIfUserAlreadyAMember"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/checkIfUserAlreadyAMember", (req, res) => {
+    checkIfUserAlreadyAMember(req, res);
 });
 
 /**

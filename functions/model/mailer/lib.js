@@ -9,7 +9,7 @@
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
- *author:sanjaykrishna1203@gmail.com
+ * Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,6 +18,7 @@
  ***********************************************************/
 const { sendMail } = require("../email/lib");
 const { getTask } = require("../tasks/lib");
+const { getUserUseEmail } = require("../users/lib");
 const { generateTemplate } = require("./tark/generateTemplate");
 
 /**
@@ -34,34 +35,41 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
     const promise = getTask(taskId, orgDomain).then((taskData) => {
         watchers = taskData.Watcher;
 
-        if (mailType == "Watcher_Task") {
-            valueArray.push(customParameter);// new Watcher email
-            valueArray.push(taskId);
-            generateTemplate(mailType, valueArray).then((data) => {
-                const message = data;
-                sendMail(customParameter, message[0], message[1]);
+        if (mailType == "Watcher_Task" || mailType == "Log_Task") {
+            getUserUseEmail(customParameter).then((userData)=>{
+                valueArray.recipientName = userData.displayName;
+                valueArray.watcher = customParameter;
+                valueArray.taskId = taskId;
+                valueArray.push(taskId);
+                generateTemplate(mailType, valueArray).then((data) => {
+                    const message = data;
+                    sendMail(customParameter, message[0], message[1]);
+                });
             });
         } else {
             watchers.forEach((element) => {
-                valueArray = [];
-                valueArray.push(customParameter);// commentor or Deletor or editor or logger name
-                valueArray.push(taskId);
-                valueArray.push(taskData.Assignee);// assignee email
-                let message = "";
-                if (element == watchers.Assignee) {
-                    valueArray.push(false);// is watcher
-                    generateTemplate(mailType, valueArray).then((data) => {
-                        message = data;
-                        sendMail(watchers.Assignee, message[0], message[1]);
-                    });
-                } else {
-                    valueArray.push(true);// is watcher
-                    valueArray.push(element);// watcher email
-                    generateTemplate(mailType, valueArray).then((data) => {
-                        message = data;
-                        sendMail(element, message[0], message[1]);
-                    });
-                }
+                getUserUseEmail(element).then((userData) => {
+                    valueArray = [];
+                    valueArray.doer = customParameter;
+                    valueArray.taskId = taskId;
+                    valueArray.AssigneeEmail = taskData.Assignee;
+                    if (userData) {
+                        valueArray.recipientName = userData.displayName;
+                    }
+                    let message = "";
+                    if (element == taskData.Assignee) {
+                        generateTemplate(mailType, valueArray).then((data) => {
+                            message = data;
+                            sendMail(element, message[0], message[1]);
+                        });
+                    } else {
+                        valueArray.watcher = element;
+                        generateTemplate(mailType, valueArray).then((data) => {
+                            message = data;
+                            sendMail(element, message[0], message[1]);
+                        });
+                    }
+                });
             });
         }
     }).catch((error) => {
@@ -80,13 +88,16 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
  * @param {any} displayName
  */
 exports.profileMailer = function(mailType, uid, email, displayName) {
-    const valueArray = [];
-    valueArray.push(uid);
-    valueArray.push(email);
-    valueArray.push(displayName);
-    generateTemplate(mailType, valueArray).then((data)=>{
-        const message = data;
-        sendMail(email, message[0], message[1]);
+    getUserUseEmail(email).then((userData)=>{
+        const valueArray = [];
+        valueArray.push(uid);
+        valueArray.push(email);
+        valueArray.push(displayName);
+        valueArray.push(userData.Username);
+        generateTemplate(mailType, valueArray).then((data) => {
+            const message = data;
+            sendMail(email, message[0], message[1]);
+        });
     });
 };
 
@@ -107,8 +118,27 @@ exports.verificationMailer = function(mailType, teamName, teamManagerEmail, user
     valueArray.push(userEmail);
     valueArray.push(organizationDomain);
     valueArray.push(teamId);
-    generateTemplate(mailType, valueArray).then((data)=>{
+    generateTemplate(mailType, valueArray).then((data) => {
         const message = data;
         sendMail(userEmail, message[0], message[1]);
+    });
+};
+/**
+ * Description
+ * @param {any} mailType
+ * @param {any} userName
+ * @param {any} userEmail
+ * @param {any} userContact
+ * @param {any} userOrg
+ */
+ exports.demoRequestMailer = function(mailType, userName, userEmail, userContact, userOrg) {
+    const valueArray = [];
+    valueArray.push(userName);
+    valueArray.push(userEmail);
+    valueArray.push(userContact);
+    valueArray.push(userOrg);
+    generateTemplate(mailType, valueArray).then((data) => {
+        const message = data;
+        sendMail("admin@worktez.com", message[0], message[1]);
     });
 };

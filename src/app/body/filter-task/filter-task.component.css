@@ -12,11 +12,19 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #button {
-    background-color: var(--secondary-color);
-    color: var(--button-text);
+    background-color: var(--primary-color);
+    color: white;
+
 }
 
 select,
+input {
+    background-color: var(--primary-bg);
+    color: #6c757d;
+    border: none;
+}
+
+#assigneeSuggestion,
 input {
     background-color: var(--primary-bg);
     color: var(--text);
@@ -31,11 +39,14 @@ input:focus {
 #dropdownMenuButton {
     background-color: var(--primary-bg);
     color: var(--text);
+    font-size: 12px;
+    border: none;
 }
 
 .dropdown-item {
     color: var(--button-text);
     cursor: pointer;
+    font-size: 12px;
 }
 
 .dropdown-item:hover {
@@ -44,5 +55,20 @@ input:focus {
 }
 
 #dropdownMenu {
+    /*background-color: var(--secondary-bg);*/
+    border-color: var(--primary-color);
+    background: var(--primary-bg);
     background-color: var(--secondary-bg);
+
 }
+
+.form-control {
+    display: inline-block;
+}
+
+.dropdown-menu{
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    border: none;
+  }

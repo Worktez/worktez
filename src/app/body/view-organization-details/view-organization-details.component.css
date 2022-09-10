@@ -12,7 +12,8 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #mOrgContainer {
-    background-color: var(--header-bg);
+    background-color: var(--primary-bg);
+    font-family: var(--font);
 }
 
 .card {
@@ -22,7 +23,6 @@
 
 .card-title {
     color: var(--text);
-    text-align: right;
 }
 
 .nav-link {
@@ -44,6 +44,19 @@
 .add-team {
     color: var(--text);
 }
+.create-team {
+    background-color: var(--input-field);
+    color: var(--text);
+    width: auto;
+    height: 37px;
+    font-size: 12px;
+    border-radius:5px;
+	text-align: left;
+    border: none !important;
+    box-shadow: none;
+    outline: 0 none;
+}
+
 
 .heading {
     color: var(--text);
@@ -58,5 +71,22 @@ hr {
 #orgImg {
     height: 122px;
     width: 122px;
-    border-radius: 50%;
+}
+
+span{
+    color: var(--text);
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.extra {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
 }

@@ -19,7 +19,7 @@
     <ng-container *ngIf="startService.teamIdExists">
         <ng-container *ngIf="startService.showTeamsData; else loader">
             <div class="row pt-2">
-                <div class="col col-md-5" *ngIf="startService.showTeamsData">
+                <div class="col col-md-5" *ngIf="startService.showTeamsData && startService.currentSprintNumber != 0">
                     <app-performance-chart [userEmail]="startService.userEmail" [uid]="startService.uid" [currentSprint]="startService.teamCurrentSprintNumber" [teamId]="startService.selectedTeamId"></app-performance-chart>
                 </div>
                 <div class="col col-md-7" *ngIf="startService.showTeamsData">
@@ -28,7 +28,7 @@
             </div>
         </ng-container>
     </ng-container>
-    <button class="btn btn-primary" (click)="runSchedular()">schedule</button>
+    <!-- <button class="btn btn-primary" (click)="runSchedular()">schedule</button> -->
 </div>
 <ng-template #loader>
     <app-loader></app-loader>

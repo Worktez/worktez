@@ -20,6 +20,7 @@ export class PopupHandlerService {
 
   createNewSprintEnabled: boolean = false
   createNewTaskEnabled: boolean = false
+  scheduleMeetEnabled: boolean = false
   createNewTeamEnabled: boolean = false
   addNewContributorEnabled: boolean = false
   parentTaskId: string = "default"
@@ -28,10 +29,15 @@ export class PopupHandlerService {
   quickNotesTitle: string = ""
   quickNotesDescription: string = ""
   addLabelEnabled: boolean = false
-  
+  milestoneId:string = ""
+  addMilestoneActive:boolean = true;
+  addPrActive:boolean = true;
+  addTaskActive:boolean = true;
+  requestDemoEnabled:boolean = false;
   constructor() { }
 
   resetPopUps() {
+    this.scheduleMeetEnabled = false
     this.createNewSprintEnabled = false
     this.createNewTaskEnabled = false
     this.addLabelEnabled=false
@@ -44,6 +50,7 @@ export class PopupHandlerService {
     this.parentTaskUrl = "default"
     this.quickNotesDescription = ""
     this.quickNotesTitle = ""
+    this.milestoneId = ""
   }
 
 }

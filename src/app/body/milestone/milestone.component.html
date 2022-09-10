@@ -1,0 +1,47 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+*    
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<ng-container *ngIf="milestoneDataReady; else loader">
+<div class="btn-group">
+  <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+  <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+      <ng-container *ngFor="let item of startService.teams">
+          <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+      </ng-container>
+  </div>
+<div class="d-flex justify-content-center m-2">
+  <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="acitivateAdd()">Add Milestone</button>
+</div>
+  
+</div>
+<div id="milestoneContainer" class="m-4">
+  <div *ngIf="milestoneData.length == 0">
+    <h3 class="text-center pt-5">No Milestones to Show!</h3>
+    <ng-template *ngIf="showLoader">
+      <app-loader></app-loader>
+    </ng-template>  
+  
+  </div>
+    <div class="row p-4" *ngIf="milestoneData.length > 0">
+      <ng-container *ngFor="let milestone of milestoneData">
+ <div class="col-md-4 p-3">
+
+       <app-milestone-card [milestone]="milestone"></app-milestone-card></div>
+      </ng-container>
+    </div>
+</div>
+<app-add-milestone *ngIf="addMilestoneActive" [teamIds]="teamIds" [teamId]="teamId" (getMilestones)="getMilestoneData()"></app-add-milestone>
+</ng-container>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>  

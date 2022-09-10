@@ -1,0 +1,71 @@
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author: Vivek Kumar <vvksindia@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+#button {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px;
+    justify-content: space-evenly;
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
+}

@@ -1,14 +1,41 @@
 .card {
-    background-color: #20282E;
-    color: #ffffff;
+    background-color: #ffffff;
     border: none;
+    width: 30rem;
+    height: 10rem;
+    border-radius: 15px;
+    box-shadow: 2px 6px 10px #ebecefa5;
+}
+
+.card-title {
+    font-size: 18px;
 }
 
 .card-text {
-    color: #ffffff;
+    font-size: 10px;
+}
+
+.photo {
+    width: 50px;
+    height: 50px;
 }
 
 .imageCheck {
     position: absolute;
-    top: -25px;
+    top: -15px;
+    left: 0px;
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 18rem;
+        height: 100%;
+    }
+    .card-title {
+        font-size: 12px;
+    }
+
+    .card-text {
+        font-size: 10px;
+    }
 }

@@ -21,6 +21,7 @@ import { FeatureCardComponent } from './feature-card/feature-card.component';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-board',
@@ -43,8 +44,10 @@ export class BoardComponent implements OnInit {
   EDate: any;
   SDate: any;
   currentSprintNumber: number;
+  isBacklog: boolean= false;
+  isActive:boolean= true;
 
-  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -53,15 +56,11 @@ export class BoardComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.readSprintData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.applicationSettingsService.teamData.subscribe((data) => {
             if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  this.readSprintData();
-                }
-              });
+              this.readSprintData();
             }
           });
         }
@@ -87,7 +86,10 @@ export class BoardComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: (() => {
+          this.cookieService.set("userSelectedTeamId", teamId);
+          console.info('Successful updated Selected Team in db');
+        })
     });
   }
 
@@ -102,15 +104,19 @@ export class BoardComponent implements OnInit {
         if (sprints) {
           this.sprintData = sprints;
           this.currentSprintNumber=this.sprintData.SprintNumber;
+          this.isBacklog=false;
           
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
           if(this.currentSprintNumber==-1){
       
             this.currentSprintName="Backlog";
+            this.isBacklog=true;
+            this.isActive=false;
           }
           else if(this.currentSprintNumber==-2){
             this.currentSprintName="Deleted";
           }
+         
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
           this.DaysUp = Math.abs((this.today - this.SDate)/(1000 * 60 * 60 * 24));
@@ -151,7 +157,7 @@ export class BoardComponent implements OnInit {
     if(filterSprintNumber==0){
       filterSprintNumber=-1;
     }
-    else if(filterSprintNumber<-2){
+    else if(filterSprintNumber==-2){
       filterSprintNumber=-2;
     }
     this.currentSprintNumber=filterSprintNumber;
@@ -160,9 +166,15 @@ export class BoardComponent implements OnInit {
     if(filterSprintNumber==-1){
       
       this.currentSprintName="Backlog";
+      this.isBacklog=true;
+      this.isActive=false;
     }
     else if(filterSprintNumber==-2){
       this.currentSprintName="Deleted";
+    }
+    else if(filterSprintNumber==0){
+      this.currentSprintName="Active";
+      this.isBacklog=false;
     }
     
     this.applicationSettingsService.editedSprintId = filterSprintNumber;

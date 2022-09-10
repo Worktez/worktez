@@ -12,23 +12,21 @@
 * See the MIT License for more details. 
 ***********************************************************/
 .card {
-    box-shadow: var(--box-shadow-bottom);
     background: var(--secondary-bg);
     color: var(--text);
-    border: 1px solid var(--scrollbar-color);
+    border: none;
     border-radius: 10px;
     height: 100%;
+    width: 27rem;
+    max-width: 27rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
 }
-.btn {
-    background-color: var(--primary-color);
-    width: 100%;
-    color: #ffffff;
-    border-radius:5px;
-	text-align:center;
-    border: none !important;
-    box-shadow: none;
-    outline: 0 none;
+
+.card:hover {
+    border: 1px solid var(--primary-color);
 }
+
 .team-pic {
     width: 37px;
     height: 37px;
@@ -37,13 +35,78 @@
 
 .add-member {
     background-color: var(--input-field);
-    font-size: 16px;
+    color: var(--text);
+    width: 100%;
+    height: 37px;
+    font-size: 12px;
+    border-radius:5px;
+	text-align: left;
+    border: none !important;
+    box-shadow: none;
+    outline: 0 none;
 }
 
-.add-member .material-icons {
-    font-size: 16px;
+#DeleteModalLabel{
+    text-align: left;
 }
 
-.add-member:hover {
-    cursor: pointer;
+.modal-dialog {
+    height: 100%;
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-content {
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    color: var(--primary-color);
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.extra {
+    background-color: var(--primary-color);
+    color: #1B1F23;
+}
+.extra:hover {
+    /* background-color: transparent; */
+    color: #1B1F23;
+}
+
+.extra2 {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
+
+.card-subtitle {
+    color: var(--text);
+}
+
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 23rem;
+        max-width: 23rem;
+    }   
+    .part {
+        padding: 1px 10px 1px 10px;
+    }
+    .heading {
+        font-size: 12px;
+        font-weight: normal;
+    }
+    .card-title{
+        font-size: 14px;
+    }
+    .add-member{
+        width: 90%;
+        margin: 5% 0% 5% 8%;
+    }
 }

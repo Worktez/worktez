@@ -22,9 +22,11 @@
                         </ng-container>
                             Update Team
                     </h2>
-                    <button type="button" class="close" (click)= "close()" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons">close</span>
-                    </button>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="close()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
                 </div>
                 <div class="modal-body container-fluid pt-0">
                     <form #form="ngForm">
@@ -49,13 +51,13 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-12 col">
-                                    <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="addMember()" style="height: 10rem;">
+                                    <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" style="height: 10rem;">
                                         <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
                                             <div class="row">
                                                 <ng-container *ngFor="let item of teamMembers">
                                                     <div class="col-md-5 member-email mx-2 mt-2 p-2">
                                                         {{item}}
-                                                        <span aria-hidden="true" class="material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMemberDB(item)">close</span>
+                                                        <!-- <span aria-hidden="true" class="material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMemberDB(item)">close</span> -->
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="!teamMembers.length">
@@ -143,6 +145,29 @@
                                 <div class="form-group form-check col-md-4 text-left">
                                     <input type="checkbox" class="form-check-input" id="Priority3" name="Priority" (change)="getLabels($event)" value="Low" checked />
                                     <label class="form-check-label" for="Priority3">Low</label>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-12 col">
+                                    <h5 class="modal-title">Setup Milestone Status labels*</h5>
+                                </div>
+                            </div>
+                            <div class="form-row justify-content-start pl-4">
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus1" name="MilestoneStatus" (change)="getLabels($event)" value="Ice Box" checked />
+                                    <label class="form-check-label" for="MilestoneStatus1">Ice Box</label>
+                                </div>
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus2" name="MilestoneStatus" (change)="getLabels($event)" value="Ready to start" checked />
+                                    <label class="form-check-label" for="MilestoneStatus2">Ready to start</label>
+                                </div>
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus3" name="MilestoneStatus" (change)="getLabels($event)" value="Under Progress" checked />
+                                    <label class="form-check-label" for="MilestoneStatus3">Under Progress</label>
+                                </div>
+                                <div class="form-group form-check col-md-4 text-left">
+                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus4" name="MilestoneStatus" (change)="getLabels($event)" value="Completed" checked />
+                                    <label class="form-check-label" for="MilestoneStatus4">Completed</label>
                                 </div>
                             </div>
                             <div class="row mt-4">

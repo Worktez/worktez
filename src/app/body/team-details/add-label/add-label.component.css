@@ -11,24 +11,15 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-.modal-header {
-    border-bottom: none !important;
-    padding: 1.1rem;
-}
 
 .modal-footer {
-    border-top: none !important;
-    padding: 1.1rem;
-    padding-bottom: 0 !important;
+    border-top: none;
 }
 
 .modal-content {
     background-color: var(--secondary-bg);
     color: var(--text);
-    border-radius: 6px;
-    padding: 1.1rem;
     justify-content: space-evenly;
-    padding-top: 0 !important;
 }
 
 .close {
@@ -43,10 +34,6 @@
     background-color: var(--input-field);
     color: var(--text);
     border: none;
-    padding: 7px;
-    border-radius: 6px;
-    opacity: 1;
-    margin: 5px !important;
 }
 
 #button {
@@ -66,7 +53,6 @@ select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
 }
 
 :host {

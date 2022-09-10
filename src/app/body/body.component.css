@@ -19,12 +19,51 @@
     cursor: default;
 } */
 
+#themeButton {
+    height: 50px;
+    width: 50px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: inline-block;
+    color: #ffffff !important;
+    text-align: center;
+    position: fixed;
+    bottom: 50px;
+    left: 10px;
+    border: none !important;
+}
+
+.switch {
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.btn {
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+.btn{
+    border-radius: 50px;
+}
+
 @media only screen and (max-width: 1920px) {
     .page {
         font-family: var(--font);
         padding-bottom: 5%;
-        max-height: 90vh;
+        max-height: auto;
         overflow-y:auto;
+        overflow-x: hidden;
         cursor: default;
     }
+}
+
+@media only screen and (max-width: 800px) {
+    #themeButton{
+        visibility: hidden;
+  }
 }

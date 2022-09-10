@@ -12,73 +12,93 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="modal fade" id="workModal" tabindex="-1" role="dialog" aria-labelledby="workModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content p-4">
-            <div class="modal-header p-4">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-3">
                 <ng-container *ngIf="workModalMode == 'add'">
-                    <h2 class="modal-title" id="exampleModalLabel">Add Your Work Experience</h2>
+                    <div class="row px-3 pb-0 pt-3">
+                        <div class="col-md-10 col-10">
+                            <h2>Add Your Work Experience</h2>
+                        </div>
+                        <div class="col-md-1 col-2 text-right ">
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editWorkDone()" title="Close">
+                                    close
+                                </mat-icon>
+                            </span>
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="workModalMode == 'edit'">
-                    <h2 class="modal-title" id="exampleModalLabel">Edit Work Expereience</h2>
+                    <div class="row px-3 pb-0 pt-3">
+                        <div class="col-md-10 col-10">
+                            <h2>Edit Work Expereience</h2>
+                        </div>
+                        <div class="col-md-1 col-2 text-right ">
+                            <span class="btn">
+                                <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editWorkDone()" title="Close">
+                                    close
+                                </mat-icon>
+                            </span>
+                        </div>
+                    </div>
                 </ng-container>
-                <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editWorkDone()" style="color: var(--secondary-color);">close</span>
-            </div>
             <div class="modal-body">
                 <form *ngIf="!enableLoader">
                     <div class="form-group mb-4">
-                        <!-- <label for="recipient-name" class="col-form-label">Display Name</label> -->
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Name</span>
                         <input type="text" [(ngModel)]="organizationName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Organization Name">
                     </div>
 
                     <div class="form-group my-4">
-                        <!-- <label for="recipient-name" class="col-form-label">Display Name</label> -->
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Position</span>
                         <input type="text" [(ngModel)]="position" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Position">
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col ml-auto">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
                             <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}" placeholder="Select The Start Date ">
                         </div>
                         <div class="col-md-6 col ml-auto">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
                             <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
                         </div>
                     </div>
 
-                    <div class="row px-4 py-4">
+                    <div class="row px-4 pt-2">
                         <ng-container *ngIf="workModalMode == 'add'">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="addWork()">Add Work Expereience</button>
+                            <button type="button" class="btn btn-lg btn-block pb-1" id="button" (click)="addWork()">Add Work Expereience</button>
                         </ng-container>
                         <ng-container *ngIf="workModalMode == 'edit'">
-                            <button type="button" class="ml-auto col-md-12 btn" (click)="updateWork()">Edit Work Expereience</button>
+                            <button type="button" class="btn btn-lg btn-block pb-1 " id="button"(click)="updateWork()">Edit Work Expereience</button>
                         </ng-container>
                     </div>
                 </form>
+                <app-loader *ngIf="enableLoader && !showClose"></app-loader> 
                 <ng-container *ngIf="showClose">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 mt-2">
                             <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
-                    <div class="row"></div>
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <div class="col">Work Experience Updated Successfully !</div>
+                        <div class="col-md-7">
+                            <div class="row"  style="font-size: medium;flex-wrap: wrap;">Work Experience Updated Successfully !</div>
                         </div>
-                        <div class="col-md-3"></div>
+                        <div class="col-md-2"></div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editWorkDone()">Close</button>
+                            <button class="btn btn-secondary" id="button" type="button" data-dismiss="modal" (click)="editWorkDone()">Close</button>
                         </div>
                         <div class="col-md-4"></div>
-                    </div>
+                    </div>                        
                 </ng-container>
             </div>
         </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader && !showClose"></app-loader> -->

@@ -15,21 +15,33 @@
   width: 100%;
   background-color: transparent;
   color: var(--text);
+  font-family: var(--font);
 }
 
-mat-paginator,
+mat-paginator {
+  background-color: var(--secondary-bg);
+  color: var(--text);
+}
+
+mat-paginator-page-size, mat-select-trigger{
+  background-color: var(--primary-bg);
+    /* color: var(--text); */
+}
 td {
   background-color: transparent;
   color: var(--text);
   border: transparent;
+  font-family: var(--font);
 }
 
 th {
   color: var(--button-text);
+  font-family: var(--font);
 }
 
 tr {
   cursor: pointer;
+  font-family: var(--font);
 }
 
 .mat-row:hover .mat-cell {

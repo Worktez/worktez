@@ -14,10 +14,10 @@
 <div class="row px-5 py-2">
     <div class="col">
         <div class="btn-group">
-            <button class="btn px-4 dropdown-toggle" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+            <button class="btn px-4 dropdown-toggle" type="button" id="teamDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
             <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
                 <ng-container *ngFor="let item of startService.teams">
-                    <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+                    <button class="dropdown-item" type="button" style="font-size: 11px" (click)="updateSelectedTeamId(item)">{{item}}</button>
                 </ng-container>
             </div>
         </div>

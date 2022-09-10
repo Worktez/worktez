@@ -1,0 +1,8 @@
+<div class="row p-2">
+    <ng-container *ngFor="let item of colorsToShow">
+        <div class="col p-1" (click)="selectedColor(item)">
+            <div class="iconsBox p-3 text-center" [style]="{'background-color': item}">
+            </div>
+        </div>
+    </ng-container>
+</div>

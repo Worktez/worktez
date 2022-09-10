@@ -25,6 +25,7 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { CookieService } from 'ngx-cookie-service';
 
 declare var jQuery:any;
 
@@ -49,13 +50,14 @@ export class CreateNewTeamComponent implements OnInit {
   teamManagerEmail: string;
   teamMembers: string[] = [];
   enableLoader: boolean = false;
+  teamChanged:boolean = false
 
-  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarService.resetNavbar();
     this.navbarService.addToNavbar(this.componentName);
-
+    this.teamAdmin = this.authService.getUserEmail(); 
     if(!this.startService.teamIdExists && this.startService.userAppSettingsReady) {
       this.loadData();
     } else {
@@ -75,12 +77,24 @@ export class CreateNewTeamComponent implements OnInit {
     }
   }
 
+  setTeamId(){
+    if(!this.teamChanged){
+    this.teamId = this.teamName.slice(0, 3);
+    }
+  }
+
+  setChange(){
+    this.teamChanged = true;
+}
+
+
   loadData() {
-    this.appKey = this.authService.getAppKey();
-    this.backendService.getOrgDetails(this.appKey);
-    this.organizationDomain = this.backendService.getOrganizationDomain();
-    this.teamAdmin = this.authService.getUserEmail();
-    this.uid = this.authService.getLoggedInUser();
+    this.appKey = this.cookieService.get('userSelectedOrgAppKey');
+    this.backendService.getOrgDetails(this.appKey).subscribe(()=>{
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+      this.teamAdmin = this.authService.getUserEmail();
+      this.uid = this.authService.getLoggedInUser();
+    });
   }
 
   handleIdInput() {
@@ -91,12 +105,16 @@ export class CreateNewTeamComponent implements OnInit {
   statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
   priorityLabels: string[] = ["High", "Medium", "Low"]
   difficultyLabels: string[] = ["High", "Medium", "Low"]
+  milestoneStatusLabels: string[] = ["Ice Box", "Completed", "Under Progress", "Ready to start"]
+
 
   async submit() {
-    this.teamName = this.teamName.trimRight();
-    this.teamName = this.teamName.trimLeft();
-    this.teamId = this.teamId.trimLeft();
-    this.teamId = this.teamId.trimRight();
+    if (this.teamName!=undefined || this.teamId!=undefined || this.teamManagerEmail!=undefined){
+      this.teamName = this.teamName.trimRight();
+      this.teamName = this.teamName.trimLeft();
+      this.teamId = this.teamId.trimLeft();
+      this.teamId = this.teamId.trimRight();
+    }
     this.teamMembers.push(this.teamManagerEmail);
     let data = [
       { label: "teamName", value: this.teamName },
@@ -119,12 +137,19 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   addMember() {
-    this.addMemberEnabled = true;
+    var condition = (this.validationService.checkTeamMemberEmails(this.teamMembers)).then(res => {
+      return res;
+    });
+    if (condition){
+      this.addMemberEnabled = true;
+    }
+    else(
+      console.log("error")
+    )
   }
 
   addedMember(data: { completed: boolean, memberEmail: string}) {
     if (data.memberEmail) {
-      this.teamMembers.push(data.memberEmail);
     }
     this.addMemberEnabled = false;
   }
@@ -145,9 +170,10 @@ export class CreateNewTeamComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription, TeamAdmin: this.teamAdmin, TeamManagerEmail: this.teamManagerEmail, TeamMembers: this.teamMembers, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels, Uid: this.uid, OrganizationAppKey: this.appKey }).subscribe({
       next: (data) => {
       this.enableLoader = false;
+      this.startService.startApplication();
       this.router.navigate(['TeamDetails',this.teamId]);
       console.log("Successful created new team");
       },
@@ -156,11 +182,14 @@ export class CreateNewTeamComponent implements OnInit {
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         console.error(error);
       },
-      complete: () => console.info('Successful ')
+      complete: () =>{ 
+        console.info('Successful ');
+        this.cookieService.set('userSelectedTeamId', this.teamId);
+    }
     });
   }
 
   close() {
-    this.router.navigate(['MyDashboard']);
+    this.router.navigate(['ViewOrganizationDetails']);
   }
 }

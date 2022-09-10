@@ -33,9 +33,10 @@ export interface Team {
     TeamManagerEmail: string;
     TeamMembers: string[];
     Type: string[];
-    StatusLabels: string[];
-    PriorityLabels: string[];
-    DifficultyLabels: string[];
+    Status: string[];
+    Priority: string[];
+    Difficulty: string[];
+    MilestoneStatus: string[];
     TotalTeamTasks: number;
     OrganizationId: string;
     CurrentSprintId: number;
@@ -52,4 +53,19 @@ export interface Label {
     Scope: string;
     Status: string;
     Id: string;
+}
+
+export interface FiterProp{
+    Difficulty:string;
+    Priority:string;
+    Status:string;
+    SprintNumber: number;
+    Assignee: string;
+}
+export interface CustomFilter {
+    FilterJson: FiterProp;
+    FilterName: string;
+    Description: string;
+    Id: string;
+    Status: string;
 }

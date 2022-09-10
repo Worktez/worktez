@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -29,6 +30,7 @@ const { getFilesInOrgDocument } = require("./tark/getFilesInOrgDocuments");
 const { uploadFileToContributorsDocuments } = require("./tark/uploadFileToContributorsDocuments");
 const { uploadProfilePicToUserDoc } = require("./tark/uploadUserProfilePic");
 const { deleteFilesInOrg } = require("./tark/deleteFilesInOrg");
+const { getFilesInUser } = require("./tark/getFilesInUser");
 
 /**
  * Description
@@ -127,6 +129,28 @@ fastify.post("/uploadLogoFile", (req, res) => {
  */
 fastify.post("/uploadUserProfilePic", (req, res) => {
     uploadProfilePicToUserDoc(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/uploadPostImages"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/uploadPostImages", (req, res) => {
+    uploadPostImagesDoc(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/uploadUserProfilePic"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getFilesInUser", (req, res) => {
+    getFilesInUser(req, res);
 });
 
 /**

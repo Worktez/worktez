@@ -1,0 +1,107 @@
+  <!-- /** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author: Vivek Kumar <vvksindia@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+  <div class="modal fade" id="exampleModalCenter" style="z-index: 1050" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLongTitle">
+            Add a Milestone
+          </h2>
+          <!-- <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <span type="button" class="btn" aria-label="Close" data-dismiss="modal" aria-hidden="true" >
+            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                close
+            </mat-icon>
+            <!-- <span class="material-icons">close</span> -->
+        </span>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="popupHandlerService.addMilestoneActive">
+              <div class="form-row my-2">
+                <div class="form-group col-md-6 col">
+                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
+                  <input type="text" [(ngModel)]="title" [ngModelOptions]="{ standalone: true }"
+                    class="form-control p-3" id="recipient-name" placeholder="Enter the title" required />
+                </div>
+                <div class="form-group col-md-6 col ml-auto">
+                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
+                  <select class="form-control form-control-sm" [(ngModel)]="teamId"
+                    [ngModelOptions]="{standalone: true}">
+                    <option [ngValue]="null" [disabled]="true">Select Team ID</option>
+                    <ng-container *ngFor='let id of teamIds'>
+                      <option>{{ id }}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row my-4">
+                <div class="form-group col-md-12 col">
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone Status</span>
+                    <select class="form-control form-control-sm" [(ngModel)]="milestoneStatus"
+                        [ngModelOptions]="{standalone: true}">
+                        <option [ngValue]="null" [disabled]="true">Milestone Status</option>
+                        <ng-container *ngFor='let label of applicationSetting.milestoneStatus'>
+                            <option>{{ label }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+              </div>
+              <div class="form-row mb-2">
+                <div class="form-group col-md-12 col">
+                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
+                  <textarea required type="text" [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"
+                    class="form-control p-3" id="recipient-name"
+                    placeholder="Enter the Description of the Milestone"></textarea>
+                </div>
+              </div>
+              <div class="form-row my-2">
+                <div class="form-group col-md-6 col">
+                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
+                  <input required class="form-control" type="text" onfocus="(this.type='date')"
+                    onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
+                    min="{{todayDate}}" placeholder="Select The Start Date ">
+                </div>
+                <div class="form-group col-md-6 col ml-auto">
+                  <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
+                  <input required class="form-control" type="text" onfocus="(this.type='date')"
+                    onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
+                    min="{{todayDate}}" placeholder="Select The End Date ">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="showLoader" aria-label="Close" (click)="validateMilestone()">Create New Milestone</button>
+              </div>
+          </form>
+          <div *ngIf="!popupHandlerService.addMilestoneActive">
+            <div class="row mx-5">
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">
+                    check_circle_outline
+                </mat-icon>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+            <h1 class="text-center">Successfully Added Milestone</h1>
+          </div>
+        </div>
+      </div>
+      <ng-template *ngIf="showLoader">
+        <app-loader></app-loader>
+      </ng-template>
+    </div>
+  </div>

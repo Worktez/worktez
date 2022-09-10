@@ -28,7 +28,7 @@ export interface UserAppSetting extends User {
     GithubProfile: string;
     LinkedInProfile: string;
     DateOfJoining: string;
-    Skills: string;
+    Skills: string[];
     Education: string;
     Experience: string;
     Projects: string;
@@ -37,6 +37,15 @@ export interface UserAppSetting extends User {
     UserPostsCounter: number;
     UserReactionCounter: number;
     UserCommentCounter: number;
+}
+
+export interface UserBasicSetting extends User{
+    uid: string;
+    Username: string;
+    displayName: string;
+    email: string;
+    photoURL: string;
+    AboutMe: string
 }
 
 export interface MyOrganizationData {
@@ -102,3 +111,5 @@ export interface QuickNote {
     Status: string;
     Title: string;
 }
+
+ 

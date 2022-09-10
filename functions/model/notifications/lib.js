@@ -137,7 +137,7 @@ exports.emptyActiveNotification = function(uid, orgDomain) {
                 ActiveNotifications: activeNotifications,
             };
             updateMyOrgCollection(inputJson, uid, orgDomain);
-            return;
+            return null;
         }
     }).catch((err) => {
         console.error(err);

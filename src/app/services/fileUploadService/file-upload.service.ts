@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
@@ -30,7 +30,6 @@ export class FileUploadService {
   taskId: string = "";
 
   filesData: FileData[]
-
   constructor(private storage: AngularFireStorage, private functions: AngularFireFunctions, private backendService: BackendService, private authService: AuthService, private toolsService: ToolsService) { }
 
   pushFileToTaskStorage(fileUpload: FileUpload, basePath: string, folderName: string): Observable<number> {
@@ -45,7 +44,9 @@ export class FileUploadService {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload, basePath, folderName).then((data) => {
-            this.readFiles(this.backendService.getOrganizationDomain(), folderName);
+            if(this.backendService.getOrganizationDomain()) {
+              this.readFiles(this.backendService.getOrganizationDomain(), folderName);
+            }
           });
         });
       })
@@ -74,7 +75,7 @@ export class FileUploadService {
           
         },
         complete: () => console.info('Successful ')
-    });
+      });
 
     } else if (folderName == "ProfilePic") {
       const callable = this.functions.httpsCallable('librarian/uploadUserProfilePic');
@@ -86,6 +87,18 @@ export class FileUploadService {
          
         },
         complete: () => console.info('Successful')
+    });
+
+  } else if(folderName == 'postImages'  ) {
+    const callable = this.functions.httpsCallable('librarian/uploadPostImages');
+    await callable({ BasePath: basePath, FileName: fileName, FileUrl: fileUrl, LastModified: lastModified, Size: size, Uid: this.authService.user.uid, Date: todayDate, Time: time }).subscribe({
+      next: (data) => {
+        console.log("Successful ");
+      },
+      error: (error) => {
+
+      },
+      complete: () => console.info('Successful')
     });
     } else {
       const appKey = this.backendService.getOrganizationAppKey();
@@ -127,7 +140,7 @@ export class FileUploadService {
     this.fileUploadStatus = false;
   }
 
-  private async deleteFileFromDB(fileName, taskId, taskFileDocumentName) {
+  private async deleteFileFromDB(fileName: string, taskId: string, taskFileDocumentName: string) {
     const appKey = this.backendService.getOrganizationAppKey();
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
@@ -181,7 +194,6 @@ export class FileUploadService {
 
   readFiles(orgDomain: string, id: string) {
     if (id != "Logo") {
-
       if (id == "Documents") {
         const callable = this.functions.httpsCallable("librarian/getFilesInOrgDocument");
         callable({ OrgDomain: orgDomain }).pipe(
@@ -195,8 +207,7 @@ export class FileUploadService {
               console.error(error);
             },
             complete: () => console.log("Getting Organisation Files Data Complete")
-          }
-          );
+          });
       } else {
         const callable = this.functions.httpsCallable("librarian/getFilesInTask");
         callable({ OrgDomain: orgDomain, Id: id }).pipe(
@@ -210,8 +221,7 @@ export class FileUploadService {
               console.error(error);
             },
             complete: () => console.log("Getting Task Details Page Files Data Complete")
-          }
-          );
+          });
       }
     }
   }

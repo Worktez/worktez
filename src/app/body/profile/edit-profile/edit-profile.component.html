@@ -14,9 +14,17 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content ">
-            <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel"><strong>Edit Profile</strong> </h2>
-                <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editProfileDone()" style="color: #6f7580;">close</span>
+            <div class="row px-3 pb-0 pt-2">
+                <div class="col-md-10 col-10">
+                    <h2>Edit Profile</h2>
+                </div>
+                <div class="col-md-1 col-2 text-right ">
+                    <span class="btn">
+                        <mat-icon  data-dismiss="modal"  fontSet="material-icons-outlined" class="align-middle "(click)="editProfileDone()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
+                </div>
             </div>
             <div class="modal-body">
                 <form *ngIf="!enableLoader">
@@ -30,10 +38,8 @@
                         <div class="row">
                             <div class="col-6">
                                 <input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}"
-                                    class="form-control" id="recipient-name">
+                                    class="form-control" id="recipient-name" (input)="checkAvailabilityLive()">
                             </div>
-                            <div class="col-6 align-middle"><a class="btn btn-primary" id="check_availability" (click)="checkAvailability()" style="background-color: #5c60ec;">check
-                                availability</a></div>
                         </div>
                         <a *ngIf="userAvailable" >
                             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -49,6 +55,11 @@
                             </div>
                         </a>
                             
+                            <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(userName)"> Please enter a username </p>
+                            <p style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(userAvailable) && (userName)"> Username is Available</p>
+                            <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(userAvailable) && !(userNameIsSame)" >
+                                {{userName}} is already taken</p>
+
                     </div>
                     <div class="form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Phonenumber</span>
@@ -68,17 +79,18 @@
                         <input type="text" class="form-control" id="recipient-linkedIn" [(ngModel)]="linkedInProfile" [ngModelOptions]="{standalone: true}" placeholder="Enter LinkedIn Profile URL">
                     </div>
                     <div class="my-1 form-group">
-                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Username</span>
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Bio</span>
                         <textarea class="form-control" [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" id="message-text" placeholder="About Me"></textarea>
                     </div>
                     <!-- <div class="my-3 form-group"> -->
                         <!-- <label for="recipient-website" class="col-form-label">Website</label> -->
                         <!-- <input type="text" class="form-control" id="recipient-website" [(ngModel)]="website" [ngModelOptions]="{standalone: true}"> -->
                     <!-- </div> -->
-                    <div class="my-1 form-group text-center success">
+                    <div class="my-1 form-group text-center success pt-1">
                         <button type="submit" class="btn btn-lg btn-block" id="button" (click)="editProfile()">Save Changes</button>
                     </div>
                 </form>
+                <app-loader *ngIf="enableLoader && !showClose"></app-loader> 
                 <ng-container *ngIf="showClose">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
@@ -98,7 +110,7 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="editProfileDone()" style="margin-left: 10px;">Close</button>
+                            <button class="btn btn-secondary" type="button" id="button" data-dismiss="modal" (click)="editProfileDone()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -107,5 +119,3 @@
         </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader && !showClose"></app-loader> -->
-

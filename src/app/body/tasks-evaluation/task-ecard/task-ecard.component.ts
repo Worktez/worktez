@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { Tasks } from 'src/app/Interface/TasksInterface';
@@ -27,7 +27,7 @@ export class TaskECardComponent implements OnInit {
   todayDate: string;
   time: string;
 
-  assigneeName = new FormControl();
+  assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: Observable<string[]>;
 
   showLoader: boolean = false;
@@ -62,6 +62,10 @@ export class TaskECardComponent implements OnInit {
 
   openTaskDetails(id: string) {
     this.router.navigate(['/TaskDetails', id]);
+  }
+
+  clickOut(){
+    this.taskIdToEdit="";
   }
 
   editTask(task: Tasks, sprintNumber: number) {

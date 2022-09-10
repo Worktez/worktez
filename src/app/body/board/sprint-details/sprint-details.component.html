@@ -19,6 +19,7 @@
           aria-expanded="false">
           Menu&nbsp;&nbsp;
         </button>
+
         <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
           <button class="dropdown-item" type="button" (click)="ActiveSprint()">
             Active Sprint
@@ -35,6 +36,7 @@
         </div>
       </div>
     </div>
+
     <div class="d-flex col-6 justify-content-center">
       <div class="btn-group" *ngIf="sprintData.Status != 'Completed' && startService.currentSprintNumber > 0">
         <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
@@ -46,23 +48,20 @@
             (click)="changeSprintStatus('Under Progress')">
             Under Progress
           </button>
-          <button class="dropdown-item" type="button" (click)="changeSprintStatus('Completed')">
+          <button class="dropdown-item" type="button" (click)="setSprintToComplete()" data-toggle="modal"
+            data-target="#changeSprintStatus">
             Completed
           </button>
         </div>
       </div>
-      <div class="completionBtn" *ngIf="startService.currentSprintNumber == 0">
+
+      <div class="completionBtn" *ngIf="sprintData.SprintNumber === activeSprintNumber && sprintData.Status === 'Completed'">
         <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal"
           data-target="#createNewSprint">
-          Start New Sprint
+         Start New Sprint
         </button>
-      </div>
-      <div class="completionBtn" *ngIf="sprintData.Status === 'Completed'">
-        <button class="btn" type="button" id="button" (click)="startNewSprint()" data-toggle="modal"
-          data-target="#createNewSprint">
-          Start New Sprint
-        </button>
-      </div>
+    </div>
+
     </div>
     <div class="d-flex col-3 justify-content-center">
       <button class="btn box" type="button" id="button" (click)="showTasks()">
@@ -70,25 +69,10 @@
       </button>
     </div>
   </div>
+
   <div class="card">
     <div class="card-header">
-      <div class="dropdown float-right">
-        <button type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          class="btn material-icons">
-          filter_list
-        </button>
-        <div class="dropdown-menu dropdown-menu-right py-4 px-4" id="filterMenu" aria-labelledby="dropdownMenuButton">
-          <div class="input-group">
-            <h5>Sprint No.</h5>
-            <input class="form-control" style="font-size: 11px" type="number" id="filterSprintNumberInput"
-              [(ngModel)]="filterSprintNumber" />
-            <button id="dropdownButton" class="btn" style="font-size: 10px" (click)="changeSprintNumber()">
-              Filter
-            </button>
-          </div>
-        </div>
-      </div>
-      <nav class="navbar navbar-expand-lg p-0" id="navbarMenu">
+      <nav class="navbar navbar-expand-lg float-left p-0" id="navbarMenu">
         <ul class="nav mr-auto">
           <li class="nav-item">
             <h6 class="active nav-link navbar-text" id="head" style="font-size: 15px">
@@ -102,27 +86,55 @@
           </li>
         </ul>
       </nav>
+      <div class="dropdown dropdown-menu-right float-right max-width-auto">
+        <span class="btn" type="button" id="dropdownButton" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle">
+            filter_list
+          </mat-icon>
+        </span>
+        <div class="dropdown-menu dropdown-menu-right py-2 px-4 " id="filterMenu" aria-labelledby="dropdownMenuButton">
+          <div class="input-group">
+            <div class="row align-items-center">
+              <div class="col-5 px-0 pt-3">
+                <h5>Sprint No.</h5>
+              </div>
+              <div class="col-7 px-1">
+                <input class="form-control" style="font-size: 10px" type="number" id="filterSprintNumberInput"
+                [(ngModel)]="filterSprintNumber" />
+              </div>
+              <div class="col-12 text-right pt-1">
+                <button id="filterButton" class="btn " style="font-size: 10px" (click)="changeSprintNumber()">
+                  Filter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body px-4">
       <div class="row">
-        <div class="col-md-6 col">
-          <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 12px">
-            <span class="material-icons" style="font-size: 15px">date_range</span>Start Date:
-          </h6>
-          <h6 class="row card-text" id="sprintStartDate" style="font-size: 12px">
-            {{ sprintData.StartDate }}
-          </h6>
-        </div>
-        <div class="col-md-6 col">
-          <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 12px">
-            <span class="material-icons" style="font-size: 15px">date_range</span>End Date:
-          </h6>
-          <h6 class="row card-text" id="sprintEndDate" style="font-size: 12px">
-            {{ sprintData.EndDate }}
-          </h6>
+        <div class="col text-center">
+          <span type="button" class="btn ml-2 align-bottom" id="StartDate">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                date_range
+              </mat-icon>
+              Start Date: <span id="sprintStartDate">{{ sprintData.StartDate }}</span> 
+          </span>
         </div>
       </div>
-      <div class="row py-4">
+      <div class="row">
+        <div class="col text-center">
+          <span type="button" class="btn ml-2 align-bottom" id="EndDate">
+            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+              date_range
+            </mat-icon>
+            End Date: <span id="sprintStartDate">{{ sprintData.EndDate }}</span> 
+        </span>
+        </div>
+      </div>
+      <div class="row py-3">
         <div class="col-12">
           <ng-container *ngIf="sprintData.SprintNumber > 0">
             <div class="row" id="sprintStatus">
@@ -151,7 +163,7 @@
           </ng-container>
         </div>
       </div>
-      <div class="row py-2">
+      <div class="row pt-4">
         <div class="col-md-7 col">
           <h6 class="row card-title" style="font-weight: bold; font-size: 12px">
             <span class="material-icons" style="font-size: 18px">format_list_numbered</span>&nbsp;&nbsp;Total Tasks:
@@ -180,4 +192,43 @@
   <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
   </ng-container>
+</ng-container>
+<ng-container *ngIf="completedSprintEnabled" id="exampleModalCenterLabel">
+  <div class="modal fade" id="changeSprintStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalDelTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered p-0" role="document">
+      <div class="modal-content">
+        <nav class="modal-header navbar navbar-dark" id="navbarMenu">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+              <span class="btn">
+                <mat-icon class="close" data-dismiss="modal" aria-label="Close" fontSet="material-icons-outlined" class="align-middle " title="Close">
+                close
+                </mat-icon>
+            </span>
+            </li>
+          </ul>
+        </nav>
+        <div class="container modal-body" id="editPageTaskContainer">
+          <ng-container>
+            <div class="row">
+              <div class="col">You are about to change Sprint Status to completed! </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9"></div>
+              <div class="col-md-3 pb-2 px-4">
+                <button class="btn" type="button" id="changeBtn" data-dismiss="modal" aria-label="Close"
+                  (click)="changeSprintStatus('Completed');hideModel()">Confirm</button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>

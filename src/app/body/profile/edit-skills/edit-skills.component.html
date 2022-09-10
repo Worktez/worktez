@@ -12,11 +12,23 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="modal fade" id="skillsModal" tabindex="-1" role="dialog" aria-labelledby="skillsModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content p-4">
-            <div class="modal-header p-4">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- <div class="modal-header p-4">
                 <h2 class="modal-title" id="exampleModalLabel">Your Skills</h2>
                 <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editSkillCompleted()" style="color: var(--secondary-color);">close</span>
+            </div> -->
+            <div class="row px-3 pb-0 pt-3">
+                <div class="col-md-10 col-10">
+                    <h2>Your Skills</h2>
+                </div>
+                <div class="col-md-1 col-2 text-right ">
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editSkillCompleted()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
+                </div>
             </div>
             <div class="modal-body">
                 <form *ngIf="!enableLoader">
@@ -36,6 +48,7 @@
                         <button type="button" class="ml-auto col-md-12 btn" data-dismiss="modal" (click)="editSkillCompleted()">Save Changes</button>
                     </div> -->
                 </form>
+                <app-loader *ngIf="enableLoader && !showClose"></app-loader>
                 <ng-container *ngIf="showClose">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
@@ -54,7 +67,7 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="editSkillCompleted()" style="margin-left: 10px;">Close</button>
+                            <button class="btn" id="button" type="button" data-dismiss="modal" (click)="editSkillCompleted()" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -63,4 +76,3 @@
         </div>
     </div>
 </div>
-<app-loader *ngIf="enableLoader && !showClose"></app-loader> -->

@@ -11,6 +11,15 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
 #profileTheme {
     color: var(--text);
 }
@@ -29,12 +38,17 @@ h4 {
 }
 
 button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
+    background-color: var(--secondary-bg);
     color: var(--button-text);
+    width: 100%;
 }
 
-ul {
-    margin: 0;
-    padding: 0;
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 23rem;
+    }
+
+    button {
+        width: 23rem;
+    }
 }

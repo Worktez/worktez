@@ -22,14 +22,14 @@ export class SelectDropdownComponent implements OnInit {
 
   constructor() { }
   @Input('teamMembers') teamMembers: string[];
-  @Output() setteamMember = new EventEmitter<{ teamMember: string }>();
+  @Output() setTeamMember = new EventEmitter<{ teamMember: string }>();
   selectedOption: string = "Team";
 
   ngOnInit(): void {
   }
 
   setSelectedOption() {
-    this.setteamMember.emit({ teamMember: this.selectedOption });
+    this.setTeamMember.emit({ teamMember: this.selectedOption });
   }
 
 }

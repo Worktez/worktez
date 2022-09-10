@@ -22,7 +22,6 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule } from '@angular/common/http';
-
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
@@ -46,8 +45,6 @@ import { LoginHandlerComponent } from './header/login-handler/login-handler.comp
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
-import { PriorityIconsComponent } from './icons/priority-icons/priority-icons.component';
-import { StatusIconsComponent } from './icons/status-icons/status-icons.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
 import { ChartComponent } from './body/common-tools/chart/chart.component';
@@ -82,7 +79,6 @@ import { ActivityComponent } from './body/task-details/activity/activity.compone
 import { ViewOrganizationDetailsComponent } from './body/view-organization-details/view-organization-details.component';
 import { Patch4Component } from './patches/patch4/patch4.component';
 import { WarningComponent } from './body/common-tools/warning/warning.component';
-import { DifficultyIconsComponent } from './icons/difficulty-icons/difficulty-icons.component';
 import { TasksEvaluationComponent } from './body/tasks-evaluation/tasks-evaluation.component';
 import { ListPatchesComponent } from './list-patches/list-patches.component';
 import { PatchCardsComponent } from './list-patches/patch-cards/patch-cards.component';
@@ -155,6 +151,29 @@ import { OrgDpComponent } from './body/common-tools/org-dp/org-dp.component';
 import { KanbanCardComponent } from './body/kanban-board/kanban-card/kanban-card.component';
 import { TestimonialCardComponent } from './body/home/testimonial-card/testimonial-card.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MilestoneComponent } from './body/milestone/milestone.component';
+import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
+import { GenerateIconComponent } from './icons/generate-icon/generate-icon.component';
+import { GetIconComponent } from './icons/get-icon/get-icon.component';
+import { FilterPageComponent } from './body/filter-page/filter-page.component';
+import { EditFilterComponent } from './body/filter-page/edit-filter/edit-filter.component';
+import { CreateFilterComponent } from './body/filter-page/create-filter/create-filter.component';
+import { IconsBaseComponent } from './body/common-tools/icons-base/icons-base.component';
+import { ColorsBaseComponent } from './body/common-tools/colors-base/colors-base.component';
+
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milestone.component';
+import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
+import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
+import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
+import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.component';
+import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
+import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
+import { PricingComponent } from './body/pricing/pricing.component';
+import { EductionsComponent } from './body/profile/eductions/eductions.component';
+import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
+import { ProjectsComponent } from './body/profile/projects/projects.component';
+import { SkillsComponent } from './body/profile/skills/skills.component';
 
 @NgModule({
   declarations: [
@@ -176,8 +195,6 @@ import { CookieService } from 'ngx-cookie-service';
     LoginHandlerComponent,
     UserCardComponent,
     MyDashBoardComponent,
-    PriorityIconsComponent,
-    StatusIconsComponent,
     FilterTaskComponent,
     NavbarComponent,
     ChartComponent,
@@ -213,7 +230,6 @@ import { CookieService } from 'ngx-cookie-service';
     ViewOrganizationDetailsComponent,
     Patch4Component,
     WarningComponent,
-    DifficultyIconsComponent,
     TasksEvaluationComponent,
     ListPatchesComponent,
     PatchCardsComponent,
@@ -277,6 +293,27 @@ import { CookieService } from 'ngx-cookie-service';
     OrgDpComponent,
     KanbanCardComponent,
     TestimonialCardComponent,
+    MilestoneComponent,
+    MilestoneDetailsComponent,
+    GenerateIconComponent,
+    GetIconComponent,
+    FilterPageComponent,
+    EditFilterComponent,
+    CreateFilterComponent,
+    IconsBaseComponent,
+    ColorsBaseComponent,
+    AddMilestoneComponent,
+    MilestoneCardComponent,
+    AddTaskComponent,
+    RequestADemoComponent,
+    ScheduleMeetComponent,
+    NotificationCardComponent,
+    ShowMeetDetailsComponent,
+    PricingComponent,
+    EductionsComponent,
+    WorkEXPComponent,
+    ProjectsComponent,
+    SkillsComponent,
   ],
   imports: [
     BrowserModule,
@@ -297,7 +334,8 @@ import { CookieService } from 'ngx-cookie-service';
     MatSortModule,
     MatInputModule,
     MatFormFieldModule,
-    DragDropModule
+    DragDropModule,
+    ImageCropperModule
   ],
   providers: [
     AuthService,

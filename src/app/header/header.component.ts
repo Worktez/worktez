@@ -65,6 +65,14 @@ export class HeaderComponent implements OnInit {
     this.popupHandlerService.resetTaskIds();
   }
 
+  ScheduleMeet(){
+    this.popupHandlerService.scheduleMeetEnabled = true;
+  }
+
+  JoinMeet(){
+
+  }
+
   Board() {
     this.router.navigate(['/Board']);
   }
@@ -90,11 +98,18 @@ export class HeaderComponent implements OnInit {
   }
 
   socialPage() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/Social']);
+  }
+  
+  filterPage(){
+    this.router.navigate(['/FilterPage']);
   }
 
   kanbanBoard() {
     this.router.navigate(['/KanbanBoard']);
+  }
+  milestoneGraph(){
+    this.router.navigate(['/Milestones'])
   }
 
 }

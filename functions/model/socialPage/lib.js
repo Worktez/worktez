@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -27,13 +28,15 @@ const { db } = require("../application/lib");
  * @param {any} postId
  * @param {any} lastUpdatedDate
  * @param {any} lastUpdatedTime
+ * @param {any} photoURLs
  * @return {any}
  */
-exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) {
+exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime, photoURLs) {
     const addPostPromise = db.collection("Social").doc(postId).set({
         Uid: uid,
         Post: post,
         PostId: postId,
+        ImagesUrl: photoURLs,
         Reach: 0,
         Reactions: 0,
         // ReactionCounter: 0,
@@ -51,7 +54,7 @@ exports.setPost = function(uid, post, postId, lastUpdatedDate, lastUpdatedTime) 
  */
 exports.getAllPosts = function() {
     const query = db.collection("Social");
-    const getAllPosts = query.get();
+    const getAllPosts = query.where("Status", "==", "OK").get();
     return Promise.resolve(getAllPosts);
 };
 
@@ -65,6 +68,18 @@ exports.getPost = function(postId) {
         return postDoc.data();
     });
     return Promise.resolve(getPostDetails);
+};
+
+/**
+ * Description
+ * @param {any} updatePostToJson
+ * @param {any} PostId
+ * @param {any} uid
+ * @return {any}
+ */
+ exports.deleteUserPost = function(updatePostToJson, postId) {
+    const deletePostPromise = db.collection("Social").doc(postId).update(updatePostToJson);
+    return Promise.resolve(deletePostPromise);
 };
 
 /**

@@ -15,7 +15,7 @@
         </div>
         <div class="col-4" (click)="showEditTask(task.Id, 'Difficulty')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Difficulty'; else showDifficultyIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" size="4" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" size="4" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
                     <ng-container *ngFor='let label of difficultyLabels'>
                         <option>{{ label }}</option>
@@ -23,7 +23,7 @@
                 </select>
             </ng-container>
             <ng-template #showDifficultyIcon>
-                <app-difficulty-icons [Difficulty]="task.Difficulty"></app-difficulty-icons>
+                <app-get-icon [DisplayName]="task.Difficulty" [Border]="false"></app-get-icon>
             </ng-template>
         </div>
         <div class="col"></div>
@@ -34,7 +34,7 @@
         </div>
         <div class="col-4" (click)="showEditTask(task.Id, 'Priority')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Priority';else showPriorityIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Priority" size="4" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Priority" size="4" style="position: relative;min-width: 150px; top: 20%;" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Priority</option>
                     <ng-container *ngFor='let label of priorityLabels'>
                         <option>{{ label }}</option>
@@ -42,7 +42,7 @@
                 </select>
             </ng-container>
             <ng-template #showPriorityIcon>
-                <app-priority-icons [Priority]="task.Priority"></app-priority-icons>
+                <app-get-icon [DisplayName]="task.Priority" [Border]="false"></app-get-icon>
             </ng-template>
         </div>
         <div class="col"></div>

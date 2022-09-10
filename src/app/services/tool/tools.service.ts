@@ -20,7 +20,9 @@ export class ToolsService {
 
   todayDate: string
   todayTime: string
-
+  totalTimeinFloat: number
+  timeInHours: number
+  timeInMins:number
   constructor() { }
 
   date(){
@@ -38,6 +40,24 @@ export class ToolsService {
     var ss= String(today.getSeconds()).padStart(2, '0');
     return this.todayTime = hh + ":" + mn + ":" + ss;
   }
+  changeToDecimalTime(timeHrs: number, timeMins: number){
+    timeMins/=60;
+    return this.totalTimeinFloat = timeHrs+timeMins;
+  }
+  changeToHourMinsTime(decimalTime: number){
+    if(decimalTime>=0){      
+      this.timeInHours=Math.floor(decimalTime);
+      this.timeInMins=Math.floor(Math.fround((decimalTime-this.timeInHours)*60));
+    }
+    else if(decimalTime<0){
+      this.timeInHours=-Math.floor(-decimalTime);
+      this.timeInMins= -Math.floor(Math.fround((-decimalTime+this.timeInHours)*60))
+      if(this.timeInHours<0 && this.timeInMins<0){
+        this.timeInMins=-this.timeInMins;
+      }
+    }
+    return [this.timeInHours , this.timeInMins];
+  }
 
   getEmailString(email: string){
     if(email == undefined)
@@ -51,6 +71,8 @@ export class ToolsService {
         return email;
     }
   }
+
+  
 
   getFormattedDate() {
     return this.date().split('/').reverse().join('-');

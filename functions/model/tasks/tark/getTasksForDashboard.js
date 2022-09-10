@@ -32,7 +32,9 @@ exports.getTasksForDashboard = function(request, response) {
 
     const getTasksPromise = getAllTasks(orgDomain, "", "", filterAssignee, "", "", filterStatus, "").then((taskCol) => {
         taskCol.forEach((taskDoc) => {
-            tasksData.push(taskDoc.data());
+            if (taskDoc.data().SprintNumber != "-2") {
+                tasksData.push(taskDoc.data());
+            }
         });
     }).catch((error) => {
         status = 500;

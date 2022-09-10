@@ -10,6 +10,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-kanban-board',
@@ -33,8 +34,11 @@ export class KanbanBoardComponent implements OnInit {
   currentSprintName: string;
   currentSprintNumber: number;
   filterSprintNumber: number;
+  currentStatusLabels: string[];
+  currentSelectedStatusLabels: string;
+  allTasks : Tasks[];
 
-  constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService) { }
+  constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -63,9 +67,9 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   readData() {
-    this.selectedStatusLabels = ['Ice Box', 'Ready to start', 'Under Progress', 'Blocked'];
     this.selectedTeamId = this.startService.selectedTeamId;
     this.statusLabels = this.applicationSettingsService.status;
+    this.selectedStatusLabels = this.statusLabels.slice(0,4);
     this.currentSprintNumber = this.startService.currentSprintNumber;
     if(this.currentSprintNumber==-1){
       this.currentSprintName= "Backlog";
@@ -84,6 +88,8 @@ export class KanbanBoardComponent implements OnInit {
     this.applicationSettingsService.editedTeamId = teamId;
     this.startService.selectedTeamId = teamId;
     this.authService.userAppSetting.SelectedTeamId = teamId;
+    this.startService.readApplicationData();
+    this.filterSprintNumber = this.startService.currentSprintNumber;
     this.startService.changeTeam = true;
     this.sprintNotExist = false;
     this.showContent = false;
@@ -99,8 +105,17 @@ export class KanbanBoardComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
           console.error(error);
         },
-        complete: () => console.info('Successful updated Selected Team in db')
+        complete: (() => {
+          this.cookieService.set("userSelectedTeamId", teamId);
+          console.info('Successful updated Selected Team in db');
+        })
     });
+  }
+
+  changeStatusLabels(newStatus, existingStatus){
+    let x = this.selectedStatusLabels.indexOf(existingStatus)
+    this.selectedStatusLabels[x] = newStatus;
+    this.putDataInTasksArray(this.allTasks);
   }
 
   changeSprintNumber() {
@@ -132,6 +147,7 @@ export class KanbanBoardComponent implements OnInit {
     callable({OrgDomain: orgDomain, TeamId: this.selectedTeamId, SprintNumber: this.currentSprintNumber }).subscribe ({
       next: (data) => {
         this.putDataInTasksArray(data.data);
+        this.allTasks = data.data;
         this.showLoader = false;
         console.log("read tasks successfully!")
       },
@@ -144,6 +160,7 @@ export class KanbanBoardComponent implements OnInit {
   }
 
   putDataInTasksArray(tasksData: Tasks[]) {
+    this.tasks = [];
     this.selectedStatusLabels.forEach((label) => {
       let tasksarr = [];
       tasksData.forEach((task) => {
@@ -158,11 +175,14 @@ export class KanbanBoardComponent implements OnInit {
   editTask(task: Tasks, status: string) {
     const appKey = this.backendService.getOrganizationAppKey();
     const callable = this.functions.httpsCallable('tasks/editTask');
-    return callable({Title: task.Title, Status: status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter});
+    if(task.MilestoneId == undefined) {
+      task.MilestoneId = "";
+    }
+    return callable({Title: task.Title, Status: status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter, MilestoneId:task.MilestoneId });
   }
 
   onDrop(event: CdkDragDrop<Tasks[]>, status: string) {
-    this.showLoader = true;
+    this.showLoader = false;
     var result;
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -185,18 +205,5 @@ export class KanbanBoardComponent implements OnInit {
     }
   }
 
-  getColor(status: string) {
-    if (status == 'Ready to start') {
-      return '#673AB7';
-    } else if (status == "Ice Box") {
-      return '#42A5F5';
-    } else if (status == "Under Progress") {
-      return '#FC6A03';
-    } else if (status == "Blocked") {
-       return '#E64336';
-    } else {
-      return '#00F11E';
-    }
-  }
 
 }

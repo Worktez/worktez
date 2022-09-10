@@ -49,11 +49,10 @@ export class MyDashBoardComponent implements OnInit {
     this.router.navigate(["CreateNewTeam"]);
   }
 
-  runSchedular() {
-      const callable = this.functions.httpsCallable('scheduledFn');
-      const result = callable({}).subscribe((data) => {
-        console.log("Created Schedular document");
-        console.log(result);
-      });
-  }
+  // runSchedular() {
+  //     const callable = this.functions.httpsCallable('scheduledFnManually/startSchedular');
+  //     callable({}).subscribe((data) => {
+  //       console.log("Created Schedular document");
+  //     });
+  // }
 }
