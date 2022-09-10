@@ -174,6 +174,7 @@ import { EductionsComponent } from './body/profile/eductions/eductions.component
 import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
 import { ProjectsComponent } from './body/profile/projects/projects.component';
 import { SkillsComponent } from './body/profile/skills/skills.component';
+import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
 
 @NgModule({
   declarations: [
@@ -314,6 +315,7 @@ import { SkillsComponent } from './body/profile/skills/skills.component';
     WorkEXPComponent,
     ProjectsComponent,
     SkillsComponent,
+    EditMilestoneComponent,
   ],
   imports: [
     BrowserModule,
