@@ -23,6 +23,7 @@ import { FilterTaskService } from 'src/app/services/filter-task/filter-task.serv
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-create-filter',
@@ -52,7 +53,7 @@ export class CreateFilterComponent implements OnInit {
   status: string = null
   difficulty: string = null
   sprint: number = 0 
-  description: string = ""
+  description: string = "Empty"
   filterName: string = ""
   teamName: string = ""
   teamIds: string[]
@@ -67,7 +68,7 @@ export class CreateFilterComponent implements OnInit {
 
   enableLoader: boolean = false;
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions, public userService: UserServiceService, public startService: StartServiceService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public authService: AuthService, public appSettings: ApplicationSettingsService, public filterTaskService: FilterTaskService, ) { }
+  constructor(public backendService: BackendService, public validationService: ValidationService, private functions: AngularFireFunctions, public userService: UserServiceService, public startService: StartServiceService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public authService: AuthService, public appSettings: ApplicationSettingsService, public filterTaskService: FilterTaskService, ) { }
 
   ngOnInit(): void {
     if(this.startService.showTeamsData) {
@@ -134,9 +135,58 @@ export class CreateFilterComponent implements OnInit {
     }); 
   }
 
- submit(){
+ async submit(){
    this.enableLoader=true;
-   this.createFilter();
+
+
+   console.log(this.priority)
+   let data = [{ label: "filterName", value: this.filterName },]  
+
+   if(this.difficulty==null){
+    this.difficulty = "All"
+  }
+  
+
+  if(this.priority==null){
+    this.priority= "All"
+  }
+
+  if(this.assignee==null){
+    this.assignee= "All"
+  }
+
+  if(this.status==null){
+    this.status = "All"
+  }
+
+  if(this.description==null){
+    this.status = "All"
+  }
+
+
+  if(this.sprint==null){
+    this.sprint = 0
+  }
+
+
+  if(this.description==null){
+    this.description = "Null"
+  }
+
+
+  
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      console.log(condition)
+      return res;
+     
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.createFilter();
+    }
+    else
+      console.log("Filter not created! Validation error");
+      this.enableLoader=false;
 }
 
 
@@ -153,8 +203,8 @@ createFilter(){
       this.priority = null
       this.status = null
       this.difficulty = null
-      this.sprint = 0 
-      this.description = ""
+      this.sprint = null
+      this.description = null
       this.filterName =""
       console.log("Added New Filter");
       this.createFilterDone();

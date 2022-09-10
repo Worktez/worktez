@@ -178,7 +178,7 @@ export class FilterTaskComponent implements OnInit {
         }
         if (!this.isSprintChecked) {
           this.sprint = this.currentSprintNumber
-        }
+        }       
         this.filterProperty.emit({ Assignee: this.assignee, Priority: this.priority, Difficulty: this.difficulty, Status: this.status, Project: this.project, Sprint: this.sprint });
       }
     }
