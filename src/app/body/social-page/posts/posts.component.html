@@ -67,7 +67,9 @@
                             <input type="text" class="form-control" [(ngModel)]="content" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment">
                         </div>
                         <div class="col-5">
-                            <span class="btn btnSend" [disabled]="enableLoader" (click)="addComment(post.PostId)">Send</span>
+                            <span class="btn" (click)="addComment(post.PostId)">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">send</mat-icon>
+                            </span> 
                         </div>
                     </div>
                     <hr>
