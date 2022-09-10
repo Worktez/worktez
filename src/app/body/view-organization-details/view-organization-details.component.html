@@ -12,12 +12,12 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="row" id="mOrgContainer" *ngIf="!showLoader">
-    <div class="col-md-2 col-1"></div>
+    <div class="col-md-2 col-0"></div>
     <div class="col">
         <div class="row">
             <div class="col-3">
                 <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
-                <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                <span *ngIf="rbaService.isRbaReady && rbaService.isAdmin" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         edit
                     </mat-icon>
@@ -40,16 +40,30 @@
         </div>
         <hr>
         <div class="row p-2">
-            <div class="col-md-7">
+            <div class="col">
+                <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        group_add
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-md-8 col-12">
                 <ul class="nav">
-                    <li class="nav-item mx-2">
+                    <li class="nav-item ">
                         <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
                             Teams
                         </a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item ">
                         <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
                             Documents
+                        </a>
+                    </li>
+                    <li class="nav-item " *ngIf="membersReady && rbaService.permissions.viewMemberRoles">
+                        <a (click)="switchView('showMemberRoles')" [ngClass]="{'nav-link ': true, 'activeBg': showMemberRoles}" aria-current="page">
+                            Member Access
                         </a>
                     </li>
                 </ul>
@@ -65,18 +79,23 @@
         </div>
         <div class="row p-2">
             <ng-container *ngIf="showTeamsDetails">
-                    <ng-container *ngFor="let team of teams">
-                        <div class="col-md-auto my-3 team-cards">
-                            <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
-                        </div>
-                    </ng-container>
+                <ng-container *ngFor="let team of teams">
+                    <div class="col-md-auto my-3">
+                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
+                    </div>
+                </ng-container>
             </ng-container>
             <ng-container *ngIf="showOrgDocuments">
                 <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
             </ng-container>
+            <ng-container *ngIf="showMemberRoles && membersReady">
+                <div class="col my-3">
+                    <app-members-access [members]="members" (updatedDetails)="updatedDetails($event)"></app-members-access>
+                </div>
+            </ng-container>
         </div>
     </div>
-    <div class="col-md-2 col-1"></div>
+    <div class="col-md-2 col-0"></div>
 </div>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>

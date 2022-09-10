@@ -18,6 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { QuickNotesService } from 'src/app/services/quickNotes/quick-notes.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-quick-notes',
@@ -47,6 +48,7 @@ export class QuickNotesComponent implements OnInit {
     this.showNotesList = false
     this.openEditNote= false;
     this.showAddNote = true
+
   }
 
   addNoteCompleted(data) {
