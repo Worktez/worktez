@@ -4,13 +4,17 @@
             <span>Work Experience</span>
         </div>
         <div class="col-2">
-            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">add</span>
+            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    add
+                </mat-icon> 
+            </span>
         </div>
     </div>
     <ng-container *ngIf="experiences?.length == 0">
         <div class="row">
             <div class="col-12 mt-3">
-                <span>Add your Work Experience</span>
+                <span>Add your work experience</span>
             </div>
         </div>
     </ng-container>
@@ -20,14 +24,18 @@
                 <span>{{ experience.Position }}</span>
             </div>
             <div class="col-2">
-                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">edit</span>
+                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
+                        edit
+                    </mat-icon> 
+                </span>
             </div>
         </div>
         <div class="row text-muted">
-            <div class="col-5">
+            <div class="col-7">
                 <span>{{ experience.OrganizationName }}</span>
             </div>
-            <div class="col-7">
+            <div class="col-5">
                 <ul>
                     <li>{{ experience.Start }} - {{ experience.End }}</li>
                 </ul>

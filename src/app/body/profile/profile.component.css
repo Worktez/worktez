@@ -28,14 +28,14 @@
     background-color: var(--secondary-bg);
 }
 
-h2 {
+/* h2 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: var(--text);
 }
 
 h4 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
+} */
 
 button {
     background-color: var(--secondary-bg);
