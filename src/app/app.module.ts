@@ -171,6 +171,7 @@ import { NotificationCardComponent } from './header/notification-center/notifica
 import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
 import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
+import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 
 @NgModule({
   declarations: [
@@ -308,6 +309,7 @@ import { MembersAccessComponent } from './body/view-organization-details/members
     ShowMeetDetailsComponent,
     PricingComponent,
     MembersAccessComponent,
+    MemberCardComponent,
   ],
   imports: [
     BrowserModule,

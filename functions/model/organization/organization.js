@@ -25,6 +25,7 @@ const { getOrgData } = require("./tark/getOrganizationData");
 const { updateProfilePic } = require("./tark/updateOrg");
 const { getMemberDetails } = require("./tark/getMember");
 const { getAllOrgMembers } = require("./tark/getAllOrgMembers");
+const { editRole } = require("./tark/changeMemberRole");
 
 /**
  * Description
@@ -79,6 +80,17 @@ fastify.post("/getOrgData", (req, res) => {
  */
  fastify.post("/getAllOrgMembers", (req, res) => {
   getAllOrgMembers(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/changeMemberRole"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/changeMemberRole", (req, res) => {
+  editRole(req, res);
 });
 
 /**

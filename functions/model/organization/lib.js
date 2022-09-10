@@ -139,22 +139,22 @@ exports.getOrgRawData = function(orgDomain) {
  * Description
  * @param {any} orgDomain
  * @param {any} email
- * @param {any} dateOfAddition
+ * @param {any} dateOfOnboarding
  * @param {any} dateOfExit
  * @param {any} isAdmin
  * @param {any} teamManager
  * @param {any} teams
  * @return {any}
  */
- exports.setOrgMember = function(orgDomain, email, dateOfAddition, dateOfExit, isAdmin, teamManager, teams ) {
+ exports.setOrgMember = function(orgDomain, email, dateOfOnboarding, dateOfExit, isAdmin, teamManager, teams ) {
     const createMember = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).set({
         Active: true,
-        DateOfAddition: dateOfAddition,
-        DateofExit: "xxxx-xx-xx",
+        DateOfOnboarding: dateOfOnboarding,
+        DateOfExit: dateOfExit,
         IsAdmin: isAdmin,
         TeamManager: teamManager,
         Teams: teams,
-
+        Email: email,
     });
     return Promise.resolve(createMember);
 };

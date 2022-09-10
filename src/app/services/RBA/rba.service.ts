@@ -1,53 +1,105 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { BackendService } from '../backend/backend.service';
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { AuthService } from '../auth.service';
-import { MemberData } from 'src/app/Interface/UserInterface';
+import { MemberData, Permissions, defaultPermissions } from 'src/app/Interface/UserInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RBAService {
-  componentName:string = "ROLE-BASED-ACCESS"
   public isRbaReady: boolean = false;
-  public isAdmin: boolean = true;
-  public memberData: MemberData[];
-  public members: [];
+  public isAdmin: boolean;
+  public teamManager: boolean; 
+  public memberData: MemberData;
+  public members: MemberData[];
+  public permissions: Permissions;
   userEmail: string = "";
-  constructor(private backendService: BackendService, public authService: AuthService, private functions: AngularFireFunctions ) { }
-  
-  
+  constructor(public authService: AuthService, private functions: AngularFireFunctions ) {
+  } 
+  setDefaultPermissions(){
+    this.permissions= defaultPermissions as Permissions;
+  }
+  assignPermissions(){
 
-  getRbaDetails() {
-    const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
-    this.userEmail= this.authService.userAppSetting.email;
-    console.log(orgDomain, this.userEmail);
+    if(this.isAdmin){
+      console.log("C")
+      this.permissions.addMember = true;
+      this.permissions.deleteMember = true;
+      this.permissions.createTask = true;
+      this.permissions.deleteTask = true;
+      this.permissions.createTeam = true;
+      this.permissions.editTeam = true;
+      this.permissions.deleteTeam = true;
+      this.permissions.createSprint = true;
+      this.permissions.completeSprint = true;
+      this.permissions.editOrganization = true;
+      this.permissions.viewMemberRoles = true;
+      this.permissions.editMemberRoles = true;
+      }
+    
+    else if(this.teamManager){
+      console.log("B");
+      this.permissions.addMember = true;
+      this.permissions.deleteMember = true;
+      this.permissions.createTask = true;
+      this.permissions.deleteTask = true;
+      this.permissions.createTeam = true;
+      this.permissions.editTeam = true;
+      this.permissions.deleteTeam = true;
+      this.permissions.createSprint = true;
+      this.permissions.completeSprint = true;
+      this.permissions.editOrganization = true;
+      this.permissions.viewMemberRoles = true;
+      this.permissions.editMemberRoles = true;
+    }
+      else{
+        console.log("A");
+        this.permissions.addMember = true;
+        this.permissions.deleteMember = true;
+        this.permissions.createTask = true;
+        this.permissions.deleteTask = true;
+        this.permissions.createTeam = true;
+        this.permissions.editTeam = true;
+        this.permissions.deleteTeam = true;
+        this.permissions.createSprint = true;
+        this.permissions.completeSprint = true;
+        this.permissions.editOrganization = true;
+        this.permissions.viewMemberRoles = true;
+        this.permissions.editMemberRoles = true;
+      }
+      this.isRbaReady = true;
+  }
+
+  getRbaDetails(orgAppKey: string, userEmail: string) {
+    this.userEmail= userEmail;
     const callable = this.functions.httpsCallable("organization/getMemberDetails");
-     callable({OrgDomain: orgDomain, Email: this.userEmail}).pipe(
+     callable({OrgAppKey: orgAppKey, Email: this.userEmail}).pipe(
       map(actions => {
-        return actions.memberData as MemberData[];
+        return actions.memberData ;
     })).subscribe({
       next: (data) =>{
-        console.log(data)
         this.memberData = data;
+        this.isAdmin = data.IsAdmin;
+        this.teamManager = data.TeamManager;
       },
       error: (error) => {
         console.error(error);
       },
-      complete: () => console.log("Getting Organisation Member Details Complete")
+      complete: () => {
+        this.assignPermissions();
+        console.log("Getting Organisation Member Details Complete")}
     })   
   }
 
-  getAllOrgMembers(orgDomain: string) {
-    console.log(orgDomain);
+  getAllOrgMembers(orgDomain : string) {
     const callable = this.functions.httpsCallable("organization/getAllOrgMembers");
-    const members = callable({OrgDomain: orgDomain}).pipe(
+    return callable({OrgDomain: orgDomain}).pipe(
       map(actions => {
-        this.members = actions.membersData
-        return actions.membersData;
-    })); 
-    return members
+        const membersData = actions.membersData as MemberData[]
+        this.members = membersData
+        return membersData;
+    }));
   }
 }
 

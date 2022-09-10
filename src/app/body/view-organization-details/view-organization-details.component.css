@@ -63,7 +63,6 @@
 }
 
 hr {
-    margin: 0;
     border: none;
     border-bottom: 2px solid var(--scrollbar-color);
 }
@@ -89,4 +88,22 @@ span{
 .extra {
     background-color: var(--primary-color);
     color: #FFFFFF;
+}
+.extra2 {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .extra2 {
+        display: block;
+    }
+    .extra {
+        display: none;
+    }
+    .nav-link {
+        font-size: 14px;
+    }
+
 }

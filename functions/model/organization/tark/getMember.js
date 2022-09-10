@@ -21,27 +21,30 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const {getOrgMember} = require("../lib");
+const {getOrgMember, getOrgUseAppKey} = require("../lib");
 
 exports.getMemberDetails = function(request, response) {
   console.log("Reached here");
-  const orgDomain = request.body.data.OrgDomain;
+  const orgAppKey = request.body.data.OrgAppKey;
   const email = request.body.data.Email;
-  console.log("OrgDomain:", orgDomain, "Email:", email);
   let result;
   let status = 200;
 
-  const p1 = getOrgMember(orgDomain, email).then((memberDoc) => {
-    if (memberDoc == undefined) {
-      result = {data: {status: "ERROR", memberData: undefined}};
-    } else {
-      result = {data: {status: "OK", memberData: memberDoc}};
-    }
-  }).catch((error) => {
+  const promise1 = getOrgUseAppKey(orgAppKey).then((orgData) => {
+    const p1 = getOrgMember(orgData.OrganizationDomain, email).then((memberDoc) => {
+      if (memberDoc == undefined) {
+        result = {data: {status: "ERROR", memberData: undefined}};
+      } else {
+        result = {data: {status: "OK", memberData: memberDoc}};
+      }
+    });
+    return Promise.resolve(p1);
+  })
+  .catch((error) => {
     status = 500;
     console.log("Error:", error);
   });
-  return Promise.resolve(p1).then(() => {
+  return Promise.resolve(promise1).then(() => {
     console.log("Fetched Member Successfully");
     return response.status(status).send(result);
   }).catch((error) => {

@@ -107,11 +107,12 @@ export const defaultUser = {
 
 export interface MemberData{
     Active: boolean;
-    DateOfAddition: string;
+    DateOfOnboarding: string;
     DateOfExit: string;
-    isAdmin: boolean;
+    IsAdmin: boolean;
     TeamManager: boolean;
     Teams: [];
+    Email: string;
 }
 
 export interface QuickNote {
@@ -122,5 +123,34 @@ export interface QuickNote {
     Status: string;
     Title: string;
 }
+
+export interface Permissions {
+    addMember: boolean;
+    deleteMember: boolean;
+    createTask: boolean;
+    deleteTask: boolean;
+    createTeam: boolean;
+    editTeam: boolean;
+    deleteTeam: boolean;
+    createSprint: boolean;
+    completeSprint: boolean;
+    editOrganization: boolean;
+    viewMemberRoles: boolean;
+    editMemberRoles: boolean
+}
+export const defaultPermissions = {
+    addMember: true,
+    deleteMember:true,
+    createTask: true,
+    deleteTask: true,
+    createTeam: true,
+    editTeam:true,
+    deleteTeam: true,
+    createSprint: true,
+    completeSprint: true,
+    editOrganization: true,
+    viewMemberRoles: true,
+    editMemberRoles:true
+  };
 
  

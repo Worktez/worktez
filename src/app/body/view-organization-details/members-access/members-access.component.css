@@ -1,3 +1,40 @@
-*{
-    color: black;
+.member{
+    border: 1px solid var(--text);
+    border-radius: 5px;
+}
+td{
+    font-size: 14px;
+    font-family: var(--font);
+    color: var(--text);
+}
+th{
+    font-size: 16px;
+    font-family: var(--font);
+    color: var(--text);
+}
+.tableArea{
+    min-height: 25rem;
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+}
+.bigDoj{
+    display: block;
+}
+.smallDoj{
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    th {
+        font-size: 12px;
+    }
+    td{
+        font-size: 10px;
+    }
+    .smallDoj{
+        display: block;
+    }
+    .bigDoj{
+        display: none;
+    }
 }

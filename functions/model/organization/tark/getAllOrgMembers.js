@@ -38,7 +38,6 @@ const {getAllMembers} = require("../lib");
      } else {
         snapshot.forEach((element) => {
             const data = element.data();
-            data["email"] = element.id;
             members.push(data);
         });
        result = {data: {status: "OK", membersData: members}};

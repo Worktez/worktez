@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { Team } from 'src/app/Interface/TeamInterface';
+import { MemberData } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -33,7 +34,8 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   organization: Organizations;
   teams: Team[] = [];
-  members: [];
+  members: MemberData[];
+  membersReady: boolean = false;
   showLoader: boolean = true;
   showTeamsDetails: boolean = true;
   showOrgDocuments: boolean = false;
@@ -48,12 +50,10 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
     if(this.startService.showTeams) {
       this.getOrganizationDetails();
-      console.log("if")
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data){
           this.getOrganizationDetails();
-          console.log("else")
         }
       });
     }
@@ -66,7 +66,7 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.teams = [];
     this.backendService.organizationsData.subscribe(data => {
       this.organization = data;
-      this.getOrgMembers();
+      this.getOrgMembers(data.OrganizationDomain);
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);
       });
@@ -81,12 +81,19 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.sameUser = true;
   }
 
-  getOrgMembers(){
-    this.rbaService.getAllOrgMembers(this.organization.OrganizationDomain).subscribe(data => {
-      this.members = data
-      console.log(this.members);
-    });
-    
+  getOrgMembers(orgDomain: string){
+    this.rbaService.getAllOrgMembers(orgDomain).subscribe({
+      next: (data) => {
+        this.members = data
+      },
+      error: (error) => {
+        console.error(error)
+      },
+      complete: () => {
+        this.membersReady = true;
+        console.log("Completed fetching members list")
+      }
+    });   
   }
   createTeam() {
     this.router.navigate(['/CreateNewTeam']);

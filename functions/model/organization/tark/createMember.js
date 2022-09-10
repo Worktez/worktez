@@ -32,14 +32,13 @@
      const dd = String(today.getDate()).padStart(2, "0");
      const mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
      const yyyy = today.getFullYear();
-     const DateOfAddition = yyyy + "-" + mm + "-" + dd;
+     const DateOfOnboarding = yyyy + "-" + mm + "-" + dd;
      const DateOfExit = "xxxx-xx-xx";
-     console.log(orgDomain, email);
 
     getOrgMember(orgDomain, email).then((MemberDoc) => {
         console.log("MemberDOc", MemberDoc);
         if (MemberDoc == undefined) {
-            setOrgMember(orgDomain, email, DateOfAddition, DateOfExit, isAdmin, teamManager, teams).catch(
+            setOrgMember(orgDomain, email, DateOfOnboarding, DateOfExit, isAdmin, teamManager, teams).catch(
                 (error) => {
                     console.error("Error", error);
                 }
@@ -51,13 +50,13 @@
             if (currentTeams.indexOf(teams[0]) == -1) {
                 currentTeams.push(teams[0]);
             }
-            setOrgMember(orgDomain, email, DateOfAddition, DateOfExit, isAdmin, teamManager, currentTeams).catch(
+            setOrgMember(orgDomain, email, DateOfOnboarding, DateOfExit, isAdmin, teamManager, currentTeams).catch(
                 (error) => {
                     console.error("Error", error);
                 }
             );
         }
     }).catch((error) => {
-        console.log("Error:", error);
+        console.error("Error:", error);
     });
  };
