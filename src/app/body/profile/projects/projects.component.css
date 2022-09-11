@@ -7,9 +7,17 @@
     color: var(--text);
 }
 
+.icon {
+    font-size: 20px;
+}
+
 .btn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
+}
+
+#projectDescription {
+    white-space: pre-wrap;
 }
 
 @media only screen and (max-width: 600px) {

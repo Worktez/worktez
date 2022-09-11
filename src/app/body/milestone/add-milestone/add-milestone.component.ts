@@ -48,7 +48,7 @@ export class AddMilestoneComponent implements OnInit {
     this.todayDate = this.toolService.date();
   }
 
-  async validateMilestone() {
+  validateMilestone() {
     let labels = ['title','project', 'description', 'startDate', 'endDate', 'milestoneStatus'];
     let values = [this.title, this.teamId, this.description, this.startDate, this.endDate, this.milestoneStatus];
     let data = [{ label: "title", value: this.title },
@@ -59,7 +59,7 @@ export class AddMilestoneComponent implements OnInit {
     { label: "milestoneStatus", value: this.milestoneStatus},
   ];
     
-    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+    var condition = (this.validationService.checkValidity(this.componentName, data)).then(res => {
       
       return res;
     });

@@ -12,6 +12,10 @@
     color: var(--button-text-hover);
 }
 
+.icon {
+    font-size: 20px;
+}
+
 h2 {
     font-size: 14px;
 }

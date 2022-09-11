@@ -75,4 +75,10 @@ li{
     a{
         font-size: 11px;
     }
+    #txtLeft{
+        text-align: left !important;
+    }
+    #txtCenter{
+        text-align:center !important;
+    }
 }

@@ -4,13 +4,17 @@
             <span>Education</span>
         </div>
         <div class="col-2">
-            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">add</span>
+            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    add
+                </mat-icon> 
+            </span>
         </div>
     </div>
     <ng-container *ngIf="educations?.length == 0">
         <div class="row">
             <div class="col-12 mt-3">
-                <span>Add your Education Qualifications</span>
+                <span>Add your education qualifications</span>
             </div>
         </div>
     </ng-container>
@@ -20,14 +24,18 @@
                 <span>{{ education.InstituteName }}</span>
             </div>
             <div class="col-2">
-                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)">edit</span>
+                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
+                        edit
+                    </mat-icon> 
+                </span>
             </div>
         </div>
         <div class="row">
-            <div class="col-4 text-muted">
+            <div class="col-7 text-muted">
                 <span>{{ education.Degree }}</span>
             </div>
-            <div class="col-8 text-muted">
+            <div class="col-5 text-muted">
                 <ul>
                     <li>{{ education.Start }} - {{ education.End }}</li>
                 </ul>

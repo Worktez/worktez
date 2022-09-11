@@ -1,6 +1,7 @@
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
+* Author: Sanjay Krishna <sanjaykrishna1203@gmail.com>
 * 
 * This program is free software; you can redistribute it and/or 
 * modify it under the terms of the MIT License 
@@ -13,23 +14,28 @@
 ***********************************************************/
 .modal-header {
     border-bottom: none !important;
+    padding: 1.1rem;
 }
 
 .modal-footer {
     border-top: none !important;
+    padding: 0.0rem;
     padding-bottom: 0 !important;
 }
 
 .modal-content {
     background-color: var(--secondary-bg);
     color: var(--text);
-    border-radius: 6px;
+    border-radius: 6px; 
+    padding: 0.75rem;
     justify-content: space-evenly;
     padding-top: 0 !important;
 }
+
 .modal-body {
     padding-top: 0px !important;
-    padding:1rem;   
+    padding:1rem;
+    
 }
 
 .close {
