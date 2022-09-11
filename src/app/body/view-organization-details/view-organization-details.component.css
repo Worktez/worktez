@@ -73,6 +73,11 @@ hr {
     width: 5rem;
 }
 
+#currentPlan{
+    width: auto;
+    height: 12vh;
+}
+
 .btn {
     color: var(--text);
 }

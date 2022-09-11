@@ -180,7 +180,8 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
 import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
 import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
-
+import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
+import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
 
 @NgModule({
   declarations: [
@@ -327,6 +328,8 @@ import { AddWatchersComponent } from './body/task-details/add-watchers/add-watch
     AllNotificationComponent,
     AllNotificationCardComponent,
     AddWatchersComponent,
+    CurrenPlanComponent,
+    PaymentStatusComponent,
   ],
   imports: [
     BrowserModule,

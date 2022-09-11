@@ -90,6 +90,10 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     });
     console.log("imageUrlText", this.imageUrl)
   }
+  
+  upgrade(){
+    this.router.navigate(['/CurrentPlan']);
+  }
 
   getTeamDetails(teamId: string) {
     this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {

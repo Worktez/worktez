@@ -17,7 +17,7 @@ import { LoginComponent } from './body/login/login.component';
 import { BoardComponent } from './body/board/board.component';
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
 import { TasksComponent } from './body/tasks/tasks.component';
-import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, AngularFireAuthGuardModule, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
@@ -53,7 +53,7 @@ import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
 import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
-
+import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -71,6 +71,7 @@ const routes: Routes = [
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
+  {path: 'CurrentPlan', component: CurrenPlanComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
   { path: 'Patch2', component: Patch2Component },
   { path: 'Patch3', component: Patch3Component },
