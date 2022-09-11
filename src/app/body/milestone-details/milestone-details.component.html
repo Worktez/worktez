@@ -55,15 +55,17 @@
           <div class="row">
             <div class="col-md-5 col">
               <h4 class="heading">
-                <span class="material-icons mr-1 align-middle">group</span><span class="align-middle lightText">{{milestoneData.TeamId}}</span>
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-1">
+                  group
+                </mat-icon><span class="align-middle lightText">{{milestoneData.TeamId}}</span>
               </h4>
               <p>Total Tasks : <span class="lightText">{{totalTasks}}</span></p>
             </div>
             <div class="col-md-7 col">
-              <div (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
+              <div (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" id="milestoneStatus">
                 <span class="label">Status:</span>
                 &nbsp;
-                <span class="value" (click)="showEditMilestone( milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
+                <span class="value" (click)="showEditMilestone( milestoneData.MilestoneId, 'MilestoneStatus')" id="milestoneStatus">
                   <ng-container *ngIf="milestoneIdToEdit == milestoneData.MilestoneId && fieldToEdit == 'MilestoneStatus'; else showMilestoneStatusIcon">
                     <select class="form-control form-control-sm" [(ngModel)]="milestoneData.MilestoneStatus" [ngModelOptions]="{standalone: true}" (change)="editStatus()" (mouseleave)="clickOut()">
                       <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
