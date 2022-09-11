@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "fir-1-a5ffc"
+    "default": "worktrolly"
   },
   "targets": {
     "worktrolly": {
