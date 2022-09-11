@@ -1,6 +1,5 @@
-/* eslint-disable valid-jsdoc */
-
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-undef */

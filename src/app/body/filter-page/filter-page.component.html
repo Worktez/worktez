@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="col-4">
-        <app-create-filter [teamName]="teamName"></app-create-filter>
+        <app-create-filter [teamName]="teamName" (createFilterCompleted)="createFilterCompleted($event)"></app-create-filter>
     </div>
 </div>
 <ng-container *ngIf="showEditFilterProp" id="openEditProperties">
@@ -97,9 +97,13 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons">close</span>
-                            </button>
+                            <div class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="btn">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
                         </li>
                     </ul>
                 </nav>
