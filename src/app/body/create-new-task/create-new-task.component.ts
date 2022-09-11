@@ -75,7 +75,7 @@ export class CreateNewTaskComponent implements OnInit {
   priorityLabels: string[]
   difficultyLabels: string[]
   type: string[]
-  taskType: string
+  taskType: string = null
   parentTaskId: string
   showClose: boolean = false;
   currentSprintNumber: number

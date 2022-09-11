@@ -77,6 +77,11 @@ span{
     color: var(--text);
 }
 
+#currentPlan{
+    width: auto;
+    height: 12vh;
+}
+
 .btn {
     color: var(--text);
 }

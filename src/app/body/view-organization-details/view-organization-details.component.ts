@@ -69,6 +69,10 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     });
   }
 
+  upgrade(){
+    this.router.navigate(['/CurrentPlan']);
+  }
+
   getTeamDetails(teamId: string) {
     this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
       this.teams.push(data);
