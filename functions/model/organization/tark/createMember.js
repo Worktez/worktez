@@ -36,7 +36,6 @@
      const DateOfExit = "xxxx-xx-xx";
 
     getOrgMember(orgDomain, email).then((MemberDoc) => {
-        console.log("MemberDOc", MemberDoc);
         if (MemberDoc == undefined) {
             setOrgMember(orgDomain, email, DateOfOnboarding, DateOfExit, isAdmin, teamManager, teams).catch(
                 (error) => {

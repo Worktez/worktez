@@ -33,7 +33,7 @@ export class QuickNotesComponent implements OnInit {
   openEditNote: boolean = false
   selectedNote: QuickNote;
   enableLoader: boolean = false
-  constructor(private quickNotes: QuickNotesService,public rbaService :RBAService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
+  constructor(private quickNotes: QuickNotesService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
 
   ngOnInit(): void {
   }

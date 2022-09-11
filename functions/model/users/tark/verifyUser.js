@@ -22,7 +22,6 @@
 
 const { getOrg } = require("../../organization/lib");
 const { createMember } = require("../../organization/tark/createMember");
-// const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { getTeam } = require("../../teams/lib");
 const { getUserUseEmail, updateUser } = require("../lib");
 const { updateTeamInOrganizations } = require("./updateTeamInOrganizations");
@@ -58,7 +57,6 @@ exports.verifyUser = function(request, response) {
                         teams: [teamId],
                     };
                     updateUser(updateUserInputJson, userID);
-                    // setSchedularUnit("UserPerformanceChart", appKey, userEmail, teamId, organizationDomain);
                     updateTeamInOrganizations(userID, organizationDomain, appKey, teamId);
                     createMember(createMemberInput);
                 }).catch((error) => {

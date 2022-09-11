@@ -25,9 +25,7 @@
 const {getAllMembers} = require("../lib");
 
  exports.getAllOrgMembers = function(request, response) {
-   console.log("Reached here");
    const orgDomain = request.body.data.OrgDomain;
-   console.log("OrgDomain:", orgDomain);
    let result;
    const members = [];
    let status = 200;

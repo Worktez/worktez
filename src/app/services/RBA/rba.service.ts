@@ -21,9 +21,7 @@ export class RBAService {
     this.permissions= defaultPermissions as Permissions;
   }
   assignPermissions(){
-
     if(this.isAdmin){
-      console.log("C")
       this.permissions.addMember = true;
       this.permissions.removeMember = true;
       this.permissions.createTask = true;
@@ -32,7 +30,7 @@ export class RBAService {
       this.permissions.createTeam = true;
       this.permissions.editTeam = true;
       this.permissions.deleteTeam = true;
-      this.permissions.createSprint = true;
+      this.permissions.createNewSprint = true;
       this.permissions.completeSprint = true;
       this.permissions.editOrganization = true;
       this.permissions.viewMemberRoles = true;
@@ -44,7 +42,6 @@ export class RBAService {
       }
     
     else if(this.teamManager){
-      console.log("B");
       this.permissions.addMember = true;
       this.permissions.removeMember = true;
       this.permissions.createTask = true;
@@ -53,7 +50,7 @@ export class RBAService {
       this.permissions.createTeam = true;
       this.permissions.editTeam = true;
       this.permissions.deleteTeam = true;
-      this.permissions.createSprint = true;
+      this.permissions.createNewSprint = true;
       this.permissions.completeSprint = true;
       this.permissions.editOrganization = true;
       this.permissions.viewMemberRoles = true;

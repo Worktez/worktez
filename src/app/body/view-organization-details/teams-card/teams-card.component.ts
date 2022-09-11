@@ -44,7 +44,7 @@ export class TeamsCardComponent implements OnInit {
   githubProjectAdded: boolean=false;
   repoLink: string;
   projectLinked: boolean= false;
-  constructor(public router: Router, private functions: AngularFireFunctions,public rbaService :RBAService, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public router: Router, private functions: AngularFireFunctions,public rbaService: RBAService, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.checkGitProject();

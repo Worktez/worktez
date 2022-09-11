@@ -24,7 +24,6 @@
 const {getOrgMember, getOrgUseAppKey} = require("../lib");
 
 exports.getMemberDetails = function(request, response) {
-  console.log("Reached here");
   const orgAppKey = request.body.data.OrgAppKey;
   const email = request.body.data.Email;
   let result;
