@@ -30,7 +30,7 @@ export interface UserAppSetting extends User {
     GithubProfile: string;
     LinkedInProfile: string;
     DateOfJoining: string;
-    Skills: string;
+    Skills: string[];
     Education: string;
     Experience: string;
     Projects: string;
@@ -126,7 +126,7 @@ export interface QuickNote {
 
 export interface Permissions {
     addMember: boolean;
-    deleteMember: boolean;
+    removeMember: boolean;
     createTask: boolean;
     deleteTask: boolean;
     createTeam: boolean;
@@ -136,11 +136,16 @@ export interface Permissions {
     completeSprint: boolean;
     editOrganization: boolean;
     viewMemberRoles: boolean;
-    editMemberRoles: boolean
+    editMemberRoles: boolean;
+    addDefaultLabel: boolean;
+    createNewLabel: boolean;
+    editLabel: boolean;
+    deleteLabel: boolean;
+    editTask: boolean;
 }
 export const defaultPermissions = {
     addMember: true,
-    deleteMember:true,
+    removeMember:true,
     createTask: true,
     deleteTask: true,
     createTeam: true,
@@ -150,7 +155,12 @@ export const defaultPermissions = {
     completeSprint: true,
     editOrganization: true,
     viewMemberRoles: true,
-    editMemberRoles:true
+    editMemberRoles:true,
+    addDefaultLabel: true,
+    createNewLabel: true,
+    editLabel: true,
+    deleteLabel: true,
+    editTask: true,
   };
 
  

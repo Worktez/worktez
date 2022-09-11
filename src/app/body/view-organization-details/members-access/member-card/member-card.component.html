@@ -1,4 +1,7 @@
-<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{memberRole}}</button>
+
+<button *ngIf=" rbaService.isRbaReady && rbaService.permissions.editMemberRoles" class="btn"  type="button">{{memberRole}} </button>
+
+<button *ngIf=" rbaService.isRbaReady && !rbaService.permissions.editMemberRoles" class="btn dropdown-toggle"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{memberRole}}</button>
 <div class="dropdown-menu textbox">
   <a class="dropdown-item" (click)="changeMemberRole('Admin')">
       <span style="font-weight: bold; ">Admin</span> <br>

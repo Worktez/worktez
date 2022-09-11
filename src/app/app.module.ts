@@ -170,6 +170,10 @@ import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.compon
 import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
+import { EductionsComponent } from './body/profile/eductions/eductions.component';
+import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
+import { ProjectsComponent } from './body/profile/projects/projects.component';
+import { SkillsComponent } from './body/profile/skills/skills.component';
 import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
 import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 
@@ -308,6 +312,10 @@ import { MemberCardComponent } from './body/view-organization-details/members-ac
     NotificationCardComponent,
     ShowMeetDetailsComponent,
     PricingComponent,
+    EductionsComponent,
+    WorkEXPComponent,
+    ProjectsComponent,
+    SkillsComponent,
     MembersAccessComponent,
     MemberCardComponent,
   ],

@@ -13,7 +13,7 @@
 ***********************************************************/ -->
 <div class="card" style="width: 18rem;" *ngIf="labelsReady">
     <div class="card-header">{{scope}}
-        <span *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="icons float-right">
+        <span *ngIf="rbaService.isRbaReady && rbaService.permissions.createNewLabel" class="icons float-right">
             <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="addLabel()" data-toggle="modal" data-target="#addLabel">
                 add
             </mat-icon>
@@ -29,11 +29,11 @@
                         <app-generate-icon [icon]="item"></app-generate-icon>
                     </span>
                 </div>
-                <div *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="col-6 text-right">
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
+                <div class="col-6 text-right">
+                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
                         edit 
                     </mat-icon>
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelTodelete(item)" data-toggle="modal" data-target="#deletedLabel">
+                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelTodelete(item)" data-toggle="modal" data-target="#deletedLabel">
                         delete
                     </mat-icon>
                 </div>

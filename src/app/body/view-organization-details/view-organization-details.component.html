@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-3">
                 <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
-                <span *ngIf="rbaService.isRbaReady && rbaService.isAdmin" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         edit
                     </mat-icon>
@@ -69,7 +69,7 @@
                 </ul>
             </div>
             <div class="col pl-0 text-right">
-                <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         group_add
                     </mat-icon>

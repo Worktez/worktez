@@ -76,7 +76,6 @@ export class TaskDetailsComponent implements OnInit {
 
   gotTaskData: boolean=false;
   showLoader: boolean=false;
- 
 
   activityData: Activity[]
   linkData: Link[]

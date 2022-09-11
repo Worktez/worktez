@@ -1,0 +1,29 @@
+<div class="card p-4 mb-4">
+    <div class="row pb-2">
+        <div class="col-10">
+            <span>Projects</span>
+        </div>
+        <div class="col-2">
+            <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">add</span>
+        </div>
+    </div>
+    <ng-container *ngIf="projects?.length == 0">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <span>Add your Projects</span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let project of projects; let i = index">
+        <div class="row">
+            <div class="col-10">
+                <span>{{ project.ProjectName }}</span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="sameUser" type="button" class="material-icons float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" >edit</span>
+            </div>
+        </div>
+        <span class="text-muted">{{ project.Start }} - {{ project.End }}</span>
+        <span class="text-muted">{{ project.Description }}</span>
+    </ng-container>
+</div>
