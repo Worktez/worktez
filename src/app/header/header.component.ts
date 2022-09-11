@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   isHomePage: boolean = false;
   userReady: boolean = false;
 
-  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService ,public rbaService :RBAService) { }
+  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public rbaService :RBAService) { }
 
   ngOnInit(): void {
     if (this.router.url == '/') {

@@ -40,7 +40,7 @@
         </div>
         <hr>
         <div class="row p-2">
-            <div class="col">
+            <div *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="col" >
                 <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         group_add

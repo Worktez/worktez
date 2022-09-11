@@ -128,11 +128,12 @@ export interface Permissions {
     addMember: boolean;
     removeMember: boolean;
     createTask: boolean;
+    editTask: boolean;
     deleteTask: boolean;
     createTeam: boolean;
     editTeam: boolean;
     deleteTeam: boolean;
-    createSprint: boolean;
+    createNewSprint: boolean;
     completeSprint: boolean;
     editOrganization: boolean;
     viewMemberRoles: boolean;
@@ -141,17 +142,17 @@ export interface Permissions {
     createNewLabel: boolean;
     editLabel: boolean;
     deleteLabel: boolean;
-    editTask: boolean;
 }
 export const defaultPermissions = {
     addMember: true,
     removeMember:true,
     createTask: true,
+    editTask: true,
     deleteTask: true,
     createTeam: true,
     editTeam:true,
     deleteTeam: true,
-    createSprint: true,
+    createNewSprint: true,
     completeSprint: true,
     editOrganization: true,
     viewMemberRoles: true,
@@ -160,7 +161,6 @@ export const defaultPermissions = {
     createNewLabel: true,
     editLabel: true,
     deleteLabel: true,
-    editTask: true,
   };
 
  

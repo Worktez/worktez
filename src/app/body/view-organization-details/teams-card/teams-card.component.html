@@ -38,8 +38,8 @@
             </div>
                 
             <div class="row mt-1">
-                <div class="col">
-                    <button *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
+                <div *ngIf="rbaService.isRbaReady && rbaService.permissions.addMember" class="col">
+                    <button  class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
                             person_add
                         </mat-icon>

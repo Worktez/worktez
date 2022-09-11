@@ -30,8 +30,6 @@ exports.editRole = function(request, response) {
     const isAdmin = request.body.data.IsAdmin;
     const teamManager = request.body.data.TeamManager;
 
-    console.log("OrgDomain:", orgDomain, "Email:", email, "IsAdmin", isAdmin, "TeamManager", teamManager);
-
     let result;
     updateMemberInputJson = {
         IsAdmin: isAdmin,
