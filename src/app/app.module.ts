@@ -174,6 +174,8 @@ import { EductionsComponent } from './body/profile/eductions/eductions.component
 import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
 import { ProjectsComponent } from './body/profile/projects/projects.component';
 import { SkillsComponent } from './body/profile/skills/skills.component';
+import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
+import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
 
 @NgModule({
@@ -315,6 +317,8 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
     WorkEXPComponent,
     ProjectsComponent,
     SkillsComponent,
+    MembersAccessComponent,
+    MemberCardComponent,
     EditMilestoneComponent,
   ],
   imports: [

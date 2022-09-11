@@ -107,6 +107,7 @@ export class EditProfileComponent implements OnInit {
 
           } else {
             this.userAvailable = true;
+            this.enableLoader = false;
           }
         },
 

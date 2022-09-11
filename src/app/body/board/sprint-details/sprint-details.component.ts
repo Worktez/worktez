@@ -22,6 +22,7 @@ import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handle
 import { AuthService } from '../../../services/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 
 
@@ -47,7 +48,7 @@ export class SprintDetailsComponent implements OnInit {
   activeSprintNumber: number;
   todayDate: string;
 
-  constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public toolsService: ToolsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router,public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService,public rbaService: RBAService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public toolsService: ToolsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();

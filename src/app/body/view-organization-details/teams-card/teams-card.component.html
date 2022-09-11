@@ -18,7 +18,7 @@
                     <h2 class="card-title" (click)="openTeamDetails()">{{ team.TeamName }}</h2>
                 </div>
                 <div class="col-6 text-center">
-                    <span type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#deleteTeam"
+                    <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#deleteTeam"
                     title="delete Team"  data-bs-toggle="tooltip">
                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
                             delete
@@ -39,7 +39,7 @@
                 
             <div class="row mt-1">
                 <div class="col">
-                    <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
+                    <button *ngIf="rbaService.isRbaReady && rbaService.isAdmin" class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
                             person_add
                         </mat-icon>

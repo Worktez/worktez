@@ -24,13 +24,13 @@
             <h3>Team Id: {{ team.TeamId }}</h3>
           </div>
           <div class="col">
-            <span class="btn ml-2">
+            <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editTeam" class="btn ml-2">
               <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal"
                 data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
                 edit
               </mat-icon>
             </span>
-            <span class="btn ml-2">
+            <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
               <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam" title="delete Team" type="button" data-toggle="modal" 
               data-bs-toggle="tooltip">
                 delete
@@ -53,7 +53,7 @@
                 <h2>Team Members</h2>
               </div>
               <div class="col text-right">
-                <button class="btn etc" (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top"
+                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.addMember" class="btn etc" (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top"
                 data-toggle="modal" data-target="#memberModal" title="add-member">Add Member</button>
               </div>
             </div>
@@ -66,7 +66,7 @@
                       </app-suggestion-bucket>
                     </div>
                     <div class="col-2 col-md-3">
-                      <span class="btn extra" (click)="removeMemberDB(item)">
+                      <span *ngIf="rbaService.isRbaReady && rbaService.permissions.removeMember" class="btn extra" (click)="removeMemberDB(item)">
                         <mat-icon  font-set="material-icons" class="material-icons align-middle text-danger">close</mat-icon>
                       </span>
                     </div>
@@ -81,7 +81,7 @@
                 <h2>Team Labels</h2>
               </div>
               <div class="col text-right">
-                <button class="btn etc float-right" (click)="createDefaultLabels()">Add Default Label</button>
+                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.addDefaultLabel" class="btn etc float-right" (click)="createDefaultLabels()">Add Default Label</button>
               </div>
             </div>
             <div class="row scopeLabels">

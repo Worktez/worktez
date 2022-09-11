@@ -23,6 +23,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-team-details',
@@ -46,7 +47,7 @@ export class TeamDetailsComponent implements OnInit {
   showLoader: boolean = true;
   enableLoader: boolean = false;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService,public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];

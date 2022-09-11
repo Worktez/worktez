@@ -1,0 +1,50 @@
+<!-- <div class="container px-4">
+
+    <div class="row heading-row pb-3">
+        <div class="col-md-4 ">
+            
+        </div>
+        <div class="col-md-3 pl-3">
+            
+        </div>
+        <div class="col-md-2">
+            
+        </div>
+        <div class="col-md-2">
+            
+        </div>
+    </div>
+    <ng-container class="member" *ngFor="let member of members">
+        <app-member-card [member] = "member"></app-member-card>
+        <hr class="pt-0 mt-0">
+    </ng-container>
+</div> -->
+<div class="table-responsive  tableArea">
+    <table class="table table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="p-4">Name / Email</th>
+            <th scope="col" class="py-4">
+                <span class="bigDoj">Date Of Joining</span>
+                <span class="smallDoj">DOJ</span>
+            </th>
+            <th scope="col" class="py-4">Teams</th>
+            <th scope="col" class="py-4">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container class="member" *ngFor="let member of members">
+                <tr>
+                    <td class="align-middle">
+                        <app-suggestion-bucket [email]="member.Email" [showEmail]=" true"></app-suggestion-bucket>
+                    </td>
+                    <td class="align-middle">{{member.DateOfOnboarding}}</td>
+                    <td class="align-middle">{{member.Teams}}</td>
+                    <td class="align-middle">
+                        <app-member-card [member] = "member"></app-member-card>
+                    </td>
+                  </tr>
+            </ng-container>
+        </tbody>
+      </table>
+</div>
