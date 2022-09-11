@@ -4,6 +4,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { MemberData } from 'src/app/Interface/UserInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 @Component({
   selector: 'app-member-card',
   templateUrl: './member-card.component.html',
@@ -13,7 +14,7 @@ export class MemberCardComponent implements OnInit {
   @Input('member') member: MemberData
   componentName: string = "Member Card Component"
   memberRole: string
-  constructor(private backendService: BackendService, public errorHandlerService: ErrorHandlerService, private functions: AngularFireFunctions) { }
+  constructor(private backendService: BackendService, public errorHandlerService: ErrorHandlerService, private functions: AngularFireFunctions, public rbaService: RBAService) { }
 
   ngOnInit(): void {
     this.checkMemberRole()

@@ -25,8 +25,9 @@ export class RBAService {
     if(this.isAdmin){
       console.log("C")
       this.permissions.addMember = true;
-      this.permissions.deleteMember = true;
+      this.permissions.removeMember = true;
       this.permissions.createTask = true;
+      this.permissions.editTask = true;
       this.permissions.deleteTask = true;
       this.permissions.createTeam = true;
       this.permissions.editTeam = true;
@@ -36,13 +37,18 @@ export class RBAService {
       this.permissions.editOrganization = true;
       this.permissions.viewMemberRoles = true;
       this.permissions.editMemberRoles = true;
+      this.permissions.addDefaultLabel= true;
+      this.permissions.createNewLabel= true;
+      this.permissions.editLabel= true;
+      this.permissions.deleteLabel= true;
       }
     
     else if(this.teamManager){
       console.log("B");
       this.permissions.addMember = true;
-      this.permissions.deleteMember = true;
+      this.permissions.removeMember = true;
       this.permissions.createTask = true;
+      this.permissions.editTask = true;
       this.permissions.deleteTask = true;
       this.permissions.createTeam = true;
       this.permissions.editTeam = true;
@@ -52,22 +58,11 @@ export class RBAService {
       this.permissions.editOrganization = true;
       this.permissions.viewMemberRoles = true;
       this.permissions.editMemberRoles = true;
+      this.permissions.addDefaultLabel= true;
+      this.permissions.createNewLabel= true;
+      this.permissions.editLabel= true;
+      this.permissions.deleteLabel= true;
     }
-      else{
-        console.log("A");
-        this.permissions.addMember = true;
-        this.permissions.deleteMember = true;
-        this.permissions.createTask = true;
-        this.permissions.deleteTask = true;
-        this.permissions.createTeam = true;
-        this.permissions.editTeam = true;
-        this.permissions.deleteTeam = true;
-        this.permissions.createSprint = true;
-        this.permissions.completeSprint = true;
-        this.permissions.editOrganization = true;
-        this.permissions.viewMemberRoles = true;
-        this.permissions.editMemberRoles = true;
-      }
       this.isRbaReady = true;
   }
 

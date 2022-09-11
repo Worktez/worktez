@@ -39,7 +39,7 @@
                         <app-suggestion-bucket [email]="member.Email" [showEmail]=" true"></app-suggestion-bucket>
                     </td>
                     <td class="align-middle">{{member.DateOfOnboarding}}</td>
-                    <td *ngIf="rbaService.permissions.editMemberRoles" class="align-middle">{{member.Teams}}</td>
+                    <td class="align-middle">{{member.Teams}}</td>
                     <td class="align-middle">
                         <app-member-card [member] = "member"></app-member-card>
                     </td>
