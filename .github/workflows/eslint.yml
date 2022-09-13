@@ -29,17 +29,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get into Functions
-        run: |
-          cd functions/
-
       - name: Install ESLint
         run: |
           npm install eslint@8.10.0 --force
           npm install @microsoft/eslint-formatter-sarif@2.1.7 --force
 
       - name: Run ESLint
-        run: npx eslint .
+        run: cd functions/ && npx eslint .
           --config .eslintrc.js
           --ext .js,.jsx,.ts,.tsx
           --format @microsoft/eslint-formatter-sarif 
