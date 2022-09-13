@@ -34,12 +34,10 @@
 .dropdown-menu {
     border-color: var(--primary-color) ;
     color: var(--text);
-    font-size: 12px;
     background-color: var(--secondary-bg);
 }
 
 .dropdown-item {
-    font-size: 12px;
     color: var(--text);
 }
 

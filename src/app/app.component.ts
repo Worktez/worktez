@@ -26,7 +26,8 @@ declare const gtag: Function;
 })
 export class AppComponent {
   constructor(public themeService: ThemeService, private router: Router) {
-    this.addGAScript();
+    if(environment.firebase.measurementId != "")
+      this.addGAScript();
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
@@ -43,7 +44,7 @@ export class AppComponent {
   addGAScript() {
     let gtagScript: HTMLScriptElement = document.createElement('script');
     gtagScript.async = true;
-    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + environment.firebase.measurementId;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + environment.firebase.measurementId;
     document.head.prepend(gtagScript);
     /** Disable automatic page view hit to fix duplicate page view count  **/
     gtag('config', environment.firebase.measurementId, { send_page_view: false });

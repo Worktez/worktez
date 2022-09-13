@@ -15,7 +15,7 @@
     <div class="col-md-2 col-0"></div>
     <div class="col">
         <div class="row">
-            <div class="col-3">
+            <div class="col-3 align-middle">
                 <img src="{{ organization.OrganizationLogoURL }}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="" id="orgImg" class="rounded-circle">
                 <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -24,18 +24,35 @@
                 </span>
             </div>
             <div class="col">
-                <div class="h2 heading" style="border: none;background: none;">
-                    {{ organization.OrganizationName }}
-                    <h3 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h3>
+                <div class="row py-2">
+                    <div class="col">
+                        <span id="heading">{{organization.OrganizationName}}</span>
+                    </div>
                 </div>
-                <h4 class="card-title">
-                    <label for="email">Organization Email: </label>
-                    {{ organization.OrganizationEmail }}
-                </h4>
-                <h4 class="card-title">
-                    <label for="email">Organization Admin Email: </label>
-                    {{ organization.OrganizationDomain }}
-                </h4>
+                <div class="row py-2">
+                    <div class="col description">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                            toc
+                        </mat-icon>
+                        <span class="card-subtitle">{{ organization.OrganizationDescription }}</span>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col">
+                        <span class="head2">
+                            <label for="email">Organization Email: </label>
+                            {{ organization.OrganizationEmail }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col">
+                        <span class="head2">
+                            <label for="email">Admin Email: </label>
+                            {{ organization.OrganizationDomain }}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
@@ -43,7 +60,7 @@
             <div *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="col" >
                 <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                        group_add
+                        groups_3
                     </mat-icon>
                 </button>
             </div>
@@ -71,7 +88,7 @@
             <div class="col pl-0 text-right">
                 <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                        group_add
+                        groups_3
                     </mat-icon>
                     Create New Team
                 </button>

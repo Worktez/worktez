@@ -11,110 +11,107 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="card" *ngIf="team.TeamStatus != -1">
+<div class="card px-2" *ngIf="team.TeamStatus != -1">
     <div class="card-body">
-            <div class="row">
-                <div class="col-6">
-                    <h2 class="card-title" (click)="openTeamDetails()">{{ team.TeamName }}</h2>
-                </div>
-                <div class="col-6 text-center">
-                    <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#deleteTeam"
-                    title="delete Team"  data-bs-toggle="tooltip">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            delete
-                        </mat-icon>
+        <div class="row">
+            <div class="col-6 p-2">
+                <span class="head2" (click)="openTeamDetails()">{{team.TeamName}}</span>
+            </div>
+            <div class="col-6 text-right">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#deleteTeam"
+                title="delete Team"  data-bs-toggle="tooltip">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        delete
+                    </mat-icon>
+                </span>
+                <span type="button" class="btn ml-2 align-bottom" (click)="openTeamDetails()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        settings
+                    </mat-icon>
+                </span>
+            </div>
+        </div>
+        <div class="row pt-3 pb-2">
+            <div class="col">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                    toc
+                </mat-icon>
+                <span class="align-middle">{{ team.TeamDescription }}</span>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col">
+                <span class="mt-2 " data-toggle="tooltip" data-placement="top" title="Team Manager">
+                    <!-- <span class="head2">
+                       Admin:  
+                    </span> -->
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                        admin_panel_settings
+                    </mat-icon>
+                    {{ team.TeamManagerEmail }}
+                </span>
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                    task_alt
+                </mat-icon>
+                Total Team Tasks : {{team.TotalTeamTasks}}
+            </div>
+        </div>
+        <div class="row py-2">
+            <div class="col">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                    timelapse
+                </mat-icon>
+                Current Sprint ID : {{ team.CurrentSprintId }}
+            </div>
+        </div>
+        <div class="row py-2">
+            <div *ngIf="rbaService.isRbaReady && rbaService.permissions.addMember" class="col">
+                <button  class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        person_add
+                    </mat-icon>
+                    Add Member
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
+                    title="Add Organisation">
+                    <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
+                    <span *ngIf="!repoLink">Integrate Github</span>
+                    <span *ngIf="repoLink">
+                        {{repoLink}}
                     </span>
-                    <span type="button" class="btn ml-2 align-bottom" (click)="openTeamDetails()">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            settings
-                        </mat-icon>
-                    </span>
-                </div>
+                </button>
             </div>
-            <div class="row">
-                <div class="col">
-                    <h3 class="card-subtitle">{{ team.TeamDescription }}</h3>
-                </div>
+        </div>
+        <div class="row py-3">
+            <div class="col">
+                <span type="button" (click)="openTeamDetails()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                        groups_3
+                    </mat-icon>
+                    Team Members :
+                </span> 
             </div>
-                
-            <div class="row mt-1">
-                <div *ngIf="rbaService.isRbaReady && rbaService.permissions.addMember" class="col">
-                    <button  class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" (click)="enableAddMember(team)" title="Add Member">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            person_add
-                        </mat-icon>
-                        Add Member
-                    </button>
-                </div>
-                <div class="col">
-                    <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
-                        title="Add Organisation">
-                        <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
-                        <span *ngIf="!repoLink">Integrate Github</span>
-                        <span *ngIf="repoLink">
-                            {{repoLink}}
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <h4 class="card-title mt-2 " data-toggle="tooltip" data-placement="top" title="Team Manager">
-                        Admin: 
-                        <!-- <app-profile-icons [profileIcon]="'email'" class="mr-2"></app-profile-icons> -->
-                        {{ team.TeamManagerEmail }}
-                    </h4>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 totalTeamTasks">
-                    <button class="btn extra2" type="button">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            task
-                        </mat-icon>
-                        Total Team Tasks : {{team.TotalTeamTasks}}
-                    </button>
-                    <!-- <span type="button" class="btn extra ml-2 align-bottom" (click)="openTeamDetails()">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            task
-                        </mat-icon>
-                    </span> Total Team Tasks
-                    <button class="counterBtns ml-5" disabled="disabled"></button> -->
-                </div>
-                <div class="col-md-6 currentSprintId">
-                    <button class="btn extra2" type="button">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            sports_score
-                        </mat-icon>
-                        Current Sprint ID : {{ team.CurrentSprintId }}
-                    </button>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col">
-                    <span type="button" class="btn ml-2 align-bottom" (click)="openTeamDetails()">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                            groups
-                        </mat-icon>
-                        Team Members :
-                    </span> 
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="card-title mt-2">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="mt-2">
                     <app-profile-pictures [emails]="team.TeamMembers"></app-profile-pictures>
-                    </h4>
-                </div>
+                </span>
             </div>
+        </div>
 
         <div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title" id="DeleteModalLabel">Confirmation Message</h2>
+                        <span class="modal-title" id="DeleteModalLabel">Confirmation Message</span>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                 <div class="modal-body">
@@ -127,6 +124,8 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel1">
     <app-add-member [teamId]="teamToAddMember.TeamId" [teamName]="teamToAddMember.TeamName"
