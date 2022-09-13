@@ -41,8 +41,19 @@
     box-shadow: var(--box-shadow-bottom);
     background: var(--secondary-bg);
     color: var(--text);
-    border-radius: 10px;
     height: 100%;
     cursor: pointer;
     border: none !important;
+}
+
+#sprintStartDate {
+    color: var(--text);
+}
+
+.lightText{
+    color: var(--table-header);
+}
+
+#dateAlign{
+    padding-left: 12px;
 }
