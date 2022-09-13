@@ -136,5 +136,8 @@
       }
     }
   },
-  "defaultProject": "worktrolly-ui"
+  "defaultProject": "worktrolly-ui",
+  "cli": {
+    "analytics": "987a6625-7460-479c-b84e-3d33d1a3ff6f"
+  }
 }

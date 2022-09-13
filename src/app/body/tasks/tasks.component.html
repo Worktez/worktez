@@ -35,7 +35,7 @@
         </ng-container>
         <div class="row">
             <ng-container *ngIf="!showLoader; else loader">
-                <div class="col">
+                <div class="col table-responsive-sm">
                     <app-data-table [dataForTable]="tasksData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
                 </div>
             </ng-container>

@@ -27,10 +27,6 @@
           data-target="#createNewTask" (click)="createTask()">
           Create Task
         </button></div>
-        <div class="float-right m-1"><button type="button" id="button" class="btn" data-toggle="modal"
-          data-target="#editModal" (click)="editMilestone()">
-          Edit Milestone
-        </button></div>
     </div>
 
     <div class="col-1">
@@ -47,52 +43,62 @@
         <div class="card p-4">
           <h1>{{milestoneData.Title}}</h1>
           <div class="row pt-2">
-            <div class="col-md-5 col">
+            <div class="col-md-12 col">
               <h4 class="heading">
-                <span class="material-icons mr-1"
-                  style="position: relative;top: 3px;">description</span>{{milestoneData.Description}}
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                  description
+                </mat-icon><span class="align-middle lightText"> {{milestoneData.Description}}</span>
               </h4>
             </div>
-                 <div class="col-md-5 col" (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
-                  <span class="label"><b>Status:</b></span>
-                  &nbsp;
-                  <span class="value" (click)="showEditMilestone( milestoneData.MilestoneId, 'MilestoneStatus')" style="cursor: pointer;">
-                      <ng-container *ngIf="milestoneIdToEdit == milestoneData.MilestoneId && fieldToEdit == 'MilestoneStatus'; else showMilestoneStatusIcon">
-                          <select class="form-control form-control-sm" [(ngModel)]="milestoneData.MilestoneStatus" [ngModelOptions]="{standalone: true}" (change)="editStatus()" (mouseleave)="clickOut()">
-                              <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
-                              <ng-container *ngFor="let item of milestoneStatusLabels">
-                                <option>{{item}}</option>
-                            </ng-container>
-                          </select>
-                      </ng-container>
-                      <ng-template #showMilestoneStatusIcon>
-                        {{milestoneData.MilestoneStatus}}
-                      </ng-template>
-                  </span>
-              </div>
           </div>
-          <h4 class="mt-1 heading">
-            <span class="material-icons mr-1" style="position: relative;top: 3px;">group</span>{{milestoneData.TeamId}}
-          </h4>
-          <div class="row pt-2">
+          <div class="row">
             <div class="col-md-5 col">
-              <p><b>Total Tasks : </b>{{totalTasks}}</p>
-              <h6 class="row card-title" id="StartDate" style="font-weight: bold; font-size: 12px;">
-                <span class="material-icons" style="font-size: 15px">date_range</span>Start Date:
-              </h6>
-              <h6 class="row card-text" id="sprintStartDate" style="font-size: 12px">
-                {{ milestoneData.StartDate }}
-              </h6>
+              <h4 class="heading">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-1">
+                  group
+                </mat-icon><span class="align-middle lightText">{{milestoneData.TeamId}}</span>
+              </h4>
+              <p>Total Tasks : <span class="lightText">{{totalTasks}}</span></p>
             </div>
             <div class="col-md-7 col">
-              <p><b>Total Completed Tasks : </b>{{totalCompletedTasks}}</p>
-
-              <h6 class="row card-title" id="EndDate" style="font-weight: bold; font-size: 12px">
-                <span class="material-icons" style="font-size: 15px">date_range</span>End Date:
-              </h6>
-              <h6 class="row card-text" id="sprintEndDate" style="font-size: 12px">
-                {{ milestoneData.EndDate }}
-              </h6>
+              <div (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" id="milestoneStatus">
+                <span class="label">Status:</span>
+                &nbsp;
+                <span class="value" (click)="showEditMilestone( milestoneData.MilestoneId, 'MilestoneStatus')" id="milestoneStatus">
+                  <ng-container *ngIf="milestoneIdToEdit == milestoneData.MilestoneId && fieldToEdit == 'MilestoneStatus'; else showMilestoneStatusIcon">
+                    <select class="form-control form-control-sm" [(ngModel)]="milestoneData.MilestoneStatus" [ngModelOptions]="{standalone: true}" (change)="editStatus()" (mouseleave)="clickOut()">
+                      <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
+                        <ng-container *ngFor="let item of milestoneStatusLabels">
+                          <option>{{item}}</option>
+                        </ng-container>
+                    </select>
+                  </ng-container>
+                  <ng-template #showMilestoneStatusIcon>
+                        <span class="lightText">{{milestoneData.MilestoneStatus}}</span>
+                  </ng-template>
+                </span>
+              </div>
+              <p id="completeTaskText">Total Completed Tasks : <span class="lightText">{{totalCompletedTasks}}</span></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <span type="button" class="btn align-bottom" id="StartDate">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    date_range
+                  </mat-icon>
+                  Start Date: <span id="sprintStartDate">{{ milestoneData.StartDate }}</span> 
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <span type="button" class="btn align-bottom" id="EndDate">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                  date_range
+                </mat-icon>
+                End Date: <span id="sprintStartDate">{{ milestoneData.EndDate }}</span> 
+              </span>
             </div>
           </div>
         </div>
@@ -132,7 +138,6 @@
     <hr>
       <ng-container *ngIf="milestoneService.taskDataStateObservable">
         <div *ngIf="milestoneService.taskData.length>0">
-    <h1 class="text-center">Tasks</h1>
     <div class=" card d-flex justify-content-center" style="width: 90%; margin: auto; position: relative;">
         <app-data-table [dataForTable]="milestoneService.taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
     </div>
