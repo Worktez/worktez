@@ -115,7 +115,7 @@ exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDa
  * @param {any} reactStatus
  * @return {any}
  */
-exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid, reactStatus) {
+exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid) {
     const setReactDetails = db.collection("Social").doc(postId).collection("Reactions").doc(reactId).set({
         CreationDate: creationDate,
         CreationTime: creationTime,
