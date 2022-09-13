@@ -61,6 +61,7 @@ export class MilestoneDetailsComponent implements OnInit {
   modalDisplayColumsn = ['Id', 'Title'];
   appkey: string = "";
   addTaskActive: boolean = true;
+  editMilestoneActive: boolean = false;
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
@@ -120,10 +121,6 @@ export class MilestoneDetailsComponent implements OnInit {
     this.location.back()
   }
 
-  clickOut() {
-    this.milestoneIdToEdit="";
-    this.submit();
-  }
 
   showEditMilestone(milestoneId: string, fieldToEdit: string) {
     this.milestoneIdToEdit = milestoneId;
@@ -168,46 +165,6 @@ export class MilestoneDetailsComponent implements OnInit {
       });
   }
 
-  editStatus(){
-    this.showLoader=true;
-
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('milestone/editMilestone');
-    callable({MilestoneId:this.milestoneId, OrgDomain:orgDomain,MilestoneStatus:this.milestoneData.MilestoneStatus}).subscribe({
-      next: (data) => {
-        this.milestoneData.MilestoneStatus=data.milestoneStatus;
-          this.showLoader=true;
-          this.milestoneIdToEdit =  "";
-          this.showLoader = false;
-      },
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName,"InternalError","Api");
-        this.showLoader = false;
-        console.error(error);
-      },
-      complete: () => console.info('Successful')
-    });
-  }
-  submit() {
-    let data = [{ label: "milestoneStatus", value: this.milestoneData.MilestoneStatus }];
-     
-      this.newVal = [this.milestoneData.MilestoneStatus];
-      this.generateChanges();
-      console.log("Inputs are valid");
-      this.editStatus();
-      this.showLoader=true;
-      this.getMilestoneDetails();
-    
-  }
-
-  generateChanges() {
-    if (this.prevVal[0] != this.newVal[0])
-      this.changedData = this.changedData + " milestoneStatus,";
-    if (this.changedData != "")
-      this.changedData = "Edited-" + this.changedData;
-    this.changedData = this.changedData.substring(0, this.changedData.length - 1) + "."
-  }
 
   setMilestoneWidth = function () {
     //Calculations are adjusted for UI Improvisations
@@ -224,6 +181,7 @@ export class MilestoneDetailsComponent implements OnInit {
     this.showLoader = true;
     this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
          this.milestoneStatusLabels = team.MilestoneStatus;
+         console.log(this.milestoneStatusLabels);
     });
     this.showLoader =false;
   }
@@ -269,5 +227,13 @@ export class MilestoneDetailsComponent implements OnInit {
     this.popupHandlerService.createNewTaskEnabled= true;
     this.popupHandlerService.resetTaskIds();
     this.popupHandlerService.milestoneId = this.milestoneId;
+  }
+
+  editMilestone(){
+    this.editMilestoneActive = true;
+  }
+
+  editMilestoneCompleted(){
+    this.getMilestoneDetails();
   }
 }

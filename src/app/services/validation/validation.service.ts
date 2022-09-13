@@ -146,6 +146,9 @@ export class ValidationService {
             case 'endTime' : {
                 return(this.checkEndTime(value));
             }
+            case 'filterName' : {
+                return(this.checkFilterName(value));
+            }
 
         }
     }
@@ -643,6 +646,17 @@ export class ValidationService {
             }
         });
         return hasNoError;
+    }
+
+    async checkFilterName(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_FILTERNAME";
+            this.errorHandlerService.addError(errorType, "Filter Name field is required")
+            return (false);
+        }
     }
 
     async checkURL(value: string[]){

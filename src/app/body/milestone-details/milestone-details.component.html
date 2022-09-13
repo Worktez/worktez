@@ -14,11 +14,10 @@
 
 <div *ngIf="milestoneDataReady" class="container-fluid">
   <div class="row header">
-    <div class="col-8">
-      <h2>Milestone Details</h2>
+    <div class="col-2">
     </div>
 
-    <div class="col-3">
+    <div class="col-9">
 
       <div class="float-right m-1"><button type="button" id="button" class="btn" (click)="activateAdd()"
           data-toggle="modal" data-target="#exampleModalCenter">
@@ -27,6 +26,10 @@
       <div class="float-right m-1"><button type="button" id="button" class="btn" data-toggle="modal"
           data-target="#createNewTask" (click)="createTask()">
           Create Task
+        </button></div>
+        <div class="float-right m-1"><button type="button" id="button" class="btn" data-toggle="modal"
+          data-target="#editModal" (click)="editMilestone()">
+          Edit Milestone
         </button></div>
     </div>
 
@@ -139,4 +142,15 @@
 <app-add-task [allTasks]="allTasks" [milestoneId]="milestoneId" (getTasks)="getTasks()"></app-add-task>
 <ng-container *ngIf="showLoader">
   <app-loader></app-loader>
+</ng-container>
+<ng-container *ngIf="editMilestoneActive" id="editModal">
+  <app-edit-milestone [title]="milestoneData.Title" 
+  [description]="milestoneData.Description"
+   [status]="milestoneData.MilestoneStatus"
+    [startDate]="milestoneData.StartDate" 
+    [endDate]="milestoneData.EndDate"
+    [statusLabels]="milestoneStatusLabels"
+    [id]="milestoneId"
+    (editMilestoneCompleted)="editMilestoneCompleted($event)">
+  </app-edit-milestone>
 </ng-container>

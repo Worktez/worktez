@@ -15,6 +15,11 @@
     font-size: 10px;
 }
 
+.photo {
+    width: 50px;
+    height: 50px;
+}
+
 .imageCheck {
     position: absolute;
     top: -15px;
@@ -24,7 +29,7 @@
 @media only screen and (max-width: 600px) {
     .card {
         width: 18rem;
-        height: 8rem;
+        height: 100%;
     }
     .card-title {
         font-size: 12px;

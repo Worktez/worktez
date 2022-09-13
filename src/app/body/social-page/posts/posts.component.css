@@ -65,3 +65,7 @@ h3 {
   color: var(--text);
   background-color: var(--secondary-bg);
 }
+
+.form-control{
+  background-color: var(--input-field);
+}

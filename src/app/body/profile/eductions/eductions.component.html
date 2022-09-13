@@ -1,0 +1,46 @@
+<div class="card p-4 mb-4">
+    <div class="row pb-2">
+        <div class="col-10">
+            <span>Education</span>
+        </div>
+        <div class="col-2">
+            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                    add
+                </mat-icon> 
+            </span>
+        </div>
+    </div>
+    <ng-container *ngIf="educations?.length == 0">
+        <div class="row">
+            <div class="col-12 mt-3">
+                <span>Add your education qualifications</span>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngFor="let education of educations; let i = index">
+        <div class="row">
+            <div class="col-10">
+                <span>{{ education.InstituteName }}</span>
+            </div>
+            <div class="col-2">
+                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
+                        edit
+                    </mat-icon> 
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7 text-muted">
+                <span>{{ education.Degree }}</span>
+            </div>
+            <div class="col-5 text-muted">
+                <ul>
+                    <li>{{ education.Start }} - {{ education.End }}</li>
+                </ul>
+            </div>
+        </div>
+    </ng-container>
+</div>
+

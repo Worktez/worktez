@@ -1,0 +1,43 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Abhishek Mishra <am1426620@gmail.com>
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+
+<div class="table-responsive  tableArea">
+    <table class="table table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="p-4">Name / Email</th>
+            <th scope="col" class="py-4">
+                <span class="bigDoj">Date Of Joining</span>
+                <span class="smallDoj">DOJ</span>
+            </th>
+            <th scope="col" class="py-4">Teams</th>
+            <th scope="col" class="py-4">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container class="member" *ngFor="let member of members">
+                <tr>
+                    <td class="align-middle">
+                        <app-suggestion-bucket [email]="member.Email" [showEmail]=" true"></app-suggestion-bucket>
+                    </td>
+                    <td class="align-middle">{{member.DateOfOnboarding}}</td>
+                    <td class="align-middle">{{member.Teams}}</td>
+                    <td class="align-middle">
+                        <app-member-card [member] = "member"></app-member-card>
+                    </td>
+                  </tr>
+            </ng-container>
+        </tbody>
+      </table>
+</div>
