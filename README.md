@@ -1,13 +1,12 @@
 # WORKTEZ - Milestone your project with the power of DevOps
 
 <p align="center">
-  <a href="https://www.producthunt.com/posts/worktez?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worktez" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=357437&theme=light" alt="Worktez - Milestone&#0032;your&#0032;project&#0032;with&#0032;the&#0032;power&#0032;of&#0032;DevOps | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-</p>
-
-<p align="center">
   <img src="https://user-images.githubusercontent.com/67370801/149733068-2071c2e2-45b5-4fa8-9355-98f0702fb689.png"> <br>
   ✨Catch our updates live on - 
   <a href="www.worktez.com"><b>www.worktez.com</b></a>
+</p>
+<p align="center">
+  <a href="https://www.producthunt.com/posts/worktez?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worktez" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=357437&theme=light" alt="Worktez - Milestone&#0032;your&#0032;project&#0032;with&#0032;the&#0032;power&#0032;of&#0032;DevOps | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 </p>
 
 ## What motivates us? :punch:
