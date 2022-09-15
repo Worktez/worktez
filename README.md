@@ -6,6 +6,8 @@
   <a href="www.worktez.com"><b>www.worktez.com</b></a>
 </p>
 
+<a href="https://www.producthunt.com/posts/worktez?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worktez" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=357437&theme=light" alt="Worktez - Milestone&#0032;your&#0032;project&#0032;with&#0032;the&#0032;power&#0032;of&#0032;DevOps | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## What motivates us? :punch:
 _At **Worktez**, we are envisioned to give milestones to your dreams._
 
