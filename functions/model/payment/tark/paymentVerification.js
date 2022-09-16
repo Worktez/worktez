@@ -15,7 +15,7 @@ exports.paymentVerification = function(request, response) {
         const signature = request.body.data.Signature;
         const id = request.body.data.Id;
         const type = request.body.data.PaymentType;
-    console.log("checking");
+
         console.log("orderId: " + orderId);
         console.log("paymentId: " + paymentId);
         console.log("signature: " + signature);
