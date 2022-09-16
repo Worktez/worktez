@@ -1,16 +1,8 @@
 /* eslint-disable max-len */
-/* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -22,19 +14,30 @@
  ***********************************************************/
 
  const {functions, cors, fastify, requestHandler} = require("../application/lib");
- const {createSubscriptionId} = require("./tark/createSubscriptionId");
- 
+ const {getSubscriptionDetails} = require("./tark/getSubscriptionDetails");
+
  /**
   * Description
-  * @param {any} "/createSubscriptionId"
+  * @param {any} "/getSubscriptionDetails"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
- fastify.post("/createSubscriptionId", (req, res) => {
-    createSubscriptionId(req, res);
+  fastify.post("/getSubscriptionDetails", (req, res) => {
+    getSubscriptionDetails(req, res);
  });
-  
+
+//  /**
+//  * Description
+//  * @param {any} "/getPaymentDetails"
+//  * @param {any} req
+//  * @param {any} res
+//  * @returns {any}
+//  */
+// fastify.post("/getPaymentDetails", (req, res) => {
+//   getPaymentDetails(req, res);
+// });
+
  /**
   * Description
   * @param {any} req

@@ -7,13 +7,16 @@
 const RazorPay = require("razorpay");
 
 const { getUser } = require("../../users/lib");
-const { setRazorDetails, generateBase62Constant } = require("../lib");
+const { generateBase64String, milliSeconds} = require("../../application/lib");
+const { setRazorpayOrderDetails, generateBase62Constant} = require("../lib");
 
-exports.razorpayPayment = function(request, response) {
+exports.generateRazorpayOrder = function(request, response) {
         const uid = request.body.data.Uid;
-        const subscriptionId = request.body.data.SubscriptionId;
+        // const subscriptionId = request.body.data.SubscriptionId;
         const amount = request.body.data.Amount;
         const userName = request.body.data.UserName;
+        const orgDomain = request.body.data.OrgDomain;
+
         console.log(amount, userName, uid);
         console.log("UID :::", uid);
         console.log("Amount :::", amount);
@@ -40,19 +43,18 @@ exports.razorpayPayment = function(request, response) {
                     receipt: generatedReceipt,
                 };
 
-                console.log(options);
                 razorpay.orders.create(options, function(err, order) {
+                    console.log(order);
                     if (err) {
                         const result = { data: err };
-                        console.log(err);
+                        console.log(result);
                         return response.status(500).send(result);
                     }
-
                     // db.collection("Registrations").doc(Uid).update({
                     //     RazorPayOrderDetails: order,
                     // });
-
-                    setRazorDetails(uid, order, subscriptionId);
+                    console.log('uid:',uid, 'order:',order,'orgDomaim:' ,orgDomain);
+                    setRazorpayOrderDetails(uid, order, orgDomain);
                     // Test credentials
                     order.key = "rzp_test_jWOofTDBbQGPFa";
 
