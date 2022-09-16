@@ -162,8 +162,40 @@ exports.checkUpdateTime = function(lastUpdated) {
     return 0;
 };
 
+exports.basicSubscription = {
+     noOfTeams : 2,
+     noOfMembers : 10,
+     emailsAndNotifications : 1000,
+     quickNotes : 200,
+     docPerTask : 1,
+     meetings : 100,
+     pDashboard : false,
+     techTag : true,
+     pReport : false,
+}
+
 const today = new Date();
 
 exports.currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
 exports.currentTime = today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds();
 exports.milliSeconds = today.getMilliseconds();
+
+// const base62 = {
+//     charset: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//         .split(""),
+//     encode: (integer) => {
+//         if (integer === 0) {
+//             return 0;
+//         }
+//         let s = [];
+//         while (integer > 0) {
+//             s = [base62.charset[integer % 62], ...s];
+//             integer = Math.floor(integer / 62);
+//         }
+//         return s.join("");
+//     },
+// };
+
+// exports.generateBase62Constant = function() {
+//     return base62.encode(milliSeconds);
+// };

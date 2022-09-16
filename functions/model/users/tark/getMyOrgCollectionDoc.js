@@ -29,6 +29,7 @@ exports.getMyOrgCollectionDocs = function(request, response) {
     let status = 200;
 
     getOrgUseAppKey(orgAppKey).then((data) => {
+        console.log(data);
         const orgDomain = data.OrganizationDomain;
         getMyOrgCollectionDoc(uid, orgDomain).then((orgDoc)=>{
             result = { data: {status: "Ok", data: orgDoc} };

@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 import { NativeWindowService } from 'src/app/services/native-window.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 
@@ -16,13 +17,13 @@ export class CurrenPlanComponent implements OnInit {
   showLoader: boolean = true;
   subscriptionId: string;
 
-  constructor(private authService: AuthService, private zone: NgZone, public router: Router, public nativeWindowServive: NativeWindowService, public functions: AngularFireFunctions, public startService: StartServiceService) { }
+  constructor(private authService: AuthService, private zone: NgZone, public router: Router, public nativeWindowServive: NativeWindowService, public functions: AngularFireFunctions, public startService: StartServiceService, private backendService: BackendService) { }
 
   ngOnInit(): void {
   }
 
   public options: any = {
-    key:'rzp_live_rSjMAYRWbLGMBk',
+    key:'',
     name: 'Worktez',
     description: 'Add Subscription',
     image: "https://worktez.com/assets/logo.png",
@@ -42,9 +43,9 @@ export class CurrenPlanComponent implements OnInit {
       const orderId = res.razorpay_order_id;
       const signature = res.razorpay_signature;
       this.zone.run(() => {
-        console.log(paymentId);
-        console.log(orderId);
-        console.log(signature);
+        console.log("paymentId",paymentId);
+        console.log("orderId",orderId);
+        console.log("signature",signature);
         this.router.navigate(["paymentStatus", this.subscriptionId]);
       })
     },
@@ -59,36 +60,17 @@ export class CurrenPlanComponent implements OnInit {
     }
   }
 
-  getSubscriptionId(){
-    const uid = this.startService.uid;
-    console.log(uid);
-    const callable = this.functions.httpsCallable('subscriptions/createSubscriptionId');
-    callable({Uid: uid}).subscribe({
-      next: (result) => {
-        this.subscriptionId = result.data;
-        console.log(result.data);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-      complete: () => {
-        this.setOrderWithRazorpay();
-      }
-    })
-  }
-
   pay(){
     this.rzp1 = new this.nativeWindowServive.nativeWindow.Razorpay(this.options);
     this.rzp1.open();
   }
 
   setOrderWithRazorpay() {
-   console.log(this.subscriptionId);
    const uid = this.startService.uid;
    const userName = this.authService.userAppSetting.Username;
-   console.log(uid, userName);
-   const callable = this.functions.httpsCallable('payment/razorpayPayment');
-   callable({SubscriptionId:this.subscriptionId, Uid: uid, Amount: "49", UserName: userName}).subscribe({
+   const orgDomain = this.backendService.getOrganizationDomain();
+   const callable = this.functions.httpsCallable('payment/generateRazorpayOrder');
+   callable({OrgDomain: orgDomain,Uid: uid, Amount: "49", UserName: userName, SubscriptionId: this.subscriptionId}).subscribe({
      next: (result) => {
       console.log(result);
       this.options.order_id = result.id;

@@ -16,7 +16,7 @@
  const {functions, cors, fastify, requestHandler} = require("../application/lib");
  const {addPaymentDetails} = require("./tark/addPaymentDetails");
  const {paymentVerification} = require("./tark/paymentVerification");
- const {razorpayPayment} = require("./tark/razorpayPayment");
+ const {generateRazorpayOrder} = require("./tark/generateRazorpayOrder");
  //  const {getPaymentDetails} = require("./tark/getPaymentDetails");
 
  /**
@@ -43,13 +43,13 @@
 
  /**
   * Description
-  * @param {any} "/razorpayPayment"
+  * @param {any} "/generateRazorpayOrder"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
-  fastify.post("/razorpayPayment", (req, res) => {
-    razorpayPayment(req, res);
+  fastify.post("/generateRazorpayOrder", (req, res) => {
+    generateRazorpayOrder(req, res);
  });
 
 //  /**
