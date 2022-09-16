@@ -3,6 +3,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { Location } from '@angular/common';
+import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 @Component({
   selector: 'app-payment-status',
   templateUrl: './payment-status.component.html',
@@ -14,7 +15,7 @@ export class PaymentStatusComponent implements OnInit {
   signature: string;
   paymentStatus: string ="waiting";
   subscriptionId: string;
-  constructor(public route: ActivatedRoute, public functions: AngularFireFunctions, public router: Router, public startService: StartServiceService, private location: Location) { }
+  constructor(public route: ActivatedRoute, public functions: AngularFireFunctions, public router: Router, public startService: StartServiceService, private location: Location, private subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
     this.orderId = this.route.snapshot.params['orderId'];
@@ -26,6 +27,7 @@ export class PaymentStatusComponent implements OnInit {
 
   verifyPayment(){
     const uid = this.startService.uid;
+    this.subscriptionId = this.subscriptionService.subscriptionPackage.SubscriptionId;
     const callable = this.functions.httpsCallable("payment/paymentVerification");
     callable({OrderId: this.orderId, PaymentId:this.paymentId, Signature: this.signature, Id: this.subscriptionId}).subscribe({
       next: (data) => {

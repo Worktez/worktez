@@ -26,9 +26,8 @@ const { db } = require("../application/lib");
  * @return {any}
  */
  exports.setSubscription = function(subscriptionData, orgDomain, uid, orgAppKey, subscriptionId, graceNotifications, expiresOn) {
-  console.log(orgDomain, uid, orgId, subscriptionId, graceNotifications, expiresOn);
-  console.log("subscriptionData:", subscriptionData, orgDomain,);
-    const setSubscriptionDoc = db.collection("Subscriptions").doc(orgDomain).set({
+  console.log(orgDomain, uid, orgAppKey ,subscriptionId, graceNotifications, expiresOn);
+    const setSubscriptionDoc = db.collection("Subscriptions").doc(orgAppKey).set({
       SubscriptionId: subscriptionId,
       Uid: uid,
       OrgAppKey: orgAppKey,
@@ -53,8 +52,8 @@ const { db } = require("../application/lib");
  * @param {any} orgDomain
  * @return {any}
  */
-  exports. getSubscriptionDetails = function(orgDomain) {
-    const getSubscriptionPromise = db.collection("Subscriptions").doc(orgDomain).get().then((doc) => {
+  exports. getSubscriptionDetails = function(orgAppKey) {
+    const getSubscriptionPromise = db.collection("Subscriptions").doc(orgAppKey).get().then((doc) => {
       if(doc.exists) return doc.data();
       else return;
     });
