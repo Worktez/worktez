@@ -172,6 +172,13 @@ import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-d
 import { PricingComponent } from './body/pricing/pricing.component';
 import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
 import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
+import { EductionsComponent } from './body/profile/eductions/eductions.component';
+import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
+import { ProjectsComponent } from './body/profile/projects/projects.component';
+import { SkillsComponent } from './body/profile/skills/skills.component';
+import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
+import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
+import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
 
 @NgModule({
   declarations: [
@@ -310,6 +317,13 @@ import { PaymentStatusComponent } from './body/payment-status/payment-status.com
     PricingComponent,
     CurrenPlanComponent,
     PaymentStatusComponent,
+    EductionsComponent,
+    WorkEXPComponent,
+    ProjectsComponent,
+    SkillsComponent,
+    MembersAccessComponent,
+    MemberCardComponent,
+    EditMilestoneComponent,
   ],
   imports: [
     BrowserModule,

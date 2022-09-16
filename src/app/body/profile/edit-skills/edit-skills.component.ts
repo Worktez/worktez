@@ -32,7 +32,7 @@ export class EditSkillsComponent implements OnInit {
   @Input('email') email: string;
   @Input('skills') skills: string;
 
-  @Output() editSkillsCompleted = new EventEmitter<{ completed: boolean }>();
+  @Output() editSkillsCompleted = new EventEmitter<{ completed: boolean, Skills: string }>();
   componentName:string = "PROFILE"
   skill: string
 
@@ -79,6 +79,6 @@ export class EditSkillsComponent implements OnInit {
   }
   
   editSkillCompleted() {
-    this.editSkillsCompleted.emit({ completed: true });
+    this.editSkillsCompleted.emit({ completed: true, Skills: this.skill });
   }
 }

@@ -12,30 +12,47 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="row" id="mOrgContainer" *ngIf="!showLoader">
-    <div class="col-md-2 col-1"></div>
+    <div class="col-md-2 col-0"></div>
     <div class="col">
         <div class="row">
-            <div class="col-3">
-                <img src="{{ organization.OrganizationLogoURL }}" alt="" id="orgImg" class="rounded-circle">
-                <span *ngIf="sameUser" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+            <div class="col-3 align-middle">
+                <img src="{{ organization.OrganizationLogoURL }}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="" id="orgImg" class="rounded-circle">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         edit
                     </mat-icon>
                 </span>
             </div>
             <div class="col">
-                <div class="h2 heading" style="border: none;background: none;">
-                    {{ organization.OrganizationName }}
-                    <h3 class="card-subtitle text-muted">{{ organization.OrganizationDescription }}</h3>
+                <div class="row py-2">
+                    <div class="col">
+                        <span id="heading">{{organization.OrganizationName}}</span>
+                    </div>
                 </div>
-                <h4 class="card-title">
-                    <label for="email">Organization Email: </label>
-                    {{ organization.OrganizationEmail }}
-                </h4>
-                <h4 class="card-title">
-                    <label for="email">Organization Admin Email: </label>
-                    {{ organization.OrganizationDomain }}
-                </h4>
+                <div class="row py-2">
+                    <div class="col description">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                            toc
+                        </mat-icon>
+                        <span class="card-subtitle">{{ organization.OrganizationDescription }}</span>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col">
+                        <span class="head2">
+                            <label for="email">Organization Email: </label>
+                            {{ organization.OrganizationEmail }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col">
+                        <span class="head2">
+                            <label for="email">Admin Email: </label>
+                            {{ organization.OrganizationDomain }}
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="col">
                 <div class="col-sm-12">
@@ -58,24 +75,38 @@
         </div>
         <hr>
         <div class="row p-2">
-            <div class="col-md-7">
+            <div *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="col" >
+                <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        groups_3
+                    </mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-md-8 col-12">
                 <ul class="nav">
-                    <li class="nav-item mx-2">
+                    <li class="nav-item ">
                         <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
                             Teams
                         </a>
                     </li>
-                    <li class="nav-item mx-2">
+                    <li class="nav-item ">
                         <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
                             Documents
+                        </a>
+                    </li>
+                    <li class="nav-item " *ngIf="membersReady && rbaService.permissions.viewMemberRoles">
+                        <a (click)="switchView('showMemberRoles')" [ngClass]="{'nav-link ': true, 'activeBg': showMemberRoles}" aria-current="page">
+                            Member Access
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="col pl-0 text-right">
-                <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                        group_add
+                        groups_3
                     </mat-icon>
                     Create New Team
                 </button>
@@ -83,18 +114,23 @@
         </div>
         <div class="row p-2">
             <ng-container *ngIf="showTeamsDetails">
-                    <ng-container *ngFor="let team of teams">
-                        <div class="col-md-auto my-3 team-cards">
-                            <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
-                        </div>
-                    </ng-container>
+                <ng-container *ngFor="let team of teams">
+                    <div class="col-md-auto my-3">
+                        <app-teams-card [team]="team" (updatedDetails)="updatedDetails($event)"></app-teams-card>
+                    </div>
+                </ng-container>
             </ng-container>
             <ng-container *ngIf="showOrgDocuments">
                 <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
             </ng-container>
+            <ng-container *ngIf="showMemberRoles && membersReady">
+                <div class="col my-3">
+                    <app-members-access [members]="members" (updatedDetails)="updatedDetails($event)"></app-members-access>
+                </div>
+            </ng-container>
         </div>
     </div>
-    <div class="col-md-2 col-1"></div>
+    <div class="col-md-2 col-0"></div>
 </div>
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>

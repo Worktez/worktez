@@ -21,6 +21,7 @@
 // eslint-disable-next-line no-dupe-else-if
 
 const { getOrg } = require("../../organization/lib");
+const { createMember } = require("../../organization/tark/createMember");
 const { getTeam } = require("../../teams/lib");
 const { getUserUseEmail, updateUser } = require("../lib");
 const { updateTeamInOrganizations } = require("./updateTeamInOrganizations");
@@ -48,9 +49,16 @@ exports.verifyUser = function(request, response) {
                         SelectedTeamId: teamId,
                         SelectedOrgAppKey: appKey,
                     };
+                    const createMemberInput = {
+                        orgDomain: organizationDomain,
+                        email: userEmail,
+                        isAdmin: false,
+                        teamManager: false,
+                        teams: [teamId],
+                    };
                     updateUser(updateUserInputJson, userID);
-                    // setSchedularUnit("UserPerformanceChart", appKey, userEmail, teamId, organizationDomain);
                     updateTeamInOrganizations(userID, organizationDomain, appKey, teamId);
+                    createMember(createMemberInput);
                 }).catch((error) => {
                     status = 500;
                     console.log("Error:", error);

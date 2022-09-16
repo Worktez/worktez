@@ -13,7 +13,6 @@
 ***********************************************************/
 .btn {
     color: var(--text);
-    z-index: 1;
 }
 
 .btn:hover {
@@ -29,22 +28,27 @@
     background-color: var(--secondary-bg);
 }
 
-h2 {
+/* h2 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: var(--text);
 }
 
 h4 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
+} */
 
 button {
-    background-color: var(--secondary-color);
-    border: var(--primary-border);
+    background-color: var(--secondary-bg);
     color: var(--button-text);
+    width: 100%;
 }
 
-ul {
-    margin: 0;
-    padding: 0;
+@media only screen and (max-width: 600px) {
+    .card {
+        width: 23rem;
+    }
+
+    button {
+        width: 23rem;
+    }
 }

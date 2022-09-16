@@ -22,6 +22,7 @@ import { AuthService } from '../auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
 import { SubscriptionService } from '../subscription/subscription.service';
+import { RBAService } from '../RBA/rba.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +57,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private quickNotes: QuickNotesService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService) { }
+  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -73,6 +74,7 @@ export class StartServiceService {
           this.user = data
           this.authService.user = data;
           this.authService.getUserSettings();
+          this.rbaService.setDefaultPermissions();
           this.loadUserAppSettings();
         } else {
           this.userReady = false;
@@ -126,6 +128,7 @@ export class StartServiceService {
       this.authService.themeService.changeTheme(AppTheme);
       this.quickNotes.getQuickNotes();
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
+      this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
     } else {
       this.authService.organizationAvailable = false;
         this.router.navigate(['/Social']);

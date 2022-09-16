@@ -19,11 +19,13 @@
                 <div class="col-6 col-md-6 pl-2">
                     <h5 class="modal-title pl-3" id="openEditPropertiesTitle">Edit Filter</h5>
                 </div>
-                <div class="col-6 col-md-6 pl-3">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons" (click)="editFilterDone()">close</span>
-                    </button>
-                </div>
+                    <div class="Close" data-dismiss="modal" aria-label="Close">
+                        <span class="btn">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="editFilterDone()" title="Close">
+                                close
+                            </mat-icon>
+                        </span>
+                    </div>
             </div>
             <div class="container-fluid modal-body px-5" id="openEditPropertiesContainer">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
@@ -120,7 +122,7 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn" type="button" data-dismiss="modal"
+                            <button class="btn" id="button" data-dismiss="modal"
                                 (click)="editFilterDone()">Close</button>
                         </div>
                         <div class="col-md-4"></div>

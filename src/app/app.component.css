@@ -29,7 +29,7 @@ body {
     --button-text: #1B1F23;
     --header-text: #838CAB;
     --button-text-hover: #5559D9;
-    --primary-bg: #F6F7F9;
+    --primary-bg: #f4f5f7;
     --secondary-bg: #FFFFFF;
     --secondary-header-bg: rgba(92, 96, 236, 0.2);
     --primary-border: 1px solid rgba(84, 84, 84, 0.17);
@@ -42,8 +42,8 @@ body {
     --button-hover-bg: #fff;
     --progress-bg: #5C60EC;
     --progress-left-bg: rgba(70, 70, 70, 0.23);
-    --card-bg: #F6F7F9;
-    --input-field: #F6F7F9;
+    --card-bg: #f4f5f7;
+    --input-field: #f4f5f7;
     --heading-text: #272845;
     --danger-color: #c62828;
     --button-bg: #4286f43f;
@@ -78,8 +78,8 @@ body {
     --progress-bg: #5C60EC;
     --progress-left-bg: rgba(17, 23, 27, 0.733);
     --card-bg: #11171B;
-    --input-field: #1E1F28;
-    --heading-text: #F6F7F9;
+    --input-field: #11171B;
+    --heading-text: #f4f5f7;
     --danger-color: #c62828;
     --button-bg: #4286f43f;
     --button-text2: #4285F4;

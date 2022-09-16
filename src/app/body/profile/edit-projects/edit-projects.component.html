@@ -17,7 +17,7 @@
                 <ng-container *ngIf="projectModalMode == 'add'">
                     <div class="row px-3 pb-0 pt-3">
                         <div class="col-md-10 col-10">
-                            <h2>Add Your Project</h2>
+                            <span>Add Your Project</span>
                         </div>
                         <div class="col-md-1 col-2 text-right ">
                             <span class="btn">
@@ -31,7 +31,7 @@
                 <ng-container *ngIf="projectModalMode == 'edit'">
                     <div class="row px-3 pb-0 pt-2">
                         <div class="col-md-10 col-10">
-                            <h2>Edit Project</h2>
+                            <span>Edit Project</span>
                         </div>
                         <div class="col-md-1 col-2 text-right ">
                             <span class="btn">
@@ -86,7 +86,9 @@
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-7">
-                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Project Updated Successfully!</div>
+                            <div class="row">
+                                <span>Project updated successfully!</span>
+                            </div>
                         </div>
                         <div class="col-md-2"></div>
                     </div>
