@@ -32,7 +32,7 @@ jobs:
       - name: Install ESLint
         run: |
           npm install eslint@8.10.0 --force
-          npm install eslint-config-google --save-dev
+          npm install eslint-config-google --force
 
       - name: Run ESLint
         run: cd functions/ && npx eslint .
