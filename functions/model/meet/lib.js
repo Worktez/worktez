@@ -125,40 +125,6 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
 
 /**
  * Description
- * @param {any} meetDocId
- * @param {any} orgDomain
- * @param {any} teamId
- * @param {any} teamMembers
- * @param {any} title
- * @param {any} startTime
- * @param {any} endTime
- * @param {any} uid
- * @param {any} hostName
- * @param {any} description
- * @param {any} date
- * @param {any} roomId
- * @return {any}
- */
- exports.setUserMeetAtMeetWorktez = function(meetDocId, teamMembers, title, startTime, endTime, hostName, description, date, roomId) {
-  const setMeetDoc1 = db.collection("Users").doc(uid).collection("Meet").doc(meetDocId).set({
-    MeetDocId: meetDocId,
-    OrgDomain: orgDomain,
-    TeamId: teamId,
-    TeamMembers: teamMembers,
-    Title: title,
-    StartTime: startTime,
-    EndTime: endTime,
-    HostName: hostName,
-    Description: description,
-    Date: date,
-    Uid: uid,
-    RoomId: roomId,
-  });
-  return Promise.resolve(setMeetDoc1);
-};
-
-/**
- * Description
  * @param {any} inputJson
  * @param {any} orgDomain
  * @param {any} title
