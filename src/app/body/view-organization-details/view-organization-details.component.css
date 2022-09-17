@@ -15,16 +15,6 @@
     background-color: var(--primary-bg);
     font-family: var(--font);
 }
-
-.card {
-    color: var(--text);
-    background-color: var(--secondary-bg);
-}
-
-.card-title {
-    color: var(--text);
-}
-
 .nav-link {
     color: var(--text);
     cursor: pointer;
@@ -58,7 +48,18 @@
 }
 
 
-.heading {
+#heading {
+    font-size: 18px;
+    font-family: var(--font);
+    color: var(--text);
+}
+
+.head2 {
+    font-size: 14px;
+    color: var(--text);
+}
+
+.description {
     color: var(--text);
 }
 
@@ -68,12 +69,8 @@ hr {
 }
 
 #orgImg {
-    height: 122px;
-    width: 122px;
-}
-
-span{
-    color: var(--text);
+    height: 5rem;
+    width: 5rem;
 }
 
 .btn {
@@ -94,6 +91,10 @@ span{
     color: #FFFFFF;
     display: none;
 }
+
+/* label {
+    font-weight: 500;
+} */
 
 @media only screen and (max-width: 600px) {
     .extra2 {

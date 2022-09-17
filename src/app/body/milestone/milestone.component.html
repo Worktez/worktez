@@ -19,24 +19,22 @@
           <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
       </ng-container>
   </div>
-<div class="d-flex justify-content-center m-2">
-  <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="acitivateAdd()">Add Milestone</button>
+  <div class="d-flex justify-content-center m-2">
+    <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="acitivateAdd()">Add Milestone</button>
+  </div>
 </div>
-  
-</div>
-<div id="milestoneContainer" class="m-4">
+<div id="milestoneContainer" class="m-2">
   <div *ngIf="milestoneData.length == 0">
     <h3 class="text-center pt-5">No Milestones to Show!</h3>
     <ng-template *ngIf="showLoader">
       <app-loader></app-loader>
     </ng-template>  
-  
   </div>
-    <div class="row p-4" *ngIf="milestoneData.length > 0">
+    <div class="row pt-2 px-4" *ngIf="milestoneData.length > 0">
       <ng-container *ngFor="let milestone of milestoneData">
- <div class="col-md-4 p-3">
-
-       <app-milestone-card [milestone]="milestone"></app-milestone-card></div>
+        <div class="col-md-4 p-3">
+          <app-milestone-card [milestone]="milestone"></app-milestone-card>
+        </div>
       </ng-container>
     </div>
 </div>

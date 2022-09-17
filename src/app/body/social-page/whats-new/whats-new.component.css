@@ -17,6 +17,11 @@ hr {
     border-bottom: 2px solid var(--scrollbar-color);
     margin-bottom: 1rem;
 }
+
+.head {
+    color:var(--primary-color);
+}
+
 .whatsnew::-webkit-scrollbar {
     width: 6px;              
   }

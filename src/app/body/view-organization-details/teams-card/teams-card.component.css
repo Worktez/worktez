@@ -90,6 +90,16 @@
     color: var(--text);
 }
 
+/* .head {
+    font-size: 18px;
+} */
+
+.head2 {
+    color: var(--text);
+    font-size: 18px;
+    font-family: var(--font);
+}
+
 @media only screen and (max-width: 600px) {
     .card {
         width: 23rem;
@@ -102,7 +112,7 @@
         font-size: 12px;
         font-weight: normal;
     }
-    .card-title{
+    .head2{
         font-size: 14px;
     }
     .add-member{
