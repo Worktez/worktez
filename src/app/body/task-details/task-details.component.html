@@ -77,11 +77,11 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                                         <div class="reopenTask "
                                             *ngIf="startService.userReady && task.Status=='Completed' && !showLoader">
-                                            <button class="dropdown-item" type="button" (click)="reopenTask()">Reopen Task</button>
+                                            <button  class="dropdown-item" type="button" (click)="reopenTask()">Reopen Task</button>
                                         </div>
                                         <div class="editTask"
                                             *ngIf="startService.userReady && task.Status!=='Completed'">
-                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                            <button *ngIf="rbaService.isRbaReady && rbaService.permissions.editTask" class="dropdown-item" type="button" data-toggle="modal"
                                                 data-target="#exampleModalCenter" (click)="editTask()">Edit Task</button>
                                         </div>
                                         <div class="cloneTask"
@@ -100,7 +100,7 @@
                                                 data-toggle="modal" data-target="#createNewTask">Add SubTask</button>
                                         </div>
                                         <div class="delete" *ngIf="startService.userReady && task.SprintNumber !== -2">
-                                            <button class="dropdown-item" type="button" data-toggle="modal"
+                                            <button *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTask" class="dropdown-item" type="button" data-toggle="modal"
                                             data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
                                         </div>
                                     </div>
@@ -142,10 +142,8 @@
         <div class="row">
             <div class="col-md-6 pt-4 part" style="overflow-y:auto; max-height: 610px;cursor: default;">
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-12">
                         <span id="labelId">{{task.Id}}</span>
-                    </div>
-                    <div class="col">
                         <span id="label" class="value">{{task.Title}}</span>
                     </div>
                 </div>

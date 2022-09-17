@@ -19,6 +19,7 @@ import { PopupHandlerService } from '../services/popup-handler/popup-handler.ser
 import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from '../services/start/start-service.service';
+import { RBAService } from '../services/RBA/rba.service';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class HeaderComponent implements OnInit {
   isHomePage: boolean = false;
   userReady: boolean = false;
 
-  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public rbaService :RBAService) { }
 
   ngOnInit(): void {
     if (this.router.url == '/') {

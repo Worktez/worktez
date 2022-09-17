@@ -11,20 +11,23 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.card {
+    background: var(--secondary-bg);
+    color: var(--text);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+}
+
+.card:hover {
+    border: 1px solid var(--primary-color);
+}
+
 #mOrgContainer {
     background-color: var(--primary-bg);
     font-family: var(--font);
 }
-
-.card {
-    color: var(--text);
-    background-color: var(--secondary-bg);
-}
-
-.card-title {
-    color: var(--text);
-}
-
 .nav-link {
     color: var(--text);
     cursor: pointer;
@@ -58,23 +61,34 @@
 }
 
 
-.heading {
+#heading {
+    font-size: 18px;
+    font-family: var(--font);
+    color: var(--text);
+}
+
+.head2 {
+    font-size: 14px;
+    color: var(--text);
+}
+
+.description {
     color: var(--text);
 }
 
 hr {
-    margin: 0;
     border: none;
     border-bottom: 2px solid var(--scrollbar-color);
 }
 
 #orgImg {
-    height: 122px;
-    width: 122px;
+    height: 5rem;
+    width: 5rem;
 }
 
-span{
-    color: var(--text);
+#currentPlan{
+    width: auto;
+    height: 12vh;
 }
 
 .btn {
@@ -89,4 +103,26 @@ span{
 .extra {
     background-color: var(--primary-color);
     color: #FFFFFF;
+}
+.extra2 {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    display: none;
+}
+
+/* label {
+    font-weight: 500;
+} */
+
+@media only screen and (max-width: 600px) {
+    .extra2 {
+        display: block;
+    }
+    .extra {
+        display: none;
+    }
+    .nav-link {
+        font-size: 14px;
+    }
+
 }

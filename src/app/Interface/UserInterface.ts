@@ -1,3 +1,5 @@
+import { ActivatedRoute } from "@angular/router";
+
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
@@ -103,6 +105,16 @@ export const defaultUser = {
     Username: "",
 };
 
+export interface MemberData{
+    Active: boolean;
+    DateOfOnboarding: string;
+    DateOfExit: string;
+    IsAdmin: boolean;
+    TeamManager: boolean;
+    Teams: [];
+    Email: string;
+}
+
 export interface QuickNote {
     DocId: string;
     LastUpdatedDate: string;
@@ -111,5 +123,44 @@ export interface QuickNote {
     Status: string;
     Title: string;
 }
+
+export interface Permissions {
+    addMember: boolean;
+    removeMember: boolean;
+    createTask: boolean;
+    editTask: boolean;
+    deleteTask: boolean;
+    createTeam: boolean;
+    editTeam: boolean;
+    deleteTeam: boolean;
+    createNewSprint: boolean;
+    completeSprint: boolean;
+    editOrganization: boolean;
+    viewMemberRoles: boolean;
+    editMemberRoles: boolean;
+    addDefaultLabel: boolean;
+    createNewLabel: boolean;
+    editLabel: boolean;
+    deleteLabel: boolean;
+}
+export const defaultPermissions = {
+    addMember: true,
+    removeMember:true,
+    createTask: true,
+    editTask: true,
+    deleteTask: true,
+    createTeam: true,
+    editTeam:true,
+    deleteTeam: true,
+    createNewSprint: true,
+    completeSprint: true,
+    editOrganization: true,
+    viewMemberRoles: true,
+    editMemberRoles:true,
+    addDefaultLabel: true,
+    createNewLabel: true,
+    editLabel: true,
+    deleteLabel: true,
+  };
 
  

@@ -65,7 +65,7 @@ exports.createTeam = function(request, response) {
 
         const prom1 = getTeam(orgDomain, teamName).then((team) => {
             if (team == undefined) {
-                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then((data)=>{
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then(()=>{
                     createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
                     // setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
                     // setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
@@ -99,7 +99,7 @@ exports.createTeam = function(request, response) {
         console.log("Error:", error);
     });
 
-    const promise3 = getUser(uid, "").then((userDoc) => {
+    const promise3 = getUser(uid, "").then(() => {
         const userUpdateJson = {
             SelectedTeamId: teamId,
         };

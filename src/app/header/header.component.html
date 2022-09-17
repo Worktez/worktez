@@ -55,14 +55,14 @@
                         <li class="nav-item px-1">
                             <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="socialPage()">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                    tag
+                                    workspace_premium
                                 </mat-icon> Tech Tag
                             </a>
                         </li>
                     </ng-container>
                     <ng-container *ngIf="(backendService.organizationsData | async)">
-                        <li class="nav-item px-1" *ngIf="startService.teamIdExists">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()"
+                        <li  class="nav-item px-1" *ngIf="startService.teamIdExists">
+                            <a *ngIf="rbaService.isRbaReady && rbaService.permissions.createTask" class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()"
                                 data-toggle="modal" data-target="#createNewTask">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     add_box

@@ -26,7 +26,7 @@ exports.patch10 = function(request, response) {
   const newFieldValueType = request.body.data.NewFieldValueType;
   const uid = request.body.data.Uid;
 
-  const promise1 = getMyOrgCollection(uid).then((orgData) => {
+  const promise1 = getMyOrgCollection(uid).then(() => {
     data = {};
     if (newFieldValueType == "Array") {
       data[newfield] = [];
