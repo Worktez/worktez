@@ -1,4 +1,4 @@
-const {getApplicationData, updateApplication, generateBase64String, milliSeconds} = require("../../application/lib");
+const {generateBase64String, milliSeconds} = require("../../application/lib");
 const { setSubscription } = require("../lib");
 
 exports.addSubscription = function(orgAppKey, uid, subscriptionData, orgDomain) {

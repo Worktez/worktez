@@ -66,31 +66,51 @@ export class CurrenPlanComponent implements OnInit {
     this.rzp1.open();
   }
 
-  setOrderWithRazorpay() {
+  upgradeSubscriptionToStandard(){
     const subscriptionId = this.subscriptionService.subscriptionPackage.SubscriptionId;
-    console.log(subscriptionId); 
     const uid = this.startService.uid;
+    console.log( uid, subscriptionId)
     const userName = this.authService.userAppSetting.Username;
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('payment/generateRazorpayOrder');
-    callable({OrgDomain: orgDomain,Uid: uid, Amount: "49", UserName: userName, SubscriptionId: subscriptionId}).subscribe({
-      next: (result) => {
-        console.log(result);
-        this.options.order_id = result.id;
-        this.options.amount = result.amount;
-        this.options.key = result.key;
-        this.options.prefill.name = this.authService.userAppSetting.Username;
-        this.options.prefill.email = this.authService.user.email;
-        this.options.prefill.contact = this.authService.user.phoneNumber;
+    const callable = this.functions.httpsCallable('subscriptions/upgradeSubscriptionsToStandard');
+    callable({Uid: uid, SubscriptionId: subscriptionId,
+    UserName: userName}).subscribe({
+      next: (data) => {
+        this.pay();
       },
       error: (error) => {
         console.log(error);
       },
-      complete: () => {
-        this.pay();
+      complete:  () => {
+
       }
     })
+  }
 
-    }
+  // setOrderWithRazorpay() {
+  //   const subscriptionId = this.subscriptionService.subscriptionPackage.SubscriptionId;
+  //   console.log(subscriptionId); 
+  //   const uid = this.startService.uid;
+  //   const userName = this.authService.userAppSetting.Username;
+  //   const orgDomain = this.backendService.getOrganizationDomain();
+  //   const callable = this.functions.httpsCallable('payment/generateRazorpayOrder');
+  //   callable({OrgDomain: orgDomain,Uid: uid, Amount: "49", UserName: userName, SubscriptionId: subscriptionId}).subscribe({
+  //     next: (result) => {
+  //       console.log(result);
+  //       this.options.order_id = result.id;
+  //       this.options.amount = result.amount;
+  //       this.options.key = result.key;
+  //       this.options.prefill.name = this.authService.userAppSetting.Username;
+  //       this.options.prefill.email = this.authService.user.email;
+  //       this.options.prefill.contact = this.authService.user.phoneNumber;
+  //     },
+  //     error: (error) => {
+  //       console.log(error);
+  //     },
+  //     complete: () => {
+  //       this.pay();
+  //     }
+  //   })
+
+  //   }
 
 }

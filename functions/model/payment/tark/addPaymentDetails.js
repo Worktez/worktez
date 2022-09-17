@@ -19,11 +19,10 @@ exports.addPaymentDetails = function(request, response) {
       paymentCounter = paymentCounter + 1;
       const paymentId = "Pay" + paymentCounter;
 
-      setPayment(amount, userUid, subscriptionId, paymentId, userEmailAddress, paymentTime, paymentDate).then((paymentData) => {
+      setPayment(amount, userUid, subscriptionId, paymentId, userEmailAddress, paymentTime, paymentDate).then(() => {
         console.log("payment added successfully");
       }).catch((error) => {
         result = {data: error};
-        status = 500;
         console.error("Error", error);
       });
       const inputJson = {

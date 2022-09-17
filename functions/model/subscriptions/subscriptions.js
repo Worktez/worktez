@@ -15,6 +15,7 @@
 
  const {functions, cors, fastify, requestHandler} = require("../application/lib");
  const {getSubscriptionDetails} = require("./tark/getSubscriptionDetails");
+ const {upgradeSubscriptionsToStandard} = require("./tark/upgradeSubscriptionsToStandard")
 
  /**
   * Description
@@ -25,6 +26,17 @@
   */
   fastify.post("/getSubscriptionDetails", (req, res) => {
     getSubscriptionDetails(req, res);
+ });
+
+ /**
+  * Description
+  * @param {any} "/upgradeSubscriptionsToStandard"
+  * @param {any} req
+  * @param {any} res
+  * @returns {any}
+  */
+  fastify.post("/upgradeSubscriptionsToStandard", (req, res) => {
+    upgradeSubscriptionsToStandard(req, res);
  });
 
 //  /**
