@@ -35,7 +35,7 @@ const { requestDemo } = require("./model/requestDemo/requestDemo");
 const { meet } = require("./model/meet/meet");
 
 exports.users = users;
-exports.tasks = tasks;
+exports.tasks = tasks
 exports.organization = organization;
 exports.teams = teams;
 exports.sprints = sprints;
