@@ -15,10 +15,12 @@
     background-color: var(--header-bg);
     color: var(--text);
     box-shadow: 1px 1px 4px 1px var(--box-shadow-color);
+    font-family: var(--font);
 }
 
 .sHeader {
     background-color: var(--header-bg);
+    font-family: var(--font);
     /* box-shadow: 1px 1px 4px 1px #ebecefa5; */
 }
 
@@ -28,15 +30,18 @@
 
 .collapse {
     background-color: var(--header-bg);
+    font-family: var(--font);
 }
 
 .dropdown-menu {
     background-color: var(--secondary-bg);
+    font-family: var(--font);
 }
 
 .dropdown-item {
     color: var(--button-text);
     font-size: 12px;
+    font-family: var(--font);
 }
 
 .dropdown-item:hover {
@@ -47,19 +52,23 @@
 .nav-item {
     display: inline-flex;
     font-size: 12px;
+    font-family: var(--font);
 }
 .nav-link {
     color: var(--header-text);
     font-size: 12px;
+    font-family: var(--font);
 }
 .nav-btn{
     background-color: var(--hover) !important;
     color: white;
     margin-right: 20px;
+    font-family: var(--font);
 }
 .btn{
     background-color: var(--secondary-color);
     font-size: 12px;
+    font-family: var(--font);
 }
 #brand_img{
     width:125px;
@@ -69,6 +78,7 @@
 #navbarDropdownTeam,
 #navbarDropdownCreate {
     color: var(--button-text);
+    font-family: var(--font);
 }
 
 #navbarDropdownBoards:hover,
@@ -78,16 +88,19 @@ a:hover,
 label:hover {
     color: var(--button-text-hover);
     cursor: pointer;
+    font-family: var(--font);
 }
 
 .btn {
     background-color: var(--primary-color);
     color: #ffffff;
+    font-family: var(--font);
 }
 
 .btn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
+    font-family: var(--font);
 }
 
 #notificationCenter {
@@ -101,6 +114,7 @@ label:hover {
     color: var(--text);
     border-radius: 2%;
     box-shadow: var(--box-shadow-bottom);
+    font-family: var(--font);
 }
 
 .ScheduleBtn{
@@ -117,16 +131,19 @@ label:hover {
     width:194px;
     margin-left: 50px;
     margin-top: 25px;
+    font-family: var(--font);
 }
 
 .ScheduleBtn-outline-secondary{
     color: #6c757d;
     border-color: #6c757d;
+    font-family: var(--font);
 }
 
 .ScheduleBtn:hover{
     color: #ffffff;
     background-color: #6c757d;
+    font-family: var(--font);
 }
 
 .meetScrollBar::-webkit-scrollbar-track {

@@ -12,53 +12,67 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 
-<div *ngIf="milestoneDataReady" class="container-fluid">
-  <div class="row header">
-    <div class="col-2">
+<div *ngIf="milestoneDataReady" class="row">
+  <div class="col-1"></div>
+  <div class="col">
+    <div class="row header">
+      <div class="col-2">
+      </div>
+      <div class="col-9">
+        <div class="float-right m-1">
+          <button type="button" id="button" class="btn" (click)="activateAdd()"
+            data-toggle="modal" data-target="#exampleModalCenter">
+            Add Task
+          </button>
+        </div>
+        <div class="float-right m-1">
+          <button type="button" id="button" class="btn" data-toggle="modal"
+            data-target="#createNewTask" (click)="createTask()">
+            Create Task
+          </button>
+        </div>
+        <div class="float-right m-1">
+          <button type="button" id="button" class="btn" data-toggle="modal"
+            data-target="#editModal" (click)="editMilestone()">
+            Edit Milestone
+          </button>
+        </div>
+      </div>
+      <div class="col-1">
+        <span type="button" class="btn ml-2 align-bottom" (click)="backToMilestones()">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle">
+            close
+          </mat-icon>
+      </span>
+      </div>
     </div>
-
-    <div class="col-9">
-
-      <div class="float-right m-1"><button type="button" id="button" class="btn" (click)="activateAdd()"
-          data-toggle="modal" data-target="#exampleModalCenter">
-          Add Task
-        </button></div>
-      <div class="float-right m-1"><button type="button" id="button" class="btn" data-toggle="modal"
-          data-target="#createNewTask" (click)="createTask()">
-          Create Task
-        </button></div>
-    </div>
-
-    <div class="col-1">
-      <span class="close material-icons float-right" (click)="backToMilestones()">close</span>
-
-    </div>
-
-  </div>
-  <hr>
-
-  <div class="row">
-    <ng-container>
+    <hr>
+    <div class="row">
       <div class="col-md-4">
-        <div class="card p-4">
-          <h1>{{milestoneData.Title}}</h1>
-          <div class="row pt-2">
-            <div class="col-md-12 col">
-              <h4 class="heading">
-                <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                  description
-                </mat-icon><span class="align-middle lightText"> {{milestoneData.Description}}</span>
-              </h4>
+        <div class="card p-3">
+          <div class="row py-3">
+            <div class="col text-center">
+              <span class="title">
+                {{milestoneData.Title}}
+              </span>
             </div>
           </div>
-          <div class="row">
+          <div class="row py-2">
+            <div class="col-md-12 col">
+              <span class="heading">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                  toc
+                </mat-icon><span class="align-middle"> {{milestoneData.Description}}</span>
+              </span>
+            </div>
+          </div>
+          <div class="row py-2">
             <div class="col-md-5 col">
-              <h4 class="heading">
-                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-1">
-                  group
-                </mat-icon><span class="align-middle lightText">{{milestoneData.TeamId}}</span>
-              </h4>
-              <p>Total Tasks : <span class="lightText">{{totalTasks}}</span></p>
+              <span class="heading">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                  groups_3
+                </mat-icon><span class="align-middle">{{milestoneData.TeamId}}</span>
+              </span>
             </div>
             <div class="col-md-7 col">
               <div (click)="showEditMilestone(milestoneData.MilestoneId, 'MilestoneStatus')" id="milestoneStatus">
@@ -68,20 +82,27 @@
                   <ng-container *ngIf="milestoneIdToEdit == milestoneData.MilestoneId && fieldToEdit == 'MilestoneStatus'; else showMilestoneStatusIcon">
                     <select class="form-control form-control-sm" [(ngModel)]="milestoneData.MilestoneStatus" [ngModelOptions]="{standalone: true}" (change)="editStatus()" (mouseleave)="clickOut()">
                       <option [ngValue]="null" [disabled]="true">Select Milestone Status</option>
-                        <ng-container *ngFor="let item of milestoneStatusLabels">
-                          <option>{{item}}</option>
-                        </ng-container>
+                      <ng-container *ngFor="let item of milestoneStatusLabels">
+                        <option>{{item}}</option>
+                      </ng-container>
                     </select>
                   </ng-container>
                   <ng-template #showMilestoneStatusIcon>
-                        <span class="lightText">{{milestoneData.MilestoneStatus}}</span>
+                    <span>{{milestoneData.MilestoneStatus}}</span>
                   </ng-template>
                 </span>
               </div>
-              <p id="completeTaskText">Total Completed Tasks : <span class="lightText">{{totalCompletedTasks}}</span></p>
             </div>
           </div>
-          <div class="row">
+          <div class="row py-2">
+            <div class="col-md-5 col">
+              <span>Total Tasks : <span>{{totalTasks}}</span></span>
+            </div>
+            <div class="col-md-7 col">
+              <span id="completeTaskText">Total Completed Tasks : <span>{{totalCompletedTasks}}</span></span>
+            </div>
+          </div>
+          <div class="row pt-2">
             <div class="col text-center">
               <span type="button" class="btn align-bottom" id="StartDate">
                   <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -91,7 +112,7 @@
               </span>
             </div>
           </div>
-          <div class="row">
+          <div class="row pb-2">
             <div class="col text-center">
               <span type="button" class="btn align-bottom" id="EndDate">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -104,7 +125,11 @@
         </div>
       </div>
       <div class="col-md-8"  *ngIf="taskDataReady">
-        <h1 class="text-center mt-4">Task Tracker</h1>
+        <div class="row">
+          <div class="col text-center">
+            <span class="title mt-2">Task Tracker</span>
+          </div>
+        </div>
         <div class="process-wrapper" *ngIf="milestoneService.taskData.length > 0">
           <div id="progress-bar-container">
             <ul>
@@ -123,27 +148,27 @@
                 </a>
               </ng-container>
             </ul>
-
             <div id="line">
               <div id="line-progress" [ngStyle]="{'width': setProgressWidth()}"></div>
             </div>
           </div>
         </div>
-        <div *ngIf="milestoneService.taskData.length == 0">
-          <h3 class="text-center pt-5">No Tasks to Show!</h3>
+        <div class="text-center" *ngIf="milestoneService.taskData.length == 0">
+          <span class="title pt-5">No Tasks to Show!</span>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <ng-container *ngIf="milestoneService.taskDataStateObservable">
+      <div class="row tableBox p-2 pt-4" *ngIf="milestoneService.taskData.length>0">
+        <div class="col">
+            <app-data-table [dataForTable]="milestoneService.taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
         </div>
       </div>
     </ng-container>
   </div>
-    <hr>
-      <ng-container *ngIf="milestoneService.taskDataStateObservable">
-        <div *ngIf="milestoneService.taskData.length>0">
-    <div class=" card d-flex justify-content-center" style="width: 90%; margin: auto; position: relative;">
-        <app-data-table [dataForTable]="milestoneService.taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
-    </div>
-  </div>
-  </ng-container>
-  </div>
+  <div class="col-1"></div>
+</div>
 <app-add-task [allTasks]="allTasks" [milestoneId]="milestoneId" (getTasks)="getTasks()"></app-add-task>
 <ng-container *ngIf="showLoader">
   <app-loader></app-loader>

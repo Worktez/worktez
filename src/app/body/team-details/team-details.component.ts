@@ -88,8 +88,8 @@ export class TeamDetailsComponent implements OnInit {
           });
           this.userService.fetchUserData().subscribe(()=>{
             this.teamDataReady = true;
+            this.showLoader = false
           });
-          this.showLoader = false
         },
         error: (error) => {
           console.error(error);

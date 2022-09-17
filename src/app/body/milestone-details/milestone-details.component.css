@@ -28,6 +28,12 @@
     margin: auto;
 }
 
+.title {
+    font-size: 18px;
+    font-family: var(--font);
+    color: var(--text);
+}
+
 #progress-bar-container {
     position: relative;
     width: 90%;
@@ -130,18 +136,16 @@
     transition: all ease 0.9s;
 }
 
-/* /* #button {
-    background-color: white;
+#button {
+    background-color: var(--secondary-bg);
     color: var(--text);
-} */
+}
 
-#button:focus,
-#button:active,
 #button:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
-    cursor: pointer;
 }
+
 
 #SuccessIcon{
     color: var(--secondary-color);
@@ -158,20 +162,11 @@
     border: none;
     height: 100%;
 }
-.close {
+
+.tableBox {
+    background-color: var(--secondary-bg);
     color: var(--text);
-}
-.close:hover{
-    cursor: pointer;
-}
-
-
-#sprintStartDate {
-    color: var(--text);
-}
-
-#completeTaskText{
-    padding-top: 20px;
+    border-radius: 5px;
 }
 
 #milestoneStatus{
@@ -190,10 +185,6 @@
     }
 }
 
-
-
-
-
 @media only screen and (max-width: 600px) {
     .container-fluid {
         padding: 4px 40px 0px 40px;
@@ -206,7 +197,11 @@
 
 .btn {
     color: var(--text);
-    background-color: var(--secondary-bg);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }
 
 #StartDate {
@@ -216,8 +211,3 @@
 #EndDate {
     color: var(--danger-color);
 }
-
-.lightText{
-    color: var(--table-header);
-}
-

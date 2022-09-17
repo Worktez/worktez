@@ -75,14 +75,14 @@
       <nav class="navbar navbar-expand-lg float-left p-0" id="navbarMenu">
         <ul class="nav mr-auto">
           <li class="nav-item">
-            <h6 class="active nav-link navbar-text" id="head" style="font-size: 15px">
+            <span class="active nav-link navbar-text" id="head">
               Sprint No: {{ currentSprintName }}
-            </h6>
+            </span>
           </li>
           <li class="nav-item">
-            <h6 class="active nav-link navbar-text" id="head" style="font-size: 15px">
+            <span class="active nav-link navbar-text" id="head">
               TeamId: {{ sprintData.TeamId }}
-            </h6>
+            </span>
           </li>
         </ul>
       </nav>
@@ -97,14 +97,14 @@
           <div class="input-group">
             <div class="row align-items-center">
               <div class="col-5 px-0 pt-3">
-                <h5>Sprint No.</h5>
+                <span>Sprint No.</span>
               </div>
               <div class="col-7 px-1">
-                <input class="form-control" style="font-size: 10px" type="number" id="filterSprintNumberInput"
+                <input class="form-control" type="number" id="filterSprintNumberInput"
                 [(ngModel)]="filterSprintNumber" />
               </div>
               <div class="col-12 text-right pt-1">
-                <button id="filterButton" class="btn " style="font-size: 10px" (click)="changeSprintNumber()">
+                <button id="filterButton" class="btn " (click)="changeSprintNumber()">
                   Filter
                 </button>
               </div>
@@ -137,54 +137,48 @@
       <div class="row py-3">
         <div class="col-12">
           <ng-container *ngIf="sprintData.SprintNumber > 0">
-            <div class="row" id="sprintStatus">
+            <div class="row py-1" id="sprintStatus">
               <div class="col-10" id="statusHeading">
-                <span class="material-icons" style="font-size: 15px; padding-left: 0">donut_large</span>
-                <h5>&nbsp;&nbsp;Status</h5>
+                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                  timelapse
+                </mat-icon>
+                <span class="align-middle">Status</span>
               </div>
               <div class="col-2">
-                <span class="material-icons align-middle completedIcon" *ngIf="sprintData.Status === 'Completed'">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle completedIcon mr-2" *ngIf="sprintData.Status === 'Completed'">
                   check_circle
-                </span>
+                </mat-icon>
               </div>
             </div>
             <div id="Progressgraph">
               <app-progress-graph [ngStyle]="{ width: workPercentage + '%' }" class="progress">
               </app-progress-graph>
-              <div class="row mt-1">
-                <h6 class="col-md-7 col" id="sprintStatus" style="font-size: 11px">
+              <div class="row py-1">
+                <span class="col-md-7 col" id="sprintStatus">
                   {{ sprintData.Status }}
-                </h6>
-                <h6 class="col-md-5 col text-right" style="font-size: 11px">
+                </span>
+                <span class="col-md-5 col text-right">
                   {{ workPercentage }}%
-                </h6>
+                </span>
               </div>
             </div>
           </ng-container>
         </div>
       </div>
-      <div class="row pt-4">
-        <div class="col-md-7 col">
-          <h6 class="row card-title" style="font-weight: bold; font-size: 12px">
-            <span class="material-icons" style="font-size: 18px">format_list_numbered</span>&nbsp;&nbsp;Total Tasks:
-          </h6>
-        </div>
-        <div class="col-md-5 col">
-          <h6 class="row card-text" id="sprintStatus" style="font-size: 12px">
-            {{ sprintData.TotalNumberOfTask }}
-          </h6>
+      <div class="row pt-4 pb-1">
+        <div class="col">
+            <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+              format_list_bulleted
+            </mat-icon>
+            <span class="align-middle">Total Tasks: {{ sprintData.TotalNumberOfTask }}</span>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-7 col">
-          <h6 class="row card-title" style="font-weight: bold; font-size: 12px">
-            <span class="material-icons" style="font-size: 18px">checklist</span>&nbsp;&nbsp;Completed Tasks:
-          </h6>
-        </div>
-        <div class="col-md-5 col">
-          <h6 class="row card-text" id="sprintStatus" style="font-size: 12px">
-            {{ sprintData.TotalCompletedTask }}
-          </h6>
+      <div class="row py-1">
+        <div class="col">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+            verified
+          </mat-icon>
+          <span class="align-middle">Completed Tasks: {{ sprintData.TotalCompletedTask }}</span>
         </div>
       </div>
     </div>
@@ -201,7 +195,7 @@
         <nav class="modal-header navbar navbar-dark" id="navbarMenu">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
+              <span class="modal-title" id="exampleModalDelFilter">Are You Sure?</span>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
