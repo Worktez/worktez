@@ -16,30 +16,30 @@
 
  const { db } = require("../application/lib");
 
- /**
- * Description
- * @param {any} amount
- * @param {any} userUid
- * @param {any} subscriptionId
- * @param {any} paymentId
- * @param {any} userEmailAddress
- * @param {any} paymentTime
- * @param {any} paymentDate
- * @return {any}
- */
-exports.setPayment = function(amount, userUid, subscriptionId, paymentId, userEmailAddress, paymentTime, paymentDate) {
-    const addPaymentPromise = db.collection("Subscriptions").doc(orgDomain).collection("Payment").set({
-        UserEmailAddress: userEmailAddress,
-        Amount: amount,
-        PaymentId: paymentId,
-        PaymentCounter: 0,
-        PaymentTime: paymentTime,
-        PaymentDate: paymentDate,
-        SubscriptionId: subscriptionId,
-        UserUid: userUid,
-    });
-    return Promise.resolve(addPaymentPromise);
-};
+//  /**
+//  * Description
+//  * @param {any} amount
+//  * @param {any} userUid
+//  * @param {any} subscriptionId
+//  * @param {any} paymentId
+//  * @param {any} userEmailAddress
+//  * @param {any} paymentTime
+//  * @param {any} paymentDate
+//  * @return {any}
+//  */
+// exports.setPayment = function(amount, userUid, subscriptionId, paymentId, userEmailAddress, paymentTime, paymentDate) {
+//     const addPaymentPromise = db.collection("Subscriptions").doc(orgDomain).collection("Payment").set({
+//         UserEmailAddress: userEmailAddress,
+//         Amount: amount,
+//         PaymentId: paymentId,
+//         PaymentCounter: 0,
+//         PaymentTime: paymentTime,
+//         PaymentDate: paymentDate,
+//         SubscriptionId: subscriptionId,
+//         UserUid: userUid,
+//     });
+//     return Promise.resolve(addPaymentPromise);
+// };
 
 const base62 = {
     charset: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -71,9 +71,15 @@ exports.generateBase62Constant = function() {
   * @param {any} order
   * @return {any}
   */
-exports.setRazorpayOrderDetails = function(paymentId, order, orgDomain) {
-    const p1 = db.collection("Subscriptions").doc(orgDomain).collection("Payment").doc(paymentId).update({
+exports.setRazorpayOrderDetails = function(uid, order, paymentId, subscriptionId, currentDate, currentTime) {
+    const p1 = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).set({
         RazorPayOrderDetails: order,
+        PaymentStatus: "Created",
+        OrderCreationDate: currentDate,
+        OrderCreationTime: currentTime,
+        Uid: uid,
+        PaymentCreationDate: "",
+        PaymentCreationTime: "",
     });
    return Promise.resolve(p1);
 };
@@ -91,26 +97,26 @@ exports.setRazorpayOrderDetails = function(paymentId, order, orgDomain) {
    return Promise.resolve(p1);
 };
 
-exports.setPaymentStatus = function(orderId, id) {
-    console.log("orderid", orderId);
-    console.log("uid", id);
-    let data;
+// exports.setPaymentStatus = function(orderId, id) {
+//     console.log("orderid", orderId);
+//     console.log("uid", id);
+//     let data;
 
-    const p1 = db.collection("Subscriptions").doc(id).collection("Payment").doc(paymentId).get().then((doc)=>{
-        data = doc.data();
-        data.RazorPayOrderDetails.amount_paid = data.RazorPayOrderDetails.amount_due;
-        data.RazorPayOrderDetails.amount_due = 0;
-        data.RazorPayOrderDetails.status = "paid";
-    });
-    Promise.resolve(p1).then(()=>{
-        const promise = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).update({
-            PaymentStatus: "Complete",
-            RazorPayOrderDetails: data.RazorPayOrderDetails,
-        });
-        mailer(data.UserUid, "Payment_Complete", paymentId);
-        return Promise.resolve(promise);
-    });
-};
+//     const p1 = db.collection("Subscriptions").doc(id).collection("Payment").doc(paymentId).get().then((doc)=>{
+//         data = doc.data();
+//         data.RazorPayOrderDetails.amount_paid = data.RazorPayOrderDetails.amount_due;
+//         data.RazorPayOrderDetails.amount_due = 0;
+//         data.RazorPayOrderDetails.status = "paid";
+//     });
+//     Promise.resolve(p1).then(()=>{
+//         const promise = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).update({
+//             PaymentStatus: "Complete",
+//             RazorPayOrderDetails: data.RazorPayOrderDetails,
+//         });
+//         mailer(data.UserUid, "Payment_Complete", paymentId);
+//         return Promise.resolve(promise);
+//     });
+// };
 
 // exports.setEcommercePaymentStatus = function(id) {
 //     console.log("reg id", id);
@@ -132,10 +138,10 @@ exports.setPaymentStatus = function(orderId, id) {
 //     });
 // };
 
-exports.gerOrderData = function(paymentId) {
-    const promise = db.collection("Subscriptions").doc(orgDomain).collection("Payment").doc(paymentId).get().then((doc)=>{
-        if (doc.exists) return doc.data();
-        else return;
-    });
-   return Promise.resolve(promise);
-};
+// exports.gerOrderData = function(paymentId) {
+//     const promise = db.collection("Subscriptions").doc(orgDomain).collection("Payment").doc(paymentId).get().then((doc)=>{
+//         if (doc.exists) return doc.data();
+//         else return;
+//     });
+//    return Promise.resolve(promise);
+// };

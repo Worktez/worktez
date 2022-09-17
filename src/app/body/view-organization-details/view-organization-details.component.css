@@ -11,6 +11,19 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.card {
+    background: var(--secondary-bg);
+    color: var(--text);
+    border: none;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    cursor: pointer;
+}
+
+.card:hover {
+    border: 1px solid var(--primary-color);
+}
+
 #mOrgContainer {
     background-color: var(--primary-bg);
     font-family: var(--font);

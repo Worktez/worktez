@@ -5,24 +5,18 @@
 /* eslint-disable max-len */
 
 const RazorPay = require("razorpay");
+const { currentTime, currentDate } = require("../../application/lib");
 
 const { getUser } = require("../../users/lib");
-const { generateBase64String, milliSeconds} = require("../../application/lib");
+
 const { setRazorpayOrderDetails, generateBase62Constant} = require("../lib");
 
-exports.generateRazorpayOrder = function(request, response) {
-        const uid = request.body.data.Uid;
+exports.generateRazorpayOrder = function(uid, paymentId, subscriptionId, amount) {
+        
         // const subscriptionId = request.body.data.SubscriptionId;
-        const amount = request.body.data.Amount;
-        const userName = request.body.data.UserName;
-        const orgDomain = request.body.data.OrgDomain;
 
-        console.log(amount, userName, uid);
-        console.log("UID :::", uid);
-        console.log("Amount :::", amount);
-        getUser(uid, userName).then((doc) => {
+        getUser(uid, "").then((doc) => {
             if (doc != undefined) {
-                console.log("check...", doc);
                 // Test Credentials
                 const razorpay = new RazorPay({
                     key_id: "rzp_test_jWOofTDBbQGPFa",
@@ -48,21 +42,22 @@ exports.generateRazorpayOrder = function(request, response) {
                     if (err) {
                         const result = { data: err };
                         console.log(result);
-                        return response.status(500).send(result);
+                        return err;
                     }
                     // db.collection("Registrations").doc(Uid).update({
                     //     RazorPayOrderDetails: order,
                     // });
-                    console.log('uid:',uid, 'order:',order,'orgDomaim:' ,orgDomain);
-                    setRazorpayOrderDetails(uid, order, orgDomain);
+                    const time = currentTime;
+                    const date = currentDate;
+
+                    setRazorpayOrderDetails(uid, order, paymentId, subscriptionId, date, time);
                     // Test credentials
-                    order.key = "rzp_test_jWOofTDBbQGPFa";
+                    // order.key = "rzp_test_jWOofTDBbQGPFa";
 
                     // Production Credentials
                     // order.key = "rzp_live_xoOwFekmzVS4do";
-                    order.receipt = generatedReceipt;
-                    const result = { data: order };
-                    return response.status(200).send(result);
+                    // order.receipt = generatedReceipt;
+                    
                 });
             }
         });

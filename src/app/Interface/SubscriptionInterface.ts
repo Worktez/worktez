@@ -14,4 +14,7 @@ export interface SubscriptionData {
         PDashboard: boolean;
         PReport: boolean;
         DocPerTask: number;
+        SubscriptionType: string;
+        CurrencyType: string;
+        Amount: number;
   }

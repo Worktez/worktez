@@ -1,12 +1,11 @@
-const {getSubscriptionDetails} = require("../lib");
+const {getSubscriptions} = require("../lib");
 
 exports.getSubscriptionDetails = function(request, response) {
-    const orgDomain = request.body.data.OrgDomain;
     const orgAppKey = request.body.data.OrgAppKey;
     let status = 200;
     let result;
 
-    getSubscriptionDetails(orgAppKey).then((sData) => {
+    getSubscriptions(orgAppKey, "").then((sData) => {
         if(sData){
             result = {data: {status: "OK", resultData: sData}};
             return response.status(status).send(result);

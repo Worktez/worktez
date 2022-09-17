@@ -17,19 +17,24 @@
  * See the MIT License for more details.
  ***********************************************************/
 
- const { Subscription } = require("rxjs");
 const { db } = require("../application/lib");
  
 /**
  * Description
  * @param {any} subscriptionId
+ * @param {any} subscriptionData
+ * @param {any} orgDomain
+ * @param {any} uid
+ * @param {any} graceNotifications
+ * @param {any} expiresOn
  * @return {any}
  */
  exports.setSubscription = function(subscriptionData, orgDomain, uid, orgAppKey, subscriptionId, graceNotifications, expiresOn) {
-  console.log(orgDomain, uid, orgAppKey ,subscriptionId, graceNotifications, expiresOn);
-    const setSubscriptionDoc = db.collection("Subscriptions").doc(orgAppKey).set({
+    const setSubscriptionDoc = db.collection("Subscriptions").doc(subscriptionId).set({
       SubscriptionId: subscriptionId,
+      SubscriptionType: subscriptionData.subscriptionType,
       Uid: uid,
+      PaymentId: 0,
       OrgAppKey: orgAppKey,
       OrgDomain: orgDomain,
       ExpiresOn: expiresOn,
@@ -43,21 +48,66 @@ const { db } = require("../application/lib");
       PDashboard: subscriptionData.pDashboard,
       PReport: subscriptionData.pReport,
       DocPerTask: subscriptionData.docPerTask,
+      Amount: subscriptionData.amount,
+      CurrencyType: subscriptionData.currencyType,
     });
     return Promise.resolve(setSubscriptionDoc);
   };
 
-  /**
+/**
+ * Description
+ * @param {any} subscriptionId
+ * @return {any}
+ */
+  exports.updateSubscription = function(inputJson, subscriptionId){
+    const updateSubscription = db.collection("Subscriptions").doc(subscriptionId).update(inputJson);
+    return Promise.resolve(updateSubscription);
+  }
+
+//   /**
+//  * Description
+//  * @param {any} orgDomain
+//  * @return {any}
+//  */
+//   exports. getSubscriptionDetails = function(orgAppKey) {
+//     const getSubscriptionPromise = db.collection("Subscriptions").doc(orgAppKey).get().then((doc) => {
+//       if(doc.exists) return doc.data();
+//       else return;
+//     });
+//     return Promise.resolve(getSubscriptionPromise);
+//   }
+  
+   /**
  * Description
  * @param {any} orgDomain
  * @return {any}
  */
-  exports. getSubscriptionDetails = function(orgAppKey) {
-    const getSubscriptionPromise = db.collection("Subscriptions").doc(orgAppKey).get().then((doc) => {
-      if(doc.exists) return doc.data();
-      else return;
+    exports. getSubscriptions = function(orgAppKey, subscriptionId) {
+      let query = db.collection("Subscriptions");
+      if(orgAppKey != "") {
+        query = query.where("OrgAppKey", "==", orgAppKey);
+      }
+      if(subscriptionId != "") {
+        query = query.where("SubscriptionId", "==", subscriptionId);
+      }
+
+      const promise = query.get().then((doc) => {
+        let data;
+        doc.forEach((element) => {
+            if (element.exists) {
+                data = element.data();
+            }
+        });
+        return data;
     });
-    return Promise.resolve(getSubscriptionPromise);
-  }
+
+    return Promise.resolve(promise);
+      // const getSubscriptionPromise = db.collection("Subscriptions").doc(orgAppKey).get().then((doc) => {
+      //   if(doc.exists) return doc.data();
+      //   else return;
+      // });
+      // return Promise.resolve(getSubscriptionPromise);
+    }
+  
   
   
