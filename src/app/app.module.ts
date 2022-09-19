@@ -170,6 +170,8 @@ import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.compon
 import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
+import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
+import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
 import { EductionsComponent } from './body/profile/eductions/eductions.component';
 import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
 import { ProjectsComponent } from './body/profile/projects/projects.component';
@@ -313,6 +315,8 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
     NotificationCardComponent,
     ShowMeetDetailsComponent,
     PricingComponent,
+    CurrenPlanComponent,
+    PaymentStatusComponent,
     EductionsComponent,
     WorkEXPComponent,
     ProjectsComponent,
