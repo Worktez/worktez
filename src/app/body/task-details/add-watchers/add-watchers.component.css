@@ -1,0 +1,106 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+#addWatchersPage,
+.modal-content {
+  background-color: var(--secondary-bg);
+  color: var(--button-text);
+}
+
+
+#addWatcherSubmit {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn {
+  color: var(--text);
+}
+
+.btn:hover,
+#addWatcherSubmit:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
+  border: none;
+}
+
+#SuccessIcon{
+  color: var(--secondary-color);
+  font-size: 48px;
+
+}
+
+.clr {
+  background-color: white;
+}
+
+select,
+input {
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+}
+
+select:focus,
+input:focus {
+  box-shadow: none;
+  outline: 0 none; 
+  border-color: var(--primary-color);
+  color: var(--text);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+}
+
+.form-control {
+  background-color: var(--primary-bg);
+}
+
+#label {
+  color: var(--button-text);
+  font-size: 14px;
+  font-weight: 200;
+}
+
+#ModalLabel {
+  color: var(--text);
+  font-weight: bold;
+}
+
+.close {
+  color: var(--text);
+}
+
+.close:hover {
+  transform: scale(1.3);
+} 
+
+#SuccessIcon{
+  color: var(--secondary-color);
+  font-size: 55px;
+}
+
+.dropdown-menu {
+  width: 300px;
+  height: auto;
+  max-height: 300px;
+  background-color: var(--secondary-bg);
+  color: var(--text);
+  border-radius: 2%;
+  box-shadow: var(--box-shadow-bottom);
+}

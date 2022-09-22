@@ -1,0 +1,94 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-body pb-0">
+              <div class="row">
+                  <div class="col-md-10 col-10">
+                      <h2>Add Watchers</h2>
+                  </div>
+                  <div class="col-md-2 col-2 text-right ">
+                      <span class="btn">
+                          <mat-icon fontSet="material-icons-outlined" data-dismiss="modal" class="align-middle" aria-label="Close" (click)="workDone()" title="Close">
+                              close
+                          </mat-icon>
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <div class="container-fluid modal-body px-4" id="addWatchersPage">
+              <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
+                  <div class="row pb-2">
+                      <div class="col">
+                          <label id="TaskID">Task ID:</label>
+                          <span style="font-weight: bold;"> {{task.Id}}</span>
+                      </div>
+                  </div>
+                  <div class="row px-3">
+                      <span id="label">Watchers</span>
+                      <div class="col-md-12 mt-2">
+                          <span>
+                              <app-profile-pictures [emails]="watcherList"></app-profile-pictures>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col col-md">
+                        <span id="label">Watcher Name</span>
+                        <div class="dropdown mt-2">
+                            <input type="text" autocomplete="off" class="form-control" [formControl]="watcherName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <ng-container *ngFor='let item of filteredOptionsWatcher'>
+                                    <app-suggestion-bucket [email]="item" [showEmail] = "true" (selectedEmail)="selectedWatcher($event)"></app-suggestion-bucket>
+                                </ng-container>
+                            </div>
+                        </div>  
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div class="col col-md">
+                          <button class="btn form-control" type="submit" id="addWatcherSubmit" [disabled]="enableLoader">Submit</button>
+                      </div>
+                  </div>
+                  <app-loader *ngIf="enableLoader"></app-loader>
+              </form>
+              <ng-container *ngIf="showClose">
+                  <div class="row mx-5">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4">
+                          <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                      </div>
+                      <div class="col-md-4"></div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-3"></div>
+                      <div class="col-md-6">
+                          <div class="row" style="font-size: medium;flex-wrap: wrap;">Added Watcher Successfully !</div>
+                      </div>
+                      <div class="col-md-3"></div>
+                  </div>
+                  <div class="row pt-2">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4 pt-2 px-4">
+                          <button class="btn btn-success" id="addWatcherSubmit" type="button" data-dismiss="modal" (click)="workDone()" style="margin-left: 10px;">Close</button>
+                      </div>
+                      <div class="col-md-4"></div>
+                  </div>
+              </ng-container>
+          </div>
+      </div>
+  </div>
+</div>

@@ -127,7 +127,7 @@
                         </app-suggestion-bucket>
                     </div>
                     <div class="col-3 watchers">
-                        <span id="headerLabel" style="cursor: default;">Watchers
+                        <span id="headerLabel" class="btn" data-toggle="modal" title="add Watcher" data-target="#Modal">Watchers
                             <mat-icon [ngClass]="{'watcherAdded': addedWatcher, 'watcherNotAdded': !addedWatcher}"
                                 fontSet="material-icons-outlined" (click)="addWatcher()">remove_red_eye
                             </mat-icon>
@@ -333,6 +333,9 @@
     </ng-container>
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
         <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-git>
+    </ng-container>
+    <ng-container *ngIf="addWatcherEnabled" id="addWatcherModal">
+        <app-add-watchers [task]="task" [orgDomain]="orgDomain" [watcherList]="task.Watcher" (addWatcherCompleted)="addWatcherCompleted($event)"></app-add-watchers>
     </ng-container>
 </ng-container>
 <ng-container *ngIf="showLoader || !(gotTaskData)">
