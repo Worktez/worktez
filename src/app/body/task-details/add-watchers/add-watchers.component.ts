@@ -77,6 +77,7 @@ export class AddWatchersComponent implements OnInit {
   }
 
   submit() {
+    this.enableLoader = true;
     let data = [{ label: "watcher", value: this.watcherName.value }];
 
     var condition = (this.validationService.checkValidity(this.componentName, data)).then(res => {

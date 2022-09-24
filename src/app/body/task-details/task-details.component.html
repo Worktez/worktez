@@ -126,12 +126,13 @@
                         <app-suggestion-bucket [email]="task.Creator" [showEmail] = "false"  (selectedEmail)="selectedAssignee($event)">
                         </app-suggestion-bucket>
                     </div>
-                    <div class="col-3 watchers">
-                        <span id="headerLabel" class="btn" data-toggle="modal" title="add Watcher" data-target="#Modal">Watchers
+                    <div class="col-3">
+                        <span id="headerLabel">Watchers</span>
+                        <div class="btn">
                             <mat-icon [ngClass]="{'watcherAdded': addedWatcher, 'watcherNotAdded': !addedWatcher}"
-                                fontSet="material-icons-outlined" (click)="addWatcher()">remove_red_eye
+                                fontSet="material-icons-outlined" (click)="addWatcher()" data-toggle="modal" title="add Watcher" data-target="#Modal">visibility
                             </mat-icon>
-                        </span>
+                        </div>
                         <div class="avatars pl-4">
                             <app-speed-images [emails]="task.Watcher"></app-speed-images>
                         </div>
