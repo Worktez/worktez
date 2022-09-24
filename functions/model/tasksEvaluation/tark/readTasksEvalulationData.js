@@ -32,6 +32,7 @@ exports.readTasksEvaluationData = function(request, response) {
     const pageToLoad = request.body.data.PageToLoad;
     const tasks = [];
     const backlogTasks = [];
+    const upcomingSprintTasks = [];
     let status = 200;
 
     let promises;
@@ -51,14 +52,19 @@ exports.readTasksEvaluationData = function(request, response) {
                 backlogTasks.push(taskDoc.data());
             });
         });
-        promises = [p1, p2];
+        const p3 = getAllTasks(orgDomain, teamId, sprintNumber + 1, "", "", "", "", "", "", "").then((taskCol) => {
+            taskCol.forEach((taskDoc) => {
+                upcomingSprintTasks.push(taskDoc.data());
+            });
+        });
+        promises = [p1, p2, p3];
     } else {
         promises = [p1];
     }
 
 
     return Promise.all(promises).then(() => {
-        result = { data: {Tasks: tasks, BacklogTasks: backlogTasks} };
+        result = { data: {Tasks: tasks, BacklogTasks: backlogTasks, UpcomingSprintTasks: upcomingSprintTasks} };
         return response.status(status).send(result);
     }).catch((err) => {
         result = { data: err };
