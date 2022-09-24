@@ -1,6 +1,6 @@
 <div class="row pt-5" *ngIf="pageReady">
     <div class="col-1"></div>
-    <div class="col col-md-3 currentUserInfo">
+    <div *ngIf="startService.userReady; else noUser"  class="col col-md-3 currentUserInfo">
         <div class="card" id="profileCard" *ngIf="authService.userAppSetting != undefined; else loader">
             <div class="text-center">
                 <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle mt-2" width="120" height="120">
@@ -30,6 +30,7 @@
                 </ng-container>
             </div>
         </div>
+        
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>
@@ -42,9 +43,13 @@
             <p>Business</p>
         </div>   
     </div>
+    <ng-template #noUser>
+        <div class="col col-md-3 currentUserInfo"></div>
+    </ng-template>
+    
     <div class="col col-md-4">
-        <div class="pb-4">
-            <button class="btn" (click)="createPost()" data-toggle="modal" data-target="#createPost">
+        <div  class="pb-4">
+            <button *ngIf="startService.userReady; else noUser" class="btn" (click)="createPost()" data-toggle="modal" data-target="#createPost">
             Create post<mat-icon fontSet="material-icons-outlined" class="align-middle ml-2">
             add_circle</mat-icon></button>
         </div>
@@ -57,8 +62,8 @@
             </ng-container>
     
             <ng-container *ngIf="(posts)?.length!=0">
-                <ng-container *ngFor="let post of posts">
-                    <app-posts [post]="post"></app-posts>
+                <ng-container *ngFor="let post of posts.slice().reverse()">
+                    <app-posts [post]="post" (switchReactionCompleted)="postReactionSwitched($event)"></app-posts>
                 </ng-container>
             </ng-container>
         </ng-container>
