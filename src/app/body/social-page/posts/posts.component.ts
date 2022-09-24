@@ -45,7 +45,8 @@ export class PostsComponent implements OnInit {
   public comments: Comment[];
   showColor : boolean = false
   dataReady: boolean = false;
-  noOfStars: any = 0
+  noOfStars: number = 0;
+  noOfComments: number = 0;
 
   
   componentName:string ="POSTS"
@@ -65,6 +66,7 @@ export class PostsComponent implements OnInit {
     // console.log(this.post.PostId.slice(0));
     this.images = this.post.ImagesUrl;
     this.getReactions(this.post.PostId);
+    this.getComments(this.post.PostId);
     this.getCreatorDetails();
     this.authService.userAppSettingObservable.subscribe((data)=>{
       this.pageReady = true;
@@ -74,7 +76,6 @@ export class PostsComponent implements OnInit {
   showCommentBox(postId: string) {
     this.showCommentList = true;
     this.showAddComment = !this.showAddComment
-    this.getComments(postId);
 
   }
 
@@ -166,6 +167,7 @@ export class PostsComponent implements OnInit {
 
 
   getComments(postId: string) {
+    this.noOfComments=0;
       const callable = this.functions.httpsCallable("socialPage/getComments");
       callable({PostId: postId}).pipe(map(res=>{
         const data = res.data as Comment[];
@@ -175,6 +177,7 @@ export class PostsComponent implements OnInit {
           this.enableLoader= true;
           this.comments = data;
           this.comments.forEach(element => {
+            this.noOfComments += 1;
             this.userService.checkAndAddToUsersUsingUid(element.Uid);
           });
           this.userService.fetchUserDataUsingUID().subscribe(()=>{
@@ -186,6 +189,7 @@ export class PostsComponent implements OnInit {
   }
 
   getReactions(postId: string) {
+    this.noOfStars=0;
     const callable = this.functions.httpsCallable("socialPage/getReactions");
     callable({PostId: postId}).pipe(map(res=>{
       const data = res.data as Reaction[];
@@ -238,5 +242,11 @@ export class PostsComponent implements OnInit {
         },
         complete: () => console.info('Successful deleted post in db')
       });
+  }
+
+  commentDeleted(data: {completed: boolean}){
+    if(data.completed==true){
+      this.noOfComments -= 1
+    }
   }
 }

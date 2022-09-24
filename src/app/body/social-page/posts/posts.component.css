@@ -50,6 +50,12 @@ h3 {
   color: var(--text);
 }
 
+.counters{
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+}
+
 .btn:hover {
   background-color: var(--dropdown-hover);
   color: var(--button-text-hover);

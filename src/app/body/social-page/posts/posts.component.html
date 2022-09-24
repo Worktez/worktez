@@ -45,21 +45,35 @@
         </div>
         
         <hr>
-        <div class="row pt-2">
-            <div class="col-6 d-flex justify-content-center">
-                <span class="btn btn-star" (click)="switchReaction(post.PostId); " [ngClass]="{'reacted': postStarred}">
+        <div class="row counters">
+            <div class="col-4 d-flex justify-content-left">
+                <span class=" py-0 my-0" *ngIf="noOfStars==1"> {{noOfStars}} star</span>
+                <span class=" py-0 my-0" *ngIf="noOfStars>1 || noOfStars==0"> {{noOfStars}} stars</span>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4 d-flex justify-content-end text-right">
+                <span class="py-0 my-0" *ngIf="noOfComments==1"> {{noOfComments}} comment</span>
+                <span class="py-0 my-0" *ngIf="noOfComments>1 || noOfComments==0"> {{noOfComments}} comments</span>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col-6  d-flex justify-content-center">
+                <span class="btn btn-star py-0 my-0" (click)="switchReaction(post.PostId); " [ngClass]="{'reacted': postStarred}">
                     <ng-container *ngIf="postStarred; else normalIcon">
                         <mat-icon class="reacted" fontSet="material-icons" class="align-middle pr-3">grade</mat-icon>
                     </ng-container>
                     <ng-template #normalIcon>
                         <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">grade</mat-icon>
                     </ng-template>
-                    Star <span *ngIf="noOfStars>0"> ( {{noOfStars}} ) </span>
+                    <span class="align-middle"> Star</span>
+                    
                 </span>
             </div>
             <div class="col-6 d-flex justify-content-center">
-                <span class="btn btn-comment" (click)="showCommentBox(post.PostId)">
-                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">chat</mat-icon>Comment
+                <span class="py-0 my-0 btn btn-comment" (click)="showCommentBox(post.PostId)">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">chat</mat-icon>
+                    <span> Comment</span> 
                 </span>
             </div>
         </div>
@@ -82,7 +96,7 @@
                             No comments to show
                         </ng-container>
                         <ng-container *ngFor="let comment of comments">
-                            <app-comments [comment]="comment"></app-comments>
+                            <app-comments [comment]="comment" (commentDeleted)="commentDeleted($event)"></app-comments>
                         </ng-container>
                     </ng-container>
                     <ng-template #loader>

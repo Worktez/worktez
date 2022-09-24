@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Comment } from 'src/app/Interface/SocialInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
@@ -13,6 +13,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 })
 export class CommentsComponent implements OnInit {
   @Input("comment") comment: Comment;
+  @Output() commentDeleted = new EventEmitter<{ completed: boolean }>();
   componentName: string = "COMMENTS"
   user: User;
   commentDataReady: boolean = false;
@@ -54,7 +55,8 @@ export class CommentsComponent implements OnInit {
         },
         complete: () => {
           this.enableLoader = false;
-          console.info('Successful deleted post in db')}
+          console.info('Successful deleted post in db');
+          this.commentDeleted.emit({ completed: true, });}
       });
   }
 
