@@ -1,5 +1,4 @@
 .label {
-    font-size: 11px;
     color: var(--primary-color);
     cursor: pointer;
 }
@@ -7,7 +6,6 @@
     text-decoration: underline;
 }
 .value {
-    font-size: 10px;
     color: var(--text);
     cursor: pointer;
 }
@@ -19,4 +17,9 @@
 .taskID:hover{
    text-decoration: underline;
    cursor: pointer;
+}
+
+.containerBox {
+    background-color: var(--primary-bg);
+    border-radius: 5px;
 }
