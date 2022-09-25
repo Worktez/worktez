@@ -98,11 +98,13 @@ exports.getOrgUseAppKey = function(appKey) {
  */
 exports.setOrgRawData = function(orgDomain) {
     const setOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").set({
-        CurrentSprintId: 0,
+        // CurrentSprintId: 0,
         TotalNumberOfTask: 0,
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: -1,
+        TotalNumberOfTeams: 1,
+        TotalNumberOfMembers: -1
     });
     return Promise.resolve(setOrgAppDetails);
 };

@@ -84,7 +84,7 @@ exports.generateBase64String = function(temp) {
  */
 exports.setApplication = function() {
     const P1 = firestore.collection("RawData").doc("AppDetails").set({
-        CurrentSprintId: 0,
+        // CurrentSprintId: 0,
         TotalDevelopmentTask: 0,
         TotalBusinessTask: 0,
         TotalMarketingTask: 0,
@@ -93,10 +93,13 @@ exports.setApplication = function() {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: 0,
+        TotalNumberOfTeams: 1,
+        TotalNumberOfMembers: 0,
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
         MeetWorktezCounter: 0,
+        TotalNumberSchedularSubOrg: 0,
         MeetCounter: 0,
         PostCounter: 0,
     });

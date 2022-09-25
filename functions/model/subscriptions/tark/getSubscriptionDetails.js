@@ -30,8 +30,8 @@ exports.getSubscriptionDetails = function(request, response) {
     let result;
 
     getSubscriptions(orgAppKey, "").then((sData) => {
-        if (sData) {
-            result = {data: {status: "OK", resultData: sData}};
+        if (sData[0]) {
+            result = {data: {status: "OK", resultData: sData[0]}};
             return response.status(status).send(result);
         }
     }).catch((error) => {

@@ -23,7 +23,7 @@
 
 const { standardSubscription } = require("../../application/lib");
 const { generateRazorpayOrder } = require("../../payment/tark/generateRazorpayOrder");
-const { getSubscriptions } = require("../lib");
+const { getSubscriptions, updateSubscription } = require("../lib");
 
 exports.upgradeSubscriptionsToStandard = function(request, response) {
     const uid = request.body.data.Uid;
@@ -50,6 +50,25 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
                 console.log("Payment id is 0 setting to 1");
                 paymentId = 1;
             }
+            paymentId++;
+            const inputJson = {
+                PaymentId: paymentId,
+                SubscriptionType: subscriptionData.subscriptionType,
+                GraceNotifications: 5,
+                NoOfTeams: subscriptionData.noOfTeams,
+                NoOfMembers: subscriptionData.noOfMembers,
+                EmailsAndNotifications: subscriptionData.emailsAndNotifications,
+                QuickNotes: subscriptionData.quickNotes,
+                TechTag: subscriptionData.techTag,
+                Meetings: subscriptionData.meetings,
+                PDashboard: subscriptionData.pDashboard,
+                PReport: subscriptionData.pReport,
+                DocPerTask: subscriptionData.docPerTask,
+                Amount: subscriptionData.amount,
+                CurrencyType: subscriptionData.currencyType,
+                SubscritionStatus: "Active",
+            };
+            updateSubscription(inputJson, subscriptionId);
             console.log("Going to call generate razorpay order");
             const p1 = generateRazorpayOrder(uid, paymentId, subscriptionId, subscriptionData.amount).then((data)=>{
                 console.log("From then part ", data);

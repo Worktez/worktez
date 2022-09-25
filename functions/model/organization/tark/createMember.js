@@ -21,6 +21,9 @@
  * See the MIT License for more details.
  ***********************************************************/
  const { setOrgMember, getOrgMember } = require("../lib");
+ const { getApplicationData, updateApplication } = require("../../application/lib");
+ const { updateOrgRawData } = require("../../organization/lib");
+
 
  exports.createMember = function(createMemberInput) {
      const orgDomain = createMemberInput.orgDomain;
@@ -34,6 +37,20 @@
      const yyyy = today.getFullYear();
      const DateOfOnboarding = yyyy + "-" + mm + "-" + dd;
      const DateOfExit = "xxxx-xx-xx";
+
+
+     getApplicationData().then((data) => {
+        // console.log(totalNumberOfMembers);
+        const totalNumberOfMembers = data.TotalNumberOfMembers;
+
+        const appDetailsUpdateJson = {
+            TotalNumberOfMembers: totalNumberOfMembers + 1,
+        };
+
+        updateApplication(appDetailsUpdateJson);
+        updateOrgRawData(appDetailsUpdateJson, orgDomain);
+
+    });
 
     getOrgMember(orgDomain, email).then((MemberDoc) => {
         if (MemberDoc == undefined) {

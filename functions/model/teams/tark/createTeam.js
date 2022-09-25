@@ -23,14 +23,16 @@
 const admin = require("firebase-admin");
 const { setTeam, getTeam, setSchedularJob } = require("../lib");
 const { getOrg, updateOrg } = require("../../organization/lib");
+const { updateOrgRawData } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
-const { updateTeamInOrganizations} = require("../../users/tark/updateTeamInOrganizations");
+const { updateTeamInOrganizations } = require("../../users/tark/updateTeamInOrganizations");
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 const { createLabelProperties } = require("./createLabelProperties");
 const { getUser, updateUser } = require("../../users/lib");
+const { getApplicationData, updateApplication } = require("../../application/lib");
 
 
-exports.createTeam = function(request, response) {
+exports.createTeam = function (request, response) {
     const teamId = request.body.data.TeamId;
     const teamDescription = request.body.data.TeamDescription;
     const teamAdmin = request.body.data.TeamAdmin;
@@ -48,10 +50,21 @@ exports.createTeam = function(request, response) {
     const scope = ["Priority", "Difficulty", "Status", "Type", "MilestoneStatus"];
     let orgId;
     const teamStatus = 1;
-
     let status = 200;
     let result = { data: "Error in Creating Team" };
 
+    getApplicationData().then((data) => {
+        const totalNumberOfTeams = data.TotalNumberOfTeams;
+        console.log(totalNumberOfTeams);
+
+        const appDetailsUpdateJson = {
+            TotalNumberOfTeams: totalNumberOfTeams + 1,
+        };
+
+        updateApplication(appDetailsUpdateJson);
+        updateOrgRawData(appDetailsUpdateJson, orgDomain);
+
+    });
     const promise1 = getOrg(orgDomain).then((orgDoc) => {
         if (orgDoc != undefined) {
             orgId = orgDoc.OrganizationId;
@@ -64,8 +77,9 @@ exports.createTeam = function(request, response) {
         }
 
         const prom1 = getTeam(orgDomain, teamName).then((team) => {
+
             if (team == undefined) {
-                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then(()=>{
+                setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then(() => {
                     createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
                     // setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
                     // setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
@@ -85,6 +99,8 @@ exports.createTeam = function(request, response) {
             console.log("Error:", error);
         });
         return Promise.resolve(prom1);
+
+
     }).catch((error) => {
         status = 500;
         console.log("Error:", error);
@@ -111,12 +127,12 @@ exports.createTeam = function(request, response) {
 
     const Promises = [promise1, promise2, promise3];
     return Promise.all(Promises).then(() => {
-            if (status != 500) {
-                result = { data: "Team Created Successfully" };
-                console.log("Team Created Successfully");
-            }
-            return response.status(status).send(result);
-        })
+        if (status != 500) {
+            result = { data: "Team Created Successfully" };
+            console.log("Team Created Successfully");
+        }
+        return response.status(status).send(result);
+    })
         .catch((error) => {
             result = { data: error };
             console.error("Error Creating Team", error);

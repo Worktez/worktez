@@ -17,4 +17,5 @@ export interface SubscriptionData {
         SubscriptionType: string;
         CurrencyType: string;
         Amount: number;
+        SubscriptionStatus: string;
   }
