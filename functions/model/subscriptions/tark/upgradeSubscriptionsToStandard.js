@@ -28,6 +28,7 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
                 DocPerTask: subscriptionData.docPerTask,
                 Amount: subscriptionData.amount,
                 CurrencyType: subscriptionData.currencyType,
+                SubscritionStatus: "Active"
             }
            const p1 = updateSubscription(inputJson, subscriptionId);
             result = {data: "Subscription updated succesfully"};
