@@ -40,7 +40,6 @@
 
 
      getApplicationData().then((data) => {
-        // console.log(totalNumberOfMembers);
         const totalNumberOfMembers = data.TotalNumberOfMembers;
 
         const appDetailsUpdateJson = {
