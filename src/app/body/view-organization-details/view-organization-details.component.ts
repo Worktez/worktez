@@ -24,6 +24,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { FileData } from 'src/app/Interface/FileInterface';
 
 @Component({
   selector: 'app-view-organization-details',
@@ -42,6 +43,9 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   showMemberRoles: boolean = false;
   sameUser: boolean = true;
   editProfilePicEnabled: boolean = false;
+  imageUrl: string = "";
+  profilePicFile: FileData;
+  imageReady: boolean = false
 
   constructor(public startService: StartServiceService, public rbaService: RBAService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
 
@@ -66,11 +70,22 @@ export class ViewOrganizationDetailsComponent implements OnInit {
     this.teams = [];
     this.backendService.organizationsData.subscribe(data => {
       this.organization = data;
+      this.readOrganizationLogo(this.organization.OrganizationDomain);
       this.getOrgMembers(data.OrganizationDomain);
       this.organization.TeamsId.forEach(teamId => {
         this.getTeamDetails(teamId);
       });
       this.showLoader = false;
+    });
+  }
+
+  readOrganizationLogo(orgDomain: string) {
+    this.authService.getOrganizationLogo(orgDomain).subscribe(fileData => {
+      if(fileData[fileData.length-1] != undefined) {
+        this.imageUrl = fileData[fileData.length-1].FileUrl;
+        this.profilePicFile = fileData[fileData.length-1];
+      }
+      this.imageReady = true
     });
   }
 
@@ -107,6 +122,12 @@ export class ViewOrganizationDetailsComponent implements OnInit {
 
   editProfilePic() {
     this.editProfilePicEnabled = true;
+  }
+
+  editOrgLogoCompleted(data: {completed: boolean, imageUrl: string}){
+    this.editProfilePicEnabled=false;
+    console.log(data);
+    this.organization.OrganizationLogoURL=data.imageUrl;
   }
 
   switchView(data: any){

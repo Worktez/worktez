@@ -159,3 +159,17 @@ exports.getFileInOrgDocument = function(orgDomain) {
 
     return Promise.resolve(getFilesPromise);
 };
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @return {any}
+ */
+ exports.getFileInOrganization = function(orgDomain) {
+    let query = db.collection("Organizations").doc(orgDomain).collection("Logo");
+    query = query.where("FileStatus", "==", "OK");
+
+    const getFilesPromise = query.get();
+
+    return Promise.resolve(getFilesPromise);
+};

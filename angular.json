@@ -138,6 +138,10 @@
   },
   "defaultProject": "worktrolly-ui",
   "cli": {
+<<<<<<< Updated upstream
     "analytics": "987a6625-7460-479c-b84e-3d33d1a3ff6f"
+=======
+    "analytics": "07d58e0d-6f9c-4e74-be1b-2d07e2762686"
+>>>>>>> Stashed changes
   }
 }
