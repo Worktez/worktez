@@ -111,7 +111,7 @@
                         <div class="form-row mb-2">
                             <div class="col-md-4 col-4 ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Sprint Number</span>
-                                <input type="number" class="form-control form-control-sm" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}" placeholder="Sprint Number">
+                                <input type="number" min="-1" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control form-control-sm" [(ngModel)]="sprintNumber" [ngModelOptions]="{standalone: true}" placeholder="Sprint Number">
                             </div>
                             <div class="col-md-4 ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Priority</span>
