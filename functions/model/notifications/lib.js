@@ -23,26 +23,29 @@ const { getUser, updateUser, getMyOrgCollectionDoc, updateMyOrgCollection } = re
 
 /**
  * Description
+ * @param {any} senderEmail
  * @param {any} notificationMessage
- * @param {any} uid
+ * @param {any} reciverUid
  * @param {any} date
  * @param {any} time
  * @param {any} orgDomain
  * @param {any} link
  * @return {any}
  */
-exports.sendNotification = function(notificationMessage, uid, date, time, orgDomain, link) {
+exports.sendNotification = function(notificationMessage, senderEmail, reciverUid, date, time, orgDomain, link) {
     const status = 1;
     let notificationId = 0;
 
-    const promise1 = getUser(uid, "").then((data) => {
+    const promise1 = getUser(reciverUid, "").then((data) => {
         if (data != undefined) {
             notificationId = data.Notification + 1;
             const inputJson = {
                 Notification: notificationId,
             };
-            updateUser(inputJson, uid);
-            const addNotificationPromise = db.collection("Users").doc(uid).collection("Notifications").doc(notificationId.toString()).set({
+            updateUser(inputJson, reciverUid);
+            const addNotificationPromise = db.collection("Users").doc(reciverUid).collection("Notifications").doc(notificationId.toString()).set({
+                SenderEmail: senderEmail,
+                ReciverUid: reciverUid,
                 Message: notificationMessage,
                 CreationDate: date,
                 CreationTime: time,
@@ -59,13 +62,13 @@ exports.sendNotification = function(notificationMessage, uid, date, time, orgDom
         return err;
     });
 
-    const promise2 = getMyOrgCollectionDoc(uid, orgDomain).then((data) => {
+    const promise2 = getMyOrgCollectionDoc(reciverUid, orgDomain).then((data) => {
         if (data != undefined) {
             const activeNotifications = data.ActiveNotifications + 1;
             const inputJson = {
                 ActiveNotifications: activeNotifications,
             };
-            updateMyOrgCollection(inputJson, uid, orgDomain);
+            updateMyOrgCollection(inputJson, reciverUid, orgDomain);
         }
     }).catch((err) => {
         console.error(err);

@@ -31,13 +31,12 @@
      getNotifications(uid, orgDomain, 1, "", "").then((notificationList) => {
          emptyActiveNotification(uid, orgDomain);
          notificationList.forEach((element) => {
-             if (element.LastSeen == "") {
-                 const inputJson = {
-                     LastSeen: lastSeenDate,
-                     Status: 0,
-                 };
-                 updateNotifications(inputJson, uid, element.NotificationId);
-             }
+                const notificationId = element.NotificationId;
+                const inputJson = {
+                    LastSeen: lastSeenDate,
+                    Status: 0,
+                };
+            updateNotifications(inputJson, uid, notificationId);
          });
          result = { data: notificationList };
          console.log("Notifications reset successfully");
