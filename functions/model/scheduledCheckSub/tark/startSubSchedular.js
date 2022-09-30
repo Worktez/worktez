@@ -27,8 +27,9 @@ exports.startSubSchedular = function () {
         if (sched) {
             sched.forEach(subDoc => {
                 const orgAppKey = subDoc.OrgAppKey;
-                const subscriptionId = subDoc.SubscriptionId
-                checkSubscription(orgAppKey, subscriptionId);
+                const subscriptionId = subDoc.SubscriptionId;
+                const orgDomain = subDoc.OrgDomain;
+                checkSubscription(orgDomain, orgAppKey, subscriptionId);
             });
         }
     });
