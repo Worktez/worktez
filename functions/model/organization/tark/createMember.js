@@ -38,19 +38,6 @@
      const DateOfOnboarding = yyyy + "-" + mm + "-" + dd;
      const DateOfExit = "xxxx-xx-xx";
 
-
-     getApplicationData().then((data) => {
-        const totalNumberOfMembers = data.TotalNumberOfMembers;
-
-        const appDetailsUpdateJson = {
-            TotalNumberOfMembers: totalNumberOfMembers + 1,
-        };
-
-        updateApplication(appDetailsUpdateJson);
-        updateOrgRawData(appDetailsUpdateJson, orgDomain);
-
-    });
-
     getOrgMember(orgDomain, email).then((MemberDoc) => {
         if (MemberDoc == undefined) {
             setOrgMember(orgDomain, email, DateOfOnboarding, DateOfExit, isAdmin, teamManager, teams).catch(

@@ -22,7 +22,7 @@
 
 const admin = require("firebase-admin");
 const { setTeam, getTeam, setSchedularJob } = require("../lib");
-const { getOrg, updateOrg } = require("../../organization/lib");
+const { getOrg, updateOrg, getOrgRawData } = require("../../organization/lib");
 const { updateOrgRawData } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
 const { updateTeamInOrganizations } = require("../../users/tark/updateTeamInOrganizations");
@@ -53,16 +53,23 @@ exports.createTeam = function (request, response) {
     let status = 200;
     let result = { data: "Error in Creating Team" };
 
+    getOrgRawData(orgDomain).then((orgData) => {
+        const totalNumberOfTeams = orgData.TotalNumberOfTeams;
+
+        const appDetailsUpdateJson = {
+            TotalNumberOfTeams: totalNumberOfTeams + 1,
+        };
+
+        updateOrgRawData(appDetailsUpdateJson, orgDomain);
+    })
     getApplicationData().then((data) => {
         const totalNumberOfTeams = data.TotalNumberOfTeams;
-        console.log(totalNumberOfTeams);
 
         const appDetailsUpdateJson = {
             TotalNumberOfTeams: totalNumberOfTeams + 1,
         };
 
         updateApplication(appDetailsUpdateJson);
-        updateOrgRawData(appDetailsUpdateJson, orgDomain);
 
     });
     const promise1 = getOrg(orgDomain).then((orgDoc) => {

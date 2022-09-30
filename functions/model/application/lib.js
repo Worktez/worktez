@@ -93,7 +93,7 @@ exports.setApplication = function() {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: 0,
-        TotalNumberOfTeams:1,
+        TotalNumberOfTeams:0,
         TotalNumberOfMembers:0,
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,

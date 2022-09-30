@@ -103,8 +103,8 @@ exports.setOrgRawData = function(orgDomain) {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: -1,
-        TotalNumberOfTeams: 1,
-        TotalNumberOfMembers: -1
+        TotalNumberOfTeams: 0,
+        TotalNumberOfMembers: 0
     });
     return Promise.resolve(setOrgAppDetails);
 };
