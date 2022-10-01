@@ -109,6 +109,30 @@ exports.updateMeetDetails= function(updateJson) {
  * @param {any}
  * @return {any}
  */
+ exports.getWorktezMeetDetails=function() {
+  const query = db.collection("Meet.Worktez").doc(meetDocId);
+
+  // query = query.where("HostName", "==", "OK");
+  const promise = query.get().then((doc) => {
+      const data=[];
+      // console.log(doc);
+      doc.forEach((element) => {
+          if (element.exists) {
+              data.push( element.data());
+          }
+      });
+      return data;
+  });
+
+  return Promise.resolve(promise);
+};
+
+/**
+ * Description
+ * @param {any}
+ * @param {any}
+ * @return {any}
+ */
 exports.getMeetDetails=function(uid) {
     const query = db.collection("Users").doc(uid).collection("Meet");
 
@@ -140,7 +164,7 @@ exports.getMeetDetails=function(uid) {
  * @param {any} date
  * @return {any}
  */
-exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date) {
+ exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date, roomId) {
   const setMeetDoc = db.collection("Meet.Worktez").doc(meetDocId).set({
     MeetDocId: meetDocId,
     Attendees: attendees,
@@ -150,6 +174,7 @@ exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endT
     HostName: hostName,
     Description: description,
     Date: date,
+    RoomId: roomId,
   });
   return Promise.resolve(setMeetDoc);
 };

@@ -25,7 +25,7 @@ const {functions, cors, fastify, requestHandler} = require("../application/lib")
 const {scheduleMeet} = require("./tark/scheduleMeet");
 const {addAttendee} = require("./tark/addAttendee");
 const {scheduleMeetAtWorktez} = require("./tark/scheduleMeetAtworktez");
-const {addAttendeeAtWorktez} = require("./tark/addAttendeeAtworktez");
+// const {addAttendeeAtWorktez} = require("./tark/addAttendeeAtworktez");
 const { getMeetDetails } = require("./tark/getMeetDetails");
 
 /**
@@ -72,16 +72,16 @@ fastify.post("/getMeetDetails", (req, res) => {
   getMeetDetails(req, res);
 });
 
-/**
- * Description
- * @param {any} "/addAttendeeAtWorktez"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/addAttendeeAtWorktez", (req, res) => {
-  addAttendeeAtWorktez(req, res);
-});
+// /**
+//  * Description
+//  * @param {any} "/addAttendeeAtWorktez"
+//  * @param {any} req
+//  * @param {any} res
+//  * @returns {any}
+//  */
+// fastify.post("/addAttendeeAtWorktez", (req, res) => {
+//   addAttendeeAtWorktez(req, res);
+// });
 
 /**
  * Description

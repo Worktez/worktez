@@ -97,6 +97,7 @@ exports.setApplication = function() {
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
         MeetCounter: 0,
+        MeetWorktezCounter:0,
         PostCounter: 0,
     });
     return Promise.resolve(P1);
