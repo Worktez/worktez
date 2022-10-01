@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-const { basicSubscription, currentDate, standardSubscription } = require("../../application/lib");
+const {  currentDate } = require("../../application/lib");
 const { getOrgRawData } = require("../../organization/lib");
 const { getSubscriptions, updateSubscription } = require("../lib");
 
@@ -27,14 +27,6 @@ exports.checkSubscription = function (orgDomain, orgAppKey, subscriptionId) {
       const expiresOn = subData[0].ExpiresOn;
       const graceNotifications = subData[0].GraceNotifications;
       const subscriptionId = subData[0].SubscriptionId;
-
-      if (subData[0].SubscriptionType == "Basic") {
-        subData[0] = basicSubscription;
-      } else if (subData[0].SubscriptionType == "Standard") {
-        subData[0] = standardSubscription;
-      } else {
-        console.error("Error getting subscription plan!");
-      }
 
       const subCheck = [
         totalNumberOfTeams <= noOfTeams,
