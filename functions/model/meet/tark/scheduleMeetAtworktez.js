@@ -37,7 +37,7 @@ exports.scheduleMeetAtWorktez = function(request, response) {
   let result;
 
   const promise1 = getApplicationData().then((appData) => {
-    const meetWorktezCounter = appData.meetWorktezCounter+1;
+    const meetWorktezCounter = appData.MeetWorktezCounter+1;
     const appDetailsUpdateJson = {
       MeetWorktezCounter: meetWorktezCounter,
     };
