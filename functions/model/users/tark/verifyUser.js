@@ -20,7 +20,6 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getApplicationData, updateApplication } = require("../../application/lib");
 const { getOrg, updateOrgRawData, getOrgRawData } = require("../../organization/lib");
 const { createMember } = require("../../organization/tark/createMember");
 const { getTeam } = require("../../teams/lib");
@@ -61,17 +60,17 @@ exports.verifyUser = function(request, response) {
                     updateUser(updateUserInputJson, userID);
                     updateTeamInOrganizations(userID, organizationDomain, appKey, teamId);
                     createMember(createMemberInput);
-
-                    getApplicationData().then((data) => {
-                        console.log("check");
-                        const totalNumberOfMembers = data.TotalNumberOfMembers;
+                    
+                    /* We are not using this method anymore*/
+                    // getApplicationData().then((data) => {
+                    //     const totalNumberOfMembers = data.TotalNumberOfMembers;
                 
-                        const appDetailsUpdateJson = {
-                            TotalNumberOfMembers: totalNumberOfMembers + 1,
-                        };
+                    //     const appDetailsUpdateJson = {
+                    //         TotalNumberOfMembers: totalNumberOfMembers + 1,
+                    //     };
                 
-                        updateApplication(appDetailsUpdateJson);                
-                    });
+                    //     updateApplication(appDetailsUpdateJson);                
+                    // });
                     getOrgRawData(orgDomain).then((orgData) => {
                         const totalNumberOfMembers = orgData.TotalNumberOfMembers;
                 
