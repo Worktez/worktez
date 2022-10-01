@@ -66,7 +66,7 @@ Help us keep our product open and inclusive. <br>
 
 ## License
 Worktez is licensed under the MIT license. <br>
-_Copyright 2021 Worktez All Rights Reserved_
+_Copyright 2022 Worktez All Rights Reserved_
 
 [Step 1 - How to clone the project]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#how-to-clone>
 [Step 2 - How to setup firebase]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#firebase-setup>
