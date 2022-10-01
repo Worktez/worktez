@@ -8,6 +8,7 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
+/* no-multi-spaces: "error" */
 // eslint-disable-next-line no-dupe-else-if
 /** *********************************************************
  * Copyright (C) 2022
