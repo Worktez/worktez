@@ -8,7 +8,6 @@
 /* eslint-disable eol-last */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-/* no-multi-spaces: "error" */
 // eslint-disable-next-line no-dupe-else-if
 /** *********************************************************
  * Copyright (C) 2022
@@ -161,7 +160,7 @@ exports.getMeetDetails=function(uid) {
  * @param {any} date
  * @return {any}
  */
- exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date, roomId)  {
+ exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date, roomId) {
   const setMeetDoc = db.collection("Meet.Worktez").doc(meetDocId).set({
     MeetDocId: meetDocId,
     Attendees: attendees,
