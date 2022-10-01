@@ -58,6 +58,7 @@ import { AllNotificationComponent } from './header/notification-center/all-notif
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'Home', component: HomeComponent},
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
   { path: 'Board', component: BoardComponent, canActivate: [AngularFireAuthGuard]},

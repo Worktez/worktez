@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Comment } from 'src/app/Interface/SocialInterface';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { defaultUser, User } from 'src/app/Interface/UserInterface';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-comments',
@@ -11,11 +13,13 @@ import { defaultUser, User } from 'src/app/Interface/UserInterface';
 })
 export class CommentsComponent implements OnInit {
   @Input("comment") comment: Comment;
-
+  @Output() commentDeleted = new EventEmitter<{ completed: boolean }>();
+  componentName: string = "COMMENTS"
   user: User;
   commentDataReady: boolean = false;
+  enableLoader: boolean = false;
 
-  constructor(public authService: AuthService, private userService: UserServiceService) { }
+  constructor(public authService: AuthService, private userService: UserServiceService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.getCreatorDetails();
@@ -31,4 +35,29 @@ export class CommentsComponent implements OnInit {
     }
     this.commentDataReady = true;
   }
+
+  deleteComment() {
+    const uid = this.authService.getLoggedInUser();
+      const callable = this.functions.httpsCallable("socialPage/deleteComment");
+      this.enableLoader = true
+      callable({Uid: uid, PostId: this.comment.PostId, CommentId: this.comment.CommentId}).subscribe({
+        next: (data) => {
+          console.log("Successfull");
+          this.comment.CommentStatus = -1;
+        },
+        
+        error: (error) => {
+          console.log("Error", error);
+          this.enableLoader=false;
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          console.error(error);
+        },
+        complete: () => {
+          this.enableLoader = false;
+          console.info('Successful deleted post in db');
+          this.commentDeleted.emit({ completed: true, });}
+      });
+  }
+
 }
