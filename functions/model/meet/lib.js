@@ -111,11 +111,8 @@ exports.updateMeetDetails= function(updateJson) {
  */
  exports.getWorktezMeetDetails=function() {
   const query = db.collection("Meet.Worktez").doc(meetDocId);
-
-  // query = query.where("HostName", "==", "OK");
   const promise = query.get().then((doc) => {
       const data=[];
-      // console.log(doc);
       doc.forEach((element) => {
           if (element.exists) {
               data.push( element.data());
@@ -123,10 +120,8 @@ exports.updateMeetDetails= function(updateJson) {
       });
       return data;
   });
-
   return Promise.resolve(promise);
 };
-
 
 /**
  * Description
