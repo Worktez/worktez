@@ -1,4 +1,4 @@
-# WORKTEZ - Milestone your project with the power of DevOps
+# WORKTEZ - Bring your team together, and milestone your ideas
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/67370801/149733068-2071c2e2-45b5-4fa8-9355-98f0702fb689.png"> <br>
@@ -10,7 +10,7 @@
 </p>
 
 ## What motivates us? :punch:
-_At **Worktez**, we are envisioned to give milestones to your dreams._
+_At **Worktez**, we are envisioned to simplify your team and project workflow, collaborate over ideas and build it._
 
 ## About our Product :speech_balloon:
 
