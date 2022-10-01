@@ -110,7 +110,7 @@ exports.updateMeetDetails= function(updateJson) {
  * @return {any}
  */
  exports.getWorktezMeetDetails=function() {
-  const query = db.collection("Meet.Worktez").doc(meetDocId);
+  const query = db.collection("Meet").doc(meetDocId);
   const promise = query.get().then((doc) => {
       const data=[];
       doc.forEach((element) => {
@@ -161,7 +161,7 @@ exports.getMeetDetails=function(uid) {
  * @return {any}
  */
  exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date, roomId) {
-  const setMeetDoc = db.collection("Meet.Worktez").doc(meetDocId).set({
+  const setMeetDoc = db.collection("Meet").doc(meetDocId).set({
     MeetDocId: meetDocId,
     Attendees: attendees,
     Title: title,
@@ -182,6 +182,6 @@ exports.getMeetDetails=function(uid) {
  * @return {any}
  */
 exports.updateMeetDetailsAtWorktez= function(updateJson) {
-  const updateMeet = db.collection("Meet.Worktez").doc(meetDocId).update(updateJson);
+  const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };
