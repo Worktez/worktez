@@ -23,9 +23,11 @@ const { addPost } = require("./tark/addPost");
 const { addPostComment } = require("./tark/addPostComment");
 const { getPosts } = require("./tark/getPosts");
 const { addReaction } = require("./tark/addReaction");
+const { removeReaction } = require("./tark/removeReaction");
 const { getComments } = require("./tark/getComments");
 const { deletePost } = require("./tark/deletePost");
-
+const { deleteComment } = require("./tark/deleteComment");
+const { getReactions } = require("./tark/getReactions");
 /**
  * Description
  * @param {any} "/addPost"
@@ -72,6 +74,17 @@ fastify.post("/getAllPosts", (req, res) => {
 
 /**
  * Description
+ * @param {any} "/deletePost"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/deleteComment", (req, res) => {
+    deleteComment(req, res);
+});
+
+/**
+ * Description
  * @param {any} "/addReaction"
  * @param {any} req
  * @param {any} res
@@ -83,6 +96,17 @@ fastify.post("/addReaction", (req, res) => {
 
 /**
  * Description
+ * @param {any} "/addReaction"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/removeReaction", (req, res) => {
+    removeReaction(req, res);
+});
+
+/**
+ * Description
  * @param {any} "/getComments"
  * @param {any} req
  * @param {any} res
@@ -90,6 +114,17 @@ fastify.post("/addReaction", (req, res) => {
  */
  fastify.post("/getComments", (req, res) => {
     getComments(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getReactions"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+ fastify.post("/getReactions", (req, res) => {
+    getReactions(req, res);
 });
 
 /**

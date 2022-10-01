@@ -17,6 +17,11 @@
 
 }
 
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
 select,
 input {
     background-color: var(--primary-bg);

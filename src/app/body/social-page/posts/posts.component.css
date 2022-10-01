@@ -5,6 +5,10 @@
   height: 30px;
 }
 
+.dropdown{
+  color: var(--text);
+}
+
 .card {
   background-color: var(--secondary-bg);
   color: var(--text);
@@ -21,13 +25,35 @@ h3 {
   color: var(--primary-color);
 }
 
-.commentbox {
-  width: 14rem;
+.image{
+  max-width: 90%;
+  max-height: 90%;
 }
 
-.btn {
+.comment-box {
+  color: var(--text);
+  border: none;
+  outline: none;
+}
+.comment-box:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-star, .btn-comment {
   color: var(--text);
   width: 10rem;
+}
+
+.btn-send {
+  color: var(--text);
+}
+
+.counters{
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 .btn:hover {
@@ -39,11 +65,7 @@ h3 {
   color: var(--primary-color);
 }
 
-.btnSend {
-  width: 100%;
-  background-color: var(--primary-color);
-  color: #ffffff;
-}
+
 
 @media only screen and (max-width: 600px) {
   .btn {

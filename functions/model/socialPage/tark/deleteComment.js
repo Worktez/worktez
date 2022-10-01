@@ -1,10 +1,9 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- *
+ * Author: Abhishek Mishra <am1426620@gmail.com>
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -14,13 +13,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-const {deleteUserPost, getPost} = require("../lib");
-const {getUser} = require("../../users/lib");
-const {decrementNumberofPostsforUser} = require("../../users/tark/incrementUserCounters");
+const {deletePostComment, getPost} = require("../lib");
+const {getUser, updateUser} = require("../../users/lib");
 
-exports.deletePost = function(request, response) {
+exports.deleteComment = function(request, response) {
   const uid = request.body.data.Uid;
   const postId = request.body.data.PostId;
+  const commentId = request.body.data.CommentId;
+  console.log(postId, commentId);
 
   let result;
   let status = 200;
@@ -30,11 +30,10 @@ exports.deletePost = function(request, response) {
       if (postData == undefined) {
         result = {data: {status: "Post doesn't exist"}};
       } else {
-        const updatePostToJson = {
+        const updateCommentJson = {
           Status: "DELETED",
         };
-        deleteUserPost(updatePostToJson, postId);
-        decrementNumberofPostsforUser(uid);
+        deletePostComment(updateCommentJson, postId, commentId);
       }
     }).catch((error) => {
       status = 500;
@@ -46,7 +45,7 @@ exports.deletePost = function(request, response) {
 
   Promise.resolve(promise).then(() => {
     result = {data: {status: "OK"}};
-    console.log("Post Deleted Successfully");
+    console.log("Comment Deleted Successfully");
     return response.status(status).send(result);
   })
       .catch((error) => {

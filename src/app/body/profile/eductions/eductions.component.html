@@ -13,8 +13,11 @@
     </div>
     <ng-container *ngIf="educations?.length == 0">
         <div class="row">
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3" *ngIf="sameUser">
                 <span>Add your education qualifications</span>
+            </div>
+            <div class="col-12 mt-3" *ngIf="!sameUser">
+                <span>No Education Details to Show</span>
             </div>
         </div>
     </ng-container>
@@ -43,4 +46,3 @@
         </div>
     </ng-container>
 </div>
-

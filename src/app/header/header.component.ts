@@ -101,10 +101,6 @@ export class HeaderComponent implements OnInit {
   socialPage() {
     this.router.navigate(['/Social']);
   }
-  
-  filterPage(){
-    this.router.navigate(['/FilterPage']);
-  }
 
   kanbanBoard() {
     this.router.navigate(['/KanbanBoard']);
