@@ -29,7 +29,6 @@ const { updateTeamInOrganizations } = require("../../users/tark/updateTeamInOrga
 const { sendVerificationEmail } = require("../../users/tark/addUserEmail");
 const { createLabelProperties } = require("./createLabelProperties");
 const { getUser, updateUser } = require("../../users/lib");
-const { getApplicationData, updateApplication } = require("../../application/lib");
 
 
 exports.createTeam = function (request, response) {
@@ -62,16 +61,18 @@ exports.createTeam = function (request, response) {
 
         updateOrgRawData(appDetailsUpdateJson, orgDomain);
     })
-    getApplicationData().then((data) => {
-        const totalNumberOfTeams = data.TotalNumberOfTeams;
+    /* We are not using this method anymore*/
 
-        const appDetailsUpdateJson = {
-            TotalNumberOfTeams: totalNumberOfTeams + 1,
-        };
+    // getApplicationData().then((data) => {
+    //     const totalNumberOfTeams = data.TotalNumberOfTeams;
 
-        updateApplication(appDetailsUpdateJson);
+    //     const appDetailsUpdateJson = {
+    //         TotalNumberOfTeams: totalNumberOfTeams + 1,
+    //     };
 
-    });
+    //     updateApplication(appDetailsUpdateJson);
+
+    // });
     const promise1 = getOrg(orgDomain).then((orgDoc) => {
         if (orgDoc != undefined) {
             orgId = orgDoc.OrganizationId;
