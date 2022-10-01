@@ -55,4 +55,11 @@ export class MyDashBoardComponent implements OnInit {
   //       console.log("Created Schedular document");
   //     });
   // }
+
+  //  runSchedular() {
+  //     const callable = this.functions.httpsCallable('scheduledSubFnManually/startSubSchedular');
+  //     callable({}).subscribe((data) => {
+  //       console.log("Created Schedular document");
+  //     });
+  // }
 }
