@@ -96,6 +96,7 @@ exports.setApplication = function() {
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
+        MeetWorktezCounter:0,
         MeetCounter: 0,
         PostCounter: 0,
     });

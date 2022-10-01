@@ -21,11 +21,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-const {getApplicationData, updateApplication} = require("../../application/lib");
+const {getApplicationData, updateApplication, generateBase64String, milliSeconds} = require("../../application/lib");
 const {setMeetAtWorktez} = require("../lib");
 
 exports.scheduleMeetAtWorktez = function(request, response) {
-  const attendees = request.body.data.Attendees;
+  const attendees = request.body.data.TeamMembers;
   const title = request.body.data.Title;
   const startTime = request.body.data.StartTime;
   const endTime = request.body.data.EndTime;
@@ -37,13 +37,14 @@ exports.scheduleMeetAtWorktez = function(request, response) {
   let result;
 
   const promise1 = getApplicationData().then((appData) => {
-    const meetCounter = appData.MeetCounter+1;
+    const meetWorktezCounter = appData.meetWorktezCounter+1;
     const appDetailsUpdateJson = {
-      MeetCounter: meetCounter,
+      MeetWorktezCounter: meetWorktezCounter,
     };
 
-    const meetDocId = "m" + meetCounter;
-    setMeetAtWorktez(meetDocId, attendees, title, startTime, endTime, hostName, description, date);
+    const meetDocId = "m" + meetWorktezCounter;
+    const roomId = generateBase64String( milliSeconds+title);
+    setMeetAtWorktez(meetDocId, attendees, title, startTime, endTime, hostName, description, date, roomId);
     updateApplication(appDetailsUpdateJson);
   }).catch((error) => {
     status = 500;
