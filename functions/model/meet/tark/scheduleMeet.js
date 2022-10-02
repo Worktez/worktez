@@ -47,8 +47,12 @@ exports.scheduleMeet = function(request, response) {
 
     const meetDocId = "m" + meetCounter;
     const roomId = generateBase64String( milliSeconds+title);
-    setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId);
-    setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
+    if(teamId=="" && uid=="" && orgDomain==""){
+      setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
+    } else {
+      setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId);
+      setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
+    }
     updateApplication(appDetailsUpdateJson);
   }).catch((error) => {
     status = 500;

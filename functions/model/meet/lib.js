@@ -147,34 +147,6 @@ exports.getMeetDetails=function(uid) {
     return Promise.resolve(promise);
 };
 
-
-/**
- * Description
- * @param {any} meetDocId
- * @param {any} attendees
- * @param {any} title
- * @param {any} startTime
- * @param {any} endTime
- * @param {any} hostName
- * @param {any} description
- * @param {any} date
- * @return {any}
- */
- exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date, roomId) {
-  const setMeetDoc = db.collection("Meet").doc(meetDocId).set({
-    MeetDocId: meetDocId,
-    Attendees: attendees,
-    Title: title,
-    StartTime: startTime,
-    EndTime: endTime,
-    HostName: hostName,
-    Description: description,
-    Date: date,
-    RoomId: roomId,
-  });
-  return Promise.resolve(setMeetDoc);
-};
-
 /**
  * Description
  * @param {any} inputJson
