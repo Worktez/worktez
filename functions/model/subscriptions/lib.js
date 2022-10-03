@@ -18,13 +18,14 @@
  ***********************************************************/
 
 const { db } = require("../application/lib");
- 
+
 /**
  * Description
- * @param {any} subscriptionId
  * @param {any} subscriptionData
  * @param {any} orgDomain
  * @param {any} uid
+ * @param {any} orgAppKey
+ * @param {any} subscriptionId
  * @param {any} graceNotifications
  * @param {any} expiresOn
  * @return {any}
@@ -56,13 +57,14 @@ const { db } = require("../application/lib");
 
 /**
  * Description
+ * @param {any} inputJson
  * @param {any} subscriptionId
  * @return {any}
  */
-  exports.updateSubscription = function(inputJson, subscriptionId){
+  exports.updateSubscription = function(inputJson, subscriptionId) {
     const updateSubscription = db.collection("Subscriptions").doc(subscriptionId).update(inputJson);
     return Promise.resolve(updateSubscription);
-  }
+  };
 
 //   /**
 //  * Description
@@ -76,18 +78,19 @@ const { db } = require("../application/lib");
 //     });
 //     return Promise.resolve(getSubscriptionPromise);
 //   }
-  
+
    /**
  * Description
- * @param {any} orgDomain
+ * @param {any} orgAppKey
+ * @param {any} subscriptionId
  * @return {any}
  */
     exports. getSubscriptions = function(orgAppKey, subscriptionId) {
       let query = db.collection("Subscriptions");
-      if(orgAppKey != "") {
+      if (orgAppKey != "") {
         query = query.where("OrgAppKey", "==", orgAppKey);
       }
-      if(subscriptionId != "") {
+      if (subscriptionId != "") {
         query = query.where("SubscriptionId", "==", subscriptionId);
       }
 
@@ -98,6 +101,7 @@ const { db } = require("../application/lib");
                 data = element.data();
             }
         });
+        console.log("Data from sub", data);
         return data;
     });
 
@@ -107,7 +111,6 @@ const { db } = require("../application/lib");
       //   else return;
       // });
       // return Promise.resolve(getSubscriptionPromise);
-    }
-  
-  
-  
+    };
+
+

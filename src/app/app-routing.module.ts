@@ -53,6 +53,8 @@ import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
 import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
+import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
+import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -96,6 +98,8 @@ const routes: Routes = [
   { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
   { path: 'Pricing', component:PricingComponent },
+  { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
+  { path: 'Standard', component:StandardSubscriptionComponent},
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

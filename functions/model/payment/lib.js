@@ -1,5 +1,8 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
 /* eslint-disable max-len */
-
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -14,8 +17,8 @@
  * See the MIT License for more details.
  ***********************************************************/
 
- const { db } = require("../application/lib");
-
+const { db } = require("../application/lib");
+const { currentTime, currentDate } = require("../application/lib");
 //  /**
 //  * Description
 //  * @param {any} amount
@@ -63,12 +66,22 @@ exports.generateBase62Constant = function() {
     return base62.encode(miliSec);
 };
 
+exports.generatePaymentId = function() {
+    const dateLocal = new Date();
+    const miliSec = dateLocal.getTime();
+    return "Pay" + base62.encode(miliSec);
+};
+
 // eslint-disable-next-line require-jsdoc
 
  /**
   * Description
-  * @param {any} Uid
+  * @param {any} uid
   * @param {any} order
+  * @param {any} paymentId
+  * @param {any} subscriptionId
+  * @param {any} currentDate
+  * @param {any} currentTime
   * @return {any}
   */
 exports.setRazorpayOrderDetails = function(uid, order, paymentId, subscriptionId, currentDate, currentTime) {
@@ -84,39 +97,42 @@ exports.setRazorpayOrderDetails = function(uid, order, paymentId, subscriptionId
    return Promise.resolve(p1);
 };
 
- /**
-  * Description
-  * @param {any} Id
-  * @param {any} order
-  * @return {any}
-  */
-  exports.setEcommerceRazorDetails = function(Id, order) {
-    const p1 = db.collection("Orders").doc(Id).update({
-        RazorPayOrderDetails: order,
-    });
-   return Promise.resolve(p1);
-};
-
-// exports.setPaymentStatus = function(orderId, id) {
-//     console.log("orderid", orderId);
-//     console.log("uid", id);
-//     let data;
-
-//     const p1 = db.collection("Subscriptions").doc(id).collection("Payment").doc(paymentId).get().then((doc)=>{
-//         data = doc.data();
-//         data.RazorPayOrderDetails.amount_paid = data.RazorPayOrderDetails.amount_due;
-//         data.RazorPayOrderDetails.amount_due = 0;
-//         data.RazorPayOrderDetails.status = "paid";
+//  /**
+//   * Description
+//   * @param {any} Id
+//   * @param {any} order
+//   * @return {any}
+//   */
+//   exports.setEcommerceRazorDetails = function(Id, order) {
+//     const p1 = db.collection("Orders").doc(Id).update({
+//         RazorPayOrderDetails: order,
 //     });
-//     Promise.resolve(p1).then(()=>{
-//         const promise = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).update({
-//             PaymentStatus: "Complete",
-//             RazorPayOrderDetails: data.RazorPayOrderDetails,
-//         });
-//         mailer(data.UserUid, "Payment_Complete", paymentId);
-//         return Promise.resolve(promise);
-//     });
+//    return Promise.resolve(p1);
 // };
+
+exports.setPaymentStatus = function(subscriptionId, paymentId) {
+    console.log("subscriptionId", subscriptionId);
+    console.log("paymentId", paymentId);
+    let data;
+
+    const p1 = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).get().then((doc)=>{
+        data = doc.data();
+        data.RazorPayOrderDetails.amount_paid = data.RazorPayOrderDetails.amount_due;
+        data.RazorPayOrderDetails.amount_due = 0;
+        data.RazorPayOrderDetails.status = "paid";
+        console.log(currentTime, currentDate);
+    });
+    Promise.resolve(p1).then(()=>{
+        const promise = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).update({
+            PaymentStatus: "Complete",
+            PaymentCreationDate: currentDate,
+            PaymentCreationTime: currentTime,
+            RazorPayOrderDetails: data.RazorPayOrderDetails,
+        });
+        // mailer(data.UserUid, "Payment_Complete", paymentId);
+        return Promise.resolve(promise);
+    });
+};
 
 // exports.setEcommercePaymentStatus = function(id) {
 //     console.log("reg id", id);

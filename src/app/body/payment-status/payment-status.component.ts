@@ -21,15 +21,18 @@ export class PaymentStatusComponent implements OnInit {
     this.orderId = this.route.snapshot.params['orderId'];
     this.paymentId = this.route.snapshot.params['paymentId'];
     this.signature = this.route.snapshot.params['signature'];
-    this.subscriptionId = this.route.snapshot.params['id'];
-    // this.verifyPayment();
+    this.subscriptionId = this.route.snapshot.params['subscriptionId'];
+    this.verifyPayment();
   }
 
   verifyPayment(){
-    const uid = this.startService.uid;
-    this.subscriptionId = this.subscriptionService.subscriptionPackage.SubscriptionId;
+    console.log("hit");
+    // const uid = this.startService.uid;
+    // this.subscriptionId = this.subscriptionService.subscriptionPackage.SubscriptionId;
+    console.log(this.subscriptionId);
+    
     const callable = this.functions.httpsCallable("payment/paymentVerification");
-    callable({OrderId: this.orderId, PaymentId:this.paymentId, Signature: this.signature, Id: this.subscriptionId}).subscribe({
+    callable({OrderId: this.orderId, PaymentId:this.paymentId, Signature: this.signature, Id: this.subscriptionId, Type: "StandardUpgrade"}).subscribe({
       next: (data) => {
         this.paymentStatus = "Complete";
         console.log("PaymentStatus", this.paymentStatus);

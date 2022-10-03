@@ -1,6 +1,5 @@
-
-/* eslint-disable max-len */
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable no-undef */

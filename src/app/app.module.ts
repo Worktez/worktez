@@ -179,6 +179,7 @@ import { SkillsComponent } from './body/profile/skills/skills.component';
 import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
 import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
+import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
 
 @NgModule({
   declarations: [
@@ -324,6 +325,7 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
     MembersAccessComponent,
     MemberCardComponent,
     EditMilestoneComponent,
+    StandardSubscriptionComponent,
   ],
   imports: [
     BrowserModule,
