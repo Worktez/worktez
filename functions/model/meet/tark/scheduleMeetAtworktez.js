@@ -10,7 +10,7 @@
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- *
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -20,21 +20,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-const {getApplicationData, updateApplication, generateBase64String, milliSeconds} = require("../../application/lib");
-const {setMeet} = require("../lib");
-const {setUserMeet} = require("../lib");
+const {getApplicationData, updateApplication} = require("../../application/lib");
+const {setMeetAtWorktez} = require("../lib");
 
-exports.scheduleMeet = function(request, response) {
-  const orgDomain = request.body.data.OrgDomain;
-  const teamId = request.body.data.TeamId;
-  const teamMembers = request.body.data.TeamMembers;
+exports.scheduleMeetAtWorktez = function(request, response) {
+  const attendees = request.body.data.Attendees;
   const title = request.body.data.Title;
   const startTime = request.body.data.StartTime;
   const endTime = request.body.data.EndTime;
   const hostName = request.body.data.HostName;
   const description = request.body.data.Description;
   const date = request.body.data.Date;
-  const uid = request.body.data.Uid;
 
   let status = 200;
   let result;
@@ -46,13 +42,7 @@ exports.scheduleMeet = function(request, response) {
     };
 
     const meetDocId = "m" + meetCounter;
-    const roomId = generateBase64String( milliSeconds+title);
-    if (teamId=="" && uid=="" && orgDomain=="") {
-      setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
-    } else {
-      setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId);
-      setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
-    }
+    setMeetAtWorktez(meetDocId, attendees, title, startTime, endTime, hostName, description, date);
     updateApplication(appDetailsUpdateJson);
   }).catch((error) => {
     status = 500;

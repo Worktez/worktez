@@ -182,6 +182,7 @@ import { AllNotificationCardComponent } from './header/notification-center/all-n
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
 import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
 import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
+import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
 
 @NgModule({
   declarations: [
@@ -330,6 +331,7 @@ import { PaymentStatusComponent } from './body/payment-status/payment-status.com
     AddWatchersComponent,
     CurrenPlanComponent,
     PaymentStatusComponent,
+    StandardSubscriptionComponent,
   ],
   imports: [
     BrowserModule,

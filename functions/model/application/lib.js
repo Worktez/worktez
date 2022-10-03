@@ -164,34 +164,34 @@ exports.checkUpdateTime = function(lastUpdated) {
 };
 
 exports.basicSubscription = {
-     noOfTeams : 2,
-     noOfMembers : 5,
-     emailsAndNotifications : 1000,
-     quickNotes : 20,
-     docPerTask : 1,
-     meetings : 100,
-     pDashboard : false,
-     techTag : true,
-     pReport : false,
+     noOfTeams: 2,
+     noOfMembers: 5,
+     emailsAndNotifications: 1000,
+     quickNotes: 20,
+     docPerTask: 1,
+     meetings: 100,
+     pDashboard: false,
+     techTag: true,
+     pReport: false,
      amount: 0,
      subscriptionType: "Basic",
-     currencyType: "USD"
-}
+     currencyType: "USD",
+};
 
 exports.standardSubscription = {
-    noOfTeams : 5,
-    noOfMembers : 10,
-    emailsAndNotifications : 10000,
-    quickNotes : 100,
-    docPerTask : 3,
-    meetings : 100,
-    pDashboard : false,
-    techTag : true,
-    pReport : false,
+    noOfTeams: 5,
+    noOfMembers: 10,
+    emailsAndNotifications: 10000,
+    quickNotes: 100,
+    docPerTask: 3,
+    meetings: 100,
+    pDashboard: false,
+    techTag: true,
+    pReport: false,
     subscriptionType: "Standard",
     amount: 49,
-    currencyType: "USD"
-}
+    currencyType: "USD",
+};
 
 
 const today = new Date();
