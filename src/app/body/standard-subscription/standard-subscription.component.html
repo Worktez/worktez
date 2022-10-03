@@ -99,7 +99,7 @@
                     <tr>
                         <td>
                             <div class="d-flex justify-content-center m-2">
-                                <div class="row p-2" style="text-align: center;" *ngIf="paymentStatus == 'Failed'">
+                                <div class="row p-2" style="text-align: center;" *ngIf="paymentStatus == 'Failed' || paymentStatus == 'Created'">
                                     <button type="button" class="btn" id="button" data-toggle="modal"
                                         data-target="#exampleModalCenter" (click)=" setOrderWithRazorpay()" style="background-color:  #ffffff;color: #4006BA;
                                   display: block;
@@ -135,6 +135,11 @@
             <div *ngIf="paymentStatus == 'Waiting'">
                 <div class="heading2 text-center">
                     Please wait
+                </div>
+            </div>
+            <div *ngIf="paymentStatus == 'Failed'">
+                <div class="heading2 text-center">
+                    Payment Failed
                 </div>
             </div>
         </div>
