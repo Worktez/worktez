@@ -18,7 +18,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
- const { functions, cors, fastify, requestHandler } = require("../application/lib"); 
+ const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { startSubSchedular } = require("./tark/startSubSchedular");
 
 
@@ -41,7 +41,7 @@ const { startSubSchedular } = require("./tark/startSubSchedular");
  fastify.post("/startSubSchedular", (req, res) => {
     startSubSchedular();
     return res.status(200).send("Success");
-  });    
+  });
 
 /**
  * Description
