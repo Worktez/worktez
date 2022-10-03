@@ -21,7 +21,7 @@
  ***********************************************************/
 
 const { functions, getApplicationData, updateApplication, generateBase64String, basicSubscription } = require("../../application/lib");
-const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("../lib");
+const { setOrg, getOrg, getOrgRawData, setOrgRawData, updateOrgRawData } = require("../lib");
 const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = require("../../users/lib");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { addSubscription } = require("../../subscriptions/tark/addSubscription");
@@ -65,6 +65,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
                 };
 
                 updateApplication(appDetailsUpdateJson);
+                updateOrgRawData(appDetailsUpdateJson, orgDomain);
             }).catch((error) => {
                 status = 500;
                 console.log("Error:", error);

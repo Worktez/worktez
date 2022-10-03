@@ -25,6 +25,8 @@ const { standardSubscription } = require("../../application/lib");
 const { generateRazorpayOrder } = require("../../payment/tark/generateRazorpayOrder");
 const { getSubscriptions } = require("../lib");
 
+// No more used
+
 exports.upgradeSubscriptionsToStandard = function(request, response) {
     const uid = request.body.data.Uid;
     let order;
@@ -37,19 +39,9 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
         console.log("Getting Sub data");
         if (subData.SubsctiptionType != " ") {
             console.log("Sub not standard");
-            let paymentId;
             const subscriptionData = standardSubscription;
-            console.log("Before if");
-            if (subData.PaymentId != "0") {
-                console.log("Payment id is not 0");
-                let paymentIdString = subData.PaymentId;
-                paymentIdString = paymentIdString.slice(1, paymentIdString.length());
-                console.log("inside if");
-                paymentId = paymentIdString + 1;
-            } else {
-                console.log("Payment id is 0 setting to 1");
-                paymentId = 1;
-            }
+            let paymentId= subData.PaymentId;
+            paymentId++;
             console.log("Going to call generate razorpay order");
             const p1 = generateRazorpayOrder(uid, paymentId, subscriptionId, subscriptionData.amount).then((data)=>{
                 console.log("From then part ", data);
