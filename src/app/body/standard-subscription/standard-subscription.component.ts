@@ -20,7 +20,7 @@ export class StandardSubscriptionComponent implements OnInit {
   subscriptionId;
   rzp1;
   paymentDone = false;
-  paymentStatus = "Failed";
+  paymentStatus = "Created";
   rzpPaymentId;
   paymentId;
   orderId;
@@ -120,6 +120,8 @@ export class StandardSubscriptionComponent implements OnInit {
         console.log("PaymentStatus", this.paymentStatus);
       },
       complete: () => {
+        const appKey = this.backendService.getOrganizationAppKey();
+        this.subscriptionService.getSubscriptionDetails(appKey);
         console.log("PaymentSuccessfull");
       }
     })

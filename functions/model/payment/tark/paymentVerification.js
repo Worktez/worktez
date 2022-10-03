@@ -20,7 +20,7 @@
 const crypto = require("crypto");
 const { setPaymentStatus } = require("../lib");
 const { standardSubscription, currentDate } = require("../../application/lib");
-const { updateSubscription } = require("../../subscriptions/lib");
+const { updateSubscription, getSubscriptions } = require("../../subscriptions/lib");
 exports.paymentVerification = function(request, response) {
     try {
         const orderId = request.body.data.OrderId;
@@ -49,9 +49,18 @@ exports.paymentVerification = function(request, response) {
         if (generatedSignature === signature) {
             const result = { data: "Payment verified successfully", status: 200 };
             console.log("Payment successful");
-                const date = new Date(currentDate);
+            console.log();
+            getSubscriptions("", id).then((data)=>{
+                let date;
+                if (data.ExpiresOn == "No limit") {
+                    date = new Date(currentDate);
+                } else {
+                    date = new Date(data.ExpiresOn);
+                }
+
                 date.setDate(date.getDate() + 30);
                 setPaymentStatus(id, paymentId);
+                console.log("Date", date);
                 if (type == "StandardUpgrade") {
                     const inputJson =
                     {
@@ -66,6 +75,7 @@ exports.paymentVerification = function(request, response) {
                 }
 
             return response.status(200).send(result);
+            });
         } else {
             console.log("payment failed");
             const result = { data: "Payment Incomplete" };
