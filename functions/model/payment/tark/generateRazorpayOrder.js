@@ -27,11 +27,6 @@ exports.generateRazorpayOrder = function(request, response) {
                     key_secret: "EjWL1pPedHeT4Z1C4laM3u1b",
                 });
 
-                // Production Credentials
-                // const razorpay = new RazorPay({
-                //     key_id: "rzp_live_xoOwFekmzVS4do",
-                //     key_secret: "UnY8Vp9ty5c9wL1TWNUlBsci",
-                // });
 
                 const generatedReceipt = generateBase62Constant();
 
@@ -59,8 +54,6 @@ exports.generateRazorpayOrder = function(request, response) {
                     // Test credentials
                     order.key = "rzp_test_nfhDfN6X5cgp42";
 
-                    // Production Credentials
-                    // order.key = "rzp_live_xoOwFekmzVS4do";
                     order.receipt = generatedReceipt;
                     order.paymentId = paymentId;
                     const result = { data: order };
