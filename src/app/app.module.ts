@@ -180,6 +180,7 @@ import { MembersAccessComponent } from './body/view-organization-details/members
 import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
+import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
 
 @NgModule({
   declarations: [
@@ -326,6 +327,7 @@ import { StandardSubscriptionComponent } from './body/standard-subscription/stan
     MemberCardComponent,
     EditMilestoneComponent,
     StandardSubscriptionComponent,
+    AddWatchersComponent,
   ],
   imports: [
     BrowserModule,

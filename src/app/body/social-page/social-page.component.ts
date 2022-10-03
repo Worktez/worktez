@@ -22,12 +22,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-social-page',
   templateUrl: './social-page.component.html',
   styleUrls: ['./social-page.component.css']
 })
+
 export class SocialPageComponent implements OnInit {
   
   componentName: string = "SOCIAL-PAGE"
@@ -41,7 +43,7 @@ export class SocialPageComponent implements OnInit {
 
   PostId: string
 
-  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService) { }
+  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, public startService: StartServiceService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -85,14 +87,24 @@ export class SocialPageComponent implements OnInit {
 
   createPost() {
     this.createPostEnabled = true;
-    this.loadSocialPageData();
   }
 
-  createPostCompleted ( data: { completed: boolean } ) {
+  createPostCompleted ( data: { completed: boolean, post: Post } ) {
     this.createPostEnabled = false;
-    this.loadSocialPageData();
+    this.posts.push(data.post);
+    // this.loadSocialPageData();
   }
 
+  postReactionSwitched(data: { Uid: string, reactionAdded: boolean, reactionRemoved: boolean } ){
+    if(data.Uid==this.authService.getLoggedInUser()){
+      if(data.reactionAdded==true){
+        this.authService.userAppSetting.UserReactionCounter+=1;
+      }
+      if(data.reactionRemoved==true){
+        this.authService.userAppSetting.UserReactionCounter-=1;
+      }
+    }
+  }
 
   loadRecentActivity(){
     const newarray = this.posts.filter((data)=>{

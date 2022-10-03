@@ -143,4 +143,9 @@ export class ViewOrganizationDetailsComponent implements OnInit {
       this.showMemberRoles = true
     }
   }
+  
+  filterPage(){
+    this.router.navigate(['/FilterPage']);
+  }
+
 }

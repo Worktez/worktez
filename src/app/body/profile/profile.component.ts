@@ -217,37 +217,12 @@ export class ProfileComponent implements OnInit {
       this.sameUser = true;
     }
     else{
-      const data = this.userService.getUserNameData(this.username);
-      if(data != null) {
-        this.displayName = data.displayName;
-        this.email = data.email;
-        this.uid = data.uid;
-        this.aboutMe = data.AboutMe;
-        this.photoURL = data.photoURL;
-        this.phoneNumber = data.phoneNumber;
-        // this.linkedInProfile = data.LinkedInProfile;
-        // this.githubProfile = data.LinkedInProfile;
-        // this.dateOfJoining = data.DateOfJoining;
-        // this.skills = data.Skills;
-        // this.website = data.Website;
-        if (this.website.includes("https://") == false) {
-          this.website = "https://" + this.website;
-        }
-        this.readUserEducation(this.uid);
-        this.readUserExperience(this.uid);
-        this.readUserProject(this.uid);
-        this.readUserProfilePic(this.uid);
-
-        this.sameUser = false;
-      }
-      else{
         const callable = this.functions.httpsCallable("users/getUserByUsername");
         callable({Username : this.username}).pipe(map(res => {
           const data = res.userData as UserAppSetting;
           return { ...data }
       })).subscribe({
         next: (data:UserAppSetting) => {
-          console.log(data);
           this.displayName = data.displayName;
           this.email = data.email;
           this.uid = data.uid;
@@ -259,8 +234,10 @@ export class ProfileComponent implements OnInit {
           this.dateOfJoining = data.DateOfJoining;
           this.skills = data.Skills;
           this.website = data.Website;
-          if (this.website.includes("https://") == false) {
-            this.website = "https://" + this.website;
+          if(this.website != ""){
+            if (this.website.includes("https://") == false) {
+              this.website = "https://" + this.website;
+            }
           }
           this.readUserEducation(this.uid);
           this.readUserExperience(this.uid);
@@ -273,7 +250,6 @@ export class ProfileComponent implements OnInit {
         },
         complete: () => console.info('Getting Task successful')
       });
-    }
   }
 }
 

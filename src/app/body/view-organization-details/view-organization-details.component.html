@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="row p-2">
-            <div class="col-md-8 col-12">
+            <div class="col-md-7 col-12">
                 <ul class="nav">
                     <li class="nav-item ">
                         <a (click)="switchView('showTeamsDetails')"
@@ -109,6 +109,14 @@
                     </li>
                 </ul>
             </div>
+            <div *ngIf="(backendService.organizationsData | async)" class="col pl-0 text-right" >
+                <button  *ngIf="startService.teamIdExists" class="btn extra" type="button"  (click)="filterPage()" title="filter Page">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        filter_list
+                    </mat-icon>
+                    Filters
+                </button>
+             </div>
             <div class="col pl-0 text-right">
                 <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra"
                     type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal"
@@ -147,6 +155,5 @@
 </ng-container>
 
 <ng-container *ngIf="editProfilePicEnabled" id="profilePicModal">
-    <app-edit-dp [uid]="uid" [email]="email" [displayName]="displayName"
-        (editProfilePicCompleted)="editProfilePicCompleted($event)"></app-edit-dp>
+    <app-edit-dp [uid]="uid" [email]="email" [displayName]="displayName" (editProfilePicCompleted)="editProfilePicCompleted($event)"></app-edit-dp>
 </ng-container>

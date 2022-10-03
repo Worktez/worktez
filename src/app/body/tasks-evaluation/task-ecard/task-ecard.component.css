@@ -9,7 +9,7 @@
 }
 
 .value {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text);
     cursor: pointer;
 }
@@ -27,6 +27,7 @@
     overflow-y: hidden;
     flex-wrap: nowrap;
     scroll-behavior: smooth;
+    cursor: move;
 }
 
 select {
@@ -36,5 +37,9 @@ select {
 }
 .form-control{
     background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+mat-icon {
     color: var(--text);
 }

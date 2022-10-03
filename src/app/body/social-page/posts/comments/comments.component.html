@@ -1,12 +1,19 @@
-<ng-container *ngIf="commentDataReady; else loader">
-  <div class="card mt-2">
+<ng-container *ngIf="commentDataReady; else loader ">
+  <div class="card mt-2" *ngIf="comment.CommentStatus != -1">
     <div class="card-header">
       <div class="row">
         <div class="col">
-          <app-suggestion-bucket [email]="user.email" [showEmail]="false"></app-suggestion-bucket>
+          <app-suggestion-bucket [email]="user.email" [showEmail]="false" [showUserBasic]="true"></app-suggestion-bucket>
         </div>
         <div class="col d-flex justify-content-end">
-          <button class="btn ml-auto p-0" style="padding-left: 30px;margin-bottom: 35px;"><mat-icon fontSet="material-icons" class="align-middle">more_vert</mat-icon></button> 
+          <div class="dropdown text-right" *ngIf="comment.Uid == this.authService.getLoggedInUser()">
+            <mat-icon role="button" type="button" class="btn dropdown" style="width:51px;height: 39px;" data-toggle="dropdown"> 
+                <span class="material-icons">more_vert</span>
+            </mat-icon>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <button class="dropdown-item" type="button" (click)="deleteComment(comment.PostId)">Delete</button>   
+            </div>    
+        </div> 
         </div>
       </div>
     </div>
@@ -14,6 +21,7 @@
       {{comment.Content}}
     </div>
   </div>
+  <app-loader *ngIf="enableLoader"></app-loader>
 </ng-container>
 <ng-template #loader>
   <app-loader></app-loader>
