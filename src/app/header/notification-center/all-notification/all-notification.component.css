@@ -3,19 +3,6 @@
     box-shadow: var(--box-shadow-bottom);
 }
 
-.notification{
-    border-radius: 12px;
-}
-
-.container {
-    color: var(--text);
-    border-radius: 6px; 
-    min-height: 350px;
-    padding: 1.1rem;
-    justify-content: space-evenly;
-    padding-top: 0 !important;
-}
-
 .close {
     color: var(--text);
 }

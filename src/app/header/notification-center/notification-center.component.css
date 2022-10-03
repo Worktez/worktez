@@ -54,3 +54,8 @@ mat-icon {
     border-radius: 2%;
     box-shadow: var(--box-shadow-bottom);
 }
+
+.oldNotificationBtn{
+    margin-top: 1rem; 
+    margin-bottom: 0.5rem;
+}
