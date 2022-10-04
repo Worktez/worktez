@@ -1,0 +1,17 @@
+<a href="{{notification.Link}}">
+    <div class="row py-2 mx-1" id="notificationBox">
+        <div class="col-12">
+            <div class="row text-left">
+                <div class="col d-flex align-items-center">
+                    <app-suggestion-bucket [email]="notification.SenderEmail" [showEmail]="false"  [showOnlyProfilePic]="true"></app-suggestion-bucket>
+                    {{notification.Message}}
+                </div>
+            </div>
+            <div class="row text-left" id="dt">
+                <div class="col" style="margin-left: 5%;">
+                    {{notification.CreationDate}} - {{notification.CreationTime}}
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

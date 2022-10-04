@@ -42,6 +42,7 @@ exports.addComment = function(request, response) {
 
     // let assigneeName = "";
     let senderName = "";
+    let senderEmail = "";
 
 
     const link = "https://worktez.com/TaskDetails/" + taskId;
@@ -57,6 +58,7 @@ exports.addComment = function(request, response) {
         // });
 
         const promise2 = getUser(uid, "").then((data) => {
+            senderEmail = data.email;
             senderName = data.displayName;
             return senderName;
         }).catch((error) => {
@@ -81,7 +83,7 @@ exports.addComment = function(request, response) {
             addActivity("COMMENT", logWorkComment, taskId, date, time, orgDomain, uid);
             // sendMail(assignee, subjectMessage, htmlMessage);
             taskMailer("Comment_Task", taskId, orgDomain, senderName);
-            sendNotification(notificationMessage, uid, date, time, orgDomain, link);
+            sendNotification(notificationMessage, senderEmail, uid, date, time, orgDomain, link);
 
             result = { data: "Commented successful!" };
             console.log("Comment successful!");
