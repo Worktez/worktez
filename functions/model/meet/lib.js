@@ -109,6 +109,26 @@ exports.updateMeetDetails= function(updateJson) {
  * @param {any}
  * @return {any}
  */
+ exports.getWorktezMeetDetails=function() {
+  const query = db.collection("Meet").doc(meetDocId);
+  const promise = query.get().then((doc) => {
+      const data=[];
+      doc.forEach((element) => {
+          if (element.exists) {
+              data.push( element.data());
+          }
+      });
+      return data;
+  });
+  return Promise.resolve(promise);
+};
+
+/**
+ * Description
+ * @param {any}
+ * @param {any}
+ * @return {any}
+ */
 exports.getMeetDetails=function(uid) {
     const query = db.collection("Users").doc(uid).collection("Meet");
 
@@ -127,33 +147,6 @@ exports.getMeetDetails=function(uid) {
     return Promise.resolve(promise);
 };
 
-
-/**
- * Description
- * @param {any} meetDocId
- * @param {any} attendees
- * @param {any} title
- * @param {any} startTime
- * @param {any} endTime
- * @param {any} hostName
- * @param {any} description
- * @param {any} date
- * @return {any}
- */
-exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endTime, hostName, description, date) {
-  const setMeetDoc = db.collection("Meet.Worktez").doc(meetDocId).set({
-    MeetDocId: meetDocId,
-    Attendees: attendees,
-    Title: title,
-    StartTime: startTime,
-    EndTime: endTime,
-    HostName: hostName,
-    Description: description,
-    Date: date,
-  });
-  return Promise.resolve(setMeetDoc);
-};
-
 /**
  * Description
  * @param {any} inputJson
@@ -161,6 +154,6 @@ exports.setMeetAtWorktez = function(meetDocId, attendees, title, startTime, endT
  * @return {any}
  */
 exports.updateMeetDetailsAtWorktez= function(updateJson) {
-  const updateMeet = db.collection("Meet.Worktez").doc(meetDocId).update(updateJson);
+  const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };
