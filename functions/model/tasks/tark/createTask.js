@@ -72,6 +72,7 @@ exports.createNewTask = function(request, response) {
     // let assigneeName = "";
     let assigneeUid = "";
     let senderName = "";
+    let senderEmail = "";
 
     let status = 200;
 
@@ -90,8 +91,10 @@ exports.createNewTask = function(request, response) {
         const p2 = getUserUseEmail(creator).then((data) => {
             if (data!=undefined) {
                 senderName = data.displayName;
+                senderEmail = data.email;
             } else {
                 senderName = "ABC";
+                senderEmail = creator;
             }
             return senderName;
         }).catch((error) => {
@@ -203,7 +206,7 @@ exports.createNewTask = function(request, response) {
             updateSprintEvaluationGraphData(orgDomain, teamId, fullSprintName);
 
             taskMailer("Create_Task", taskId, orgDomain, senderName);
-            sendNotification(notificationMessage, assigneeUid, creationDate, time, orgDomain, link);
+            sendNotification(notificationMessage, senderEmail, assigneeUid, creationDate, time, orgDomain, link);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
 

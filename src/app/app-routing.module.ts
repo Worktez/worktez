@@ -52,6 +52,7 @@ import { FilterPageComponent } from './body/filter-page/filter-page.component';
 import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
+import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
 import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
 import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
@@ -101,6 +102,7 @@ const routes: Routes = [
   { path: 'Pricing', component:PricingComponent },
   { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
   { path: 'Standard', component:StandardSubscriptionComponent},
+  { path: 'Notifications', component:AllNotificationComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 
