@@ -187,6 +187,16 @@ export class AuthService {
       }));
       return this.filesCollectionData;
   }
+  
+  getOrganizationLogo(orgDomain: string) {
+    const callable = this.functions.httpsCallable("librarian/getFilesInOrganization");
+    this.filesCollectionData = callable({OrgDomain: orgDomain}).pipe(
+      map(actions => {
+        this.filesData = actions.data as FileData[];
+        return this.filesData;
+      }));
+      return this.filesCollectionData;
+  }
 
   getAppKey() {
     return this.userAppSetting.SelectedOrgAppKey;

@@ -261,6 +261,7 @@ export class ProfileComponent implements OnInit {
       }
       this.imageReady = true
     });
+    console.log(this.imageUrl);
   }
 
   readUserEducation(uid: string) {

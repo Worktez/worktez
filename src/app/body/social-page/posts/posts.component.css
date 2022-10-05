@@ -1,3 +1,7 @@
+.post {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
 .card-header {
   background-color: var(--secondary-bg);
   color: var(--text);

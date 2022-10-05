@@ -53,7 +53,6 @@ export class NotificationCenterComponent implements OnInit {
 
   showNotification() {
     this.applicationSettingService.newNotificationListObservable.subscribe((data) => {
-      console.log(data);
       if(!data) {
         this.loadNotifications(1);
       } else {
@@ -72,7 +71,6 @@ export class NotificationCenterComponent implements OnInit {
     const callable = this.functions.httpsCallable("notifications/emptyNotifications");
     callable({Uid: uid, OrgDomain: orgDomain, LastSeenDate: lastSeenDate}).subscribe({
       next: (data) => {
-        console.log(data);
       },
       error: (error) => {
         console.error("active notifications reset");
