@@ -17,12 +17,21 @@
 }
 
 #headingLine {
-    width: 80%;
+    width: 90%;
     height: 85%;
     color: #4E4E4E;
-    font-size: 35px;
+    font-size: 34px;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    line-height: 3rem;
+    line-height: 2.5rem;
+}
+
+#headingLine2 {
+    width: 100%;
+    height: 85%;
+    color: #4E4E4E;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    line-height: 1.5rem;
 }
 
 #conceptArt {
@@ -187,7 +196,7 @@
 
 @media only screen and (max-width: 600px) {
     #headingLine {
-        font-size: 40px;
+        font-size: 35px;
         width: 100%;
     }
 

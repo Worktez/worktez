@@ -89,7 +89,7 @@
                             <div class="row pt-3">
                                 <div class="col-md-4 ml-auto px-2">
                                     <span id="label">Sprint Number</span>
-                                    <input type="number" min="-1" class="form-control" [(ngModel)]="editTask.SprintNumber" [ngModelOptions]="{standalone: true}">
+                                    <input type="number" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" min="-1" class="form-control" [(ngModel)]="editTask.SprintNumber" [ngModelOptions]="{standalone: true}">
                                 </div>
                                 <div class="col-md-4 px-2">
                                     <span id="label">Task Priority</span>

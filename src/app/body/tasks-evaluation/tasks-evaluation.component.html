@@ -24,6 +24,43 @@
     </div>
 </div>
 <ng-container *ngIf="!showLoader && tasks.length" cdkDropListGroup>
+
+    <ng-container *ngFor="let item of upcomingSprintTasks">
+        <ng-container>
+            <div class="card mx-5 mb-5" cdkDropList (cdkDropListDropped)="onDropUpComingSprint($event)" [cdkDropListData]="item">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">
+                            <a id="sprintName">Upcoming Sprint</a>
+                        </div>
+                        <div class="col ml-auto rightMenu" *ngIf="item.length > 0">
+                            <span class="material-icons" *ngIf="!toogleClosedSprint.includes(teamCurrentSprint + 1)" (click)="iconsToggle(teamCurrentSprint + 1)">
+                                expand_less
+                            </span>
+                            <span class="material-icons" *ngIf="toogleClosedSprint.includes(teamCurrentSprint + 1)" (click)="iconsToggle(teamCurrentSprint + 1)">
+                                expand_more
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            <div *ngIf="item.length > 0">
+                <div class="card-body" *ngIf="!toogleClosedSprint.includes(teamCurrentSprint + 1)">
+                    <ul class="list-group list-group-flush"  *ngFor="let task of item">
+                        <li class="list-group-item" cdkDrag>
+                            <app-task-ecard [task]="task"></app-task-ecard>
+                        </li>   
+                    </ul>
+                </div>
+            </div>
+            <div *ngIf="item.length == 0">
+                <div class="text-center p-3" style="color: var(--text);">
+                     No tasks to show!
+                </div>
+            </div>
+        </div>
+        </ng-container>
+    </ng-container>
+
     <ng-container *ngFor="let item of tasks">
         <ng-container *ngIf="item.length">
             <div class="card mx-5 mb-5" cdkDropList (cdkDropListDropped)="onDrop($event)" [cdkDropListData]="item">

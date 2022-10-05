@@ -39,8 +39,10 @@ exports.addWatcher = function(request, response) {
     let result;
     const promises = [];
     const watchers = [];
+    let senderEmail = "";
 
     const addWatcherPromise = getTask(taskId, orgDomain).then((taskDoc) => {
+        senderEmail = taskDoc.Assignee;
         taskDoc.Watcher.forEach((element) => {
             watchers.push(element);
         });
@@ -68,7 +70,7 @@ exports.addWatcher = function(request, response) {
             addActivity("EDITED", "AddedWatcher", taskId, creationDate, time, orgDomain, uid);
             // sendMail(newWatcher, subjectMessage, htmlMessage);
             taskMailer("Watcher_Task", taskId, orgDomain, newWatcher);
-            sendNotification(notificationMessage, uid, creationDate, time, orgDomain, link);
+            sendNotification(notificationMessage, senderEmail, uid, creationDate, time, orgDomain, link);
             return response.status(status).send(result);
         });
     })

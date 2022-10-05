@@ -121,7 +121,7 @@ export class EditPageComponent implements OnInit {
             error:(error) => {
               console.error(error)
             },
-            complete:() => console.info("Getting filtered options Assignee was successfull")
+            complete:() => console.info("Getting filtered options Reporter was successfull")
           });
     }); 
   }

@@ -36,6 +36,7 @@ export class TasksEvaluationComponent implements OnInit {
 
   componentName: string = "TASKS-EVALUATION";
   tasks = [];
+  upcomingSprintTasks = [];
   sprints: Sprint[] = []
   showLoader: boolean;
   selectedTeamId: string;
@@ -84,7 +85,6 @@ export class TasksEvaluationComponent implements OnInit {
     this.nextSprintTasksToFetch = this.teamCurrentSprint;
     this.selectedTeamId = this.startService.selectedTeamId;
     this.selectedTeamName = this.startService.teamName;
-
     this.readTasks(); 
   }
  
@@ -98,6 +98,7 @@ export class TasksEvaluationComponent implements OnInit {
     callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
         next: (data) => {
           this.tasks=[];
+          this.upcomingSprintTasks = [];
           this.getData();
         },
         error: (error) => {
@@ -129,6 +130,7 @@ export class TasksEvaluationComponent implements OnInit {
           if (result.BacklogTasks.length > 0) {
             this.tasks.push(result.BacklogTasks);
           }
+          this.upcomingSprintTasks.push(result.UpcomingSprintTasks);
           this.tasks.push(result.Tasks);
           this.nextSprintTasksToFetch -= 1;
           if (this.nextSprintTasksToFetch < 1) {
@@ -207,6 +209,19 @@ export class TasksEvaluationComponent implements OnInit {
     } else {
       // move to the dragged sprint
       this.editTask(event.previousContainer.data[event.previousIndex], event.container.data[0].SprintNumber);
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
+  }
+
+  onDropUpComingSprint(event: CdkDragDrop<Tasks[]>) {
+    this.showLoader = false;
+    console.log(event.previousContainer === event.container);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.showLoader = false;
+    } else {
+      // move to the dragged sprint
+      this.editTask(event.previousContainer.data[event.previousIndex], this.teamCurrentSprint + 1);
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }

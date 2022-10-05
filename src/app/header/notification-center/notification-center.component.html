@@ -13,7 +13,7 @@
 ***********************************************************/ -->
 <div class="btn-group" *ngIf="authService.myOrgCollectionDocData">
     <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}"
-        matBadgeColor="warn" (click)="showNotification()"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">notifications</mat-icon>
+        matBadgeColor="warn" [matBadgeHidden]="authService.myOrgCollectionDocData.ActiveNotifications==0" (click)="showNotification()"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">notifications</mat-icon>
    
     <div class="dropdown-menu dropdown-menu-right" id="notificationCenter">
         <div class="text-center align-middle" >
@@ -26,7 +26,7 @@
                 </ng-container>
                 
                 <ng-container *ngIf="!showOldNotificationsList">
-                <a class="btn btn-outline-secondary" (click)="showOlderNotifications()" style="margin-top: 2rem;">Show older notifications</a>
+                <a class="btn btn-outline-secondary oldNotificationBtn" (click)="showOlderNotifications()" routerLink="">Show older notifications</a>
                 </ng-container>
             </ng-container>
             <ng-template #loader>

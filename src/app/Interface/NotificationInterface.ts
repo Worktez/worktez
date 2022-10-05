@@ -12,6 +12,8 @@
 * See the MIT License for more details. 
 ***********************************************************/
 export interface Notification {
+    SenderEmail: string;
+    Uid: string;
     Message: string;
     CreationDate: string;
     CreationTime: string;

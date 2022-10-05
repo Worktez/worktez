@@ -43,7 +43,8 @@ export class ApplicationSettingsService {
 
   public sprintDataObservable: Observable<Sprint>;
 
-  public notificationListObservable: Observable<Notification[]>;
+  public newNotificationListObservable: Observable<Notification[]>;
+  public oldNotificationListObservable: Observable<Notification[]>;
 
   public projectLink: string;
 
@@ -121,10 +122,19 @@ export class ApplicationSettingsService {
 
   getNotificationsList(notificationStatus: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
-    // const callable = this.functions.httpsCallable("notifications/getNotifications");
-    // this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
-    //     return actions as Notification[];
-    // }));
-    return this.notificationListObservable;
+    const callable = this.functions.httpsCallable("notifications/getNotifications");
+    if(notificationStatus==1){
+      this.newNotificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
+          return actions as Notification[];
+      }));
+      return this.newNotificationListObservable;   
+    }
+
+    if(notificationStatus==0){
+      this.oldNotificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
+        return actions as Notification[];
+      }));
+      return this.oldNotificationListObservable;   
+    }
   }
 }

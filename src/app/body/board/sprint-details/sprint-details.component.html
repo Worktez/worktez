@@ -96,14 +96,14 @@
         <div class="dropdown-menu dropdown-menu-right py-2 px-4 " id="filterMenu" aria-labelledby="dropdownMenuButton">
           <div class="input-group">
             <div class="row align-items-center">
-              <div class="col-5 px-0 pt-3">
+              <div class="col-4 px-0">
                 <span>Sprint No.</span>
               </div>
-              <div class="col-7 px-1">
+              <div class="col-4 px-1">
                 <input class="form-control" type="number" id="filterSprintNumberInput"
                 [(ngModel)]="filterSprintNumber" />
               </div>
-              <div class="col-12 text-right pt-1">
+              <div class="col-4 text-right">
                 <button id="filterButton" class="btn " (click)="changeSprintNumber()">
                   Filter
                 </button>

@@ -47,6 +47,7 @@ export class TaskDetailsComponent implements OnInit {
   Id: string
   logWorkEnabled: boolean = false
   gitPrEnabled: boolean = false
+  addWatcherEnabled: boolean = false;
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
   linkEnabled: boolean = false
@@ -398,22 +399,13 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  addWatcher() {
-    const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
-    callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
-      next: (data) => {
-        console.log("Successful");
-        
-        this.addedWatcher = true;
-        return;
-      },
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.log( "Error", error );
-      },
-      complete: () => console.info('Successful')
-    });
+  addWatcher() { 
+    this.addWatcherEnabled = true;
+  }
+
+  addWatcherCompleted( data: { completed: boolean } ) {
+    this.addWatcherEnabled = false;
+    this.getTaskPageData();
   }
 
   linkPr() {
