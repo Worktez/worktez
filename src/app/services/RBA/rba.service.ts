@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { MemberData, Permissions, defaultPermissions } from 'src/app/Interface/UserInterface';
 
 @Injectable({

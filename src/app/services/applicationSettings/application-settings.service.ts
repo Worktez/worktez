@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Notification } from 'src/app/Interface/NotificationInterface';
 import { Team, Sprint, Label } from '../../Interface/TeamInterface';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { UserServiceService } from '../user-service/user-service.service';
 

@@ -14,7 +14,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { QuickNote } from 'src/app/Interface/UserInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { QuickNotesService } from 'src/app/services/quickNotes/quick-notes.service';

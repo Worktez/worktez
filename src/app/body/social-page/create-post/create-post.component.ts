@@ -4,7 +4,7 @@ import { FormControl, NgForm } from '@angular/forms';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { map, Observable, startWith } from 'rxjs';

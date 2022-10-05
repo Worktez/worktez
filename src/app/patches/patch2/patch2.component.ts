@@ -14,7 +14,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PatchService } from 'src/app/services/patch/patch.service';
 import { Patch } from 'src/app/Interface/PatchInterface';
 @Component({

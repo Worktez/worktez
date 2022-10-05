@@ -19,7 +19,7 @@ import { ValidationService } from '../../../services/validation/validation.servi
 import { ToolsService } from '../../../services/tool/tools.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 
 @Component({

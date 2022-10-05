@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({

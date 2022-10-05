@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 

@@ -14,13 +14,13 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase/compat/app';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { MyEducationData, MyExperienceData, MyOrganizationData, MyProjectData, User, UserAppSetting } from "../Interface/UserInterface";
+import { MyEducationData, MyExperienceData, MyOrganizationData, MyProjectData, User, UserAppSetting } from "../../Interface/UserInterface";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
-import { ThemeService } from './theme/theme.service';
+import { ThemeService } from '../theme/theme.service';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
-import { FileData } from '../Interface/FileInterface';
+import { FileData } from '../../Interface/FileInterface';
 
 @Injectable({
   providedIn: 'root',

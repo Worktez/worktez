@@ -15,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { ApplicationSettingsService } from '../services/applicationSettings/application-settings.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { StartServiceService } from '../services/start/start-service.service';
 

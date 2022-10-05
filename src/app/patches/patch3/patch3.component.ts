@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { Tasks, TasksId } from 'src/app/Interface/TasksInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PatchService } from 'src/app/services/patch/patch.service';
 import { Patch } from 'src/app/Interface/PatchInterface';
 

@@ -17,7 +17,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { Post, Comment } from 'src/app/Interface/SocialInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ToolsService } from '../../../services/tool/tools.service';

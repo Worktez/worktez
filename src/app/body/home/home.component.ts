@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';

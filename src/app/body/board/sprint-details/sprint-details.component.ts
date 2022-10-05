@@ -19,7 +19,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';

@@ -8,7 +8,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ToolsService } from 'src/app/services/tool/tools.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { CookieService } from 'ngx-cookie-service';
 

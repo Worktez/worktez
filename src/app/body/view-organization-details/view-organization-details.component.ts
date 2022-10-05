@@ -18,7 +18,7 @@ import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { MemberData } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
