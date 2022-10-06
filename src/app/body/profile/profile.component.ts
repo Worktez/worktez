@@ -79,15 +79,11 @@ export class ProfileComponent implements OnInit {
   userData : User[]
 
   constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
-    this.router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd){
-        this.ngOnInit();
-      }
-    });
   }
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
+    this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
