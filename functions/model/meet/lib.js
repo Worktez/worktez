@@ -132,10 +132,8 @@ exports.updateMeetDetails= function(updateJson) {
 exports.getMeetDetails=function(uid) {
     const query = db.collection("Users").doc(uid).collection("Meet");
 
-    // query = query.where("HostName", "==", "OK");
     const promise = query.get().then((doc) => {
         const data=[];
-        // console.log(doc);
         doc.forEach((element) => {
             if (element.exists) {
                 data.push( element.data());

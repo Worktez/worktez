@@ -9,22 +9,16 @@ const { standardSubscription } = require("../../application/lib");
 const { getSubscriptions } = require("../../subscriptions/lib");
 const { setRazorpayOrderDetails, generateBase62Constant, generatePaymentId} = require("../lib");
 const { currentTime, currentDate } = require("../../application/lib");
-
+const { keyId, keySecret, orderKey} = require("../../../paymentKeys");
 exports.generateRazorpayOrder = function(request, response) {
         const Uid = request.body.data.Uid;
         const SubscriptionId = request.body.data.SubscriptionId;
-        console.log("Uid", Uid);
-        console.log("SubscriptionId", SubscriptionId);
-        // const OrgDomain = request.body.data.OrgDomain;
         getSubscriptions("", SubscriptionId).then((doc) => {
-            console.log(doc);
             if (doc != undefined) {
-                // Test Credentials
-                console.log(doc);
                 const amount = standardSubscription.amount;
                 const razorpay = new RazorPay({
-                    key_id: "rzp_test_nfhDfN6X5cgp42",
-                    key_secret: "EjWL1pPedHeT4Z1C4laM3u1b",
+                    key_id: keyId,
+                    key_secret: keySecret,
                 });
 
 
@@ -47,17 +41,15 @@ exports.generateRazorpayOrder = function(request, response) {
                     //     RazorPayOrderDetails: order,
                     // });
                     const paymentId = generatePaymentId();
-                    console.log(paymentId);
                     const time = currentTime;
                     const date = currentDate;
                     setRazorpayOrderDetails(Uid, order, paymentId, SubscriptionId, date, time);
                     // Test credentials
-                    order.key = "rzp_test_nfhDfN6X5cgp42";
+                    order.key = orderKey;
 
                     order.receipt = generatedReceipt;
                     order.paymentId = paymentId;
                     const result = { data: order };
-                    console.log(result);
                     return response.status(200).send(result);
                 });
             }

@@ -36,21 +36,15 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
     console.log("Started Upgrade Subscription");
 
     const p = getSubscriptions("", subscriptionId).then((subData) => {
-        console.log("Getting Sub data");
         if (subData.SubsctiptionType != " ") {
-            console.log("Sub not standard");
             const subscriptionData = standardSubscription;
             let paymentId= subData.PaymentId;
             paymentId++;
-            console.log("Going to call generate razorpay order");
             const p1 = generateRazorpayOrder(uid, paymentId, subscriptionId, subscriptionData.amount).then((data)=>{
-                console.log("From then part ", data);
                 return data;
             });
             Promise.resolve(p1).then((data)=>{
-                console.log("Resolved promise receiving order");
                 order = data;
-                console.log("received orders", order);
                 return data;
             }).catch((err)=>{
                 status = 500;
@@ -81,59 +75,3 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
             return response.status(status).send(result);
         });
 };
-//     getSubscriptions("", subscriptionId).then((subData) => {
-//         console.log("Got sub data");
-//         if (subData.SubscriptionType != "Standard") {
-//             let paymentId;
-//             const subscriptionData = standardSubscription;
-//             console.log("Before if");
-//             if (subData.PaymentId != "0") {
-//                 let paymentIdString = subData.PaymentId;
-//                 paymentIdString = paymentIdString.slice(1, paymentIdString.length());
-//                 console.log("inside if");
-//                 paymentId = paymentIdString + 1;
-//             } else {
-//                 paymentId = 1;
-//             }
-//             console.log("After if");
-
-//             // const inputJson = {
-//             //     PaymentId: paymentId,
-//             //     SubscriptionType: subscriptionData.subscriptionType,
-//             //     GraceNotifications: 5,
-//             //     NoOfTeams: subscriptionData.noOfTeams,
-//             //     NoOfMembers: subscriptionData.noOfMembers,
-//             //     EmailsAndNotifications: subscriptionData.emailsAndNotifications,
-//             //     QuickNotes: subscriptionData.quickNotes,
-//             //     TechTag: subscriptionData.techTag,
-//             //     Meetings: subscriptionData.meetings,
-//             //     PDashboard: subscriptionData.pDashboard,
-//             //     PReport: subscriptionData.pReport,
-//             //     DocPerTask: subscriptionData.docPerTask,
-//             //     Amount: subscriptionData.amount,
-//             //     CurrencyType: subscriptionData.currencyType,
-//             // };
-//             // const p1 = updateSubscription(inputJson, subscriptionId);
-//             result = { data: "Subscription updated succesfully" };
-//             const p2 = generateRazorpayOrder(uid, paymentId, subscriptionId, subscriptionData.amount);
-//             const promises = [p2];
-//             Promise.all(promises).then((order) => {
-//                 console.log(order);
-//                 result = {data: order};
-//                 return response.status(status).send(result);
-//             }).catch((error) => {
-//                 status = 500;
-//                 result = { data: error };
-//                 return response.status(status).send(result);
-//             });
-//             result = { data: order};
-//         } else {
-//             console.log("Already upgraded");
-//             result = { data: "Already Upgraded"};
-//         }
-//         return response.status(200).send(result);
-//     }).catch((error) => {
-//         status = 500;
-//         result = { data: "Subscription not updated ", error: error };
-//     });
-// };

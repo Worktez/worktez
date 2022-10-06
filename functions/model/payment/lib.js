@@ -19,30 +19,6 @@
 
 const { db } = require("../application/lib");
 const { currentTime, currentDate } = require("../application/lib");
-//  /**
-//  * Description
-//  * @param {any} amount
-//  * @param {any} userUid
-//  * @param {any} subscriptionId
-//  * @param {any} paymentId
-//  * @param {any} userEmailAddress
-//  * @param {any} paymentTime
-//  * @param {any} paymentDate
-//  * @return {any}
-//  */
-// exports.setPayment = function(amount, userUid, subscriptionId, paymentId, userEmailAddress, paymentTime, paymentDate) {
-//     const addPaymentPromise = db.collection("Subscriptions").doc(orgDomain).collection("Payment").set({
-//         UserEmailAddress: userEmailAddress,
-//         Amount: amount,
-//         PaymentId: paymentId,
-//         PaymentCounter: 0,
-//         PaymentTime: paymentTime,
-//         PaymentDate: paymentDate,
-//         SubscriptionId: subscriptionId,
-//         UserUid: userUid,
-//     });
-//     return Promise.resolve(addPaymentPromise);
-// };
 
 const base62 = {
     charset: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -72,7 +48,6 @@ exports.generatePaymentId = function() {
     return "Pay" + base62.encode(miliSec);
 };
 
-// eslint-disable-next-line require-jsdoc
 
  /**
   * Description
@@ -97,22 +72,8 @@ exports.setRazorpayOrderDetails = function(uid, order, paymentId, subscriptionId
    return Promise.resolve(p1);
 };
 
-//  /**
-//   * Description
-//   * @param {any} Id
-//   * @param {any} order
-//   * @return {any}
-//   */
-//   exports.setEcommerceRazorDetails = function(Id, order) {
-//     const p1 = db.collection("Orders").doc(Id).update({
-//         RazorPayOrderDetails: order,
-//     });
-//    return Promise.resolve(p1);
-// };
 
 exports.setPaymentStatus = function(subscriptionId, paymentId) {
-    console.log("subscriptionId", subscriptionId);
-    console.log("paymentId", paymentId);
     let data;
 
     const p1 = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).get().then((doc)=>{
@@ -120,7 +81,6 @@ exports.setPaymentStatus = function(subscriptionId, paymentId) {
         data.RazorPayOrderDetails.amount_paid = data.RazorPayOrderDetails.amount_due;
         data.RazorPayOrderDetails.amount_due = 0;
         data.RazorPayOrderDetails.status = "paid";
-        console.log(currentTime, currentDate);
     });
     Promise.resolve(p1).then(()=>{
         const promise = db.collection("Subscriptions").doc(subscriptionId).collection("Payment").doc(paymentId).update({
@@ -129,35 +89,6 @@ exports.setPaymentStatus = function(subscriptionId, paymentId) {
             PaymentCreationTime: currentTime,
             RazorPayOrderDetails: data.RazorPayOrderDetails,
         });
-        // mailer(data.UserUid, "Payment_Complete", paymentId);
         return Promise.resolve(promise);
     });
 };
-
-// exports.setEcommercePaymentStatus = function(id) {
-//     console.log("reg id", id);
-//     let data;
-
-//     const p1 = db.collection("Orders").doc(id).get().then((doc)=>{
-//         data = doc.data();
-//         data.RazorPayOrderDetails.amount_paid = data.RazorPayOrderDetails.amount_due;
-//         data.RazorPayOrderDetails.amount_due = 0;
-//         data.RazorPayOrderDetails.status = "paid";
-//     });
-//     Promise.resolve(p1).then(()=>{
-//         const promise = db.collection("Orders").doc(id).update({
-//             PaymentStatus: "Complete",
-//             RazorPayOrderDetails: data.RazorPayOrderDetails,
-//         });
-//         mailer(data.UserUid, "Payment_Complete", id);
-//         return Promise.resolve(promise);
-//     });
-// };
-
-// exports.gerOrderData = function(paymentId) {
-//     const promise = db.collection("Subscriptions").doc(orgDomain).collection("Payment").doc(paymentId).get().then((doc)=>{
-//         if (doc.exists) return doc.data();
-//         else return;
-//     });
-//    return Promise.resolve(promise);
-// };
