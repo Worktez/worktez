@@ -18,7 +18,7 @@ import { Subject } from 'rxjs';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from '../applicationSettings/application-settings.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
 import { RBAService } from '../RBA/rba.service';

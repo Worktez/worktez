@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
 import { GitPrData,GitRepoData } from 'src/app/Interface/githubOrgData';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';

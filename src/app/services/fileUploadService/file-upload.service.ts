@@ -17,7 +17,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { FileData, FileUpload } from 'src/app/Interface/FileInterface';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { ToolsService } from '../tool/tools.service';
 

@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
 import { GitOrgData } from 'src/app/Interface/githubUserData';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 
 @Component({
   selector: 'app-github-link',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm, UntypedFormControl } from '@angular/forms';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToolsService } from 'src/app/services/tool/tools.service'; 
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';

@@ -19,7 +19,7 @@ import { CookieService } from "ngx-cookie-service";
  import { map, Observable } from "rxjs";
  import { Milestones } from "src/app/Interface/MilestoneInterface";
 import { ApplicationSettingsService } from "src/app/services/applicationSettings/application-settings.service";
- import { AuthService } from "src/app/services/auth.service";
+ import { AuthService } from "src/app/services/auth/auth.service";
  import { BackendService } from "src/app/services/backend/backend.service";
  import { ErrorHandlerService } from "src/app/services/error-handler/error-handler.service";
  import { NavbarHandlerService } from "src/app/services/navbar-handler/navbar-handler.service";

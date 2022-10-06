@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -79,15 +79,11 @@ export class ProfileComponent implements OnInit {
   userData : User[]
 
   constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
-    this.router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd){
-        this.ngOnInit();
-      }
-    });
   }
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
+    this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
