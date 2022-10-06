@@ -64,6 +64,12 @@
                             <textarea type="text" class="form-control"  style="width: 500px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
                         </div>
                     </div>
+                    <div class="form-group row  pt-2">
+                        <div class="col-md-10" >
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Change Labels</span>
+                            <button type="submit" class="btn ml-2 mt-1" id="button" (click)="changeLabels()" style="font-size: 10px;">Submit</button>
+                        </div>
+                    </div>
                     <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Members Email</span>
                     <div class="form-row">
                         <div class="col">

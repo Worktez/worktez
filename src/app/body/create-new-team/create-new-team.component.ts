@@ -26,6 +26,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CookieService } from 'ngx-cookie-service';
+import { marketingLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
 
 declare var jQuery:any;
 
@@ -55,6 +56,7 @@ export class CreateNewTeamComponent implements OnInit {
   constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
+    console.log(marketingLabelsTempelate);
     this.navbarService.resetNavbar();
     this.navbarService.addToNavbar(this.componentName);
     this.teamAdmin = this.authService.getUserEmail(); 
@@ -95,6 +97,45 @@ export class CreateNewTeamComponent implements OnInit {
       this.teamAdmin = this.authService.getUserEmail();
       this.uid = this.authService.getLoggedInUser();
     });
+  }
+
+  changeLabels(){
+    const callable = this.functions.httpsCallable('teams/changeLabels');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TypeLabels: this.type, StatusLabels:this.statusLabels,
+     PriorityLabels:this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+       next: (data) => {
+           this.enableLoader = false;
+           this.updateTeamLabels();
+           console.log("Successfully changed labels");
+       },
+       error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.log(error);
+       },
+       complete: () => {
+         console.info('Successfully changed labels ');
+       }
+
+     })
+  }
+
+  updateTeamLabels() {
+    const callable = this.functions.httpsCallable('teams/updateTeamLabels');
+    callable({TypeLabels: this.type, StatusLabels:this.statusLabels,
+      PriorityLabels:this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+      next: (data) => {
+        this.createNewTeamWithLabels();
+      }, 
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.log(error);
+      },
+      complete: () => {
+        console.info('Successfully updated team labels');
+      }
+    })
   }
 
   handleIdInput() {

@@ -180,6 +180,7 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
 import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
 import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
+import { ApplyDifferentLabelsComponent } from './body/apply-different-labels/apply-different-labels.component';
 
 
 @NgModule({
@@ -327,6 +328,7 @@ import { AddWatchersComponent } from './body/task-details/add-watchers/add-watch
     AllNotificationComponent,
     AllNotificationCardComponent,
     AddWatchersComponent,
+    ApplyDifferentLabelsComponent,
   ],
   imports: [
     BrowserModule,
