@@ -24,7 +24,6 @@
  const {updateMember} = require("../lib");
 
 exports.editRole = function(request, response) {
-    console.log("Reached here");
     const orgDomain = request.body.data.OrgDomain;
     const email = request.body.data.Email;
     const isAdmin = request.body.data.IsAdmin;

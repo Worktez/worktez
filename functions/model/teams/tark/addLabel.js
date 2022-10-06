@@ -45,7 +45,6 @@ exports.addLabel = function(request, response) {
 
       if (scope == "Priority") {
         const priority = team.Priority;
-        console.log(team.Priority);
         priority.push(displayName);
         inputJson["Priority"] = priority;
       } else if (scope == "Difficulty") {

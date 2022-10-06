@@ -159,7 +159,6 @@ exports.checkUpdateTime = function(lastUpdated) {
     // for 1 day difference - 86400000
     const currentTimeStamp = Date.now();
     const diff = currentTimeStamp - lastUpdated;
-    console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
     if (diff >= 60) {
         return currentTimeStamp;
     }
@@ -202,23 +201,3 @@ const today = new Date();
 exports.currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
 exports.currentTime = today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds();
 exports.milliSeconds = today.getMilliseconds();
-
-// const base62 = {
-//     charset: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-//         .split(""),
-//     encode: (integer) => {
-//         if (integer === 0) {
-//             return 0;
-//         }
-//         let s = [];
-//         while (integer > 0) {
-//             s = [base62.charset[integer % 62], ...s];
-//             integer = Math.floor(integer / 62);
-//         }
-//         return s.join("");
-//     },
-// };
-
-// exports.generateBase62Constant = function() {
-//     return base62.encode(milliSeconds);
-// };

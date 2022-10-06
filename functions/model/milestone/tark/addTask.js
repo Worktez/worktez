@@ -33,7 +33,6 @@ const { addTask } = require("../lib");
  * @return {any}
  */
 exports.addTaskToMilestone = function(request, response) {
-    console.log( request.body.data);
     const uid = request.body.data.Uid;
     const milestoneId = request.body.data.MilestoneId;
     const taskId = request.body.data.TaskId;

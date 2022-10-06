@@ -21,6 +21,7 @@ const crypto = require("crypto");
 const { setPaymentStatus } = require("../lib");
 const { standardSubscription, currentDate } = require("../../application/lib");
 const { updateSubscription, getSubscriptions } = require("../../subscriptions/lib");
+const { keySecret } = require("../../../paymentKeys");
 exports.paymentVerification = function(request, response) {
     try {
         const orderId = request.body.data.OrderId;
@@ -29,27 +30,13 @@ exports.paymentVerification = function(request, response) {
         const id = request.body.data.Id; // Subscription Id
         const type = request.body.data.Type;
         const paymentId = request.body.data.PId;
-
-        console.log("orderId: " + orderId);
-        console.log("rzpPaymentId: " + rzpPaymentId);
-        console.log("signature: " + signature);
-        console.log("Id: " + id);
-        console.log("type", type);
-        console.log("PaymentId", paymentId);
-
-        // Test Credentials
-        const keySecret = "EjWL1pPedHeT4Z1C4laM3u1b";
-
-        console.log("hit 1");
+        const secretKey = keySecret;
         let generatedSignature = "";
-        generatedSignature = crypto.createHmac("sha256", keySecret).update((orderId + "|" + rzpPaymentId).toString()).digest("hex");
-
-        console.log("generated signature ", generatedSignature);
+        generatedSignature = crypto.createHmac("sha256", secretKey).update((orderId + "|" + rzpPaymentId).toString()).digest("hex");
 
         if (generatedSignature === signature) {
             const result = { data: "Payment verified successfully", status: 200 };
             console.log("Payment successful");
-            console.log();
             getSubscriptions("", id).then((data)=>{
                 let date;
                 if (data.ExpiresOn == "No limit") {
