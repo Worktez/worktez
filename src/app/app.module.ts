@@ -179,6 +179,11 @@ import { SkillsComponent } from './body/profile/skills/skills.component';
 import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
 import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
+import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
+import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
+import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
+import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
+
 
 @NgModule({
   declarations: [
@@ -324,6 +329,10 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
     MembersAccessComponent,
     MemberCardComponent,
     EditMilestoneComponent,
+    StandardSubscriptionComponent,
+    AllNotificationComponent,
+    AllNotificationCardComponent,
+    AddWatchersComponent,
   ],
   imports: [
     BrowserModule,

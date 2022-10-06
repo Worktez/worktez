@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable linebreak-style */
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,9 +13,18 @@
  * See the MIT License for more details.
  ***********************************************************/
 
+/* eslint-disable require-jsdoc */
+/* eslint-disable object-curly-spacing */
+// /* eslint-disable no-undef */
+/* eslint-disable eol-last */
+/* eslint-disable indent */
+/* eslint-disable max-len */
+// eslint-disable-next-line no-dupe-else-if
+
+
  const {functions, cors, fastify, requestHandler} = require("../application/lib");
  const {getSubscriptionDetails} = require("./tark/getSubscriptionDetails");
- const {upgradeSubscriptionsToStandard} = require("./tark/upgradeSubscriptionsToStandard")
+ const {upgradeSubscriptionsToStandard} = require("./tark/upgradeSubscriptionsToStandard");
 
  /**
   * Description

@@ -20,15 +20,16 @@ const { db } = require("../application/lib");
 
 /**
  * Description
- * @param {any} subscriptionId
  * @param {any} subscriptionData
  * @param {any} orgDomain
  * @param {any} uid
+ * @param {any} orgAppKey
+ * @param {any} subscriptionId
  * @param {any} graceNotifications
  * @param {any} expiresOn
  * @return {any}
  */
-exports.setSubscription = function (subscriptionData, orgDomain, uid, orgAppKey, subscriptionId, graceNotifications, expiresOn) {
+exports.setSubscription = function(subscriptionData, orgDomain, uid, orgAppKey, subscriptionId, graceNotifications, expiresOn) {
   const setSubscriptionDoc = db.collection("Subscriptions").doc(subscriptionId).set({
     SubscriptionId: subscriptionId,
     SubscriptionType: subscriptionData.subscriptionType,
@@ -49,20 +50,21 @@ exports.setSubscription = function (subscriptionData, orgDomain, uid, orgAppKey,
     DocPerTask: subscriptionData.docPerTask,
     Amount: subscriptionData.amount,
     CurrencyType: subscriptionData.currencyType,
-    SubscriptionStatus: "Active"
+    SubscriptionStatus: "Active",
   });
   return Promise.resolve(setSubscriptionDoc);
 };
 
 /**
  * Description
+ * @param {any} inputJson
  * @param {any} subscriptionId
  * @return {any}
  */
-exports.updateSubscription = function (inputJson, subscriptionId) {
+exports.updateSubscription = function(inputJson, subscriptionId) {
   const updateSubscription = db.collection("Subscriptions").doc(subscriptionId).update(inputJson);
   return Promise.resolve(updateSubscription);
-}
+};
 
 //   /**
 //  * Description
@@ -78,11 +80,12 @@ exports.updateSubscription = function (inputJson, subscriptionId) {
 //   }
 
 /**
-* Description
-* @param {any} orgDomain
-* @return {any}
-*/
-exports.getSubscriptions = function (orgAppKey, subscriptionId) {
+ * Description
+ * @param {any} orgAppKey
+ * @param {any} subscriptionId
+ * @return {any}
+ */
+exports. getSubscriptions = function(orgAppKey, subscriptionId) {
   let query = db.collection("Subscriptions");
   if (orgAppKey != "") {
     query = query.where("OrgAppKey", "==", orgAppKey);
@@ -90,19 +93,24 @@ exports.getSubscriptions = function (orgAppKey, subscriptionId) {
   if (subscriptionId != "") {
     query = query.where("SubscriptionId", "==", subscriptionId);
   }
+
   const promise = query.get().then((doc) => {
-    let data = [];
+    let data;
     doc.forEach((element) => {
       if (element.exists) {
-        data.push(element.data());
+        data = element.data();
       }
     });
+    console.log("Data from sub", data);
     return data;
   });
+
   return Promise.resolve(promise);
   // const getSubscriptionPromise = db.collection("Subscriptions").doc(orgAppKey).get().then((doc) => {
   //   if(doc.exists) return doc.data();
   //   else return;
   // });
   // return Promise.resolve(getSubscriptionPromise);
-}
+};
+
+

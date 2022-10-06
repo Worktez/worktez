@@ -31,7 +31,7 @@ const { createLabelProperties } = require("./createLabelProperties");
 const { getUser, updateUser } = require("../../users/lib");
 
 
-exports.createTeam = function (request, response) {
+exports.createTeam = function(request, response) {
     const teamId = request.body.data.TeamId;
     const teamDescription = request.body.data.TeamDescription;
     const teamAdmin = request.body.data.TeamAdmin;
@@ -60,7 +60,7 @@ exports.createTeam = function (request, response) {
         };
 
         updateOrgRawData(appDetailsUpdateJson, orgDomain);
-    })
+    });
     /* We are not using this method anymore*/
 
     // getApplicationData().then((data) => {
@@ -85,7 +85,6 @@ exports.createTeam = function (request, response) {
         }
 
         const prom1 = getTeam(orgDomain, teamName).then((team) => {
-
             if (team == undefined) {
                 setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then(() => {
                     createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
@@ -107,8 +106,6 @@ exports.createTeam = function (request, response) {
             console.log("Error:", error);
         });
         return Promise.resolve(prom1);
-
-
     }).catch((error) => {
         status = 500;
         console.log("Error:", error);

@@ -21,17 +21,16 @@ const { getSubscriptions } = require("../../subscriptions/lib");
 const { checkSubscription } = require("../../subscriptions/tark/checkSubscription");
 
 
-exports.startSubSchedular = function () {
-
-    const p = getSubscriptions("", "").then((sched) => {
-        if (sched) {
-            sched.forEach(subDoc => {
-                const orgAppKey = subDoc.OrgAppKey;
-                const subscriptionId = subDoc.SubscriptionId;
-                const orgDomain = subDoc.OrgDomain;
-                checkSubscription(orgDomain, orgAppKey, subscriptionId);
-            });
-        }
-    });
-    return Promise.resolve(p);
-}
+exports.startSubSchedular = function() {
+  const p = getSubscriptions("", "").then((sched) => {
+    if (sched) {
+      sched.forEach((subDoc) => {
+        const orgAppKey = subDoc.OrgAppKey;
+        const subscriptionId = subDoc.SubscriptionId;
+        const orgDomain = subDoc.OrgDomain;
+        checkSubscription(orgDomain, orgAppKey, subscriptionId);
+      });
+    }
+  });
+  return Promise.resolve(p);
+};

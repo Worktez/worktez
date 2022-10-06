@@ -5,60 +5,55 @@
 /* eslint-disable max-len */
 
 const RazorPay = require("razorpay");
+const { standardSubscription } = require("../../application/lib");
+const { getSubscriptions } = require("../../subscriptions/lib");
+const { setRazorpayOrderDetails, generateBase62Constant, generatePaymentId} = require("../lib");
 const { currentTime, currentDate } = require("../../application/lib");
-
-const { getUser } = require("../../users/lib");
-
-const { setRazorpayOrderDetails, generateBase62Constant} = require("../lib");
-
-exports.generateRazorpayOrder = function(uid, paymentId, subscriptionId, amount) {
-        
-        // const subscriptionId = request.body.data.SubscriptionId;
-
-        getUser(uid, "").then((doc) => {
+const { keyId, keySecret, orderKey} = require("../../../paymentKeys");
+exports.generateRazorpayOrder = function(request, response) {
+        const Uid = request.body.data.Uid;
+        const SubscriptionId = request.body.data.SubscriptionId;
+        getSubscriptions("", SubscriptionId).then((doc) => {
             if (doc != undefined) {
-                // Test Credentials
+                const amount = standardSubscription.amount;
                 const razorpay = new RazorPay({
-                    key_id: "rzp_test_jWOofTDBbQGPFa",
-                    key_secret: "N9fWEfNEVnIrmubuMyDhxP4i",
+                    key_id: keyId,
+                    key_secret: keySecret,
                 });
 
-                // Production Credentials
-                // const razorpay = new RazorPay({
-                //     key_id: "rzp_live_xoOwFekmzVS4do",
-                //     key_secret: "UnY8Vp9ty5c9wL1TWNUlBsci",
-                // });
 
                 const generatedReceipt = generateBase62Constant();
 
                 const options = {
                     amount: parseInt(amount * 100), // amount in the smallest currency unit
-                    currency: "INR",
+                    currency: "USD",
                     receipt: generatedReceipt,
                 };
 
                 razorpay.orders.create(options, function(err, order) {
-                    console.log(order);
                     if (err) {
                         const result = { data: err };
-                        console.log(result);
-                        return err;
+                        console.log(err);
+                        return response.status(500).send(result);
                     }
+
                     // db.collection("Registrations").doc(Uid).update({
                     //     RazorPayOrderDetails: order,
                     // });
+                    const paymentId = generatePaymentId();
                     const time = currentTime;
                     const date = currentDate;
-
-                    setRazorpayOrderDetails(uid, order, paymentId, subscriptionId, date, time);
+                    setRazorpayOrderDetails(Uid, order, paymentId, SubscriptionId, date, time);
                     // Test credentials
-                    // order.key = "rzp_test_jWOofTDBbQGPFa";
+                    order.key = orderKey;
 
-                    // Production Credentials
-                    // order.key = "rzp_live_xoOwFekmzVS4do";
-                    // order.receipt = generatedReceipt;
-                    
+                    order.receipt = generatedReceipt;
+                    order.paymentId = paymentId;
+                    const result = { data: order };
+                    return response.status(200).send(result);
                 });
             }
+        }).catch((err)=>{
+            console.log(err);
         });
 };

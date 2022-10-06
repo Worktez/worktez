@@ -60,26 +60,26 @@ exports.verifyUser = function(request, response) {
                     updateUser(updateUserInputJson, userID);
                     updateTeamInOrganizations(userID, organizationDomain, appKey, teamId);
                     createMember(createMemberInput);
-                    
+
                     /* We are not using this method anymore*/
                     // getApplicationData().then((data) => {
                     //     const totalNumberOfMembers = data.TotalNumberOfMembers;
-                
+
                     //     const appDetailsUpdateJson = {
                     //         TotalNumberOfMembers: totalNumberOfMembers + 1,
                     //     };
-                
-                    //     updateApplication(appDetailsUpdateJson);                
+
+                    //     updateApplication(appDetailsUpdateJson);
                     // });
                     getOrgRawData(orgDomain).then((orgData) => {
                         const totalNumberOfMembers = orgData.TotalNumberOfMembers;
-                
+
                         const appDetailsUpdateJson = {
                             TotalNumberOfMembers: totalNumberOfMembers + 1,
-                        }; 
-                        
+                        };
+
                         updateOrgRawData(appDetailsUpdateJson);
-                    })
+                    });
                 }).catch((error) => {
                     status = 500;
                     console.log("Error:", error);

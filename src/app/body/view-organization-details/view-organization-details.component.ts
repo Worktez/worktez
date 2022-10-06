@@ -14,6 +14,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { element } from 'protractor';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { MemberData } from 'src/app/Interface/UserInterface';
@@ -24,6 +25,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
 @Component({
   selector: 'app-view-organization-details',
@@ -42,8 +44,9 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   showMemberRoles: boolean = false;
   sameUser: boolean = true;
   editProfilePicEnabled: boolean = false;
+  isAdmin:boolean = false;
 
-  constructor(public startService: StartServiceService, public rbaService: RBAService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService) { }
+  constructor(public startService: StartServiceService, public rbaService: RBAService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService,  public subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -95,10 +98,23 @@ export class ViewOrganizationDetailsComponent implements OnInit {
       },
       complete: () => {
         this.membersReady = true;
+        this.checkAdmin();
         console.log("Completed fetching members list")
       }
     });   
   }
+
+  checkAdmin(){
+    const email = this.authService.userAppSetting.email;
+    this.members.forEach((element)=>{
+      if(element.Email == email){
+        if(element.IsAdmin == true){
+          this.isAdmin = true;
+        }
+      }
+    })
+  }
+
   createTeam() {
     this.router.navigate(['/CreateNewTeam']);
   }
@@ -127,4 +143,9 @@ export class ViewOrganizationDetailsComponent implements OnInit {
       this.showMemberRoles = true
     }
   }
+  
+  filterPage(){
+    this.router.navigate(['/FilterPage']);
+  }
+
 }

@@ -16,8 +16,11 @@
     <div class="col">
         <div class="row">
             <div class="col-3 align-middle">
-                <img src="{{ organization.OrganizationLogoURL }}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="" id="orgImg" class="rounded-circle">
-                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                <img src="{{ organization.OrganizationLogoURL }}"
+                    onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="" id="orgImg" class="rounded-circle">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button"
+                    class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal"
+                    data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         edit
                     </mat-icon>
@@ -54,29 +57,29 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col" *ngIf="isAdmin">
                 <div class="col-sm-12">
-                    <div class="card" id="currentPlan" style="width: 80%;">
-                      <div class="card-body">
-                        <h5 class="card-title">Current Plan</h5>
-                        <div class="row">
-                            <div class="col" style="font-size: medium;"><p class="card-text">Basic: $0/month</p></div>
-                            <div class="col"><button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" (click)="upgrade()" title="Upgrade Current Plan" style="width: 60%; height: 4vh;font-size: small;margin-left: 60px;">
-                                <!-- <mat-icon fontSet="material-icons-outlined" class="align-middle" style="size: 30%;">
-                                    trending_up
-                                </mat-icon> -->
-                                Upgrade
-                            </button></div>
+                    <div class="card" id="currentPlan">
+                        <div class="card-body">
+                            <h5 class="card-title">Current Plan</h5>
+                                <div class="" style="font-size: medium;">
+                                    <p class="card-text">{{ subscriptionService.subscriptionPackage.SubscriptionType }}:
+                                        ${{subscriptionService.subscriptionPackage.Amount}}/month</p>
+                                </div>
+                            <div class="pt-2 text-center"><button class="btn extra" type="button" data-bs-toggle="tooltip" style="width: 60%; height: 4vh;font-size: small;"
+                                    data-bs-placement="top" (click)="upgrade()" title="Upgrade Current Plan">
+                                    Upgrade
+                                </button></div>
                         </div>
-                      </div>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
         <hr>
         <div class="row p-2">
-            <div *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="col" >
-                <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+            <div *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="col">
+                <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         groups_3
                     </mat-icon>
@@ -84,33 +87,46 @@
             </div>
         </div>
         <div class="row p-2">
-            <div class="col-md-8 col-12">
+            <div class="col-md-7 col-12">
                 <ul class="nav">
                     <li class="nav-item ">
-                        <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
+                        <a (click)="switchView('showTeamsDetails')"
+                            [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
                             Teams
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a (click)="switchView('showOrgDocuments')" [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
+                        <a (click)="switchView('showOrgDocuments')"
+                            [ngClass]="{'nav-link ': true, 'activeBg': showOrgDocuments}" aria-current="page">
                             Documents
                         </a>
                     </li>
                     <li class="nav-item " *ngIf="membersReady && rbaService.permissions.viewMemberRoles">
-                        <a (click)="switchView('showMemberRoles')" [ngClass]="{'nav-link ': true, 'activeBg': showMemberRoles}" aria-current="page">
+                        <a (click)="switchView('showMemberRoles')"
+                            [ngClass]="{'nav-link ': true, 'activeBg': showMemberRoles}" aria-current="page">
                             Member Access
                         </a>
                     </li>
                 </ul>
             </div>
+            <div *ngIf="(backendService.organizationsData | async)" class="col pl-0 text-right" >
+                <button  *ngIf="startService.teamIdExists" class="btn extra" type="button"  (click)="filterPage()" title="filter Page">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        filter_list
+                    </mat-icon>
+                    Filters
+                </button>
+             </div>
             <div class="col pl-0 text-right">
-                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
+                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra"
+                    type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal"
+                    data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         groups_3
                     </mat-icon>
                     Create New Team
                 </button>
-             </div>
+            </div>
         </div>
         <div class="row p-2">
             <ng-container *ngIf="showTeamsDetails">
@@ -121,11 +137,13 @@
                 </ng-container>
             </ng-container>
             <ng-container *ngIf="showOrgDocuments">
-                <app-org-documents [organizationId]="organization.OrganizationId" [orgDomain]="organization.OrganizationDomain"></app-org-documents>
+                <app-org-documents [organizationId]="organization.OrganizationId"
+                    [orgDomain]="organization.OrganizationDomain"></app-org-documents>
             </ng-container>
             <ng-container *ngIf="showMemberRoles && membersReady">
                 <div class="col my-3">
-                    <app-members-access [members]="members" (updatedDetails)="updatedDetails($event)"></app-members-access>
+                    <app-members-access [members]="members" (updatedDetails)="updatedDetails($event)">
+                    </app-members-access>
                 </div>
             </ng-container>
         </div>

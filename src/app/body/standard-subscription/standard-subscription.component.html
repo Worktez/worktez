@@ -1,0 +1,148 @@
+<div class="page">
+    <!-- <div class="row pt-4 heading1">
+        <div class="col-1 col-md-0"></div>
+        <div class="col">Standard Plan</div>
+        <div class="col-1 col-md-2"></div>
+    </div> -->
+
+    <div class="row py-4">
+        <div class="col-0 col-md-1"></div>
+        <div class="col-0 col-md-5 table-responsive-sm">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col" class="mr-5" id="featureCard" style="vertical-align:middle;">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <p class="tablehead text-center">Features</p>
+                                </div>
+                                <div class="col-1" style="background-color: #FFFFFF;"></div>
+                            </div>
+                        </th>
+
+                        <th scope="col" id="entCard" style="vertical-align:middle;">
+                            <div class="row align-items-center py-3">
+                                <div class="col">
+                                    <p class="tablehead text-center">Standard</p>
+
+                                </div>
+                            </div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Teams</th>
+                        <td>5 Teams/Org</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Members</th>
+                        <td>10 Members/Team</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Emails & Notifications</th>
+                        <td>10K/Month</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Quick Notes</th>
+                        <td>100 Notes/User/Month</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Documents</th>
+                        <td>3 Doc/Task</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">TechTag</th>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Meetings</th>
+                        <td>Free upto 5 User upto 100 meetings</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Personalised Dashboard</th>
+                        <td>Not available</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center p-4">Personalised Report</th>
+                        <td>Not available</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-0 col-md-5 pt-4">
+            <div class="table-responsive-sm">
+                <table class="table table-borderless">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <div class="heading1 pl-4">Summary</div>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>Standard Subscription</td>
+                    </tr>
+                    <tr>
+                        <td>Amount</td>
+                        <td>$49 USD</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center m-2">
+                                <div class="row p-2" style="text-align: center;" *ngIf="paymentStatus == 'Failed' || paymentStatus == 'Created'">
+                                    <button type="button" class="btn" id="button" data-toggle="modal"
+                                        data-target="#exampleModalCenter" (click)=" setOrderWithRazorpay()" style="background-color:  #ffffff;color: #4006BA;
+                                  display: block;
+                                  border-radius: 50px;
+                                  text-align: center;
+                                  font-family: 'Plus Jakarta Sans', sans-serif;
+                                  border-color: #4006BA;">Pay Now</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </table>
+                <div *ngIf="paymentStatus == 'Complete'" class="text-center">
+                    <div class="heading2">
+                        Successfully Upgraded to Standard Plan
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-center m-2">
+                            <div class="row p-2">
+                                <button type="button" class="btn" id="button" routerLink="/Home" style="background-color:  #ffffff;color: #4006BA;
+                              display: block;
+                              border-radius: 50px;
+                              text-align: center;
+                              font-family: 'Plus Jakarta Sans', sans-serif;
+                              border-color: #4006BA;">Go to Home</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="paymentStatus == 'Waiting'">
+                <div class="heading2 text-center">
+                    Please wait
+                </div>
+            </div>
+            <div *ngIf="paymentStatus == 'Failed'">
+                <div class="heading2 text-center">
+                    Payment Failed
+                </div>
+            </div>
+        </div>
+        <div class="col-0 col-md-1"></div>
+    </div>
+</div>

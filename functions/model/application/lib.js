@@ -93,11 +93,12 @@ exports.setApplication = function() {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: 0,
-        TotalNumberOfTeams:0,
-        TotalNumberOfMembers:0,
+        TotalNumberOfTeams: 0,
+        TotalNumberOfMembers: 0,
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
+        MeetWorktezCounter: 0,
         MeetCounter: 0,
         PostCounter: 0,
     });
@@ -157,7 +158,6 @@ exports.checkUpdateTime = function(lastUpdated) {
     // for 1 day difference - 86400000
     const currentTimeStamp = Date.now();
     const diff = currentTimeStamp - lastUpdated;
-    console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
     if (diff >= 60) {
         return currentTimeStamp;
     }
@@ -165,34 +165,34 @@ exports.checkUpdateTime = function(lastUpdated) {
 };
 
 exports.basicSubscription = {
-     noOfTeams : 2,
-     noOfMembers : 5,
-     emailsAndNotifications : 1000,
-     quickNotes : 20,
-     docPerTask : 1,
-     meetings : 100,
-     pDashboard : false,
-     techTag : true,
-     pReport : false,
+     noOfTeams: 2,
+     noOfMembers: 5,
+     emailsAndNotifications: 1000,
+     quickNotes: 20,
+     docPerTask: 1,
+     meetings: 100,
+     pDashboard: false,
+     techTag: true,
+     pReport: false,
      amount: 0,
      subscriptionType: "Basic",
-     currencyType: "USD"
-}
+     currencyType: "USD",
+};
 
 exports.standardSubscription = {
-    noOfTeams : 5,
-    noOfMembers : 10,
-    emailsAndNotifications : 10000,
-    quickNotes : 100,
-    docPerTask : 3,
-    meetings : 100,
-    pDashboard : false,
-    techTag : true,
-    pReport : false,
+    noOfTeams: 5,
+    noOfMembers: 10,
+    emailsAndNotifications: 10000,
+    quickNotes: 100,
+    docPerTask: 3,
+    meetings: 100,
+    pDashboard: false,
+    techTag: true,
+    pReport: false,
     subscriptionType: "Standard",
     amount: 49,
-    currencyType: "USD"
-}
+    currencyType: "USD",
+};
 
 
 const today = new Date();
@@ -200,23 +200,3 @@ const today = new Date();
 exports.currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
 exports.currentTime = today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds();
 exports.milliSeconds = today.getMilliseconds();
-
-// const base62 = {
-//     charset: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-//         .split(""),
-//     encode: (integer) => {
-//         if (integer === 0) {
-//             return 0;
-//         }
-//         let s = [];
-//         while (integer > 0) {
-//             s = [base62.charset[integer % 62], ...s];
-//             integer = Math.floor(integer / 62);
-//         }
-//         return s.join("");
-//     },
-// };
-
-// exports.generateBase62Constant = function() {
-//     return base62.encode(milliSeconds);
-// };

@@ -1,15 +1,18 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-9 py-1">
+<div class="containerBox p-3">
+    <div class="row align-items-center">
+        <div class="col-9">
             <a class="taskID" (click)="openTaskDetails(task.Id)">{{task.Id}}</a>
-            <br>
-            <span class="value">{{task.Title}}</span>
         </div>
-        <div class="col-3 text-end">    
+        <div class="col-3">    
             <app-suggestion-bucket [email]="task.Assignee" [showEmail]="false"  [showOnlyProfilePic]="true"></app-suggestion-bucket>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row pb-1">
+        <div class="col">
+            <span class="value">{{task.Title}}</span>
+        </div>
+    </div>
+    <div class="row py-1 justify-content-center">
         <div class="col label">
             Difficulty
         </div>
@@ -28,7 +31,7 @@
         </div>
         <div class="col"></div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row py-1 justify-content-center">
         <div class="col label">
             Priority 
         </div>
@@ -47,9 +50,9 @@
         </div>
         <div class="col"></div>
     </div>
-    <div class="row">
+    <div class="row py-1">
         <div class="col">
-            <span id="headerLabel">Progress</span>
+            <span class="label">Progress</span>
             <app-progress-graph [workdone]="task.WorkDone" class="col-8"></app-progress-graph>
         </div>
     </div>

@@ -29,6 +29,20 @@ exports.incrementNumberofPostsforUser = function(uid) {
   });
 };
 
+exports.decrementNumberofPostsforUser = function(uid) {
+  getUser(uid, "").then((userData) => {
+    let UserPostsCounter = userData.UserPostsCounter;
+    if (isNaN(UserPostsCounter)) {
+      UserPostsCounter = 0;
+    }
+    UserPostsCounter = UserPostsCounter-1;
+    const inputPostJson = {
+      UserPostsCounter: UserPostsCounter,
+    };
+    updateUser(inputPostJson, uid);
+  });
+};
+
 exports.incrementNumberofLikesforUser = function(uid) {
   getUser(uid, "").then((userData) => {
     let UserReactionCounter = userData.UserReactionCounter;
@@ -42,6 +56,21 @@ exports.incrementNumberofLikesforUser = function(uid) {
     updateUser(inputPostJson, uid);
   });
 };
+
+exports.decrementNumberofLikesforUser = function(uid) {
+  getUser(uid, "").then((userData) => {
+    let UserReactionCounter = userData.UserReactionCounter;
+    if (isNaN(UserReactionCounter)) {
+      UserReactionCounter = 0;
+    }
+    UserReactionCounter = UserReactionCounter-1;
+    const inputPostJson = {
+      UserReactionCounter: UserReactionCounter,
+    };
+    updateUser(inputPostJson, uid);
+  });
+};
+
 
 exports.incrementNumberofCommentsforUser = function(uid) {
   getUser(uid, "").then((userData) => {
