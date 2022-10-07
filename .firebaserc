@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "worktrolly"
+    "default": "worktez-first-3349d"
+    
   },
   "targets": {
     "worktrolly": {
