@@ -1,5 +1,5 @@
 .page {
-    background-color: var(--secondary-bg);
+    background-color: var(--secondary-bg) !important;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -11,7 +11,7 @@
 
 .heading2 {
     color: #4E4E4E;
-    font-size: 40px;
+    font-size: 40px;    
     font-family: var(--font);
     line-height: 3rem;
 }

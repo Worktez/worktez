@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NativeWindowService } from 'src/app/services/native-window.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
@@ -18,9 +19,10 @@ export class CurrenPlanComponent implements OnInit {
   showLoader: boolean = true;
   subscriptionId: string;
 
-  constructor(private authService: AuthService, private zone: NgZone, public router: Router, public nativeWindowServive: NativeWindowService, public functions: AngularFireFunctions, public startService: StartServiceService, private backendService: BackendService, public subscriptionService: SubscriptionService) { }
+  constructor(private authService: AuthService, private zone: NgZone, public router: Router, public nativeWindowServive: NativeWindowService, public functions: AngularFireFunctions, public startService: StartServiceService, private backendService: BackendService, public subscriptionService: SubscriptionService, private navbarService: NavbarHandlerService) { }
 
   ngOnInit(): void {
+    this.navbarService.resetNavbar();
   }
 
 
