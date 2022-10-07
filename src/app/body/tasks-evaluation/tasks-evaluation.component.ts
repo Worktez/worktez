@@ -130,7 +130,9 @@ export class TasksEvaluationComponent implements OnInit {
           if (result.BacklogTasks.length > 0) {
             this.tasks.push(result.BacklogTasks);
           }
-          this.upcomingSprintTasks.push(result.UpcomingSprintTasks);
+          if(pageToLoad == "initial"){
+            this.upcomingSprintTasks.push(result.UpcomingSprintTasks);
+          }
           this.tasks.push(result.Tasks);
           this.nextSprintTasksToFetch -= 1;
           if (this.nextSprintTasksToFetch < 1) {
