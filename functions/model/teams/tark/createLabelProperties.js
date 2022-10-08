@@ -218,33 +218,4 @@ const getIconDetails = function(element) {
         }    
 
     }
-    // if (element === "High") {
-    //     return highData;
-    // } else if (element === "Medium") {
-    //     return mediumData;
-    // } else if (element === "Low") {
-    //     return lowData;
-    // } else if (element === "Bug") {
-    //     return bugData;
-    // } else if (element === "Story") {
-    //     return storyData;
-    // } else if (element === "Sub Task") {
-    //     return subtaskData;
-    // } else if (element === "Ice Box") {
-    //     return iceBoxData;
-    // } else if (element === "Ready to start") {
-    //     return readyData;
-    // } else if (element === "Under Progress") {
-    //     return inPrgressData;
-    // } else if (element === "Blocked") {
-    //     return blockedData;
-    // } else if (element === "Completed") {
-    //     return completeData;
-    // } else if (element === "SocialMedia") {
-    //     return socialMediaData;
-    // } else if (element === "Email") {
-    //     return emailData;
-    // }  else if (element === "Ad's") {
-    //     return adsData;
-    // } 
 };
