@@ -202,5 +202,5 @@ const getIconDetails = function(element) {
             return emailData;
     } case "Ad's": {
             return adsData;
-    }}
-};
+    }
+}};
