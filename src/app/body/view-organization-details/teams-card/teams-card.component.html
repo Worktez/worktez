@@ -20,8 +20,10 @@
                     <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
                 </div>
                     <span class="material-icons float-left ml-0 mt-2" type="button" (click)="openTeamDetails()" style="cursor: pointer;">settings</span>
-                    <span class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
-                    title="delete Team"  data-bs-toggle="tooltip">delete</span>
+                    <mat-icon fontSet="material-icons-outlined" class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
+                    title="delete Team"  data-bs-toggle="tooltip">
+                              delete
+                                 </mat-icon>
             </div>
                         
             <div class="row mt-1">

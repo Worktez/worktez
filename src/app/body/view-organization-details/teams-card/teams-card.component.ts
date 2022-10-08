@@ -64,10 +64,10 @@ export class TeamsCardComponent implements OnInit {
     this.updateTeamEnabled = true;
   }
 
-  async deleteTeam() {
+  deleteTeam() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/deleteTeam');
-    await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+      callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
       next: (data) => {
         this.team.TeamStatus = -1;
       },
