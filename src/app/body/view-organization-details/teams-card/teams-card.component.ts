@@ -60,26 +60,28 @@ export class TeamsCardComponent implements OnInit {
       }
     }
   }
-  // updateTeam(team: Team) {
-  //   this.teamToUpdate = team;
-  //   this.updateTeamEnabled = true;
-  // }
+  updateTeam(team: Team) {
+    this.teamToUpdate = team;
+    this.updateTeamEnabled = true;
+  }
 
-  // async deleteTeam() {
-  //   const orgDomain = this.backendService.getOrganizationDomain();
-  //   const callable = this.functions.httpsCallable('teams/deleteTeam');
-  //   await callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
-  //     next: (data) => {
-  //       this.team.TeamStatus = -1;
-  //     },
-  //     error: (error) => {
-  //       console.error("Error", error);
-  //       this.errorHandlerService.showError = true;
-  //       this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-  //     },
-  //     complete: () => console.info('Successful ')
-  // });
-  // }
+
+
+   deleteTeam() {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/deleteTeam');
+     callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+      next: (data) => {
+        this.team.TeamStatus = -1;
+      },
+      error: (error) => {
+        console.error("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful ')
+  });
+  }
 
   openTeamDetails() {
     this.router.navigate(['TeamDetails', this.team.TeamId]);
@@ -116,7 +118,7 @@ export class TeamsCardComponent implements OnInit {
     this.repoLink=data.projLink;
     }
   }
-  // teamUpdated(data: { completed: boolean }) {
-  //   this.updateTeamEnabled = false;
-  // }
+  teamUpdated(data: { completed: boolean }) {
+    this.updateTeamEnabled = false;
+  }
 }
