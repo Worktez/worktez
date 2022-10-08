@@ -176,46 +176,45 @@ const getIconDetails = function(element) {
     switch (element) {
         case "High": {
             return highData;
-        }
+    }
         case "Medium": {
             return mediumData;
-        }
+    }
         case "Low": {
             return lowData;
-        }
+    }
         case "Bug": {
             return bugData;
-        }
+    }
         case "Story": {
             return storyData;
-        }
+    }
         case "Sub Task": {
             return subtaskData;
-        }
+    }
         case "Ice Box": {
             return iceBoxData;
-        }  
+    }
         case "Ready to start": {
             return readyData;
-        }   
+    }  
         case "Under Progress": {
             return inPrgressData;
-        }    
+    }    
         case "Blocked": {
             return blockedData;
-        } 
+    } 
         case "Completed": {
             return completeData;
-        }  
+    }  
         case "SocialMedia": {
             return socialMediaData;
-        }   
+    }   
         case "Email": {
             return emailData;
-        }    
+    }    
         case "Ad's": {
-            return emailData;
-        }    
-
+            return adsData;
+    }    
     }
 };

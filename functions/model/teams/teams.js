@@ -176,7 +176,7 @@ fastify.post("/editLabel", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/changeLabels", (req, res) => {
+fastify.post("/changeLabels", (req, res) => {
   changeLabels(req, res);
 });
 
