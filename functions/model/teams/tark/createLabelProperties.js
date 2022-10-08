@@ -203,4 +203,5 @@ const getIconDetails = function(element) {
     } case "Ad's": {
             return adsData;
     }
-}};
+}
+};
