@@ -20,6 +20,8 @@
                     <h3 class="card-subtitle text-muted">{{ team.TeamDescription }}</h3>
                 </div>
                     <span class="material-icons float-left ml-0 mt-2" type="button" (click)="openTeamDetails()" style="cursor: pointer;">settings</span>
+                    <span class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
+                    title="delete Team"  data-bs-toggle="tooltip">delete</span>
             </div>
                         
             <div class="row mt-1">
@@ -43,8 +45,6 @@
                     title="Add Member">
                     <span class="material-icons pl-1" style="position: relative;top: 3px;">person_add</span>
                     Add Member</button>
-                    <span class="material-icons mr-2 float-right trash p-2" type="button" data-toggle="modal" data-target="#deleteTeam"
-                    title="delete Team"  data-bs-toggle="tooltip">delete</span>
                     </div>
                  </div>
             </div>
@@ -100,7 +100,7 @@
                     <div class="alert alert-danger" role="alert">Are you sure you want to delete this team?</div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
                     <button type="button" class="btn btn-danger" (click) = "deleteTeam()">Delete</button>
                 </div>
                 </div>
