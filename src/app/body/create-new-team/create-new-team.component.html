@@ -40,9 +40,19 @@
                         </div>
                     </div>
                     <div class="form-group row pt-2">
-                        <div class="col-sm-11">
+                        <div class="col-sm-6">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Id</span>
                             <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID*">
+                        </div>
+                        <div class="col-sm-5">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Apply Labels</span>
+                            <select class="form-control form-control-sm" [(ngModel)]="labelName"
+                                [ngModelOptions]="{standalone: true}">
+                                <option [ngValue]="null" [disabled]="true">Select Label</option>
+                                <ng-container *ngFor='let label of filteredOptionsLabels'>
+                                    <option>{{ label }}</option>
+                                </ng-container>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row pt-2">
@@ -59,21 +69,49 @@
                     </div>
                     </div>
                     <div class="form-group row  pt-2">
-                        <div class="col-md-10" >
+                        <div class="col-md-10">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Description</span>
-                            <textarea type="text" class="form-control"  style="width: 500px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
+                            <textarea type="text" class="form-control"  style="width: 1090px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
                         </div>
                     </div>
-                    <div class="form-group row  pt-2">
+                    <!-- <div class="col">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Select Label</span>
+                        <select class="form-control form-control-sm" [(ngModel)]="labelName"
+                            [ngModelOptions]="{standalone: true}">
+                            <option [ngValue]="null" [disabled]="true">Select Priority</option>
+                            <ng-container *ngFor='let label of filteredOptionsLabels' >
+                                <option>{{ label }}</option>
+                            </ng-container>
+                        </select>
+                    </div> -->
+                    <!-- <div class="form-group row pt-2">
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
+                              aria-expanded="false">
+                              Label&nbsp;&nbsp;
+                            </button>
+                    
+                            <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                              <button class="dropdown-item" type="button" (click)="changeLabels('Marketing')">
+                                Marketing
+                              </button>
+                              <button class="dropdown-item" type="button">
+                                Development
+                              </button>
+                            </div>
+                          </div>
+                    </div> -->
+                    
+                    <!-- <div class="form-group row  pt-2">
                         <div class="col-md-10" >
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Change Labels</span>
                             <button type="submit" class="btn ml-2 mt-1" id="button" (click)="changeLabels()" style="font-size: 10px;">Submit</button>
                         </div>
-                    </div>
+                    </div> -->
                     <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Members Email</span>
                     <div class="form-row">
                         <div class="col">
-                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"  (click)="addMember()" style="height: 10rem;">
+                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"  (click)="addMember()" style="height: 10rem; width: 1090px;">
                                 <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
                                     <div class="row">
                                         <ng-container *ngFor="let item of teamMembers">
@@ -83,7 +121,7 @@
                                             </div>
                                         </ng-container>
                                         <ng-container *ngIf="!teamMembers.length">
-                                            <div class="col text-muted h6 font-weight-normal" style="width: 818px;;">
+                                            <div class="col text-muted h6 font-weight-normal">
                                                 Enter Team Members Email Id*
                                             </div>
                                         </ng-container>

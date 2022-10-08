@@ -31,6 +31,7 @@ const {addProjLink} = require("./tark/addProjLink");
 const {createDefaultLabels} = require("./tark/createDefaultLabels");
 const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 const {changeLabels} = require("./tark/changeLabels");
+// const {updateTeamLabels} = require("./tark/updateTeamLabels");
 
 /**
  * Description
@@ -86,6 +87,17 @@ fastify.post("/getTeamData", (req, res) => {
 fastify.post("/removeMember", (req, res) => {
   removeMember(req, res);
 });
+
+// /**
+//  * Description
+//  * @param {any} "/updateTeamLabels"
+//  * @param {any} req
+//  * @param {any} res
+//  * @returns {any}
+//  */
+//  fastify.post("/updateTeamLabels", (req, res) => {
+//   updateTeamLabels(req, res);
+// });
 
 /**
  * Description
