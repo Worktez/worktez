@@ -18,7 +18,7 @@
                 <input type="text" class="form-control form-control-sm" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" (ngModelChange)="setChange()" placeholder="Enter Note Title"/>
             </div>
             <div class="col-4 d-flex justify-content-end">
-                <span class="btn">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.createTask" class="btn">
                     <a (click)="createTask()" data-toggle="modal" data-target="#createNewTask" title="Create a task with the given Title and Description">Create Task</a>
                 </span>
                 <span class="btn">

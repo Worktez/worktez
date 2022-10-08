@@ -13,6 +13,7 @@
 ***********************************************************/
 export interface Milestones {
     MilestoneId: string;
+    MilestoneStatus: string;
     CreationDate: string;
     CreationTime: string;
     Description: string;

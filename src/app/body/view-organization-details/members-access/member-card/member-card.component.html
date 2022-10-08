@@ -1,0 +1,43 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Abhishek Mishra <am1426620@gmail.com>
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<button *ngIf=" rbaService.isRbaReady && !rbaService.permissions.editMemberRoles" class="btn"  type="button">{{memberRole}} </button>
+
+<button *ngIf=" rbaService.isRbaReady && rbaService.permissions.editMemberRoles" class="btn dropdown-toggle"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{memberRole}}</button>
+<div class="dropdown-menu textbox">
+  <a class="dropdown-item" (click)="changeMemberRole('Admin')">
+      <span style="font-weight: bold; ">Admin</span> <br>
+      <span class="permissions">
+          Can create or delete teams, Can change the members' roles. <br>
+          Can edit organisation details. <br>
+          Can also do everything that a team manager can do.
+      </span>
+  </a>
+  <a class="dropdown-item" (click)="changeMemberRole('Team Manager')">
+      <span style="font-weight: bold;">Team manager</span> <br>
+      <span class="permissions">
+          Can add or remove members to teams, Can edit the team details. <br>
+          Can create and complete sprints, delete tasks. <br>
+          Can do everything that a member can do.
+      </span>
+  </a>
+     
+  <a class="dropdown-item" (click)="changeMemberRole('Member')">
+      <span style="font-weight: bold;">Member</span> <br>
+      <span class="permissions">
+          Can create, read, and edit tasks, 
+          Can create and edit milestones. <br>
+          Can post in social pages.
+      </span>
+  </a>
+</div>

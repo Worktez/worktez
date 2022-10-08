@@ -53,7 +53,6 @@ export class UploadLogoComponent implements OnInit {
 
   cropPhotoCompleted(data: { completed: boolean, photoUrl: string, file: FileUpload }) {
     this.currentFileUpload = data.file;
-    console.log(data.photoUrl);
-    this.uploadedLogo.emit({ completed: true, logoFile: this.currentFileUpload, photoUrl: data.photoUrl});
+    this.uploadedLogo.emit({ completed: data.completed, logoFile: this.currentFileUpload, photoUrl: data.photoUrl});
   }
 }

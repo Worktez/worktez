@@ -14,10 +14,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { QuickNote } from 'src/app/Interface/UserInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { QuickNotesService } from 'src/app/services/quickNotes/quick-notes.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-quick-notes',
@@ -47,6 +48,7 @@ export class QuickNotesComponent implements OnInit {
     this.showNotesList = false
     this.openEditNote= false;
     this.showAddNote = true
+
   }
 
   addNoteCompleted(data) {
@@ -72,6 +74,11 @@ export class QuickNotesComponent implements OnInit {
   }
 
   deleteNote(docId: string) {
+    for(let i=0; i<this.quickNotes.notes.length; i++){
+     if(this.quickNotes.notes[i].DocId==docId){ 
+      delete this.quickNotes.notes[i]; 
+      }
+      }
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
     this.enableLoader = true

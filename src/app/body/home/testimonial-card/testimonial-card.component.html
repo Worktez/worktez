@@ -1,8 +1,20 @@
-<div class="card align-middle align-items-center mx-3">
-    <img class="imageCheck rounded-circle" width="80" height="80" src="../../../../assets/defaultavatar.jpg" alt="Card image cap">
-    <div class="card-body my-5">
-        <h3 class="card-title text-center">{{name}}</h3>
-        <p class="card-text text-center">{{content}}</p>
+<div class="card mx-1">
+    <img class="imageCheck" width="30" height="30" src="../../../../assets/quotes.svg" alt="Card image cap">
+    <div class="card-body">
+        <div class="row py-1">
+            <div class="col-md-3 col-1 d-flex justify-content-center">
+                <img class="rounded-circle photo" src="{{image}}" alt="Card image cap">
+            </div>
+            <div class="col d-flex justify-content-center">
+                <div>
+                    <span class="card-title">{{name}}</span>
+                    <br>
+                    <span class="card-text text-muted">{{position}}</span>
+                    <br>
+                    <span class="card-text" style="overflow: scroll;">{{content}}</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- <div class="card align-middle p-3">

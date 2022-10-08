@@ -33,7 +33,7 @@ exports.patch5 = function(request, response) {
 
     let status = 200;
 
-    const promise1 = getOrg(orgDomain).then((orgData) => {
+    const promise1 = getOrg(orgDomain).then(() => {
         const updateUsersPromise = getAllUsers().then((users) => {
             if (users.docs.length > 0) {
                 users.forEach((userDoc) => {

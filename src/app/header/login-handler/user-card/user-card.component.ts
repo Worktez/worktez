@@ -14,7 +14,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
@@ -38,7 +38,7 @@ export class UserCardComponent implements OnInit {
   onLogout() {
     this.authService.logout().then(()=>{
       this.startService.stopApplication();
-      this.router.navigate(['/']);
+      this.router.navigate(['/Social']);
     });
   }
   profile() {

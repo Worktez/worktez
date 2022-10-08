@@ -20,7 +20,6 @@ import { TasksComponent } from './body/tasks/tasks.component';
 import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { SocialPageComponent } from './body/social-page/social-page.component';
-import { AddLabelComponent } from './body/team-details/add-label/add-label.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
 import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
 import { Patch1Component } from './patches/patch1/patch1.component';
@@ -52,11 +51,14 @@ import { TeamDetailsComponent } from './body/team-details/team-details.component
 import { FilterPageComponent } from './body/filter-page/filter-page.component';
 import { MilestoneComponent } from './body/milestone/milestone.component';
 import { MilestoneDetailsComponent } from './body/milestone-details/milestone-details.component';
+import { PricingComponent } from './body/pricing/pricing.component';
+import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
 
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
+  { path: '', component: HomeComponent},
   { path: 'Home', component: HomeComponent},
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
   { path: 'Board', component: BoardComponent, canActivate: [AngularFireAuthGuard]},
@@ -64,7 +66,7 @@ const routes: Routes = [
   { path: 'TasksEvaluation', component: TasksEvaluationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
-  { path: '', component: SocialPageComponent},
+  { path: 'Social', component: SocialPageComponent},
   { path: 'FilterPage', component: FilterPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
@@ -94,6 +96,8 @@ const routes: Routes = [
   { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
+  { path: 'Pricing', component:PricingComponent },
+  { path: 'Notifications', component:AllNotificationComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

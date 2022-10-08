@@ -99,3 +99,9 @@ input:focus {
     outline: 0 none;
     border-color: var(--primary-color);
 } 
+
+.btn-close{
+    position: absolute;
+    float: right;
+    right: 0px;
+}

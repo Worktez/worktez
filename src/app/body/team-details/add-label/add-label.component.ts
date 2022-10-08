@@ -14,8 +14,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl, NgForm } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { UntypedFormControl, NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
@@ -33,8 +33,8 @@ export class AddLabelComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Output()  addLabelCompleted = new EventEmitter;
 
-  iconName = new FormControl();
-  colorCode = new FormControl();
+  iconName = new UntypedFormControl();
+  colorCode = new UntypedFormControl();
 
   displayName: string;
   scope: string;

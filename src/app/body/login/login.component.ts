@@ -15,8 +15,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Location } from '@angular/common';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
   activeLogin: boolean = true
   userExistChecked=false;
 
-  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location) { }
+  constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location, public startService: StartServiceService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -89,7 +90,8 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToHome() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/Social']);
+    this.startService.startApplication();
   }
   
   navigateToVerification(path) {

@@ -14,9 +14,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-addnew-note',
@@ -33,7 +34,7 @@ export class AddnewNoteComponent implements OnInit {
 
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService,public popupHandlerService: PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions,public rbaService :RBAService, public authService: AuthService, private toolService: ToolsService,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
   }

@@ -15,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
@@ -50,10 +50,9 @@ export class MyDashBoardComponent implements OnInit {
   }
 
   // runSchedular() {
-  //     const callable = this.functions.httpsCallable('scheduledFn');
-  //     const result = callable({}).subscribe((data) => {
+  //     const callable = this.functions.httpsCallable('scheduledFnManually/startSchedular');
+  //     callable({}).subscribe((data) => {
   //       console.log("Created Schedular document");
-  //       console.log(result);
   //     });
   // }
 }

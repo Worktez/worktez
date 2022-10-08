@@ -14,12 +14,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { QuickNote } from 'src/app/Interface/UserInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class EditNoteComponent implements OnInit {
   editNote: QuickNote
   enableLoader: boolean = false
 
-  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService,public popupHandlerService: PopupHandlerService) { }
+  constructor(private functions: AngularFireFunctions, public authService: AuthService, private toolService: ToolsService, private router: Router, public errorHandlerService: ErrorHandlerService,public popupHandlerService: PopupHandlerService, public rbaService: RBAService) { }
 
   ngOnInit(): void {
     

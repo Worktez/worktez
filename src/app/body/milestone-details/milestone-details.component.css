@@ -28,6 +28,12 @@
     margin: auto;
 }
 
+.title {
+    font-size: 18px;
+    font-family: var(--font);
+    color: var(--text);
+}
+
 #progress-bar-container {
     position: relative;
     width: 90%;
@@ -103,7 +109,7 @@
 }
 
 #progress-bar-container li.active:after {
-    background: #207893;
+    background: var(--progress-bg);
 }
 
 #progress-bar-container #line {
@@ -122,26 +128,24 @@
     content: " ";
     width: 1%;
     height: 100%;
-    background: #207893;
-    background: linear-gradient(to right, #207893 0%, #2ea3b7 100%);
+    background: var(--progress-bg);
+    background: linear-gradient(to right, var(--progress-bg) 0%, var(--progress-bg) 100%);
     position: absolute;
     z-index: 2;
     border-radius: 50px;
     transition: all ease 0.9s;
 }
+
 #button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
+    background-color: var(--secondary-bg);
+    color: var(--text);
 }
 
-#button:focus,
-#button:active,
 #button:hover {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }
+
 
 #SuccessIcon{
     color: var(--secondary-color);
@@ -156,18 +160,18 @@
     background: var(--secondary-bg);
     color: var(--text);
     border: none;
-    border-radius: 10px;
     height: 100%;
 }
-.close {
+
+.tableBox {
+    background-color: var(--secondary-bg);
     color: var(--text);
+    border-radius: 5px;
 }
-.close:hover{
+
+#milestoneStatus{
     cursor: pointer;
 }
-
-
-
 
 @keyframes FadeInUp {
     0% {
@@ -181,12 +185,29 @@
     }
 }
 
-
-
-
-
 @media only screen and (max-width: 600px) {
     .container-fluid {
         padding: 4px 40px 0px 40px;
     }  
+
+    #completeTaskText{
+        padding-top: 0px;
+    }      
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+#StartDate {
+    color: var(--secondary-color);
+}
+
+#EndDate {
+    color: var(--danger-color);
 }

@@ -13,7 +13,7 @@
  ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
@@ -36,13 +36,13 @@ export class AddTaskComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async addTask(task){
+   addTask(task){
     this.showLoader = true
     const todayDate = this.toolsService.date();
     const time = this.toolsService.time();
-    const appKey = this.backendService.getOrganizationAppKey();
-      const callable = this.functions.httpsCallable('tasks/editTask');
-      await callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: task.SprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: todayDate, Time: time, ChangedData: "Milestone Added", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.reporterName, MilestoneId: this.milestoneId}).subscribe({
+    const orgDomain = this.backendService.getOrganizationDomain();
+      const callable = this.functions.httpsCallable('milestone/addTask');
+      callable({TaskId: task.Id, Uid: this.authService.user.uid, MilestoneId: this.milestoneId, Time:time, Date:todayDate, OrgDomain: orgDomain}).subscribe({
 
         next: (data) => {
           this.showLoader = false;

@@ -18,9 +18,10 @@ import { Subject } from 'rxjs';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { User } from 'src/app/Interface/UserInterface';
 import { ApplicationSettingsService } from '../applicationSettings/application-settings.service';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
+import { RBAService } from '../RBA/rba.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private quickNotes: QuickNotesService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
+  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -72,6 +73,7 @@ export class StartServiceService {
           this.user = data
           this.authService.user = data;
           this.authService.getUserSettings();
+          this.rbaService.setDefaultPermissions();
           this.loadUserAppSettings();
         } else {
           this.userReady = false;
@@ -91,6 +93,8 @@ export class StartServiceService {
   }
 
   loadUserAppSettings() {
+    if(this.currentUrl == '/')
+    this.router.navigate(['/Home']);
     const userSelectedOrgAppKeyCookie = this.cookieService.get("userSelectedOrgAppKey");
     const userSelectedTeamId = this.cookieService.get("userSelectedTeamId");
 
@@ -115,24 +119,21 @@ export class StartServiceService {
 
   loadNext(SelectedOrgAppKey: string, SelectedTeamId: string, uid: string, AppTheme: string) {
     this.userAppSettingsReady = true;
-    this.authService.landingToSocial = false
-    if (SelectedOrgAppKey != "") {
+    if (SelectedOrgAppKey != undefined && SelectedOrgAppKey != "") {
       this.authService.organizationAvailable = true;
       this.authService.getListedOrganizationData(uid);
       this.backendService.getOrgDetails(SelectedOrgAppKey);
       this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
       this.authService.themeService.changeTheme(AppTheme);
       this.quickNotes.getQuickNotes();
+      this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
     } else {
       this.authService.organizationAvailable = false;
+        this.router.navigate(['/Social']);
     }
     if (SelectedOrgAppKey) {
-      if(!this.authService.landingToSocial) {
-        this.authService.landingToSocial = true;
-        if(this.currentUrl == '/') {
-          this.router.navigate(['/MyDashboard']);
-        }
-          
+      if(this.currentUrl == '/') {
+        this.router.navigate(['/MyDashboard']);
       }
       if(SelectedTeamId != "") {
         this.selectedTeamId = SelectedTeamId;
@@ -155,8 +156,11 @@ export class StartServiceService {
         });
       } else {
         this.teamIdExists = false;
+        this.applicationDataState.next(true);
         console.log("TeamId doesn't exists");
       }
+    } else {
+        this.router.navigate(['/Social']);
     }
   }
 
@@ -165,6 +169,7 @@ export class StartServiceService {
     this.applicationDataState.next(false);
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
+    this.applicationSettingsService.getNotificationsList(1);
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
       this.teamData = teams;
       if (this.teamData.TeamId == this.selectedTeamId) {

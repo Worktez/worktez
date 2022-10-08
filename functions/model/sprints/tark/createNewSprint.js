@@ -24,6 +24,7 @@ const { createSprintName, currentDate, currentTime } = require("../../applicatio
 const { getSprint, setSprint, updateSprint, setSprintActivity } = require("../lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId, updateTeamDetails } = require("../../teams/lib");
+const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 
 exports.createNewSprint = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -105,6 +106,7 @@ exports.createNewSprint = function(request, response) {
     const Promises = [promise];
     let result;
     return Promise.all(Promises).then(() => {
+        updateSprintEvaluationGraphData(orgDomain, teamId, createSprintName(newSprintId));
             result = { data: "Sprint Created Successfully" };
             console.log("Sprint Created Successfully");
             return response.status(status).send(result);

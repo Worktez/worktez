@@ -25,49 +25,51 @@
             </span>
         </div>
     </div>
-    <form id="form">
-        <div class="form-group row px-2">
-            <div class="col-md-8 col">
-                <div class="form-group row pt-2">
-                    <div class="col-sm-8">
-                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Name</span>
-                        <input type="text" class="form-control" placeholder="Organization Name*" [(ngModel)]="orgName" [ngModelOptions]="{standalone: true}">
+    <form #form="ngForm" [formGroup]="createNewOrgForm" (ngSubmit)="submit()">
+            <div class="form-row px-2">
+                <div class="form-group col-md-6 pt-2">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Name<span style="color: red;">*</span></span>
+                        <input type="text" class="form-control form-control-sm" formControlName="orgName" placeholder="Organisation Name"> 
+                        <span class="ml-2" *ngIf="orgName.invalid && orgName.touched" style="color: red; font-size: 10px; ">Organisation name is required</span> 
+                <div class="form-row pt-2">
+                    <div class=" form-group col-md-12">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Domain<span style="color: red;">*</span></span>
+                        <input type="text" class="form-control" placeholder="Organization Domain" formControlName="orgDomain">
+                        <span class="ml-2" *ngIf="orgDomain.value=='' && orgDomain.touched" style="color: red; font-size: 10px; ">Organisation Domain is required</span>
+                        <span class="ml-2" *ngIf="orgDomain.value!='' && orgDomain.touched && orgDomain.invalid" style="color: red; font-size: 10px; ">Enter a valid Organisation Domain</span> 
                     </div>
                 </div>
-                <div class="form-group row pt-2">
-                    <div class="col-sm-8">
-                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Domain</span>
-                        <input type="text" class="form-control" placeholder="Organization Domain*" [(ngModel)]="orgDomain" [ngModelOptions]="{standalone: true}">
-                    </div>
-                </div>
-                <div class="form-group row pt-2">
-                    <div class="col-sm-8">
-                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Email</span>
-                        <input type="text" class="form-control" placeholder="Organization Email*" [(ngModel)]="orgEmail" [ngModelOptions]="{standalone: true}">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Email<span style="color: red;">*</span></span>
+                        <input type="text" class="form-control" placeholder="Organization Email" formControlName="orgEmail">
+                        <span class="ml-2" *ngIf="orgEmail.value=='' && orgEmail.touched" style="color: red; font-size: 10px; ">email is required</span>
+                        <span class="ml-2" *ngIf="orgEmail.value!='' && orgEmail.touched && orgEmail.invalid" style="color: red; font-size: 10px; ">Enter a valid email address</span>
                     </div>
                 </div>
             </div>
             <app-loader *ngIf="enableLoader"></app-loader>
-            <div class="col-md-2 col">
+            <div class="col-md-2 col ml-5">
                 <div class="form-group col p-2" id="uploadButtonContainer">
                     <ng-container *ngIf="!logoUploaded; else uploadedImg">
                         <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>
                     </ng-container>
                     <ng-template #uploadedImg>
-                        <img src="{{orgLogoURL}}" alt="" srcset="" width="50" height="50">
+                        <img src="{{orgLogoURL}}" alt="" srcset="" width="200" height="200">
                     </ng-template>
                 </div>
             </div>
         </div>
         <div class="form-group row px-2">
             <div class="col">
-                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Description</span>
-                <textarea type="text" class="form-control" placeholder="Enter Organization Description*" rows="3" [(ngModel)]="orgDescription" [ngModelOptions]="{standalone: true}"></textarea>
+                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Description<span style="color: red;">*</span></span>
+                <textarea type="text" class="form-control" placeholder="Enter Organization Description" rows="3" formControlName="orgDescription"></textarea>
+                <span class="ml-2" *ngIf="orgDescription.invalid && orgDescription.touched" style="color: red; font-size: 10px; ">Organisation name is required</span> 
             </div>
         </div>
         <div class="form-group row p-2">
             <div class="col text-right">
-                <button type="submit" class="btn" id="button" (click)="submit()" [disabled]="!logoUploaded && orgLogo && enableLoader">Submit
+                <button type="submit" class="btn" id="button" [disabled]="!logoUploaded || enableLoader || createNewOrgForm.invalid">Submit
                 </button>
             </div>
         </div>

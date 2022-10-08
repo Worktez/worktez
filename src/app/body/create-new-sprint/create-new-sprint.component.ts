@@ -18,7 +18,7 @@ import { User } from 'src/app/Interface/UserInterface';
 import { ValidationService } from '../../services/validation/validation.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';

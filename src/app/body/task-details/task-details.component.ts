@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators'
 import { Tasks, Link } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToolsService } from '../../services/tool/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -30,8 +30,9 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -46,6 +47,7 @@ export class TaskDetailsComponent implements OnInit {
   Id: string
   logWorkEnabled: boolean = false
   gitPrEnabled: boolean = false
+  addWatcherEnabled: boolean = false;
   editTaskEnabled: boolean = false
   deleteTaskEnabled: boolean = false
   linkEnabled: boolean = false
@@ -75,21 +77,29 @@ export class TaskDetailsComponent implements OnInit {
 
   gotTaskData: boolean=false;
   showLoader: boolean=false;
-  
 
   activityData: Activity[]
   linkData: Link[]
   prLinked: boolean = false;
   prApiLink: string;
+  totalEstimatedTime: number;
+  estimatedTimeHrs: number;
+  estimatedTimeMins: number;
+  totalLoggedTime: number;
+  loggedTimeHrs: number;
+  loggedTimeMins: number;
+  totalRemainingTime: number;
+  remainingTimeHrs: number;
+  remainingTimeMins: number
 
 
-  constructor (private httpService: HttpServiceService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
     this.creationDate = this.toolsService.date();
     this.time = this.toolsService.time();
-
+        
     this.Id = this.route.snapshot.params[ 'taskId' ];
     this.url = window.location.href;
 
@@ -152,6 +162,7 @@ export class TaskDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.task = data;
+        this.getTimeDetails();
         this.checkPrLinked()
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
@@ -174,6 +185,22 @@ export class TaskDetailsComponent implements OnInit {
       },
       complete: () => console.info('Getting Task successful')
     });
+  }
+
+  
+  getTimeDetails(){
+    this.totalEstimatedTime=this.task.EstimatedTime;
+    [this.estimatedTimeHrs, this.estimatedTimeMins ]= this.toolsService.changeToHourMinsTime(this.totalEstimatedTime);
+
+    this.totalLoggedTime= this.task.LogWorkTotalTime;
+    [this.loggedTimeHrs, this.loggedTimeMins] = this.toolsService.changeToHourMinsTime(this.totalLoggedTime)
+
+    this.totalRemainingTime= this.totalEstimatedTime - this.task.LogWorkTotalTime;
+    [this.remainingTimeHrs, this.remainingTimeMins] = this.toolsService.changeToHourMinsTime(this.totalRemainingTime)
+    
+    if(this.remainingTimeHrs==0 && this.remainingTimeMins==0){
+      this.totalRemainingTime=0
+    }
   }
 
   getActivityData () {
@@ -220,6 +247,24 @@ export class TaskDetailsComponent implements OnInit {
       complete: () => console.info('Getting Sprint Evaluation data successful')
     });
   }
+
+  removeLink(linkId, linkType){
+    const callable = this.functions.httpsCallable('linker/removeLink');
+    callable({ OrgDomain: this.orgDomain, TaskId: this.Id, LinkType: linkType, LinkId:linkId  }).subscribe({
+      next: (data) => {
+        return;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.error(error);
+      },
+      complete: () => {
+        this.getLinkData()
+        this.getTaskDetail()
+        console.info('Successfully created Link')
+      }});
+    }
 
   async addComment() {
     this.activityDataReady = true
@@ -282,7 +327,9 @@ export class TaskDetailsComponent implements OnInit {
     this.logWorkEnabled = false;
   }
 
-  editTaskCompleted ( data: { completed: boolean } ) {
+  editTaskCompleted ( data: { completed: boolean, task:Tasks } ) {
+    console.log(data);
+    this.getTaskPageData();
     this.editTaskEnabled = false;
   }
 
@@ -297,6 +344,7 @@ export class TaskDetailsComponent implements OnInit {
     this.prApiLink=data.prApiLink;
     this.getPrDetails();
     this.getLinkData();
+    this.getTaskDetail();
 
   }
 
@@ -305,7 +353,7 @@ export class TaskDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable( 'tasks/log' );
     const appKey = this.backendService.getOrganizationAppKey();
 
-    callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: this.task.WorkDone, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
+    callable( {AppKey: appKey, SprintNumber: this.task.SprintNumber, LogTaskId: this.task.Id, LogHours: 0, LogWorkDone: 0, LogWorkStatus: "Ready to start", LogWorkComment: "Reopening", Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid } ).subscribe({
       next: (data) => {
         this.getTaskPageData();
         this.showLoader = false;
@@ -351,26 +399,19 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  addWatcher() {
-    const callable = this.functions.httpsCallable( 'tasks/addWatcher' );
-    callable({OrgDomain: this.orgDomain, TaskId:this.task.Id, NewWatcher: this.newWatcher, CreationDate: this.creationDate, Time: this.time, Uid: this.authService.userAppSetting.uid}).subscribe({
-      next: (data) => {
-        console.log("Successful");
-        
-        this.addedWatcher = true;
-        return;
-      },
-      error: (error) => {
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.log( "Error", error );
-      },
-      complete: () => console.info('Successful')
-    });
+  addWatcher() { 
+    this.addWatcherEnabled = true;
+  }
+
+  addWatcherCompleted( data: { completed: boolean } ) {
+    this.addWatcherEnabled = false;
+    this.getTaskPageData();
   }
 
   linkPr() {
+    this.popupHandlerService.addPrActive = true;
     this.gitPrEnabled = true;
+    // this.showLoader = true;
   }
 
   

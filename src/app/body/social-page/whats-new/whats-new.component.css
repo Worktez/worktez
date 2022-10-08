@@ -17,14 +17,18 @@ hr {
     border-bottom: 2px solid var(--scrollbar-color);
     margin-bottom: 1rem;
 }
+
+.head {
+    color:var(--primary-color);
+}
+
 .whatsnew::-webkit-scrollbar {
     width: 6px;              
   }
-  .whatsnew::-webkit-scrollbar-track {
+.whatsnew::-webkit-scrollbar-track {
     background: var(--secondary-bg);        
 }
 .whatsnew::-webkit-scrollbar-thumb {
     border-radius: 1rem;
-    background-color: #00d2ff;
-    background-image: linear-gradient(to top, #3a7bd5 0%, #5C60EC 100%);
+    background-color: #5C60EC;
 } 

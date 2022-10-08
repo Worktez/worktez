@@ -35,11 +35,11 @@
                                         corporate_fare
                                     </mat-icon>
                                     {{backendService.organizationDetails.OrganizationName}}
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
+                                    <mat-icon *ngIf="(authService.myOrgCollectionsData | async)?.length > 1" fontSet="material-icons-outlined" class="align-middle pr-4">
                                         expand_more
                                     </mat-icon>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
+                                <div *ngIf="(authService.myOrgCollectionsData | async)?.length > 1" class="dropdown-menu" aria-labelledby="navbarDropdownCreate">
                                     <ng-container *ngFor="let item of authService.myOrgCollectionsData | async">
                                         <a class="dropdown-item"
                                             *ngIf="item.OrgDomain != backendService.organizationDetails.OrganizationDomain"
@@ -55,14 +55,14 @@
                         <li class="nav-item px-1">
                             <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="socialPage()">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                    tag
+                                    workspace_premium
                                 </mat-icon> Tech Tag
                             </a>
                         </li>
                     </ng-container>
                     <ng-container *ngIf="(backendService.organizationsData | async)">
-                        <li class="nav-item px-1" *ngIf="startService.teamIdExists">
-                            <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()"
+                        <li  class="nav-item px-1" *ngIf="startService.teamIdExists">
+                            <a *ngIf="rbaService.isRbaReady && rbaService.permissions.createTask" class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewTask()"
                                 data-toggle="modal" data-target="#createNewTask">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     add_box
@@ -70,7 +70,7 @@
                                 Create
                             </a>
                         </li>
-                        <ng-container *ngIf="startService.userReady">
+                        <ng-container *ngIf="startService.teamIdExists">
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="milestoneGraph()">
                                     <mat-icon fontSet="material-icons-outlined" class="align-middle">interests</mat-icon> Milestones
@@ -95,21 +95,33 @@
                                 <a class="dropdown-item " (click)="kanbanBoard() ">Kanban Board</a>
                             </div>
                         </li>
-                        <ng-container *ngIf="(backendService.organizationsData | async)">
-                            <li class="nav-item px-1" *ngIf="startService.teamIdExists">
-                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="filterPage()">
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                        filter_list
-                                    </mat-icon> Filters
-                                </a>
-                            </li>
-                        </ng-container>
                         <ng-container *ngIf="(authService.organizationAvailable) && startService.userReady">
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button"
                                     (click)="organizationDetails()">
                                     <label>My Organization</label>
                                 </a>
+                            </li>
+                        </ng-container>
+                        <ng-container>
+                            <li class="nav-item dropdown" *ngIf="startService.teamIdExists">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                        video_call
+                                    </mat-icon>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right meetScrollBar" aria-labelledby="navbarDropdownBoards" id="notificationCenter">
+                                    <div class="text-center align-middle" >
+                                        <div>
+                                            <a class="dropdown-item ScheduleBtn ScheduleBtn-outline-secondary" style="margin-bottom: 2rem;" (click)="ScheduleMeet()" data-toggle="modal" data-target="#scheduleMeet">Schedule a Meet</a>
+                                        </div>
+                                        <ng-container>
+                                            <app-show-meet-details></app-show-meet-details>
+                                        </ng-container>
+                                        <!-- <a  class=" dropdown-item" >Show Scheduled Meets</a> -->
+                                    </div>    
+                                </div>
                             </li>
                         </ng-container>
                     </ng-container>
@@ -129,37 +141,45 @@
         </nav>
     </ng-container>
     <ng-template #homePageHeader>
-        <nav id="navbar" class="navbar header">
-            <a class="navbar-brand" href="#">
-                <img id="brand_img" src="../../assets/worktezLogo.jpg" alt="Worktez">
-            </a>
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#services">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#aboutUs">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#features">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/Home#testimonial">Testimonials</a>
-                </li>
-                <ng-container *ngIf="!(authService.organizationAvailable) && startService.userReady">
-                    <li class="nav-item px-1">
-                        <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
-                            <label>Create New Organization</label>
+        <div class="sHeader pb-2">
+            <div class="row header">
+                <div class="col-md-2 col-1"></div>
+                <div class="col">
+                    <nav id="navbar" class="navbar">
+                        <a class="navbar-brand" href="#">
+                            <img id="brand_img" src="../../assets/worktezName.png" alt="Worktez">
                         </a>
-                    </li>
-                </ng-container>
-                <li class="nav-item">
-                    <app-login-handler></app-login-handler>
-                </li>
-            </ul>
-        </nav>
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link" routerLink="/Pricing">Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#aboutUs">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home#testimonial">Testimonials</a>
+                            </li>
+                            <ng-container *ngIf="!(authService.organizationAvailable) && startService.userReady">
+                                <li class="nav-item px-1">
+                                    <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="createNewOrganization()">
+                                        <label>Create New Organization</label>
+                                    </a>
+                                </li>
+                            </ng-container>
+                            <li class="nav-item">
+                                <app-login-handler></app-login-handler>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-2 col-1"></div>
+            </div>
+        </div>
     </ng-template>
 </div>

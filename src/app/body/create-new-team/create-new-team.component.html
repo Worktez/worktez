@@ -35,39 +35,45 @@
                     <div class="team-details">
                     <div class="form-group row pt-2">
                         <div class="col-sm-11">
-                            <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Name*">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Name</span>
+                            <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" (ngModelChange)="handleIdInput()" placeholder="Enter Team Name*">
                         </div>
                     </div>
                     <div class="form-group row pt-2">
                         <div class="col-sm-11">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Id</span>
                             <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID*">
                         </div>
                     </div>
                     <div class="form-group row pt-2">
                         <div class="col-sm-11">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Manager Email</span>
                             <input type="text" class="form-control" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Manager's Email Id*">
                         </div>
                     </div>
                     <div class="form-group row pt-2">
                         <div class="col-sm-11">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Admin Email</span>
                             <input type="text" readonly  class="form-control" value={{this.teamAdmin}} [(ngModel)]="teamAdmin" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Admin's Email Id*">
                         </div>
                     </div>
                     </div>
                     <div class="form-group row  pt-2">
                         <div class="col-md-10" >
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Description</span>
                             <textarea type="text" class="form-control"  style="width: 500px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
                         </div>
                     </div>
+                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Members Email</span>
                     <div class="form-row">
                         <div class="col">
-                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member" (click)="addMember()" style="height: 10rem;">
+                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"  (click)="addMember()" style="height: 10rem;">
                                 <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
                                     <div class="row">
                                         <ng-container *ngFor="let item of teamMembers">
                                             <div class="col-md-5 member-email mx-2 mt-2 p-2">
                                                 {{item}}
-                                                <span aria-hidden="true" class="material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMember(item)">close</span>
+                                                <span aria-hidden="true" class="btn material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMember(item)">close</span>
                                             </div>
                                         </ng-container>
                                         <ng-container *ngIf="!teamMembers.length">

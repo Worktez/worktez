@@ -96,6 +96,8 @@ exports.setApplication = function() {
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
+        MeetWorktezCounter: 0,
+        MeetCounter: 0,
         PostCounter: 0,
     });
     return Promise.resolve(P1);
@@ -165,3 +167,4 @@ const today = new Date();
 
 exports.currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
 exports.currentTime = today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds();
+exports.milliSeconds = today.getMilliseconds();

@@ -23,6 +23,8 @@
 const { functions, getApplicationData, updateApplication, generateBase64String } = require("../../application/lib");
 const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("../lib");
 const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = require("../../users/lib");
+const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { createMember } = require("../tark/createMember");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;
@@ -94,6 +96,18 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         console.log("Error:", error);
     });
 
+    const schedularInput = {
+        SelectedOrgAppKey: appKey,
+    };
+    const createMemberInput = {
+        orgDomain: orgDomain,
+        email: orgAdmin,
+        isAdmin: true,
+        teamManager: true,
+        teams: [],
+    };
+    setSchedularUnit(schedularInput, orgId);
+    createMember(createMemberInput);
     let result;
     const promises = [promise1, promise2, promise3, promise4];
     return Promise.all(promises).then(() => {

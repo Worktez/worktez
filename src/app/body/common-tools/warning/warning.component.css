@@ -11,51 +11,82 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+.modal-header {
+    border-bottom: none !important;
+    padding: 1.1rem;
+}
+
+.modal-footer {
+    border-top: none !important;
+    padding: 1.1rem;
+}
+
 #editPageTaskContainer,
 .modal-content {
-    border: var(--primary-border);
-    background-color: var(--secondary-bg);
+    background-color: var(--card-bg);
+    color: var(--text);
+    border-radius: 6px;
+    min-height: 30px;
+    justify-content: space-evenly;
+    padding: 1.1rem;
+}
+
+.close {
     color: var(--text);
 }
 
-.btn{
-    color: var(--button-text);
-    background-color: var(--button-bg);
+.form-row {
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
 }
 
+.form-group {
+    margin-bottom: 0;
+}
 
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+.btn {
+    color: var(--text);
+    width:100%;
+}
+
+#button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    width:130% ;
+}
+
+.btn:hover,
 #button:focus,
 #button:active,
-.btn:hover {
-    background-color: var(--hover);
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
 }
 
-.clr {
-    background-color: white;
-}
-
-.header {
-    font-weight: bold;
-}
-
-.head {
-    font-weight: bolder;
-}
-
-#font {
-    font-size: 20px;
+.btn-secondary {
     background-color: var(--secondary-color);
-    color: var(--button-text);
 }
 
-#navbarMenu,
-.modal-header {
-    background-color: var(--primary-color);
+.btn-secondary:hover {
+    background-color: var(--button-bg);
 }
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
+}
+
+#SuccessIcon{
+    color: var(--primary-color);
+    font-size: 48px;
 }

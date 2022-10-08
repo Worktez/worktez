@@ -2,17 +2,41 @@
     color: var(--text);
 }
 
+.box {
+    border-radius: 5px;
+}
+
+.list-group, .list-group-item {
+    background-color: var(--secondary-bg);
+}
+
+.cardsBody {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: fit-content;
+    max-height: 120vh;
+    background-color: var(--secondary-bg);
+}
+
 .dropdown-item{
     color: var(--text);
 }
 
 #filterMenu, #dropdownUserCard {
     background-color: var(--secondary-bg);
-    border-color: var(--primary-color);
     color: var(--text); 
 }
 #tasksContainer {
     background-color: var(--secondary-bg);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
 }
 
 .btn {
@@ -22,8 +46,11 @@
 }
 
 .cdk-drag-preview {
+    background: #1de9b6;
+    border: 1px solid #00b686;
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
     
 .cdk-drag-placeholder {
@@ -37,22 +64,6 @@
 #tasksContainer.cdk-drop-list-dragging {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
-.card {
-    background-color: var(--card-bg);
-    color: var(--text);
-    border: none;
-}
-
-.card-title {
-    font-size: 9px;
-    display: inline-block;
-}
-
-#taskId {
-    color: var(--primary-color);
-}
-
 .title {
     font-size: 15px;
 }
@@ -66,6 +77,20 @@
     background-color: var(--primary-color);
     color: white;
 }
+.dropdown-menu {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item {
+    color: var(--button-text);
+    font-size: 12px;
+}
+
+.dropdown-item:hover {
+    color: var(--hover);
+    background-color: var(--button-hover-bg);
+    cursor: pointer;
+}
 input{
     background-color: var(--primary-bg);
     color: var(--text);
@@ -76,7 +101,7 @@ input:focus{
     color: var(--text);
     box-shadow: none;
     outline: none;
-},
+}
 .btn:focus{
     box-shadow: none;
     outline: 0 none;

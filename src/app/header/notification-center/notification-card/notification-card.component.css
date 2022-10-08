@@ -1,0 +1,14 @@
+a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 12px;
+}
+
+#notificationBox:hover {
+    border: 1px solid var(--button-text-hover);
+    background-color: var(--dropdown-hover);
+}
+
+#dt {
+    color: var(--button-text);
+}

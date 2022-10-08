@@ -56,7 +56,7 @@ exports.patch1 = function(request, response) {
     });
 
     const promise2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((team) => {
-        team.forEach((doc) => {
+        team.forEach(() => {
             totalTeamTask += 1;
             console.log("Executing Promise2 of Patch1");
         });

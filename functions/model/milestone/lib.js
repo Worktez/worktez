@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -32,9 +33,10 @@ const { db } = require("../application/lib");
  * @param {any} creationTime
  * @param {any} startDate
  * @param {any} endDate
+ * @param {any} milestoneStatus
  * @return {any}
  */
-exports.setMilestone = function(uid, orgDomain, title, description, milestoneId, teamId, creationDate, creationTime, startDate, endDate) {
+exports.setMilestone = function(uid, orgDomain, title, description, milestoneId, teamId, creationDate, creationTime, startDate, endDate, milestoneStatus) {
     const addMilestonePromise = db.collection("Organizations").doc(orgDomain).collection("Milestones").doc(milestoneId).set({
         CreatorUid: uid,
         TeamId: teamId,
@@ -45,6 +47,7 @@ exports.setMilestone = function(uid, orgDomain, title, description, milestoneId,
         CreationTime: creationTime,
         StartDate: startDate,
         EndDate: endDate,
+        MilestoneStatus: milestoneStatus,
     });
     return Promise.resolve(addMilestonePromise);
 };
@@ -87,17 +90,28 @@ exports.getAllMilestonesData = function(orgDomain, teamId="") {
     return Promise.resolve(promise);
 };
 
-// exports.getTaskData = function(orgDomain, milestoneId) {
-//     let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
-//     query = query.where("MilestoneId", "==", milestoneId);
-//     const promise = query.get().then((doc) => {
-//         const data=[];
-//         doc.forEach((element) => {
-//             if (element.exists) {
-//                 data.push( element.data());
-//             }
-//         });
-//         return data;
-//     });
-//     return Promise.resolve(promise);
-// };
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} milestoneId
+ * @return {any}
+ */
+ exports.updateMilestone = function(MilestoneStatus, orgDomain, milestoneId) {
+    const editMilestonePromise = db.collection("Organizations").doc(orgDomain).collection("Milestones").doc(milestoneId).update(MilestoneStatus);
+    return Promise.resolve(editMilestonePromise);
+  };
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} milestoneId
+ * @param {any} taskId
+ * @return
+ */
+exports.addTask = function(milestoneId, taskId, orgDomain) {
+    console.log(milestoneId, taskId, orgDomain);
+    const promise =db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update({
+        MilestoneId: milestoneId,
+    });
+    return Promise.resolve(promise);
+};

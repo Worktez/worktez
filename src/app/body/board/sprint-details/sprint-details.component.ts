@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -19,8 +19,12 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/auth/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ToolsService } from 'src/app/services/tool/tools.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
+
+
 
 
 @Component({
@@ -41,14 +45,24 @@ export class SprintDetailsComponent implements OnInit {
   completedSprintEnabled: boolean = false;
   showLoader:boolean = false
   sprintDataReady: boolean = false
+  activeSprintNumber: number;
+  todayDate: string;
 
-  constructor(public startService: StartServiceService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService,public rbaService: RBAService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public toolsService: ToolsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.todayDate = this.toolsService.date();
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
       this.sprintDataReady = true;
+      if(this.startService.currentSprintNumber == 0){
+        this.activeSprintNumber = -1;
+      }
+      else{
+        this.activeSprintNumber = this.startService.currentSprintNumber;
+      }
     });
     this.filterSprintNumber=this.startService.teamCurrentSprintNumber ;
+    
   }
 
   changeSprintStatus(sprintStatus: string) {
@@ -56,8 +70,10 @@ export class SprintDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('sprints/updateSprintStatus');
     const appKey = this.backendService.getOrganizationAppKey();
     const uid = this.authService.getLoggedInUser();
+   
 
-    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid }).subscribe({
+
+    callable({AppKey: appKey, CurrentSprintName: this.currentSprintName, SprintStatus: sprintStatus, TeamId: this.sprintData.TeamId, Uid: uid, Date: this.todayDate}).subscribe({
         next: (data) => {
           console.log("Successful updated ");
         },
@@ -69,6 +85,11 @@ export class SprintDetailsComponent implements OnInit {
         complete: () => this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
           this.sprintData = data;
           this.showLoader = false;
+          if(sprintStatus=='Completed'){
+            this.sprintData.EndDate=  this.todayDate = this.toolsService.date().split('/').reverse().join('-');
+            this.workPercentage=100;
+          
+          }
         })
     });
   }
@@ -82,6 +103,7 @@ export class SprintDetailsComponent implements OnInit {
   }
 
   setSprintToComplete(){
+    
     this.completedSprintEnabled=true;
   }
 
@@ -116,5 +138,9 @@ export class SprintDetailsComponent implements OnInit {
         },
         complete: () => console.info('Successful')
     });
+  }
+  @ViewChild('closeModal') private closeModal: ElementRef;
+  public hideModel() {
+        this.closeModal.nativeElement.click();      
   }
 }

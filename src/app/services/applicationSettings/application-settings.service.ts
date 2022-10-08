@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Notification } from 'src/app/Interface/NotificationInterface';
 import { Team, Sprint, Label } from '../../Interface/TeamInterface';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { UserServiceService } from '../user-service/user-service.service';
 
@@ -34,6 +34,7 @@ export class ApplicationSettingsService {
   public priority: string[] = []
   public difficulty: string[] = []
   public type: string[] = []
+  public milestoneStatus: string[] = []
   public project: string[] = []
 
   public labels: Label[] = []
@@ -42,7 +43,8 @@ export class ApplicationSettingsService {
 
   public sprintDataObservable: Observable<Sprint>;
 
-  public notificationListObservable: Observable<Notification[]>;
+  public newNotificationListObservable: Observable<Notification[]>;
+  public oldNotificationListObservable: Observable<Notification[]>;
 
   public projectLink: string;
 
@@ -66,6 +68,7 @@ export class ApplicationSettingsService {
             this.status = this.team.Status;
             this.priority = this.team.Priority;
             this.difficulty = this.team.Difficulty;
+            this.milestoneStatus = this.team.MilestoneStatus;
             this.type = this.team.Type;
             this.project = this.backendService.organizationDetails.TeamsId;
             this.projectLink= this.team.ProjectLink;
@@ -120,9 +123,18 @@ export class ApplicationSettingsService {
   getNotificationsList(notificationStatus: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable("notifications/getNotifications");
-    this.notificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
+    if(notificationStatus==1){
+      this.newNotificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
+          return actions as Notification[];
+      }));
+      return this.newNotificationListObservable;   
+    }
+
+    if(notificationStatus==0){
+      this.oldNotificationListObservable = callable({Uid: this.authService.user.uid, OrgDomain: orgDomain, NotificationStatus: notificationStatus}).pipe(map(actions => {
         return actions as Notification[];
-    }));
-    return this.notificationListObservable;
+      }));
+      return this.oldNotificationListObservable;   
+    }
   }
 }

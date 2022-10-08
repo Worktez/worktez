@@ -13,12 +13,13 @@
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { BackendService } from '../services/backend/backend.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from '../services/start/start-service.service';
+import { RBAService } from '../services/RBA/rba.service';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class HeaderComponent implements OnInit {
   isHomePage: boolean = false;
   userReady: boolean = false;
 
-  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService) { }
+  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public rbaService :RBAService) { }
 
   ngOnInit(): void {
     if (this.router.url == '/') {
@@ -65,6 +66,14 @@ export class HeaderComponent implements OnInit {
     this.popupHandlerService.resetTaskIds();
   }
 
+  ScheduleMeet(){
+    this.popupHandlerService.scheduleMeetEnabled = true;
+  }
+
+  JoinMeet(){
+
+  }
+
   Board() {
     this.router.navigate(['/Board']);
   }
@@ -90,11 +99,7 @@ export class HeaderComponent implements OnInit {
   }
 
   socialPage() {
-    this.router.navigate(['/']);
-  }
-  
-  filterPage(){
-    this.router.navigate(['/FilterPage']);
+    this.router.navigate(['/Social']);
   }
 
   kanbanBoard() {

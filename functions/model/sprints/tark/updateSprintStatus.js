@@ -24,6 +24,7 @@ const { currentDate, currentTime } = require("../../application/lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { updateSprint, getSprint, setSprintActivity } = require("../lib");
+const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 
 
 exports.updateSprintStatus = function(request, response) {
@@ -32,6 +33,7 @@ exports.updateSprintStatus = function(request, response) {
     const appKey = request.body.data.AppKey;
     const teamId = request.body.data.TeamId;
     const uid = request.body.data.Uid;
+    const date = request.body.data.Date;
     let orgDomain;
     let result;
     let status = 200;
@@ -55,6 +57,7 @@ exports.updateSprintStatus = function(request, response) {
                     updateSprintStatusInputJson = {
                         Status: sprintStatus,
                         EndStoryPoint: sprintDoc.CompletedStoryPoint,
+                        EndDate: date,
                     };
                     message = "Updated Sprint Status As Completed";
                 }
@@ -68,7 +71,9 @@ exports.updateSprintStatus = function(request, response) {
                     updateSprintStatusInputJson["SprintActivityCounter"] = sprintActivityCounter;
                 }
                 setSprintActivity(orgDomain, teamName, currentSprintName, sprintActivityCounter, message, currentDate, currentTime, uid);
-                updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName);
+                updateSprint(updateSprintStatusInputJson, orgDomain, teamName, currentSprintName).then(()=>{
+                    updateSprintEvaluationGraphData(orgDomain, teamId, currentSprintName);
+                });
             });
             return Promise.resolve(getSprintPromise);
         }).catch((error) => {

@@ -15,16 +15,16 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { UserAppSetting } from 'src/app/Interface/UserInterface';
+import { UserBasicSetting } from 'src/app/Interface/UserInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserServiceService {
   public photoUrlObservable: Observable<string[]>
-  public usersObservable: Observable<UserAppSetting[]>
+  public usersObservable: Observable<UserBasicSetting[]>
 
-  public users: UserAppSetting[] = []
+  public users: UserBasicSetting[] = []
   public newEmails: string[] = []
   userReady: boolean = false
 
@@ -100,7 +100,7 @@ export class UserServiceService {
     if(!this.userReady) {
       const callable = this.functions.httpsCallable("users/getUserByEmail");
       this.usersObservable =  callable({Email: this.newEmails }).pipe(map(res=>{
-        const data = res.userData as UserAppSetting[];
+        const data = res.userData as UserBasicSetting[];
         if(this.users.length == 0) {
           this.users = data
         } else {
@@ -118,7 +118,7 @@ export class UserServiceService {
     if(!this.userReady) {
       const callable = this.functions.httpsCallable("users/getUserByUid");
       this.usersObservable =  callable({Uid: this.newUids }).pipe(map(res=>{
-        const data = res.userData as UserAppSetting[];
+        const data = res.userData as UserBasicSetting[];
         if(this.users.length == 0) {
           this.users = data
         } else {

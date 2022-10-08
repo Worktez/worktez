@@ -22,7 +22,6 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { HttpClientModule } from '@angular/common/http';
-
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 import { USE_EMULATOR as USE_FUNCTIONS_EMULATOR } from '@angular/fire/compat/functions';
@@ -44,7 +43,7 @@ import { LoaderComponent } from './body/loader/loader.component';
 import { LoginComponent } from './body/login/login.component';
 import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
@@ -166,6 +165,22 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AddMilestoneComponent } from './body/milestone/add-milestone/add-milestone.component';
 import { MilestoneCardComponent } from './body/milestone/milestone-card/milestone-card.component';
 import { AddTaskComponent } from './body/milestone-details/add-task/add-task.component';
+import { RequestADemoComponent } from './body/request-a-demo/request-a-demo.component';
+import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.component';
+import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
+import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
+import { PricingComponent } from './body/pricing/pricing.component';
+import { EductionsComponent } from './body/profile/eductions/eductions.component';
+import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
+import { ProjectsComponent } from './body/profile/projects/projects.component';
+import { SkillsComponent } from './body/profile/skills/skills.component';
+import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
+import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
+import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
+import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
+import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
+import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
+
 
 @NgModule({
   declarations: [
@@ -297,6 +312,21 @@ import { AddTaskComponent } from './body/milestone-details/add-task/add-task.com
     AddMilestoneComponent,
     MilestoneCardComponent,
     AddTaskComponent,
+    RequestADemoComponent,
+    ScheduleMeetComponent,
+    NotificationCardComponent,
+    ShowMeetDetailsComponent,
+    PricingComponent,
+    EductionsComponent,
+    WorkEXPComponent,
+    ProjectsComponent,
+    SkillsComponent,
+    MembersAccessComponent,
+    MemberCardComponent,
+    EditMilestoneComponent,
+    AllNotificationComponent,
+    AllNotificationCardComponent,
+    AddWatchersComponent,
   ],
   imports: [
     BrowserModule,

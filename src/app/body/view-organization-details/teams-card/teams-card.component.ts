@@ -18,6 +18,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-teams-card',
@@ -43,7 +44,7 @@ export class TeamsCardComponent implements OnInit {
   githubProjectAdded: boolean=false;
   repoLink: string;
   projectLinked: boolean= false;
-  constructor(public router: Router, private functions: AngularFireFunctions, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public router: Router, private functions: AngularFireFunctions,public rbaService: RBAService, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.checkGitProject();

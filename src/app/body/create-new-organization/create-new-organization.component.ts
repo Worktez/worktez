@@ -14,15 +14,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { ValidationService } from 'src/app/services/validation/validation.service';
+import { NgForm, FormGroup, FormControl, Validators} from '@angular/forms';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { FileUpload } from 'src/app/Interface/FileInterface';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Location } from '@angular/common';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { app } from 'firebase-functions/v1';
+import { CookieService } from 'ngx-cookie-service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 
 @Component({
   selector: 'app-create-new-organization',
@@ -37,10 +40,6 @@ export class CreateNewOrganizationComponent implements OnInit {
   logoUploaded: boolean = false
   orgAdmin: string
   orgAdminUid: string
-  orgName: string
-  orgDomain: string
-  orgEmail: string
-  orgDescription: string = ""
   orgLogoURL: string
   orgLogo: FileUpload
   orgId:string
@@ -48,7 +47,18 @@ export class CreateNewOrganizationComponent implements OnInit {
   fileName: string
   percentage: number = 0;
 
-  constructor(private navbarHandler: NavbarHandlerService, public validationService: ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService) { }
+  createNewOrgForm= new FormGroup({
+    orgName: new FormControl('', Validators.required),
+    orgDomain: new FormControl('', [Validators.required, Validators.pattern("^(?:[a-z0-9][a-z0-9-]{0,61}[a-z0-9]\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$")]),
+    orgEmail: new FormControl('', [Validators.required, Validators.email]),
+    orgDescription: new FormControl('', Validators.required),
+  })
+  get orgName(){return this.createNewOrgForm.get('orgName')};
+  get orgDomain(){return this.createNewOrgForm.get('orgDomain')};
+  get orgEmail(){return this.createNewOrgForm.get('orgEmail')};
+  get orgDescription(){return this.createNewOrgForm.get('orgDescription')};
+  
+  constructor(private navbarHandler: NavbarHandlerService, public startService: StartServiceService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private fireStorage: AngularFireStorage, private location: Location, private authService: AuthService, public router: Router,public uploadService: FileUploadService,public backendService: BackendService, public cookieService: CookieService) { }
   ngOnInit(): void {
     this.orgAdmin = this.authService.getUserEmail();
     this.orgAdminUid = this.authService.getLoggedInUser()
@@ -56,34 +66,19 @@ export class CreateNewOrganizationComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
    }
 
-  async submit() {
-    this.orgName = this.orgName.trimRight();
-    this.orgDomain = this.orgDomain.trimRight();
-    this.orgEmail = this.orgEmail.trimRight();
-    let data = [
-      { label: "organizationName", value: this.orgName },
-      { label: "organizationDomain", value: this.orgDomain },
-      { label: "organizationEmail", value: this.orgEmail },
-    ];
-    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      return res;
-    });
-    if (condition && this.logoUploaded) {
-      this.createNewOrganization();
-    }
-    else {
-      console.log("Organization not created! Validation error");
-    }
-  }
-
-  createNewOrganization() {
+  submit() {
+    const orgName= this.orgName.value;
+    const orgDomain= this.orgDomain.value;
+    const orgEmail= this.orgEmail.value;
+    const orgDescription= this.orgDescription.value;
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('organization/createOrg');
-    callable({OrganizationName: this.orgName, OrganizationEmail: this.orgEmail, OrganizationDomain: this.orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: this.orgDescription, OrganizationLogoURL: this.orgLogoURL }).subscribe({
+    callable({OrganizationName: orgName, OrganizationEmail: orgEmail, OrganizationDomain: orgDomain, OrganizationAdmin: this.orgAdmin,  OrganizationAdminUid: this.orgAdminUid, OrganizationDescription: orgDescription, OrganizationLogoURL: this.orgLogoURL }).subscribe({
       next: (result) => {
         this.orgId = result[2];
         this.uploadLogo();
         this.enableLoader = false;
+        this.startService.startApplication();
         this.router.navigate(["CreateNewTeam"]);
       },
       error: (error) => {
@@ -94,6 +89,7 @@ export class CreateNewOrganizationComponent implements OnInit {
   }
 
   uploadedLogo(data: { completed: boolean, logoFile: FileUpload, photoUrl: string }) {
+    this.enableLoader=false
     this.logoUploaded = data.completed;
     this.orgLogo = data.logoFile;
     this.orgLogoURL = data.photoUrl;

@@ -11,18 +11,19 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component,Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { FormControl, NgForm } from '@angular/forms';
+import {  UntypedFormControl, NgForm, FormGroup, FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { FilterTaskService } from 'src/app/services/filter-task/filter-task.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
   selector: 'app-create-filter',
@@ -34,11 +35,14 @@ export class CreateFilterComponent implements OnInit {
   componentName: string = "CREATE-FILTER";
 
   @ViewChild('form') form: NgForm;
+  @Output() createFilterCompleted = new EventEmitter<{ completed:boolean }>();
+  @Input() getTeamFilters = new EventEmitter();
 
-  assigneeName = new FormControl();
+
+  assigneeName = new UntypedFormControl();
   filteredOptionsAssignee: Observable<string[]>;
 
-  reporterName = new FormControl();
+  reporterName = new UntypedFormControl();
   filteredOptionsReporter: Observable<string[]>;
 
   defaultProject: string
@@ -49,7 +53,7 @@ export class CreateFilterComponent implements OnInit {
   status: string = null
   difficulty: string = null
   sprint: number = 0 
-  description: string = ""
+  description: string = "Empty"
   filterName: string = ""
   teamName: string = ""
   teamIds: string[]
@@ -64,7 +68,7 @@ export class CreateFilterComponent implements OnInit {
 
   enableLoader: boolean = false;
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions, public userService: UserServiceService, public startService: StartServiceService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public authService: AuthService, public appSettings: ApplicationSettingsService, public filterTaskService: FilterTaskService, ) { }
+  constructor(public backendService: BackendService, public validationService: ValidationService, private functions: AngularFireFunctions, public userService: UserServiceService, public startService: StartServiceService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public authService: AuthService, public appSettings: ApplicationSettingsService, public filterTaskService: FilterTaskService, ) { }
 
   ngOnInit(): void {
     if(this.startService.showTeamsData) {
@@ -131,26 +135,79 @@ export class CreateFilterComponent implements OnInit {
     }); 
   }
 
- submit(){
+ async submit(){
    this.enableLoader=true;
-   this.addFilter();
+
+
+   console.log(this.priority)
+   let data = [{ label: "filterName", value: this.filterName },]  
+
+   if(this.difficulty==null){
+    this.difficulty = "All"
+  }
+  
+
+  if(this.priority==null){
+    this.priority= "All"
+  }
+
+  if(this.assignee==null){
+    this.assignee= "All"
+  }
+
+  if(this.status==null){
+    this.status = "All"
+  }
+
+  if(this.description==null){
+    this.status = "All"
+  }
+
+
+  if(this.sprint==null){
+    this.sprint = 0
+  }
+
+
+  if(this.description==null){
+    this.description = "Null"
+  }
+
+
+  
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      console.log(condition)
+      return res;
+     
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.createFilter();
+    }
+    else
+      console.log("Filter not created! Validation error");
+      this.enableLoader=false;
 }
 
-addFilter(){
+
+
+
+createFilter(){
   const orgDomain = this.backendService.getOrganizationDomain();
   const callable = this.functions.httpsCallable('filters/createFilter');
   callable({FilterName:this.filterName, Description:this.description, Difficulty: this.difficulty, Priority: this.priority, Status: this.status, SprintNumber: this.sprintNumber, OrgDomain: orgDomain, TeamName: this.teamName, Assignee: this.assigneeName.value}).subscribe({
     next:() => {
-      this.enableLoader = false;
+      this.enableLoader = true;
       this.assignee = ""
       this.project = ""
       this.priority = null
       this.status = null
       this.difficulty = null
-      this.sprint = 0 
-      this.description = ""
-      this.filterName = ""
+      this.sprint = null
+      this.description = null
+      this.filterName =""
       console.log("Added New Filter");
+      this.createFilterDone();
     },
     error: (error) => {
       console.error(error);
@@ -161,6 +218,12 @@ addFilter(){
     }
   })
 }
+
+createFilterDone(){
+  console.log(this.getTeamFilters);
+  this.createFilterCompleted.emit({ completed:true });
+}
+
 
   onProjectChange(){
     console.log("update teams");

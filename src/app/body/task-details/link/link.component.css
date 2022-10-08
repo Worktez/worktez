@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-#navbarMenu{
+#navbarMenu {
     background-color: var(--secondary-bg);
     color: var(--text);
 }
@@ -23,7 +23,7 @@
     color: var(--text);
 }
 
-#SuccessIcon{
+#SuccessIcon {
     color: var(--secondary-color);
     font-size: 48px;
 }
@@ -49,9 +49,33 @@ input:focus {
 }
 
 .btn {
-    color: var(--button-text);
-    background-color: var(--button-bg);}
+    color: var(--text);
+}
 
-.btn:hover {
-    background-color: var(--button-bg);
+#button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn:hover,
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
+}
+
+.form-control {
+    background-color: var(--input-field);
+        color: var(--text);
+        border: none;
+        padding: 7px;
+        border-radius: 6px;
+        opacity: 1;
+        margin: -2px !important;
+}
+
+.form-inline{
+    padding-top: 10px;
 }

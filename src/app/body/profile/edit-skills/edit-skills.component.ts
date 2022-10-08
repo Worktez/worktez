@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 
@@ -32,7 +32,7 @@ export class EditSkillsComponent implements OnInit {
   @Input('email') email: string;
   @Input('skills') skills: string;
 
-  @Output() editSkillsCompleted = new EventEmitter<{ completed: boolean }>();
+  @Output() editSkillsCompleted = new EventEmitter<{ completed: boolean, Skills: string }>();
   componentName:string = "PROFILE"
   skill: string
 
@@ -58,14 +58,13 @@ export class EditSkillsComponent implements OnInit {
     else
       console.log("Log-Work failed due to validation error");
   }
-  async submitaddedskill() {
+  submitaddedskill() {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('users/updateSkill');
     
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).subscribe({
+      callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, Skill: this.skill}).subscribe({
         next: (data) => {
           console.log("Successful");
-          this.skill = "";
           this.showClose = true;
         },
         error: (error) => {
@@ -80,6 +79,6 @@ export class EditSkillsComponent implements OnInit {
   }
   
   editSkillCompleted() {
-    this.editSkillsCompleted.emit({ completed: true });
+    this.editSkillsCompleted.emit({ completed: true, Skills: this.skill });
   }
 }

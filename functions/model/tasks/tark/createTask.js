@@ -33,6 +33,7 @@ const { taskMailer } = require("../../mailer/lib");
 const { getUserUseEmail } = require("../../users/lib");
 const { sendNotification } = require("../../notifications/lib");
 const { linkSubtask } = require("../../linker/tark/linkSubTask");
+const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 
 exports.createNewTask = function(request, response) {
     const appKey = request.body.data.AppKey;
@@ -43,7 +44,7 @@ exports.createNewTask = function(request, response) {
     const creator = request.body.data.Creator;
     const assignee = request.body.data.Assignee;
     const reporter = request.body.data.Reporter;
-    const estimatedTime = parseInt(request.body.data.EstimatedTime);
+    const estimatedTime = parseFloat(request.body.data.EstimatedTime);
     const taskStatus = request.body.data.Status;
     const project = request.body.data.Project;
     const storyPointNumber = parseInt(request.body.data.StoryPointNumber);
@@ -64,12 +65,14 @@ exports.createNewTask = function(request, response) {
     const completiondate = "Not yet Completed";
     let orgDomain;
     let orgId;
+    let teamId;
     const watchers = [];
     let milestoneId =request.body.data.MilestoneId;
 
     // let assigneeName = "";
     let assigneeUid = "";
     let senderName = "";
+    let senderEmail = "";
 
     let status = 200;
 
@@ -86,7 +89,13 @@ exports.createNewTask = function(request, response) {
         // });
 
         const p2 = getUserUseEmail(creator).then((data) => {
-            senderName = data.displayName;
+            if (data!=undefined) {
+                senderName = data.displayName;
+                senderEmail = data.email;
+            } else {
+                senderName = "ABC";
+                senderEmail = creator;
+            }
             return senderName;
         }).catch((error) => {
             console.error(error);
@@ -103,6 +112,7 @@ exports.createNewTask = function(request, response) {
 
         const promise1 = getTeam(orgDomain, project).then((team) => {
             const totalTeamTasks = team.TotalTeamTasks + 1;
+            teamId = team.TeamId;
             taskId = team.TeamId + totalTeamTasks.toString();
 
             const updateTeamJson = {
@@ -193,9 +203,10 @@ exports.createNewTask = function(request, response) {
             const subjectMessage = senderName + " created a task for you";
 
             const link = "https://worktez.com/TaskDetails/" + taskId;
+            updateSprintEvaluationGraphData(orgDomain, teamId, fullSprintName);
 
             taskMailer("Create_Task", taskId, orgDomain, senderName);
-            sendNotification(notificationMessage, assigneeUid, creationDate, time, orgDomain, link);
+            sendNotification(notificationMessage, senderEmail, assigneeUid, creationDate, time, orgDomain, link);
 
             addActivity("CREATED", "Created task " + taskId, taskId, creationDate, time, orgDomain, uid);
 

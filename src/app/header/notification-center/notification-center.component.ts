@@ -14,10 +14,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification } from 'src/app/Interface/NotificationInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification-center',
@@ -33,27 +34,35 @@ export class NotificationCenterComponent implements OnInit {
   OpenNotifBox: boolean = true;
   display: string;
 
-  
 
-  constructor(public toolService: ToolsService, public functions: AngularFireFunctions, public backendService: BackendService, public authService: AuthService, public applicationSettingService: ApplicationSettingsService) { }
+  constructor(public toolService: ToolsService,public router: Router, public functions: AngularFireFunctions, public backendService: BackendService, public authService: AuthService, public applicationSettingService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
+    
   }
 
   loadNotifications(notificationStatus) {
     this.showLoader = true;
-    console.log(this.showNotificationsList)
-    this.showNotificationsList = !(this.showNotificationsList);
-    this.showOldNotificationsList = false;
-    if (this.showNotificationsList) 
-    {
-      this.applicationSettingService.getNotificationsList(notificationStatus).subscribe((data) => {
+    this.applicationSettingService.getNotificationsList(notificationStatus).subscribe((data) => {
+      this.notificationsList = data;
+      this.showNotificationsList = !(this.showNotificationsList);
+      this.showOldNotificationsList = false;
+      this.showLoader = false;
+    });
+  }
+
+  showNotification() {
+    this.applicationSettingService.newNotificationListObservable.subscribe((data) => {
+      console.log(data);
+      if(!data) {
+        this.loadNotifications(1);
+      } else {
         this.notificationsList = data;
-        this.showLoader = false;
-        if (notificationStatus == 1)
-          this.resetActiveNotificationCounter();
-      });
-    }
+        this.showNotificationsList = !(this.showNotificationsList);
+        this.showOldNotificationsList = false;
+      }
+    });
+    this.resetActiveNotificationCounter();
   }
 
   resetActiveNotificationCounter() {
@@ -68,13 +77,17 @@ export class NotificationCenterComponent implements OnInit {
       error: (error) => {
         console.error("active notifications reset");
       },
-      complete: () => this.authService.getMyOrgCollectionDocs(this.authService.userAppSetting.uid,this.authService.userAppSetting.SelectedOrgAppKey)
+      complete: () => {
+        if(this.authService.userAppSetting.SelectedOrgAppKey != undefined && this.authService.userAppSetting.SelectedOrgAppKey  != "")
+          this.authService.getMyOrgCollectionDocs(this.authService.userAppSetting.uid,this.authService.userAppSetting.SelectedOrgAppKey);
+      }
     })
   }
 
   showOlderNotifications() {
-    this.showNotificationsList = !(this.showNotificationsList);
-    this.loadNotifications(0);
-    this.showOldNotificationsList = true;
+    // this.showNotificationsList = !(this.showNotificationsList);
+    // this.loadNotifications(0);
+    // this.showOldNotificationsList = true;
+    this.router.navigate(['/Notifications'])
   }
 } 

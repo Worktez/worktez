@@ -22,7 +22,7 @@
 }
 
 .modal-content {
-    background-color: var(--card-bg);
+    background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 6px;
     min-height: 300px;
@@ -32,6 +32,7 @@
 
 .close {
     color: var(--text);
+    justify-content: center;
 }
 
 .form-row {
@@ -61,19 +62,29 @@
 #button:focus,
 #button:active,
 #button:hover {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
 }
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
+} 
 
 select:focus,
 input:focus {
     box-shadow: none;
     outline: 0 none;
-    border-color: var(--primary-color);
 }
 
 #SuccessIcon{
-    color: var(--primary-color);
-    font-size: 48px;
+    color: var(--secondary-color);
+    font-size: 55px;
 }

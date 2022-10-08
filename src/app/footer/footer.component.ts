@@ -14,9 +14,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitData } from '../Interface/githubReleaseData';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
+import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { StartServiceService } from '../services/start/start-service.service';
 
 @Component({
@@ -28,7 +29,7 @@ export class FooterComponent implements OnInit {
   tag_name: string;
   userDataReady: boolean = false;
 
-  constructor(public startService: StartServiceService, public authService: AuthService, private httpService: HttpServiceService, public router: Router) { }
+  constructor(public startService: StartServiceService, public authService: AuthService, private httpService: HttpServiceService, public router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
         this.httpService.getReleaseDetails().pipe(map(data => {
@@ -61,5 +62,8 @@ export class FooterComponent implements OnInit {
   }
   build(){
     this.router.navigate(['/releasenotes']);
+  }
+  requestDemo() {
+    this.popupHandlerService.requestDemoEnabled = true;
   }
 }

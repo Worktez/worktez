@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Router } from '@angular/router';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -63,7 +63,7 @@ export class TasksComponent implements OnInit {
 
     if (this.currentSprintName == "Backlog") {
       this.currentSprintNumber = -1;
-    } else if (this.currentSprintName == "S-2") {
+    } else if (this.currentSprintName == "Deleted") {
       this.currentSprintNumber = -2;
     } else {
       this.currentSprintNumber = parseInt(this.currentSprintName.slice(1));
@@ -110,7 +110,6 @@ export class TasksComponent implements OnInit {
   }
 
   applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string, Sprint: number }) {
-    this.showFilter=false;
     this.filterTaskService.saveFilterData(data.Assignee, data.Project, data.Priority, data.Difficulty, data.Status, data.Sprint)
     if (data.Project != this.teamId) {
       this.teamId = data.Project

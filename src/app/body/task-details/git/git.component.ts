@@ -1,10 +1,11 @@
+import { PopupHandlerService } from './../../../services/popup-handler/popup-handler.service';
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
-import { GitRepoData } from 'src/app/Interface/githubOrgData';
+import { GitPrData,GitRepoData } from 'src/app/Interface/githubOrgData';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
@@ -22,7 +23,10 @@ export class GitComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('taskId') taskId: string;
   @Input('orgDomain') orgDomain: string;
-  prLink: string;
+  @Input('prLink') prLink:string;
+  @Input('prApiLink') prApiLink:string;
+  @Input('PrNumber') PrNumber: number;
+  @Input('prState') prState:string;
   @Output() addedPrLink = new EventEmitter<{ completed: boolean, prLink: string, prApiLink: string}>();
   componentName: string = "LINK"
   linkURL: string;
@@ -37,10 +41,11 @@ export class GitComponent implements OnInit {
   noRepoLinked: boolean = false;
   noPrExist: boolean = false;
   prLinked: boolean = false;
-  prApiLink: string;
-  constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService) { }
+  prtitle: string;
+  constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
+    this.showClose = false;
     this.teamId = this.taskId.slice(0,3);
     if(this.startService.showTeams) {
       this.getTeamDetails(this.teamId);
@@ -106,6 +111,7 @@ export class GitComponent implements OnInit {
         console.log("Successfully added Link");
         this.enableLoader = false;
         this.showClose = true;
+        this.PopupHandlerService.addPrActive = false;
         return;
       },
       error: (error) => {

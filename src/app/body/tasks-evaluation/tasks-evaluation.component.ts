@@ -16,7 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
@@ -36,6 +36,7 @@ export class TasksEvaluationComponent implements OnInit {
 
   componentName: string = "TASKS-EVALUATION";
   tasks = [];
+  upcomingSprintTasks = [];
   sprints: Sprint[] = []
   showLoader: boolean;
   selectedTeamId: string;
@@ -84,7 +85,6 @@ export class TasksEvaluationComponent implements OnInit {
     this.nextSprintTasksToFetch = this.teamCurrentSprint;
     this.selectedTeamId = this.startService.selectedTeamId;
     this.selectedTeamName = this.startService.teamName;
-
     this.readTasks(); 
   }
  
@@ -98,6 +98,7 @@ export class TasksEvaluationComponent implements OnInit {
     callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
         next: (data) => {
           this.tasks=[];
+          this.upcomingSprintTasks = [];
           this.getData();
         },
         error: (error) => {
@@ -129,6 +130,7 @@ export class TasksEvaluationComponent implements OnInit {
           if (result.BacklogTasks.length > 0) {
             this.tasks.push(result.BacklogTasks);
           }
+          this.upcomingSprintTasks.push(result.UpcomingSprintTasks);
           this.tasks.push(result.Tasks);
           this.nextSprintTasksToFetch -= 1;
           if (this.nextSprintTasksToFetch < 1) {
@@ -168,14 +170,14 @@ export class TasksEvaluationComponent implements OnInit {
   }
 
   editTask(task: Tasks, sprintNumber: number) {
-    this.showLoader = true;
+    this.showLoader = false;
     let result;
     if (sprintNumber == null) {
       sprintNumber = task.SprintNumber;
     }
     const appKey = this.backendService.getOrganizationAppKey();
     const callable = this.functions.httpsCallable('tasks/editTask');
-    return callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter}).subscribe({
+    return callable({Title: task.Title, Status: task.Status, AppKey: appKey, Id: task.Id, Description: task.Description, Priority: task.Priority, Difficulty: task.Difficulty, Assignee: task.Assignee, EstimatedTime: task.EstimatedTime, Project: task.Project, SprintNumber: sprintNumber, StoryPointNumber: task.StoryPointNumber, OldStoryPointNumber: task.StoryPointNumber, PreviousId: task.SprintNumber, CreationDate: task.CreationDate, Date: this.todayDate, Time: this.time, ChangedData: "", Uid: this.authService.user.uid, Type:task.Type, Reporter: task.Reporter, MilestoneId:task.MilestoneId }).subscribe({
       next: (data) => {
         result = data;
         if (result == "OK") {
@@ -184,6 +186,9 @@ export class TasksEvaluationComponent implements OnInit {
           task.SprintNumber = sprintNumber;
           this.showLoader = false;
           this.tasks = this.tasks.filter(arr => arr.length > 0);
+        }
+        if(task.MilestoneId == undefined) {
+          task.MilestoneId = "";
         }
       },
       error: (error) => {
@@ -196,7 +201,7 @@ export class TasksEvaluationComponent implements OnInit {
   } 
 
   onDrop(event: CdkDragDrop<Tasks[]>) {
-    this.showLoader = true;
+    this.showLoader = false;
     console.log(event.previousContainer === event.container);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -204,6 +209,19 @@ export class TasksEvaluationComponent implements OnInit {
     } else {
       // move to the dragged sprint
       this.editTask(event.previousContainer.data[event.previousIndex], event.container.data[0].SprintNumber);
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
+  }
+
+  onDropUpComingSprint(event: CdkDragDrop<Tasks[]>) {
+    this.showLoader = false;
+    console.log(event.previousContainer === event.container);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.showLoader = false;
+    } else {
+      // move to the dragged sprint
+      this.editTask(event.previousContainer.data[event.previousIndex], this.teamCurrentSprint + 1);
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }

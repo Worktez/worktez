@@ -1,33 +1,35 @@
-# WORKTEZ - An Agile Project Management Tool
+# WORKTEZ - Bring your team together, and milestone your ideas
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/67370801/149733068-2071c2e2-45b5-4fa8-9355-98f0702fb689.png"> <br>
   ✨Catch our updates live on - 
   <a href="www.worktez.com"><b>www.worktez.com</b></a>
 </p>
+<p align="center">
+  <a href="https://www.producthunt.com/posts/worktez?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-worktez" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=357437&theme=light" alt="Worktez - Milestone&#0032;your&#0032;project&#0032;with&#0032;the&#0032;power&#0032;of&#0032;DevOps | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+</p>
 
 ## What motivates us? :punch:
-_At **Worktez**, we are envisioned to give milestones to your dreams._
+_At **Worktez**, we are envisioned to simplify your team and project workflow, collaborate over ideas and build it._
 
 ## About our Product :speech_balloon:
 
-Worktez is a smart solution to scrum your project with devOps to plan, track, deploy and collaborate over ideas and project implementation with Developers, Students and Architects across the world.
-
+Worktez is a smart solution to simplify your project and team with powerful framworks to plan, track, deploy and collaborate over ideas and project. Worktez is executive solution arround your organization, that help you simplify the complex industrial practices on developement workflow, and remote work solution.
 
 Worktez is a Web App developed by a team of fresh and enthusiastic minds to help plan, track and automate the development activities.
 Our focus is create visually appealing and functionally progressive solution to all your Project Management related work.
-WorkTez promotes a happy work culture environment because a happy employee is way more productive in comparison to an employee burdened with loads of work!
 Our solution is focused on agile based devOps automation, that helps in more organised remote team management. You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore!
+With a vision of workplace metaverse, we keep innovating towards the simplification, automation and virtual presence to team collaboration.
 
 
 # Technologies used
 
 | FRAMEWORK | DETAILS |
 | ------ | ------ |
-| Angular | [the frontend framework used - HTML enhanced for web apps!][angular] |
-| Firebase | [firebase functions, storage, firestore and hosting services are incorporated into our product][firebase] |
-| FastifyJs | [backend framework used - rest API implementation][fastify] |
-| Node | [the backend engine  used][node] |
+| Angular | [Frontend framework used - HTML enhanced for web apps!][angular] |
+| Firebase | [Firebase functions, storage, firestore and hosting services are incorporated into our product][firebase] |
+| FastifyJs | [Backend framework used - rest API implementation][fastify] |
+| Node | [Backend engine  used][node] |
 
 
 # Basic architecture
@@ -64,7 +66,7 @@ Help us keep our product open and inclusive. <br>
 
 ## License
 Worktez is licensed under the MIT license. <br>
-_Copyright 2021 Worktez All Rights Reserved_
+_Copyright 2022 Worktez All Rights Reserved_
 
 [Step 1 - How to clone the project]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#how-to-clone>
 [Step 2 - How to setup firebase]: <https://github.com/Worktez/worktez/wiki/How-to-get-started#firebase-setup>

@@ -23,7 +23,7 @@
 
 const { setLabelProperties, getTeam, updateTeamDetails } = require("../lib");
 
-exports.createLabelProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels) {
+exports.createLabelProperties = function(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels) {
     let scope;
     let displayName;
     let iconName;
@@ -73,6 +73,18 @@ exports.createLabelProperties = function(orgDomain, teamName, type, statusLabels
         const docID = "L" + docNumber;
         setLabelProperties(orgDomain, teamName, docID, displayName, scope, iconName, colorCode);
     });
+
+    milestoneStatusLabels.forEach((element) => {
+        displayName = element;
+        scope = "MilestoneStatus";
+        const data = getIconDetails(element);
+        iconName = data.IconName;
+        colorCode = data.ColorCode;
+        docNumber++;
+        const docID = "L" + docNumber;
+        setLabelProperties(orgDomain, teamName, docID, displayName, scope, iconName, colorCode);
+    });
+
 
     const promise = getTeam(orgDomain, teamName).then((team) => {
         if (team) {

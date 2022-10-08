@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Location } from '@angular/common';
 import { Label, Team } from 'src/app/Interface/TeamInterface';
@@ -23,6 +23,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { RBAService } from 'src/app/services/RBA/rba.service';
 
 @Component({
   selector: 'app-team-details',
@@ -43,10 +44,10 @@ export class TeamDetailsComponent implements OnInit {
   updateTeamEnabled: boolean = false;
   addMemberEnabled: boolean = false;
 
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   enableLoader: boolean = false;
 
-  constructor(private applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService) { }
+  constructor(private applicationSettingsService: ApplicationSettingsService,public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -87,8 +88,8 @@ export class TeamDetailsComponent implements OnInit {
           });
           this.userService.fetchUserData().subscribe(()=>{
             this.teamDataReady = true;
+            this.showLoader = false
           });
-          this.showLoader = false
         },
         error: (error) => {
           console.error(error);
@@ -107,14 +108,14 @@ export class TeamDetailsComponent implements OnInit {
     this.addMemberEnabled = false;
   }
 
-  async removeMemberDB(remove: string) {
+  removeMemberDB(remove: string) {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('teams/removeMember');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
     
-    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamMembers: this.team.TeamMembers, Remove: remove}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamMembers: this.team.TeamMembers, Remove: remove}).subscribe({
       next: (data) => {
         console.log(remove);
         this.enableLoader = false;
@@ -134,7 +135,7 @@ export class TeamDetailsComponent implements OnInit {
         
       },
       complete: () => console.info('Successful ')
-  });
+    });
   }
 
   teamUpdated(data: { completed: boolean }) {
@@ -171,7 +172,9 @@ export class TeamDetailsComponent implements OnInit {
     const statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
     const priorityLabels: string[] = ["High", "Medium", "Low"];
     const difficultyLabels: string[] = ["High", "Medium", "Low"];
-    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels}).subscribe({
+    const milestoneStatusLabels: string[] = ["Ice Box", "Completed", "Under Progress", "Ready to start"];
+
+    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels,  MilestoneStatusLabels: milestoneStatusLabels}).subscribe({
       next: (data) => {
         this.showLoader = false
       },
@@ -184,7 +187,7 @@ export class TeamDetailsComponent implements OnInit {
   });
   }
   close () {
-    this.location.back()
+    this.router.navigate(['ViewOrganizationDetails']);
   }
 
 }

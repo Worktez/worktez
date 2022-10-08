@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({
@@ -56,12 +56,12 @@ export class EditProfileComponent implements OnInit {
     this.email = this.authService.userAppSetting.email;
   }
 
-  async editProfile() {
+  editProfile() {
     if(this.userAvailable == true || this.oldUserName == this.userName) {
       this.enableLoader = true
       const callable = this.functions.httpsCallable('users/updateUser');
 
-        await callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).subscribe({
+        callable({Uid: this.uid, Email: this.email, AboutMe: this.aboutMe, DisplayName: this.displayName, PhoneNumber: this.phoneNumber, GithubProfile: this.githubProfile, LinkedInProfile: this.linkedInProfile, Skills: this.skills, Education: this.education, Experience: this.experience, Projects: this.projects, Website: this.website, Username: this.userName }).subscribe({
           next: (data) => {
             console.log("Successful");
             this.showClose = true
@@ -107,6 +107,7 @@ export class EditProfileComponent implements OnInit {
 
           } else {
             this.userAvailable = true;
+            this.enableLoader = false;
           }
         },
 

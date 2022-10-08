@@ -1,15 +1,15 @@
-<div class="row p-3 xoverflow align-items-center">
+<div class="row p-2 xoverflow align-items-center">
     <div class="col-3">
-        <span class="label" (click)="openTaskDetails(task.Id)">{{task.Id}}</span>
-        &nbsp;
-        <span class="value">{{task.Title}}</span>
+        <span class="value">
+            <span class="label px-2" (click)="openTaskDetails(task.Id)">{{task.Id}}</span>
+            {{task.Title}}
+        </span>
     </div>
     <div class="col d-flex justify-content-center" (click)="showEditTask(task.Id, 'Status')" style="cursor: pointer;">
-        <span class="label">Status</span>
-        &nbsp;
+        <span class="label px-2">Status</span>
         <span class="value" (click)="showEditTask(task.Id, 'Status')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Status'; else showStatusIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Status" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (blur)="clickOut()">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Status" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Status</option>
                     <ng-container *ngFor='let label of statusLabels'>
                         <option>{{ label }}</option>
@@ -22,11 +22,10 @@
         </span>
     </div>
     <div class="col d-flex justify-content-center">
-        <span class="label">Priority</span>
-        &nbsp;
+        <span class="label px-2">Priority</span>
         <span class="value" (click)="showEditTask(task.Id, 'Priority')" style="cursor: pointer;" >
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Priority';else showPriorityIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Priority" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (blur)="clickOut()">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Priority" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Priority</option>
                     <ng-container *ngFor='let label of priorityLabels'>
                         <option>{{ label }}</option>
@@ -39,11 +38,10 @@
         </span>
     </div>
     <div class="col d-flex justify-content-center">
-        <span class="label">Difficulty</span>
-        &nbsp;
+        <span class="label px-2">Difficulty</span>
         <span class="value" (click)="showEditTask(task.Id, 'Difficulty')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Difficulty'; else showDifficultyIcon">
-                <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (blur)="clickOut()">
+                <select class="form-control form-control-sm" [(ngModel)]="task.Difficulty" [ngModelOptions]="{standalone: true}" (change)="editTask(task, null)" (mouseleave)="clickOut()">
                     <option [ngValue]="null" [disabled]="true">Select Difficulty</option>
                     <ng-container *ngFor='let label of difficultyLabels'>
                         <option>{{ label }}</option>
@@ -55,11 +53,11 @@
             </ng-template>
         </span>
     </div>
-    <div class="col-3 d-flex justify-content-center">
+    <div class="col-2">
         <span class="value" (click)="showEditTask(task.Id, 'Assignee')" style="cursor: pointer;">
             <ng-container *ngIf="taskIdToEdit == task.Id && fieldToEdit == 'Assignee'; else showAssignee">
                 <div class="dropdown">
-                    <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (blur)="clickOut()">
+                    <input type="text" autocomplete="off" class="form-control" [formControl]="assigneeName"  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div id="assigneeSuggestion" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <ng-container *ngFor='let item of filteredOptionsAssignee | async'>
                             <app-suggestion-bucket [email]="item"  [showEmail] = "true" (selectedEmail)="selectedAssignee($event, task)"></app-suggestion-bucket>
@@ -72,11 +70,15 @@
             </ng-template>
         </span>
     </div>
-    <div class="col-3 d-flex justify-content-center">
-        <span class="label">Last Updated</span>
-        &nbsp;
+    <div class="col-2">
         <span class="value">
+            <span class="label px-2">Last Updated</span>
             {{task.LastUpdatedDate}}
         </span>
+    </div>
+    <div class="col-1 d-flex justify-content-center">
+        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+            drag_indicator
+        </mat-icon>
     </div>
 </div>
