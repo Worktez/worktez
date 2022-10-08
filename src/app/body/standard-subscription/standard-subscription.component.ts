@@ -5,6 +5,7 @@ import { type } from 'os';
 import { AuthService } from 'src/app/services/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NativeWindowService } from 'src/app/services/native-window.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
 
@@ -15,7 +16,7 @@ import { SubscriptionService } from 'src/app/services/subscription/subscription.
 })
 export class StandardSubscriptionComponent implements OnInit {
 
-  constructor(private authService: AuthService, private zone: NgZone, public router: Router, public nativeWindowServive: NativeWindowService, public functions: AngularFireFunctions, public startService: StartServiceService, private backendService: BackendService, public subscriptionService: SubscriptionService) { }
+  constructor(private authService: AuthService, private zone: NgZone, public router: Router, public nativeWindowServive: NativeWindowService, public functions: AngularFireFunctions, public startService: StartServiceService, private backendService: BackendService, public subscriptionService: SubscriptionService, private navbarService: NavbarHandlerService) { }
 
   subscriptionId;
   rzp1;
@@ -26,13 +27,14 @@ export class StandardSubscriptionComponent implements OnInit {
   orderId;
   signature;
   ngOnInit(): void {
+    this.navbarService.resetNavbar();
   }
 
   public options: any = {
     key: '',
     name: 'Worktez',
     description: 'Add Subscription',
-    image: "https://worktez.com/assets/logo.png",
+    image: "http://localhost:4200/assets/worktezSquare.png",
     order_id: "",
     amount: 0,
     prefill: {
@@ -42,7 +44,7 @@ export class StandardSubscriptionComponent implements OnInit {
     },
     notes: {},
     theme: {
-
+      color: '#5559D9'
     },
     handler: (res: any) => {
       console.log(res);
