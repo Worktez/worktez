@@ -1,5 +1,5 @@
 .post {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font);
 }
 
 .card-header {

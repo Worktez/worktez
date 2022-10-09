@@ -16,7 +16,6 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const e = require("cors");
 const { getFileInOrganization} = require("../lib");
 
 exports.getFilesInOrganization= function(request, response) {
