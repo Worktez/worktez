@@ -31,7 +31,7 @@ const { uploadFileToContributorsDocuments } = require("./tark/uploadFileToContri
 const { uploadProfilePicToUserDoc } = require("./tark/uploadUserProfilePic");
 const { deleteFilesInOrg } = require("./tark/deleteFilesInOrg");
 const { getFilesInUser } = require("./tark/getFilesInUser");
-const { getFilesInOrganization } = require("./tark/getFilesInOrganization");
+const { getFilesInOrganization } = require("./tark/getFilesInOrganizationLogo");
 
 /**
  * Description
