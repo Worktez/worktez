@@ -90,7 +90,8 @@ export class TaskDetailsComponent implements OnInit {
   loggedTimeMins: number;
   totalRemainingTime: number;
   remainingTimeHrs: number;
-  remainingTimeMins: number
+  remainingTimeMins: number;
+  gitRepoExists: boolean = false;
 
 
   constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
@@ -107,6 +108,15 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
+  }
+
+  checkGithubRepo(){
+    this.applicationSettingService.getTeamDetails(this.task.TeamId).subscribe(data => {
+      if(data.ProjectLink != undefined && data.ProjectLink != ""){
+          this.gitRepoExists=true;
+          this.checkPrLinked();
+      }
+    });
   }
   
   checkPrLinked(){
@@ -163,7 +173,7 @@ export class TaskDetailsComponent implements OnInit {
       next: (data) => {
         this.task = data;
         this.getTimeDetails();
-        this.checkPrLinked()
+        this.checkGithubRepo();
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
         }
