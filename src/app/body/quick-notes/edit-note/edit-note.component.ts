@@ -14,7 +14,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef} from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { QuickNote } from 'src/app/Interface/UserInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';

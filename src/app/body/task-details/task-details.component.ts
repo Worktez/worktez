@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators'
 import { Tasks, Link } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ToolsService } from '../../services/tool/tools.service';
 import { Location } from '@angular/common';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -30,7 +30,7 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
 
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 

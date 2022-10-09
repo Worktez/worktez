@@ -16,7 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 
 @Injectable({

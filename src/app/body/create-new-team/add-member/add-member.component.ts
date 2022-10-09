@@ -15,7 +15,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';

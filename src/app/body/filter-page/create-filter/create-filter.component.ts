@@ -17,7 +17,7 @@ import {  UntypedFormControl, NgForm, FormGroup, FormControl, Validators} from '
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { FilterTaskService } from 'src/app/services/filter-task/filter-task.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';

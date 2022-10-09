@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map, Subject } from 'rxjs';
-import { Tasks } from '../Interface/TasksInterface';
+import { Tasks } from '../../Interface/TasksInterface';
 
 @Injectable({
   providedIn: 'root'

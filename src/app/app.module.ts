@@ -43,7 +43,7 @@ import { LoaderComponent } from './body/loader/loader.component';
 import { LoginComponent } from './body/login/login.component';
 import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 import { NavbarComponent } from './body/navbar/navbar.component';

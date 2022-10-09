@@ -16,7 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Label ,Team} from 'src/app/Interface/TeamInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 

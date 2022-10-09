@@ -14,7 +14,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Patch } from 'src/app/Interface/PatchInterface';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { PatchService } from 'src/app/services/patch/patch.service';
 

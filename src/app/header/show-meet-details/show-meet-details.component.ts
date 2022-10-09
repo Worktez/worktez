@@ -15,7 +15,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Meet } from 'src/app/Interface/MeetInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { map, Observable } from "rxjs";
 

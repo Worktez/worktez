@@ -14,9 +14,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitData } from '../Interface/githubReleaseData';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { PopupHandlerService } from '../services/popup-handler/popup-handler.service';
 import { StartServiceService } from '../services/start/start-service.service';
 

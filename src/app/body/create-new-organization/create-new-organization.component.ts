@@ -19,7 +19,7 @@ import { FileUploadService } from 'src/app/services/fileUploadService/file-uploa
 import { FileUpload } from 'src/app/Interface/FileInterface';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Location } from '@angular/common';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';

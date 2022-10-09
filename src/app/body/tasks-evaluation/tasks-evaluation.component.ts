@@ -16,7 +16,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
@@ -130,7 +130,9 @@ export class TasksEvaluationComponent implements OnInit {
           if (result.BacklogTasks.length > 0) {
             this.tasks.push(result.BacklogTasks);
           }
-          this.upcomingSprintTasks.push(result.UpcomingSprintTasks);
+          if(pageToLoad == "initial"){
+            this.upcomingSprintTasks.push(result.UpcomingSprintTasks);
+          }
           this.tasks.push(result.Tasks);
           this.nextSprintTasksToFetch -= 1;
           if (this.nextSprintTasksToFetch < 1) {

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { GitData } from 'src/app/Interface/githubReleaseData';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { HttpServiceService } from 'src/app/services/http-service.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 @Component({
   selector: 'app-whats-new',

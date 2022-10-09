@@ -8,6 +8,18 @@
     text-decoration: underline;
 }
 
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    overflow-x: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}
+
 .value {
     font-size: 11px;
     color: var(--text);
@@ -23,8 +35,8 @@
     background-color: var(--primary-bg);
     display: flex;
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    /* overflow-x: auto;
+    overflow-y: auto; */
     flex-wrap: nowrap;
     scroll-behavior: smooth;
     cursor: move;
