@@ -1,4 +1,4 @@
-<!-- /*********************************************************** 
+/*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
 * 
@@ -10,27 +10,28 @@
 * but WITHOUT ANY WARRANTY; without even the implied warranty of 
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
-***********************************************************/ -->
-
-#button {
-    background-color: white;
+***********************************************************/
+.modal-content {
+    background-color: var(--secondary-bg);
     color: var(--text);
-}
-
-#button:focus,
-#button:active,
-#button:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-    cursor: pointer;
 }
 
 .btn {
     color: var(--text);
-    border: var(--primary-border);
 }
 
 .btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+#button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+#button:hover,
+#button:active {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
 }

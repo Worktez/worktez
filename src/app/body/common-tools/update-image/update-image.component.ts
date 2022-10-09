@@ -47,6 +47,7 @@ export class UpdateImageComponent implements OnInit {
   constructor(public backendService: BackendService, public uploadService: FileUploadService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
+    console.log(this.imageUrl);
     if(this.imageUrl == "") {
       this.showSaveButton = false
     } else {

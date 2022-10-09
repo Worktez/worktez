@@ -101,6 +101,8 @@ export class StartServiceService {
     if(userSelectedOrgAppKeyCookie && userSelectedTeamId) {
       const userUid = this.cookieService.get("useruid");
       const userAppTheme = this.cookieService.get("userAppTheme");
+      console.log("check: ", userSelectedOrgAppKeyCookie);
+      console.log(typeof(userSelectedOrgAppKeyCookie));
       this.loadNext(userSelectedOrgAppKeyCookie, userSelectedTeamId, userUid, userAppTheme);
     }
 
@@ -119,13 +121,15 @@ export class StartServiceService {
 
   loadNext(SelectedOrgAppKey: string, SelectedTeamId: string, uid: string, AppTheme: string) {
     this.userAppSettingsReady = true;
-    if (SelectedOrgAppKey != undefined && SelectedOrgAppKey != "") {
+    if (SelectedOrgAppKey != undefined && SelectedOrgAppKey!= "undefined" && SelectedOrgAppKey != "") {
       this.authService.organizationAvailable = true;
       this.authService.getListedOrganizationData(uid);
       this.backendService.getOrgDetails(SelectedOrgAppKey);
       this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
       this.authService.themeService.changeTheme(AppTheme);
       this.quickNotes.getQuickNotes();
+      console.log("test : ", SelectedOrgAppKey);
+      console.log("test2 : ", this.userEmail);
       this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
     } else {
       this.authService.organizationAvailable = false;
@@ -135,7 +139,8 @@ export class StartServiceService {
       if(this.currentUrl == '/') {
         this.router.navigate(['/MyDashboard']);
       }
-      if(SelectedTeamId != "") {
+      if(SelectedTeamId != "" && SelectedTeamId!= "undefined") {
+        console.log(SelectedTeamId);
         this.selectedTeamId = SelectedTeamId;
         this.teamIdExists = true;
         
