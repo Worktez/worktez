@@ -1,6 +1,21 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FileUpload } from 'src/app/Interface/FileInterface';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-edit-dp',
@@ -11,85 +26,81 @@ export class EditDpComponent implements OnInit {
 
   @ViewChild("closeBtn", { static: false }) public closeBtn: ElementRef;
 
-  @Input('uid') uid: string;
-  @Input('email') email: string;
-  @Input('displayName') displayName: string;
+  @Input('orgDomain') orgDomain: string;
+  @Input('imageUrl') imageUrl: string;
 
+  componentName: string = "Edit Organization Logo"
   choosePhoto: boolean = true
   enableLoader: boolean = false
   showClose: boolean = false
   enableCropper: boolean = false
 
+  imageUrlTemp: string = "";
   selectedFile: FileList
-  imageUrl: string = ""
 
   percentage: number = 0
   basePath: string;
   private currentFileUpload: FileUpload;
   public fileName: string
 
-  @Output() editOrgLogoCompleted = new EventEmitter<{ completed: boolean }>();
+  @Output() editOrgLogoCompleted = new EventEmitter<{ completed: boolean, imageUrl: string }>();
 
-  constructor(public uploadService: FileUploadService) { }
+  constructor(public uploadService: FileUploadService, private functions: AngularFireFunctions, private errorHandlerService: ErrorHandlerService) {}
+
 
   ngOnInit(): void {
-    this.imageUrl = ""
     this.choosePhoto = true;
-    this.enableCropper = false;
-
-    this.basePath = '/Organisation/' + this.uid + '/Logo';
-  }
-
-  detectImage(imageUpload) {
-    this.selectedFile = imageUpload.target.files;
-    const file = this.selectedFile.item(0);
-
-    var reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.imageUrl = event.target.result;
-
-      this.choosePhoto = false;
-      this.enableCropper = true;
+    if(this.imageUrl== "") {
+      this.enableCropper = false
+    } 
+    else {
+      this.enableCropper = true
     }
-    reader.readAsDataURL(file)
+    this.imageUrlTemp = this.imageUrl;
+    console.log(this.imageUrlTemp);
 
+    this.basePath = '/Organizations/' + this.orgDomain + '/LogoFiles';
   }
 
-  cancel() {
-    this.imageUrl = ""
-    this.choosePhoto = true;
-    this.enableCropper = false;
-  }
-
-  cropPhotoCompleted(data: { completed: boolean }) {
+  cropPhotoCompleted(data: { completed: boolean, photoUrl: string, file: FileUpload  }) {
     this.enableCropper = false;
     
-    const file = this.selectedFile.item(0);
-    
-    this.currentFileUpload = new FileUpload(file);
-    this.fileName = this.currentFileUpload.file.name;
-
-    this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "Logo")
-    .subscribe(percentage => {
-      this.percentage = Math.round(percentage);
-    },
-    error => {
-      console.log(error);
+    this.imageUrlTemp = data.photoUrl;
+    this.currentFileUpload = data.file;
+    if(data.file != undefined) {
+      this.fileName = this.currentFileUpload.file.name;
+      this.uploadService.pushFileToTaskStorage(this.currentFileUpload, this.basePath, "Logo")
+      .subscribe(percentage => {
+        this.percentage = Math.round(percentage);
+      },
+      error => {
+        console.log(error);
+      });
     }
-    );
-
-    this.editOrgLogoDone();
+    this.setOrgLogo(data.photoUrl);
   }
+
+  setOrgLogo(croppedImage) {
+    const callable = this.functions.httpsCallable('organization/updateOrgLogo');
+
+    callable({ OrgDomain: this.orgDomain, PhotoURL: croppedImage}).subscribe({
+      next: (data) => {
+        console.log("Successful");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully updated image')
+    });
+
+  this.editOrgLogoDone();
+}
 
   editOrgLogoDone() {
     this.showClose = true;
-    this.editOrgLogoCompleted.emit({ completed: true });
-  }
-
-  closeModal() {
-    this.choosePhoto = true;
-    this.showClose = false;
-    this.closeBtn.nativeElement.click();
-  }
-
+    this.choosePhoto = false;
+    this.editOrgLogoCompleted.emit({ completed: true, imageUrl: this.imageUrlTemp});
+}
 }

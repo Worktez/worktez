@@ -1,3 +1,7 @@
+.post {
+  font-family: var(--font);
+}
+
 .card-header {
   background-color: var(--secondary-bg);
   color: var(--text);
