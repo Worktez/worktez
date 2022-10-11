@@ -52,7 +52,7 @@ export class TeamDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
     this.navbarHandler.addToNavbar(this.teamId);
-
+    console.log(this.teamId);
     if(this.startService.showTeamsData) {
       this.getTeamData();
     } else {
