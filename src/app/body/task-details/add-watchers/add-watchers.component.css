@@ -98,9 +98,15 @@ input:focus {
 .dropdown-menu {
   width: 300px;
   overflow:scroll;
-  height: 25vh;
+  height: 185px;
   background-color: var(--secondary-bg);
   color: var(--text);
   border-radius: 2%;
   box-shadow: var(--box-shadow-bottom);
+}
+
+@media only screen and (max-width: 600px) {
+  .dropdown-menu{
+    height: 235px;
+  }
 }
