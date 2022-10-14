@@ -153,7 +153,7 @@ fastify.post("/getLabelsInScopes", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/updateTeamLabels", (req, res) => {
+fastify.post("/updateTeamLabels", (req, res) => {
   updateTeamLabels(req, res);
 });
 
