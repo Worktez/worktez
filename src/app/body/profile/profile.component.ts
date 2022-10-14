@@ -24,6 +24,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { FileData } from 'src/app/Interface/FileInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
+import { database } from 'firebase-functions/v1/firestore';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
   editProjectEnabled: boolean = false
   editSkillsEnabled: boolean = false
   editWorkEnabled: boolean = false
+  submitaddedskill: boolean = false
   
   educationModalMode: string
   educationModalData: MyEducationData
@@ -179,7 +181,7 @@ export class ProfileComponent implements OnInit {
   
   editSkillsCompleted(data: { completed: boolean, Skills: string }) {
     this.editSkillsEnabled = false;
-    this.skills.push(data.Skills); 
+    this.skills.push();
     this.readUser();
   }
    
