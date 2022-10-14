@@ -10,8 +10,6 @@ exports.updateTeamLabels = function(request, response) {
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
 
-    // console.log(type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgDomain, teamName);
-
   let status = 200;
   let result = {data: "Error updating team labels"};
 
@@ -23,11 +21,11 @@ exports.updateTeamLabels = function(request, response) {
         Priority: priorityLabels,
         Difficulty: difficultyLabels,
         MilestoneStatus: milestoneStatusLabels,
-        };
-        console.log("check");
+      };
       updateTeamDetails(updateJson, orgDomain, teamName).then(() => {
-      createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
-    });
+        createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, 
+        difficultyLabels, milestoneStatusLabels);
+      });
       result = {data: "Labels updated successfully"};
       console.log("Labels Updated Successfully");
     } else {
