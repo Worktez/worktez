@@ -24,6 +24,10 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
+import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
+import { Observable } from 'rxjs';
+import { UntypedFormControl } from '@angular/forms';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-team-details',
@@ -32,7 +36,7 @@ import { RBAService } from 'src/app/services/RBA/rba.service';
 })
 export class TeamDetailsComponent implements OnInit {
   ComponentName: string;
-
+  labelName = new UntypedFormControl();
   organizationDomain: string
   teamId: string;
   teamName: string;
@@ -43,9 +47,14 @@ export class TeamDetailsComponent implements OnInit {
   teamToUpdate: Team;
   updateTeamEnabled: boolean = false;
   addMemberEnabled: boolean = false;
-
+  filteredOptionsLabels: string[] = ['Development', 'Marketing'];
   showLoader: boolean = true;
   enableLoader: boolean = false;
+  type: string[]; 
+  statusLabels: string[];
+  priorityLabels: string[]; 
+  difficultyLabels: string[]; 
+  milestoneStatusLabels: string[];
 
   constructor(private applicationSettingsService: ApplicationSettingsService,public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -70,6 +79,63 @@ export class TeamDetailsComponent implements OnInit {
         }
       });
     }
+  }
+
+  changeLabels(labelName){
+    if(labelName == "Marketing"){
+      this.type = marketingLabelsTempelate.type;
+      this.statusLabels = marketingLabelsTempelate.statusLabels;
+      this.difficultyLabels = marketingLabelsTempelate.difficultyLabels;
+      this.priorityLabels = marketingLabelsTempelate.priorityLabels;
+      this.milestoneStatusLabels = marketingLabelsTempelate.milestoneStatusLabels
+    }
+    else if(labelName == "Development"){
+      this.type = developmentLabelsTempelate.type;
+      this.statusLabels = developmentLabelsTempelate.statusLabels;
+      this.difficultyLabels = developmentLabelsTempelate.difficultyLabels;
+      this.priorityLabels = developmentLabelsTempelate.priorityLabels;
+      this.milestoneStatusLabels = developmentLabelsTempelate.milestoneStatusLabels;
+
+    }
+  }
+
+  updateDefaultLabels(){
+    this.showLoader = true;
+    const callable = this.functions.httpsCallable('teams/updateTeamLabels');
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    callable({OrganizationDomain:this.organizationDomain, TeamName: this.team.TeamName, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+      next: (data) => {
+        this.changeDefaultLabels();
+        this.showLoader = false;
+        this.router.navigate(['TeamDetails', this.teamId]);
+        console.log("Successful ");
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successful')
+    });
+  }
+
+  changeDefaultLabels(){
+    this.changeLabels(this.labelName);
+    this.showLoader = true;
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/createDefaultLabel');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Type: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels,  MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+      next: (data) => {
+        this.updateDefaultLabels();
+        this.showLoader = false;
+      },
+      error: (error) => {
+        console.error("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => console.info('Successful')
+    });
   }
   
   getTeamData() {

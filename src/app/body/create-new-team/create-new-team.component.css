@@ -50,6 +50,10 @@
     margin: 5px !important;
 }
 
+.form-control {
+    display: inline;
+}
+
 .btn {
     color: var(--text);
 }
