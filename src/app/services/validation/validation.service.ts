@@ -200,7 +200,7 @@ export class ValidationService {
             return (false);
         }
     }
-       
+ 
     async checkTaskType(value: String) {
         const control = new UntypedFormControl(value, Validators.required);
         if (control.errors === null)
