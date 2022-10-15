@@ -68,18 +68,6 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
 
 /**
  * Description
- * @param {any} updateJson
- * @param {any} orgDomain
- * @param {any} teamName
- * @return {any}
- */
- exports.updateTeamLabels = function(updateJson, orgDomain, teamName) {
-    const updateTeam = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").update(updateJson);
-    return Promise.resolve(updateTeam);
-};
-
-/**
- * Description
  * @param {any} orgDomain
  * @param {any} teamName
  * @param {any} docId

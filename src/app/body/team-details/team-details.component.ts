@@ -101,9 +101,10 @@ export class TeamDetailsComponent implements OnInit {
 
   updateDefaultLabels(){
     this.showLoader = true;
-    const callable = this.functions.httpsCallable('teams/updateTeamLabels');
+    const callable = this.functions.httpsCallable('teams/createDefaultLabels');
     this.organizationDomain = this.backendService.getOrganizationDomain();
-    callable({OrganizationDomain:this.organizationDomain, TeamName: this.team.TeamName, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+    const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
+    callable({OrganizationDomain:this.organizationDomain, TeamName: this.team.TeamName, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
       next: (data) => {
         this.changeDefaultLabels();
         this.showLoader = false;
@@ -123,10 +124,12 @@ export class TeamDetailsComponent implements OnInit {
     this.changeLabels(this.labelName);
     this.showLoader = true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/createDefaultLabel');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Type: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels,  MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+    const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
+    const callable = this.functions.httpsCallable('teams/createDefaultLabels');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Type: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels,  MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
       next: (data) => {
-        this.updateDefaultLabels();
+        console.log("Successfully updated")
+        // this.updateDefaultLabels();
         this.showLoader = false;
       },
       error: (error) => {
@@ -232,15 +235,16 @@ export class TeamDetailsComponent implements OnInit {
 
   createDefaultLabels() {
     this.showLoader = true;
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/createDefaultLabel');
     const type: string[] = ["Bug", "Story", "Sub Task"];
     const statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"];
     const priorityLabels: string[] = ["High", "Medium", "Low"];
     const difficultyLabels: string[] = ["High", "Medium", "Low"];
     const milestoneStatusLabels: string[] = ["Ice Box", "Completed", "Under Progress", "Ready to start"];
-
-    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels,  MilestoneStatusLabels: milestoneStatusLabels}).subscribe({
+    const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/createDefaultLabels');
+    console.log(orgDomain, this.team.TeamName, type, scope, difficultyLabels, milestoneStatusLabels, priorityLabels);
+    callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, Type: type, StatusLabels: statusLabels, PriorityLabels: priorityLabels, DifficultyLabels: difficultyLabels,  MilestoneStatusLabels: milestoneStatusLabels, Scope: scope}).subscribe({
       next: (data) => {
         this.showLoader = false
       },

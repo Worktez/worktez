@@ -30,7 +30,6 @@ const {addLabel} = require("./tark/addLabel");
 const {addProjLink} = require("./tark/addProjLink");
 const {createDefaultLabels} = require("./tark/createDefaultLabels");
 const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
-const {updateTeamLabels} = require("./tark/updateTeamLabels");
 
 /**
  * Description
@@ -148,17 +147,6 @@ fastify.post("/getLabelsInScopes", (req, res) => {
 
 /**
  * Description
- * @param {any} "/updateTeamLabels"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/updateTeamLabels", (req, res) => {
-  updateTeamLabels(req, res);
-});
-
-/**
- * Description
  * @param {any} "/editLabel"
  * @param {any} req
  * @param {any} res
@@ -170,12 +158,12 @@ fastify.post("/editLabel", (req, res) => {
 
 /**
  * Description
- * @param {any} "/editLabel"
+ * @param {any} "/createDefaultLabel"
  * @param {any} req
  * @param {any} res
  * @returns {any}
  */
-fastify.post("/createDefaultLabel", (req, res) => {
+fastify.post("/createDefaultLabels", (req, res) => {
   createDefaultLabels(req, res);
 });
 

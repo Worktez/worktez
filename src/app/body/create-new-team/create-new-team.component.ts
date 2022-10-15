@@ -128,9 +128,10 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
   updateTeamLabels() {
-    const callable = this.functions.httpsCallable('teams/updateTeamLabels');
+    const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
+    const callable = this.functions.httpsCallable('teams/createDefaultLabels');
     callable({TypeLabels: this.type, StatusLabels:this.statusLabels,
-      PriorityLabels:this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels}).subscribe({
+      PriorityLabels:this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
       next: (data) => {
         this.createNewTeamWithLabels();
       }, 
