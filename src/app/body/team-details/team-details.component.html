@@ -108,21 +108,15 @@
               </ng-container>
               <ng-container>
                   <div class="row text-right">
-                  <div class="col-md-8">
-                    <span class="ml-2 text-muted" style="font-size:0.8rem; display: none;" id="label">Apply
-                      Labels</span>
+                  <div class="col-md-12">
                     <select class="form-control form-control-sm" [(ngModel)]="labelName"
-                      [ngModelOptions]="{standalone: true}" placeholder="Enter Task Type">
+                      [ngModelOptions]="{standalone: true}" placeholder="Enter Custom Label" (click)="changeDefaultLabels()">
                       <option [ngValue]="null" [disabled]="true">Select Label</option>
                       <ng-container *ngFor='let label of filteredOptionsLabels'>
                         <option>{{ label }}</option>
                       </ng-container>
                     </select>
                   </div>
-                    <div class="col-md-4 text-right">
-                      <button type="submit" class="btn etc float-right"  style="font-size: 10px;"
-                        (click)="changeDefaultLabels()">Apply</button>
-                    </div>
                   </div>
               </ng-container>
             </div>

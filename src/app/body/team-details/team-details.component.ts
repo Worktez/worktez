@@ -128,9 +128,10 @@ export class TeamDetailsComponent implements OnInit {
     const callable = this.functions.httpsCallable('teams/createDefaultLabels');
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Type: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels,  MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
       next: (data) => {
-        console.log("Successfully updated")
-        // this.updateDefaultLabels();
         this.showLoader = false;
+        console.log("Successfully updated")
+        this.router.navigate(['TeamDetails', this.teamId]);
+        // this.updateDefaultLabels();
       },
       error: (error) => {
         console.error("Error", error);
