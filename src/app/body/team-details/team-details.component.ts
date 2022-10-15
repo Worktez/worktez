@@ -25,9 +25,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
-import { Observable } from 'rxjs';
 import { UntypedFormControl } from '@angular/forms';
-import { error } from 'protractor';
 
 @Component({
   selector: 'app-team-details',
