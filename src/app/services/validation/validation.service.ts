@@ -32,6 +32,9 @@ export class ValidationService {
             case 'status': {
                 return this.checkStatus(value);
             }
+            case 'taskType': {
+                return this.checkTaskType(value);
+            }
             case 'priority': {
                 return (this.checkPriority(value));
             }
