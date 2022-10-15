@@ -23,8 +23,8 @@ exports.updateTeamLabels = function(request, response) {
         MilestoneStatus: milestoneStatusLabels,
       };
       updateTeamDetails(updateJson, orgDomain, teamName).then(() => {
-        createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, 
-        difficultyLabels, milestoneStatusLabels);
+        createLabelProperties(orgDomain, teamName, type, statusLabels,
+            priorityLabels, difficultyLabels, milestoneStatusLabels);
       });
       result = {data: "Labels updated successfully"};
       console.log("Labels Updated Successfully");
