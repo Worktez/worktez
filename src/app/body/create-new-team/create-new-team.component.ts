@@ -109,7 +109,6 @@ export class CreateNewTeamComponent implements OnInit {
   changeLabels(labelName){
     console.log(labelName);
     if(labelName == "Marketing"){
-      console.log("check")
       this.type = marketingLabelsTempelate.type;
       this.statusLabels = marketingLabelsTempelate.statusLabels;
       this.difficultyLabels = marketingLabelsTempelate.difficultyLabels;
@@ -117,7 +116,6 @@ export class CreateNewTeamComponent implements OnInit {
       this.milestoneStatusLabels = marketingLabelsTempelate.milestoneStatusLabels
     }
     else if(labelName == "Development"){
-      console.log("check1");
       this.type = developmentLabelsTempelate.type;
       this.statusLabels = developmentLabelsTempelate.statusLabels;
       this.difficultyLabels = developmentLabelsTempelate.difficultyLabels;

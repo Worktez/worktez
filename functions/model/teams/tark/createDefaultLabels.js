@@ -32,7 +32,7 @@ exports.createDefaultLabels = function(request, response) {
     const priorityLabels = request.body.data.PriorityLabels;
     const difficultyLabels = request.body.data.DifficultyLabels;
     const milestoneStatusLabels = request.body.data.MilestoneStatusLabels;
-    console.log(orgDomain, teamName, scope, type, statusLabels, priorityLabels, difficultyLabels, statusLabels, milestoneStatusLabels);
+
     let status = 200;
     let result = { data: "Error in adding default labels" };
 
