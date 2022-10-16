@@ -111,7 +111,7 @@
                   <div class="col-md-12">
                     <select class="form-control form-control-sm" [(ngModel)]="labelName"
                       [ngModelOptions]="{standalone: true}" placeholder="Enter Custom Label" (click)="changeDefaultLabels()">
-                      <option [ngValue]="null" [disabled]="true">Select Label</option>
+                      <option [ngValue]="Null" [disabled]="true">Select Label</option>
                       <ng-container *ngFor='let label of filteredOptionsLabels'>
                         <option>{{ label }}</option>
                       </ng-container>
