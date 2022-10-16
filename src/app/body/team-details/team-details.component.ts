@@ -25,7 +25,6 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
-import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-team-details',
@@ -34,7 +33,7 @@ import { UntypedFormControl } from '@angular/forms';
 })
 export class TeamDetailsComponent implements OnInit {
   ComponentName: string;
-  labelName = new UntypedFormControl();
+  labelName: string;
   organizationDomain: string
   teamId: string;
   teamName: string;
