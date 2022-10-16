@@ -12,12 +12,30 @@
  * See the MIT License for more details.
  ***********************************************************/
 .dropdown-menu{
-    font-size: 12px
+    /* font-size: 12px */
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+
 }
  #dropdownSelectCard {
-    color: var(--text);
+    color: var(--primary-color);
     background-color: var(--secondary-bg);
+}
 
+#dropdown-item{
+    color: var(--button-text);
+    font-family: var(--font);
+   outline: none;
+}
+
+#dropdown-item:hover {
+    cursor: pointer;
 }
 
 #dropdownMenuButton {
@@ -31,10 +49,12 @@
 select{
     background-color: var(--primary-bg);
     color: var(--text);
+    border: 0;
 }
 select:focus{
     box-sizing: none;
     outline: none;
+    border: 0;
 }
 
 #button {
