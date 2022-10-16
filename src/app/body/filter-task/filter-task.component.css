@@ -75,5 +75,15 @@ input:focus {
     height: auto;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
     border: none;
-  }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}

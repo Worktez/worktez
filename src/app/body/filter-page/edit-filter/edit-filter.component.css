@@ -103,10 +103,20 @@ input:focus {
     height: auto;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 2%;
     box-shadow: var(--box-shadow-bottom);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
 }
 
 .close:hover {

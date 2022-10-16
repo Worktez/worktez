@@ -98,9 +98,19 @@ input:focus {
 .dropdown-menu {
   width: 300px;
   overflow:scroll;
+  overflow-x: hidden;
   max-height: 15vh;
   background-color: var(--secondary-bg);
   color: var(--text);
   border-radius: 2%;
   box-shadow: var(--box-shadow-bottom);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-color); 
+  border-radius: 10px;
 }
