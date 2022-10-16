@@ -98,7 +98,7 @@ input:focus {
 .dropdown-menu {
   width: 300px;
   height: 185px;
-  overflow:scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   background-color: var(--secondary-bg);
   color: var(--text);
