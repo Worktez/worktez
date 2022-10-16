@@ -97,9 +97,9 @@ input:focus {
 
 .dropdown-menu {
   width: 300px;
+  height: 185px;
   overflow:scroll;
   overflow-x: hidden;
-  max-height: 15vh;
   background-color: var(--secondary-bg);
   color: var(--text);
   border-radius: 2%;
@@ -113,4 +113,10 @@ input:focus {
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-color); 
   border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .dropdown-menu{
+    height: 235px;
+  }
 }

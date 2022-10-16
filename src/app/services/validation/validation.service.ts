@@ -32,6 +32,9 @@ export class ValidationService {
             case 'status': {
                 return this.checkStatus(value);
             }
+            case 'taskType': {
+                return this.checkTaskType(value);
+            }
             case 'priority': {
                 return (this.checkPriority(value));
             }
@@ -194,6 +197,17 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_STATUS";
             this.errorHandlerService.addError(errorType, "Status field is required")
+            return (false);
+        }
+    }
+
+    async checkTaskType(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_STATUS";
+            this.errorHandlerService.addError(errorType, "Task-Type field is required")
             return (false);
         }
     }
