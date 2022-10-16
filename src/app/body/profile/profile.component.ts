@@ -181,7 +181,7 @@ export class ProfileComponent implements OnInit {
   
   editSkillsCompleted(data: { completed: boolean, Skills: string }) {
     this.editSkillsEnabled = false;
-    this.skills.push();
+    this.skills.push(data.Skills);
     this.readUser();
   }
    
