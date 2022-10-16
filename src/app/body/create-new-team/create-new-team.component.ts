@@ -27,8 +27,6 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
-import { Observable } from 'rxjs';
-import { UntypedFormControl } from '@angular/forms';
 
 declare var jQuery:any;
 
@@ -41,7 +39,7 @@ export class CreateNewTeamComponent implements OnInit {
   componentName: string = "CREATE-NEW-TEAM"
 
   filteredOptionsLabels: string[] = ['Development', 'Marketing'];
-  labelName = new UntypedFormControl();
+  labelName: string;
   organizationDomain: string
   appKey: string
   teamAdmin: string
