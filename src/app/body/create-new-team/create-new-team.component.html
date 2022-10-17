@@ -34,25 +34,35 @@
                 <div class="col-md-8">
                     <div class="team-details">
                     <div class="form-group row pt-2">
-                        <div class="col-sm-11">
+                        <div class="col-sm-6">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Name</span>
                             <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" (ngModelChange)="handleIdInput()" placeholder="Enter Team Name*">
                         </div>
+                        <div class="col-sm-5">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Apply Labels</span>
+                            <select class="form-control" [(ngModel)]="labelName"
+                                [ngModelOptions]="{standalone: true}">
+                                <option [ngValue]="null" [disabled]="true">Select Label</option>
+                                <ng-container *ngFor='let label of filteredOptionsLabels'>
+                                    <option>{{ label }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group row pt-2">
-                        <div class="col-sm-11">
+                        <div class="col-sm-10">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Id</span>
                             <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID*">
                         </div>
                     </div>
                     <div class="form-group row pt-2">
-                        <div class="col-sm-11">
+                        <div class="col-sm-10">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Manager Email</span>
                             <input type="text" class="form-control" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Manager's Email Id*">
                         </div>
                     </div>
                     <div class="form-group row pt-2">
-                        <div class="col-sm-11">
+                        <div class="col-sm-12 col">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Admin Email</span>
                             <input type="text" readonly  class="form-control" value={{this.teamAdmin}} [(ngModel)]="teamAdmin" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Admin's Email Id*">
                         </div>
@@ -61,13 +71,13 @@
                     <div class="form-group row  pt-2">
                         <div class="col-md-10" >
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Description</span>
-                            <textarea type="text" class="form-control"  style="width: 500px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
+                            <textarea type="text" class="form-control"  style="width: 1100px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
                         </div>
                     </div>
                     <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Members Email</span>
                     <div class="form-row">
                         <div class="col">
-                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"  (click)="addMember()" style="height: 10rem;">
+                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"  (click)="addMember()" style="height: 10rem; width: 1100px;">
                                 <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
                                     <div class="row">
                                         <ng-container *ngFor="let item of teamMembers">
@@ -77,7 +87,7 @@
                                             </div>
                                         </ng-container>
                                         <ng-container *ngIf="!teamMembers.length">
-                                            <div class="col text-muted h6 font-weight-normal" style="width: 818px;;">
+                                            <div class="col text-muted h6 font-weight-normal">
                                                 Enter Team Members Email Id*
                                             </div>
                                         </ng-container>

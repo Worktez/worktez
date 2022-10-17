@@ -19,6 +19,13 @@
     font-family: var(--font);
 }
 
+.form-control {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    font-size: 12px;
+    border: none;
+}
+
 .contentBox {
     color: var(--text);
 }
@@ -33,6 +40,13 @@ hr {
 
 #DeleteModalLabel{
     text-align: left;
+}
+
+#dropdownMenuButton {
+    background-color: var(--primary-bg);
+    color: var(--text);
+    font-size: 12px;
+    border: none;
 }
 
 .modal-dialog {
