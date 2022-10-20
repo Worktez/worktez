@@ -181,12 +181,12 @@ fastify.post("/editLabel", (req, res) => {
 
 /**
  * Description
- * @param {any} "/editLabel"
+ * @param {any} "/createDefaultLabel"
  * @param {any} req
  * @param {any} res
  * @returns {any}
  */
-fastify.post("/createDefaultLabel", (req, res) => {
+fastify.post("/createDefaultLabels", (req, res) => {
   createDefaultLabels(req, res);
 });
 

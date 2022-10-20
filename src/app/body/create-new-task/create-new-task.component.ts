@@ -173,6 +173,7 @@ export class CreateNewTaskComponent implements OnInit {
     this.totalEstimatedTime=this.toolsService.changeToDecimalTime(this.estimatedTimeHrs,this.estimatedTimeMins)
     let data = [{ label: "title", value: this.title },
     { label: "status", value: this.status },
+    { label: "taskType", value: this.taskType },
     { label: "priority", value: this.priority },
     { label: "estimatedTime", value: this.totalEstimatedTime },
     { label: "difficulty", value: this.difficulty },
