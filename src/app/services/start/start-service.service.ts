@@ -21,7 +21,6 @@ import { ApplicationSettingsService } from '../applicationSettings/application-s
 import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
-import { SubscriptionService } from '../subscription/subscription.service';
 import { RBAService } from '../RBA/rba.service';
 import { SubscriptionService } from '../subscription/subscription.service';
 
