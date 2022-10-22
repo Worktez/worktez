@@ -13,28 +13,28 @@
  ***********************************************************/-->
 <div class="dropdown">
     <span class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-        <mat-icon fontSet="material-icons-outlined" class="align-middle">
-            filter_list
-        </mat-icon>
-    </span>
-    <div class="dropdown-menu dropdown-menu-right p-0" id="dropdownSelectCard">
-        <form>
-            <div class="row align-items-center m-0 p-2" id="header">
-                <h5>Select Member/Team</h5>
-            </div>
-            <div class="row align-items-center px-2">
-                <div class="col-12">
-                    <select class="form-select w-100" [(ngModel)]="selectedOption" [ngModelOptions]="{standalone: true}">
-                        <option [ngValue]="'Team'">Team</option>
+    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+      filter_list
+    </mat-icon>
+  </span>
+  <div class="dropdown-menu dropdown-menu-right p-0" id="dropdownSelectCard">
+    <form>
+      <div class="row align-items-center m-0 p-2" id="header">
+        <h5>Select Member/Team</h5>
+      </div>
+      <div class="row align-items-center px-2">
+        <div class="col-12">
+                    <select class="form-select w-100" [(ngModel)]="selectedOption"  id="dropdown-item" [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="'Team'">Team</option>
                         <option *ngFor="let teamMember of teamMembers"  [ngValue]="teamMember">
                             <app-suggestion-bucket [email]="teamMember" [showEmail]="false" (selectedEmail)="selectedAssignee($event)">
                             </app-suggestion-bucket></option>
-                    </select>
-                </div>
-                <div class="col pb-2 text-right">
+          </select>
+        </div>
+        <div class="col pb-2 text-right">
                     <button type="submit" class="btn ml-2 mt-1" id="button" (click)="setSelectedOption()" style="font-size: 10px;">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
