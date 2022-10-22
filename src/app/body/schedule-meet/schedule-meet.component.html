@@ -32,21 +32,12 @@
                     </div>
                     <form #form="ngForm" *ngIf="!showClose">
                         <div class="form-row mb-2">
-                            <div class="col-md-6 ml-auto">
+                            <div class="col-md-12 ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
                                 <input type="text" class="form-control form-control-sm" [(ngModel)]="title"
                                     [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
                             </div>
-                            <div class="col-md-6 col ml-auto">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
-                                <select class="form-control form-control-sm" [(ngModel)]="project"
-                                    [ngModelOptions]="{standalone: true}" (change)="readTeamData(project)">
-                                    <option [ngValue]="null" [disabled]="true">Select Project Name</option>
-                                    <ng-container *ngFor='let id of teamIds'>
-                                        <option>{{ id }}</option>
-                                    </ng-container>
-                                </select>
-                            </div>
+                         
                          
                         </div>
                         <div class="form-row mb-2">
@@ -68,11 +59,15 @@
                                 </div>
                                 
                             </div>
-                            <div class="col-md-6 ml-auto">
-                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">OrgDomain</span>
-                                <input type="text" class="form-control"
-                                    value={{this.backendService.getOrganizationDomain()}}
-                                    [ngModelOptions]="{standalone: true}" readonly>
+                            <div class="col-md-6 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
+                                <select class="form-control form-control-sm" [(ngModel)]="project"
+                                    [ngModelOptions]="{standalone: true}" (change)="readTeamData(project)">
+                                    <option [ngValue]="null" [disabled]="true">Select Project Name</option>
+                                    <ng-container *ngFor='let id of teamIds'>
+                                        <option>{{ id }}</option>
+                                    </ng-container>
+                                </select>
                             </div>
                         </div>
 
