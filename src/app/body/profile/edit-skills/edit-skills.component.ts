@@ -79,6 +79,8 @@ export class EditSkillsComponent implements OnInit {
   }
   
   editSkillCompleted() {
-    this.editSkillsCompleted.emit({ completed: true, Skills: this.skill });
+    if(this.skill !=""){
+      this.editSkillsCompleted.emit({ completed: true, Skills: this.skill });
   }
+}
 }
