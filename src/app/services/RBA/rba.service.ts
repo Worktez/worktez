@@ -39,6 +39,7 @@ export class RBAService {
       this.permissions.createNewLabel= true;
       this.permissions.editLabel= true;
       this.permissions.deleteLabel= true;
+      this.permissions.addContributors= true;
       }
     
     else if(this.teamManager){
@@ -59,6 +60,7 @@ export class RBAService {
       this.permissions.createNewLabel= true;
       this.permissions.editLabel= true;
       this.permissions.deleteLabel= true;
+      this.permissions.addContributors= true;
     }
       this.isRbaReady = true;
   }

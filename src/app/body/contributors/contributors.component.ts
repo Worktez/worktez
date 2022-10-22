@@ -17,7 +17,7 @@ import { map, Observable } from 'rxjs';
 import { Contributors } from 'src/app/Interface/ContributorsInterface';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-
+import { RBAService } from 'src/app/services/RBA/rba.service';
 @Component({
   selector: 'app-contributors',
   templateUrl: './contributors.component.html',
@@ -28,16 +28,22 @@ export class ContributorsComponent implements OnInit {
 
   contributorsData: Contributors[]
 
-  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService) { }
+  enableLoader: boolean = false;
+  contributorDataReady: boolean = false;
+
+  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public rbaService: RBAService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.ComponentName)
-
+    this.contributorDataReady = false;
     this.getContributors();
   }
 
   getContributors() {
+    console.log("triggred")
+    this.enableLoader = true;
+    console.log(this.enableLoader);
     const callable = this.functions.httpsCallable("contributors/getContributorsData");
     callable({}).pipe(
       map(actions => {
@@ -45,12 +51,21 @@ export class ContributorsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.contributorsData=data;
+        console.log(data);
+        this.contributorDataReady = true;
+        this.enableLoader = false;
+        console.log(this.enableLoader);
         console.log("Saved Contributors Data")
       },
       error: (error) => {
+        this.enableLoader = false;
         console.error(error);
       },
-      complete: () => console.info('Getting Contributors data successful')
+      complete: () => {
+        this.enableLoader = false;
+        this.contributorDataReady = true;
+        console.info('Getting Contributors data successful')
+      }
     });
   }
 
@@ -58,7 +73,9 @@ export class ContributorsComponent implements OnInit {
     this.popupHandlerService.addNewContributorEnabled = true;
   }
 
-  addNewContirbutor( completed: boolean ) {
+  addNewContributorCompleted( completed: boolean ) {
+    console.log("triggred2")
     this.popupHandlerService.addNewContributorEnabled = false;
+    this.getContributors();
   }
 }

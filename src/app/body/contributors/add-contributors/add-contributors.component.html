@@ -17,10 +17,12 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="createNewTaskTitle">Add New Contributor</h4>
-                    <button type="button" class="close" (click)= "close()" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons">close</span>
-                    </button>
+                    <h2 class="modal-title" id="createNewTaskTitle">Add New Contributor</h2>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
                 </div>
                 <div class="modal-body container-fluid pt-0">
                     <form *ngIf="percentage != 100; else showFileName">
@@ -45,19 +47,23 @@
                     <form #form="ngForm">
                         <div class="form-row">
                             <div class="form-group col-md-6 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
                                 <input type="text" class="form-control" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" placeholder="Enter Title">
                             </div>
                             <div class="form-group col-md-6 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Name</span>
                                 <input type="text" class="form-control" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" placeholder="Enter Name">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Bio</span>
                                 <textarea type="text" class="form-control form-control-sm" rows="3" [(ngModel)]="aboutme" [ngModelOptions]="{standalone: true}" placeholder="About Contributor..."></textarea>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col">                        
+                            <div class="col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Email</span>                     
                                 <input type="text" class="form-control" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
                             </div>
                         </div>
@@ -65,7 +71,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)= "submit()">Add New Contributor</button>
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader || !fileUpload" aria-label="Close" (click)= "submit()">Add New Contributor</button>
                 </div>
             </div>
         </div>
