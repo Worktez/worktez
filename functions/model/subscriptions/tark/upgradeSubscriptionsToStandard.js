@@ -31,22 +31,16 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
     const subscriptionId = request.body.data.SubscriptionId;
     let status = 200;
     let result;
-    console.log("Started Upgrade Subscription");
 
     const p = getSubscriptions("", subscriptionId).then((subData) => {
         if (subData.SubsctiptionType != " ") {
-            console.log("Sub not standard");
             let paymentId;
             const subscriptionData = standardSubscription;
-            console.log("Before if");
             if (subData.PaymentId != "0") {
-                console.log("Payment id is not 0");
                 let paymentIdString = subData.PaymentId;
                 paymentIdString = paymentIdString.slice(1, paymentIdString.length());
-                console.log("inside if");
                 paymentId = paymentIdString + 1;
             } else {
-                console.log("Payment id is 0 setting to 1");
                 paymentId = 1;
             }
             paymentId++;
@@ -68,7 +62,6 @@ exports.upgradeSubscriptionsToStandard = function(request, response) {
                 SubscritionStatus: "Active",
             };
             updateSubscription(inputJson, subscriptionId);
-            console.log("Going to call generate razorpay order");
             const p1 = generateRazorpayOrder(uid, paymentId, subscriptionId, subscriptionData.amount).then((data)=>{
                 return data;
             });
