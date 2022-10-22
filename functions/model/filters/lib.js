@@ -54,7 +54,6 @@ exports.setFilterProperties = function(orgDomain, teamName, docId, filterName, d
  * @return {any}
  */
 exports.getFilterById = function(orgDomain, teamName, docId) {
-  console.log(orgDomain, teamName, docId);
   const getFilterById = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("CustomFilter").doc(docId).get().then((doc) => {
     const data = doc.data();
     return data;
@@ -70,7 +69,6 @@ exports.getFilterById = function(orgDomain, teamName, docId) {
  * @return {any}
  */
 exports.getFilters = function(orgDomain, teamName) {
-  console.log(orgDomain, teamName);
   const getFilterPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("CustomFilter").where("Status", "==", "OK").get().then((doc) => {
     const data = [];
     doc.forEach((filter) => {

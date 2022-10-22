@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -61,7 +61,6 @@ exports.getDemoRequestData = function() {
         if (doc.exists) {
             return doc.data();
         } else {
-            console.log("else triggered");
             return;
         }
     });

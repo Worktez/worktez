@@ -84,7 +84,7 @@ exports.generateBase64String = function(temp) {
  */
 exports.setApplication = function() {
     const P1 = firestore.collection("RawData").doc("AppDetails").set({
-        CurrentSprintId: 0,
+        // CurrentSprintId: 0,
         TotalDevelopmentTask: 0,
         TotalBusinessTask: 0,
         TotalMarketingTask: 0,
@@ -93,10 +93,13 @@ exports.setApplication = function() {
         TotalCompletedTask: 0,
         TotalUnCompletedTask: 0,
         TotalNumberOfOrganizations: 0,
+        TotalNumberOfTeams: 0,
+        TotalNumberOfMembers: 0,
         TotalNumberOfPatch: 9,
         TotalNumberOfContributors: 0,
         TotalNumberSchedularOrg: 0,
         MeetWorktezCounter: 0,
+        TotalNumberSchedularSubOrg: 0,
         MeetCounter: 0,
         PostCounter: 0,
     });
@@ -156,12 +159,42 @@ exports.checkUpdateTime = function(lastUpdated) {
     // for 1 day difference - 86400000
     const currentTimeStamp = Date.now();
     const diff = currentTimeStamp - lastUpdated;
-    console.log(currentTimeStamp, "-", lastUpdated, " = ", diff);
     if (diff >= 60) {
         return currentTimeStamp;
     }
     return 0;
 };
+
+exports.basicSubscription = {
+     noOfTeams: 2,
+     noOfMembers: 5,
+     emailsAndNotifications: 1000,
+     quickNotes: 20,
+     docPerTask: 1,
+     meetings: 100,
+     pDashboard: false,
+     techTag: true,
+     pReport: false,
+     amount: 0,
+     subscriptionType: "Basic",
+     currencyType: "USD",
+};
+
+exports.standardSubscription = {
+    noOfTeams: 5,
+    noOfMembers: 10,
+    emailsAndNotifications: 10000,
+    quickNotes: 100,
+    docPerTask: 3,
+    meetings: 100,
+    pDashboard: false,
+    techTag: true,
+    pReport: false,
+    subscriptionType: "Standard",
+    amount: 49,
+    currencyType: "USD",
+};
+
 
 const today = new Date();
 
