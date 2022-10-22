@@ -26,7 +26,6 @@ const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = requi
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { addSubscription } = require("../../subscriptions/tark/addSubscription");
 const { createMember } = require("../tark/createMember");
-const { addSubscription } = require("../../subscriptions/tark/addSubscription");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
     const data = request.body.data;
