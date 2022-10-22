@@ -4,7 +4,7 @@ const path = require('path');
 const dir = "functions/model/application";
 const prodFile = "paymentKeys.js";
 
-const content = `${process.RAZORPAY_KEYS}`;
+const content = `${process.env.RAZORPAY_KEYS}`;
 
 fs.access(dir, fs.constants.F_OK, (err) => {
     if(err) {
