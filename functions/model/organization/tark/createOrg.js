@@ -24,6 +24,7 @@ const { functions, getApplicationData, updateApplication, generateBase64String, 
 const { setOrg, getOrg, getOrgRawData, setOrgRawData, updateOrgRawData } = require("../lib");
 const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = require("../../users/lib");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { addSubscription } = require("../../subscriptions/tark/addSubscription");
 const { createMember } = require("../tark/createMember");
 const { addSubscription } = require("../../subscriptions/tark/addSubscription");
 

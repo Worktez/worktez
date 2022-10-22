@@ -21,6 +21,7 @@ import { ApplicationSettingsService } from '../applicationSettings/application-s
 import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
+import { SubscriptionService } from '../subscription/subscription.service';
 import { RBAService } from '../RBA/rba.service';
 import { SubscriptionService } from '../subscription/subscription.service';
 
@@ -129,6 +130,7 @@ export class StartServiceService {
       this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
       this.authService.themeService.changeTheme(AppTheme);
       this.quickNotes.getQuickNotes();
+      this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
       this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
     } else {

@@ -100,6 +100,8 @@ const routes: Routes = [
   { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
   { path: 'Pricing', component:PricingComponent },
+  { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
+  { path: 'Standard', component:StandardSubscriptionComponent},
   { path: 'Notifications', component:AllNotificationComponent },
   { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
   { path: 'Standard', component:StandardSubscriptionComponent},
