@@ -21,7 +21,7 @@ const crypto = require("crypto");
 const { setPaymentStatus } = require("../lib");
 const { standardSubscription, currentDate } = require("../../application/lib");
 const { updateSubscription, getSubscriptions } = require("../../subscriptions/lib");
-const { keySecret } = require("../../../paymentKeys");
+const { keySecret } = require("../../application/paymentKeys");
 exports.paymentVerification = function(request, response) {
     try {
         const orderId = request.body.data.OrderId;
