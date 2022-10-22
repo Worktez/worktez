@@ -21,7 +21,9 @@ import { ApplicationSettingsService } from '../applicationSettings/application-s
 import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
+import { SubscriptionService } from '../subscription/subscription.service';
 import { RBAService } from '../RBA/rba.service';
+import { SubscriptionService } from '../subscription/subscription.service';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +58,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService) { }
+  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -128,9 +130,9 @@ export class StartServiceService {
       this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
       this.authService.themeService.changeTheme(AppTheme);
       this.quickNotes.getQuickNotes();
-      console.log("test : ", SelectedOrgAppKey);
-      console.log("test2 : ", this.userEmail);
+      this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
       this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
+      this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
     } else {
       this.authService.organizationAvailable = false;
         this.router.navigate(['/Social']);

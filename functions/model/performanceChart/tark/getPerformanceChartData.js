@@ -68,7 +68,6 @@ exports.getPerformanceChartData = function(request, response) {
             responseData.push([i, doc[i]]);
           }
         }
-        console.log(responseData);
         result = { data: { status: "OK", data: responseData } };
       }
     });

@@ -1,0 +1,105 @@
+.page {
+    background-color: var(--secondary-bg) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.heading1 {
+    color: #4E4E4E;
+    font-size: 25px;
+    font-family: var(--font); 
+}
+
+.heading2 {
+    color: #4E4E4E;
+    font-size: 40px;    
+    font-family: var(--font);
+    line-height: 3rem;
+}
+
+.tablehead {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.tablebody {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+#featureCard {
+    background-color: #4042E2;
+    border-top-left-radius: 20px 20px;
+    border-right: 6px solid #ffffff;
+}
+
+#basicCard {
+    background-color: #00867D;
+    border-right: 3px solid #ffffff;
+}
+
+#upgradeButton{
+    background-color: #ffffff;
+    color: #4006BA;
+    display: block;
+    border-radius: 50px;
+    text-align: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: #4006BA;
+}
+
+#standardCard {
+    background-color: #E94E32;
+    border-left: 3px solid #ffffff;
+}
+
+#entCard {
+    background-color: #2368FF;
+    border-top-right-radius: 20px 20px;
+    border-left: 6px solid #ffffff;
+}
+.table {
+    border-radius: 0px;
+    box-shadow: 0px 0px 10px 3px #ebecefa5;
+}
+td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.demoButton {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    display: block;
+    border-radius:50px;
+	text-align:center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border: none !important;
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+
+
+.button {
+    background-color: #2368FF;
+}
+/* .btn {
+    color: var(--button-text);
+    background-color: var(--secondary-bg);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+} */
+
+@media only screen and (max-width: 600px) {
+    #ebox {
+        display: none;
+    }
+}

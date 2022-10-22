@@ -20,10 +20,11 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { functions, getApplicationData, updateApplication, generateBase64String } = require("../../application/lib");
-const { setOrg, getOrg, getOrgRawData, setOrgRawData } = require("../lib");
+const { functions, getApplicationData, updateApplication, generateBase64String, basicSubscription } = require("../../application/lib");
+const { setOrg, getOrg, getOrgRawData, setOrgRawData, updateOrgRawData } = require("../lib");
 const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = require("../../users/lib");
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+const { addSubscription } = require("../../subscriptions/tark/addSubscription");
 const { createMember } = require("../tark/createMember");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
@@ -31,7 +32,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
     const date = new Date();
     const orgId = generateBase64String(date.toString() + date.getMilliseconds().toString());
     const appKey = generateBase64String(date.getMilliseconds() + orgId);
-
+    const subscriptionData = basicSubscription;
     const organizationName = data.OrganizationName;
     const orgDomain = data.OrganizationDomain;
     const orgEmail = data.OrganizationEmail;
@@ -64,6 +65,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
                 };
 
                 updateApplication(appDetailsUpdateJson);
+                updateOrgRawData(appDetailsUpdateJson, orgDomain);
             }).catch((error) => {
                 status = 500;
                 console.log("Error:", error);
@@ -96,6 +98,13 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         console.log("Error:", error);
     });
 
+    const promise5 =addSubscription(appKey, orgAdminUid, subscriptionData, orgDomain).then(() => {
+        return;
+    }).catch((error) => {
+        status = 500;
+        console.log("Error:", error);
+    });
+
     const schedularInput = {
         SelectedOrgAppKey: appKey,
     };
@@ -106,10 +115,11 @@ exports.createOrg = functions.https.onRequest((request, response) => {
         teamManager: true,
         teams: [],
     };
+
     setSchedularUnit(schedularInput, orgId);
     createMember(createMemberInput);
     let result;
-    const promises = [promise1, promise2, promise3, promise4];
+    const promises = [promise1, promise2, promise3, promise4, promise5];
     return Promise.all(promises).then(() => {
             const arr = ["Created Organization Successfully", appKey, orgId];
             result = { data: arr };
