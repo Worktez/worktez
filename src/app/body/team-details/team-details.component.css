@@ -26,6 +26,32 @@
     border: none;
 }
 
+.dropdown-menu {
+    border-color: var(--primary-color) ;
+    color: var(--text);
+    background-color: var(--secondary-bg);
+    width: 70px !important;
+}
+
+.dropdown {
+    width: 200px;
+}
+
+#button{
+    background-color: var(--button-hover-bg);
+    color: var(--button-text);
+}
+
+#button:hover,
+#dropdownButton:hover, .dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
+}
+
+.dropdown-item {
+    color: var(--text);
+}
+
 .contentBox {
     color: var(--text);
 }

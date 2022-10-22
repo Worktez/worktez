@@ -106,18 +106,22 @@
                     class="btn etc float-right" (click)="createDefaultLabels()">Add Default Label</button>
                 </div>
               </ng-container>
-              <ng-container>
-                  <div class="row text-right">
-                  <div class="col-md-12">
-                    <select class="form-control form-control-sm" [(ngModel)]="labelName"
-                      [ngModelOptions]="{standalone: true}" placeholder="Enter Custom Label" (click)="changeDefaultLabels()">
-                      <option [ngValue]="Null" [disabled]="true">Select Label</option>
-                      <ng-container *ngFor='let label of filteredOptionsLabels'>
-                        <option>{{ label }}</option>
-                      </ng-container>
-                    </select>
+              <ng-container >
+                <div class="btn-group">
+                  <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    {{labelName}}&nbsp;&nbsp;
+                  </button>
+          
+                  <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                    <button class="dropdown-item" type="button" (click)="changeDefaultLabels('Development')">
+                      Development
+                    </button>
+                    <button class="dropdown-item" type="button" (click)="changeDefaultLabels('Marketing')">
+                      Marketing
+                    </button>
                   </div>
-                  </div>
+                </div>
               </ng-container>
             </div>
             <div class="row scopeLabels">
