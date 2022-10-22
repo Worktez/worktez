@@ -17,7 +17,7 @@ fs.access(dir, fs.constants.F_OK, (err) => {
 
     try {
         fs.writeFileSync(dir + "/" + prodFile, content);
-        console.log("Created successfully in", process.cwd());
+        console.log("Credentials updated in", process.cwd());
         if(fs.existsSync(dir + "/" + prodFile)) {
             console.log("File is created", path.resolve(dir + "/" + prodFile));
             const str = fs.readFileSync(dir + "/" + prodFile).toString();

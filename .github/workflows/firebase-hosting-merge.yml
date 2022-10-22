@@ -17,6 +17,9 @@ jobs:
       - run: node createEnv.js
         env:
           FIREBASE_DETAILS: '${{ secrets.FIREBASE_DETAILS }}'
+      - run: node createRazorpayCred.js
+        env:
+          RAZORPAY_KEYS: '${{ secrets.RAZORPAY_KEYS }}'
       - run: npm install --force
       - run: npm install -g @angular/cli
       - run: ng build --configuration production
