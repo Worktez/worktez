@@ -21,6 +21,9 @@
  * See the MIT License for more details.
  ***********************************************************/
  const { setOrgMember, getOrgMember } = require("../lib");
+ const { getApplicationData, updateApplication } = require("../../application/lib");
+ const { updateOrgRawData } = require("../../organization/lib");
+
 
  exports.createMember = function(createMemberInput) {
      const orgDomain = createMemberInput.orgDomain;

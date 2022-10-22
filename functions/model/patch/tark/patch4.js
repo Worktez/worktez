@@ -28,16 +28,12 @@ const db = admin.firestore();
 exports.patch4 = function(request, response) {
     const uid = request.body.data.Uid;
     const orgDomain = request.body.data.OrgDomain;
-    console.log(uid);
-    console.log(orgDomain);
 
     const promise1 = db.collection("Organizations").doc(orgDomain).collection("Activity").get().then((activities) => {
         activities.forEach((activity) => {
             const updateActivities = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(activity.id).collection("Action").get().then((actions) => {
-                console.log(activity.id + "Activity Length is " + actions.docs.length);
                 if (actions.docs.length > 0) {
                     actions.forEach((action) => {
-                        console.log("Action" + action.id + "for Activity" + activity.id);
                         const updateAction = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(activity.id).collection("Action").doc(action.id).update({
                             Uid: uid,
                         });

@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -28,7 +28,6 @@ const {addRequest} = require("./tark/addRequest");
  * @returns {any}
  */
  fastify.post("/addRequest", (req, res) => {
-     console.log("requestDemo triggered");
     addRequest(req, res);
 });
 

@@ -53,8 +53,6 @@ exports.editTask = function(request, response) {
     const editedSprintName = createSprintName(editedSprintNumber);
     const type = request.body.data.Type;
     const reporter = request.body.data.Reporter;
-    // const milestoneId = request.body.data.MilestoneId;
-    // console.log("Milestone Id from Edit task", milestoneId);
     let result;
     let status = 200;
     let assigneeName = "";
@@ -65,8 +63,6 @@ exports.editTask = function(request, response) {
     let comment = "Edited task details: ";
     let teamId;
     let teamName;
-    // let SprintEditedFlag;
-    // const subjectMessage = "your task is edited sucesfully";
 
 
     const promises = [];
@@ -76,7 +72,6 @@ exports.editTask = function(request, response) {
         const orgId = orgDetail.OrganizationId;
         let currentSprint;
         if (editedSprintNumber != previousId) {
-            // SprintEditedFlag = true;
             comment += "Moved to sprint " + editedSprintName + ". ";
 
             const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
@@ -84,7 +79,6 @@ exports.editTask = function(request, response) {
                 teamId = taskDoc.TeamId;
                 getTeamUseTeamId(orgDomain, teamId).then((data)=>{
                     teamName = data.TeamName;
-                    console.log(teamName, data);
                     currentSprint = data.CurrentSprintId;
                     updateSprintData(teamId, project, orgDomain, previousSprintName, oldStoryPointNumber, storyPointNumber, editedSprintNumber, orgId, editedSprintName, currentSprint).then(()=>{
                         updateSprintEvaluationGraphData(orgDomain, teamId, editedSprintName);
@@ -113,7 +107,6 @@ exports.editTask = function(request, response) {
                             StartStoryPoint: startStoryPointNumber,
                         };
                     } else if (sprintDoc.SprintNumber == currentSprint) {
-                        console.log(currentSprint, sprintDoc.SprintNumber);
                         const midStoryPointNumber = parseInt(sprintDoc.MidStoryPoint) - oldStoryPointNumber + storyPointNumber;
                         updateNewSprintJson = {
                             MidStoryPoint: midStoryPointNumber,

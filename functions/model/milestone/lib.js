@@ -1,5 +1,5 @@
-/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable indent */
@@ -109,7 +109,6 @@ exports.getAllMilestonesData = function(orgDomain, teamId="") {
  * @return
  */
 exports.addTask = function(milestoneId, taskId, orgDomain) {
-    console.log(milestoneId, taskId, orgDomain);
     const promise =db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update({
         MilestoneId: milestoneId,
     });
