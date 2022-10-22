@@ -43,7 +43,7 @@ import { LoaderComponent } from './body/loader/loader.component';
 import { LoginComponent } from './body/login/login.component';
 import { LoginHandlerComponent } from './header/login-handler/login-handler.component';
 import { UserCardComponent } from './header/login-handler/user-card/user-card.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { FilterTaskComponent } from './body/filter-task/filter-task.component';
 import { NavbarComponent } from './body/navbar/navbar.component';
@@ -177,6 +177,10 @@ import { SkillsComponent } from './body/profile/skills/skills.component';
 import { MembersAccessComponent } from './body/view-organization-details/members-access/members-access.component';
 import { MemberCardComponent } from './body/view-organization-details/members-access/member-card/member-card.component';
 import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/edit-milestone.component';
+import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
+import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
+import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
+
 
 @NgModule({
   declarations: [
@@ -320,6 +324,9 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
     MembersAccessComponent,
     MemberCardComponent,
     EditMilestoneComponent,
+    AllNotificationComponent,
+    AllNotificationCardComponent,
+    AddWatchersComponent,
   ],
   imports: [
     BrowserModule,

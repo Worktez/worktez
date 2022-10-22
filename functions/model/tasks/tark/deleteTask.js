@@ -43,6 +43,7 @@ exports.deleteTask = function(request, response) {
     let status = 200;
     let assigneeName = "";
     let senderName = "";
+    let senderEmail = "";
 
     getOrgUseAppKey(appKey).then((orgDoc) => {
         const orgDomain = orgDoc.OrganizationDomain;
@@ -68,6 +69,7 @@ exports.deleteTask = function(request, response) {
 
             const p2 = getUser(uid, "").then((data) => {
                 senderName = data.displayName;
+                senderEmail = data.email;
                 return senderName;
             }).catch((error) => {
                 console.error(error);
@@ -130,7 +132,7 @@ exports.deleteTask = function(request, response) {
 
                 // sendMail(assignee, subjectMessage, htmlMessage);
                 taskMailer("Delete_Task", taskId, orgDomain, senderName);
-                sendNotification(notificationMessage, uid, date, time, orgDomain, link);
+                sendNotification(notificationMessage, senderEmail, uid, date, time, orgDomain, link);
 
                 addActivity("DELETED", "Deleted Task", taskId, date, time, orgDomain, uid);
 

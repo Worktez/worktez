@@ -17,6 +17,11 @@
 
 }
 
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
 select,
 input {
     background-color: var(--primary-bg);
@@ -70,5 +75,15 @@ input:focus {
     height: auto;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
     border: none;
-  }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}

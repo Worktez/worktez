@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -14,7 +15,8 @@
  * See the MIT License for more details.
  ***********************************************************/
 const {deleteUserPost, getPost} = require("../lib");
-const {getUser, updateUser} = require("../../users/lib");
+const {getUser} = require("../../users/lib");
+const {decrementNumberofPostsforUser} = require("../../users/tark/incrementUserCounters");
 
 exports.deletePost = function(request, response) {
   const uid = request.body.data.Uid;
@@ -32,6 +34,7 @@ exports.deletePost = function(request, response) {
           Status: "DELETED",
         };
         deleteUserPost(updatePostToJson, postId);
+        decrementNumberofPostsforUser(uid);
       }
     }).catch((error) => {
       status = 500;

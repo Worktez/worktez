@@ -14,10 +14,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification } from 'src/app/Interface/NotificationInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ToolsService } from 'src/app/services/tool/tools.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification-center',
@@ -33,9 +34,11 @@ export class NotificationCenterComponent implements OnInit {
   OpenNotifBox: boolean = true;
   display: string;
 
-  constructor(public toolService: ToolsService, public functions: AngularFireFunctions, public backendService: BackendService, public authService: AuthService, public applicationSettingService: ApplicationSettingsService) { }
+
+  constructor(public toolService: ToolsService,public router: Router, public functions: AngularFireFunctions, public backendService: BackendService, public authService: AuthService, public applicationSettingService: ApplicationSettingsService) { }
 
   ngOnInit(): void {
+    
   }
 
   loadNotifications(notificationStatus) {
@@ -49,8 +52,7 @@ export class NotificationCenterComponent implements OnInit {
   }
 
   showNotification() {
-    this.applicationSettingService.notificationListObservable.subscribe((data) => {
-      console.log(data);
+    this.applicationSettingService.newNotificationListObservable.subscribe((data) => {
       if(!data) {
         this.loadNotifications(1);
       } else {
@@ -59,6 +61,7 @@ export class NotificationCenterComponent implements OnInit {
         this.showOldNotificationsList = false;
       }
     });
+    this.resetActiveNotificationCounter();
   }
 
   resetActiveNotificationCounter() {
@@ -68,7 +71,6 @@ export class NotificationCenterComponent implements OnInit {
     const callable = this.functions.httpsCallable("notifications/emptyNotifications");
     callable({Uid: uid, OrgDomain: orgDomain, LastSeenDate: lastSeenDate}).subscribe({
       next: (data) => {
-        console.log(data);
       },
       error: (error) => {
         console.error("active notifications reset");
@@ -81,8 +83,9 @@ export class NotificationCenterComponent implements OnInit {
   }
 
   showOlderNotifications() {
-    this.showNotificationsList = !(this.showNotificationsList);
-    this.loadNotifications(0);
-    this.showOldNotificationsList = true;
+    // this.showNotificationsList = !(this.showNotificationsList);
+    // this.loadNotifications(0);
+    // this.showOldNotificationsList = true;
+    this.router.navigate(['/Notifications'])
   }
 } 

@@ -16,7 +16,7 @@ import { Sprint } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { FeatureCardComponent } from './feature-card/feature-card.component';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from 'src/app/services/start/start-service.service';

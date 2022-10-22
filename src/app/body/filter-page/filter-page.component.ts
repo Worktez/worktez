@@ -20,7 +20,7 @@ import { CustomFilter } from 'src/app/Interface/TeamInterface';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { database } from 'firebase-functions/v1/firestore';
 
 @Component({

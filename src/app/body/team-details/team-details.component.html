@@ -37,7 +37,7 @@
                 <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
                   badge
                 </mat-icon>
-                <span class="align-middle"> Team Id:  {{ team.TeamId }}</span>
+                <span class="align-middle"> Team Id: {{ team.TeamId }}</span>
               </div>
             </div>
           </div>
@@ -49,8 +49,8 @@
               </mat-icon>
             </span>
             <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
-              <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam" title="delete Team" type="button" data-toggle="modal" 
-              data-bs-toggle="tooltip">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam"
+                title="delete Team" type="button" data-toggle="modal" data-bs-toggle="tooltip">
                 delete
               </mat-icon>
             </span>
@@ -69,8 +69,9 @@
                 <span class="head">Team Members</span>
               </div>
               <div class="col text-right">
-                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.addMember" class="btn etc" (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top"
-                data-toggle="modal" data-target="#memberModal" title="add-member">Add Member</button>
+                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.addMember" class="btn etc"
+                  (click)="addMember()" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal"
+                  data-target="#memberModal" title="add-member">Add Member</button>
               </div>
             </div>
             <div class="row">
@@ -78,12 +79,15 @@
                 <ng-container *ngFor="let item of team.TeamMembers">
                   <div class="row">
                     <div class="col">
-                      <app-suggestion-bucket [email]="item" [showEmail]="false" (selectedEmail)="selectedAssignee($event)">
+                      <app-suggestion-bucket [email]="item" [showEmail]="false"
+                        (selectedEmail)="selectedAssignee($event)">
                       </app-suggestion-bucket>
                     </div>
                     <div class="col-2 col-md-3">
-                      <span *ngIf="rbaService.isRbaReady && rbaService.permissions.removeMember" class="btn extra" (click)="removeMemberDB(item)">
-                        <mat-icon  font-set="material-icons" class="material-icons align-middle text-danger">close</mat-icon>
+                      <span *ngIf="rbaService.isRbaReady && rbaService.permissions.removeMember" class="btn extra"
+                        (click)="removeMemberDB(item)">
+                        <mat-icon font-set="material-icons" class="material-icons align-middle text-danger">close
+                        </mat-icon>
                       </span>
                     </div>
                   </div>
@@ -96,9 +100,25 @@
               <div class="col">
                 <span class="head">Team Labels</span>
               </div>
-              <div class="col text-right">
-                <button *ngIf="rbaService.isRbaReady && rbaService.permissions.addDefaultLabel" class="btn etc float-right" (click)="createDefaultLabels()">Add Default Label</button>
-              </div>
+              <ng-container>
+                <div class="col text-right">
+                  <button *ngIf="rbaService.isRbaReady && rbaService.permissions.addDefaultLabel"
+                    class="btn etc float-right" (click)="createDefaultLabels()">Add Default Label</button>
+                </div>
+              </ng-container>
+              <ng-container>
+                  <div class="row text-right">
+                  <div class="col-md-12">
+                    <select class="form-control form-control-sm" [(ngModel)]="labelName"
+                      [ngModelOptions]="{standalone: true}" placeholder="Enter Custom Label" (click)="changeDefaultLabels()">
+                      <option [ngValue]="Null" [disabled]="true">Select Label</option>
+                      <ng-container *ngFor='let label of filteredOptionsLabels'>
+                        <option>{{ label }}</option>
+                      </ng-container>
+                    </select>
+                  </div>
+                  </div>
+              </ng-container>
             </div>
             <div class="row scopeLabels">
               <ng-container *ngFor="let item of team.Scope">
@@ -119,19 +139,20 @@
 </ng-container>
 <div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <span class="modal-title" id="DeleteModalLabel">Confirmation Message</span>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-          <div class="modal-body">
-              <div class="alert alert-danger" role="alert">Are you sure you want to delete this team?</div>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger" (click) = "deleteTeam()">Delete</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="DeleteModalLabel">Confirmation Message</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
       </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert">Are you sure you want to delete this team?</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteTeam()">Delete</button>
+      </div>
+    </div>
   </div>
 </div>
 <ng-container *ngIf="updateTeamEnabled">

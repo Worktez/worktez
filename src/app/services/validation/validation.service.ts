@@ -32,6 +32,9 @@ export class ValidationService {
             case 'status': {
                 return this.checkStatus(value);
             }
+            case 'taskType': {
+                return this.checkTaskType(value);
+            }
             case 'priority': {
                 return (this.checkPriority(value));
             }
@@ -149,6 +152,9 @@ export class ValidationService {
             case 'filterName' : {
                 return(this.checkFilterName(value));
             }
+            case 'watcher' : {
+                return(this.checkWatcher(value));
+            }
 
         }
     }
@@ -191,6 +197,17 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_STATUS";
             this.errorHandlerService.addError(errorType, "Status field is required")
+            return (false);
+        }
+    }
+
+    async checkTaskType(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_STATUS";
+            this.errorHandlerService.addError(errorType, "Task-Type field is required")
             return (false);
         }
     }
@@ -294,6 +311,19 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_REPORTER";
             this.errorHandlerService.addError(errorType, "Reporter field is required")
+            return (false);
+        }
+    }
+
+    async checkWatcher(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        const regularExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const result = regularExpression.test(String(value).toLowerCase());
+        if (control.errors === null && result == true)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_WATCHER";
+            this.errorHandlerService.addError(errorType, "Watcher field is required")
             return (false);
         }
     }

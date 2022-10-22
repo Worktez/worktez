@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-3 align-middle">
                 <img src="{{ organization.OrganizationLogoURL }}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="" id="orgImg" class="rounded-circle">
-                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editOrganization" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#OrgLogoModal" data-whatever="@mdo" (click)="editProfilePic()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         edit
                     </mat-icon>
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="row p-2">
-            <div class="col-md-8 col-12">
+            <div class="col-md-7 col-12">
                 <ul class="nav">
                     <li class="nav-item ">
                         <a (click)="switchView('showTeamsDetails')" [ngClass]="{'nav-link ': true, 'activeBg': showTeamsDetails}" aria-current="page">
@@ -85,6 +85,14 @@
                     </li>
                 </ul>
             </div>
+            <div *ngIf="(backendService.organizationsData | async)" class="col pl-0 text-right" >
+                <button  *ngIf="startService.teamIdExists" class="btn extra" type="button"  (click)="filterPage()" title="filter Page">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        filter_list
+                    </mat-icon>
+                    Filters
+                </button>
+             </div>
             <div class="col pl-0 text-right">
                 <button *ngIf="rbaService.isRbaReady && rbaService.permissions.createTeam" class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#createNewTeam" (click)="createTeam()" title="Create a New Team">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -118,6 +126,6 @@
     <app-loader></app-loader>
 </ng-container>
 
-<ng-container *ngIf="editProfilePicEnabled" id="profilePicModal">
-    <app-edit-dp [uid]="uid" [email]="email" [displayName]="displayName" (editProfilePicCompleted)="editProfilePicCompleted($event)"></app-edit-dp>
+<ng-container *ngIf="editProfilePicEnabled && imageReady" id="OrgLogoModal">
+    <app-edit-dp [orgDomain]="organization.OrganizationDomain"  [imageUrl]="imageUrl"  (editOrgLogoCompleted)="editOrgLogoCompleted($event)"></app-edit-dp>
 </ng-container>

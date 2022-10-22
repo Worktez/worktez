@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
 import { QuickNote } from 'src/app/Interface/UserInterface';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { ErrorHandlerService } from '../error-handler/error-handler.service';
 
 @Injectable({

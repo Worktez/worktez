@@ -20,12 +20,13 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Location } from '@angular/common';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CookieService } from 'ngx-cookie-service';
+import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
 
 declare var jQuery:any;
 
@@ -37,6 +38,8 @@ declare var jQuery:any;
 export class CreateNewTeamComponent implements OnInit {
   componentName: string = "CREATE-NEW-TEAM"
 
+  filteredOptionsLabels: string[] = ['Development', 'Marketing'];
+  labelName: string;
   organizationDomain: string
   appKey: string
   teamAdmin: string
@@ -101,6 +104,44 @@ export class CreateNewTeamComponent implements OnInit {
     this.teamId = this.teamName.slice(0, 3);
   }
 
+  changeLabels(labelName){
+    console.log(labelName);
+    if(labelName == "Marketing"){
+      this.type = marketingLabelsTempelate.type;
+      this.statusLabels = marketingLabelsTempelate.statusLabels;
+      this.difficultyLabels = marketingLabelsTempelate.difficultyLabels;
+      this.priorityLabels = marketingLabelsTempelate.priorityLabels;
+      this.milestoneStatusLabels = marketingLabelsTempelate.milestoneStatusLabels
+    }
+    else if(labelName == "Development"){
+      this.type = developmentLabelsTempelate.type;
+      this.statusLabels = developmentLabelsTempelate.statusLabels;
+      this.difficultyLabels = developmentLabelsTempelate.difficultyLabels;
+      this.priorityLabels = developmentLabelsTempelate.priorityLabels;
+      this.milestoneStatusLabels = developmentLabelsTempelate.milestoneStatusLabels;
+
+    }
+  }
+
+  updateTeamLabels() {
+    const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
+    const callable = this.functions.httpsCallable('teams/createDefaultLabels');
+    callable({TypeLabels: this.type, StatusLabels:this.statusLabels,
+      PriorityLabels:this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
+      next: (data) => {
+        this.createNewTeamWithLabels();
+      }, 
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError", "Api");
+        console.log(error);
+      },
+      complete: () => {
+        console.info('Successfully updated team labels');
+      }
+    })
+  }
+
   type: string[] = ["Bug", "Story", "Sub Task"]
   statusLabels: string[] = ["Ice Box", "Ready to start", "Under Progress", "Blocked", "Completed"]
   priorityLabels: string[] = ["High", "Medium", "Low"]
@@ -109,6 +150,7 @@ export class CreateNewTeamComponent implements OnInit {
 
 
   async submit() {
+    this.changeLabels(this.labelName);
     if (this.teamName!=undefined || this.teamId!=undefined || this.teamManagerEmail!=undefined){
       this.teamName = this.teamName.trimRight();
       this.teamName = this.teamName.trimLeft();

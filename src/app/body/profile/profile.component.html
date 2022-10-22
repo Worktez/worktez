@@ -24,14 +24,14 @@
         <div class="col-md-1 col-1"></div>
         <div class="col pt-2">
             <div class="card p-2">
-                <div class="row">
+                <div class="row text-center">
                     <div class="col">
-                        <img class="mt-3 ml-3 rounded-circle" src={{photoURL}} onerror="this.src = '../../assets/defaultavatar.jpg' " alt="{{displayName}}" width="100" height="100" style=" border-radius: 50%;">
-                        <span *ngIf="sameUser" type="button" class="btn align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                edit
-                            </mat-icon> 
-                        </span>
+                        <img class="rounded-circle" src={{photoURL}} onerror="this.src = '../../assets/defaultavatar.jpg' " alt="{{displayName}}" width="100" height="100" style=" border-radius: 50%;">
+                            <span *ngIf="sameUser" type="button" class="btn align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    edit
+                                </mat-icon> 
+                            </span>
                     </div>
                 </div>
                 <div class="card-body">

@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 
 @Component({

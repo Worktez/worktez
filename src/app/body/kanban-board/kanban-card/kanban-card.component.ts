@@ -5,7 +5,7 @@ import { ApplicationSettingsService } from 'src/app/services/applicationSettings
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ToolsService } from 'src/app/services/tool/tools.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-kanban-card',

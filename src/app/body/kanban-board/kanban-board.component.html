@@ -1,15 +1,15 @@
-<div class="row px-3 py-2">
-    <div class="col-1">
+<div class="row px-2 py-2">
+    <div class="col-md-1 col-3">
         <div class="btn-group">
             <button class="btn px-4 dropdown-toggle" type="button" id="teamDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
             <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
                 <ng-container *ngFor="let item of startService.teams">
-                    <button class="dropdown-item" style="font-size: 12px" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+                    <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
                 </ng-container>
             </div>
         </div>
     </div>
-    <div class="col-2 dropdown">
+    <div class="col dropdown">
         <button type="button" id="filterDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
           class="btn">
             <mat-icon fontSet="material-icons-outlined" class="align-middle pr-4">
@@ -30,10 +30,10 @@
     </div>
 </div>
 <ng-container *ngIf="tasks && !showLoader">
-    <div class="row px-3" cdkDropListGroup>
+    <div class="row px-2" cdkDropListGroup>
         <ng-container *ngFor="let tasksArr of tasks; let i = index">
             <div class="col">
-                <div class="container p-4" cdkDropList (cdkDropListDropped)="onDrop($event, selectedStatusLabels[i])" [cdkDropListData]="tasksArr" id="tasksContainer">
+                <div class="box p-3" cdkDropList (cdkDropListDropped)="onDrop($event, selectedStatusLabels[i])" [cdkDropListData]="tasksArr" id="tasksContainer">
                     <ng-container *ngIf="tasksArr.length; else emptyLabelContainer">
                         <div class="row title">
                             <div class="col-9">
@@ -42,7 +42,7 @@
                                     <div class="col-10 pt-2">{{selectedStatusLabels[i]}}</div> 
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 text-right">
                                 <ng-container [Status]="selectedStatusLabels[i]">
                                     <div class="nav-item dropdown">
                                         <a class="nav-link" id="navbarDropdownBoards" role="button" data-toggle="dropdown">
@@ -52,23 +52,20 @@
                                         </a>
                                         <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards" >
                                             <ng-container *ngFor="let status of statusLabels">
-
-                                                    <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
-
+                                                <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
                                             </ng-container>
                                         </div>
                                     </div> 
                                 </ng-container>
                             </div>
                         </div>
-                        <ng-container *ngFor="let task of tasksArr">
-                            <!-- TaskCard -->
-                            <div class="card mt-3" cdkDrag>
-                                <div class="card-body p-1">
+                        <div class="cardsBody">
+                            <ul class="list-group list-group-flush"  *ngFor="let task of tasksArr">
+                                <li class="list-group-item p-0 pb-2" cdkDrag>
                                     <app-kanban-card [task]="task"></app-kanban-card>
-                                </div>
-                            </div>
-                        </ng-container>
+                                </li>
+                            </ul>
+                        </div>
                     </ng-container>
                     <ng-template #emptyLabelContainer>
                         <div class="row title">
@@ -88,7 +85,7 @@
                                         </a>
                                         <div class="dropdown-menu " aria-labelledby="navbarDropdownBoards" >
                                             <ng-container *ngFor="let status of statusLabels">
-                                                    <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
+                                                <li class="dropdown-item" (click)="changeStatusLabels(status, selectedStatusLabels[i])"> {{status}}</li>
                                             </ng-container>
                                         </div>
                                     </div> 

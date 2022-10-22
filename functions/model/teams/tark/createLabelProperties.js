@@ -156,28 +156,53 @@ const completeData = {
     IconName: "check_circle_outline",
 };
 
+const socialMediaData = {
+    ColorCode: "f44336",
+    IconName: "check_circle_outline",
+};
+
+const emailData = {
+    ColorCode: "00ff00",
+    IconName: "arrow_circle_up",
+};
+
+const adsData = {
+    ColorCode: "fc6a03",
+    IconName: "inventory_2",
+};
+
 const getIconDetails = function(element) {
-    if (element === "High") {
-        return highData;
-    } else if (element === "Medium") {
-        return mediumData;
-    } else if (element === "Low") {
-        return lowData;
-    } else if (element === "Bug") {
-        return bugData;
-    } else if (element === "Story") {
-        return storyData;
-    } else if (element === "Sub Task") {
-        return subtaskData;
-    } else if (element === "Ice Box") {
-        return iceBoxData;
-    } else if (element === "Ready to start") {
-        return readyData;
-    } else if (element === "Under Progress") {
-        return inPrgressData;
-    } else if (element === "Blocked") {
-        return blockedData;
-    } else if (element === "Completed") {
-        return completeData;
-    }
+    switch (element) {
+        case "High": {
+            return highData;
+    } case "Medium": {
+            return mediumData;
+    } case "Low": {
+            return lowData;
+    } case "Bug": {
+            return bugData;
+    } case "Story": {
+            return storyData;
+    } case "Sub Task": {
+            return subtaskData;
+    } case "Ice Box": {
+            return iceBoxData;
+    } case "Ready to start": {
+            return readyData;
+    } case "Under Progress": {
+            return inPrgressData;
+    } case "Blocked": {
+            return blockedData;
+    } case "Completed": {
+            return completeData;
+    } case "SocialMedia": {
+            return socialMediaData;
+    } case "Email": {
+            return emailData;
+    } case "Ad's": {
+            return adsData;
+    } case "Highest": {
+        return adsData;
+}
+}
 };

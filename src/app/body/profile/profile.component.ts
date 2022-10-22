@@ -12,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
@@ -24,6 +24,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { FileData } from 'src/app/Interface/FileInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
+import { database } from 'firebase-functions/v1/firestore';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
   editProjectEnabled: boolean = false
   editSkillsEnabled: boolean = false
   editWorkEnabled: boolean = false
+  submitaddedskill: boolean = false
   
   educationModalMode: string
   educationModalData: MyEducationData
@@ -79,15 +81,11 @@ export class ProfileComponent implements OnInit {
   userData : User[]
 
   constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
-    this.router.events.subscribe((event) => {
-      if(event instanceof NavigationEnd){
-        this.ngOnInit();
-      }
-    });
   }
 
   ngOnInit(): void {
     this.popupHandler.resetPopUps();
+    this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
 
     this.username = this.route.snapshot.params['username'];
@@ -183,7 +181,7 @@ export class ProfileComponent implements OnInit {
   
   editSkillsCompleted(data: { completed: boolean, Skills: string }) {
     this.editSkillsEnabled = false;
-    this.skills.push(data.Skills); 
+    this.skills.push(data.Skills);
     this.readUser();
   }
    
@@ -217,37 +215,12 @@ export class ProfileComponent implements OnInit {
       this.sameUser = true;
     }
     else{
-      const data = this.userService.getUserNameData(this.username);
-      if(data != null) {
-        this.displayName = data.displayName;
-        this.email = data.email;
-        this.uid = data.uid;
-        this.aboutMe = data.AboutMe;
-        this.photoURL = data.photoURL;
-        this.phoneNumber = data.phoneNumber;
-        // this.linkedInProfile = data.LinkedInProfile;
-        // this.githubProfile = data.LinkedInProfile;
-        // this.dateOfJoining = data.DateOfJoining;
-        // this.skills = data.Skills;
-        // this.website = data.Website;
-        if (this.website.includes("https://") == false) {
-          this.website = "https://" + this.website;
-        }
-        this.readUserEducation(this.uid);
-        this.readUserExperience(this.uid);
-        this.readUserProject(this.uid);
-        this.readUserProfilePic(this.uid);
-
-        this.sameUser = false;
-      }
-      else{
         const callable = this.functions.httpsCallable("users/getUserByUsername");
         callable({Username : this.username}).pipe(map(res => {
           const data = res.userData as UserAppSetting;
           return { ...data }
       })).subscribe({
         next: (data:UserAppSetting) => {
-          console.log(data);
           this.displayName = data.displayName;
           this.email = data.email;
           this.uid = data.uid;
@@ -259,8 +232,10 @@ export class ProfileComponent implements OnInit {
           this.dateOfJoining = data.DateOfJoining;
           this.skills = data.Skills;
           this.website = data.Website;
-          if (this.website.includes("https://") == false) {
-            this.website = "https://" + this.website;
+          if(this.website != ""){
+            if (this.website.includes("https://") == false) {
+              this.website = "https://" + this.website;
+            }
           }
           this.readUserEducation(this.uid);
           this.readUserExperience(this.uid);
@@ -273,7 +248,6 @@ export class ProfileComponent implements OnInit {
         },
         complete: () => console.info('Getting Task successful')
       });
-    }
   }
 }
 
@@ -285,6 +259,7 @@ export class ProfileComponent implements OnInit {
       }
       this.imageReady = true
     });
+    console.log(this.imageUrl);
   }
 
   readUserEducation(uid: string) {
