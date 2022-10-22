@@ -12,13 +12,24 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div *ngIf="(uploadService.filesData )?.length != 0; else upload">
+    <div class="form-group">
+        <label role="button" class="btn btn-outline-secondary btn-lg btn-block p-2" id="exampleFormControlFile1">
+                <mat-icon fontSet="material-icons-outlined" style="position: relative; bottom: 3px; right: 2px;" class="align-middle" >
+                    cloud_upload
+                </mat-icon>
+                Click to upload Document
+            <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+        </label>
+    </div>
     <div class="row" style="max-height: 40px;">
         <h4 class="col-md-10 col-10 pt-2 mb-0">Uploaded Files</h4>
         <div class="col-md-1 col-2 pt-1">
             <form>
                 <div class="form-group">
-                    <span class="material-icons uploadIcon">cloud_upload</span>
+                    <label role="button" id="exampleFormControlFile1">
+                    <span class="material-icons uploadIcon"  id="exampleFormControlFile1">cloud_upload</span>
                   <input type="file" style="display: none;" class="form-control-file" id="exampleFormControlFile1" (change)=detectFiles($event)>
+                </label>
                 </div>
             </form>
         </div>
