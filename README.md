@@ -14,12 +14,12 @@ _At **Worktez**, we are envisioned to simplify your team and project workflow, c
 
 ## About our Product :speech_balloon:
 
-Worktez is a smart solution to simplify your project and team with powerful framworks to plan, track, deploy and collaborate over ideas and project. Worktez is executive solution arround your organization, that help you simplify the complex industrial practices on developement workflow, and remote work solution.
+Worktez is an innovative solution to simplify your project and team with powerful frameworks to plan, track, deploy and collaborate over ideas and projects. Worktez is an executive solution for your organisation, that help you simplify complex industrial practices development workflow and remote work solution.
 
 Worktez is a Web App developed by a team of fresh and enthusiastic minds to help plan, track and automate the development activities.
-Our focus is create visually appealing and functionally progressive solution to all your Project Management related work.
-Our solution is focused on agile based devOps automation, that helps in more organised remote team management. You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore!
-With a vision of workplace metaverse, we keep innovating towards the simplification, automation and virtual presence to team collaboration.
+Our focus is to create visually appealing and functionally progressive solutions for all your Project Management related work.
+Our solution is focused on agile-based DevOps automation, which helps in more organised remote team management. You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore!
+With a vision of the workplace metaverse, we keep innovating towards simplification, automation and virtual presence for team collaboration.
 
 
 # Technologies used
