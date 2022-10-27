@@ -3,6 +3,8 @@
  * Copyright (C) 2022
  * Worktez
  *
+ * Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -20,23 +22,35 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getTeamUseTeamId } = require("../lib");
+const { getAllTeams } = require("../lib");
 
-exports.getTeamData = function(request, response) {
+exports.getAllTeamData = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
-    const teamId = request.body.data.TeamId;
     let status = 200;
     let result;
+    const teamData = [];
+    console.log("Orgdomain", orgDomain);
 
-    getTeamUseTeamId(orgDomain, teamId).then((team) => {
-        if (team) {
-            result = { data: {status: "OK", resultData: team} };
-            return response.status(status).send(result);
+    getAllTeams(orgDomain).then((team) => {
+        team.forEach((element) => {
+            teamData.push(element.data());
+        });
+        const res = {};
+        let i;
+        for (i=0; i< teamData.length; i++) {
+            console.log(teamData[i]);
+            const teamName = teamData[i].TeamName;
+            res[teamName] = teamData[i];
         }
+        console.log(res);
+        const jsonString= JSON.stringify(res);
+        console.log(jsonString);
+            result = { data: {status: "OK", resultData: res} };
+            return response.status(status).send(result);
     }).catch((error) => {
         status = 500;
         result = { data: error };
         console.error("Error Getting Teams", error);
-        return response.status(status).json(result);
+        return response.status(status).send(result);
     });
 };

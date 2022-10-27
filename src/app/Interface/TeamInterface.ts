@@ -46,6 +46,11 @@ export interface Team {
 
 export interface TeamDataId extends Team {id: string;}
 
+export interface TeamData {
+    TeamName: string;
+    TeamData: Team;
+}
+
 export interface Label {
     ColorCode: string;
     DisplayName: string;
