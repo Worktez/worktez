@@ -266,10 +266,10 @@ export class TaskDetailsComponent implements OnInit {
       }});
     }
 
-  async addComment() {
+   addComment() {
     this.activityDataReady = false
 
-    var condition=await (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
+    var condition= (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
       return res;
     });
     if(condition){
