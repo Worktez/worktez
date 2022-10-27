@@ -41,14 +41,14 @@
     border-right: 3px solid var(--secondary-bg);
 }
 
-#upgradeButton{
-    background-color: #ffffff;
-    color: #4006BA;
+.upgradeButton{
+    background-color: var(--primary-color);
+    color: #ffffff;
     display: block;
-    border-radius: 50px;
-    text-align: center;
+    border-radius:50px;
+	text-align:center;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    border: #4006BA;
+    border: none !important;
 }
 
 #standardCard {
