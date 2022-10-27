@@ -39,7 +39,7 @@ export class CreateNewTeamComponent implements OnInit {
   componentName: string = "CREATE-NEW-TEAM"
 
   filteredOptionsLabels: string[] = ['Development', 'Marketing'];
-  labelName: string = null;
+  labelName: string;
   organizationDomain: string
   appKey: string
   teamAdmin: string

@@ -89,8 +89,6 @@ nav {
     border-color: var(--dropdown-hover);
     border-style: solid;
     border-width: medium;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .btn {
