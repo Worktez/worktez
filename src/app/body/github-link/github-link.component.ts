@@ -43,28 +43,47 @@ export class GithubLinkComponent implements OnInit {
         this.httpService.getGithubUserRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
-        })).subscribe(data => {
-          this.objData = data;
-          this.dataFetched = true;
+        })).subscribe({
+          next: (data) => {
+            this.objData = data;
+            this.dataFetched = true;
+            console.log("Successfull");
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => console.info('Successfull')
         });
       } else if (this.searchType == 'organisation') {
         if (this.linkType=='Private'){
           this.httpService.getGithubPrivateRepos(this.bearerToken).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
-          })).subscribe(data => {
-            console.log(data);
-            this.objData = data;
-            this.dataFetched = true;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
           })
         } else if(this.linkType=='All') {
           this.httpService.getGithubAllRepos(this.bearerToken).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
-          })).subscribe(data => {
-            console.log(data);
-            this.objData = data;
-            this.dataFetched = true;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
           })
         }
       }
@@ -72,10 +91,17 @@ export class GithubLinkComponent implements OnInit {
         this.httpService.getGithubUserRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
-        })).subscribe(data => {
-          this.objData = data;
-          this.enableLoader=false;
-          this.dataFetched = true;
+        })).subscribe({
+          next: (data) => {
+            this.objData = data;
+            this.enableLoader=false;
+            this.dataFetched = true;
+            console.log("Successfull");
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => console.info('Successfull')
         });
       }
       else if (this.searchType == 'username') {
@@ -83,20 +109,32 @@ export class GithubLinkComponent implements OnInit {
           this.httpService.getGithubPrivateRepos(this.bearerToken).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
-          })).subscribe(data => {
-            console.log(data);
-            this.objData = data;
-            this.dataFetched = true;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
           })
         } else if(this.linkType=='All') {
           console.log("check2");
           this.httpService.getGithubAllRepos(this.bearerToken).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
-          })).subscribe(data => {
-            console.log(data);
-            this.objData = data;
-            this.dataFetched = true;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
           })
         }
       }

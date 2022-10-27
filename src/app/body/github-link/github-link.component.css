@@ -17,6 +17,17 @@
 .nav-link{
     color: var(--text);
 }
+
+.btn dropdown-toggle box {
+    text-align: center;
+    margin-bottom: 5px; 
+    size: 30%;
+}
+
+#bearerTokenInput {
+    margin-top: 10px;
+}
+
 .btn-primary {
     background-color: var(--primary-color);
     width: 100%;
