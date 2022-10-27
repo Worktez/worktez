@@ -94,4 +94,5 @@ h4:hover{
 }
 .aboutMe{
     max-height: 60px;
+    overflow: scroll;
 }
