@@ -240,7 +240,7 @@ export class CreateNewTeamComponent implements OnInit {
     this.router.navigate(['ViewOrganizationDetails']);
   }
 
-  async checkTeamNameAvailabilityLive() {
+  checkTeamNameAvailabilityLive() {
     if(this.teamName!=""){
       this.teamNameIsSame = false
     }
@@ -249,7 +249,7 @@ export class CreateNewTeamComponent implements OnInit {
     }
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/creatTeamNaneCheck');
-       await callable({OrganizationDomain: orgDomain, TeamName: this.teamName ,TeamId: this.teamId}).subscribe({
+       callable({OrganizationDomain: orgDomain, TeamName: this.teamName ,TeamId: this.teamId}).subscribe({
         next: (result) => {
           if(result == "teamName Already taken"){   
               this.TeamNameAvailable = false;
@@ -271,7 +271,7 @@ export class CreateNewTeamComponent implements OnInit {
   }
 
 
-  async checkTeamIdAvailabilityLive() {
+  checkTeamIdAvailabilityLive() {
     if(this.teamId!=""){
       this.teamIdIsSame = false
     }
@@ -280,7 +280,7 @@ export class CreateNewTeamComponent implements OnInit {
     }
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/creatTeamIdCheck');
-       await callable({OrganizationDomain: orgDomain, TeamName: this.teamName ,TeamId: this.teamId}).subscribe({
+       callable({OrganizationDomain: orgDomain, TeamName: this.teamName ,TeamId: this.teamId}).subscribe({
         next: (result) => {
           if(result == "teamId Already taken"){   
               this.TeamIdAvailable = false;
