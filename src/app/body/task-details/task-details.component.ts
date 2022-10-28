@@ -282,10 +282,10 @@ export class TaskDetailsComponent implements OnInit {
       }});
     }
 
-  async addComment() {
-    this.activityDataReady = true
+   addComment() {
+    this.activityDataReady = false
 
-    var condition=await (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
+    var condition= (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
       return res;
     });
     if(condition){
@@ -294,7 +294,6 @@ export class TaskDetailsComponent implements OnInit {
 
       callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
-          this.getActivityData();
           this.comment = "";
         },
         error: (error) => {
@@ -303,8 +302,9 @@ export class TaskDetailsComponent implements OnInit {
           console.log("Error", error);
         },
         complete: () => {
-          this.activityDataReady = false
-          console.info('Successful ')
+          this.activityDataReady = true
+          this.getActivityData();
+          console.info('Successful')
           
         }
     });
