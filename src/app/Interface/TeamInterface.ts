@@ -46,11 +46,6 @@ export interface Team {
 
 export interface TeamDataId extends Team {id: string;}
 
-export interface TeamData {
-    TeamName: string;
-    TeamData: Team;
-}
-
 export interface Label {
     ColorCode: string;
     DisplayName: string;
@@ -58,6 +53,14 @@ export interface Label {
     Scope: string;
     Status: string;
     Id: string;
+}
+
+export interface Scope {
+    Labels: Label[];
+}
+
+export interface TeamLabels {
+    TeamScopes: Scope[];
 }
 
 export interface FiterProp{

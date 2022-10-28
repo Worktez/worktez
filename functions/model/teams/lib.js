@@ -253,7 +253,6 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
  * @return {any}
  */
  exports.getAllLabels = function(orgDomain, teamName) {
-    console.log("Org", orgDomain, "Teamname", teamName);
     const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Status", "==", "OK").get().then((doc) => {
         const data = [];
         doc.forEach((team) => {

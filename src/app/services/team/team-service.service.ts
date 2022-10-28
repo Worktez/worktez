@@ -15,40 +15,55 @@
 ***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { TeamData } from 'src/app/Interface/TeamInterface'
+import { Subject } from 'rxjs';
+import { Team, TeamLabels } from 'src/app/Interface/TeamInterface'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamServiceService {
-  teamData: TeamData[];
+  private teamDataState: Subject<boolean> = new Subject<boolean>();
+  public teamDataStateObservable = this.teamDataState.asObservable();
+  private teamLabelDataState: Subject<boolean> = new Subject<boolean>();
+  public teamLabelDataStateObservable = this.teamLabelDataState.asObservable();
+  public teamsDataJson: Team[] = [];
+  public teamsLabelsJson: TeamLabels[] = [];
   constructor(private functions: AngularFireFunctions) { }
-
+  
   getTeams(orgDomain) {
+    this.teamDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getAllTeams');
     callable({ OrganizationDomain: orgDomain }).subscribe({
       next: (data) => {
-        console.log(data);
+        const teamsDataArray = data.resultData as Team[];
+        teamsDataArray.forEach(element => {
+            this.teamsDataJson[element.TeamId] = element as Team;
+        });
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {
+        this.teamDataState.next(true);
         console.info('Getting Team Data Successful')
       }
     });
   }
 
   getLabels(orgDomain) {
+    this.teamLabelDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getAllLabels');
     callable({ OrganizationDomain: orgDomain }).subscribe({
       next: (data) => {
-        console.log(data);
+        this.teamsLabelsJson = data;
+       // console.log(this.teamsLabelsJson["Development"]["Difficulty"]["High"].ColorCode);
+        //Example to access the Label Properties
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {
+        this.teamLabelDataState.next(false);
         console.info('Getting Label Data Successful')
       }
     });

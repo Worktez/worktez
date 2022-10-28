@@ -35,18 +35,8 @@ exports.getAllTeamData = function(request, response) {
         team.forEach((element) => {
             teamData.push(element.data());
         });
-        const res = {};
-        let i;
-        for (i=0; i< teamData.length; i++) {
-            console.log(teamData[i]);
-            const teamName = teamData[i].TeamName;
-            res[teamName] = teamData[i];
-        }
-        console.log(res);
-        const jsonString= JSON.stringify(res);
-        console.log(jsonString);
-            result = { data: {status: "OK", resultData: res} };
-            return response.status(status).send(result);
+        result = { data: { status: "OK", resultData: teamData } };
+        return response.status(status).send(result);
     }).catch((error) => {
         status = 500;
         result = { data: error };
