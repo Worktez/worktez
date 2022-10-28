@@ -109,7 +109,6 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
-   
   }
   
   checkPrLinked(){
@@ -191,11 +190,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   checkGitRepoExists(){
-    console.log(this.task.TeamId);
-    console.log(this.teamService.teamDataStateObservable);
     this.teamService.teamDataStateObservable.subscribe((data)=>{
       if(data){
-        console.log(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink);
         if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
           this.githubRepoExists = true;
           this.checkPrLinked();
