@@ -32,7 +32,8 @@ const {createDefaultLabels} = require("./tark/createDefaultLabels");
 const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 const {getAllTeamData} = require("./tark/getAllTeamData");
 const {getAllLabels} = require("./tark/getAllLabels");
-
+const {creatTeamNaneCheck} = require("./tark/createTeamNameCheck");
+const {creatTeamIdCheck} = require("./tark/creatTeamIdCheck");
 /**
  * Description
  * @param {any} "/addMember"
@@ -97,6 +98,28 @@ fastify.post("/getTeamData", (req, res) => {
  */
 fastify.post("/removeMember", (req, res) => {
   removeMember(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/checkAvailableUsername"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/creatTeamNaneCheck", (req, res)=>{
+  creatTeamNaneCheck(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/checkAvailableUsername"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/creatTeamIdCheck", (req, res)=>{
+  creatTeamIdCheck(req, res);
 });
 
 /**

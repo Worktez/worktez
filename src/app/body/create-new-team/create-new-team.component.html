@@ -36,8 +36,15 @@
                     <div class="form-group row pt-2">
                         <div class="col-sm-6">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Name</span>
-                            <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" (ngModelChange)="handleIdInput()" placeholder="Enter Team Name*">
+                            <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" (ngModelChange)="handleIdInput()" (input)="checkTeamNameAvailabilityLive()"placeholder="Enter Team Name*">
                         </div>
+                        
+                            <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(teamName)"> Please enter a TeamName </p>
+                            <p class="pl-4" style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(TeamNameAvailable) && (teamName)"> TeamName is Available</p>
+                            <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(TeamNameAvailable) && !(teamNameIsSame)" >
+                                {{teamName}} is already taken</p>
+                        </div>
+                        
                         <div class="col-sm-5">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Apply Labels</span>
                             <select class="form-control" [(ngModel)]="labelName"
@@ -52,8 +59,13 @@
                     <div class="form-group row pt-2">
                         <div class="col-sm-10">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Id</span>
-                            <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID*">
+                            <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()" (input)="checkTeamIdAvailabilityLive()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID*">
                         </div>
+                        
+                        <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(teamId)"> Please enter a TeamID </p>
+                            <p class="pl-4" style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(TeamIdAvailable) && (teamId)"> TeamID is Available</p>
+                            <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(TeamIdAvailable) && !(teamIdIsSame)" >
+                                {{teamId}} is already taken</p>
                     </div>
                     <div class="form-group row pt-2">
                         <div class="col-sm-10">
@@ -97,10 +109,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
             <div class="form-group row align-items-center justify-content-center">
                 <div class="col text-right">
-                    <button class="btn btn-md" id="button" [disabled]="enableLoader" (click)="submit()">Create Team</button>
+                    <button class="btn btn-md" id="button" [disabled]="enableLoader || !TeamIdAvailable || !TeamIdAvailable" (click)="submit()">Create Team</button>
                 </div>
             </div>
         <app-loader *ngIf="enableLoader"></app-loader>
