@@ -36,6 +36,32 @@
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <ng-container *ngIf="!dataFetched">
                     <div class="row px-2">
+                            <div class="col-md-12 py-0 my-0">
+                                <div class="btn-group">
+                                    <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
+                                      aria-expanded="false">
+                                      {{linkType}}
+                                    </button>
+                            
+                                    <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                                      <button class="dropdown-item" type="button" (click)="setLinkType('Private')">
+                                        Private
+                                      </button>
+                                      <button class="dropdown-item" type="button" (click)="setLinkType('Public')">
+                                        Public
+                                      </button>
+                                      <button class="dropdown-item" type="button" (click)="setLinkType('All')">
+                                        All
+                                      </button>
+                                    </div>
+                                  </div>
+                            </div>
+                        <ng-container *ngIf="linkType=='Private' || linkType == 'All'">
+                            <div class="col-md-12 my-0 py-0">
+                                <input type="text" class="form-control" id="bearerTokenInput" [(ngModel)]="bearerToken"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the bearer token" (click)=" setBearerToken(bearerToken)">
+                            </div>
+                        </ng-container>
                         <div class="col-md-5 py-0 my-0">
                             <span class="form-inline"><h3>Fetch repo by:</h3></span>
                         </div>
