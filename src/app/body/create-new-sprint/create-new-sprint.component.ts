@@ -81,11 +81,11 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(team => {
-      this.teamCurrentSprintNumber = team.CurrentSprintId;
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId);
+    const team = this.applicationSettingsService.team;
+    this.teamCurrentSprintNumber = team.CurrentSprintId;
       this.nextSprintId = team.CurrentSprintId + 1;
       this.readSprintData();
-    });
   }
 
   readSprintData() {

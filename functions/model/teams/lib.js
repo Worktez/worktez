@@ -119,6 +119,18 @@ exports.getTeam = function(orgDomain, teamName) {
 /**
  * Description
  * @param {any} orgDomain
+ * @return {any}
+ */
+ exports.getAllTeams = function(orgDomain) {
+    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").get().then((doc) => {
+        return doc;
+    });
+    return Promise.resolve(getTeamPromise);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
  * @param {any} teamId
  * @return {any}
  */
@@ -228,6 +240,23 @@ exports.addTeamLabel=function(orgDomain, teamName, scope, docId, displayName, ic
         const data = [];
         doc.forEach((team) => {
             data.push(team.data());
+        });
+        return data;
+    });
+    return Promise.resolve(getTeamPromise);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @return {any}
+ */
+ exports.getAllLabels = function(orgDomain, teamName) {
+    const getTeamPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").where("Status", "==", "OK").get().then((doc) => {
+        const data = [];
+        doc.forEach((labelProperties) => {
+            data.push(labelProperties.data());
         });
         return data;
     });

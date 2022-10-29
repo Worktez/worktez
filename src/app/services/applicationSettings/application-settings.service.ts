@@ -16,9 +16,10 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Notification } from 'src/app/Interface/NotificationInterface';
-import { Team, Sprint, Label } from '../../Interface/TeamInterface';
+import { Team, Sprint } from '../../Interface/TeamInterface';
 import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
+import { TeamServiceService } from '../team/team-service.service';
 import { UserServiceService } from '../user-service/user-service.service';
 
 @Injectable({
@@ -28,7 +29,7 @@ import { UserServiceService } from '../user-service/user-service.service';
 export class ApplicationSettingsService {
   public editedTeamId: string = "";
   public editedSprintId: number = 0;
-  team: Team;
+  public team: Team;
 
   public status: string[] = []
   public priority: string[] = []
@@ -37,9 +38,9 @@ export class ApplicationSettingsService {
   public milestoneStatus: string[] = []
   public project: string[] = []
 
-  public labels: Label[] = []
+  // public labels: Label[] = []
 
-  public teamData: Observable<Team>;
+  // public teamData: Observable<Team>;
 
   public sprintDataObservable: Observable<Sprint>;
 
@@ -51,64 +52,46 @@ export class ApplicationSettingsService {
   teamDataReady: boolean = false;
   teamAvailable: boolean = false;
 
-  labelDataReady: boolean = false;
+  labelDataReady: boolean = true;
 
-  constructor(private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
+  constructor(private teamService: TeamServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, private authService: AuthService) { }
 
   getTeamDetails(teamId: string) {
       this.teamDataReady = false;
-      const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
-      const callable = this.functions.httpsCallable("teams/getTeamData");
-      this.teamData = callable({OrganizationDomain: orgDomain, TeamId: teamId}).pipe(
-        map(actions => {
-          const data = actions.resultData as Team
-          if(this.team == undefined) {
-            this.team = data
-            this.teamAvailable = true;
-            this.status = this.team.Status;
-            this.priority = this.team.Priority;
-            this.difficulty = this.team.Difficulty;
-            this.milestoneStatus = this.team.MilestoneStatus;
-            this.type = this.team.Type;
-            this.project = this.backendService.organizationDetails.TeamsId;
-            this.projectLink= this.team.ProjectLink;
-            this.getLabelProperties(this.team.Scope, this.team.TeamName);
-          }
-
-          data.TeamMembers.forEach(element => {
-            this.userService.checkAndAddToUsersUsingEmail(element);
-          });
-          if(!this.userService.userReady) {
-            this.userService.fetchUserData().subscribe(()=>{
-              this.teamDataReady = true;
-            });
-          } else {
-            this.teamDataReady = true;
-          }
-          return data;
-      }));
-    
-    return this.teamData;
-  }
-
-  getLabelProperties(scope: string[], teamName: string) {
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("teams/getLabelsInScopes");
-    callable({OrganizationDomain: orgDomain, TeamName: teamName, Scope: scope}).pipe(map(actions => {
-        return actions.resultData as Label[];
-    })).subscribe({
-      next: (data) => {
-        this.labels = data;
-        this.labelDataReady = true;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.info("completed fetching labels");
+      if(this.team == undefined) {
+        this.team = this.teamService.teamsDataJson[teamId];
+        this.teamAvailable = true;
+        this.status = this.team.Status;
+        this.priority = this.team.Priority;
+        this.difficulty = this.team.Difficulty;
+        this.milestoneStatus = this.team.MilestoneStatus;
+        this.type = this.team.Type;
+        this.project = this.backendService.organizationDetails.TeamsId;
+        this.projectLink= this.team.ProjectLink;
+        // this.getLabelProperties(this.team.TeamId);
       }
-    });
+      this.teamService.teamsDataJson[teamId].TeamMembers.forEach(element => {
+        this.userService.checkAndAddToUsersUsingEmail(element);
+      });
+      if(!this.userService.userReady) {
+        this.userService.fetchUserData().subscribe(()=>{
+          this.teamDataReady = true;
+        });
+      } else {
+        this.teamDataReady = true;
+      }
   }
+
+  // getLabelProperties(teamId: string) {
+  //   const scopes = this.teamService.teamsLabelsJson[teamId];
+  //   const labelsArray = [];
+  //   scopes.forEach(element => {
+  //     labelsArray.concat(element);
+  //   });
+  //   console.log(labelsArray);
+  //   this.labels = labelsArray;
+  //   this.labelDataReady = true;
+  // }
 
   getSprintsDetails(SprintNumber: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
