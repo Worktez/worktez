@@ -27,8 +27,6 @@ import { Milestones } from 'src/app/Interface/MilestoneInterface';
 import { MilestoneServiceService } from 'src/app/services/milestone/milestone-service.service';
 import { Router } from '@angular/router';
 
-
-
 declare var jQuery:any;
 
 @Component({
@@ -94,7 +92,6 @@ export class CreateNewTaskComponent implements OnInit {
     this.parentTaskId = this.popupHandlerService.parentTaskId;
     this.title = this.popupHandlerService.quickNotesTitle;		
     this.description = this.popupHandlerService.quickNotesDescription;
-    console.log(this.popupHandlerService.milestoneId);
     this.selectedMilestoneId = this.popupHandlerService.milestoneId;
   }
 
@@ -105,30 +102,30 @@ export class CreateNewTaskComponent implements OnInit {
   
   readTeamData(teamId :string){
     this.enableLoader = true;
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-          this.priorityLabels = team.Priority;
-          this.statusLabels = team.Status;
-          this.type = team.Type;
-          this.difficultyLabels = team.Difficulty;
-          this.teamMembers=team.TeamMembers;
-          this.teamName=team.TeamName;
-          this.sprintNumber = team.CurrentSprintId;
-          this.currentSprintNumber=team.CurrentSprintId;
-          this.backlogSprintNumber=-1;
+    this.applicationSetting.getTeamDetails(teamId);
+    const team = this.applicationSetting.team;
+    this.priorityLabels = team.Priority;
+    this.statusLabels = team.Status;
+    this.type = team.Type;
+    this.difficultyLabels = team.Difficulty;
+    this.teamMembers=team.TeamMembers;
+    this.teamName=team.TeamName;
+    this.sprintNumber = team.CurrentSprintId;
+    this.currentSprintNumber=team.CurrentSprintId;
+    this.backlogSprintNumber=-1;
 
-          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
-            startWith(''),
-            map((value) => {
-              return this._filter(value)
-            }),
-          );
+    this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      }),
+    );
 
-          this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value)),
-          );
-          this.enableLoader = false;
-    }); 
+    this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
+    this.enableLoader = false;
   }
 
   showBacklog(){

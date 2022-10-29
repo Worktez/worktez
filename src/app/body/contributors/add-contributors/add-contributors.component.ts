@@ -28,7 +28,7 @@ declare var jQuery:any;
 export class AddContributorsComponent implements OnInit {
 
   @Input('organizationId') organizationId: string
-  @Output() addContributor = new EventEmitter<{ completed: boolean }>();
+  @Output() addNewContributorCompleted = new EventEmitter<{ completed: boolean }>();
 
   private currentFileUpload: FileUpload;
   private selectedFile: FileList;
@@ -42,6 +42,7 @@ export class AddContributorsComponent implements OnInit {
   public email: string;
 
   private basePath: string;
+  public fileUpload:boolean = false;
 
   constructor(private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, private uploadService: FileUploadService, public errorHandlerService: ErrorHandlerService) { }
 
@@ -52,10 +53,11 @@ export class AddContributorsComponent implements OnInit {
   close() {
     jQuery('#addNewMember').modal('hide');
     jQuery('#form').trigger("reset");
-    this.addContributor.emit({ completed: true });
+    this.addNewContributorCompleted.emit({ completed: true });
   }
 
   detectFiles(event) {
+    this.fileUpload=true;
     this.selectedFile = event.target.files;
     const file = this.selectedFile.item(0);
 

@@ -23,6 +23,7 @@ import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
 import { RBAService } from '../RBA/rba.service';
 import { SubscriptionService } from '../subscription/subscription.service';
+import { TeamServiceService } from '../team/team-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService) { }
+  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService, public teamService: TeamServiceService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -102,8 +103,6 @@ export class StartServiceService {
     if(userSelectedOrgAppKeyCookie && userSelectedTeamId) {
       const userUid = this.cookieService.get("useruid");
       const userAppTheme = this.cookieService.get("userAppTheme");
-      console.log("check: ", userSelectedOrgAppKeyCookie);
-      console.log(typeof(userSelectedOrgAppKeyCookie));
       this.loadNext(userSelectedOrgAppKeyCookie, userSelectedTeamId, userUid, userAppTheme);
     }
 
@@ -154,7 +153,20 @@ export class StartServiceService {
           this.applicationSettingsService.editedTeamId = this.selectedTeamId;
         }
         this.backendService.organizationsData.subscribe(data => {
-          this.readApplicationData();
+          this.teamService.getTeams(this.backendService.getOrganizationDomain());
+          this.teamService.getLabels(this.backendService.getOrganizationDomain());
+          this.teamService.teamDataStateObservable.subscribe({
+            next: (data) =>{
+              if(data)
+                this.readApplicationData();
+            },
+            error: (error)=> {
+              console.error(error);
+            },
+            complete: () => {
+              console.log("completed fetching team data");
+            }
+          });
         });
         this.authService.myTeamsListObservable.subscribe(data => {
           this.teams = data;
@@ -176,31 +188,32 @@ export class StartServiceService {
     this.applicationSettingsService.team = undefined;
     this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getNotificationsList(1);
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(teams => {
-      this.teamData = teams;
-      if (this.teamData.TeamId == this.selectedTeamId) {
-        if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
-          this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
-          this.currentSprintNumber = this.teamData.CurrentSprintId;
-        } else {
-          this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
-          this.currentSprintNumber = this.teamData.CurrentSprintId;
-          this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
-          this.changeTeam = false;
-        }
-        this.teamMembers = this.teamData.TeamMembers;
-      }
-      this.teamName = teams.TeamName;
-      this.managerEmail = teams.TeamManagerEmail;
-      if (teams.TeamManagerEmail == this.userEmail) {
-        this.role = "Manager";
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId);
+    
+    const teams = this.applicationSettingsService.team;
+    this.teamData = teams;
+    if (this.teamData.TeamId == this.selectedTeamId) {
+      if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
+        this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;
+        this.currentSprintNumber = this.teamData.CurrentSprintId;
       } else {
-        this.role = "Member";
+        this.teamCurrentSprintNumber = this.teamData.CurrentSprintId;
+        this.currentSprintNumber = this.teamData.CurrentSprintId;
+        this.applicationSettingsService.editedSprintId = this.currentSprintNumber;
+        this.changeTeam = false;
       }
-      this.showTeamsData = true;
-      this.applicationDataState.next(true);
-      return this.teamData;
-    });
+      this.teamMembers = this.teamData.TeamMembers;
+    }
+    this.teamName = teams.TeamName;
+    this.managerEmail = teams.TeamManagerEmail;
+    if (teams.TeamManagerEmail == this.userEmail) {
+      this.role = "Manager";
+    } else {
+      this.role = "Member";
+    }
+    this.showTeamsData = true;
+    this.applicationDataState.next(true);
+    return this.teamData;
   }
 
   stopApplication() {

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Label } from 'src/app/Interface/TeamInterface';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-get-icon',
@@ -11,25 +11,39 @@ export class GetIconComponent implements OnInit {
 
   @Input('DisplayName') displayName: string;
   @Input('Border') border: boolean;
+  @Input('TeamId') teamId: string;
+  @Input('Scope') scope: string;
+
 
   icon: Label;
   iconReady: boolean = false;
 
-  constructor(private applicationSettingService: ApplicationSettingsService) { }
+  constructor(private teamService: TeamServiceService) { }
 
   ngOnInit(): void {
-    this.getlabelProperties();
+    console.log(this.teamId, this.scope);
+    if(this.teamService.labelsReady)
+      this.getlabelProperties();
+    else {
+      this.teamService.teamLabelDataStateObservable.subscribe({
+        next: () => {
+          this.getlabelProperties();
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("Completed getting labels");
+        }
+      })
+    }
   }
 
   getlabelProperties() {
-    if(this.applicationSettingService.labels.length != 0) {
-      const labels = this.applicationSettingService.labels;
-      labels.forEach(label => {
-        if(label.DisplayName == this.displayName) {
-          this.icon = label;
-          this.iconReady = true;
-        }
-      });
+    if(this.teamService.teamsLabelsJson.length != 0) {
+      const label = this.teamService.teamsLabelsJson[this.teamId][this.scope][this.displayName];
+      this.icon = label;
+      this.iconReady = true;
     } else {
       // this.getlabelProperties();
     }

@@ -37,7 +37,7 @@ exports.addContributor = function(request, response) {
         const totalNumberOfContributors = data.TotalNumberOfContributors + 1;
 
         const appDetailsUpdateJson = {
-            TotalNumberOfContributors: totalNumberOfContributors + 1,
+            TotalNumberOfContributors: totalNumberOfContributors,
         };
 
         const docId = "Contributor"+totalNumberOfContributors;

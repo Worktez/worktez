@@ -179,11 +179,10 @@ export class MilestoneDetailsComponent implements OnInit {
 
   readTeamData(teamId :string){
     this.showLoader = true;
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-         this.milestoneStatusLabels = team.MilestoneStatus;
-         console.log(this.milestoneStatusLabels);
-    });
+    this.applicationSetting.getTeamDetails(teamId);
     this.showLoader =false;
+    const team = this.applicationSetting.team;
+    this.milestoneStatusLabels = team.MilestoneStatus;
   }
  
 

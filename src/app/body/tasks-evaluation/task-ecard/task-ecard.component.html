@@ -17,7 +17,7 @@
                 </select>
             </ng-container>
             <ng-template #showStatusIcon>
-                <app-get-icon [DisplayName]="task.Status" [Border]="false"></app-get-icon>
+                <app-get-icon [DisplayName]="task.Status" [Border]="false" [TeamId]="task.TeamId" [Scope]="'Status'"></app-get-icon>
             </ng-template>
         </span>
     </div>
@@ -33,7 +33,7 @@
                 </select>
             </ng-container>
             <ng-template #showPriorityIcon>
-                <app-get-icon [DisplayName]="task.Priority" [Border]="false"></app-get-icon>
+                <app-get-icon [DisplayName]="task.Priority" [Border]="false" [TeamId]="task.TeamId" [Scope]="'Priority'"></app-get-icon>
             </ng-template>
         </span>
     </div>
@@ -49,7 +49,7 @@
                 </select>
             </ng-container>
             <ng-template #showDifficultyIcon>
-                <app-get-icon [DisplayName]="task.Difficulty" [Border]="false"></app-get-icon>
+                <app-get-icon [DisplayName]="task.Difficulty" [Border]="false" [TeamId]="task.TeamId" [Scope]="'Difficulty'"></app-get-icon>
             </ng-template>
         </span>
     </div>
