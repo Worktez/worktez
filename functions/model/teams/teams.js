@@ -30,6 +30,8 @@ const {addLabel} = require("./tark/addLabel");
 const {addProjLink} = require("./tark/addProjLink");
 const {createDefaultLabels} = require("./tark/createDefaultLabels");
 const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
+const {getAllTeamData} = require("./tark/getAllTeamData");
+const {getAllLabels} = require("./tark/getAllLabels");
 const {creatTeamNaneCheck} = require("./tark/createTeamNameCheck");
 const {creatTeamIdCheck} = require("./tark/creatTeamIdCheck");
 /**
@@ -41,6 +43,17 @@ const {creatTeamIdCheck} = require("./tark/creatTeamIdCheck");
  */
 fastify.post("/addMember", (req, res) => {
   addMember(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getAllTeams"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getAllTeams", (req, res) => {
+  getAllTeamData(req, res);
 });
 
 /**
@@ -166,6 +179,17 @@ fastify.post("/getLabelByScope", (req, res) => {
  */
 fastify.post("/getLabelsInScopes", (req, res) => {
   getLabelsInScopes(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getAllLabels"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getAllLabels", (req, res) => {
+  getAllLabels(req, res);
 });
 
 /**

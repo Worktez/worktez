@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-6 col-6 py-2 d-flex justify-content-end">
                         <ul class="nav">
-                            <li class="nav-item">
+                            <li class="nav-item" *ngIf="githubRepoExists">
                                 <span class="btn">
                                     <img src="../../../assets/git.png" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
                                     alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel" (click)="linkPr()">
