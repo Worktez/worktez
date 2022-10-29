@@ -30,9 +30,7 @@ exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintId) 
     const inputJson = {};
     const p1 = getTeamUseTeamId(orgDomain, teamId).then((data)=>{
         const teamName = data.TeamName;
-        console.log(orgDomain, teamId, sprintId);
         const p = getSprint(orgDomain, teamName, sprintId).then((sprintDoc) => {
-            console.log(sprintDoc);
             storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
             inputJson[sprintId] = storyPointArray;
             const promise = getOrganizationsChartDetails(orgDomain, teamName, "SprintEvaluationGraph").then((data) => {

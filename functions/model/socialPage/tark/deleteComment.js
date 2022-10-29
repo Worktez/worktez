@@ -20,7 +20,6 @@ exports.deleteComment = function(request, response) {
   const uid = request.body.data.Uid;
   const postId = request.body.data.PostId;
   const commentId = request.body.data.CommentId;
-  console.log(postId, commentId);
 
   let result;
   let status = 200;

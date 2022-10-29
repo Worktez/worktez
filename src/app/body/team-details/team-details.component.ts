@@ -33,7 +33,7 @@ import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/In
 })
 export class TeamDetailsComponent implements OnInit {
   ComponentName: string;
-  labelName: string;
+  labelName: string = "Select label";
   organizationDomain: string
   teamId: string;
   teamName: string;
@@ -103,7 +103,7 @@ export class TeamDetailsComponent implements OnInit {
     const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
     callable({OrganizationDomain:this.organizationDomain, TeamName: this.team.TeamName, TypeLabels: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels, MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
       next: (data) => {
-        this.changeDefaultLabels();
+        // this.changeDefaultLabels();
         this.showLoader = false;
         this.router.navigate(['TeamDetails', this.teamId]);
         console.log("Successful ");
@@ -117,26 +117,29 @@ export class TeamDetailsComponent implements OnInit {
     });
   }
 
-  changeDefaultLabels(){
-    this.changeLabels(this.labelName);
-    this.showLoader = true;
-    this.organizationDomain = this.backendService.getOrganizationDomain();
-    const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
-    const callable = this.functions.httpsCallable('teams/createDefaultLabels');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Type: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels,  MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
-      next: (data) => {
-        this.showLoader = false;
-        console.log("Successfully updated")
-        this.router.navigate(['TeamDetails', this.teamId]);
-        // this.updateDefaultLabels();
-      },
-      error: (error) => {
-        console.error("Error", error);
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-      },
-      complete: () => console.info('Successful')
-    });
+  changeDefaultLabels(item: string){
+    this.labelName = item;
+    if(this.labelName!=undefined){
+      this.changeLabels(this.labelName);
+      this.showLoader = true;
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+      const scope: string[] = ["Type", "Priority", "Difficulty", "Status", "MilestoneStatus"];
+      const callable = this.functions.httpsCallable('teams/createDefaultLabels');
+      callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Type: this.type, StatusLabels: this.statusLabels, PriorityLabels: this.priorityLabels, DifficultyLabels: this.difficultyLabels,  MilestoneStatusLabels: this.milestoneStatusLabels, Scope: scope}).subscribe({
+        next: (data) => {
+          this.showLoader = false;
+          console.log("Successfully updated")
+          this.router.navigate(['TeamDetails', this.teamId]);
+          // this.updateDefaultLabels();
+        },
+        error: (error) => {
+          console.error("Error", error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => console.info('Successful')
+      });
+    }
   }
   
   getTeamData() {

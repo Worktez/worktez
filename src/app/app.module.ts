@@ -170,6 +170,8 @@ import { ScheduleMeetComponent } from './body/schedule-meet/schedule-meet.compon
 import { NotificationCardComponent } from './header/notification-center/notification-card/notification-card.component';
 import { ShowMeetDetailsComponent } from './header/show-meet-details/show-meet-details.component';
 import { PricingComponent } from './body/pricing/pricing.component';
+import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
+import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
 import { EductionsComponent } from './body/profile/eductions/eductions.component';
 import { WorkEXPComponent } from './body/profile/work-exp/work-exp.component';
 import { ProjectsComponent } from './body/profile/projects/projects.component';
@@ -180,7 +182,7 @@ import { EditMilestoneComponent } from './body/milestone-details/edit-milestone/
 import { AllNotificationComponent } from './header/notification-center/all-notification/all-notification.component';
 import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
-
+import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
 
 @NgModule({
   declarations: [
@@ -317,6 +319,8 @@ import { AddWatchersComponent } from './body/task-details/add-watchers/add-watch
     NotificationCardComponent,
     ShowMeetDetailsComponent,
     PricingComponent,
+    CurrenPlanComponent,
+    PaymentStatusComponent,
     EductionsComponent,
     WorkEXPComponent,
     ProjectsComponent,
@@ -324,9 +328,11 @@ import { AddWatchersComponent } from './body/task-details/add-watchers/add-watch
     MembersAccessComponent,
     MemberCardComponent,
     EditMilestoneComponent,
+    StandardSubscriptionComponent,
     AllNotificationComponent,
     AllNotificationCardComponent,
     AddWatchersComponent,
+    PaymentStatusComponent,
   ],
   imports: [
     BrowserModule,
