@@ -140,7 +140,7 @@ export class TaskDetailsComponent implements OnInit {
       this.getLinkData();
       this.activeAllBtn = true;
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();
           this.getTaskDetail();

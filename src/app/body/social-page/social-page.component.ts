@@ -47,15 +47,20 @@ export class SocialPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
-    // this.authService.getUserSettings();
-    this.startService.userDataStateObservable.subscribe((data) => {
-      if(data) {
-        this.authService.userAppSettingObservable.subscribe((data)=>{
-          this.pageReady = true;
-          this.loadSocialPageData();
-        });
-      }
-    });
+    this.authService.getUserSettings();
+    if(this.startService.showTeamsData) {
+      this.pageReady = true;
+      this.loadSocialPageData();
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data) {
+          this.authService.userAppSettingObservable.subscribe((data)=>{
+            this.pageReady = true;
+            this.loadSocialPageData();
+          });
+        }
+      });
+    }
   }
 
   loadSocialPageData() {
@@ -95,7 +100,6 @@ export class SocialPageComponent implements OnInit {
   createPostCompleted ( data: { completed: boolean, post: Post } ) {
     this.createPostEnabled = false;
     this.posts.push(data.post);
-    // this.loadSocialPageData();
   }
 
   postReactionSwitched(data: { Uid: string, reactionAdded: boolean, reactionRemoved: boolean } ){
