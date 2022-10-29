@@ -51,11 +51,12 @@ export class FilterPageComponent implements OnInit {
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
             if(data) {
-              this.applicationSettings.teamData.subscribe((data) => {
-                if(data) {
-                  this.getTeamFilters();
-                }
-              });
+              this.getTeamFilters();
+              // this.applicationSettings.teamData.subscribe((data) => {
+              //   if(data) {
+              //     this.getTeamFilters();
+              //   }
+              // });
             }
           });
         }

@@ -65,7 +65,6 @@ export class UserServiceService {
         return newArray[0]
       }
     } else {
-      
       return undefined
     }
   }

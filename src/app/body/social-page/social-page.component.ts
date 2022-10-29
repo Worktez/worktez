@@ -47,11 +47,14 @@ export class SocialPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
-    this.authService.getUserSettings();
-    this.authService.userAppSettingObservable.subscribe((data)=>{
-      this.pageReady = true;
-      this.loadSocialPageData();
-      
+    // this.authService.getUserSettings();
+    this.startService.userDataStateObservable.subscribe((data) => {
+      if(data) {
+        this.authService.userAppSettingObservable.subscribe((data)=>{
+          this.pageReady = true;
+          this.loadSocialPageData();
+        });
+      }
     });
   }
 

@@ -50,17 +50,9 @@ export class KanbanBoardComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.readData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  this.readData();
-                }
-              });
-            }
-          });
+            this.readData();
         }
       });
     }

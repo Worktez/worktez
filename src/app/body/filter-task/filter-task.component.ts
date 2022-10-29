@@ -65,14 +65,18 @@ export class FilterTaskComponent implements OnInit {
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
             if(data) {
-              this.appSettings.teamData.subscribe((data) => {
-                if(data) {
-                  this.project = this.authService.getTeamId();
-                  this.teamIds = this.backendService.getOrganizationTeamIds();
-                  this.getCustomFilter();
-                  this.readTeamData(this.project);
-                }
-              });
+              this.project = this.authService.getTeamId();
+              this.teamIds = this.backendService.getOrganizationTeamIds();
+              this.getCustomFilter();
+              this.readTeamData(this.project);
+              // this.appSettings.teamData.subscribe((data) => {
+              //   if(data) {
+              //     this.project = this.authService.getTeamId();
+              //     this.teamIds = this.backendService.getOrganizationTeamIds();
+              //     this.getCustomFilter();
+              //     this.readTeamData(this.project);
+              //   }
+              // });
             }
           });
         }
@@ -96,16 +100,16 @@ export class FilterTaskComponent implements OnInit {
   
   readTeamData(teamId: string){
     this.showLoader = true;
-    this.appSettings.getTeamDetails(teamId).subscribe(team => {
-      this.showLoader = false;
-      this.teamMembers = team.TeamMembers;
-      this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
-        startWith(''),
-        map((value) => {
-          return this._filter(value)
-        }),
-      );
-    })
+    this.appSettings.getTeamDetails(teamId);
+    const team = this.appSettings.team;
+    this.showLoader = false;
+    this.teamMembers = team.TeamMembers;
+    this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      }),
+    );
  }
 
  getCustomFilter(){
@@ -131,9 +135,8 @@ export class FilterTaskComponent implements OnInit {
 
   onProjectChange() {
     this.showLoader = true;
-    this.appSettings.getTeamDetails(this.project).subscribe(data => {
-      this.showLoader = false;
-    });
+    this.appSettings.getTeamDetails(this.project);
+    this.showLoader = false;
   }
 
   filterByProperties() {

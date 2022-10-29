@@ -32,19 +32,19 @@
                         <div class="row"*ngIf="activityDataReady">
                             <div class="status labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Status &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                <app-get-icon [DisplayName]="task.Status" [Border]="true"></app-get-icon>
+                                <app-get-icon [DisplayName]="task.Status" [Border]="true" [TeamId]="task.TeamId" [Scope]="'Status'"></app-get-icon>
                             </div>
                             <div class="priority labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Priority &nbsp;&nbsp;</span>
-                                <app-get-icon [DisplayName]="task.Priority" [Border]="true"></app-get-icon>
+                                <app-get-icon [DisplayName]="task.Priority" [Border]="true" [TeamId]="task.TeamId" [Scope]="'Priority'"></app-get-icon>
                             </div>
                             <div class="difficulty labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Difficulty</span>
-                                <app-get-icon [DisplayName]="task.Difficulty" [Border]="true"></app-get-icon>
+                                <app-get-icon [DisplayName]="task.Difficulty" [Border]="true" [TeamId]="task.TeamId" [Scope]="'Difficulty'"></app-get-icon>
                             </div>
                             <div class="type labels mx-2" *ngIf="applicationSettingService.labelDataReady">
                                 <span id="headerLabel">Task Type</span>
-                                <app-get-icon [DisplayName]="task.Type" [Border]="true"></app-get-icon>
+                                <app-get-icon [DisplayName]="task.Type" [Border]="true" [TeamId]="task.TeamId" [Scope]="'Type'"></app-get-icon>
                             </div>
                         </div>
                     </div>

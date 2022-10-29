@@ -58,16 +58,14 @@ export class GitComponent implements OnInit {
     }
   }
   getTeamDetails(teamId: string) {
-    this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
-      this.team=data;
-      this.repoLink=this.team.ProjectLink;
-      if(this.repoLink!=""){
+    this.applicationSettingsService.getTeamDetails(teamId);
+    this.team = this.applicationSettingsService.team;
+    this.repoLink=this.team.ProjectLink;
+    if(this.repoLink!=""){
       this.getPullRequests();
-      }
-      else{
-        this.noRepoLinked=true;
-       }
-    });
+    } else {
+      this.noRepoLinked=true;
+    }
   }
 
   getPullRequests() {
