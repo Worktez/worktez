@@ -9,6 +9,7 @@ export interface Meet {
     StartTime: string;
     EndTime: string;
     OrgDomain: string;
+    Status: string;
     Uid: string;
     RoomId:string;
 }

@@ -53,6 +53,7 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
     Description: description,
     Date: date,
     RoomId: roomId,
+    Status: "OK",
   });
   return Promise.resolve(setMeetDoc);
 };
@@ -84,6 +85,7 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
     EndTime: endTime,
     HostName: hostName,
     Description: description,
+    Status: "OK",
     Date: date,
     Uid: uid,
     RoomId: roomId,
@@ -98,8 +100,8 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
  * @param {any} title
  * @return {any}
  */
-exports.updateMeetDetails= function(updateJson) {
-  const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
+exports.updateMeetDetails= function(updateMeetDetailsToJson, docId) {
+  const updateMeet = db.collection("Meet").doc(docId).update(updateMeetDetailsToJson);
   return Promise.resolve(updateMeet);
 };
 
@@ -137,6 +139,7 @@ exports.getMeetDetails=function(uid) {
         doc.forEach((element) => {
             if (element.exists) {
                 data.push( element.data());
+                console.log(data);
             }
         });
         return data;
@@ -154,4 +157,20 @@ exports.getMeetDetails=function(uid) {
 exports.updateMeetDetailsAtWorktez= function(updateJson) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
+};
+
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} docId
+ * @return {any}
+ */
+ exports.getMeetDetailsById = function(docId) {
+  const getMeetDetailsById = db.collection("Meet").doc(docId).get().then((doc) => {
+    const data = doc.data();
+    return data;
+  });
+  return Promise.resolve(getMeetDetailsById);
 };
