@@ -17,7 +17,7 @@ import { map, Observable } from 'rxjs';
 import { Contributors } from 'src/app/Interface/ContributorsInterface';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-import { RBAService } from 'src/app/services/RBA/rba.service';
+
 @Component({
   selector: 'app-contributors',
   templateUrl: './contributors.component.html',
@@ -31,7 +31,7 @@ export class ContributorsComponent implements OnInit {
   enableLoader: boolean = false;
   contributorDataReady: boolean = false;
 
-  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService, public rbaService: RBAService) { }
+  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
