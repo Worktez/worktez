@@ -53,7 +53,7 @@ export class CreateFilterComponent implements OnInit {
   status: string = null
   difficulty: string = null
   sprint: number = 0 
-  description: string = "Empty"
+  description: string = ""
   filterName: string = ""
   teamName: string = ""
   teamIds: string[]
