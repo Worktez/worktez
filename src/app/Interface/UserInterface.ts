@@ -142,7 +142,6 @@ export interface Permissions {
     createNewLabel: boolean;
     editLabel: boolean;
     deleteLabel: boolean;
-    addContributors: boolean;
 }
 export const defaultPermissions = {
     addMember: true,
@@ -162,7 +161,4 @@ export const defaultPermissions = {
     createNewLabel: true,
     editLabel: true,
     deleteLabel: true,
-    addContributors: true,
   };
-
- 

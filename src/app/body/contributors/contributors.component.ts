@@ -41,9 +41,7 @@ export class ContributorsComponent implements OnInit {
   }
 
   getContributors() {
-    console.log("triggred")
     this.enableLoader = true;
-    console.log(this.enableLoader);
     const callable = this.functions.httpsCallable("contributors/getContributorsData");
     callable({}).pipe(
       map(actions => {
@@ -51,10 +49,8 @@ export class ContributorsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.contributorsData=data;
-        console.log(data);
         this.contributorDataReady = true;
         this.enableLoader = false;
-        console.log(this.enableLoader);
         console.log("Saved Contributors Data")
       },
       error: (error) => {
@@ -74,7 +70,6 @@ export class ContributorsComponent implements OnInit {
   }
 
   addNewContributorCompleted( completed: boolean ) {
-    console.log("triggred2")
     this.popupHandlerService.addNewContributorEnabled = false;
     this.getContributors();
   }
