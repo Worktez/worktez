@@ -17,7 +17,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { Organizations } from 'src/app/Interface/OrganizationInterface';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { MemberData } from 'src/app/Interface/UserInterface';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
@@ -26,6 +25,7 @@ import { RBAService } from 'src/app/services/RBA/rba.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { FileData } from 'src/app/Interface/FileInterface';
 import { SubscriptionService } from 'src/app/services/subscription/subscription.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-view-organization-details',
@@ -49,7 +49,11 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   imageReady: boolean = false
   isAdmin:boolean = false;
 
-  constructor(public startService: StartServiceService, public rbaService: RBAService, public backendService: BackendService, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public router: Router, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public cookieService: CookieService,  public subscriptionService: SubscriptionService) { }
+  constructor(public teamService: TeamServiceService, public startService: StartServiceService, public rbaService: RBAService, 
+    public backendService: BackendService, public authService: AuthService, 
+    public router: Router, public navbarHandler: NavbarHandlerService, 
+    public popupHandlerService: PopupHandlerService, public cookieService: CookieService,  
+    public subscriptionService: SubscriptionService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -98,9 +102,8 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   getTeamDetails(teamId: string) {
-    this.applicationSettingsService.getTeamDetails(teamId).subscribe(data => {
-      this.teams.push(data);
-    });
+    const team = this.teamService.getTeamUsingId(teamId);
+    this.teams.push(team);
     this.sameUser = true;
   }
 

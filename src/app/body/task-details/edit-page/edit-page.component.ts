@@ -88,42 +88,41 @@ export class EditPageComponent implements OnInit {
   }
 
   readTeamMembers(teamId :string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-          this.teamMembers=team.TeamMembers;
-          this.teamName=team.TeamName;
-          this.currentSprintNumber=team.CurrentSprintId;
-          this.backlogSprintNumber=-1;
+    this.applicationSetting.getTeamDetails(teamId); 
+    const team = this.applicationSetting.team;
+    this.teamMembers=team.TeamMembers;
+    this.teamName=team.TeamName;
+    this.currentSprintNumber=team.CurrentSprintId;
+    this.backlogSprintNumber=-1;
 
+    this.assigneeName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      }),
+    ).subscribe({
+      next :(data) => {
+        this.filteredOptionsAssignee = data
+      },
+      error:(error) => {
+        console.error(error)
+      },
+      complete:() => console.info("Getting filtered options Assignee was successfull")
+    });
 
-          this.assigneeName.valueChanges.pipe(
-            startWith(''),
-            map((value) => {
-              return this._filter(value)
-            }),
-          ).subscribe({
-            next :(data) => {
-              this.filteredOptionsAssignee = data
-            },
-            error:(error) => {
-              console.error(error)
-            },
-            complete:() => console.info("Getting filtered options Assignee was successfull")
-          });
-
-          this.reporterName.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value)),
-          ).subscribe({
-            
-            next :(data) => {
-              this.filteredOptionsReporter = data
-            },
-            error:(error) => {
-              console.error(error)
-            },
-            complete:() => console.info("Getting filtered options Reporter was successfull")
-          });
-    }); 
+    this.reporterName.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    ).subscribe({
+      
+      next :(data) => {
+        this.filteredOptionsReporter = data
+      },
+      error:(error) => {
+        console.error(error)
+      },
+      complete:() => console.info("Getting filtered options Reporter was successfull")
+    });
   }
 
   selectedAssignee(item) {

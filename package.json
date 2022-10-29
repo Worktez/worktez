@@ -28,7 +28,7 @@
     "cropperjs": "^1.5.12",
     "fastify": "^3.25.2",
     "firebase": "^9.4.0",
-    "firebase-functions": "^3.22.0",
+    "firebase-functions": "^4.0.1",
     "jquery": "^3.5.1",
     "latest": "^0.2.0",
     "ngx-cookie-service": "^13.1.2",

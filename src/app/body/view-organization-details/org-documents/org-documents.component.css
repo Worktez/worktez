@@ -11,10 +11,10 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-#button {
-    background-color: white;
+/* #button {
+    background-color: var(--secondary-bg);
     color: var(--text);
-}
+} */
 
 #button:focus,
 #button:active,
@@ -32,4 +32,9 @@
 .btn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
+}
+
+.uploadFile{
+    background-color: var(--primary-color);
+    color: #ffffff;
 }

@@ -29,7 +29,7 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setOrganizationsChart = function(orgDomain, teamId, chartName, inputJson) {
-    const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).update(inputJson);
+    const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).set(inputJson);
     return Promise.resolve(setChart);
 };
 

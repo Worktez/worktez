@@ -1,5 +1,5 @@
 .page {
-    background-color: var(--secondary-bg);
+    background-color: #FFFFFF;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -14,6 +14,10 @@
     font-size: 40px;
     font-family: var(--font);
     line-height: 3rem;
+}
+
+.tableData{
+    color: #000000;
 }
 
 .tablehead {
@@ -37,14 +41,14 @@
     border-right: 3px solid #ffffff;
 }
 
-#upgradeButton{
-    background-color: #ffffff;
-    color: #4006BA;
+.upgradeButton{
+    background-color: var(--primary-color);
+    color: #ffffff;
     display: block;
-    border-radius: 50px;
-    text-align: center;
+    border-radius:50px;
+	text-align:center;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    border: #4006BA;
+    border: none !important;
 }
 
 #standardCard {

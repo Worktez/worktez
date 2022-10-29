@@ -55,6 +55,14 @@ export interface Label {
     Id: string;
 }
 
+export interface Scope {
+    Labels: Label[];
+}
+
+export interface TeamLabels {
+    TeamScopes: Scope[];
+}
+
 export interface FiterProp{
     Difficulty:string;
     Priority:string;

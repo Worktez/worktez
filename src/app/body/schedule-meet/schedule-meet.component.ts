@@ -85,10 +85,10 @@ export class ScheduleMeetComponent implements OnInit {
 
   readTeamData(teamId: string){
     this.enableLoader = true;
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-      this.teamMembers = team.TeamMembers;
-      this.enableLoader = false; 
-    }); 
+    this.applicationSetting.getTeamDetails(teamId); 
+    const team = this.applicationSetting.team;
+    this.teamMembers = team.TeamMembers;
+    this.enableLoader = false; 
   }
   
   selectedAttendee(item) {

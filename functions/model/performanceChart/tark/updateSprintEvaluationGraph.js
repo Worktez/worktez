@@ -20,8 +20,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { createSprintName } = require("../../application/lib");
-const { getAllSprints, getSprint } = require("../../sprints/lib");
+const { getSprint } = require("../../sprints/lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { updateChart, setOrganizationsChart, getOrganizationsChartDetails } = require("../lib");
 
