@@ -1,5 +1,5 @@
 .page {
-    background-color: var(--secondary-bg);
+    background-color: #FFFFFF;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .tableData{
-    color: var(--text);
+    color: #000000;
 }
 
 .tablehead {
@@ -33,12 +33,12 @@
 #featureCard {
     background-color: #4042E2;
     border-top-left-radius: 20px 20px;
-    border-right: 6px solid var(--secondary-bg);
+    border-right: 6px solid #ffffff;
 }
 
 #basicCard {
     background-color: #00867D;
-    border-right: 3px solid var(--secondary-bg);
+    border-right: 3px solid #ffffff;
 }
 
 .upgradeButton{
@@ -59,7 +59,7 @@
 #entCard {
     background-color: #2368FF;
     border-top-right-radius: 20px 20px;
-    border-left: 6px solid var(--secondary-bg);
+    border-left: 6px solid #ffffff;
 }
 .table {
     border-radius: 20px;
@@ -105,11 +105,5 @@ td {
 @media only screen and (max-width: 600px) {
     #ebox {
         display: none;
-    }
-}
-
-@media (prefers-color-scheme: dark) { 
-    .heading1, .heading2{
-        color: var(--text);
     }
 }
