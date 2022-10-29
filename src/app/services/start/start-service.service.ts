@@ -23,6 +23,7 @@ import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
 import { RBAService } from '../RBA/rba.service';
 import { SubscriptionService } from '../subscription/subscription.service';
+import { TeamServiceService } from '../team/team-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService) { }
+  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService, public teamService: TeamServiceService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -197,6 +198,8 @@ export class StartServiceService {
       } else {
         this.role = "Member";
       }
+      this.teamService.getTeams(this.backendService.getOrganizationDomain());
+      this.teamService.getLabels(this.backendService.getOrganizationDomain());
       this.showTeamsData = true;
       this.applicationDataState.next(true);
       return this.teamData;
