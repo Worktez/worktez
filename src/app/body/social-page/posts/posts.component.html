@@ -59,18 +59,18 @@
             <div class="col-6  d-flex justify-content-center">
                 <span class="btn btn-star py-2" (click)="switchReaction(post.PostId); " [ngClass]="{'reacted': postStarred}">
                     <ng-container *ngIf="postStarred; else normalIcon">
-                        <mat-icon class="reacted" fontSet="material-icons" class="align-middle pr-3">grade</mat-icon>
+                        <mat-icon class="reacted" fontSet="material-icons" class="align-middle pr-3">blur_circular</mat-icon>
                     </ng-container>
                     <ng-template #normalIcon>
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">grade</mat-icon>
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">blur_circular</mat-icon>
                     </ng-template>
-                    <span class="align-middle"> Star</span>
+                    <span class="align-middle">Star</span>
                 </span>
             </div>
             <div class="col-6 d-flex justify-content-center">
                 <span class="btn btn-comment py-2" (click)="showCommentBox(post.PostId)">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">chat</mat-icon>
-                    <span> Comment</span> 
+                    <span class="align-middle">Comment</span> 
                 </span>
             </div>
         </div>
