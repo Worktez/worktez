@@ -190,14 +190,11 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   checkGitRepoExists(){
-    this.teamService.teamDataStateObservable.subscribe((data)=>{
-      if(data){
-        if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
-          this.githubRepoExists = true;
-          this.checkPrLinked();
-        }
-      }
-    })
+    console.log(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink);
+    if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
+      this.githubRepoExists = true;
+      this.checkPrLinked();
+    }
   }
   
   getTimeDetails(){
