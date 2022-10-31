@@ -64,7 +64,7 @@ exports.logWork = function(request, response) {
                 const mm = String(today.getMonth() + 1).padStart(2, "0");
                 const yyyy = today.getFullYear();
 
-                const todayDate = dd + "/" + mm + "/" + yyyy;
+                const todayDate = dd + "-" + mm + "-" + yyyy;
 
                 completiondate = todayDate;
             }
@@ -77,7 +77,6 @@ exports.logWork = function(request, response) {
             };
             updateTask(logWorkInputJson, orgDomain, taskId);
             taskMailer("Log_Task", taskId, orgDomain, assignee);
-            // sendMail(assignee, subjectMessage, htmlMessage);
         }).catch((error) => {
             status = 500;
             console.log("Error:", error);

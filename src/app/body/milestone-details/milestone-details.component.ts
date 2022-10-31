@@ -70,7 +70,6 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("check1",this.milestoneService.taskData); //To Test in Production
     this.tasks = [];
     this.milestoneId = this.route.snapshot.params['MilestoneId'];
     this.navbarHandler.addToNavbar(this.milestoneId);
@@ -92,9 +91,8 @@ export class MilestoneDetailsComponent implements OnInit {
         this.tasks = this.milestoneService.taskData;
         this.getNumberData();
         this.taskDataReady = true;
-        console.log("check3",this.milestoneService.taskData); //To Test in Production
       });
-      this.prevVal = [this.milestoneData.MilestoneStatus];
+     
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
@@ -111,12 +109,10 @@ export class MilestoneDetailsComponent implements OnInit {
               this.tasks = this.milestoneService.taskData;
               this.getNumberData();
               this.taskDataReady = true;
-              console.log("check2",this.milestoneService.taskData); //To Test in Production
             });
             this.project = this.authService.getTeamId();
             this.teamIds = this.backendService.getOrganizationTeamIds();
             this.readTeamData(this.project); 
-            this.prevVal = [this.milestoneData.MilestoneStatus];
           });
    
         }
@@ -203,6 +199,7 @@ export class MilestoneDetailsComponent implements OnInit {
       })).subscribe({
         next: (data) => {
           this.milestoneData = data;
+          this.prevVal = [this.milestoneData.MilestoneStatus];
         },
         error: (error) => {
           console.log(error);
