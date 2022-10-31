@@ -14,16 +14,14 @@
  * See the MIT License for more details.
  ***********************************************************/ -->
 <div class="card post mb-3"  *ngIf="post.PostStatus != -1">
-
     <div class="card-header">
-         
         <div class="row">
             <div class="col">
                 <app-suggestion-bucket [email]="user.email" [showEmail]="false" [showUserBasic]="true"></app-suggestion-bucket>
             </div>
             <div class="col">
                 <div class="dropdown text-right" *ngIf="post.Uid == this.authService.getLoggedInUser()">
-                    <mat-icon role="button" type="button" class="btn dropdown" style="width:51px;height: 39px;" data-toggle="dropdown"> 
+                    <mat-icon role="button" type="button" class="btn dropdown" data-toggle="dropdown"> 
                         <span class="material-icons">more_vert</span>
                     </mat-icon>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
@@ -34,46 +32,45 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col"><p class="post-content" style="margin-bottom:15px;margin-left:20px;">{{post.Content}}</p></div>
+        <div class="row py-3">
+            <div class="col"><p class="post-content">{{post.Content}}</p></div>
         </div>
-        <div class="row">
-            <div class="col">  <div *ngFor="let image of images" style="margin-bottom:15px;margin-left:20px;">
-                <img [src]="image" class="image" alt="post-image">
-            </div></div>
-          
+        <div class="row align-middle">
+            <div class="col">
+                <div *ngFor="let image of images">
+                    <img [src]="image" class="image" alt="post-image">
+                </div>
+            </div>
         </div>
-        
         <hr>
         <div class="row counters">
             <div class="col-4 d-flex justify-content-left">
-                <span class=" py-0 my-0" *ngIf="noOfStars==1"> {{noOfStars}} star</span>
-                <span class=" py-0 my-0" *ngIf="noOfStars>1 || noOfStars==0"> {{noOfStars}} stars</span>
+                <span *ngIf="noOfStars==1"> {{noOfStars}} star</span>
+                <span *ngIf="noOfStars>1 || noOfStars==0"> {{noOfStars}} stars</span>
             </div>
             <div class="col-4"></div>
             <div class="col-4 d-flex justify-content-end text-right">
-                <span class="py-0 my-0" *ngIf="noOfComments==1"> {{noOfComments}} comment</span>
-                <span class="py-0 my-0" *ngIf="noOfComments>1 || noOfComments==0"> {{noOfComments}} comments</span>
+                <span *ngIf="noOfComments==1"> {{noOfComments}} comment</span>
+                <span *ngIf="noOfComments>1 || noOfComments==0"> {{noOfComments}} comments</span>
             </div>
             <div class="col"></div>
         </div>
         <div class="row">
             <div class="col-6  d-flex justify-content-center">
-                <span class="btn btn-star py-0 my-0" (click)="switchReaction(post.PostId); " [ngClass]="{'reacted': postStarred}">
+                <span class="btn btn-star py-2" (click)="switchReaction(post.PostId); " [ngClass]="{'reacted': postStarred}">
                     <ng-container *ngIf="postStarred; else normalIcon">
-                        <mat-icon class="reacted" fontSet="material-icons" class="align-middle pr-3">grade</mat-icon>
+                        <mat-icon class="reacted" fontSet="material-icons" class="align-middle pr-3">blur_circular</mat-icon>
                     </ng-container>
                     <ng-template #normalIcon>
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">grade</mat-icon>
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">blur_circular</mat-icon>
                     </ng-template>
-                    <span class="align-middle"> Star</span>
-                    
+                    <span class="align-middle">Star</span>
                 </span>
             </div>
             <div class="col-6 d-flex justify-content-center">
-                <span class="py-0 my-0 btn btn-comment" (click)="showCommentBox(post.PostId)">
+                <span class="btn btn-comment py-2" (click)="showCommentBox(post.PostId)">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">chat</mat-icon>
-                    <span> Comment</span> 
+                    <span class="align-middle">Comment</span> 
                 </span>
             </div>
         </div>
