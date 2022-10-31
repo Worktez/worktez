@@ -63,15 +63,15 @@ export class EditFilterComponent implements OnInit {
   }
 
   readTeamData(teamId :string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-          this.teamMembers=team.TeamMembers;
-          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
-            startWith(''),
-            map((value) => {
-              return this._filter(value)
-            }),
-          );
-    }); 
+    this.applicationSetting.getTeamDetails(teamId); 
+    const team = this.applicationSetting.team;
+    this.teamMembers=team.TeamMembers;
+    this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      }),
+    );
   }
 
   submit(){

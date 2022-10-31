@@ -162,5 +162,3 @@ export const defaultPermissions = {
     editLabel: true,
     deleteLabel: true,
   };
-
- 

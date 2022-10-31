@@ -31,6 +31,29 @@ export class HttpServiceService {
     return this.httpClient.get(url);
   }
 
+  getGithubPrivateRepos(bearerToken) {
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+
+    const url = environment.githubApiUrl + "/user/" +"repos?visibility=private";
+    return this.httpClient.get(url, httpOptions);
+
+  }
+
+  getGithubAllRepos(bearerToken) {
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+
+    const url = environment.githubApiUrl + "/user/" +"repos?";
+    return this.httpClient.get(url, httpOptions);
+  }
+
   getGithubOrgRepos(memberOrgName) {
     const url = environment.githubApiUrl+ "/orgs/" + memberOrgName + "/repos";
     return this.httpClient.get(url);

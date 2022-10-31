@@ -86,12 +86,12 @@ export class TasksComponent implements OnInit {
 
   changeSprint(newSprintNumber: number) {
     if (newSprintNumber == 0) {
-      this.applicationSettingsService.getTeamDetails(this.teamId).subscribe(teams => {
-        this.teamData = teams;
+      this.applicationSettingsService.getTeamDetails(this.teamId);
+      const team = this.applicationSettingsService.team;
+      this.teamData = team;
         newSprintNumber = this.teamData.CurrentSprintId;
         this.currentSprintName = this.fullSprintName(newSprintNumber);
         this.changeRoute(this.teamId, this.currentSprintName);
-      });
     } else {
       this.currentSprintNumber = newSprintNumber;
       this.currentSprintName = this.fullSprintName(newSprintNumber);

@@ -11,29 +11,49 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<ng-container *ngIf="popupHandlerService.addNewContributorEnabled">
-  <app-add-contributors (addNewContributor)="addNewContirbutor($event)"></app-add-contributors>
-</ng-container>
-<div class="row">
-  <div class="col">
-    <div class="row pl-5 ">
-      <ng-container *ngFor="let item of contributorsData ">
-        <div class="col pt-2">
-          <div class="card pt-2">
-            <img class="imageProp mx-auto rounded-circle" src="{{item.PhotoUrl}}" alt="Card image cap">
-            <div class="card-body text-center">
-              {{item.Name}} <br>
-              {{item.Title}} <hr>
-              <p>{{item.About}}</p>
+<ng-container *ngIf="contributorDataReady && !enableLoader; else loader">  
+  <div class="row mb-4">
+    <div class="col">
+      <div class="row pl-5">
+        <ng-container *ngFor="let item of contributorsData">
+          <div class="col-md-3 pt-2 mb-2">
+            <div class="card pt-2">
+              <img class="imageProp mx-auto rounded-circle" src="{{item.PhotoUrl}}" alt="Card image cap">
+              <div class="card-body text-center">
+                <div class="row">
+                  <div class="col">{{item.Name}}</div>
+                </div>
+                <div class="row">
+                  <div class="col">{{item.Title}}</div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span class="pr-1">
+                      <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                          email
+                      </mat-icon>
+                    </span>{{item.Email}}
+                  </div>
+                </div> <hr>
+                <div class="row">
+                  <div class="col">{{item.About}}</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-1" (click)="openAddMember()">
+      <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal" data-target="#addNewMember">
+        person_add
+      </mat-icon>
     </div>
   </div>
-  <div class="col-1" (click)="openAddMember()">
-    <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal" data-target="#addNewMember">
-      person_add
-    </mat-icon>
-  </div>
-</div>
+</ng-container>
+<ng-container *ngIf="popupHandlerService.addNewContributorEnabled">
+  <app-add-contributors (addNewContributorCompleted)="addNewContributorCompleted($event)"></app-add-contributors>
+</ng-container>
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

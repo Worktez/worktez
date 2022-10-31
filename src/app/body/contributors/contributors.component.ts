@@ -28,16 +28,20 @@ export class ContributorsComponent implements OnInit {
 
   contributorsData: Contributors[]
 
+  enableLoader: boolean = false;
+  contributorDataReady: boolean = false;
+
   constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.ComponentName)
-
+    this.contributorDataReady = false;
     this.getContributors();
   }
 
   getContributors() {
+    this.enableLoader = true;
     const callable = this.functions.httpsCallable("contributors/getContributorsData");
     callable({}).pipe(
       map(actions => {
@@ -45,12 +49,19 @@ export class ContributorsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         this.contributorsData=data;
+        this.contributorDataReady = true;
+        this.enableLoader = false;
         console.log("Saved Contributors Data")
       },
       error: (error) => {
+        this.enableLoader = false;
         console.error(error);
       },
-      complete: () => console.info('Getting Contributors data successful')
+      complete: () => {
+        this.enableLoader = false;
+        this.contributorDataReady = true;
+        console.info('Getting Contributors data successful')
+      }
     });
   }
 
@@ -58,7 +69,8 @@ export class ContributorsComponent implements OnInit {
     this.popupHandlerService.addNewContributorEnabled = true;
   }
 
-  addNewContirbutor( completed: boolean ) {
+  addNewContributorCompleted( completed: boolean ) {
     this.popupHandlerService.addNewContributorEnabled = false;
+    this.getContributors();
   }
 }
