@@ -65,7 +65,6 @@ exports.logWork = function(request, response) {
 
         completiondate = todayDate;
       }
-
       const logWorkInputJson = {
         LogWorkTotalTime: logWorkTotalTime,
         WorkDone: workDone,
