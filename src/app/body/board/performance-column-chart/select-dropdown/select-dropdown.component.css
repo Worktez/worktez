@@ -17,7 +17,6 @@
     height: auto;
     max-height: 300px;
     overflow-y: auto;
-    overflow-x: hidden;
     background-color: var(--secondary-bg);
     color: var(--text);
     border-radius: 2%;
@@ -32,8 +31,7 @@
 #dropdown-item{
     color: var(--button-text);
     font-family: var(--font);
-    outline: none;
-    overflow-x: hidden;
+   outline: none;
 }
 
 #dropdown-item:hover {
