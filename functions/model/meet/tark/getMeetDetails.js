@@ -23,7 +23,6 @@ exports.getMeetDetails = function(request, response) {
 
   const getMeetDetailsPromise = getMeetDetails(uid).then((meetData) => {
     if (meetData) {
-      console.log(meetData);
       result = {data: {status: "OK", data: meetData}};
     }
   }).catch((error) => {

@@ -22,7 +22,6 @@ exports.getFilter = function(request, response) {
   let result;
 
   getFilters(orgDomain, teamName).then((filterData) => {
-    console.log(filterData);
     if (filterData) {
       result = {data: {status: "OK", resultData: filterData}};
       return response.status(status).send(result);

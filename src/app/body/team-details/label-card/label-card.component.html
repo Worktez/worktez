@@ -48,7 +48,7 @@
 <ng-container *ngIf="showEditLabelProp" id="openEditProperties">
     <app-edit-label-prop [label]="labelToEdit" [teamName]="teamName" (editLabelCompleted)="editLabelCompleted($event)" (getTeamLabelsByScope)="getTeamLabelsByScope()" [scope]="scope"></app-edit-label-prop>
 </ng-container>
-<!-- <ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
+<ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
     <div class="modal fade" id="deletedLabel" tabindex="-1" role="dialog" aria-labelledby="deletedLabelTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered  p-0" role="document">
             <div class="modal-content">
@@ -75,46 +75,6 @@
                             <div class="col-md-9"></div>
                             <div class="col-md-3 pb-2 px-4">
                                 <button class="btn" id="button" type="button"  (click)="deletedLabel()">Delete</button>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-container> -->
-<ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
-    <div class="modal fade" id="deletedLabel" tabindex="-1" role="dialog" aria-labelledby="deletedLabelTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered  p-0" role="document">
-            <div class="modal-content">
-                <nav class="modal-header navbar  navbar-dark" id="navbarMenu">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <h3 class="modal-title" id="exampleModalDelLabel">Are You Sure?</h3>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <div class="close" data-dismiss="modal" aria-label="Close">
-                                <span class="btn">
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "title="Close">
-                                        close
-                                    </mat-icon>
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="container modal-body" id="editPageTaskContainer">
-                    <ng-container>
-                        <div class="row">
-                            <div class="col">You are about to delete this <Label></Label>.</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9"></div>
-                            <div class="col-md-3 pb-2 px-4">
-                                <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deletedLabel()">Delete</button>
                             </div>
                         </div>
                     </ng-container>

@@ -111,7 +111,6 @@ export class FilterPageComponent implements OnInit {
     }
    
   }
-  
   deletedFilter(){
     if(this.filterToDelete != null) {
        const orgDomain = this.backendService.getOrganizationDomain();
