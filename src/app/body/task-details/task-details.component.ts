@@ -33,6 +33,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component( {
   selector: 'app-task-details',
@@ -91,9 +92,10 @@ export class TaskDetailsComponent implements OnInit {
   totalRemainingTime: number;
   remainingTimeHrs: number;
   remainingTimeMins: number
+  githubRepoExists: boolean = false;
 
 
-  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService ) { }
+  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -163,7 +165,7 @@ export class TaskDetailsComponent implements OnInit {
       next: (data) => {
         this.task = data;
         this.getTimeDetails();
-        this.checkPrLinked()
+        this.checkGitRepoExists()
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
         }
@@ -187,6 +189,16 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
+  checkGitRepoExists(){
+    this.teamService.teamDataStateObservable.subscribe((data)=>{
+      if(data){
+        if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
+          this.githubRepoExists = true;
+          this.checkPrLinked();
+        }
+      }
+    })
+  }
   
   getTimeDetails(){
     this.totalEstimatedTime=this.task.EstimatedTime;
@@ -266,10 +278,10 @@ export class TaskDetailsComponent implements OnInit {
       }});
     }
 
-  async addComment() {
-    this.activityDataReady = true
+   addComment() {
+    this.activityDataReady = false
 
-    var condition=await (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
+    var condition= (this.validationService.checkValidity(this.componentName, [{label: "comment", value: this.comment.trim()}])).then(res => {
       return res;
     });
     if(condition){
@@ -278,7 +290,6 @@ export class TaskDetailsComponent implements OnInit {
 
       callable({ AppKey: appKey, Assignee: this.task.Assignee, LogTaskId: this.task.Id, LogWorkComment: this.comment, Date: this.creationDate, Time: this.time, Uid: this.authService.user.uid }).subscribe({
         next: (data) => {
-          this.getActivityData();
           this.comment = "";
         },
         error: (error) => {
@@ -287,8 +298,9 @@ export class TaskDetailsComponent implements OnInit {
           console.log("Error", error);
         },
         complete: () => {
-          this.activityDataReady = false
-          console.info('Successful ')
+          this.activityDataReady = true
+          this.getActivityData();
+          console.info('Successful')
           
         }
     });

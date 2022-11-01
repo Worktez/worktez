@@ -27,6 +27,8 @@ export class GithubLinkComponent implements OnInit {
   objData: GitOrgData[] = [];
   enableLoader: boolean=false;
   noRepoFound: boolean=false
+  linkType: string = "Public";
+  bearerToken: string;
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
   constructor(private httpService: HttpServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
@@ -37,27 +39,124 @@ export class GithubLinkComponent implements OnInit {
 
   submit() {
     if (this.memberOrgName) {
-      if (this.searchType == 'organisation') {
+      if (this.searchType == 'organisation' && this.linkType == 'Public') {
         this.httpService.getGithubUserRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
-        })).subscribe(data => {
-          this.objData = data;
-          this.dataFetched = true;
+        })).subscribe({
+          next: (data) => {
+            this.objData = data;
+            this.dataFetched = true;
+            console.log("Successfull");
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => console.info('Successfull')
         });
-      } 
-      else if(this.searchType == 'username') {
+      } else if (this.searchType == 'organisation') {
+        if (this.linkType=='Private'){
+          this.httpService.getGithubPrivateRepos(this.bearerToken).pipe(map(data => {
+            const objData =data as GitOrgData[];
+            return objData;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
+          })
+        } else if(this.linkType=='All') {
+          this.httpService.getGithubAllRepos(this.bearerToken).pipe(map(data => {
+            const objData =data as GitOrgData[];
+            return objData;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
+          })
+        }
+      }
+      else if(this.searchType == 'username' && this.linkType == 'Public') {
         this.httpService.getGithubUserRepos(this.memberOrgName).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
-        })).subscribe(data => {
-          this.objData = data;
-          this.enableLoader=false;
-          this.dataFetched = true;
+        })).subscribe({
+          next: (data) => {
+            this.objData = data;
+            this.enableLoader=false;
+            this.dataFetched = true;
+            console.log("Successfull");
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => console.info('Successfull')
         });
+      }
+      else if (this.searchType == 'username') {
+        if (this.linkType=='Private'){
+          this.httpService.getGithubPrivateRepos(this.bearerToken).pipe(map(data => {
+            const objData =data as GitOrgData[];
+            return objData;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
+          })
+        } else if(this.linkType=='All') {
+          console.log("check2");
+          this.httpService.getGithubAllRepos(this.bearerToken).pipe(map(data => {
+            const objData =data as GitOrgData[];
+            return objData;
+          })).subscribe({
+            next: (data) => {
+              this.objData = data;
+              this.dataFetched = true;
+              console.log("Successfull");
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => console.info('Successfull')
+          })
+        }
       }
       }
          
+  }
+
+  setBearerToken(token: string) {
+    this.bearerToken = token;
+  }
+
+  setLinkType(linkType: string) {
+    if (linkType == 'Public') {
+      this.linkType = "Public";
+    }
+    if (linkType == 'Private'){
+      this.linkType = "Private";
+    }
+    if (linkType == 'All') {
+      this.linkType = "All"
+    }
+
   }
 
   addProjLink(projLink: string) {
