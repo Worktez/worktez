@@ -60,21 +60,12 @@ export class TasksEvaluationComponent implements OnInit {
     this.todayDate = this.toolsService.date();
     this.time = this.toolsService.time();
 
-
     if(this.startService.showTeamsData) {
       this.getData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  this.getData();
-                }
-              });
-            }
-          });
+            this.getData();
         }
       });
     }

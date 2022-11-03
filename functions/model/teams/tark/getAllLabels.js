@@ -22,8 +22,7 @@
 /* eslint-disable max-len */
 // eslint-disable-next-line no-dupe-else-if
 
-const { getAllLabels } = require("../lib");
-const { getOrg } = require("../../organization/lib");
+const { getAllLabels, getAllTeams } = require("../lib");
 
 exports.getAllLabels = function(request, response) {
     const orgDomain = request.body.data.OrganizationDomain;
@@ -31,17 +30,19 @@ exports.getAllLabels = function(request, response) {
     let result;
     const res = {};
 
-    const p = getOrg(orgDomain).then((data)=>{
-        const teams = data.TeamsName;
+    const p = getAllTeams(orgDomain).then((docs) => {
         let p2;
-       teams.forEach((element) => {
-            res[element] ={};
-            p2 = getAllLabels(orgDomain, element).then((data)=>{
+        docs.forEach((element) => {
+            const teamdata = element.data();
+            const teamName = teamdata.TeamName;
+            const teamId = teamdata.TeamId;
+            res[teamId]={};
+            p2 = getAllLabels(orgDomain, teamName).then((data)=>{
                 data.forEach((d) => {
-                    res[element][d.Scope] = {};
+                    res[teamId][d.Scope] = {};
                 });
                 data.forEach((d) => {
-                    res[element][d.Scope][d.DisplayName] = d;
+                    res[teamId][d.Scope][d.DisplayName] = d;
                 });
             });
         });
@@ -51,7 +52,7 @@ exports.getAllLabels = function(request, response) {
         console.log("Error: ", error);
     });
     return Promise.resolve(p).then(() => {
-        console.log(res.Development[0]);
+        console.log(res);
         result = { data: res };
         return response.status(status).send(result);
     })

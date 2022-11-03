@@ -164,13 +164,11 @@
                             <input type="text" disabled min="0" class="form-control form-control-sm" [(ngModel)]="selectedMilestoneId" [ngModelOptions]="{standalone: true}" placeholder="Milestone">
                         </div>
                     </ng-container>
-
-                
-                <div class="modal-footer mt-1">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
-                </div>
-                <app-loader *ngIf="enableLoader"></app-loader>
-                    </form>
+                    <div class="modal-footer mt-1">
+                        <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()">Create New Task</button>
+                    </div>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                </form>
                 <ng-container *ngIf="showClose">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>

@@ -53,7 +53,7 @@ export class CreateFilterComponent implements OnInit {
   status: string = null
   difficulty: string = null
   sprint: number = 0 
-  description: string = "Empty"
+  description: string = ""
   filterName: string = ""
   teamName: string = ""
   teamIds: string[]
@@ -80,13 +80,16 @@ export class CreateFilterComponent implements OnInit {
         if(data){
           this.startService.applicationDataStateObservable.subscribe((data) => {
             if(data) {
-              this.appSettings.teamData.subscribe((data) => {
-                if(data) {
-                  this.project = this.authService.getTeamId();
-                  this.teamIds = this.backendService.getOrganizationTeamIds();
-                  this.readTeamData(this.project);
-                }
-              });
+              this.project = this.authService.getTeamId();
+              this.teamIds = this.backendService.getOrganizationTeamIds();
+              this.readTeamData(this.project);
+              // this.appSettings.teamData.subscribe((data) => {
+              //   if(data) {
+              //     this.project = this.authService.getTeamId();
+              //     this.teamIds = this.backendService.getOrganizationTeamIds();
+              //     this.readTeamData(this.project);
+              //   }
+              // });
             }
           });
         }
@@ -109,30 +112,30 @@ export class CreateFilterComponent implements OnInit {
 
   readTeamData(teamId :string){
     this.enableLoader = true;
-    this.appSettings.getTeamDetails(teamId).subscribe(team => {
-          this.priorityLabels = team.Priority;
-          this.statusLabels = team.Status;
-          this.type = team.Type;
-          this.difficultyLabels = team.Difficulty;
-          this.teamMembers=team.TeamMembers;
-          this.teamName=team.TeamName;
-          this.sprintNumber = team.CurrentSprintId;
-          this.currentSprintNumber=team.CurrentSprintId;
-          this.backlogSprintNumber=-1;
+    this.appSettings.getTeamDetails(teamId); 
+    const team = this.appSettings.team;
+    this.priorityLabels = team.Priority;
+    this.statusLabels = team.Status;
+    this.type = team.Type;
+    this.difficultyLabels = team.Difficulty;
+    this.teamMembers=team.TeamMembers;
+    this.teamName=team.TeamName;
+    this.sprintNumber = team.CurrentSprintId;
+    this.currentSprintNumber=team.CurrentSprintId;
+    this.backlogSprintNumber=-1;
 
-          this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
-            startWith(''),
-            map((value) => {
-              return this._filter(value)
-            }),
-          );
+    this.filteredOptionsAssignee = this.assigneeName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      }),
+    );
 
-          this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
-            startWith(''),
-            map(value => this._filter(value)),
-          );
-          this.enableLoader = false;
-    }); 
+    this.filteredOptionsReporter = this.reporterName.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
+    this.enableLoader = false;
   }
 
  async submit(){

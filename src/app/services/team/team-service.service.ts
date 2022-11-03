@@ -28,6 +28,7 @@ export class TeamServiceService {
   public teamLabelDataStateObservable = this.teamLabelDataState.asObservable();
   public teamsDataJson: Team[] = [];
   public teamsLabelsJson: TeamLabels[] = [];
+  public labelsReady: boolean = false;
   constructor(private functions: AngularFireFunctions) { }
   
   getTeams(orgDomain) {
@@ -48,6 +49,11 @@ export class TeamServiceService {
         console.info('Getting Team Data Successful')
       }
     });
+    return this.teamDataStateObservable;
+  }
+
+  getTeamUsingId(teamId: string) {
+    return this.teamsDataJson[teamId];
   }
 
   getLabels(orgDomain) {
@@ -55,7 +61,9 @@ export class TeamServiceService {
     const callable = this.functions.httpsCallable('teams/getAllLabels');
     callable({ OrganizationDomain: orgDomain }).subscribe({
       next: (data) => {
-        this.teamsLabelsJson = data;
+        this.teamsLabelsJson = data as TeamLabels[];
+        this.labelsReady = true;
+        console.log(this.teamsLabelsJson);
        // console.log(this.teamsLabelsJson["Development"]["Difficulty"]["High"].ColorCode);
         //Example to access the Label Properties
       },
@@ -67,5 +75,6 @@ export class TeamServiceService {
         console.info('Getting Label Data Successful')
       }
     });
+    return this.teamLabelDataStateObservable;
   }
 }

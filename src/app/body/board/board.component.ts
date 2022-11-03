@@ -58,11 +58,12 @@ export class BoardComponent implements OnInit {
     } else {
       this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data) {
-          this.applicationSettingsService.teamData.subscribe((data) => {
-            if(data) {
-              this.readSprintData();
-            }
-          });
+          this.readSprintData();
+          // this.applicationSettingsService.teamData.subscribe((data) => {
+          //   if(data) {
+              
+          //   }
+          // });
         }
       });
     }
@@ -137,15 +138,17 @@ export class BoardComponent implements OnInit {
       });
     } else {
       this.startService.readApplicationData();
-      this.startService.applicationDataStateObservable.subscribe((data) => {
-        if(data) {
-          this.applicationSettingsService.teamData.subscribe((data) => {
-            if(data) {
-              this.readSprintData();
-            }
-          });
-        }
-      });
+      this.readSprintData();
+      // this.startService.applicationDataStateObservable.subscribe((data) => {
+      //   if(data) {
+          // this.readSprintData();
+          // this.applicationSettingsService.teamData.subscribe((data) => {
+          //   if(data) {
+          //     this.readSprintData();
+          //   }
+          // });
+      //   }
+      // });
     }
   } else {
       this.showContent = true

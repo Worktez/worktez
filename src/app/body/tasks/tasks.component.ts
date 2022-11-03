@@ -86,12 +86,12 @@ export class TasksComponent implements OnInit {
 
   changeSprint(newSprintNumber: number) {
     if (newSprintNumber == 0) {
-      this.applicationSettingsService.getTeamDetails(this.teamId).subscribe(teams => {
-        this.teamData = teams;
+      this.applicationSettingsService.getTeamDetails(this.teamId);
+      const team = this.applicationSettingsService.team;
+      this.teamData = team;
         newSprintNumber = this.teamData.CurrentSprintId;
         this.currentSprintName = this.fullSprintName(newSprintNumber);
         this.changeRoute(this.teamId, this.currentSprintName);
-      });
     } else {
       this.currentSprintNumber = newSprintNumber;
       this.currentSprintName = this.fullSprintName(newSprintNumber);
@@ -101,6 +101,7 @@ export class TasksComponent implements OnInit {
 
   changeRoute(newTeamID: string, newSprintName: string) {
       this.router.navigate(['Tasks/', newTeamID, newSprintName]);
+      console.log("getting filter data");
       this.getFilterData();
   }
 
@@ -110,7 +111,16 @@ export class TasksComponent implements OnInit {
   }
 
   applyFilters(data: { Assignee: string, Priority: string, Difficulty: string, Status: string, Project: string, Sprint: number }) {
-    this.filterTaskService.saveFilterData(data.Assignee, data.Project, data.Priority, data.Difficulty, data.Status, data.Sprint)
+    if(data.Assignee == "All" || data.Assignee == null)
+      data.Assignee = "";
+    if(data.Priority == "All" || data.Priority == null)
+      data.Priority = "";
+    if(data.Difficulty == "All" || data.Difficulty == null)
+      data.Difficulty = "";
+    if(data.Status == "All" || data.Status == null)
+      data.Status = "";
+
+    this.filterTaskService.saveFilterData(data.Assignee, data.Project, data.Priority, data.Difficulty, data.Status, data.Sprint);
     if (data.Project != this.teamId) {
       this.teamId = data.Project
     }
@@ -118,7 +128,7 @@ export class TasksComponent implements OnInit {
       this.currentSprintNumber = data.Sprint
       this.currentSprintName = this.fullSprintName(this.currentSprintNumber);
     }
-      this.changeRoute(this.teamId, this.currentSprintName)
+    this.changeRoute(this.teamId, this.currentSprintName)
   }
 
   getFilterData() {
@@ -141,7 +151,6 @@ export class TasksComponent implements OnInit {
         });
       }
     });
-
   }
 
   openTaskDetails(id: string) {
