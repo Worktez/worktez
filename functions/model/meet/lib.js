@@ -53,6 +53,7 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
     Description: description,
     Date: date,
     RoomId: roomId,
+    Status: "OK",
   });
   return Promise.resolve(setMeetDoc);
 };
@@ -84,6 +85,7 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
     EndTime: endTime,
     HostName: hostName,
     Description: description,
+    Status: "OK",
     Date: date,
     Uid: uid,
     RoomId: roomId,
@@ -93,13 +95,15 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
 
 /**
  * Description
+ * @param {any} uid
+ * @param {any} docId
  * @param {any} inputJson
  * @param {any} orgDomain
  * @param {any} title
  * @return {any}
  */
-exports.updateMeetDetails= function(updateJson) {
-  const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
+exports.updateUserMeetDetails= function(uid, docId, updateMeetDetailsToJson) {
+  const updateMeet = db.collection("Users").doc(uid).collection("Meet").doc(docId).update(updateMeetDetailsToJson);
   return Promise.resolve(updateMeet);
 };
 
@@ -130,7 +134,7 @@ exports.updateMeetDetails= function(updateJson) {
  * @return {any}
  */
 exports.getMeetDetails=function(uid) {
-    const query = db.collection("Users").doc(uid).collection("Meet");
+    const query = db.collection("Users").doc(uid).collection("Meet").where("Status", "==", "OK");
 
     const promise = query.get().then((doc) => {
         const data=[];
@@ -154,4 +158,21 @@ exports.getMeetDetails=function(uid) {
 exports.updateMeetDetailsAtWorktez= function(updateJson) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
+};
+
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} uid
+ * @param {any} docId
+ * @return {any}
+ */
+ exports.getUserMeetDetailsById = function(uid, docId) {
+  const getUserMeetDetailsById = db.collection("Users").doc(uid).collection("Meet").doc(docId).get().then((doc) => {
+    const data = doc.data();
+    return data;
+  });
+  return Promise.resolve(getUserMeetDetailsById);
 };
