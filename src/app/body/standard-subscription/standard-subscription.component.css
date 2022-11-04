@@ -88,15 +88,16 @@ td {
 .button {
     background-color: #2368FF;
 }
-/* .btn {
-    color: var(--button-text);
-    background-color: var(--secondary-bg);
+.btn {
+    color: #ffffff;
+    background-color: var(--primary-color);
+    border-radius: 50px;
 }
 
 .btn:hover {
     background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-} */
+    color: var(--primary-color);
+}
 
 @media only screen and (max-width: 600px) {
     #ebox {

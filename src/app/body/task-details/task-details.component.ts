@@ -140,7 +140,7 @@ export class TaskDetailsComponent implements OnInit {
       this.getLinkData();
       this.activeAllBtn = true;
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data){
           this.orgDomain = this.backendService.getOrganizationDomain();
           this.getTaskDetail();
@@ -190,14 +190,11 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   checkGitRepoExists(){
-    this.teamService.teamDataStateObservable.subscribe((data)=>{
-      if(data){
-        if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
-          this.githubRepoExists = true;
-          this.checkPrLinked();
-        }
-      }
-    })
+    console.log(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink);
+    if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
+      this.githubRepoExists = true;
+      this.checkPrLinked();
+    }
   }
   
   getTimeDetails(){

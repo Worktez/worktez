@@ -110,7 +110,7 @@
                     <th scope="row" class="text-center p-4"></th>
                     <td>
                       <div class="d-flex justify-content-center m-2" *ngIf="subscriptionService.subscriptionPackage.SubscriptionType == 'Basic'">
-                        <button type="button" disabled class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" style="background-color: rgb(240, 227, 227);border-radius: 50px; border-color: #4006BA;font-family: 'Plus Jakarta Sans', sans-serif;">Current Plan</button>
+                        <button type="button" class="btn" disabled data-toggle="modal" data-target="#exampleModalCenter">Current Plan</button>
                       </div>
                     </td>
                     <td>
@@ -119,12 +119,7 @@
                           <button type="button" class="btn upgradeButton" routerLink="/Standard">Upgrade</button>
                       </div>
                       <div class="row p-2" *ngIf="subscriptionService.subscriptionPackage.SubscriptionType == 'Standard'" style="text-align: center;">
-                        <button type="button" class="btn" id="button"  routerLink="/Standard" style="background-color:  #ffffff;color: #4006BA;
-                        display: block;
-                        border-radius: 50px;
-                        text-align: center;
-                        font-family: 'Plus Jakarta Sans', sans-serif;
-                        border-color: #4006BA;">Renew</button>
+                        <button type="button" class="btn" routerLink="/Standard">Renew</button>
                     </div>
                       </div>
                     </td>

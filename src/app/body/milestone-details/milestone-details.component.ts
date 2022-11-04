@@ -70,11 +70,9 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("check1",this.milestoneService.taskData); //To Test in Production
     this.tasks = [];
     this.milestoneId = this.route.snapshot.params['MilestoneId'];
     this.navbarHandler.addToNavbar(this.milestoneId);
-    console.log(this.milestoneService.taskData);
     if (this.startService.showTeams) {
       this.project = this.authService.getTeamId();
       this.teamIds = this.backendService.getOrganizationTeamIds();
@@ -92,7 +90,6 @@ export class MilestoneDetailsComponent implements OnInit {
         this.tasks = this.milestoneService.taskData;
         this.getNumberData();
         this.taskDataReady = true;
-        console.log("check3",this.milestoneService.taskData); //To Test in Production
       });
       this.prevVal = [this.milestoneData.MilestoneStatus];
     } else {
@@ -111,7 +108,6 @@ export class MilestoneDetailsComponent implements OnInit {
               this.tasks = this.milestoneService.taskData;
               this.getNumberData();
               this.taskDataReady = true;
-              console.log("check2",this.milestoneService.taskData); //To Test in Production
             });
             this.project = this.authService.getTeamId();
             this.teamIds = this.backendService.getOrganizationTeamIds();
