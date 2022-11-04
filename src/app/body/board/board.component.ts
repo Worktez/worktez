@@ -109,7 +109,6 @@ export class BoardComponent implements OnInit {
           
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
           if(this.currentSprintNumber==-1){
-      
             this.currentSprintName="Backlog";
             this.isBacklog=true;
             this.isActive=false;
@@ -117,7 +116,6 @@ export class BoardComponent implements OnInit {
           else if(this.currentSprintNumber==-2){
             this.currentSprintName="Deleted";
           }
-         
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
           this.DaysUp = Math.abs((this.today - this.SDate)/(1000 * 60 * 60 * 24));

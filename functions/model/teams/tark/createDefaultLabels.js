@@ -50,10 +50,10 @@ exports.createDefaultLabels = function(request, response) {
             const updateJson = {
                 Scope: scope,
                 Type: type,
-                StatusLabels: statusLabels,
-                PriorityLabels: priorityLabels,
-                DifficultyLabels: difficultyLabels,
-                MilestoneStatusLabels: milestoneStatusLabels,
+                Status: statusLabels,
+                Priority: priorityLabels,
+                Difficulty: difficultyLabels,
+                MilestoneStatus: milestoneStatusLabels,
             };
             updateTeamDetails(updateJson, orgDomain, teamName);
             result = { data: "Labels Updated Successfully" };

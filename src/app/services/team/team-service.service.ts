@@ -17,6 +17,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Subject } from 'rxjs';
 import { Team, TeamLabels } from 'src/app/Interface/TeamInterface'
+import { StartServiceService } from '../start/start-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,7 @@ export class TeamServiceService {
   public teamsDataJson: Team[] = [];
   public teamsLabelsJson: TeamLabels[] = [];
   public labelsReady: boolean = false;
+  public teamsReady: boolean = false;
   constructor(private functions: AngularFireFunctions) { }
   
   getTeams(orgDomain) {
@@ -46,6 +48,7 @@ export class TeamServiceService {
       },
       complete: () => {
         this.teamDataState.next(true);
+        this.teamsReady = true;
         console.info('Getting Team Data Successful')
       }
     });
@@ -56,6 +59,11 @@ export class TeamServiceService {
     return this.teamsDataJson[teamId];
   }
 
+  getLabelsByScope(teamId, scope){
+        const labelsArray = this.teamsLabelsJson[teamId][scope];
+        return Object.keys(labelsArray);
+  }
+
   getLabels(orgDomain) {
     this.teamLabelDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getAllLabels');
@@ -63,15 +71,12 @@ export class TeamServiceService {
       next: (data) => {
         this.teamsLabelsJson = data as TeamLabels[];
         this.labelsReady = true;
-        console.log(this.teamsLabelsJson);
-       // console.log(this.teamsLabelsJson["Development"]["Difficulty"]["High"].ColorCode);
-        //Example to access the Label Properties
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {
-        this.teamLabelDataState.next(false);
+        this.teamLabelDataState.next(true);
         console.info('Getting Label Data Successful')
       }
     });
