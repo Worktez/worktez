@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -36,7 +35,7 @@ const { getReactions } = require("./tark/getReactions");
  * @returns {any}
  */
 fastify.post("/addPost", (req, res) => {
-    addPost(req, res);
+  addPost(req, res);
 });
 
 /**
@@ -47,7 +46,7 @@ fastify.post("/addPost", (req, res) => {
  * @returns {any}
  */
 fastify.post("/addPostComment", (req, res) => {
-    addPostComment(req, res);
+  addPostComment(req, res);
 });
 
 /**
@@ -58,7 +57,7 @@ fastify.post("/addPostComment", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getAllPosts", (req, res) => {
-    getPosts(req, res);
+  getPosts(req, res);
 });
 
 /**
@@ -68,8 +67,8 @@ fastify.post("/getAllPosts", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/deletePost", (req, res) => {
-    deletePost(req, res);
+fastify.post("/deletePost", (req, res) => {
+  deletePost(req, res);
 });
 
 /**
@@ -79,8 +78,8 @@ fastify.post("/getAllPosts", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/deleteComment", (req, res) => {
-    deleteComment(req, res);
+fastify.post("/deleteComment", (req, res) => {
+  deleteComment(req, res);
 });
 
 /**
@@ -91,7 +90,7 @@ fastify.post("/getAllPosts", (req, res) => {
  * @returns {any}
  */
 fastify.post("/addReaction", (req, res) => {
-    addReaction(req, res);
+  addReaction(req, res);
 });
 
 /**
@@ -101,8 +100,8 @@ fastify.post("/addReaction", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/removeReaction", (req, res) => {
-    removeReaction(req, res);
+fastify.post("/removeReaction", (req, res) => {
+  removeReaction(req, res);
 });
 
 /**
@@ -112,8 +111,8 @@ fastify.post("/addReaction", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getComments", (req, res) => {
-    getComments(req, res);
+fastify.post("/getComments", (req, res) => {
+  getComments(req, res);
 });
 
 /**
@@ -123,8 +122,8 @@ fastify.post("/addReaction", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getReactions", (req, res) => {
-    getReactions(req, res);
+fastify.post("/getReactions", (req, res) => {
+  getReactions(req, res);
 });
 
 /**
@@ -134,10 +133,10 @@ fastify.post("/addReaction", (req, res) => {
  * @returns {any}
  */
 exports.socialPage = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-            if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

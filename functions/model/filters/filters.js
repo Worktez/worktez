@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -17,8 +16,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-/* eslint-disable no-unused-vars */
-// eslint-disable-next-line max-len
+
 const {functions, cors, fastify, requestHandler} = require("../application/lib");
 const {createFilter} = require("./tark/createFilter");
 const { getFilter } = require("./tark/getFilter");
@@ -43,7 +41,7 @@ fastify.post("/createFilter", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getFilter", (req, res) => {
+fastify.post("/getFilter", (req, res) => {
   getFilter(req, res);
 });
 
@@ -54,7 +52,7 @@ fastify.post("/createFilter", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/editFilter", (req, res) => {
+fastify.post("/editFilter", (req, res) => {
   editFilter(req, res);
 });
 
@@ -65,7 +63,7 @@ fastify.post("/createFilter", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/deleteFilter", (req, res) => {
+fastify.post("/deleteFilter", (req, res) => {
   deleteFilter(req, res);
 });
 

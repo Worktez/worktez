@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -12,8 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable object-curly-spacing */
 
 const { getOrg, updateOrg } = require("../../organization/lib");
 const { updateTeamDetails, getTeam } = require("../lib");

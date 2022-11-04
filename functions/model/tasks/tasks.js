@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -12,13 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 
@@ -139,7 +136,7 @@ fastify.post("/log", (req, res) => {
  * @returns {any}
  */
 
- fastify.post("/addWatcher", (req, res) => {
+fastify.post("/addWatcher", (req, res) => {
   addWatcher(req, res);
 });
 
@@ -154,7 +151,7 @@ exports.tasks = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {
       if (err) throw err;
-          requestHandler(req, res);
-      });
+      requestHandler(req, res);
+    });
   });
 });

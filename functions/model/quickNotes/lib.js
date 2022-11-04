@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,21 +25,21 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.getNotes = function(Uid) {
-    let query = db.collection("Users").doc(Uid).collection("QuickNotes");
+  let query = db.collection("Users").doc(Uid).collection("QuickNotes");
 
-    query = query.where("Status", "==", "OK");
+  query = query.where("Status", "==", "OK");
 
-    const promise = query.get().then((doc) => {
-        const data=[];
-        doc.forEach((element) => {
-            if (element.exists) {
-                data.push( element.data());
-            }
-        });
-        return data;
+  const promise = query.get().then((doc) => {
+    const data=[];
+    doc.forEach((element) => {
+      if (element.exists) {
+        data.push( element.data());
+      }
     });
+    return data;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -49,21 +49,21 @@ exports.getNotes = function(Uid) {
  * @return {any}
  */
 exports.getNote = function(Uid, docId) {
-    let query = db.collection("Users").doc(Uid).collection("QuickNotes");
+  let query = db.collection("Users").doc(Uid).collection("QuickNotes");
 
-    query = query.where("DocId", "==", docId);
+  query = query.where("DocId", "==", docId);
 
-    const promise = query.get().then((doc) => {
-        let data;
-        doc.forEach((element) => {
-            if (element.exists) {
-                data = element.data();
-            }
-        });
-        return data;
+  const promise = query.get().then((doc) => {
+    let data;
+    doc.forEach((element) => {
+      if (element.exists) {
+        data = element.data();
+      }
     });
+    return data;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -77,15 +77,15 @@ exports.getNote = function(Uid, docId) {
  * @return {any}
  */
 exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpdatedTime) {
-    const addNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).set({
-        Title: title,
-        Note: note,
-        DocId: docId,
-        LastUpdatedDate: lastUpdatedDate,
-        LastUpdatedTime: lastUpdatedTime,
-        Status: "OK",
-    });
-    return Promise.resolve(addNotePromise);
+  const addNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).set({
+    Title: title,
+    Note: note,
+    DocId: docId,
+    LastUpdatedDate: lastUpdatedDate,
+    LastUpdatedTime: lastUpdatedTime,
+    Status: "OK",
+  });
+  return Promise.resolve(addNotePromise);
 };
 
 /**
@@ -96,8 +96,8 @@ exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpd
  * @return {any}
  */
 exports.deleteUserNote = function(updateNoteToJson, uid, docId) {
-    const deleteNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(updateNoteToJson);
-    return Promise.resolve(deleteNotePromise);
+  const deleteNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(updateNoteToJson);
+  return Promise.resolve(deleteNotePromise);
 };
 
 /**
@@ -108,6 +108,6 @@ exports.deleteUserNote = function(updateNoteToJson, uid, docId) {
  * @return {any}
  */
 exports.updateNote = function(inputJson, uid, docId) {
-    const editNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(inputJson);
-    return Promise.resolve(editNotePromise);
+  const editNotePromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(docId).update(inputJson);
+  return Promise.resolve(editNotePromise);
 };

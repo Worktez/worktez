@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable no-undef */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -29,12 +27,12 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setSchedular = function(schedularDocId, orgAppKey, orgId) {
-    const inputJson = {
-        OrgAppKey: orgAppKey,
-        OrgId: orgId,
-    };
-    const setSchedularDoc = db.collection("SchedularOrg").doc(schedularDocId).set(inputJson);
-    return Promise.resolve(setSchedularDoc);
+  const inputJson = {
+    OrgAppKey: orgAppKey,
+    OrgId: orgId,
+  };
+  const setSchedularDoc = db.collection("SchedularOrg").doc(schedularDocId).set(inputJson);
+  return Promise.resolve(setSchedularDoc);
 };
 
 /**
@@ -43,10 +41,10 @@ exports.setSchedular = function(schedularDocId, orgAppKey, orgId) {
  * @return {any}
  */
 exports.getSchedular = function(schedularDocId) {
-    const getSchedularPromise = db.collection("SchedularOrg").doc(schedularDocId).get().then((doc) => {
-        return doc.data();
-    });
-    return Promise.resolve(getSchedularPromise);
+  const getSchedularPromise = db.collection("SchedularOrg").doc(schedularDocId).get().then((doc) => {
+    return doc.data();
+  });
+  return Promise.resolve(getSchedularPromise);
 };
 
 /**
@@ -56,14 +54,14 @@ exports.getSchedular = function(schedularDocId) {
  * @return {any}
  */
 exports.getAllSchedular = function(orgAppKey, orgId) {
-    let query = db.collection("SchedularOrg");
-    if (orgId != "") {
-        query = query.where("OrgId", "==", orgId);
-    }
-    if (orgAppKey != "") {
-        query = query.where("OrgAppKey", "==", orgAppKey);
-    }
-    const getAllScheduledPromises = query.get();
+  let query = db.collection("SchedularOrg");
+  if (orgId != "") {
+    query = query.where("OrgId", "==", orgId);
+  }
+  if (orgAppKey != "") {
+    query = query.where("OrgAppKey", "==", orgAppKey);
+  }
+  const getAllScheduledPromises = query.get();
 
-    return Promise.resolve(getAllScheduledPromises);
+  return Promise.resolve(getAllScheduledPromises);
 };

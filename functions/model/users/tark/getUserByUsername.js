@@ -1,12 +1,13 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-trailing-spaces */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
  * Author : Sanjay Krishna <sanjaykrishna1203@gmail.com>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -22,7 +23,7 @@ exports.getUserByUsername = function(request, response) {
   const username = request.body.data.Username;
   let result;
   let status = 200;
-   
+
   const p1 = getUser("", username).then((userDoc) => {
     if (userDoc == undefined) {
       result = {data: {status: "ERROR", userData: undefined}};
@@ -41,4 +42,4 @@ exports.getUserByUsername = function(request, response) {
     return response.status(status).send(result);
   });
 };
- 
+
