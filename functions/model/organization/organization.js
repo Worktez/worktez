@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -45,7 +44,7 @@ fastify.post("/createOrg", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/updateOrgLogo", (req, res) => {
+fastify.post("/updateOrgLogo", (req, res) => {
   updateProfilePic(req, res);
 });
 
@@ -60,15 +59,15 @@ fastify.post("/getOrgData", (req, res) => {
   getOrgData(req, res);
 });
 
- /**
+/**
  * Description
  * @param {any} "/getMemberDetails"
  * @param {any} req
  * @param {any} res
  * @returns {any}
  */
-  fastify.post("/getMemberDetails", (req, res) => {
-    getMemberDetails(req, res);
+fastify.post("/getMemberDetails", (req, res) => {
+  getMemberDetails(req, res);
 });
 
 /**
@@ -78,7 +77,7 @@ fastify.post("/getOrgData", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getAllOrgMembers", (req, res) => {
+fastify.post("/getAllOrgMembers", (req, res) => {
   getAllOrgMembers(req, res);
 });
 
@@ -89,7 +88,7 @@ fastify.post("/getOrgData", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/changeMemberRole", (req, res) => {
+fastify.post("/changeMemberRole", (req, res) => {
   editRole(req, res);
 });
 
@@ -100,10 +99,10 @@ fastify.post("/getOrgData", (req, res) => {
  * @returns {any}
  */
 exports.organization = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

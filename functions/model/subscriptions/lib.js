@@ -1,8 +1,8 @@
-/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -82,7 +82,8 @@ exports.updateSubscription = function(inputJson, subscriptionId) {
 
 /**
 * Description
-* @param {any} orgDomain
+* @param {any} orgAppKey
+* @param {any} subscriptionId
 * @return {any}
 */
 exports.getSubscriptions = function(orgAppKey, subscriptionId) {

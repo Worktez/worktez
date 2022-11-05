@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-/* eslint-disable max-len */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -20,8 +19,8 @@
 
 const { setPostImages } = require("../lib");
 const { getPost, updatePost } = require("../../users/lib");
- 
-exports.uploadProfilePicToUserDoc = function(request, response) {
+
+exports.uploadPostImagesDoc = function(request, response) {
   const fileName = request.body.data.FileName;
   const fileUrl = request.body.data.FileUrl;
   const lastModified = request.body.data.LastModified;
@@ -30,19 +29,19 @@ exports.uploadProfilePicToUserDoc = function(request, response) {
   const time = request.body.data.Time;
   const basePath = request.body.data.BasePath;
   const uid = request.body.data.Uid;
- 
+
   let result;
   let status = 200;
- 
-  const promise = getPost(postId).then((data) => {
+
+  const promise = getPost(uid).then((data) => {
     let photoCounter = data.TotalPhotoCounter;
     photoCounter++;
- 
+
     const updateUserDocJson = {
       TotalPhotoCounter: photoCounter,
     };
-    updatePost(updateUserDocJson, postId);
- 
+    updatePost(updateUserDocJson, uid);
+
     const imageFileName = "P" + photoCounter;
     const updateUserFileJson = {
       FileName: fileName,
@@ -51,16 +50,16 @@ exports.uploadProfilePicToUserDoc = function(request, response) {
       Size: size,
       Date: date,
       Time: time,
-      OrgFileDocumentName: orgFileDocumentName,
+      OrgFileDocumentName: fileName,
       BasePath: basePath,
       FileStatus: "OK",
     };
-    setPostImages(updateUserFileJson, postId, imageFileName);
+    setPostImages(updateUserFileJson, uid, imageFileName);
   }).catch((error) => {
     status = 500;
     console.log("Error:", error);
   });
- 
+
   Promise.resolve(promise).then(() => {
     result = { data: { status: "OK" } };
     console.log("Image  Uploaded Successfully");
@@ -72,4 +71,4 @@ exports.uploadProfilePicToUserDoc = function(request, response) {
         return response.status(status).send(result);
       });
 };
- 
+

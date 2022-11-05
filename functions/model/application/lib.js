@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -75,7 +75,7 @@ exports.cors = cors;
  * @return {any}
  */
 exports.generateBase64String = function(temp) {
-    return Buffer.from(temp).toString("base64");
+  return Buffer.from(temp).toString("base64");
 };
 
 /**
@@ -83,27 +83,27 @@ exports.generateBase64String = function(temp) {
  * @return {any}
  */
 exports.setApplication = function() {
-    const P1 = firestore.collection("RawData").doc("AppDetails").set({
-        // CurrentSprintId: 0,
-        TotalDevelopmentTask: 0,
-        TotalBusinessTask: 0,
-        TotalMarketingTask: 0,
-        TotalOtherTask: 0,
-        TotalNumberOfTask: 0,
-        TotalCompletedTask: 0,
-        TotalUnCompletedTask: 0,
-        TotalNumberOfOrganizations: 0,
-        TotalNumberOfTeams: 0,
-        TotalNumberOfMembers: 0,
-        TotalNumberOfPatch: 9,
-        TotalNumberOfContributors: 0,
-        TotalNumberSchedularOrg: 0,
-        MeetWorktezCounter: 0,
-        TotalNumberSchedularSubOrg: 0,
-        MeetCounter: 0,
-        PostCounter: 0,
-    });
-    return Promise.resolve(P1);
+  const P1 = firestore.collection("RawData").doc("AppDetails").set({
+    // CurrentSprintId: 0,
+    TotalDevelopmentTask: 0,
+    TotalBusinessTask: 0,
+    TotalMarketingTask: 0,
+    TotalOtherTask: 0,
+    TotalNumberOfTask: 0,
+    TotalCompletedTask: 0,
+    TotalUnCompletedTask: 0,
+    TotalNumberOfOrganizations: 0,
+    TotalNumberOfTeams: 0,
+    TotalNumberOfMembers: 0,
+    TotalNumberOfPatch: 9,
+    TotalNumberOfContributors: 0,
+    TotalNumberSchedularOrg: 0,
+    MeetWorktezCounter: 0,
+    TotalNumberSchedularSubOrg: 0,
+    MeetCounter: 0,
+    PostCounter: 0,
+  });
+  return Promise.resolve(P1);
 };
 
 /**
@@ -112,8 +112,8 @@ exports.setApplication = function() {
  * @return {any}
  */
 exports.updateApplication = function(inputJson) {
-    const P1 = firestore.collection("RawData").doc("AppDetails").update(inputJson);
-    return Promise.resolve(P1);
+  const P1 = firestore.collection("RawData").doc("AppDetails").update(inputJson);
+  return Promise.resolve(P1);
 };
 
 /**
@@ -121,14 +121,14 @@ exports.updateApplication = function(inputJson) {
  * @return {any}
  */
 exports.getApplicationData = function() {
-    const promise = firestore.collection("RawData").doc("AppDetails").get().then((doc) => {
-        if (doc.exists) {
-            return doc.data();
-        } else {
-            return;
-        }
-    });
-    return Promise.resolve(promise);
+  const promise = firestore.collection("RawData").doc("AppDetails").get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    } else {
+      return;
+    }
+  });
+  return Promise.resolve(promise);
 };
 
 /**
@@ -137,13 +137,13 @@ exports.getApplicationData = function() {
  * @return {any}
  */
 exports.createSprintName = function(sprintId) {
-    if (sprintId == -1) {
-        return "Backlog";
-    } else if (sprintId == -2) {
-        return "Deleted";
-    } else {
-        return ("S" + sprintId.toString());
-    }
+  if (sprintId == -1) {
+    return "Backlog";
+  } else if (sprintId == -2) {
+    return "Deleted";
+  } else {
+    return ("S" + sprintId.toString());
+  }
 };
 
 /**
@@ -152,47 +152,47 @@ exports.createSprintName = function(sprintId) {
  * @return {any}
  */
 exports.checkUpdateTime = function(lastUpdated) {
-      // const d = new Date();
-    // const currentTimeStamp = d.getMilliseconds();
-    // for 1 minute difference - 60000
-    // for 1 hour difference - 3600000
-    // for 1 day difference - 86400000
-    const currentTimeStamp = Date.now();
-    const diff = currentTimeStamp - lastUpdated;
-    if (diff >= 60) {
-        return currentTimeStamp;
-    }
-    return 0;
+  // const d = new Date();
+  // const currentTimeStamp = d.getMilliseconds();
+  // for 1 minute difference - 60000
+  // for 1 hour difference - 3600000
+  // for 1 day difference - 86400000
+  const currentTimeStamp = Date.now();
+  const diff = currentTimeStamp - lastUpdated;
+  if (diff >= 60) {
+    return currentTimeStamp;
+  }
+  return 0;
 };
 
 exports.basicSubscription = {
-     noOfTeams: 2,
-     noOfMembers: 5,
-     emailsAndNotifications: 1000,
-     quickNotes: 20,
-     docPerTask: 1,
-     meetings: 100,
-     pDashboard: false,
-     techTag: true,
-     pReport: false,
-     amount: 0,
-     subscriptionType: "Basic",
-     currencyType: "USD",
+  noOfTeams: 2,
+  noOfMembers: 5,
+  emailsAndNotifications: 1000,
+  quickNotes: 20,
+  docPerTask: 1,
+  meetings: 100,
+  pDashboard: false,
+  techTag: true,
+  pReport: false,
+  amount: 0,
+  subscriptionType: "Basic",
+  currencyType: "USD",
 };
 
 exports.standardSubscription = {
-    noOfTeams: 5,
-    noOfMembers: 10,
-    emailsAndNotifications: 10000,
-    quickNotes: 100,
-    docPerTask: 3,
-    meetings: 100,
-    pDashboard: false,
-    techTag: true,
-    pReport: false,
-    subscriptionType: "Standard",
-    amount: 49,
-    currencyType: "USD",
+  noOfTeams: 5,
+  noOfMembers: 10,
+  emailsAndNotifications: 10000,
+  quickNotes: 100,
+  docPerTask: 3,
+  meetings: 100,
+  pDashboard: false,
+  techTag: true,
+  pReport: false,
+  subscriptionType: "Standard",
+  amount: 49,
+  currencyType: "USD",
 };
 
 

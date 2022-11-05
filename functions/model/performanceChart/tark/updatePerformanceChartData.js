@@ -1,11 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -26,40 +23,40 @@ const { getTeamUseTeamId } = require("../../teams/lib");
 const { updatedUserPerformanceChartData } = require("./updatedUserPerformanceChartData");
 
 exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprintRange) {
-    let teamName;
-    const responseData = [];
-    const inputJson = {};
+  let teamName;
+  const responseData = [];
+  const inputJson = {};
 
-    if (assignee == "Team") {
-        assignee = "";
-    }
-    const p = getTeamUseTeamId(orgDomain, teamId).then((team) => {
-        teamName = team.TeamName;
-        const teamMembers = team.TeamMembers;
-        teamMembers.forEach((element) => {
-            updatedUserPerformanceChartData(orgDomain, element, sprintRange, teamId, teamName);
-        });
-
-        const promise1 = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
-            let i; let storyPoint; let data;
-            for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
-                storyPoint = 0;
-                snapshot.docs.forEach((taskDoc) => {
-                    data = taskDoc.data();
-                    if (data.SprintNumber == i) {
-                        storyPoint += data.StoryPointNumber;
-                    }
-                });
-                responseData.push(["S" + i, storyPoint]);
-                inputJson["S"+i]=storyPoint;
-            }
-            setOrganizationsChart(orgDomain, teamName, "PerformanceChart", inputJson);
-            return null;
-        });
-        return Promise.resolve(promise1);
-    }).catch((error) => {
-        console.log("Error:", error);
+  if (assignee == "Team") {
+    assignee = "";
+  }
+  const p = getTeamUseTeamId(orgDomain, teamId).then((team) => {
+    teamName = team.TeamName;
+    const teamMembers = team.TeamMembers;
+    teamMembers.forEach((element) => {
+      updatedUserPerformanceChartData(orgDomain, element, sprintRange, teamId, teamName);
     });
 
-    return Promise.resolve(p);
+    const promise1 = getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
+      let i; let storyPoint; let data;
+      for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
+        storyPoint = 0;
+        snapshot.docs.forEach((taskDoc) => {
+          data = taskDoc.data();
+          if (data.SprintNumber == i) {
+            storyPoint += data.StoryPointNumber;
+          }
+        });
+        responseData.push(["S" + i, storyPoint]);
+        inputJson["S"+i]=storyPoint;
+      }
+      setOrganizationsChart(orgDomain, teamName, "PerformanceChart", inputJson);
+      return null;
+    });
+    return Promise.resolve(promise1);
+  }).catch((error) => {
+    console.log("Error:", error);
+  });
+
+  return Promise.resolve(p);
 };

@@ -1,12 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-var */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
-/* eslint-disable require-jsdoc */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -29,97 +25,122 @@ const { updatePatchData } = require("../lib");
 const db = admin.firestore();
 
 exports.patch1 = function(request, response) {
-    const orgDomain = request.body.data.OrgDomain;
-    const teamId = request.body.data.TeamId;
-    const uid = request.body.data.Uid;
+  const orgDomain = request.body.data.OrgDomain;
+  const teamId = request.body.data.TeamId;
+  const uid = request.body.data.Uid;
 
-    let teamName;
-    let orgId;
-    let totalSprints;
-    let fullSprintId;
-    let totalTeamTask = 0;
+  let teamName;
+  let orgId;
+  let totalSprints;
+  let fullSprintId;
+  let totalTeamTask = 0;
+  let i;
+  let result;
 
-    const promise1 = getTeamUseTeamId(orgDomain, teamId).then((teamDoc) => {
-        totalSprints = teamDoc.CurrentSprintId;
-        teamName = teamDoc.TeamName;
-        orgId = teamDoc.OrganizationId;
-        for (i = -2; i <= totalSprints; i++) {
-            if (i != 0) {
-                fullSprintId = createSprintId(i);
-                if (i < 0) {
-                    // creates Backlog and Deleted with Default Values if don't exist
-                    createBacklogAndDeleted(i, orgDomain, teamId, teamName, fullSprintId, orgId);
-                }
-                sprintCounters(i, orgDomain, teamId, teamName, fullSprintId);
-            }
+  const promise1 = getTeamUseTeamId(orgDomain, teamId).then((teamDoc) => {
+    totalSprints = teamDoc.CurrentSprintId;
+    teamName = teamDoc.TeamName;
+    orgId = teamDoc.OrganizationId;
+    for (i = -2; i <= totalSprints; i++) {
+      if (i != 0) {
+        fullSprintId = createSprintId(i);
+        if (i < 0) {
+          // creates Backlog and Deleted with Default Values if don't exist
+          createBacklogAndDeleted(i, orgDomain, teamId, teamName, fullSprintId, orgId);
         }
+        sprintCounters(i, orgDomain, teamId, teamName, fullSprintId);
+      }
+    }
+  });
+
+  const promise2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((team) => {
+    team.forEach(() => {
+      totalTeamTask += 1;
+      console.log("Executing Promise2 of Patch1");
     });
 
-    const promise2 = db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((team) => {
-        team.forEach(() => {
-            totalTeamTask += 1;
-            console.log("Executing Promise2 of Patch1");
-        });
+    const updateTeamInputJson = {
+      TotalTeamTasks: totalTeamTask,
+    };
+    updateTeamDetails(updateTeamInputJson, orgDomain, teamName);
+  });
 
-        updateTeamInputJson = {
-            TotalTeamTasks: totalTeamTask,
-        };
-        updateTeamDetails(updateTeamInputJson, orgDomain, teamName);
-    });
-
-    const Promises = [promise1, promise2];
-    Promise.all(Promises).then(() => {
-        result = { data: "OK! Patch1 executed" };
-        updatePatchData("Patch1", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
-        console.log("Counters updated");
-        return response.status(200).send(result);
-    }).catch(function(error) {
-        result = { data: error };
-        console.error("Patch error in updating counters", error);
-        return response.status(500).send(result);
-    });
+  const Promises = [promise1, promise2];
+  Promise.all(Promises).then(() => {
+    result = { data: "OK! Patch1 executed" };
+    updatePatchData("Patch1", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
+    console.log("Counters updated");
+    return response.status(200).send(result);
+  }).catch(function(error) {
+    result = { data: error };
+    console.error("Patch error in updating counters", error);
+    return response.status(500).send(result);
+  });
 };
 
+/**
+ * Description
+ * @param {any} i
+ * @param {any} orgDomain
+ * @param {any} teamId
+ * @param {any} teamName
+ * @param {any} fullSprintId
+ */
 function sprintCounters(i, orgDomain, teamId, teamName, fullSprintId) {
-    var a = [0, 0, 0];
-    db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((tasks) => {
-        tasks.forEach((doc) => {
-            if (doc.data().SprintNumber == i) {
-                a[0] += 1;
-                if (doc.data().Status == "Completed") {
-                    a[1] += 1;
-                } else a[2] += 1;
-            }
-        });
-
-        updateSprintInputJson = {
-            TotalNumberOfTask: a[0],
-            TotalCompletedTask: a[1],
-            TotalUnCompletedTask: a[2],
-        };
-
-        const p1 = updateSprint(updateSprintInputJson, orgDomain, teamName, fullSprintId);
-        return Promise.resolve(p1);
+  const a = [0, 0, 0];
+  db.collection("Organizations").doc(orgDomain).collection("Tasks").where("TeamId", "==", teamId).get().then((tasks) => {
+    tasks.forEach((doc) => {
+      if (doc.data().SprintNumber == i) {
+        a[0] += 1;
+        if (doc.data().Status == "Completed") {
+          a[1] += 1;
+        } else a[2] += 1;
+      }
     });
+
+    const updateSprintInputJson = {
+      TotalNumberOfTask: a[0],
+      TotalCompletedTask: a[1],
+      TotalUnCompletedTask: a[2],
+    };
+
+    const p1 = updateSprint(updateSprintInputJson, orgDomain, teamName, fullSprintId);
+    return Promise.resolve(p1);
+  });
 }
 
+/**
+ * Description
+ * @param {any} sprintNumber
+ * @return {any}
+ */
 function createSprintId(sprintNumber) {
-    if (sprintNumber === -1) {
-        return "Backlog";
-    } else if (sprintNumber === -2) {
-        return "Deleted";
-    } else {
-        return ("S" + sprintNumber);
-    }
+  if (sprintNumber === -1) {
+    return "Backlog";
+  } else if (sprintNumber === -2) {
+    return "Deleted";
+  } else {
+    return ("S" + sprintNumber);
+  }
 }
 
+/**
+ * Description
+ * @param {any} i
+ * @param {any} orgDomain
+ * @param {any} teamId
+ * @param {any} teamName
+ * @param {any} fullSprintId
+ * @param {any} orgId
+ * @return {any}
+ */
 function createBacklogAndDeleted(i, orgDomain, teamId, teamName, fullSprintId, orgId) {
-    const promise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintId).get().then((doc) => {
-        if (doc.exists) {
-            return 0;
-        } else {
-            setSprint(orgDomain, teamName, fullSprintId, orgId, teamId, i, "Not Started", 0, 0, "xxxx-xx-xx", "xxxx-xx-xx");
-        }
-    });
-    return Promise.resolve(promise);
+  const promise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintId).get().then((doc) => {
+    if (doc.exists) {
+      return 0;
+    } else {
+      setSprint(orgDomain, teamName, fullSprintId, orgId, teamId, i, "Not Started", 0, 0, "xxxx-xx-xx", "xxxx-xx-xx");
+    }
+  });
+  return Promise.resolve(promise);
 }

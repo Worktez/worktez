@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -30,53 +30,53 @@ const { generateTemplate } = require("./tark/generateTemplate");
  * @return {any}
  */
 exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
-    let watchers = [];
-    let valueArray = [];
-    const promise = getTask(taskId, orgDomain).then((taskData) => {
-        watchers = taskData.Watcher;
+  let watchers = [];
+  let valueArray = [];
+  const promise = getTask(taskId, orgDomain).then((taskData) => {
+    watchers = taskData.Watcher;
 
-        if (mailType == "Watcher_Task" || mailType == "Log_Task") {
-            getUserUseEmail(customParameter).then((userData)=>{
-                valueArray.recipientName = userData.displayName;
-                valueArray.watcher = customParameter;
-                valueArray.taskId = taskId;
-                valueArray.push(taskId);
-                generateTemplate(mailType, valueArray).then((data) => {
-                    const message = data;
-                    sendMail(customParameter, message[0], message[1]);
-                });
+    if (mailType == "Watcher_Task" || mailType == "Log_Task") {
+      getUserUseEmail(customParameter).then((userData)=>{
+        valueArray.recipientName = userData.displayName;
+        valueArray.watcher = customParameter;
+        valueArray.taskId = taskId;
+        valueArray.push(taskId);
+        generateTemplate(mailType, valueArray).then((data) => {
+          const message = data;
+          sendMail(customParameter, message[0], message[1]);
+        });
+      });
+    } else {
+      watchers.forEach((element) => {
+        getUserUseEmail(element).then((userData) => {
+          valueArray = [];
+          valueArray.doer = customParameter;
+          valueArray.taskId = taskId;
+          valueArray.AssigneeEmail = taskData.Assignee;
+          if (userData) {
+            valueArray.recipientName = userData.displayName;
+          }
+          let message = "";
+          if (element == taskData.Assignee) {
+            generateTemplate(mailType, valueArray).then((data) => {
+              message = data;
+              sendMail(element, message[0], message[1]);
             });
-        } else {
-            watchers.forEach((element) => {
-                getUserUseEmail(element).then((userData) => {
-                    valueArray = [];
-                    valueArray.doer = customParameter;
-                    valueArray.taskId = taskId;
-                    valueArray.AssigneeEmail = taskData.Assignee;
-                    if (userData) {
-                        valueArray.recipientName = userData.displayName;
-                    }
-                    let message = "";
-                    if (element == taskData.Assignee) {
-                        generateTemplate(mailType, valueArray).then((data) => {
-                            message = data;
-                            sendMail(element, message[0], message[1]);
-                        });
-                    } else {
-                        valueArray.watcher = element;
-                        generateTemplate(mailType, valueArray).then((data) => {
-                            message = data;
-                            sendMail(element, message[0], message[1]);
-                        });
-                    }
-                });
+          } else {
+            valueArray.watcher = element;
+            generateTemplate(mailType, valueArray).then((data) => {
+              message = data;
+              sendMail(element, message[0], message[1]);
             });
-        }
-    }).catch((error) => {
-        console.error(error);
-        return error;
-    });
-    return Promise.resolve(promise);
+          }
+        });
+      });
+    }
+  }).catch((error) => {
+    console.error(error);
+    return error;
+  });
+  return Promise.resolve(promise);
 };
 
 
@@ -88,17 +88,17 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
  * @param {any} displayName
  */
 exports.profileMailer = function(mailType, uid, email, displayName) {
-    getUserUseEmail(email).then((userData)=>{
-        const valueArray = [];
-        valueArray.push(uid);
-        valueArray.push(email);
-        valueArray.push(displayName);
-        valueArray.push(userData.Username);
-        generateTemplate(mailType, valueArray).then((data) => {
-            const message = data;
-            sendMail(email, message[0], message[1]);
-        });
+  getUserUseEmail(email).then((userData)=>{
+    const valueArray = [];
+    valueArray.push(uid);
+    valueArray.push(email);
+    valueArray.push(displayName);
+    valueArray.push(userData.Username);
+    generateTemplate(mailType, valueArray).then((data) => {
+      const message = data;
+      sendMail(email, message[0], message[1]);
     });
+  });
 };
 
 
@@ -112,16 +112,16 @@ exports.profileMailer = function(mailType, uid, email, displayName) {
  * @param {any} teamId
  */
 exports.verificationMailer = function(mailType, teamName, teamManagerEmail, userEmail, organizationDomain, teamId) {
-    const valueArray = [];
-    valueArray.push(teamName);
-    valueArray.push(teamManagerEmail);
-    valueArray.push(userEmail);
-    valueArray.push(organizationDomain);
-    valueArray.push(teamId);
-    generateTemplate(mailType, valueArray).then((data) => {
-        const message = data;
-        sendMail(userEmail, message[0], message[1]);
-    });
+  const valueArray = [];
+  valueArray.push(teamName);
+  valueArray.push(teamManagerEmail);
+  valueArray.push(userEmail);
+  valueArray.push(organizationDomain);
+  valueArray.push(teamId);
+  generateTemplate(mailType, valueArray).then((data) => {
+    const message = data;
+    sendMail(userEmail, message[0], message[1]);
+  });
 };
 /**
  * Description
@@ -131,14 +131,14 @@ exports.verificationMailer = function(mailType, teamName, teamManagerEmail, user
  * @param {any} userContact
  * @param {any} userOrg
  */
- exports.demoRequestMailer = function(mailType, userName, userEmail, userContact, userOrg) {
-    const valueArray = [];
-    valueArray.push(userName);
-    valueArray.push(userEmail);
-    valueArray.push(userContact);
-    valueArray.push(userOrg);
-    generateTemplate(mailType, valueArray).then((data) => {
-        const message = data;
-        sendMail("admin@worktez.com", message[0], message[1]);
-    });
+exports.demoRequestMailer = function(mailType, userName, userEmail, userContact, userOrg) {
+  const valueArray = [];
+  valueArray.push(userName);
+  valueArray.push(userEmail);
+  valueArray.push(userContact);
+  valueArray.push(userOrg);
+  generateTemplate(mailType, valueArray).then((data) => {
+    const message = data;
+    sendMail("admin@worktez.com", message[0], message[1]);
+  });
 };

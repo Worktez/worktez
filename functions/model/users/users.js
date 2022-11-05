@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -12,12 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
@@ -58,7 +56,7 @@ const { checkIfUserAlreadyAMember } = require("./tark/checkIfUserAlreadyAMember"
  * @returns {any}
  */
 fastify.post("/createNewUser", (req, res) => {
-    createNewUser(req, res);
+  createNewUser(req, res);
 });
 
 /**
@@ -69,7 +67,7 @@ fastify.post("/createNewUser", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getUserAppSettings", (req, res) => {
-    getUserAppSettings(req, res);
+  getUserAppSettings(req, res);
 });
 
 /**
@@ -80,7 +78,7 @@ fastify.post("/getUserAppSettings", (req, res) => {
  * @returns {any}
  */
 fastify.post("/checkAvailableUsername", (req, res) => {
-    checkAvailableUsername(req, res);
+  checkAvailableUsername(req, res);
 });
 
 /**
@@ -91,7 +89,7 @@ fastify.post("/checkAvailableUsername", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getMyOrgCollectionDocs", (req, res) => {
-    getMyOrgCollectionDocs(req, res);
+  getMyOrgCollectionDocs(req, res);
 });
 
 /**
@@ -102,7 +100,7 @@ fastify.post("/getMyOrgCollectionDocs", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getMyOrgList", (req, res) => {
-    getMyOrgList(req, res);
+  getMyOrgList(req, res);
 });
 
 /**
@@ -113,7 +111,7 @@ fastify.post("/getMyOrgList", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getMyTeamsList", (req, res) => {
-    getMyTeamsList(req, res);
+  getMyTeamsList(req, res);
 });
 
 /**
@@ -124,7 +122,7 @@ fastify.post("/getMyTeamsList", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getPhotoURLList", (req, res) => {
-    getPhotoURLList(req, res);
+  getPhotoURLList(req, res);
 });
 
 /**
@@ -135,7 +133,7 @@ fastify.post("/getPhotoURLList", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getUserByEmail", (req, res) => {
-    getUserByEmail(req, res);
+  getUserByEmail(req, res);
 });
 
 /**
@@ -146,7 +144,7 @@ fastify.post("/getUserByEmail", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getUserByUid", (req, res) => {
-    getUserByUid(req, res);
+  getUserByUid(req, res);
 });
 
 /**
@@ -157,7 +155,7 @@ fastify.post("/getUserByUid", (req, res) => {
  * @returns {any}
  */
 fastify.post("/setMyOrganization", (req, res) => {
-    setMyOrganization(req, res);
+  setMyOrganization(req, res);
 });
 
 /**
@@ -168,7 +166,7 @@ fastify.post("/setMyOrganization", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateSelectedTeam", (req, res) => {
-    updateSelectedTeam(req, res);
+  updateSelectedTeam(req, res);
 });
 
 /**
@@ -179,7 +177,7 @@ fastify.post("/updateSelectedTeam", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateUser", (req, res) => {
-    updateUser(req, res);
+  updateUser(req, res);
 });
 
 /**
@@ -190,7 +188,7 @@ fastify.post("/updateUser", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateTheme", (req, res) => {
-    updateTheme(req, res);
+  updateTheme(req, res);
 });
 
 /**
@@ -201,7 +199,7 @@ fastify.post("/updateTheme", (req, res) => {
  * @returns {any}
  */
 fastify.post("/verify", (req, res) => {
-    verifyUser(req, res);
+  verifyUser(req, res);
 });
 
 /**
@@ -212,7 +210,7 @@ fastify.post("/verify", (req, res) => {
  * @returns {any}
  */
 fastify.post("/addEducation", (req, res) => {
-    addEducation(req, res);
+  addEducation(req, res);
 });
 
 /**
@@ -223,7 +221,7 @@ fastify.post("/addEducation", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateEducation", (req, res) => {
-    updateEducation(req, res);
+  updateEducation(req, res);
 });
 
 /**
@@ -234,7 +232,7 @@ fastify.post("/updateEducation", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getAllEducation", (req, res) => {
-    getEducationList(req, res);
+  getEducationList(req, res);
 });
 
 /**
@@ -245,7 +243,7 @@ fastify.post("/getAllEducation", (req, res) => {
  * @returns {any}
  */
 fastify.post("/addExperience", (req, res) => {
-    addExperience(req, res);
+  addExperience(req, res);
 });
 
 /**
@@ -256,7 +254,7 @@ fastify.post("/addExperience", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateExperience", (req, res) => {
-    updateExperience(req, res);
+  updateExperience(req, res);
 });
 
 /**
@@ -267,7 +265,7 @@ fastify.post("/updateExperience", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getAllExperience", (req, res) => {
-    getExperienceList(req, res);
+  getExperienceList(req, res);
 });
 
 /**
@@ -278,7 +276,7 @@ fastify.post("/getAllExperience", (req, res) => {
  * @returns {any}
  */
 fastify.post("/addProject", (req, res) => {
-    addProject(req, res);
+  addProject(req, res);
 });
 
 /**
@@ -289,7 +287,7 @@ fastify.post("/addProject", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateProject", (req, res) => {
-    updateProject(req, res);
+  updateProject(req, res);
 });
 
 /**
@@ -300,7 +298,7 @@ fastify.post("/updateProject", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getAllProject", (req, res) => {
-    getProjectList(req, res);
+  getProjectList(req, res);
 });
 
 /**
@@ -311,7 +309,7 @@ fastify.post("/getAllProject", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateSkill", (req, res) => {
-    updateUserSkill(req, res);
+  updateUserSkill(req, res);
 });
 
 /**
@@ -322,7 +320,7 @@ fastify.post("/updateSkill", (req, res) => {
  * @returns {any}
  */
 fastify.post("/updateProfilePic", (req, res) => {
-    updateProfilePic(req, res);
+  updateProfilePic(req, res);
 });
 
 /**
@@ -332,8 +330,8 @@ fastify.post("/updateProfilePic", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getUserByUsername", (req, res) => {
-    getUserByUsername(req, res);
+fastify.post("/getUserByUsername", (req, res) => {
+  getUserByUsername(req, res);
 });
 
 /**
@@ -343,8 +341,8 @@ fastify.post("/updateProfilePic", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/checkIfUserAlreadyAMember", (req, res) => {
-    checkIfUserAlreadyAMember(req, res);
+fastify.post("/checkIfUserAlreadyAMember", (req, res) => {
+  checkIfUserAlreadyAMember(req, res);
 });
 
 /**
@@ -354,10 +352,10 @@ fastify.post("/updateProfilePic", (req, res) => {
  * @returns {any}
  */
 exports.users = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-            if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

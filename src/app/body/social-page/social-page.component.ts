@@ -47,7 +47,7 @@ export class SocialPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
-    this.authService.getUserSettings();
+    // this.authService.getUserSettings();
     if(this.startService.showTeamsData) {
       this.pageReady = true;
       this.loadSocialPageData();

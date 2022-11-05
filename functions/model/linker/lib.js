@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -29,8 +27,8 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.getLink = function(orgDomain, taskId) {
-    const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").get();
-    return Promise.resolve(getLinkDetails);
+  const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").get();
+  return Promise.resolve(getLinkDetails);
 };
 
 /**
@@ -43,31 +41,29 @@ exports.getLink = function(orgDomain, taskId) {
  * @return {any}
  */
 exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
-    const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).set({
-        LinkType: linkType,
-        LinkURL: linkURL,
-        TaskID: taskId,
-        LinkID: linkID,
-        OrgDomain: orgDomain,
-        LinkStatus: "Active",
-    });
-    return Promise.resolve(setLinkDetails);
+  const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).set({
+    LinkType: linkType,
+    LinkURL: linkURL,
+    TaskID: taskId,
+    LinkID: linkID,
+    OrgDomain: orgDomain,
+    LinkStatus: "Active",
+  });
+  return Promise.resolve(setLinkDetails);
 };
 
 /**
  * Description
  * @param {any} orgDomain
  * @param {any} taskId
- * @param {any} linkType
- * @param {any} linkURL
  * @param {any} linkID
  * @return {any}
  */
- exports.removeLinkDoc = function(orgDomain, taskId, linkID) {
-    const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).update({
-        LinkStatus: "Deleted",
-    });
-    return Promise.resolve(setLinkDetails);
+exports.removeLinkDoc = function(orgDomain, taskId, linkID) {
+  const setLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkID).update({
+    LinkStatus: "Deleted",
+  });
+  return Promise.resolve(setLinkDetails);
 };
 
 /**
@@ -79,6 +75,6 @@ exports.setLinkDoc = function(orgDomain, taskId, linkType, linkURL, linkID) {
  */
 
 exports.getLinkData = function(orgDomain, taskId, linkId) {
-    const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkId).get();
-    return Promise.resolve(getLinkDetails);
+  const getLinkDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Link").doc(linkId).get();
+  return Promise.resolve(getLinkDetails);
 };
