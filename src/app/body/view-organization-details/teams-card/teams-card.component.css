@@ -63,6 +63,10 @@
     color: var(--primary-color);
 }
 
+.modal-title{
+    color: var(--text);
+}
+
 .btn {
     color: var(--text);
 }
@@ -72,10 +76,15 @@
     color: var(--button-text-hover);
 }
 
+.noHover {
+    pointer-events: none;
+  }
+
 .extra {
     background-color: var(--primary-color);
     color: #1B1F23;
 }
+
 .extra:hover {
     /* background-color: transparent; */
     color: #1B1F23;

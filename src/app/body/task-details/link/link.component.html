@@ -17,7 +17,7 @@
             <nav class="modal-header navbar navbar-expand" id="navbarMenu">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <h5 class="active nav-link head" id="linkModalLabel">Add Link</h5>
+                        <h2 class="active nav-link head" id="linkModalLabel">Add Link</h2>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -34,7 +34,7 @@
             <div class="container modal-body align-items-center px-4" id="addLinkPage">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row">
-                        <div class="col-md-3 pl-4">
+                        <div class="col-md-3 pl-4 link">
                             <span class="form-inline">Link Type</span>
                         </div>
                         <div class="col-md-9">
@@ -43,7 +43,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-3 pl-4">
+                        <div class="col-md-3 pl-4 link">
                             <span class="form-inline">Link URL</span>
                         </div>
                         <div class="col-md-9">

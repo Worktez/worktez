@@ -59,3 +59,12 @@ mat-icon {
     margin-top: 1rem; 
     margin-bottom: 0.5rem;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}

@@ -12,12 +12,12 @@
 * See the MIT License for more details. 
 ***********************************************************/-->
 <div class="modal fade" id="exampleModalDel" tabindex="-1" role="dialog" aria-labelledby="exampleModalDelTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered  p-0" role="document">
-        <div class="modal-content ">
-            <nav class="modal-header navbar  navbar-dark pr-0 pt-0" id="navbarMenu">
-                <ul class="navbar-nav ">
+    <div class="modal-dialog modal-dialog-centered p-0" role="document">
+        <div class="modal-content modalAlign">
+            <nav class="modal-header navbar navbar-dark pr-0 pt-0" id="navbarMenu">
+                <ul class="navbar-nav">
                     <li class="nav-item mt-2">
-                        <h5 class="modal-title" id="exampleModalDelLabel">Are You Sure?</h5>
+                        <h3 class="modal-title" id="exampleModalDelLabel">Are You Sure?</h3>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -33,12 +33,12 @@
             <div class="container modal-body" id="editPageTaskContainer">
                 <ng-container>
                     <div class="row">
-                        <div class="col">You are about to delete this Task.</div>
+                        <div class="col text">You are about to delete this Task.</div>
                     </div>
                     <div class="row">
                         <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-secondary" data-dismiss="modal" aria-label="Close" id="button" type="button"  (click)="deleteTask()">Confirm</button>
+                        <div class="col-md-3 pb-2 confirmButton">
+                            <button class="btn noHover" data-dismiss="modal" aria-label="Close" id="button" type="button" (click)="deleteTask()">Confirm</button>
                         </div>
                     </div>
                 </ng-container>
