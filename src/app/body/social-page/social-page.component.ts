@@ -127,6 +127,5 @@ export class SocialPageComponent implements OnInit {
       return this.recentPosts[0]
     }
   }
-
 }
 

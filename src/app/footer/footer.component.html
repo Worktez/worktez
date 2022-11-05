@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-8 col-md-4 company-text">
                         <h3>WorkTez</h3>
-                        <p>Milestone your project with the power of DevOps.</p>
+                        <p>Simplify and organize the way teams work.</p>
                     </div>
                     <div class="col">
                         <h3 class="footer-headings">Company</h3>
@@ -56,6 +56,9 @@
                     <div class="col text-center">
                         <h3 class="footer-headings">Resources</h3>
                         <ul class="list-unstyled">
+                            <li>
+                                <span class="p-2" onclick="window.location='https://github.com/Worktez/worktez'">Explore Our Code</span>
+                            </li>
                             <li>
                             <a href="https://www.youtube.com/watch?v=riiBlKkOLug">Getting Started</a>
                             </li>
@@ -82,8 +85,10 @@
                 <div class="row footer-copyright pb-5">
                     <div class="col-md-3 col" (click)='termsandcondition()' id="txtCenter">Terms & Conditions</div>
                     <div class="col-md-1 col" id="txtCenter">|</div>
-                    <div class="col-md-3 col" (click)='privacy()'id="txtCenter">Privacy Policy</div>
-                    <div class="col-md-5 col text-right"id="txtCenter">
+                    <div class="col-md-2 col" (click)='privacy()'id="txtCenter">Privacy Policy</div>
+                    <div class="col-md-1 col" id="txtCenter">|</div>
+                    <div class="col-md-2 col" (click)="copyright()"id="txtCenter">License</div>
+                    <div class="col-md-3 col text-right"id="txtCenter">
                         <mat-icon fontSet="material-icons-outlined" class="align-middle pt-1" style="font-size: 15px;">
                             copyright
                         </mat-icon>

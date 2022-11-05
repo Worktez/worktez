@@ -38,7 +38,7 @@ export class UserCardComponent implements OnInit {
   onLogout() {
     this.authService.logout().then(()=>{
       this.startService.stopApplication();
-      this.router.navigate(['/Social']);
+      this.router.navigate(['/techverse']);
     });
   }
   profile() {
