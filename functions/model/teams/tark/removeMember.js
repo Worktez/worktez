@@ -31,7 +31,6 @@ exports.removeMember = function(request, response) {
     let flag = false;
     let result;
     let status = 200;
-    const res2 = {};
     const index = teamMembers.indexOf(remove);
     if (index != -1) {
         teamMembers.splice(index, 1);
@@ -43,7 +42,6 @@ exports.removeMember = function(request, response) {
             docs.forEach((element) => {
                 const teamdata = element.data();
                 const teamMembers = teamdata.TeamMembers;
-                res2[teamMembers]={};
                     if (teamMembers.includes(remove)) {
                         flag=true;
                     }
