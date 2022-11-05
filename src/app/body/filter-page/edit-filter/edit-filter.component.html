@@ -14,31 +14,31 @@
 <div class="modal fade" id="openEditProperties" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="row modal-content">
-            <div class="modal-header pt-3 pb-0">
-                <div class="col-6 col-md-6 pl-2">
+        <div class="row modal-content modalAlign">
+            <div class="modal-header pt-3">
+                <div class="col-10 col-md-10 pl-2 pt-2">
                     <h5 class="modal-title pl-3" id="openEditPropertiesTitle">Edit Filter</h5>
                 </div>
-                    <div class="Close" data-dismiss="modal" aria-label="Close">
-                        <span class="btn">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="editFilterDone()" title="Close">
-                                close
-                            </mat-icon>
-                        </span>
-                    </div>
+                <div class="col-2 col-md-2 Close" data-dismiss="modal" aria-label="Close">
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="editFilterDone()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
+                </div>
             </div>
             <div class="container-fluid modal-body px-5" id="openEditPropertiesContainer">
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row">
-                        <div class="col-md-4 pl-2">
+                        <div class="col-md-4 px-2">
                             <span id="openEditProperties">Filter Name</span>
                             <input type="text" class="form-control" value={{filterName}}
                                 [(ngModel)]="customFilter.FilterName" [ngModelOptions]="{standalone: true}">
                         </div>
-                        <div class="col-md-8 pr-2">
+                        <div class="col-md-8 pl-2">
                             <span id="openEditProperties">Assignee Name</span>
                             <div class="dropdown">
-                                <input type="text" autocomplete="off"  class="form-control" 
+                                <input type="text" autocomplete="off" class="form-control" 
                                 [formControl]="assigneeName" value={{customFilter.FilterJson.Assignee}}
                                 [(ngModel)]="customFilter.FilterJson.Assignee" [ngModelOptions]="{standalone: true}" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-md-6 px-2">
                             <span id="openEditProperties">Priority</span>
-                            <select class="custom-select" [(ngModel)]="customFilter.FilterJson.Priority"
+                            <select class="form-control" [(ngModel)]="customFilter.FilterJson.Priority"
                                 [ngModelOptions]="{standalone: true}">
                                 <option selected disabled value="">Select Priority</option>
                                 <ng-container *ngFor="let item of applicationSetting.priority">
@@ -71,7 +71,7 @@
                         </div>
                         <div class="col-md-6 pl-2">
                             <span id="openEditProperties">Difficulty</span>
-                            <select class="custom-select" [(ngModel)]="customFilter.FilterJson.Difficulty"
+                            <select class="form-control" [(ngModel)]="customFilter.FilterJson.Difficulty"
                                 [ngModelOptions]="{standalone: true}">
                                 <option selected disabled value="">Select Difficulty</option>
                                 <ng-container *ngFor="let item of applicationSetting.difficulty">
@@ -81,9 +81,9 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 pl-2">
+                        <div class="col-md-6 px-2">
                             <span id="openEditProperties">Status</span>
-                            <select class="custom-select form-control" value={{this.customFilter.FilterJson.Status}}
+                            <select class="form-control" value={{this.customFilter.FilterJson.Status}}
                                 [(ngModel)]="customFilter.FilterJson.Status" [ngModelOptions]="{standalone: true}">
                                 <ng-container *ngFor="let item of applicationSetting.status">
                                     <option>{{item}}</option>

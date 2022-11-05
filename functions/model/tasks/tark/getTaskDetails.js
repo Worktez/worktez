@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-trailing-spaces */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -22,7 +23,7 @@ exports.getTaskDetails = function(request, response) {
   const taskId = request.body.data.Id;
   let result;
   let status = 200;
-  
+
   const p1 = getTask(taskId, orgDomain).then((taskDoc) => {
     if (taskDoc == undefined) {
       result = {data: {status: "ERROR", taskData: undefined}};

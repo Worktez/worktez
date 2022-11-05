@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -17,14 +16,14 @@
  * See the MIT License for more details.
  ***********************************************************/
 
- const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { addMilestone } = require("../milestone/tark/addMilestone");
 const { getAllMilestones } = require("../milestone/tark/getAllMilestones");
 const { getMilestone } = require("../milestone/tark/getMilestone");
 const { editMilestone } = require("../milestone/tark/editMilestone");
 const { addTaskToMilestone } = require("../milestone/tark/addTask");
 
- /**
+/**
  * Description
  * @param {any} "/addMilestone"
  * @param {any} req
@@ -32,8 +31,8 @@ const { addTaskToMilestone } = require("../milestone/tark/addTask");
  * @returns {any}
  */
 fastify.post("/addMilestone", (req, res) => {
-    addMilestone(req, res);
-  });
+  addMilestone(req, res);
+});
 
 /**
  * Description
@@ -43,8 +42,8 @@ fastify.post("/addMilestone", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getMilestone", (req, res) => {
-    getMilestone(req, res);
-  });
+  getMilestone(req, res);
+});
 
 /**
  * Description
@@ -64,7 +63,7 @@ fastify.post("/getAllMilestones", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/editMilestone", (req, res) => {
+fastify.post("/editMilestone", (req, res) => {
   editMilestone(req, res);
 });
 
@@ -75,7 +74,7 @@ fastify.post("/getAllMilestones", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/addTask", (req, res) => {
+fastify.post("/addTask", (req, res) => {
   addTaskToMilestone(req, res);
 });
 
@@ -85,11 +84,11 @@ fastify.post("/getAllMilestones", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- exports.milestone = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-            requestHandler(req, res);
-        });
+exports.milestone = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
   });
+});

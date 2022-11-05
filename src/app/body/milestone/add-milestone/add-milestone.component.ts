@@ -41,16 +41,17 @@ export class AddMilestoneComponent implements OnInit {
   todayDate: string
   milestoneStatus: string
   addMilestoneActive: boolean = true;
+  minDate:string;
 
   constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolService.date();
+    const dateArray = this.todayDate.split('-');
+    this.minDate = dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];
   }
 
   validateMilestone() {
-    let labels = ['title','project', 'description', 'startDate', 'endDate', 'milestoneStatus'];
-    let values = [this.title, this.teamId, this.description, this.startDate, this.endDate, this.milestoneStatus];
     let data = [{ label: "title", value: this.title },
     { label: "project", value: this.teamId },
     { label: "description", value: this.description },
@@ -59,16 +60,16 @@ export class AddMilestoneComponent implements OnInit {
     { label: "milestoneStatus", value: this.milestoneStatus},
   ];
     
-    var condition = (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      
-      return res;
+     this.validationService.checkValidity(this.componentName, data).then(res => {
+      console.log("condition ", res);
+      if (res) {
+        console.log("Inputs are valid");
+        this.addMilestone();
+      }
+      else
+        console.log("Add Milestone Failed due to Validation Error");
     });
-    if (condition) {
-      console.log("Inputs are valid");
-      this.addMilestone();
-    }
-    else
-      console.log("Add Milestone Failed due to Validation Error");
+    
   }
 
   addMilestone() {

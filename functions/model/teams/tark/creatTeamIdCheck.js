@@ -17,31 +17,29 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { getMyOrgCollection } = require("../lib");
+const { getOrg } = require("../../organization/lib");
 
-exports.getMyOrgList = function(request, response) {
-  const uid = request.body.data.Uid;
-
+exports.creatTeamIdCheck = function(request, response) {
   let status = 200;
-  const resultData = [];
-  let result;
-
-  getMyOrgCollection(uid).then((snapshot) => {
-    if (snapshot == undefined) {
-      result = { data: {status: "Not Found", data: "No Organization Listed"} };
-    } else {
-      snapshot.forEach((element) => {
-        const data = element.data();
-        data["OrgDomain"] = element.id;
-        resultData.push(data);
-      });
-      result = { data: {status: "Ok", data: resultData} };
+  let resultData = "";
+  const teamId = request.body.data.TeamId;
+  const orgDomain = request.body.data.OrganizationDomain;
+  getOrg(orgDomain).then((orgDoc) => {
+    for (let i = 0; i < orgDoc.TeamsId.length; i++) {
+      if (orgDoc.TeamsId[i] == teamId) {
+        resultData = "teamId Already taken";
+        break;
+      } else {
+        resultData = "teamId Available";
+      }
     }
+    const result = { data: resultData};
     return response.status(status).send(result);
-  }).catch((error) => {
+  }).catch((err) => {
     status = 500;
-    console.log("Error: ", error);
-    result = { data: {status: "Error", data: "No Organization Listed"}};
+    resultData = "teamId Already taken";
+    console.error("Error : " + err);
+    const result = { data: resultData };
     return response.status(status).send(result);
   });
 };

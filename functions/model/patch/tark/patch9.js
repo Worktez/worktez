@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
-/* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,8 +25,9 @@ exports.patch9 = function(request, response) {
   const newFieldValue = request.body.data.NewFieldValue;
   const newFieldValueType = request.body.data.NewFieldValueType;
   const uid = request.body.data.Uid;
+  let result;
 
-  inputJson = {};
+  const inputJson = {};
   if (newFieldValueType == "Array") {
     inputJson[newfield] = [];
   } else if (newFieldValueType == "String") {

@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -38,23 +37,23 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId, newSprintId, status, totalNumberOfTask = 0, totalUnCompletedTask = 0, startStoryPoint = 0, midStoryPoint = 0, startDate = "xxxx-xx-xx", endDate = "xxxx-xx-xx") {
-    const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).set({
-        OrganizationId: orgId,
-        TeamId: teamId,
-        SprintNumber: newSprintId,
-        TotalCompletedTask: 0,
-        TotalNumberOfTask: totalNumberOfTask,
-        TotalUnCompletedTask: totalUnCompletedTask,
-        StartDate: startDate,
-        EndDate: endDate,
-        Status: status,
-        StartStoryPoint: startStoryPoint,
-        MidStoryPoint: midStoryPoint,
-        EndStoryPoint: 0,
-        CompletedStoryPoint: 0,
-        SprintActivityCounter: 0,
-    });
-    return Promise.resolve(setSprint);
+  const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).set({
+    OrganizationId: orgId,
+    TeamId: teamId,
+    SprintNumber: newSprintId,
+    TotalCompletedTask: 0,
+    TotalNumberOfTask: totalNumberOfTask,
+    TotalUnCompletedTask: totalUnCompletedTask,
+    StartDate: startDate,
+    EndDate: endDate,
+    Status: status,
+    StartStoryPoint: startStoryPoint,
+    MidStoryPoint: midStoryPoint,
+    EndStoryPoint: 0,
+    CompletedStoryPoint: 0,
+    SprintActivityCounter: 0,
+  });
+  return Promise.resolve(setSprint);
 };
 
 /**
@@ -66,8 +65,8 @@ exports.setSprint = function(orgDomain, teamName, fullSprintName, orgId, teamId,
  * @return {any}
  */
 exports.updateSprint = function(inputJson, orgDomain, teamName, fullSprintName) {
-    const updateSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).update(inputJson);
-    return Promise.resolve(updateSprint);
+  const updateSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).update(inputJson);
+  return Promise.resolve(updateSprint);
 };
 
 /**
@@ -78,12 +77,12 @@ exports.updateSprint = function(inputJson, orgDomain, teamName, fullSprintName) 
  * @return {any}
  */
 exports.getSprint = function(orgDomain, teamName, fullSprintName) {
-    const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).get().then((sprint) => {
-        if (sprint.exists) {
-        return sprint.data();
-        } else return;
-    });
-    return Promise.resolve(getSrpintDetails);
+  const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).get().then((sprint) => {
+    if (sprint.exists) {
+      return sprint.data();
+    } else return;
+  });
+  return Promise.resolve(getSrpintDetails);
 };
 
 /**
@@ -93,16 +92,16 @@ exports.getSprint = function(orgDomain, teamName, fullSprintName) {
  * @return {any}
  */
 exports.getSprints = function(orgDomain, teamName) {
-    const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").get().then((sprintsData) => {
-        const sprints = [];
-        sprintsData.forEach((element) => {
-            if (element.exists) {
-                sprints.push(element.data());
-            }
-        });
-        return sprints;
+  const getSrpintDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").get().then((sprintsData) => {
+    const sprints = [];
+    sprintsData.forEach((element) => {
+      if (element.exists) {
+        sprints.push(element.data());
+      }
     });
-    return Promise.resolve(getSrpintDetails);
+    return sprints;
+  });
+  return Promise.resolve(getSrpintDetails);
 };
 
 /**
@@ -114,27 +113,27 @@ exports.getSprints = function(orgDomain, teamName) {
  * @return {any}
  */
 exports.getAllSprints = function(orgDomain, teamName, sprintRange1 = "", sprintRange2 = "") {
-    let query = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints");
+  let query = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints");
 
-    if (sprintRange1 != "") {
-        query = query.where("SprintNumber", ">=", sprintRange1);
-    }
+  if (sprintRange1 != "") {
+    query = query.where("SprintNumber", ">=", sprintRange1);
+  }
 
-    if (sprintRange2 != "") {
-        query = query.where("SprintNumber", "<=", sprintRange2);
-    }
+  if (sprintRange2 != "") {
+    query = query.where("SprintNumber", "<=", sprintRange2);
+  }
 
-    const getSprintDetails = query.get().then((sprintsData) => {
-        const sprints = [];
-        sprintsData.forEach((element) => {
-            if (element.exists) {
-                sprints.push(element.data());
-            }
-        });
-        return sprints;
+  const getSprintDetails = query.get().then((sprintsData) => {
+    const sprints = [];
+    sprintsData.forEach((element) => {
+      if (element.exists) {
+        sprints.push(element.data());
+      }
     });
+    return sprints;
+  });
 
-    return Promise.resolve(getSprintDetails);
+  return Promise.resolve(getSprintDetails);
 };
 
 /**
@@ -149,13 +148,13 @@ exports.getAllSprints = function(orgDomain, teamName, sprintRange1 = "", sprintR
  * @param {any} uid
  * @return {any}
  */
- exports.setSprintActivity = function(orgDomain, teamName, fullSprintName, sprintActivityId, message, creationDate, creationTime, uid = "Bot") {
-    const docId = sprintActivityId.toString();
-    const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).collection("SprintActivity").doc(docId).set({
-        CreationTime: creationTime,
-        CreationDate: creationDate,
-        Message: message,
-        Uid: uid,
-    });
-    return Promise.resolve(setSprint);
+exports.setSprintActivity = function(orgDomain, teamName, fullSprintName, sprintActivityId, message, creationDate, creationTime, uid = "Bot") {
+  const docId = sprintActivityId.toString();
+  const setSprint = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Sprints").doc(fullSprintName).collection("SprintActivity").doc(docId).set({
+    CreationTime: creationTime,
+    CreationDate: creationDate,
+    Message: message,
+    Uid: uid,
+  });
+  return Promise.resolve(setSprint);
 };

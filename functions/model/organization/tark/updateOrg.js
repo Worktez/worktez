@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,32 +17,24 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable no-unused-vars */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
 const { updateOrg } = require("../lib");
 
 exports.updateProfilePic = function(request, response) {
-    const OrganizationLogoURL = request.body.data.PhotoURL;
-    const orgDomain = request.body.data.OrgDomain;
+  const OrganizationLogoURL = request.body.data.PhotoURL;
+  const orgDomain = request.body.data.OrgDomain;
 
-    let result;
+  let result;
 
-    updateOrgInputJson = {
-        OrganizationLogoURL: OrganizationLogoURL,
-    };
-    updateOrg(orgDomain, updateOrgInputJson).then(() => {
-        result = { data: "Organisation Display Picture updated successfully" };
-        console.log("Successful");
-        return response.status(200).send(result);
-    }).catch((error) => {
-        result = { data: error };
-        console.error("Error", error);
-        return response.status(500).send(result);
-    });
+  const updateOrgInputJson = {
+    OrganizationLogoURL: OrganizationLogoURL,
+  };
+  updateOrg(orgDomain, updateOrgInputJson).then(() => {
+    result = { data: "Organisation Display Picture updated successfully" };
+    console.log("Successful");
+    return response.status(200).send(result);
+  }).catch((error) => {
+    result = { data: error };
+    console.error("Error", error);
+    return response.status(500).send(result);
+  });
 };

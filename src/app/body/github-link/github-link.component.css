@@ -95,3 +95,12 @@ input:focus {
     color: var(--button-text-hover);
     border: none;
 }
+
+.form-control{
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+}

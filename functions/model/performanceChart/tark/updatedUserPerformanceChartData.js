@@ -1,12 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable prefer-const */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,45 +21,45 @@ const { setOrganizationsChart } = require("../lib");
 const { getAllTasks } = require("../../tasks/lib");
 
 exports.updatedUserPerformanceChartData =function(orgDomain, assignee, sprintRange, teamId, teamName) {
-        let inputJson = {};
-        let responseData = [];
+  const inputJson = {};
+  const responseData = [];
 
-        getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
-            let i; let storyPoint; let data;
-            for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
-                storyPoint = 0;
-                snapshot.docs.forEach((taskDoc) => {
-                    data = taskDoc.data();
-                    if (data.SprintNumber == i) {
-                        storyPoint += data.StoryPointNumber;
-                    }
-                });
-                responseData.push(["S" + i, storyPoint]);
-                inputJson["S"+i]=storyPoint;
-            }
-            setOrganizationsChart(orgDomain, teamName, assignee, inputJson);
-        });
+  getAllTasks(orgDomain, teamId, "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
+    let i; let storyPoint; let data;
+    for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
+      storyPoint = 0;
+      snapshot.docs.forEach((taskDoc) => {
+        data = taskDoc.data();
+        if (data.SprintNumber == i) {
+          storyPoint += data.StoryPointNumber;
+        }
+      });
+      responseData.push(["S" + i, storyPoint]);
+      inputJson["S"+i]=storyPoint;
+    }
+    setOrganizationsChart(orgDomain, teamName, assignee, inputJson);
+  });
 
-        // getUserUseEmail(assignee).then((data) => {
-        //     const uid = data.uid;
-        //     getAllTasks(orgDomain, "", "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
-        //         let i; let storyPoint; let data;
-        //         for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
-        //             storyPoint = 0;
-        //             snapshot.docs.forEach((taskDoc) => {
-        //                 data = taskDoc.data();
-        //                 if (data.SprintNumber == i) {
-        //                     storyPoint += data.StoryPointNumber;
-        //                 }
-        //             });
-        //             responseData.push(["S" + i, storyPoint]);
-        //             inputJson["S"+i]=storyPoint;
-        //         }
-        //         setUserChart(orgDomain, uid, inputJson);
-        //     }).catch((error) => {
-        //         console.log("Error:", error);
-        //     });
-        // }).catch((error) => {
-        //     console.log("Error:", error);
-        // });
+  // getUserUseEmail(assignee).then((data) => {
+  //     const uid = data.uid;
+  //     getAllTasks(orgDomain, "", "", assignee, "", "", "Completed", "", sprintRange["SprintRange1"], sprintRange["SprintRange2"]).then((snapshot) => {
+  //         let i; let storyPoint; let data;
+  //         for (i = sprintRange["SprintRange1"]; i <= sprintRange["SprintRange2"]; i++) {
+  //             storyPoint = 0;
+  //             snapshot.docs.forEach((taskDoc) => {
+  //                 data = taskDoc.data();
+  //                 if (data.SprintNumber == i) {
+  //                     storyPoint += data.StoryPointNumber;
+  //                 }
+  //             });
+  //             responseData.push(["S" + i, storyPoint]);
+  //             inputJson["S"+i]=storyPoint;
+  //         }
+  //         setUserChart(orgDomain, uid, inputJson);
+  //     }).catch((error) => {
+  //         console.log("Error:", error);
+  //     });
+  // }).catch((error) => {
+  //     console.log("Error:", error);
+  // });
 };

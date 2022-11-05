@@ -46,22 +46,22 @@
                 <form *ngIf="!enableLoader">
                     <div class="form-group mb-4">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">College/School Name</span>
-                        <input type="text" [(ngModel)]="instituteName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your College or School Name">
+                        <input type="text" [(ngModel)]="instituteName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your College or School Name" autocomplete="off">
                     </div>
 
                     <div class="form-group my-4">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Degree Name</span>
-                        <input type="text" [(ngModel)]="degree" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Degree Name">
+                        <input type="text" [(ngModel)]="degree" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Degree Name" autocomplete="off">
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 col ml-auto">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
-                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The Start Date ">
+                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"  placeholder="Select The Start Date ">
                         </div>
                         <div class="col-md-6 col ml-auto">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
-                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
+                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{startDate}}" placeholder="Select The End Date ">
                         </div>
                     </div>
 

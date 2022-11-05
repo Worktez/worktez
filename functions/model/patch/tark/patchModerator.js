@@ -1,6 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
 /* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,6 +27,7 @@ exports.patchModerator = function(request, response) {
   const UpdatedOn = request.body.data.UpdatedOn;
   const LastUsedByOrg = request.body.data.LastUsedByOrg;
   const LastUsedByUid = request.body.data.LastUsedByUid;
+  let result;
 
   const promise = getPatchData(Patch).then((patch) => {
     if (patch == undefined) {

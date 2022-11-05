@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,13 +17,6 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable require-jsdoc */
-/* eslint-disable object-curly-spacing */
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 const {currentDate} = require("../../application/lib");
 const {getOrgRawData} = require("../../organization/lib");
 const {getSubscriptions, updateSubscription} = require("../lib");

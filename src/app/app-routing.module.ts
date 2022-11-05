@@ -17,7 +17,7 @@ import { LoginComponent } from './body/login/login.component';
 import { BoardComponent } from './body/board/board.component';
 import { TaskDetailsComponent } from './body/task-details/task-details.component';
 import { TasksComponent } from './body/tasks/tasks.component';
-import { AngularFireAuthGuard, AngularFireAuthGuardModule, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component';
 import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
@@ -61,19 +61,19 @@ const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
-  { path: 'Home', component: HomeComponent},
+  { path: 'Home', component: HomeComponent, title: "Worktez"},
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
-  { path: 'Board', component: BoardComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'Board', component: BoardComponent, title: "Board", canActivate: [AngularFireAuthGuard]},
   { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TasksEvaluation', component: TasksEvaluationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TaskDetails/:taskId', component: TaskDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'Social', component: SocialPageComponent},
+  { path: 'techverse', component: SocialPageComponent, title: "Techverse"},
   { path: 'FilterPage', component: FilterPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
-  {path: 'CurrentPlan', component: CurrenPlanComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'CurrentPlan', component: CurrenPlanComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'Patch1', component: Patch1Component },
   { path: 'Patch2', component: Patch2Component },
   { path: 'Patch3', component: Patch3Component },
@@ -91,15 +91,15 @@ const routes: Routes = [
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ListPatches', component: ListPatchesComponent },
-  { path: 'privacy', component: PrivacyComponent },
-  { path: 'copyright', component: CopyrightComponent },
+  { path: 'privacy', component: PrivacyComponent, title: "Privacy" },
+  { path: 'copyright', component: CopyrightComponent, title: "Copyright" },
   { path: 'contributors', component: ContributorsComponent },
   { path: 'termsandcondition', component: TermsAndConditionComponent},
   { path: 'releasenotes', component: ReleaseNotesComponent },
   { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
-  { path: 'Pricing', component:PricingComponent },
+  { path: 'Pricing', component:PricingComponent, title: "Pricing" },
   { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
   { path: 'Standard', component:StandardSubscriptionComponent},
   { path: 'Notifications', component:AllNotificationComponent },

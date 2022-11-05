@@ -50,7 +50,7 @@ export class UserVerificationComponent implements OnInit {
           callable({OrganizationDomain:this.organizationDomain, TeamName:this.teamName, UserEmail: this.userEmail, TeamId: this.teamId}).subscribe({
             next: (data) => {
               if(data == "true"){
-                this.router.navigate(['/Social']);
+                this.router.navigate(['/techverse']);
                 console.log("Successful");
               } else {
                 console.log("Member does dot exist")
@@ -80,7 +80,7 @@ export class UserVerificationComponent implements OnInit {
         complete: () => {
           console.info('Successful');
           this.startService.startApplication();
-          this.router.navigate(['/Social']);
+          this.router.navigate(['/techverse']);
         }
 
     });

@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable no-undef */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -18,7 +16,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
- const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { startSubSchedular } = require("./tark/startSubSchedular");
 
 
@@ -27,9 +25,9 @@ const { startSubSchedular } = require("./tark/startSubSchedular");
  * @param {any} "121***"
  * @returns {any}
  */
-    exports.scheduledSubFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
-        context.startSubSchedular();
-    });
+exports.scheduledSubFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
+  context.startSubSchedular();
+});
 
 /**
  * Description
@@ -38,10 +36,10 @@ const { startSubSchedular } = require("./tark/startSubSchedular");
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/startSubSchedular", (req, res) => {
-    startSubSchedular();
-    return res.status(200).send("Success");
-  });
+fastify.post("/startSubSchedular", (req, res) => {
+  startSubSchedular();
+  return res.status(200).send("Success");
+});
 
 /**
  * Description
@@ -49,12 +47,12 @@ const { startSubSchedular } = require("./tark/startSubSchedular");
  * @param {any} res
  * @returns {any}
  */
- exports.scheduledSubFnManually = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-      fastify.ready((err) => {
-        if (err) throw err;
-        requestHandler(req, res);
-      });
+exports.scheduledSubFnManually = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
   });
+});
 

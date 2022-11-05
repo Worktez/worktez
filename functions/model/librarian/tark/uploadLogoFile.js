@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -33,7 +33,7 @@ exports.uploadLogoFile = function(request, response) {
 
   let result;
   let status = 200;
-  
+
   const promise = getOrgUseAppKey(appKey).then((orgDetail) => {
     const orgDomain = orgDetail.OrganizationDomain;
     const orgId = orgDetail.OrganizationId;

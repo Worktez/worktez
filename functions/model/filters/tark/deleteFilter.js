@@ -1,13 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-const-assign */
-/* eslint-disable require-jsdoc */
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -30,7 +25,7 @@ exports.deleteFilter = function(request, response) {
   const teamName = request.body.data.TeamName;
   const docId = request.body.data.Id;
   let result;
-  const status = 200;
+  let status = 200;
 
   const promise = getFilterById(orgDomain, teamName, docId).then((filterData) => {
     if (filterData == undefined) {

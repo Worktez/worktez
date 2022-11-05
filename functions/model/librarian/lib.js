@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -29,8 +28,8 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
-    const setFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).set(inputJson);
-    return Promise.resolve(setFileToTaskPromise);
+  const setFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).set(inputJson);
+  return Promise.resolve(setFileToTaskPromise);
 };
 
 /**
@@ -42,8 +41,8 @@ exports.setFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentN
  * @return {any}
  */
 exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocumentName) {
-    const updateFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).update(inputJson);
-    return Promise.resolve(updateFileToTaskPromise);
+  const updateFileToTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files").doc(taskFileDocumentName).update(inputJson);
+  return Promise.resolve(updateFileToTaskPromise);
 };
 
 /**
@@ -54,8 +53,8 @@ exports.updateFileToTask = function(inputJson, orgDomain, taskId, taskFileDocume
  * @return {any}
  */
 exports.updateFileToOrg = function(inputJson, orgDomain, OrgFileDocumentName) {
-    const updateFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(OrgFileDocumentName).update(inputJson);
-    return Promise.resolve(updateFileToOrgPromise);
+  const updateFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(OrgFileDocumentName).update(inputJson);
+  return Promise.resolve(updateFileToOrgPromise);
 };
 
 /**
@@ -65,12 +64,12 @@ exports.updateFileToOrg = function(inputJson, orgDomain, OrgFileDocumentName) {
  * @return {any}
  */
 exports.getFileInTask = function(orgDomain, taskId) {
-    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files");
-    query = query.where("FileStatus", "==", "OK");
+  let query = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).collection("Files");
+  query = query.where("FileStatus", "==", "OK");
 
-    const getFilesPromise = query.get();
+  const getFilesPromise = query.get();
 
-    return Promise.resolve(getFilesPromise);
+  return Promise.resolve(getFilesPromise);
 };
 
 /**
@@ -81,8 +80,8 @@ exports.getFileInTask = function(orgDomain, taskId) {
  * @return {any}
  */
 exports.setFileToOrg = function(inputJson, orgDomain, logoFileName) {
-    const setFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("LogoFiles").doc(logoFileName).set(inputJson);
-    return Promise.resolve(setFileToOrgPromise);
+  const setFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("LogoFiles").doc(logoFileName).set(inputJson);
+  return Promise.resolve(setFileToOrgPromise);
 };
 
 /**
@@ -93,8 +92,8 @@ exports.setFileToOrg = function(inputJson, orgDomain, logoFileName) {
  * @return {any}
  */
 exports.setFileToOrgDocument = function(inputJson, orgDomain, orgFileDocumentName) {
-    const setFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(orgFileDocumentName).set(inputJson);
-    return Promise.resolve(setFileToOrgPromise);
+  const setFileToOrgPromise = db.collection("Organizations").doc(orgDomain).collection("Documents").doc(orgFileDocumentName).set(inputJson);
+  return Promise.resolve(setFileToOrgPromise);
 };
 
 /**
@@ -104,8 +103,8 @@ exports.setFileToOrgDocument = function(inputJson, orgDomain, orgFileDocumentNam
  * @return {any}
  */
 exports.setFileToContributorsDocument = function(inputJson, orgFileDocumentName) {
-    const setFileToContributorsPromise = db.collection("ContributorsDocuments").doc(orgFileDocumentName).set(inputJson);
-    return Promise.resolve(setFileToContributorsPromise);
+  const setFileToContributorsPromise = db.collection("ContributorsDocuments").doc(orgFileDocumentName).set(inputJson);
+  return Promise.resolve(setFileToContributorsPromise);
 };
 
 /**
@@ -116,8 +115,8 @@ exports.setFileToContributorsDocument = function(inputJson, orgFileDocumentName)
  * @return {any}
  */
 exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentName) {
-    const setProfilePicToUserDocumentPromise = db.collection("Users").doc(uid).collection("ProfilePic").doc(orgFileDocumentName).set(inputJson);
-    return Promise.resolve(setProfilePicToUserDocumentPromise);
+  const setProfilePicToUserDocumentPromise = db.collection("Users").doc(uid).collection("ProfilePic").doc(orgFileDocumentName).set(inputJson);
+  return Promise.resolve(setProfilePicToUserDocumentPromise);
 };
 
 /**
@@ -127,9 +126,9 @@ exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentNa
  * @param {any} imageFileName
  * @return {any}
  */
- exports.setPostImages = function(inputJson, uid, imageFileName) {
-    const setPostImagesPromise = db.collection("Social").doc(postId).collection("postImages").doc(imageFileName).set(inputJson);
-    return Promise.resolve(setPostImagesPromise);
+exports.setPostImages = function(inputJson, uid, imageFileName) {
+  const setPostImagesPromise = db.collection("Social").doc(uid).collection("postImages").doc(imageFileName).set(inputJson);
+  return Promise.resolve(setPostImagesPromise);
 };
 
 /**
@@ -137,13 +136,13 @@ exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentNa
  * @param {any} uid
  * @return {any}
  */
- exports.getFileInUser = function(uid) {
-    let query = db.collection("Users").doc(uid).collection("ProfilePic");
-    query = query.where("FileStatus", "==", "OK");
+exports.getFileInUser = function(uid) {
+  let query = db.collection("Users").doc(uid).collection("ProfilePic");
+  query = query.where("FileStatus", "==", "OK");
 
-    const getProfilePicToUserDocumentPromise = query.get();
+  const getProfilePicToUserDocumentPromise = query.get();
 
-    return Promise.resolve(getProfilePicToUserDocumentPromise);
+  return Promise.resolve(getProfilePicToUserDocumentPromise);
 };
 
 /**
@@ -152,12 +151,12 @@ exports.setProfilePicToUserDocument = function(inputJson, uid, orgFileDocumentNa
  * @return {any}
  */
 exports.getFileInOrgDocument = function(orgDomain) {
-    let query = db.collection("Organizations").doc(orgDomain).collection("Documents");
-    query = query.where("FileStatus", "==", "OK");
+  let query = db.collection("Organizations").doc(orgDomain).collection("Documents");
+  query = query.where("FileStatus", "==", "OK");
 
-    const getFilesPromise = query.get();
+  const getFilesPromise = query.get();
 
-    return Promise.resolve(getFilesPromise);
+  return Promise.resolve(getFilesPromise);
 };
 
 /**
@@ -165,11 +164,11 @@ exports.getFileInOrgDocument = function(orgDomain) {
  * @param {any} orgDomain
  * @return {any}
  */
- exports.getFileInOrganization = function(orgDomain) {
-    let query = db.collection("Organizations").doc(orgDomain).collection("LogoFiles");
-    query = query.where("FileStatus", "==", "OK");
+exports.getFileInOrganization = function(orgDomain) {
+  let query = db.collection("Organizations").doc(orgDomain).collection("LogoFiles");
+  query = query.where("FileStatus", "==", "OK");
 
-    const getFilesPromise = query.get();
+  const getFilesPromise = query.get();
 
-    return Promise.resolve(getFilesPromise);
+  return Promise.resolve(getFilesPromise);
 };

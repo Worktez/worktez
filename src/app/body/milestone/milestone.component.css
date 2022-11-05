@@ -118,3 +118,8 @@ h3{
     color: var(--text);
 }
 
+@media only screen and (max-width: 600px) {
+    .smallButton{
+        padding-left: 25px !important;
+    }
+}
