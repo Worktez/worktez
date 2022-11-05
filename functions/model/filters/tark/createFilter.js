@@ -1,12 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-const-assign */
-/* eslint-disable require-jsdoc */
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -36,7 +32,7 @@ exports.createFilter = function(request, response) {
   const assignee = request.body.data.Assignee;
 
   let result;
-  const status = 200;
+  let status = 200;
 
   const promise = getTeam(orgDomain, teamName).then((team)=>{
     if (team) {

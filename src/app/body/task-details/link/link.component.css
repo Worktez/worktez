@@ -19,7 +19,6 @@
 #addLinkPage,
 .modal-content {
     background-color: var(--secondary-bg);
-    border: var(--primary-border);
     color: var(--text);
 }
 
@@ -68,14 +67,25 @@ input:focus {
 
 .form-control {
     background-color: var(--input-field);
-        color: var(--text);
-        border: none;
-        padding: 7px;
-        border-radius: 6px;
-        opacity: 1;
-        margin: -2px !important;
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: -2px !important;
 }
 
 .form-inline{
     padding-top: 10px;
+}
+
+#addLinkPage{
+    color: var(--button-text);
+}
+
+@media only screen and (max-width: 600px) {
+    .link{
+        padding-left: 14px !important;
+        padding-bottom: 5px;
+    }
 }

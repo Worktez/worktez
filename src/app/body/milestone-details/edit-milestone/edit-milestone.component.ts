@@ -34,12 +34,14 @@ export class EditMilestoneComponent implements OnInit {
   @Input('statusLabels') statusLabels: any
   @Input('id') milestoneId:string
   enableLoader:boolean =true;
+  minDate: string;
   showClose:boolean;
   @Output() editMilestoneCompleted = new EventEmitter<{ completed: boolean }>();
   constructor(private validationService:ValidationService, private backendService: BackendService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.enableLoader = false;
+    this.minDate = this.startDate;
   }
 
   
@@ -74,16 +76,15 @@ export class EditMilestoneComponent implements OnInit {
     { label: "milestoneStatus", value: this.status},
   ];
     
-    var condition = (this.validationService.checkValidity(this.componentName, data)).then(res => {
-      
-      return res;
+    this.validationService.checkValidity(this.componentName, data).then(res => {
+      if (res) {
+        console.log("Inputs are valid");
+        this.editMilestone();
+      }
+      else
+        console.log("Add Milestone Failed due to Validation Error");
     });
-    if (condition) {
-      console.log("Inputs are valid");
-      this.editMilestone();
-    }
-    else
-      console.log("Add Milestone Failed due to Validation Error");
+    
   }
 
 }

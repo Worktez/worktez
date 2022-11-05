@@ -1,13 +1,7 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable no-unused-vars */
-/* eslint-disable require-jsdoc */
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -31,8 +25,8 @@ const {db} = require("../application/lib");
  * @param {any} teamName
  * @param {any} docId
  * @param {any} filterName
- * @param {any} scope
- * @param {any} status
+ * @param {any} description
+ * @param {any} filterJson
  * @return {any}
  */
 exports.setFilterProperties = function(orgDomain, teamName, docId, filterName, description, filterJson) {
@@ -82,6 +76,7 @@ exports.getFilters = function(orgDomain, teamName) {
 
 /**
  * Description
+ * @param {any} inputJson
  * @param {any} orgDomain
  * @param {any} teamName
  * @param {any} docId

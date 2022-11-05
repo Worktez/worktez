@@ -60,12 +60,18 @@ export class TeamDetailsComponent implements OnInit {
     this.teamId = this.route.snapshot.params['teamId'];
     this.navbarHandler.addToNavbar(this.teamId);
 
-    if(this.startService.showTeamsData) {
+    if(this.teamService.teamsReady) {
       this.getTeamData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
+      this.teamService.teamDataStateObservable.subscribe({
+        next: () => {
           this.getTeamData();
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("Completed getting Team Data");
         }
       });
     }
@@ -137,8 +143,11 @@ export class TeamDetailsComponent implements OnInit {
   
   getTeamData() {
     this.showLoader = true;
-    this.team = this.teamService.getTeamUsingId(this.teamId);
-    console.log(this.team);
+    // this.teamService.teamDataStateObservable.subscribe((data)=>{
+    //   if(data){
+        this.team = this.teamService.getTeamUsingId(this.teamId);
+    //   }
+    // });
     this.team.TeamMembers.forEach((element: any) => {
       this.userService.checkAndAddToUsersUsingEmail(element);
     });

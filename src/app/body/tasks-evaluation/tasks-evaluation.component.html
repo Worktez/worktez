@@ -23,8 +23,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="!showLoader && tasks.length" cdkDropListGroup>
-
+<ng-container *ngIf="tasks.length && !firstUserData" cdkDropListGroup>
     <ng-container *ngFor="let item of upcomingSprintTasks">
         <ng-container>
             <div class="card mx-5 mb-5" cdkDropList (cdkDropListDropped)="onDropUpComingSprint($event)" [cdkDropListData]="item">
@@ -97,9 +96,8 @@
             <button class="btn btn-sm" [disabled]="disableLoadMore"> No more data to load...</button>
         </div>
     </ng-template>
-    
 </ng-container>
-
 <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
 </ng-container>
+

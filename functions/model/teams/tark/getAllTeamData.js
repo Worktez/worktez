@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -15,32 +19,25 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
 const { getAllTeams } = require("../lib");
 
 exports.getAllTeamData = function(request, response) {
-    const orgDomain = request.body.data.OrganizationDomain;
-    let status = 200;
-    let result;
-    const teamData = [];
-    console.log("Orgdomain", orgDomain);
+  const orgDomain = request.body.data.OrganizationDomain;
+  let status = 200;
+  let result;
+  const teamData = [];
+  console.log("Orgdomain", orgDomain);
 
-    getAllTeams(orgDomain).then((team) => {
-        team.forEach((element) => {
-            teamData.push(element.data());
-        });
-        result = { data: { status: "OK", resultData: teamData } };
-        return response.status(status).send(result);
-    }).catch((error) => {
-        status = 500;
-        result = { data: error };
-        console.error("Error Getting Teams", error);
-        return response.status(status).send(result);
+  getAllTeams(orgDomain).then((team) => {
+    team.forEach((element) => {
+      teamData.push(element.data());
     });
+    result = { data: { status: "OK", resultData: teamData } };
+    return response.status(status).send(result);
+  }).catch((error) => {
+    status = 500;
+    result = { data: error };
+    console.error("Error Getting Teams", error);
+    return response.status(status).send(result);
+  });
 };

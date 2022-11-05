@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -31,7 +30,7 @@ const { getContributorsList } = require("./tark/getContributorsList");
  * @returns {any}
  */
 fastify.post("/getContributorsData", (req, res) => {
-    getContributorsList(req, res);
+  getContributorsList(req, res);
 });
 
 /**
@@ -42,7 +41,7 @@ fastify.post("/getContributorsData", (req, res) => {
  * @returns {any}
  */
 fastify.post("/addContributor", (req, res) => {
-    addContributor(req, res);
+  addContributor(req, res);
 });
 
 /**
@@ -52,10 +51,10 @@ fastify.post("/addContributor", (req, res) => {
  * @returns {any}
  */
 exports.contributors = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-            if (err) throw err;
-                requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

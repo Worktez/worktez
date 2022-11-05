@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-/* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,9 +26,10 @@ exports.patch10 = function(request, response) {
   const newFieldValue = request.body.data.NewFieldValue;
   const newFieldValueType = request.body.data.NewFieldValueType;
   const uid = request.body.data.Uid;
+  let result;
 
   const promise1 = getMyOrgCollection(uid).then(() => {
-    data = {};
+    const data = {};
     if (newFieldValueType == "Array") {
       data[newfield] = [];
     } else if (newFieldValueType == "String") {

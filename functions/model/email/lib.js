@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -27,12 +27,12 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.sendMail = function(userEmail, subjectMessage, htmlMessage) {
-    const sendEmailPromise = db.collection("mail").add({
-        to: userEmail,
-        message: {
-            subject: subjectMessage,
-            html: htmlMessage,
-        },
-    });
-    return Promise.resolve(sendEmailPromise);
+  const sendEmailPromise = db.collection("mail").add({
+    to: userEmail,
+    message: {
+      subject: subjectMessage,
+      html: htmlMessage,
+    },
+  });
+  return Promise.resolve(sendEmailPromise);
 };

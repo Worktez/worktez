@@ -51,4 +51,12 @@ button {
     button {
         width: 23rem;
     }
+
+    .editProfile{
+        padding: 8px;
+    }
+
+    .profileCard{
+        margin-left: 8px;
+    }
 }
