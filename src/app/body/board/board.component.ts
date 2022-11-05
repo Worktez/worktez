@@ -45,6 +45,7 @@ export class BoardComponent implements OnInit {
   SDate: any;
   currentSprintNumber: number;
   isBacklog: boolean= false;
+  isDeleted: boolean= false;
   isActive:boolean= true;
 
   constructor(public startService: StartServiceService, public authService: AuthService, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
@@ -106,15 +107,20 @@ export class BoardComponent implements OnInit {
           this.sprintData = sprints;
           this.currentSprintNumber=this.sprintData.SprintNumber;
           this.isBacklog=false;
+          this.isDeleted=false;
           
           this.currentSprintName = "S" + this.sprintData.SprintNumber;
           if(this.currentSprintNumber==-1){
             this.currentSprintName="Backlog";
             this.isBacklog=true;
             this.isActive=false;
+            this.isDeleted=false;
           }
           else if(this.currentSprintNumber==-2){
             this.currentSprintName="Deleted";
+            this.isBacklog=false;
+            this.isActive=false;
+            this.isDeleted=true;
           }
           this.EDate = new Date(this.sprintData.EndDate.replace('/','-'));
           this.SDate = new Date(this.sprintData.StartDate.replace('/','-'));
