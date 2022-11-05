@@ -52,8 +52,16 @@ exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTim
  */
 exports.getAllPosts = function() {
   const query = db.collection("Social");
-  const getAllPosts = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get();
+  const getAllPosts = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get().then((doc) => {
+    return doc;
+  });
   return Promise.resolve(getAllPosts);
+};
+
+exports.getAllPostsData = function() {
+  const query = db.collection("Social");
+  const getAllPostsData = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get();
+  return Promise.resolve(getAllPostsData);
 };
 
 /**

@@ -23,7 +23,6 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
-
 @Component({
   selector: 'app-social-page',
   templateUrl: './social-page.component.html',
@@ -31,17 +30,21 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 })
 
 export class SocialPageComponent implements OnInit {
-  
+  currentPosition: number = 0
+  endPosition: number = 0
   componentName: string = "SOCIAL-PAGE"
   showloader: boolean = false
   dataReady: boolean = false
   createPostEnabled: boolean = false
   public posts: Post[]
   public recentPosts: Post[] = []
-
+  getPostsMaximumLimit:number = 5;
+  currentScrollPos: number = 0;
   pageReady:boolean = false;
-
+  currentPost: number;
+  remainingPostsToFetch: number;
   PostId: string
+  postsToShow: string[] =[];
 
   constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, public startService: StartServiceService) { }
 
@@ -50,21 +53,62 @@ export class SocialPageComponent implements OnInit {
     // this.authService.getUserSettings();
     if(this.startService.showTeamsData) {
       this.pageReady = true;
+      console.log(this.pageReady);
       this.loadSocialPageData();
+      window.addEventListener('scroll', this.scrollEvent, true);
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if(data) {
           this.authService.userAppSettingObservable.subscribe((data)=>{
             this.pageReady = true;
             this.loadSocialPageData();
+            window.addEventListener('scroll', this.scrollEvent, true);
           });
         }
       });
     }
   }
 
+  ngOnDestroy(){
+    window.removeEventListener('scroll', this.scrollEvent, true);
+  }
+
+  scrollEvent = (event): void => {
+    let scrollPos = event.target.scrollingElement.scrollTop;
+    console.log(scrollPos);
+    if(scrollPos >= this.currentScrollPos + 700){
+      this.currentScrollPos = scrollPos;
+      this.getPosts("down");
+    }
+  }
+
+  getPostsWithLimit(start, end) {
+    if(end>this.posts.length) {
+      end = this.posts.length;
+    }
+    if(start<this.posts.length && end<this.posts.length) {
+      return this.posts.slice(start, end);
+    }
+  }
+
+  getPosts(pos:string) {
+    if(pos == "down") {
+      this.currentPosition = this.endPosition
+      this.endPosition = this.endPosition + this.getPostsMaximumLimit;
+    } 
+    const postData = this.getPostsWithLimit(this.currentPosition, this.endPosition);
+    this.posts = this.posts.concat(postData);
+  }
+
   loadSocialPageData() {
     this.showloader = true;
+    let result;
+    let pageToLoad = "";
+    if(this.remainingPostsToFetch == this.currentPost){
+      pageToLoad = "initial";
+    } else {
+      pageToLoad = "loadMore";
+    }
     const callable = this.functions.httpsCallable("socialPage/getAllPosts");
     callable({}).pipe(map(res=>{
       const data = res.data as Post[];
