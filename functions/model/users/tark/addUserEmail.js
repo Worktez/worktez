@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,13 +17,8 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-
 const { verificationMailer } = require("../../mailer/lib");
 
 exports.sendVerificationEmail = function(teamName, teamManagerEmail, teamDescription, userEmail, organizationDomain, teamId) {
-        verificationMailer("Verification_Mail", teamName, teamManagerEmail, userEmail, organizationDomain, teamId);
+  verificationMailer("Verification_Mail", teamName, teamManagerEmail, userEmail, organizationDomain, teamId);
 };

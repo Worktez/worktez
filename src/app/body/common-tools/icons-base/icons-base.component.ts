@@ -18,17 +18,35 @@ export class IconsBaseComponent implements OnInit {
 
   iconsSelected: string = ""
   dataReady: boolean = false
+  currentScrollPos: number = 0;
 
   constructor(public iconsBaseService: IconsBaseService) { }
 
   ngOnInit(): void {
-    this.getIcons();
+    this.getIcons("down");
+    window.addEventListener('scroll', this.scrollEvent, true);
   }
 
-  getIcons() {
-    this.currentPosition = this.endPosition
-    this.endPosition = this.currentPosition + this.getIconsMaximumLimit;
-    this.iconsToShow = this.iconsBaseService.getIconsWithLimit(this.currentPosition, this.endPosition);
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scrollEvent, true);
+  }
+   
+  scrollEvent = (event): void => {
+    let scrollPos = event.target.scrollTop;
+    if(scrollPos >= this.currentScrollPos+700) {
+      // down
+      this.currentScrollPos = scrollPos;
+      this.getIcons("down");
+    }
+  }
+
+  getIcons(pos:string) {
+    if(pos == "down") {
+      this.currentPosition = this.endPosition
+      this.endPosition = this.endPosition + this.getIconsMaximumLimit;
+    } 
+    const iconData = this.iconsBaseService.getIconsWithLimit(this.currentPosition, this.endPosition);
+    this.iconsToShow = this.iconsToShow.concat(iconData);
   }
 
   selectedIcon(item: string) {

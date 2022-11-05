@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -22,21 +21,21 @@ const { getApplicationData, updateApplication } = require("../../application/lib
 const { setSchedular, getAllSchedular } = require("../lib");
 
 exports.setSchedularUnit = function(schedularInput, orgId) {
-    getAllSchedular(schedularInput.SelectedOrgAppKey, orgId).then((snapshot)=>{
-        if (snapshot.docs.length != 0) {
-            console.log("SCheduled Jobs already exists");
-        } else {
-            getApplicationData().then((appData) => {
-                const totalNumberOfSchedularOrg = appData.TotalNumberSchedularOrg + 1;
-                const appDetailsUpdateJson = {
-                    TotalNumberSchedularOrg: totalNumberOfSchedularOrg,
-                };
-                const schedularDocId = "so" + totalNumberOfSchedularOrg;
-                updateApplication(appDetailsUpdateJson);
-                setSchedular(schedularDocId, schedularInput.SelectedOrgAppKey, orgId);
-            }).catch((error) => {
-                console.log("Error:", error);
-            });
-        }
-    });
+  getAllSchedular(schedularInput.SelectedOrgAppKey, orgId).then((snapshot)=>{
+    if (snapshot.docs.length != 0) {
+      console.log("SCheduled Jobs already exists");
+    } else {
+      getApplicationData().then((appData) => {
+        const totalNumberOfSchedularOrg = appData.TotalNumberSchedularOrg + 1;
+        const appDetailsUpdateJson = {
+          TotalNumberSchedularOrg: totalNumberOfSchedularOrg,
+        };
+        const schedularDocId = "so" + totalNumberOfSchedularOrg;
+        updateApplication(appDetailsUpdateJson);
+        setSchedular(schedularDocId, schedularInput.SelectedOrgAppKey, orgId);
+      }).catch((error) => {
+        console.log("Error:", error);
+      });
+    }
+  });
 };

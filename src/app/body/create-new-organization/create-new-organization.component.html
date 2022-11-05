@@ -13,7 +13,7 @@
 ***********************************************************/ -->
 <div class="container mt-4">
     <div class="row p-3">
-        <div class="col-md-11 col-8">
+        <div class="col-md-11 col-8 pt-2">
             <h3>Create New Organization</h3>
         </div>
         <div class="col-md-1 col-4 text-right">
@@ -29,7 +29,7 @@
             <div class="form-row px-2">
                 <div class="form-group col-md-6 pt-2">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Name<span style="color: red;">*</span></span>
-                        <input type="text" class="form-control form-control-sm" formControlName="orgName" placeholder="Organisation Name"> 
+                        <input type="text" class="form-control" formControlName="orgName" placeholder="Organisation Name"> 
                         <span class="ml-2" *ngIf="orgName.invalid && orgName.touched" style="color: red; font-size: 10px; ">Organisation name is required</span> 
                 <div class="form-row pt-2">
                     <div class=" form-group col-md-12">
@@ -43,13 +43,13 @@
                     <div class="form-group col-md-12">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Email<span style="color: red;">*</span></span>
                         <input type="text" class="form-control" placeholder="Organization Email" formControlName="orgEmail">
-                        <span class="ml-2" *ngIf="orgEmail.value=='' && orgEmail.touched" style="color: red; font-size: 10px; ">email is required</span>
+                        <span class="ml-2" *ngIf="orgEmail.value=='' && orgEmail.touched" style="color: red; font-size: 10px; ">Email is required</span>
                         <span class="ml-2" *ngIf="orgEmail.value!='' && orgEmail.touched && orgEmail.invalid" style="color: red; font-size: 10px; ">Enter a valid email address</span>
                     </div>
                 </div>
             </div>
             <app-loader *ngIf="enableLoader"></app-loader>
-            <div class="col-md-2 col ml-5">
+            <div class="col-md-2 col uploadLogo">
                 <div class="form-group col p-2" id="uploadButtonContainer">
                     <ng-container *ngIf="!logoUploaded; else uploadedImg">
                         <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>

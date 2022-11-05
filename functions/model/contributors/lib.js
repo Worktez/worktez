@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -24,19 +24,19 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.getContributors = function() {
-    const query = db.collection("Contributors");
+  const query = db.collection("Contributors");
 
-    const promise = query.get().then((docs) => {
-        const contributors = [];
-        docs.forEach((element) => {
-            if (element.exists) {
-                contributors.push(element.data());
-            }
-        });
-        return contributors;
+  const promise = query.get().then((docs) => {
+    const contributors = [];
+    docs.forEach((element) => {
+      if (element.exists) {
+        contributors.push(element.data());
+      }
     });
+    return contributors;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -50,13 +50,13 @@ exports.getContributors = function() {
  * @return {any}
  */
 exports.setContributors = function(docId, email, about, photoUrl, title, name) {
-    const P1 = db.collection("Contributors").doc(docId).set({
-        Email: email,
-        About: about,
-        PhotoUrl: photoUrl,
-        Title: title,
-        Name: name,
-        ContributorId: docId,
-    });
-    return Promise.resolve(P1);
+  const P1 = db.collection("Contributors").doc(docId).set({
+    Email: email,
+    About: about,
+    PhotoUrl: photoUrl,
+    Title: title,
+    Name: name,
+    ContributorId: docId,
+  });
+  return Promise.resolve(P1);
 };

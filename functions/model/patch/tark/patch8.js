@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable indent */
-/* eslint-disable no-undef */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -26,13 +27,14 @@ exports.patch8 = function(request, response) {
   const newFieldValue = request.body.data.NewFieldValue;
   const newFieldValueType = request.body.data.NewFieldValueType;
   const uid = request.body.data.Uid;
+  let result;
   const promise1 = getOrg(orgDomain).then((orgData) => {
     if (orgData != undefined) {
       const teamNames = orgData.TeamsName;
       teamNames.forEach((teamName) => {
         getTeam(orgDomain, teamName).then((team) => {
           console.log(team.teamName);
-          data = {};
+          const data = {};
           if (newFieldValueType == "Array") {
             data[newfield] = [];
           } else if (newFieldValueType == "String") {
@@ -44,16 +46,16 @@ exports.patch8 = function(request, response) {
         });
       });
     }
-});
-    const Promises = [promise1];
-    Promise.all(Promises).then(() => {
-      result = {data: "OK! Patch8 executed"};
-      updatePatchData("Patch8", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
-      console.log("Patch8 executed successfully");
-      return response.status(200).send(result);
-    }).catch(function(error) {
-      result = {data: error};
-      console.error("Patch8 error in updating all tasks", error);
-      return response.status(500).send(result);
+  });
+  const Promises = [promise1];
+  Promise.all(Promises).then(() => {
+    result = {data: "OK! Patch8 executed"};
+    updatePatchData("Patch8", {LastUsedByUid: uid, LastUsedByOrg: orgDomain});
+    console.log("Patch8 executed successfully");
+    return response.status(200).send(result);
+  }).catch(function(error) {
+    result = {data: error};
+    console.error("Patch8 error in updating all tasks", error);
+    return response.status(500).send(result);
   });
 };

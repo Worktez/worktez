@@ -18,22 +18,26 @@
   background-color: var(--secondary-bg);
 }
 
+.card-header{
+  background-color: transparent;
+}
+
 input {
-  background-color: var(--primary-bg);
+  background-color: transparent;
   border: none;
   color: var(--text);
 }
 
 textarea,
 textarea:focus {
-    background-color: var(--primary-bg);
+    background-color: transparent;
     border: none;
     color: var(--text);
 }
 
 input:hover,
 input:focus {
-  background-color: var(--primary-bg);
+  background-color: transparent;
   color: var(--text);
 }
 

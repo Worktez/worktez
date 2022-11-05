@@ -1,11 +1,7 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -39,10 +35,10 @@ exports.getMemberDetails = function(request, response) {
     });
     return Promise.resolve(p1);
   })
-  .catch((error) => {
-    status = 500;
-    console.log("Error:", error);
-  });
+      .catch((error) => {
+        status = 500;
+        console.log("Error:", error);
+      });
   return Promise.resolve(promise1).then(() => {
     console.log("Fetched Member Successfully");
     return response.status(status).send(result);

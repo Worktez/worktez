@@ -1,11 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,28 +22,28 @@ const { getTeamUseTeamId } = require("../../teams/lib");
 const { updateChart, setOrganizationsChart, getOrganizationsChartDetails } = require("../lib");
 
 exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintId) {
-    let storyPointArray = [];
-    const inputJson = {};
-    const p1 = getTeamUseTeamId(orgDomain, teamId).then((data)=>{
-        const teamName = data.TeamName;
-        const p = getSprint(orgDomain, teamName, sprintId).then((sprintDoc) => {
-            storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
-            inputJson[sprintId] = storyPointArray;
-            const promise = getOrganizationsChartDetails(orgDomain, teamName, "SprintEvaluationGraph").then((data) => {
-                if (data != undefined) {
-                    updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
-                } else {
-                    setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
-                }
-                return null;
-            }).catch((err) => {
-                console.log(err);
-            });
-            return Promise.resolve(promise);
-        });
-        return Promise.resolve(p);
+  let storyPointArray = [];
+  const inputJson = {};
+  const p1 = getTeamUseTeamId(orgDomain, teamId).then((data)=>{
+    const teamName = data.TeamName;
+    const p = getSprint(orgDomain, teamName, sprintId).then((sprintDoc) => {
+      storyPointArray = [parseInt(sprintDoc.StartStoryPoint), parseInt(sprintDoc.MidStoryPoint), parseInt(sprintDoc.EndStoryPoint)];
+      inputJson[sprintId] = storyPointArray;
+      const promise = getOrganizationsChartDetails(orgDomain, teamName, "SprintEvaluationGraph").then((data) => {
+        if (data != undefined) {
+          updateChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+        } else {
+          setOrganizationsChart(orgDomain, teamName, "SprintEvaluationGraph", inputJson);
+        }
+        return null;
+      }).catch((err) => {
+        console.log(err);
+      });
+      return Promise.resolve(promise);
     });
-    Promise.resolve(p1);
+    return Promise.resolve(p);
+  });
+  Promise.resolve(p1);
 };
 
 // exports.updateSprintEvaluationGraphData = function(orgDomain, teamId, sprintRange) {

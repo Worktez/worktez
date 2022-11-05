@@ -1,8 +1,12 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author: Simran Nigam <nigamsimran14@gmail.com>
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
@@ -13,13 +17,6 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable require-jsdoc */
-/* eslint-disable object-curly-spacing */
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 
 const {getLabelById, updateLabel, updateTeamDetails} =require("../lib");
 const admin = require("firebase-admin");

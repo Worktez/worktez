@@ -55,6 +55,15 @@ export interface Label {
     Id: string;
 }
 
+export const defaultLabel = {
+    ColorCode: "d50000",
+    DisplayName: "error",
+    IconName: "error",
+    Scope: "All",
+    Status: "Error",
+    Id: "0"
+};
+
 export interface Scope {
     Labels: Label[];
 }

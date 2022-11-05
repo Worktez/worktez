@@ -29,6 +29,7 @@ export class SuggestionBucketComponent implements OnInit {
 
   @Input("showEmail") showEmail: boolean;
   @Input("showUserBasic") showUserBasic: boolean;
+  showUserBasicExtra: boolean = false;
   @Output() selectedEmail = new EventEmitter<{ selected: boolean, data: string }>();
 
   displayName: string;

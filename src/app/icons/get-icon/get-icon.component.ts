@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Label } from 'src/app/Interface/TeamInterface';
+import { defaultLabel, Label } from 'src/app/Interface/TeamInterface';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
@@ -40,12 +40,14 @@ export class GetIconComponent implements OnInit {
   }
 
   getlabelProperties() {
-    if(this.teamService.teamsLabelsJson.length != 0) {
+    if(this.teamService.teamsLabelsJson.length != 0 && this.teamService.teamsLabelsJson[this.teamId][this.scope][this.displayName] != undefined) {
       const label = this.teamService.teamsLabelsJson[this.teamId][this.scope][this.displayName];
       this.icon = label;
       this.iconReady = true;
     } else {
-      // this.getlabelProperties();
+      const label = defaultLabel;
+      this.icon = label;
+      this.iconReady = true;
     }
   }
 

@@ -1,5 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,12 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable no-undef */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 
 const { db } = require("../application/lib");
 
@@ -48,44 +45,46 @@ const { db } = require("../application/lib");
  * @param {any} taskFileCounter
  * @param {any} linkCounter=0
  * @param {any} lastUpdatedDate
+ * @param {any} watchers
+ * @param {any} milestoneId
  * @param {any} prLink=""
  * @param {any} prApiLink=""
  * @param {any} prNumber
  * @return {any}
  */
 exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, creator, assignee, reporter, estimatedTime, status, project, loggedWorkTotalTime, workDone, sprintNumber, storyPointNumber, creationDate, completiondate, orgId, teamId, type, taskFileCounter, linkCounter = 0, lastUpdatedDate, watchers, milestoneId, prLink="", prApiLink="", prNumber=null) {
-    const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
-        Id: taskId,
-        Title: title,
-        Description: des,
-        Priority: priority,
-        Difficulty: difficulty,
-        Creator: creator,
-        Assignee: assignee,
-        Reporter: reporter,
-        Watcher: watchers,
-        EstimatedTime: estimatedTime,
-        Status: status,
-        Project: project,
-        LogWorkTotalTime: loggedWorkTotalTime,
-        WorkDone: workDone,
-        SprintNumber: sprintNumber,
-        StoryPointNumber: storyPointNumber,
-        CreationDate: creationDate,
-        CompletionDate: completiondate,
-        OrganizationId: orgId,
-        TeamId: teamId,
-        Type: type,
-        TaskFilesCounter: taskFileCounter,
-        LinkCounter: linkCounter,
-        LastUpdatedDate: lastUpdatedDate,
-        PrLink: prLink,
-        PrApiLink: prApiLink,
-        PrNumber: prNumber,
-        MilestoneId: milestoneId,
+  const createTask = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).set({
+    Id: taskId,
+    Title: title,
+    Description: des,
+    Priority: priority,
+    Difficulty: difficulty,
+    Creator: creator,
+    Assignee: assignee,
+    Reporter: reporter,
+    Watcher: watchers,
+    EstimatedTime: estimatedTime,
+    Status: status,
+    Project: project,
+    LogWorkTotalTime: loggedWorkTotalTime,
+    WorkDone: workDone,
+    SprintNumber: sprintNumber,
+    StoryPointNumber: storyPointNumber,
+    CreationDate: creationDate,
+    CompletionDate: completiondate,
+    OrganizationId: orgId,
+    TeamId: teamId,
+    Type: type,
+    TaskFilesCounter: taskFileCounter,
+    LinkCounter: linkCounter,
+    LastUpdatedDate: lastUpdatedDate,
+    PrLink: prLink,
+    PrApiLink: prApiLink,
+    PrNumber: prNumber,
+    MilestoneId: milestoneId,
 
-    });
-    return Promise.resolve(createTask);
+  });
+  return Promise.resolve(createTask);
 };
 
 /**
@@ -96,8 +95,8 @@ exports.setTask = function(orgDomain, taskId, title, des, priority, difficulty, 
  * @return {any}
  */
 exports.updateTask = function(inputJson, orgDomain, taskId) {
-    const updateTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(inputJson);
-    return Promise.resolve(updateTaskPromise);
+  const updateTaskPromise = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).update(inputJson);
+  return Promise.resolve(updateTaskPromise);
 };
 
 /**
@@ -107,10 +106,10 @@ exports.updateTask = function(inputJson, orgDomain, taskId) {
  * @return {any}
  */
 exports.getTask = function(taskId, orgDomain) {
-    const getTaskDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).get().then((taskDoc) => {
-        return taskDoc.data();
-    });
-    return Promise.resolve(getTaskDetails);
+  const getTaskDetails = db.collection("Organizations").doc(orgDomain).collection("Tasks").doc(taskId).get().then((taskDoc) => {
+    return taskDoc.data();
+  });
+  return Promise.resolve(getTaskDetails);
 };
 
 /**
@@ -125,45 +124,46 @@ exports.getTask = function(taskId, orgDomain) {
  * @param {any} filterProject=""
  * @param {any} sprintRange1=""
  * @param {any} sprintRange2=""
+ * @param {any} milestoneId=""
  * @return {any}
  */
 exports.getAllTasks = function(orgDomain, teamId = "", sprintNumber = "", filterAssignee = "", filterPriority = "", filterDifficulty = "", filterStatus = "", filterProject = "", sprintRange1 = "", sprintRange2 = "", milestoneId = "") {
-    let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
-    if (sprintNumber != "") {
-        query = query.where("SprintNumber", "==", sprintNumber);
-    }
-    if (sprintRange1 != "") {
-        query = query.where("SprintNumber", ">=", sprintRange1);
-    }
-    if (sprintRange2 != "") {
-        query = query.where("SprintNumber", "<=", sprintRange2);
-    }
-    if (filterAssignee != "") {
-        query = query.where("Assignee", "==", filterAssignee);
-    }
-    if (filterPriority != "") {
-        query = query.where("Priority", "==", filterPriority);
-    }
-    if (filterDifficulty != "") {
-        query = query.where("Difficulty", "==", filterDifficulty);
-    }
-    if (filterStatus == "Incomplete") {
-        query = query.where("Status", "!=", "Completed");
-    } else if (filterStatus != "") {
-        query = query.where("Status", "==", filterStatus);
-    }
-    if (filterProject != "") {
-        query = query.where("Project", "==", filterProject);
-    }
-    if (teamId != "") {
-        query = query.where("TeamId", "==", teamId);
-    }
-    if (milestoneId != "") {
-        query = query.where("MilestoneId", "==", milestoneId);
-    }
+  let query = db.collection("Organizations").doc(orgDomain).collection("Tasks");
+  if (sprintNumber != "") {
+    query = query.where("SprintNumber", "==", sprintNumber);
+  }
+  if (sprintRange1 != "") {
+    query = query.where("SprintNumber", ">=", sprintRange1);
+  }
+  if (sprintRange2 != "") {
+    query = query.where("SprintNumber", "<=", sprintRange2);
+  }
+  if (filterAssignee != "") {
+    query = query.where("Assignee", "==", filterAssignee);
+  }
+  if (filterPriority != "") {
+    query = query.where("Priority", "==", filterPriority);
+  }
+  if (filterDifficulty != "") {
+    query = query.where("Difficulty", "==", filterDifficulty);
+  }
+  if (filterStatus == "Incomplete") {
+    query = query.where("Status", "!=", "Completed");
+  } else if (filterStatus != "") {
+    query = query.where("Status", "==", filterStatus);
+  }
+  if (filterProject != "") {
+    query = query.where("Project", "==", filterProject);
+  }
+  if (teamId != "") {
+    query = query.where("TeamId", "==", teamId);
+  }
+  if (milestoneId != "") {
+    query = query.where("MilestoneId", "==", milestoneId);
+  }
 
-    const getAllTasksPromise = query.get();
+  const getAllTasksPromise = query.get();
 
-    return Promise.resolve(getAllTasksPromise);
+  return Promise.resolve(getAllTasksPromise);
 };
 

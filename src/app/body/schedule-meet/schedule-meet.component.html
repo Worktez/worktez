@@ -18,7 +18,7 @@
             <div class="modal-content p-2">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-10 col-10">
+                        <div class="col-md-10 col-10 pt-1">
                             <h2>Schedule A Meet</h2>
                         </div>
                         <div class="col-md-2 col-2 text-right">
@@ -35,21 +35,17 @@
                             <div class="col-md-12 ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
                                 <input type="text" class="form-control form-control-sm" [(ngModel)]="title"
-                                    [ngModelOptions]="{standalone: true}" placeholder="Enter Task Title">
+                                    [ngModelOptions]="{standalone: true}" placeholder="Enter Meet Title">
                             </div>
-                         
-                         
                         </div>
                         <div class="form-row mb-2">
                             <div class="form-group col-md-12 col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                                 <textarea type="text" class="form-control form-control-sm" rows="3"
                                     [(ngModel)]="description" [ngModelOptions]="{standalone: true}"
-                                    placeholder="Write a Task Description..."></textarea>
+                                    placeholder="Write a Meet Description..."></textarea>
                             </div>
                         </div>
-                       
-                    
                         <div class="form-row mb-2">
                             <div class="col-md-6 col ml-auto">
                                 <div class="dropdown">
@@ -57,7 +53,6 @@
                                     <input type="text" autocomplete="off" class="form-control form-control-sm"
                                         id="dropdownMenuButton" value={{this.hostName}} [(ngModel)]="this.hostName" [ngModelOptions]="{standalone: true}">
                                 </div>
-                                
                             </div>
                             <div class="col-md-6 col ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
@@ -70,8 +65,6 @@
                                 </select>
                             </div>
                         </div>
-
-
                         <div class="form-row mb-2">
                             <div class="col-md-12 col ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Attendee
@@ -94,9 +87,9 @@
                         <div class="form-row mb-2">
                             <div class="form-group col ml-auto">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
-                                <input class="form-control" type="text" onfocus="(this.type = 'date')"
+                                <input class="form-control form-control-sm" type="text" onfocus="(this.type = 'date')"
                                     onblur="(this.type='text')" [(ngModel)]="date" [ngModelOptions]="{standalone: true}"
-                                    min="{{todayDate}}" placeholder="Select the Date">
+                                    min="{{minDate}}" placeholder="Select the Date">
                             </div>
                         </div>
                         <div class="form-row mb-2">
@@ -117,8 +110,6 @@
                         </div>
                         <ng-container>
                         </ng-container>
-
-
                         <div class="modal-footer mt-1">
                             <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader"
                                 aria-label="Close" (click)="submit()">Schedule Meet</button>

@@ -36,6 +36,4 @@ export class ColorsBaseComponent implements OnInit {
     this.colorsSelected = item;
     this.selectedColorName.emit({ selected: true, data: this.colorsSelected });
   }
-
-
 }
