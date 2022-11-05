@@ -24,6 +24,10 @@
     border: none !important;
 }
 
+.card-header{
+    background-color: var(--secondary-bg);
+}
+
 #quickNotesButton:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);

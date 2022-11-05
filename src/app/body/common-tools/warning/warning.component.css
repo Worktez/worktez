@@ -11,16 +11,6 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-.modal-header {
-    border-bottom: none !important;
-    padding: 1.1rem;
-}
-
-.modal-footer {
-    border-top: none !important;
-    padding: 1.1rem;
-}
-
 #editPageTaskContainer,
 .modal-content {
     background-color: var(--card-bg);
@@ -28,7 +18,6 @@
     border-radius: 6px;
     min-height: 30px;
     justify-content: space-evenly;
-    padding: 1.1rem;
 }
 
 .close {
@@ -54,22 +43,20 @@
 
 .btn {
     color: var(--text);
-    width:100%;
+    width: 100%;
 }
 
 #button {
-    background-color: var(--primary-color);
     color: #ffffff;
-    width:130% ;
+    width: 100%;
+    background-color: var(--danger-color);
 }
 
 .btn:hover,
 #button:focus,
 #button:active,
 #button:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-    border: none;
+    cursor: pointer;
 }
 
 .btn-secondary {
@@ -89,4 +76,24 @@ input:focus {
 #SuccessIcon{
     color: var(--primary-color);
     font-size: 48px;
+}
+
+@media only screen and (max-width: 600px) {
+    .confirmButton{
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    .btn{
+        width: 60% !important;
+    }
+
+    .text{
+        text-align: center;
+        font-size: 19px;
+    }
+
+    .modalAlign{
+        margin-left: -3px;
+    }
 }

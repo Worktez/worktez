@@ -192,7 +192,15 @@
 
     #completeTaskText{
         padding-top: 0px;
-    }      
+    }
+    
+    .title2{
+        padding-top: 20px;
+    }
+
+    .buttonFloat{
+        float: left !important;
+    }
 }
 
 .btn {

@@ -13,10 +13,10 @@
 ***********************************************************/ -->
 <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content px-2">
             <div class="modal-body pb-0">
                 <div class="row">
-                    <div class="col-md-10 col-10">
+                    <div class="col-md-10 col-10 pt-2">
                         <h2>Log Work</h2>
                     </div>
                     <div class="col-md-2 col-2 text-right ">
@@ -36,15 +36,15 @@
                             <span style="font-weight: bold;"> {{task.Id}}</span>
                         </div>
                     </div>
-                    <div class="row ">
+                    <div class="row">
                         <div class="col col-md">
                             <span id="logHead" class="form-inline">Log Time:</span>
                             <div class="row">
                                 <div class="col-6 pr-1">
-                                    <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="loggedTimeHrs" [ngModelOptions]="{standalone: true}" placeholder="Log Hrs">
+                                    <input type="number" min="0" class="form-control" [(ngModel)]="loggedTimeHrs" [ngModelOptions]="{standalone: true}" placeholder="Log Hrs">
                                 </div>
                                 <div class="col-6 pl-1">
-                                    <input type="number" min="0" max="59" class="form-control form-control-sm" [(ngModel)]="loggedTimeMins" [ngModelOptions]="{standalone: true}" placeholder="Log Mins">
+                                    <input type="number" min="0" max="59" class="form-control" [(ngModel)]="loggedTimeMins" [ngModelOptions]="{standalone: true}" placeholder="Log Mins">
                                 </div>
                             </div>
                         </div>
@@ -53,17 +53,17 @@
                             <input type="number" min="1" max="100" class="form-control" placeholder="Work Completed(%)" [(ngModel)]="logWorkDone" [ngModelOptions]="{standalone: true}">
                         </div>
                     </div>
-                    <div class="row pt-2 ">
+                    <div class="row pt-3">
                         <div class="col col-md">
                             <span id="logHead">Task Status:</span>
-                            <select class="custom-select form-control" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
+                            <select class="form-select form-control" [(ngModel)]="logWorkStatus" [ngModelOptions]="{standalone: true}">
                                 <ng-container *ngFor="let item of applicationSettingService.status">
                                     <option>{{item}}</option>
                                 </ng-container>
                             </select>
                         </div>
                     </div>
-                    <div class="row pt-2">
+                    <div class="row pt-3">
                         <div class="col col-md">
                             <label for="comment" class="form-label" id="logHead">Comment: </label>
                             <span id="logHead"> {{todayDate}} | {{time}}</span>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="row">
                         <div class="col col-md">
-                            <textarea class="form-control md clr" rows="2" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}"></textarea>
+                            <textarea class="form-control md clr" rows="2" [(ngModel)]="logWorkComment" [ngModelOptions]="{standalone: true}" placeholder="Add a comment"></textarea>
                         </div>
                     </div>
                     <br>
