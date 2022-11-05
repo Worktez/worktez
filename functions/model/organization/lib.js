@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -33,22 +33,22 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, orgEmail, orgAdmin, orgDescription, orgLogoURL) {
-    const orgData = db.collection("Organizations").doc(orgDomain).set({
-        OrganizationId: orgId,
-        AppKey: appKey,
-        SecurityPhase: securityPhrase,
-        OrganizationName: orgName,
-        OrganizationDomain: orgDomain,
-        OrganizationEmail: orgEmail,
-        OrganizationAdmin: orgAdmin,
-        OrganizationDescription: orgDescription,
-        OrganizationLogoURL: orgLogoURL,
-        TeamsId: [],
-        TeamsName: [],
-        LogoCounter: 0,
-        FilesCounter: 0,
-    });
-    return Promise.resolve(orgData);
+  const orgData = db.collection("Organizations").doc(orgDomain).set({
+    OrganizationId: orgId,
+    AppKey: appKey,
+    SecurityPhase: securityPhrase,
+    OrganizationName: orgName,
+    OrganizationDomain: orgDomain,
+    OrganizationEmail: orgEmail,
+    OrganizationAdmin: orgAdmin,
+    OrganizationDescription: orgDescription,
+    OrganizationLogoURL: orgLogoURL,
+    TeamsId: [],
+    TeamsName: [],
+    LogoCounter: 0,
+    FilesCounter: 0,
+  });
+  return Promise.resolve(orgData);
 };
 
 /**
@@ -58,8 +58,8 @@ exports.setOrg = function(orgDomain, orgId, appKey, securityPhrase, orgName, org
  * @return {any}
  */
 exports.updateOrg = function(orgDomain, inputJson) {
-    const updateTeam = db.collection("Organizations").doc(orgDomain).update(inputJson);
-    return Promise.resolve(updateTeam);
+  const updateTeam = db.collection("Organizations").doc(orgDomain).update(inputJson);
+  return Promise.resolve(updateTeam);
 };
 
 /**
@@ -68,11 +68,11 @@ exports.updateOrg = function(orgDomain, inputJson) {
  * @return {any}
  */
 exports.getOrg = function(orgDomain) {
-    const getOrgPromise = db.collection("Organizations").doc(orgDomain).get().then((doc) => {
-        if (doc.exists) return doc.data();
-        else return;
-    });
-    return Promise.resolve(getOrgPromise);
+  const getOrgPromise = db.collection("Organizations").doc(orgDomain).get().then((doc) => {
+    if (doc.exists) return doc.data();
+    else return;
+  });
+  return Promise.resolve(getOrgPromise);
 };
 
 /**
@@ -81,14 +81,14 @@ exports.getOrg = function(orgDomain) {
  * @return {any}
  */
 exports.getOrgUseAppKey = function(appKey) {
-    const getOrgPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((doc) => {
-        let data;
-        doc.forEach((org) => {
-            data = org.data();
-        });
-        return data;
+  const getOrgPromise = db.collection("Organizations").where("AppKey", "==", appKey).get().then((doc) => {
+    let data;
+    doc.forEach((org) => {
+      data = org.data();
     });
-    return Promise.resolve(getOrgPromise);
+    return data;
+  });
+  return Promise.resolve(getOrgPromise);
 };
 
 /**
@@ -97,16 +97,16 @@ exports.getOrgUseAppKey = function(appKey) {
  * @return {any}
  */
 exports.setOrgRawData = function(orgDomain) {
-    const setOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").set({
-        // CurrentSprintId: 0,
-        TotalNumberOfTask: 0,
-        TotalCompletedTask: 0,
-        TotalUnCompletedTask: 0,
-        TotalNumberOfOrganizations: -1,
-        TotalNumberOfTeams: 0,
-        TotalNumberOfMembers: 0,
-    });
-    return Promise.resolve(setOrgAppDetails);
+  const setOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").set({
+    // CurrentSprintId: 0,
+    TotalNumberOfTask: 0,
+    TotalCompletedTask: 0,
+    TotalUnCompletedTask: 0,
+    TotalNumberOfOrganizations: -1,
+    TotalNumberOfTeams: 0,
+    TotalNumberOfMembers: 0,
+  });
+  return Promise.resolve(setOrgAppDetails);
 };
 
 /**
@@ -116,8 +116,8 @@ exports.setOrgRawData = function(orgDomain) {
  * @return {any}
  */
 exports.updateOrgRawData = function(inputJson, orgDomain) {
-    const updateOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").update(inputJson);
-    return Promise.resolve(updateOrgAppDetails);
+  const updateOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").update(inputJson);
+  return Promise.resolve(updateOrgAppDetails);
 };
 
 /**
@@ -126,14 +126,14 @@ exports.updateOrgRawData = function(inputJson, orgDomain) {
  * @return {any}
  */
 exports.getOrgRawData = function(orgDomain) {
-    const getOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").get().then((doc) => {
-        if (doc.exists) {
-            return doc.data();
-        } else {
-            return;
-        }
-    });
-    return Promise.resolve(getOrgAppDetails);
+  const getOrgAppDetails = db.collection("Organizations").doc(orgDomain).collection("RawData").doc("AppDetails").get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    } else {
+      return;
+    }
+  });
+  return Promise.resolve(getOrgAppDetails);
 };
 
 
@@ -148,17 +148,17 @@ exports.getOrgRawData = function(orgDomain) {
  * @param {any} teams
  * @return {any}
  */
- exports.setOrgMember = function(orgDomain, email, dateOfOnboarding, dateOfExit, isAdmin, teamManager, teams ) {
-    const createMember = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).set({
-        Active: true,
-        DateOfOnboarding: dateOfOnboarding,
-        DateOfExit: dateOfExit,
-        IsAdmin: isAdmin,
-        TeamManager: teamManager,
-        Teams: teams,
-        Email: email,
-    });
-    return Promise.resolve(createMember);
+exports.setOrgMember = function(orgDomain, email, dateOfOnboarding, dateOfExit, isAdmin, teamManager, teams ) {
+  const createMember = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).set({
+    Active: true,
+    DateOfOnboarding: dateOfOnboarding,
+    DateOfExit: dateOfExit,
+    IsAdmin: isAdmin,
+    TeamManager: teamManager,
+    Teams: teams,
+    Email: email,
+  });
+  return Promise.resolve(createMember);
 };
 
 /**
@@ -167,11 +167,11 @@ exports.getOrgRawData = function(orgDomain) {
  * @param {any} email
  * @return {any}
  */
- exports.getOrgMember = function(orgDomain, email) {
-    const MemberDetails = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).get().then((MemberDoc) => {
-        return MemberDoc.data();
-    });
-    return Promise.resolve(MemberDetails);
+exports.getOrgMember = function(orgDomain, email) {
+  const MemberDetails = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).get().then((MemberDoc) => {
+    return MemberDoc.data();
+  });
+  return Promise.resolve(MemberDetails);
 };
 
 /**
@@ -179,9 +179,9 @@ exports.getOrgRawData = function(orgDomain) {
  * @param {any} orgDomain
  * @return {any}
  */
- exports.getAllMembers = function(orgDomain) {
-    const MembersDetails = db.collection("Organizations").doc(orgDomain).collection("Members").get();
-    return Promise.resolve(MembersDetails);
+exports.getAllMembers = function(orgDomain) {
+  const MembersDetails = db.collection("Organizations").doc(orgDomain).collection("Members").get();
+  return Promise.resolve(MembersDetails);
 };
 
 
@@ -192,7 +192,7 @@ exports.getOrgRawData = function(orgDomain) {
  * @param {any} email
  * @return {any}
  */
- exports.updateMember = function(inputJson, orgDomain, email) {
-    const updateMemberPromise = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).update(inputJson);
-    return Promise.resolve(updateMemberPromise);
+exports.updateMember = function(inputJson, orgDomain, email) {
+  const updateMemberPromise = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).update(inputJson);
+  return Promise.resolve(updateMemberPromise);
 };

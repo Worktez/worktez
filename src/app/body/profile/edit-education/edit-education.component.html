@@ -57,11 +57,11 @@
                     <div class="form-row">
                         <div class="col-md-6 col ml-auto">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
-                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The Start Date ">
+                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"  placeholder="Select The Start Date ">
                         </div>
                         <div class="col-md-6 col ml-auto">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
-                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{todayDate}}" placeholder="Select The End Date ">
+                            <input class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}" min="{{startDate}}" placeholder="Select The End Date ">
                         </div>
                     </div>
 

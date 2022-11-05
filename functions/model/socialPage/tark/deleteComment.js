@@ -1,5 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -14,7 +17,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 const {deletePostComment, getPost} = require("../lib");
-const {getUser, updateUser} = require("../../users/lib");
+const {getUser} = require("../../users/lib");
 
 exports.deleteComment = function(request, response) {
   const uid = request.body.data.Uid;

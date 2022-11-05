@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -18,17 +17,17 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
-const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
-const { getAllUsersInUids } = require("../../users/lib");
-const { getUserPerformanceChart } = require("../lib");
+// const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
+// const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
+// const { getAllUsersInUids } = require("../../users/lib");
+// const { getUserPerformanceChart } = require("../lib");
 
 exports.getUserPerformanceChartData = function(request, response) {
-  const data = request.body.data;
-  const orgDomain = data.OrganizationDomain;
-  const sprintRange = data.SprintNumberRange;
-  const assignee = data.Assignee;
-  const uid=data.Uid;
+  // const data = request.body.data;
+  // const orgDomain = data.OrganizationDomain;
+  // const sprintRange = data.SprintNumberRange;
+  // const assignee = data.Assignee;
+  // const uid=data.Uid;
 
   // This method needs improvement
   // getUserPerformanceChart(orgDomain, uid).then((doc) => {
