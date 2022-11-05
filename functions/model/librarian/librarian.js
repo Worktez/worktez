@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -32,6 +30,7 @@ const { uploadProfilePicToUserDoc } = require("./tark/uploadUserProfilePic");
 const { deleteFilesInOrg } = require("./tark/deleteFilesInOrg");
 const { getFilesInUser } = require("./tark/getFilesInUser");
 const { getFilesInOrganization } = require("./tark/getFilesInOrganizationLogo");
+const { uploadPostImagesDoc } = require("./tark/uploadPostImages");
 
 /**
  * Description
@@ -41,7 +40,7 @@ const { getFilesInOrganization } = require("./tark/getFilesInOrganizationLogo");
  * @returns {any}
  */
 fastify.post("/deleteFilesInTask", (req, res) => {
-    deleteFilesInTask(req, res);
+  deleteFilesInTask(req, res);
 });
 
 /**
@@ -52,7 +51,7 @@ fastify.post("/deleteFilesInTask", (req, res) => {
  * @returns {any}
  */
 fastify.post("/deleteFilesInOrg", (req, res) => {
-    deleteFilesInOrg(req, res);
+  deleteFilesInOrg(req, res);
 });
 
 /**
@@ -63,7 +62,7 @@ fastify.post("/deleteFilesInOrg", (req, res) => {
  * @returns {any}
  */
 fastify.post("/uploadFileToContributorsDocuments", (req, res) => {
-    uploadFileToContributorsDocuments(req, res);
+  uploadFileToContributorsDocuments(req, res);
 });
 
 /**
@@ -74,7 +73,7 @@ fastify.post("/uploadFileToContributorsDocuments", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getFilesInOrgDocument", (req, res) => {
-    getFilesInOrgDocument(req, res);
+  getFilesInOrgDocument(req, res);
 });
 
 /**
@@ -85,7 +84,7 @@ fastify.post("/getFilesInOrgDocument", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getFilesInTask", (req, res) => {
-    getFilesInTask(req, res);
+  getFilesInTask(req, res);
 });
 
 /**
@@ -96,7 +95,7 @@ fastify.post("/getFilesInTask", (req, res) => {
  * @returns {any}
  */
 fastify.post("/uploadFileToOrgDocuments", (req, res) => {
-    uploadFileToOrgDocuments(req, res);
+  uploadFileToOrgDocuments(req, res);
 });
 
 /**
@@ -107,7 +106,7 @@ fastify.post("/uploadFileToOrgDocuments", (req, res) => {
  * @returns {any}
  */
 fastify.post("/uploadFileToTask", (req, res) => {
-    uploadFileToTask(req, res);
+  uploadFileToTask(req, res);
 });
 
 /**
@@ -118,7 +117,7 @@ fastify.post("/uploadFileToTask", (req, res) => {
  * @returns {any}
  */
 fastify.post("/uploadLogoFile", (req, res) => {
-    uploadLogoFile(req, res);
+  uploadLogoFile(req, res);
 });
 
 /**
@@ -129,7 +128,7 @@ fastify.post("/uploadLogoFile", (req, res) => {
  * @returns {any}
  */
 fastify.post("/uploadUserProfilePic", (req, res) => {
-    uploadProfilePicToUserDoc(req, res);
+  uploadProfilePicToUserDoc(req, res);
 });
 
 /**
@@ -139,8 +138,8 @@ fastify.post("/uploadUserProfilePic", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/uploadPostImages", (req, res) => {
-    uploadPostImagesDoc(req, res);
+fastify.post("/uploadPostImages", (req, res) => {
+  uploadPostImagesDoc(req, res);
 });
 
 /**
@@ -150,8 +149,8 @@ fastify.post("/uploadUserProfilePic", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getFilesInUser", (req, res) => {
-    getFilesInUser(req, res);
+fastify.post("/getFilesInUser", (req, res) => {
+  getFilesInUser(req, res);
 });
 
 /**
@@ -161,8 +160,8 @@ fastify.post("/uploadUserProfilePic", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/getFilesInOrganization", (req, res) => {
-    getFilesInOrganization(req, res);
+fastify.post("/getFilesInOrganization", (req, res) => {
+  getFilesInOrganization(req, res);
 });
 
 /**
@@ -172,10 +171,10 @@ fastify.post("/uploadUserProfilePic", (req, res) => {
  * @returns {any}
  */
 exports.librarian = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-            if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

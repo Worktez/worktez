@@ -62,6 +62,7 @@ export class ScheduleMeetComponent implements OnInit {
   hostName: string;
   attendeeEmail: string;
   attendeeEmailsArray: string[] =[]
+  minDate:string;
 
   constructor(public popupHandlerService: PopupHandlerService, public toolsService: ToolsService, private backendService: BackendService,  private authService: AuthService , public applicationSetting: ApplicationSettingsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, private router: Router) { }
 
@@ -71,6 +72,8 @@ export class ScheduleMeetComponent implements OnInit {
     this.attendeeEmails.setValue("");
     this.description = this.popupHandlerService.quickNotesDescription;
     this.todayDate = this.toolsService.date();
+    const dateArray = this.todayDate.split('-');
+    this.minDate = dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];
     this.project = this.authService.getTeamId();
     this.time = this.toolsService.time();
     this.hostName = this.authService.getUserEmail();

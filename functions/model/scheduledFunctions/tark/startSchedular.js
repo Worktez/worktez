@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -21,7 +20,6 @@
 const { getAllSchedular } = require("../lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId, setSchedularJob } = require("../../teams/lib");
-const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
 const { updatePerformanceChartData } = require("../../performanceChart/tark/updatePerformanceChartData");
 // const { updateAutoSprintStatus } = require("../../performanceChart/tark/")
 
@@ -41,7 +39,7 @@ exports.startSchedular = function() {
                 const teamName = team.TeamName;
                 setSchedularJob(orgDomain, teamName);
               } else {
-                const sprintEvalChart = team.SchedularJob.SprintEvaluationChart;
+                // const sprintEvalChart = team.SchedularJob.SprintEvaluationChart;
                 const performanceChart = team.SchedularJob.PerformanceChart;
                 // const userPerformanceChart = team.SchedularJob.UserPerformanceChart;
 
@@ -54,16 +52,16 @@ exports.startSchedular = function() {
                   // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
                 // } else if (type == "UserPerformanceChart") {
                 //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
-                // } 
-                
+                // }
+
                 if (performanceChart) {
                   updatePerformanceChartData(orgDomain, teamId, "Team", sprintRange);
-                } 
+                }
                 // else if (userPerformanceChart) {
                 // updateAutoSprintStatus(schDoc.data().OrgAppKey, schDoc.data().TeamId);
                 // }
               }
-              
+
               return null;
             });
           });

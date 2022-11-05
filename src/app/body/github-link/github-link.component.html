@@ -16,14 +16,14 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="container modal-body align-items-center px-4" id="addMemberPage">
-                <div class="row px-4">
+                <div class="row px-4 pt-1">
                     <ul class="navbar-nav mr-auto">
                             <h4 class="active nav-link head bold" id="memberModalLabel">Link Github Repo</h4>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <span class="btn">
                             <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal"aria-label="Close"
-                              (click)="added()" >
+                              (click)="added()">
                               close
                             </mat-icon>
                         </span>
@@ -36,7 +36,7 @@
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <ng-container *ngIf="!dataFetched">
                     <div class="row px-2">
-                            <div class="col-md-12 py-0 my-0">
+                            <div class="col-md-12 py-0">
                                 <div class="btn-group">
                                     <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
                                       aria-expanded="false">
@@ -62,10 +62,10 @@
                                 [ngModelOptions]="{standalone: true}" placeholder="Enter the bearer token" (click)=" setBearerToken(bearerToken)">
                             </div>
                         </ng-container>
-                        <div class="col-md-5 py-0 my-0">
+                        <div class="col-md-5 py-0">
                             <span class="form-inline"><h3>Fetch repo by:</h3></span>
                         </div>
-                        <div class="col-md-12 my-0 py-0">
+                        <div class="col-md-12 py-0">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="organisation" [(ngModel)]="searchType" checked>
                                 <label class="form-check-label" for="exampleRadios1">
@@ -80,9 +80,9 @@
                               </div>
                               <br>
                               <input *ngIf="searchType==='organisation'" type="text" class="form-control" [(ngModel)]="memberOrgName"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the organisation name">
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the Organisation Name">
                             <input type="text" *ngIf="searchType==='username'" class="form-control" [(ngModel)]="memberOrgName"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the username"><br>
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the Username"><br>
                             <button type="submit" class="btn btn-primary px-4" id="button" >Fetch Repos</button>
                         </div>
                     </div>

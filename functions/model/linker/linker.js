@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -54,7 +53,7 @@ fastify.post("/setLink", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/removeLink", (req, res) => {
+fastify.post("/removeLink", (req, res) => {
   removeLink(req, res);
 });
 
@@ -68,7 +67,7 @@ exports.linker = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {
       if (err) throw err;
-          requestHandler(req, res);
-      });
+      requestHandler(req, res);
+    });
   });
 });

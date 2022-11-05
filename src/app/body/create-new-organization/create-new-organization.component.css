@@ -49,3 +49,13 @@ textarea:focus {
     outline: 0 none;
     border-color: var(--primary-color);
 }
+
+.uploadLogo{
+    margin-left: 48px;
+}
+
+@media only screen and (max-width: 600px) {
+    .uploadLogo{
+        margin-left: 0px;
+    }
+}

@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -25,7 +26,7 @@ exports.getLinkDetails = function(request, response) {
   let result;
   const resultData = [];
   let status = 200;
-  
+
   const promise = getLink(orgDomain, taskId).then((linkDoc) => {
     if (linkDoc == undefined) {
       result = {data: {status: "OK", data: "No Links Available"}};

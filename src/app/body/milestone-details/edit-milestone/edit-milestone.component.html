@@ -1,4 +1,3 @@
-<p>edit-milestone works!</p>
 <!-- /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
@@ -13,7 +12,7 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content ">
             <div class="row px-3 pb-0 pt-2">
                 <div class="col-md-10 col-10">
@@ -31,7 +30,7 @@
                 <form *ngIf="!enableLoader && !showClose">
                     <div class="form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
-                        <input type="text" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Title">
+                        <input type="text" [(ngModel)]="title" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Title" autocomplete="off">
                     </div>
                     <div class="my-1 form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
@@ -39,8 +38,9 @@
                     </div>
 
                     <div class="my-1 form-group">
-                        <span id="label">Status</span>
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
                         <select class="custom-select form-control" value={{this.Status}} [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+                            <option [ngValue]="null" [disabled]="true">Select Status</option>
                             <ng-container *ngFor="let item of statusLabels">
                                 <option>{{item}}</option>
                             </ng-container>
@@ -52,13 +52,13 @@
                           <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
                           <input required class="form-control" type="text" onfocus="(this.type='date')"
                             onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
-                            min="{{todayDate}}" placeholder="Select The Start Date ">
+                            min="{{minDate}}" placeholder="Select The Start Date ">
                         </div>
                         <div class="form-group col-md-6 col ml-auto">
                           <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
                           <input required class="form-control" type="text" onfocus="(this.type='date')"
                             onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
-                            min="{{todayDate}}" placeholder="Select The End Date ">
+                            min="{{startDate}}" placeholder="Select The End Date ">
                         </div>
                       </div>    
                     <div class="my-1 form-group text-center success pt-1">

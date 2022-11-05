@@ -91,7 +91,7 @@ export class MilestoneDetailsComponent implements OnInit {
         this.getNumberData();
         this.taskDataReady = true;
       });
-      this.prevVal = [this.milestoneData.MilestoneStatus];
+     
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
@@ -112,7 +112,6 @@ export class MilestoneDetailsComponent implements OnInit {
             this.project = this.authService.getTeamId();
             this.teamIds = this.backendService.getOrganizationTeamIds();
             this.readTeamData(this.project); 
-            this.prevVal = [this.milestoneData.MilestoneStatus];
           });
    
         }
@@ -199,6 +198,7 @@ export class MilestoneDetailsComponent implements OnInit {
       })).subscribe({
         next: (data) => {
           this.milestoneData = data;
+          this.prevVal = [this.milestoneData.MilestoneStatus];
         },
         error: (error) => {
           console.log(error);

@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -23,127 +22,126 @@ const { getUser, updateUser, getMyOrgCollectionDoc, updateMyOrgCollection } = re
 
 /**
  * Description
- * @param {any} senderEmail
  * @param {any} notificationMessage
+ * @param {any} senderEmail
  * @param {any} reciverUid
  * @param {any} date
  * @param {any} time
  * @param {any} orgDomain
  * @param {any} link
- * @return {any}
  */
 exports.sendNotification = function(notificationMessage, senderEmail, reciverUid, date, time, orgDomain, link) {
-    const status = 1;
-    let notificationId = 0;
+  const status = 1;
+  let notificationId = 0;
 
-    const promise1 = getUser(reciverUid, "").then((data) => {
-        if (data != undefined) {
-            notificationId = data.Notification + 1;
-            const inputJson = {
-                Notification: notificationId,
-            };
-            updateUser(inputJson, reciverUid);
-            const addNotificationPromise = db.collection("Users").doc(reciverUid).collection("Notifications").doc(notificationId.toString()).set({
-                SenderEmail: senderEmail,
-                ReciverUid: reciverUid,
-                Message: notificationMessage,
-                CreationDate: date,
-                CreationTime: time,
-                OrgDomain: orgDomain,
-                Status: status,
-                NotificationId: notificationId,
-                Link: link,
-                LastSeen: "",
-            });
-            return Promise.resolve(addNotificationPromise);
-        }
-    }).catch((err) => {
-        console.error(err);
-        return err;
-    });
+  const promise1 = getUser(reciverUid, "").then((data) => {
+    if (data != undefined) {
+      notificationId = data.Notification + 1;
+      const inputJson = {
+        Notification: notificationId,
+      };
+      updateUser(inputJson, reciverUid);
+      const addNotificationPromise = db.collection("Users").doc(reciverUid).collection("Notifications").doc(notificationId.toString()).set({
+        SenderEmail: senderEmail,
+        ReciverUid: reciverUid,
+        Message: notificationMessage,
+        CreationDate: date,
+        CreationTime: time,
+        OrgDomain: orgDomain,
+        Status: status,
+        NotificationId: notificationId,
+        Link: link,
+        LastSeen: "",
+      });
+      return Promise.resolve(addNotificationPromise);
+    }
+  }).catch((err) => {
+    console.error(err);
+    return err;
+  });
 
-    const promise2 = getMyOrgCollectionDoc(reciverUid, orgDomain).then((data) => {
-        if (data != undefined) {
-            const activeNotifications = data.ActiveNotifications + 1;
-            const inputJson = {
-                ActiveNotifications: activeNotifications,
-            };
-            updateMyOrgCollection(inputJson, reciverUid, orgDomain);
-        }
-    }).catch((err) => {
-        console.error(err);
-        return err;
-    });
+  const promise2 = getMyOrgCollectionDoc(reciverUid, orgDomain).then((data) => {
+    if (data != undefined) {
+      const activeNotifications = data.ActiveNotifications + 1;
+      const inputJson = {
+        ActiveNotifications: activeNotifications,
+      };
+      updateMyOrgCollection(inputJson, reciverUid, orgDomain);
+    }
+  }).catch((err) => {
+    console.error(err);
+    return err;
+  });
 
-    const promises = [promise1, promise2];
+  const promises = [promise1, promise2];
 
-    Promise.all(promises).then(() => {
-        console.log("Notification Updated successfully");
-        return;
-    }).catch((err) => {
-        console.error(err);
-        return err;
-    });
+  Promise.all(promises).then(() => {
+    console.log("Notification Updated successfully");
+    return;
+  }).catch((err) => {
+    console.error(err);
+    return err;
+  });
 };
 
 /**
  * Description
  * @param {any} Uid
  * @param {any} orgDomain
+ * @param {any} status
  * @param {any} startId
  * @param {any} endId
  * @return {any}
  */
 exports.getNotifications = function(Uid, orgDomain, status, startId, endId) {
-    let query = db.collection("Users").doc(Uid).collection("Notifications");
+  let query = db.collection("Users").doc(Uid).collection("Notifications");
 
-    query = query.where("OrgDomain", "==", orgDomain);
-    query = query.where("Status", "==", status);
+  query = query.where("OrgDomain", "==", orgDomain);
+  query = query.where("Status", "==", status);
 
-    if (startId != "") {
-        query = query.where("NotificationId", ">=", startId);
-    }
+  if (startId != "") {
+    query = query.where("NotificationId", ">=", startId);
+  }
 
-    if (endId != "") {
-        query = query.where("NotificationId", "<=", endId);
-    }
+  if (endId != "") {
+    query = query.where("NotificationId", "<=", endId);
+  }
 
-    const promise = query.orderBy("CreationTime", "desc").get().then((docs) => {
-        const notifications = [];
-        docs.forEach((element) => {
-            if (element.exists) {
-                notifications.push(element.data());
-            }
-        });
-        return notifications;
+  const promise = query.orderBy("CreationTime", "desc").get().then((docs) => {
+    const notifications = [];
+    docs.forEach((element) => {
+      if (element.exists) {
+        notifications.push(element.data());
+      }
     });
+    return notifications;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 exports.updateNotifications = function(inputJson, uid, notificationId) {
-    const updateNotificationPromise = db.collection("Users").doc(uid).collection("Notifications").doc(notificationId.toString()).update(inputJson);
-    return Promise.resolve(updateNotificationPromise);
+  const updateNotificationPromise = db.collection("Users").doc(uid).collection("Notifications").doc(notificationId.toString()).update(inputJson);
+  return Promise.resolve(updateNotificationPromise);
 };
 
 /**
  * Description
  * @param {any} uid
  * @param {any} orgDomain
- * @return {any}
  */
 exports.emptyActiveNotification = function(uid, orgDomain) {
-    getMyOrgCollectionDoc(uid, orgDomain).then((data) => {
-        if (data != undefined) {
-            const activeNotifications = 0;
-            const inputJson = {
-                ActiveNotifications: activeNotifications,
-            };
-            updateMyOrgCollection(inputJson, uid, orgDomain);
-            return null;
-        }
-    }).catch((err) => {
-        console.error(err);
-        return err;
-    });
+  getMyOrgCollectionDoc(uid, orgDomain).then((data) => {
+    if (data != undefined) {
+      const activeNotifications = 0;
+      const inputJson = {
+        ActiveNotifications: activeNotifications,
+      };
+      updateMyOrgCollection(inputJson, uid, orgDomain);
+      return null;
+    }
+  }).catch((err) => {
+    console.error(err);
+    return err;
+  });
 };
