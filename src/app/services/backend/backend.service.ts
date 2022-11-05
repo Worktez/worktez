@@ -61,6 +61,9 @@ export class BackendService {
   getOrganizationTeamIds(){
     return this.organizationDetails.TeamsId;
   }
+  getOrganizationTeamNames(){
+    return this.organizationDetails.TeamsName;
+  }
 
   getOrganizationName() {
     return this.organizationDetails.OrganizationName;
