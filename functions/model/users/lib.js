@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -12,11 +16,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
-/* eslint-disable object-curly-spacing */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 
 /**
  * Description
@@ -41,34 +40,34 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, ProviderId, Username, AppKey = "", TeamId = "", AboutMe = "", AppTheme = "theme-light") {
-    const userData = db.collection("Users").doc(Uid).set({
-        SelectedOrgAppKey: AppKey,
-        SelectedTeamId: TeamId,
-        uid: Uid,
-        photoURL: PhotoURL,
-        displayName: DisplayName,
-        email: Email,
-        phoneNumber: PhoneNumber,
-        providerId: ProviderId,
-        Username: Username,
-        AboutMe: AboutMe,
-        AppTheme: AppTheme,
-        GithubProfile: "",
-        LinkedInProfile: "",
-        DateOfJoining: "",
-        Skills: [],
-        Website: "",
-        Notification: 0,
-        EducationCounter: 0,
-        ExperienceCounter: 0,
-        ProjectCounter: 0,
-        TotalPhotoCounter: 0,
-        NoteCounter: 0,
-        UserPostsCounter: 0,
-        UserReactionCounter: 0,
-        UserCommentCounter: 0,
-    });
-    return Promise.resolve(userData);
+  const userData = db.collection("Users").doc(Uid).set({
+    SelectedOrgAppKey: AppKey,
+    SelectedTeamId: TeamId,
+    uid: Uid,
+    photoURL: PhotoURL,
+    displayName: DisplayName,
+    email: Email,
+    phoneNumber: PhoneNumber,
+    providerId: ProviderId,
+    Username: Username,
+    AboutMe: AboutMe,
+    AppTheme: AppTheme,
+    GithubProfile: "",
+    LinkedInProfile: "",
+    DateOfJoining: "",
+    Skills: [],
+    Website: "",
+    Notification: 0,
+    EducationCounter: 0,
+    ExperienceCounter: 0,
+    ProjectCounter: 0,
+    TotalPhotoCounter: 0,
+    NoteCounter: 0,
+    UserPostsCounter: 0,
+    UserReactionCounter: 0,
+    UserCommentCounter: 0,
+  });
+  return Promise.resolve(userData);
 };
 
 /**
@@ -78,8 +77,8 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
  * @return {any}
  */
 exports.updateUser = function(inputJson, Uid) {
-    const promise = db.collection("Users").doc(Uid).update(inputJson);
-    return Promise.resolve(promise);
+  const promise = db.collection("Users").doc(Uid).update(inputJson);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -89,27 +88,27 @@ exports.updateUser = function(inputJson, Uid) {
  * @return {any}
  */
 exports.getUser = function(Uid, username) {
-    let query = db.collection("Users");
+  let query = db.collection("Users");
 
-    if (username != "") {
-        query = query.where("Username", "==", username);
-    }
+  if (username != "") {
+    query = query.where("Username", "==", username);
+  }
 
-    if (Uid != "") {
-        query = query.where("uid", "==", Uid);
-    }
+  if (Uid != "") {
+    query = query.where("uid", "==", Uid);
+  }
 
-    const promise = query.get().then((doc) => {
-        let data;
-        doc.forEach((element) => {
-            if (element.exists) {
-                data = element.data();
-            }
-        });
-        return data;
+  const promise = query.get().then((doc) => {
+    let data;
+    doc.forEach((element) => {
+      if (element.exists) {
+        data = element.data();
+      }
     });
+    return data;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -118,14 +117,14 @@ exports.getUser = function(Uid, username) {
  * @return {any}
  */
 exports.getAllPhotos = function(emails) {
-    const data = [];
-    const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
-        doc.forEach((user) => {
-            data.push(user.data().photoURL);
-        });
-        return data;
+  const data = [];
+  const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
+    doc.forEach((user) => {
+      data.push(user.data().photoURL);
     });
-    return Promise.resolve(promise);
+    return data;
+  });
+  return Promise.resolve(promise);
 };
 
 /**
@@ -134,15 +133,15 @@ exports.getAllPhotos = function(emails) {
  * @return {any}
  */
 exports.getAllUsersInEmail = function(emails) {
-    const data = [];
-    const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
-        doc.forEach((user) => {
-            const userBasic = (({ uid, displayName, email, Username, AboutMe, photoURL }) => ({ uid, displayName, email, Username, AboutMe, photoURL }))(user.data());
-            data.push(userBasic);
-        });
-        return data;
+  const data = [];
+  const promise = db.collection("Users").where("email", "in", emails).get().then((doc) => {
+    doc.forEach((user) => {
+      const userBasic = (({ uid, displayName, email, Username, AboutMe, photoURL }) => ({ uid, displayName, email, Username, AboutMe, photoURL }))(user.data());
+      data.push(userBasic);
     });
-    return Promise.resolve(promise);
+    return data;
+  });
+  return Promise.resolve(promise);
 };
 
 /**
@@ -151,15 +150,15 @@ exports.getAllUsersInEmail = function(emails) {
  * @return {any}
  */
 exports.getAllUsersInUids = function(uids) {
-    const data = [];
-    const promise = db.collection("Users").where("uid", "in", uids).get().then((doc) => {
-        doc.forEach((user) => {
-            const userBasic = (({ uid, displayName, email, Username, AboutMe, photoURL }) => ({ uid, displayName, email, Username, AboutMe, photoURL }))(user.data());
-            data.push(userBasic);
-        });
-        return data;
+  const data = [];
+  const promise = db.collection("Users").where("uid", "in", uids).get().then((doc) => {
+    doc.forEach((user) => {
+      const userBasic = (({ uid, displayName, email, Username, AboutMe, photoURL }) => ({ uid, displayName, email, Username, AboutMe, photoURL }))(user.data());
+      data.push(userBasic);
     });
-    return Promise.resolve(promise);
+    return data;
+  });
+  return Promise.resolve(promise);
 };
 
 /**
@@ -168,15 +167,15 @@ exports.getAllUsersInUids = function(uids) {
  * @return {any}
  */
 exports.getUserUseEmail = function(email) {
-    const promise = db.collection("Users").where("email", "==", email).get().then((doc) => {
-        let data;
-        doc.forEach((user) => {
-            data = user.data();
-        });
-        return data;
+  const promise = db.collection("Users").where("email", "==", email).get().then((doc) => {
+    let data;
+    doc.forEach((user) => {
+      data = user.data();
     });
+    return data;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -184,11 +183,11 @@ exports.getUserUseEmail = function(email) {
  * @return {any}
  */
 exports.getAllUsers = function() {
-    const promise = db.collection("Users").get().then((users) => {
-        return users;
-    });
+  const promise = db.collection("Users").get().then((users) => {
+    return users;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -201,15 +200,15 @@ exports.getAllUsers = function() {
  * @return {any}
  */
 exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], defaultTeam = "") {
-    const setMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).set({
-        Uid: Uid,
-        OrgAppKey: orgAppKey,
-        Teams: teams,
-        DefaultTeam: defaultTeam,
-        OrgDomain: orgDomain,
-        ActiveNotifications: 0,
-    });
-    return Promise.resolve(setMyOrgPromise);
+  const setMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).set({
+    Uid: Uid,
+    OrgAppKey: orgAppKey,
+    Teams: teams,
+    DefaultTeam: defaultTeam,
+    OrgDomain: orgDomain,
+    ActiveNotifications: 0,
+  });
+  return Promise.resolve(setMyOrgPromise);
 };
 
 /**
@@ -219,10 +218,10 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
  * @return {any}
  */
 exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
-    const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
-        return doc.data();
-    });
-    return Promise.resolve(getMyOrgPromise);
+  const getMyOrgPromise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).get().then((doc) => {
+    return doc.data();
+  });
+  return Promise.resolve(getMyOrgPromise);
 };
 
 /**
@@ -233,8 +232,8 @@ exports.getMyOrgCollectionDoc = function(Uid, orgDomain) {
  * @return {any}
  */
 exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
-    const promise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).update(inputJson);
-    return Promise.resolve(promise);
+  const promise = db.collection("Users").doc(Uid).collection("MyOrganizations").doc(orgDomain).update(inputJson);
+  return Promise.resolve(promise);
 };
 
 /**
@@ -243,8 +242,8 @@ exports.updateMyOrgCollection = function(inputJson, Uid, orgDomain) {
  * @return {any}
  */
 exports.getMyOrgCollection = function(uid) {
-    const getMyOrgPromise = db.collection("Users").doc(uid).collection("MyOrganizations").get();
-    return Promise.resolve(getMyOrgPromise);
+  const getMyOrgPromise = db.collection("Users").doc(uid).collection("MyOrganizations").get();
+  return Promise.resolve(getMyOrgPromise);
 };
 
 /**
@@ -254,18 +253,18 @@ exports.getMyOrgCollection = function(uid) {
  * @return {any}
  */
 exports.getMyTeamCollection = function(uid, orgAppKey) {
-    const promise = db.collection("Users").doc(uid).collection("MyOrganizations").where("OrgAppKey", "==", orgAppKey).get().then((doc) => {
-        let data;
-        doc.forEach((user) => {
-            data = user.data();
-        });
-        if (data != undefined) {
-            return data.Teams;
-        }
-
-        return undefined;
+  const promise = db.collection("Users").doc(uid).collection("MyOrganizations").where("OrgAppKey", "==", orgAppKey).get().then((doc) => {
+    let data;
+    doc.forEach((user) => {
+      data = user.data();
     });
-    return Promise.resolve(promise);
+    if (data != undefined) {
+      return data.Teams;
+    }
+
+    return undefined;
+  });
+  return Promise.resolve(promise);
 };
 
 /**
@@ -278,13 +277,13 @@ exports.getMyTeamCollection = function(uid, orgAppKey) {
  * @return {any}
  */
 exports.addUserEducation = function(uid, instituteName, degree, start, end) {
-    const addEducationPromise = db.collection("Users").doc(uid).collection("Education").doc().set({
-        Start: start,
-        End: end,
-        InstituteName: instituteName,
-        Degree: degree,
-    });
-    return Promise.resolve(addEducationPromise);
+  const addEducationPromise = db.collection("Users").doc(uid).collection("Education").doc().set({
+    Start: start,
+    End: end,
+    InstituteName: instituteName,
+    Degree: degree,
+  });
+  return Promise.resolve(addEducationPromise);
 };
 
 /**
@@ -295,8 +294,8 @@ exports.addUserEducation = function(uid, instituteName, degree, start, end) {
  * @return {any}
  */
 exports.updateUserEducation = function(uid, educationDoc, inputJson) {
-    const updateEducationPromise = db.collection("Users").doc(uid).collection("Education").doc(educationDoc).update(inputJson);
-    return Promise.resolve(updateEducationPromise);
+  const updateEducationPromise = db.collection("Users").doc(uid).collection("Education").doc(educationDoc).update(inputJson);
+  return Promise.resolve(updateEducationPromise);
 };
 
 /**
@@ -305,10 +304,10 @@ exports.updateUserEducation = function(uid, educationDoc, inputJson) {
  * @return {any}
  */
 exports.getAllUserEducation = function(uid) {
-    const getEducationPromise = db.collection("Users").doc(uid).collection("Education").get().then((educations) => {
-        return educations;
-    });
-    return Promise.resolve(getEducationPromise);
+  const getEducationPromise = db.collection("Users").doc(uid).collection("Education").get().then((educations) => {
+    return educations;
+  });
+  return Promise.resolve(getEducationPromise);
 };
 
 /**
@@ -321,13 +320,13 @@ exports.getAllUserEducation = function(uid) {
  * @return {any}
  */
 exports.addUserExperience = function(uid, organizationName, position, start, end) {
-    const addExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc().set({
-        Start: start,
-        End: end,
-        OrganizationName: organizationName,
-        Position: position,
-    });
-    return Promise.resolve(addExperiencePromise);
+  const addExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc().set({
+    Start: start,
+    End: end,
+    OrganizationName: organizationName,
+    Position: position,
+  });
+  return Promise.resolve(addExperiencePromise);
 };
 
 /**
@@ -338,8 +337,8 @@ exports.addUserExperience = function(uid, organizationName, position, start, end
  * @return {any}
  */
 exports.updateUserExperience = function(uid, experienceDoc, inputJson) {
-    const updateExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc(experienceDoc).update(inputJson);
-    return Promise.resolve(updateExperiencePromise);
+  const updateExperiencePromise = db.collection("Users").doc(uid).collection("Experience").doc(experienceDoc).update(inputJson);
+  return Promise.resolve(updateExperiencePromise);
 };
 
 /**
@@ -348,10 +347,10 @@ exports.updateUserExperience = function(uid, experienceDoc, inputJson) {
  * @return {any}
  */
 exports.getAllUserExperience = function(uid) {
-    const getExperiencePromise = db.collection("Users").doc(uid).collection("Experience").get().then((experiences) => {
-        return experiences;
-    });
-    return Promise.resolve(getExperiencePromise);
+  const getExperiencePromise = db.collection("Users").doc(uid).collection("Experience").get().then((experiences) => {
+    return experiences;
+  });
+  return Promise.resolve(getExperiencePromise);
 };
 
 /**
@@ -364,13 +363,13 @@ exports.getAllUserExperience = function(uid) {
  * @return {any}
  */
 exports.addUserProject = function(uid, projectName, description, start, end) {
-    const addProjectPromise = db.collection("Users").doc(uid).collection("Project").doc().set({
-        Start: start,
-        End: end,
-        ProjectName: projectName,
-        Description: description,
-    });
-    return Promise.resolve(addProjectPromise);
+  const addProjectPromise = db.collection("Users").doc(uid).collection("Project").doc().set({
+    Start: start,
+    End: end,
+    ProjectName: projectName,
+    Description: description,
+  });
+  return Promise.resolve(addProjectPromise);
 };
 
 /**
@@ -381,8 +380,8 @@ exports.addUserProject = function(uid, projectName, description, start, end) {
  * @return {any}
  */
 exports.updateUserProject = function(uid, projectDoc, inputJson) {
-    const updateProjectPromise = db.collection("Users").doc(uid).collection("Project").doc(projectDoc).update(inputJson);
-    return Promise.resolve(updateProjectPromise);
+  const updateProjectPromise = db.collection("Users").doc(uid).collection("Project").doc(projectDoc).update(inputJson);
+  return Promise.resolve(updateProjectPromise);
 };
 
 /**
@@ -391,8 +390,8 @@ exports.updateUserProject = function(uid, projectDoc, inputJson) {
  * @return {any}
  */
 exports.getAllUserProject = function(uid) {
-    const getProjectPromise = db.collection("Users").doc(uid).collection("Project").get().then((projects) => {
-        return projects;
-    });
-    return Promise.resolve(getProjectPromise);
+  const getProjectPromise = db.collection("Users").doc(uid).collection("Project").get().then((projects) => {
+    return projects;
+  });
+  return Promise.resolve(getProjectPromise);
 };

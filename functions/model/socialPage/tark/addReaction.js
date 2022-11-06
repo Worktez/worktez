@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-/* eslint-disable no-undef */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -28,7 +27,7 @@ exports.addReaction = function(request, response) {
   const type = request.body.data.Type;
   let result;
   let status = 200;
-  
+
   const p1 = getPost(postId).then((postDoc) => {
     if (postDoc == undefined) {
       result = {data: {status: "ERROR", postData: undefined}};
@@ -48,7 +47,7 @@ exports.addReaction = function(request, response) {
     console.log("Error:", error);
   });
 
-  
+
   return Promise.resolve(p1).then(() => {
     console.log("Added Reaction Successfully");
     return response.status(status).send(result);

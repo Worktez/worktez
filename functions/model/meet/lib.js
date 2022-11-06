@@ -1,14 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-/* eslint-disable max-len */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable no-unused-vars */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -66,10 +60,10 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
  * @param {any} title
  * @param {any} startTime
  * @param {any} endTime
- * @param {any} uid
  * @param {any} hostName
  * @param {any} description
  * @param {any} date
+ * @param {any} uid
  * @param {any} roomId
  * @return {any}
  */
@@ -93,65 +87,63 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
 
 /**
  * Description
- * @param {any} inputJson
- * @param {any} orgDomain
+ * @param {any} updateJson
+ * @param {any} meetDocId
  * @param {any} title
  * @return {any}
  */
-exports.updateMeetDetails= function(updateJson) {
+exports.updateMeetDetails= function(updateJson, meetDocId) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };
 
 /**
  * Description
- * @param {any}
- * @param {any}
+ * @param {any} meetDocId
  * @return {any}
  */
- exports.getWorktezMeetDetails=function() {
+exports.getWorktezMeetDetails=function(meetDocId) {
   const query = db.collection("Meet").doc(meetDocId);
   const promise = query.get().then((doc) => {
-      const data=[];
-      doc.forEach((element) => {
-          if (element.exists) {
-              data.push( element.data());
-          }
-      });
-      return data;
+    const data=[];
+    doc.forEach((element) => {
+      if (element.exists) {
+        data.push( element.data());
+      }
+    });
+    return data;
   });
   return Promise.resolve(promise);
 };
 
 /**
  * Description
- * @param {any}
- * @param {any}
+ * @param {any} uid
  * @return {any}
  */
 exports.getMeetDetails=function(uid) {
-    const query = db.collection("Users").doc(uid).collection("Meet");
+  const query = db.collection("Users").doc(uid).collection("Meet");
 
-    const promise = query.get().then((doc) => {
-        const data=[];
-        doc.forEach((element) => {
-            if (element.exists) {
-                data.push( element.data());
-            }
-        });
-        return data;
+  const promise = query.get().then((doc) => {
+    const data=[];
+    doc.forEach((element) => {
+      if (element.exists) {
+        data.push( element.data());
+      }
     });
+    return data;
+  });
 
-    return Promise.resolve(promise);
+  return Promise.resolve(promise);
 };
 
 /**
  * Description
- * @param {any} inputJson
- * @param {any} title
+ * @param {any} updateJson
+ * @param {any} meetDocId
  * @return {any}
  */
-exports.updateMeetDetailsAtWorktez= function(updateJson) {
+exports.updateMeetDetailsAtWorktez= function(updateJson, meetDocId) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };

@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -32,39 +30,39 @@ const { db } = require("../application/lib");
  * @param {any} time
  * @return {any}
  */
- exports.setRequest = function(personName, emailAddress, requestId, contactNumber, orgName, date, time) {
-    const addRequestPromise = db.collection("DemoRequests").doc(requestId).set({
-        PersonName: personName,
-        EmailAddress: emailAddress,
-        ContactNumber: contactNumber,
-        OrganisationOrProjectName: orgName,
-        CreationDate: date,
-        CreationTime: time,
-    });
-    return Promise.resolve(addRequestPromise);
+exports.setRequest = function(personName, emailAddress, requestId, contactNumber, orgName, date, time) {
+  const addRequestPromise = db.collection("DemoRequests").doc(requestId).set({
+    PersonName: personName,
+    EmailAddress: emailAddress,
+    ContactNumber: contactNumber,
+    OrganisationOrProjectName: orgName,
+    CreationDate: date,
+    CreationTime: time,
+  });
+  return Promise.resolve(addRequestPromise);
 };
 
 /**
  * Description
  * @return {any}
  */
- exports.setDemoRequestData = function() {
-    const P1 = db.collection("DemoRequests").doc("RawData").set({
-        DemoRequestCounter: 0,
-    });
-    return Promise.resolve(P1);
+exports.setDemoRequestData = function() {
+  const P1 = db.collection("DemoRequests").doc("RawData").set({
+    DemoRequestCounter: 0,
+  });
+  return Promise.resolve(P1);
 };
 
 
 exports.getDemoRequestData = function() {
-    const promise = db.collection("DemoRequests").doc("RawData").get().then((doc) => {
-        if (doc.exists) {
-            return doc.data();
-        } else {
-            return;
-        }
-    });
-    return Promise.resolve(promise);
+  const promise = db.collection("DemoRequests").doc("RawData").get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    } else {
+      return;
+    }
+  });
+  return Promise.resolve(promise);
 };
 
 /**
@@ -72,7 +70,7 @@ exports.getDemoRequestData = function() {
  * @param {any} inputJson
  * @return {any}
  */
- exports.updateDemoRequestData = function(inputJson) {
-    const P1 = db.collection("DemoRequests").doc("RawData").update(inputJson);
-    return Promise.resolve(P1);
+exports.updateDemoRequestData = function(inputJson) {
+  const P1 = db.collection("DemoRequests").doc("RawData").update(inputJson);
+  return Promise.resolve(P1);
 };

@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -27,15 +25,15 @@ const {addRequest} = require("./tark/addRequest");
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/addRequest", (req, res) => {
-    addRequest(req, res);
+fastify.post("/addRequest", (req, res) => {
+  addRequest(req, res);
 });
 
 exports.requestDemo = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-            if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

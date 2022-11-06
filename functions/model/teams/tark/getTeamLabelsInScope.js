@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -15,32 +19,25 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
 const { getLabelInScopes } = require("../lib");
 
 exports.getLabelsInScopes = function(request, response) {
-    const orgDomain = request.body.data.OrganizationDomain;
-    const teamName = request.body.data.TeamName;
-    const scope = request.body.data.Scope;
+  const orgDomain = request.body.data.OrganizationDomain;
+  const teamName = request.body.data.TeamName;
+  const scope = request.body.data.Scope;
 
-    let status = 200;
-    let result;
+  let status = 200;
+  let result;
 
-    getLabelInScopes(orgDomain, teamName, scope).then((labels) => {
-        if (labels) {
-            result = { data: {status: "OK", resultData: labels} };
-            return response.status(status).send(result);
-        }
-    }).catch((error) => {
-        status = 500;
-        result = { data: error };
-        console.error("Error Getting Teams", error);
-        return response.status(status).send(result);
-    });
+  getLabelInScopes(orgDomain, teamName, scope).then((labels) => {
+    if (labels) {
+      result = { data: {status: "OK", resultData: labels} };
+      return response.status(status).send(result);
+    }
+  }).catch((error) => {
+    status = 500;
+    result = { data: error };
+    console.error("Error Getting Teams", error);
+    return response.status(status).send(result);
+  });
 };

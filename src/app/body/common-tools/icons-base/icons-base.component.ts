@@ -33,7 +33,6 @@ export class IconsBaseComponent implements OnInit {
    
   scrollEvent = (event): void => {
     let scrollPos = event.target.scrollTop;
-    console.log(scrollPos);
     if(scrollPos >= this.currentScrollPos+700) {
       // down
       this.currentScrollPos = scrollPos;

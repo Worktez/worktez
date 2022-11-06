@@ -1,9 +1,7 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable valid-jsdoc */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 
 /** *********************************************************
  * Copyright (C) 2022
@@ -24,7 +22,7 @@ const { db } = require("../application/lib");
 /**
  * Description
  * @param {any} uid
- * @param {any} post
+ * @param {any} content
  * @param {any} postId
  * @param {any} lastUpdatedDate
  * @param {any} lastUpdatedTime
@@ -32,20 +30,20 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTime, photoURLs) {
-    const addPostPromise = db.collection("Social").doc(postId).set({
-        Uid: uid,
-        Content: content,
-        PostId: postId,
-        ImagesUrl: photoURLs,
-        Reach: 0,
-        Reactions: 0,
-        // ReactionCounter: 0,
-        CommentCounter: 0,
-        LastUpdatedDate: lastUpdatedDate,
-        LastUpdatedTime: lastUpdatedTime,
-        Status: "OK",
-    });
-    return Promise.resolve(addPostPromise);
+  const addPostPromise = db.collection("Social").doc(postId).set({
+    Uid: uid,
+    Content: content,
+    PostId: postId,
+    ImagesUrl: photoURLs,
+    Reach: 0,
+    Reactions: 0,
+    // ReactionCounter: 0,
+    CommentCounter: 0,
+    LastUpdatedDate: lastUpdatedDate,
+    LastUpdatedTime: lastUpdatedTime,
+    Status: "OK",
+  });
+  return Promise.resolve(addPostPromise);
 };
 
 /**
@@ -53,9 +51,9 @@ exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTim
  * @return {any}
  */
 exports.getAllPosts = function() {
-    const query = db.collection("Social");
-    const getAllPosts = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get();
-    return Promise.resolve(getAllPosts);
+  const query = db.collection("Social");
+  const getAllPosts = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get();
+  return Promise.resolve(getAllPosts);
 };
 
 /**
@@ -64,22 +62,21 @@ exports.getAllPosts = function() {
  * @return {any}
  */
 exports.getPost = function(postId) {
-    const getPostDetails = db.collection("Social").doc(postId).get().then((postDoc) => {
-        return postDoc.data();
-    });
-    return Promise.resolve(getPostDetails);
+  const getPostDetails = db.collection("Social").doc(postId).get().then((postDoc) => {
+    return postDoc.data();
+  });
+  return Promise.resolve(getPostDetails);
 };
 
 /**
  * Description
  * @param {any} updatePostToJson
- * @param {any} PostId
- * @param {any} uid
+ * @param {any} postId
  * @return {any}
  */
- exports.deleteUserPost = function(updatePostToJson, postId) {
-    const deletePostPromise = db.collection("Social").doc(postId).update(updatePostToJson);
-    return Promise.resolve(deletePostPromise);
+exports.deleteUserPost = function(updatePostToJson, postId) {
+  const deletePostPromise = db.collection("Social").doc(postId).update(updatePostToJson);
+  return Promise.resolve(deletePostPromise);
 };
 
 /**
@@ -89,25 +86,25 @@ exports.getPost = function(postId) {
  * @param {any} commentId
  * @return {any}
  */
- exports.deletePostComment = function(updatePostToJson, postId, commentId) {
-    const deleteCommentPromise = db.collection("Social").doc(postId).collection("Comment").doc(commentId).update(updatePostToJson);
-    return Promise.resolve(deleteCommentPromise);
+exports.deletePostComment = function(updatePostToJson, postId, commentId) {
+  const deleteCommentPromise = db.collection("Social").doc(postId).collection("Comment").doc(commentId).update(updatePostToJson);
+  return Promise.resolve(deleteCommentPromise);
 };
 
 /**
  * Description
- * @param {any} PostId
+ * @param {any} postId
  * @param {any} uid
  * @return {any}
  */
- exports.deletePostReaction = function(postId, uid) {
-    const deleteReactionPromise = db.collection("Social").doc(postId).collection("Reactions").where("Uid", "==", uid);
-    deleteReactionPromise.get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          doc.ref.delete();
-        });
-      });
-    return Promise.resolve(deleteReactionPromise);
+exports.deletePostReaction = function(postId, uid) {
+  const deleteReactionPromise = db.collection("Social").doc(postId).collection("Reactions").where("Uid", "==", uid);
+  deleteReactionPromise.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      doc.ref.delete();
+    });
+  });
+  return Promise.resolve(deleteReactionPromise);
 };
 
 
@@ -122,16 +119,16 @@ exports.getPost = function(postId) {
  * @return {any}
  */
 exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDate, lastUpdatedTime) {
-    const addCommentPromise = db.collection("Social").doc(postId).collection("Comment").doc(commentId).set({
-        Content: content,
-        PostId: postId,
-        CommentId: commentId,
-        Uid: uid,
-        LastUpdatedDate: lastUpdatedDate,
-        LastUpdatedTime: lastUpdatedTime,
-        Status: "OK",
-    });
-    return Promise.resolve(addCommentPromise);
+  const addCommentPromise = db.collection("Social").doc(postId).collection("Comment").doc(commentId).set({
+    Content: content,
+    PostId: postId,
+    CommentId: commentId,
+    Uid: uid,
+    LastUpdatedDate: lastUpdatedDate,
+    LastUpdatedTime: lastUpdatedTime,
+    Status: "OK",
+  });
+  return Promise.resolve(addCommentPromise);
 };
 
 /**
@@ -146,15 +143,15 @@ exports.addUserComment = function(uid, postId, content, commentId, lastUpdatedDa
  * @return {any}
  */
 exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type, uid) {
-    const setReactDetails = db.collection("Social").doc(postId).collection("Reactions").doc(reactId).set({
-        CreationDate: creationDate,
-        CreationTime: creationTime,
-        Type: type,
-        Uid: uid,
-        PostId: postId,
-        // Status: reactStatus
-    });
-    return Promise.resolve(setReactDetails);
+  const setReactDetails = db.collection("Social").doc(postId).collection("Reactions").doc(reactId).set({
+    CreationDate: creationDate,
+    CreationTime: creationTime,
+    Type: type,
+    Uid: uid,
+    PostId: postId,
+    // Status: reactStatus
+  });
+  return Promise.resolve(setReactDetails);
 };
 
 /**
@@ -164,8 +161,8 @@ exports.setReactDoc = function(postId, reactId, creationDate, creationTime, type
  * @return {any}
  */
 exports.updatePost = function(inputJson, postID) {
-    const updatePostPromise = db.collection("Social").doc(postID).update(inputJson);
-    return Promise.resolve(updatePostPromise);
+  const updatePostPromise = db.collection("Social").doc(postID).update(inputJson);
+  return Promise.resolve(updatePostPromise);
 };
 
 
@@ -175,8 +172,8 @@ exports.updatePost = function(inputJson, postID) {
  * @return {any}
  */
 exports.getCommentsContent = function(postID) {
-    const getCommentsPromise = db.collection("Social").doc(postID).collection("Comment").where("Status", "==", "OK").get();
-    return Promise.resolve(getCommentsPromise);
+  const getCommentsPromise = db.collection("Social").doc(postID).collection("Comment").where("Status", "==", "OK").get();
+  return Promise.resolve(getCommentsPromise);
 };
 
 /**
@@ -185,6 +182,6 @@ exports.getCommentsContent = function(postID) {
  * @return {any}
  */
 exports.getReactionsContent = function(postID) {
-    const getReactionsPromise = db.collection("Social").doc(postID).collection("Reactions").get();
-    return Promise.resolve(getReactionsPromise);
+  const getReactionsPromise = db.collection("Social").doc(postID).collection("Reactions").get();
+  return Promise.resolve(getReactionsPromise);
 };

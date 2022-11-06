@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -17,44 +17,44 @@
  * See the MIT License for more details.
  ***********************************************************/
 
- const {functions, cors, fastify, requestHandler} = require("../application/lib");
- const {addPaymentDetails} = require("./tark/addPaymentDetails");
- const {paymentVerification} = require("./tark/paymentVerification");
- const {generateRazorpayOrder} = require("./tark/generateRazorpayOrder");
- //  const {getPaymentDetails} = require("./tark/getPaymentDetails");
+const {functions, cors, fastify, requestHandler} = require("../application/lib");
+const {addPaymentDetails} = require("./tark/addPaymentDetails");
+const {paymentVerification} = require("./tark/paymentVerification");
+const {generateRazorpayOrder} = require("./tark/generateRazorpayOrder");
+//  const {getPaymentDetails} = require("./tark/getPaymentDetails");
 
- /**
+/**
   * Description
   * @param {any} "/addPayment"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
- fastify.post("/addPaymentDetails", (req, res) => {
-    addPaymentDetails(req, res);
- });
+fastify.post("/addPaymentDetails", (req, res) => {
+  addPaymentDetails(req, res);
+});
 
- /**
+/**
   * Description
   * @param {any} "/paymentVerification"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
-  fastify.post("/paymentVerification", (req, res) => {
-    paymentVerification(req, res);
- });
+fastify.post("/paymentVerification", (req, res) => {
+  paymentVerification(req, res);
+});
 
- /**
+/**
   * Description
   * @param {any} "/generateRazorpayOrder"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
-  fastify.post("/generateRazorpayOrder", (req, res) => {
-    generateRazorpayOrder(req, res);
- });
+fastify.post("/generateRazorpayOrder", (req, res) => {
+  generateRazorpayOrder(req, res);
+});
 
 //  /**
 //  * Description
@@ -67,17 +67,17 @@
 //   getPaymentDetails(req, res);
 // });
 
- /**
+/**
   * Description
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
- exports.payment = functions.https.onRequest((req, res) => {
-   cors(req, res, () => {
-     fastify.ready((err) => {
-       if (err) throw err;
-       requestHandler(req, res);
-     });
-   });
- });
+exports.payment = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
+    });
+  });
+});

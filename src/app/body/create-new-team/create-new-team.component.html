@@ -34,7 +34,7 @@
                 <div class="col-md-8">
                     <div class="team-details">
                     <div class="form-group row pt-2">
-                        <div class="col-sm-6">
+                        <div class="col-sm-10">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Name</span>
                             <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" (ngModelChange)="handleIdInput()" (input)="checkTeamNameAvailabilityLive()"placeholder="Enter Team Name*">
                         </div>
@@ -111,7 +111,7 @@
                 </div>
             <div class="form-group row align-items-center justify-content-center">
                 <div class="col text-right">
-                    <button class="btn btn-md" id="button" [disabled]="enableLoader || !TeamIdAvailable || !TeamIdAvailable" (click)="submit()">Create Team</button>
+                    <button class="btn btn-md" id="button" [disabled]="enableLoader || !TeamNameAvailable || !TeamIdAvailable" (click)="submit()">Create Team</button>
                 </div>
             </div>
         <app-loader *ngIf="enableLoader"></app-loader>

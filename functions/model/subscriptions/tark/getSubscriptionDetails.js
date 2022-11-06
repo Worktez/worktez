@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,31 +17,22 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable require-jsdoc */
-/* eslint-disable object-curly-spacing */
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
-
 const {getSubscriptions} = require("../lib");
 
 exports.getSubscriptionDetails = function(request, response) {
-    const orgAppKey = request.body.data.OrgAppKey;
-    let status = 200;
-    let result;
+  const orgAppKey = request.body.data.OrgAppKey;
+  let status = 200;
+  let result;
 
-    getSubscriptions(orgAppKey, "").then((sData) => {
-        if (sData[0]) {
-            result = {data: {status: "OK", resultData: sData[0]}};
-            return response.status(status).send(result);
-        }
-    }).catch((error) => {
-        status = 500;
-        result = {data: error};
-        console.error("Error getting subscription data", error);
-        return response.status(status).send(result);
-    });
+  getSubscriptions(orgAppKey, "").then((sData) => {
+    if (sData[0]) {
+      result = {data: {status: "OK", resultData: sData[0]}};
+      return response.status(status).send(result);
+    }
+  }).catch((error) => {
+    status = 500;
+    result = {data: error};
+    console.error("Error getting subscription data", error);
+    return response.status(status).send(result);
+  });
 };

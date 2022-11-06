@@ -27,7 +27,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
-
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 declare var jQuery:any;
 
 @Component({
@@ -58,8 +58,9 @@ export class CreateNewTeamComponent implements OnInit {
   public TeamNameAvailable: boolean = true;
   teamIdIsSame: boolean = true;
   public TeamIdAvailable: boolean = true;
-  
-  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService) { }
+  teamIds: string[] = [];
+  teamNames: string[] = [];
+  constructor(private startService: StartServiceService, private applicationSettingsService: ApplicationSettingsService, private navbarService: NavbarHandlerService, private functions: AngularFireFunctions, public validationService: ValidationService, private router: Router,private authService: AuthService, private location: Location, public applicationSettings: ApplicationSettingsService, public backendService: BackendService, public toolsService: ToolsService, public popUpHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, public cookieService: CookieService,public teamService: TeamServiceService ) { }
 
   ngOnInit(): void {
     
@@ -83,6 +84,8 @@ export class CreateNewTeamComponent implements OnInit {
         });
       }
     }
+    this.teamIds = this.backendService.getOrganizationTeamIds();
+    this.teamNames = this.backendService.getOrganizationTeamNames();
   }
 
   setTeamId(){
@@ -247,27 +250,16 @@ export class CreateNewTeamComponent implements OnInit {
     else{
       this.teamNameIsSame = true
     }
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/creatTeamNaneCheck');
-       callable({OrganizationDomain: orgDomain, TeamName: this.teamName ,TeamId: this.teamId}).subscribe({
-        next: (result) => {
-          if(result == "teamName Already taken"){   
-              this.TeamNameAvailable = false;
-
-          } else {
+    for (let i = 0; i < this.teamNames.length; i++) {
+        if (this.teamNames[i]==this.teamName) {
+          this.TeamNameAvailable = false;
+          break;
+        }else {
             this.TeamNameAvailable = true;
             this.enableLoader = false;
-          }
-        },
-        error: (error) => {
-          console.log(error);
-          console.log("error is here")
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        },
-        complete: () => {console.info('Successful ')}
-    });
-    this.checkTeamIdAvailabilityLive();
+        }
+    }
+      this.checkTeamIdAvailabilityLive();
   }
 
 
@@ -278,25 +270,14 @@ export class CreateNewTeamComponent implements OnInit {
     else{
       this.teamIdIsSame = true
     }
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/creatTeamIdCheck');
-       callable({OrganizationDomain: orgDomain, TeamName: this.teamName ,TeamId: this.teamId}).subscribe({
-        next: (result) => {
-          if(result == "teamId Already taken"){   
-              this.TeamIdAvailable = false;
-
-          } else {
-            this.TeamIdAvailable = true;
-            this.enableLoader = false;
-          }
-        },
-        error: (error) => {
-          console.log(error);
-          console.log("error is here")
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        },
-        complete: () => {console.info('Successful ')}
-    });
+    for (let i = 0; i < this.teamIds.length; i++) {
+      if (this.teamIds[i]==this.teamId) {
+        this.TeamIdAvailable = false;
+        break;
+      }else {
+          this.TeamIdAvailable = true;
+          this.enableLoader = false;
+      }
+    }
   }
 }
