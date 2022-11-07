@@ -16,6 +16,7 @@ import { ThemeService } from './services/theme/theme.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
+import { Meta, Title } from '@angular/platform-browser';
 
 declare const gtag: Function;
 
@@ -25,7 +26,7 @@ declare const gtag: Function;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public themeService: ThemeService, private router: Router) {
+  constructor(public themeService: ThemeService, private router: Router, private metaTagService: Meta, private titleService: Title) {
     if(environment.firebase.measurementId != "")
       this.addGAScript();
     this.router.events.pipe(
@@ -39,6 +40,23 @@ export class AppComponent {
     });
    }
   title = 'worktez';
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.titleService.setTitle("Worktez: Simplify and organize the way teams work.");
+    this.metaTagService.addTags([
+      {
+        name: 'description',
+        content: 'Track it, from everywhere. One step to hybrid work environment. Without worrying about time, and location. Enable your team to work more on ideas, and automate the process.',
+      },
+      { name: 'robots', content: 'index, follow' },
+      { name: 'author', content: 'Vivek Kumar' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'date', content: '2022-11-07', scheme: 'YYYY-MM-DD' },
+      { charset: 'UTF-8' },
+    ]);
+  }
 
   /** Add Google Analytics Script Dynamically */
   addGAScript() {
