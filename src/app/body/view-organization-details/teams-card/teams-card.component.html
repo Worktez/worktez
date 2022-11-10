@@ -78,12 +78,14 @@
                 </button>
             </div>
             <div class="col">
-                <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                <button class="btn extra2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
                     data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
                     title="Add Organisation">
-                    <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
-                    <span *ngIf="!repoLink">Integrate Github</span>
-                    <span *ngIf="repoLink">
+                    <div>
+                        <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
+                    </div>
+                    <span class="p-2" *ngIf="!repoLink">Integrate Github</span>
+                    <span class="p-2" *ngIf="repoLink">
                         {{repoLink}}
                     </span>
                 </button>

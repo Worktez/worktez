@@ -31,7 +31,7 @@
 .btn-primary {
     background-color: var(--primary-color);
     width: 100%;
-    color: #ffffff;
+    color: #ffffff !important;
     border-radius:5px;
 	text-align:center;
     border: none !important;
@@ -91,8 +91,8 @@ input:focus {
 #button:focus,
 #button:active,
 #button:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
+    background-color: var(--dropdown-hover) !important;
+    color: var(--button-text-hover) !important;
     border: none;
 }
 
