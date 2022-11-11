@@ -141,7 +141,7 @@ exports.generateTemplate = function(mailType, valueArray) {
           data = data.replace("$name$", "You");
         }
       }
-    } else if (templateName == "addEducation.html" || templateName == "addExperience.html" || templateName == "addProjectProfile.html" || templateName == "updateEducation.html" || templateName == "updateExperience.html" || templateName == "updateProject.html" || templateName == "updateSkill.html" || templateName == "editProfile.html") {
+    } else if (templateName == "addEducation.html" || templateName == "addExperience.html" || templateName == "addProjectProfile.html" || templateName == "updateEducation.html" || templateName == "updateExperience.html" || templateName == "updateProject.html" || templateName == "updateSkill.html" || templateName == "editProfile.html" || templateName == "updatePic.html") {
       data = data.replace("$username$", valueArray[3]);
       data = data.replace("$recipientName$", valueArray[2]);
     } else if (templateName == "verificationMail.html") {
