@@ -25,7 +25,6 @@ import { ApplicationSettingsService } from "src/app/services/applicationSettings
  import { NavbarHandlerService } from "src/app/services/navbar-handler/navbar-handler.service";
 import { PopupHandlerService } from "src/app/services/popup-handler/popup-handler.service";
  import { StartServiceService } from "src/app/services/start/start-service.service";
-import { TeamServiceService } from "src/app/services/team/team-service.service";
 
  @Component({
    selector: "app-milestone",
