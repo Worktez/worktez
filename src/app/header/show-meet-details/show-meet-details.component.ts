@@ -55,7 +55,6 @@ export class ShowMeetDetailsComponent implements OnInit {
         return actions.data as Meet[];
       })).subscribe({
         next: (data) => {
-          console.log(data)
           if (data) {
             this.meetData = data            
           }
@@ -67,12 +66,6 @@ export class ShowMeetDetailsComponent implements OnInit {
           console.info("Fetched Meet Data Successfully");
         }
       })
-  }
-
-  setMeetToDelete(item){
-    this.MeetToDelete=item;
-    this.deletedMeetEnabled=true;
-   
   }
   
   deletedMeet(index) {

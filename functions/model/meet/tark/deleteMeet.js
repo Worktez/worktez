@@ -1,14 +1,7 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-const-assign */
-/* eslint-disable require-jsdoc */
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
+/* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
