@@ -26,6 +26,7 @@
 
 .card {
     background-color: var(--secondary-bg);
+    border: none;
 }
 
 /* h2 {

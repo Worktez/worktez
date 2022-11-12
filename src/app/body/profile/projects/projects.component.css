@@ -1,6 +1,7 @@
 .card {
     background-color: var(--secondary-bg);
     width: 100%;
+    border: none;
 }
 
 .btn {
