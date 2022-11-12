@@ -10,6 +10,7 @@ export interface Meet {
     EndTime: string;
     Status: string;
     OrgDomain: string;
+    Status: string;
     Uid: string;
     RoomId:string;
 }
