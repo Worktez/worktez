@@ -82,7 +82,7 @@ fastify.post("/getMeetDetails", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
- fastify.post("/deleteMeet", (req, res) => {
+fastify.post("/deleteMeet", (req, res) => {
   deleteMeet(req, res);
 });
 
