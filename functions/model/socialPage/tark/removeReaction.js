@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-/* eslint-disable no-undef */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -19,13 +18,13 @@
  ***********************************************************/
 const { getPost, deletePostReaction, updatePost } = require("../lib");
 const { decrementNumberofLikesforUser } = require("../../users/tark/incrementUserCounters");
- 
+
 exports.removeReaction = function(request, response) {
   const postId = request.body.data.PostId;
   const uid = request.body.data.Uid;
   let result;
   let status = 200;
-   
+
   const p1 = getPost(postId).then((postDoc) => {
     if (postDoc == undefined) {
       result = {data: {status: "ERROR", postData: undefined}};
@@ -43,8 +42,8 @@ exports.removeReaction = function(request, response) {
     status = 500;
     console.log("Error:", error);
   });
- 
-   
+
+
   return Promise.resolve(p1).then(() => {
     console.log("Removed Reaction Successfully");
     return response.status(status).send(result);
@@ -53,4 +52,4 @@ exports.removeReaction = function(request, response) {
     return response.status(status).send(result);
   });
 };
- 
+

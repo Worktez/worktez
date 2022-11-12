@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
 /* eslint-disable guard-for-in */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -19,7 +18,6 @@
  ***********************************************************/
 
 const { getOrg } = require("../../organization/lib");
-const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { startSchedular } = require("../../scheduledFunctions/tark/startSchedular");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { getOrganizationsChartDetails } = require("../lib");
@@ -41,7 +39,7 @@ exports.getSprintEvaluationGraph = function(request, response) {
       const responseData = [];
       if (doc == undefined) {
         getOrg(orgDomain).then((data) => {
-          const orgAppKey = data.AppKey;
+          // const orgAppKey = data.AppKey;
           // setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
           startSchedular();
         });

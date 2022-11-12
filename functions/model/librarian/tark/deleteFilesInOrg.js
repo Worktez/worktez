@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+ 
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -18,7 +18,7 @@
  ***********************************************************/
 
 const { updateFileToOrg } = require("../lib");
-const { getOrg, getOrgUseAppKey, updateOrg} = require("../../organization/lib");
+const { getOrgUseAppKey } = require("../../organization/lib");
 
 exports.deleteFilesInOrg = function(request, response) {
   const appKey = request.body.data.AppKey;

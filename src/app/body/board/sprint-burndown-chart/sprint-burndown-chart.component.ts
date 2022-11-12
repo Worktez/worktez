@@ -65,8 +65,16 @@ export class SprintBurndownChartComponent implements OnInit {
 
     this.data.forEach((element, index) => {
       data.forEach(task => {
-        var dateArray = task.CompletionDate.split("/");
-        var formattedDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+        let formattedDate;
+        if(task.CompletionDate.includes("/")){
+          //This condition is added to support the Previous data before the change in the ToolsService, Can be removed in future.
+          var dateArray = task.CompletionDate.split("/");
+          formattedDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+        } else if(task.CompletionDate.includes("-")){
+          var dateArray = task.CompletionDate.split("-");
+        formattedDate = dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2];
+        }
+        
         if (task.Status == "Completed" && new Date(formattedDate).toDateString() === element[0].toDateString()) {
           this.totalStoryPoints -= task.StoryPointNumber;
           this.data[index] = [index, this.totalStoryPoints];

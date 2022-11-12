@@ -99,7 +99,7 @@ export class HeaderComponent implements OnInit {
   }
 
   socialPage() {
-    this.router.navigate(['/Social']);
+    this.router.navigate(['/techverse']);
   }
 
   kanbanBoard() {

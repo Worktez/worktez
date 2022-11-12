@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -45,8 +45,8 @@ exports.generateTemplate = function(mailType, valueArray) {
   } else if (mailType == "Log_Task") {
     templateName = "logTask.html";
     mailSubject = "Logged work on Worktez";
-    } else if (mailType == "Verification_Mail") {
-      templateName = "verificationMail.html";
+  } else if (mailType == "Verification_Mail") {
+    templateName = "verificationMail.html";
   } else if (mailType == "Add_Education_Profile") {
     templateName = "addEducation.html";
     mailSubject = "Education added on Worktez";
@@ -143,7 +143,7 @@ exports.generateTemplate = function(mailType, valueArray) {
       }
     } else if (templateName == "addEducation.html" || templateName == "addExperience.html" || templateName == "addProjectProfile.html" || templateName == "updateEducation.html" || templateName == "updateExperience.html" || templateName == "updateProject.html" || templateName == "updateSkill.html" || templateName == "editProfile.html") {
       data = data.replace("$username$", valueArray[3]);
-        data = data.replace("$recipientName$", valueArray[2]);
+      data = data.replace("$recipientName$", valueArray[2]);
     } else if (templateName == "verificationMail.html") {
       mailSubject = "Verification mail - Worktez";
       data = data.replace("$recipientName$", valueArray[2]);

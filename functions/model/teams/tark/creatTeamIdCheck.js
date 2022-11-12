@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,37 +17,29 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable no-unused-vars */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
 const { getOrg } = require("../../organization/lib");
 
 exports.creatTeamIdCheck = function(request, response) {
-    let status = 200;
-    let resultData = "";
-    const teamId = request.body.data.TeamId;
-    const orgDomain = request.body.data.OrganizationDomain;
-    getOrg(orgDomain).then((orgDoc) => {
-        for (let i = 0; i < orgDoc.TeamsId.length; i++) {
-            if (orgDoc.TeamsId[i] == teamId) {
-                resultData = "teamId Already taken";
-                break;
-            } else {
-                resultData = "teamId Available";
-            }
-          }
-        const result = { data: resultData};
-        return response.status(status).send(result);
-    }).catch((err) => {
-            status = 500;
-            resultData = "teamId Already taken";
-            console.error("Error : " + err);
-            const result = { data: resultData };
-            return response.status(status).send(result);
-    });
+  let status = 200;
+  let resultData = "";
+  const teamId = request.body.data.TeamId;
+  const orgDomain = request.body.data.OrganizationDomain;
+  getOrg(orgDomain).then((orgDoc) => {
+    for (let i = 0; i < orgDoc.TeamsId.length; i++) {
+      if (orgDoc.TeamsId[i] == teamId) {
+        resultData = "teamId Already taken";
+        break;
+      } else {
+        resultData = "teamId Available";
+      }
+    }
+    const result = { data: resultData};
+    return response.status(status).send(result);
+  }).catch((err) => {
+    status = 500;
+    resultData = "teamId Already taken";
+    console.error("Error : " + err);
+    const result = { data: resultData };
+    return response.status(status).send(result);
+  });
 };

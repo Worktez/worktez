@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -22,13 +23,13 @@ exports.getFilesInUser = function(request, response) {
   const uid = request.body.data.UID;
   const resultData = [];
   const status = 200;
- 
+
   const promise1 = getFileInUser(uid).then((snapshot) => {
     snapshot.forEach((element) => {
       resultData.push(element.data());
     });
   });
- 
+
   return Promise.resolve(promise1).then(() => {
     const result={data: {status: "Ok", data: resultData}};
     return response.status(status).send(result);
@@ -39,4 +40,4 @@ exports.getFilesInUser = function(request, response) {
         return response.status(status).send(result);
       });
 };
- 
+

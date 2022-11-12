@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -29,8 +28,8 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setOrganizationsChart = function(orgDomain, teamId, chartName, inputJson) {
-    const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).set(inputJson);
-    return Promise.resolve(setChart);
+  const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).set(inputJson);
+  return Promise.resolve(setChart);
 };
 
 /**
@@ -42,8 +41,8 @@ exports.setOrganizationsChart = function(orgDomain, teamId, chartName, inputJson
  * @return {any}
  */
 exports.updateChart = function(orgDomain, teamId, chartName, inputJson) {
-    const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).update(inputJson);
-    return Promise.resolve(setChart);
+  const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).update(inputJson);
+  return Promise.resolve(setChart);
 };
 
 /**
@@ -54,10 +53,10 @@ exports.updateChart = function(orgDomain, teamId, chartName, inputJson) {
  * @return {any}
  */
 exports.getOrganizationsChartDetails = function(orgDomain, teamName, chartName) {
-    const getDetailsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Charts").doc(chartName).get().then((doc) => {
-        return doc.data();
-    });
-    return Promise.resolve(getDetailsPromise);
+  const getDetailsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Charts").doc(chartName).get().then((doc) => {
+    return doc.data();
+  });
+  return Promise.resolve(getDetailsPromise);
 };
 
 /**
@@ -68,8 +67,8 @@ exports.getOrganizationsChartDetails = function(orgDomain, teamName, chartName) 
  * @return {any}
  */
 exports.setUserChart = function(orgDomain, uid, inputJson) {
-    const setChart = db.collection("Users").doc(uid).collection("PerformanceChart").doc(orgDomain).set(inputJson);
-    return Promise.resolve(setChart);
+  const setChart = db.collection("Users").doc(uid).collection("PerformanceChart").doc(orgDomain).set(inputJson);
+  return Promise.resolve(setChart);
 };
 
 /**
@@ -79,8 +78,8 @@ exports.setUserChart = function(orgDomain, uid, inputJson) {
  * @return {any}
  */
 exports.getUserPerformanceChart = function(orgDomain, uid) {
-    const getUserPerformanceChartPromise = db.collection("Users").doc(uid).collection("PerformanceChart").doc(orgDomain).get().then((doc) => {
-        return doc.data();
-    });
-    return Promise.resolve(getUserPerformanceChartPromise);
+  const getUserPerformanceChartPromise = db.collection("Users").doc(uid).collection("PerformanceChart").doc(orgDomain).get().then((doc) => {
+    return doc.data();
+  });
+  return Promise.resolve(getUserPerformanceChartPromise);
 };
