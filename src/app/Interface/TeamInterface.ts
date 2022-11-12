@@ -37,6 +37,7 @@ export interface Team {
     Priority: string[];
     Difficulty: string[];
     MilestoneStatus: string[];
+    MilestoneStatusLabels: string[];
     TotalTeamTasks: number;
     OrganizationId: string;
     CurrentSprintId: number;

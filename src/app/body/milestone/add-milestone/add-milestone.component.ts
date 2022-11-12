@@ -42,10 +42,16 @@ export class AddMilestoneComponent implements OnInit {
   milestoneStatus: string
   addMilestoneActive: boolean = true;
   minDate:string;
+  milestoneStatusLabels: string[];
 
-  constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService) { }
+  constructor(public validationService: ValidationService, private functions: AngularFireFunctions, public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public applicationSetting: ApplicationSettingsService ) { }
 
   ngOnInit(): void {
+    this.teamId = this.authService.getTeamId();
+    this.applicationSetting.getTeamDetails(this.teamId);
+    this.showLoader =false;
+    const team = this.applicationSetting.team;
+    this.milestoneStatusLabels = team.MilestoneStatusLabels; 
     this.todayDate = this.toolService.date();
     const dateArray = this.todayDate.split('-');
     this.minDate = dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];

@@ -25,6 +25,8 @@ import { ApplicationSettingsService } from "src/app/services/applicationSettings
  import { NavbarHandlerService } from "src/app/services/navbar-handler/navbar-handler.service";
 import { PopupHandlerService } from "src/app/services/popup-handler/popup-handler.service";
  import { StartServiceService } from "src/app/services/start/start-service.service";
+import { TeamServiceService } from "src/app/services/team/team-service.service";
+
  @Component({
    selector: "app-milestone",
    templateUrl: "./milestone.component.html",
@@ -41,10 +43,9 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
    showLoader: boolean = false;
    teamId: string;
    
-   
    constructor(private functions: AngularFireFunctions, private router: Router, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService) { }
  
-   ngOnInit(): void {
+   ngOnInit(): void { 
      this.showLoader = true;
      this.navbarHandler.resetNavbar();
      this.navbarHandler.addToNavbar(this.componentName);
