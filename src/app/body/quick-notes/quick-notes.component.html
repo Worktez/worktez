@@ -21,7 +21,7 @@
     <div class="card" style="width: 18rem;">
         <div class="card-header">
             <div class="row">
-                <div class="col-8">
+                <div class="col-8 pt-2">
                     Notes
                 </div>
                 <div class="col ml-auto">
@@ -44,10 +44,12 @@
                                 <div class="col-8" (click)="openNote(item)">
                                     {{item.Title}}
                                 </div>
-                                <div class="col">
-                                    <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
-                                        delete
-                                    </mat-icon>
+                                <div class="col-4 pl-4">
+                                    <span class="btn">
+                                        <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
+                                            delete
+                                        </mat-icon>
+                                    </span>
                                 </div>
                             </div>
                         </li>

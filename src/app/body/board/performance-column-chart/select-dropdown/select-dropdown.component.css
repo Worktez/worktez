@@ -22,10 +22,10 @@
     color: var(--text);
     border-radius: 2%;
     box-shadow: var(--box-shadow-bottom);
-
+    border-color: var(--primary-color);
 }
  #dropdownSelectCard {
-    color: var(--primary-color);
+    color: var(--text);
     background-color: var(--secondary-bg);
 }
 

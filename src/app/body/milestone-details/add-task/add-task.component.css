@@ -47,3 +47,12 @@
     color: var(--secondary-color);
     font-size: 55px;
 }
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
