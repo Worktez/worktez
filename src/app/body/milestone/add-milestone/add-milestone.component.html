@@ -54,7 +54,7 @@
                     <select class="form-control form-control-sm" [(ngModel)]="milestoneStatus"
                         [ngModelOptions]="{standalone: true}">
                         <option [ngValue]="null" [disabled]="true">Milestone Status</option>
-                        <ng-container *ngFor='let label of milestoneStatusLabels'>
+                        <ng-container *ngFor='let label of applicationSetting.milestoneStatus'>
                             <option>{{ label }}</option>
                         </ng-container>
                     </select>

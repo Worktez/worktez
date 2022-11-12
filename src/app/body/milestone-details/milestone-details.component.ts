@@ -234,7 +234,7 @@ export class MilestoneDetailsComponent implements OnInit {
     this.applicationSetting.getTeamDetails(teamId);
     this.showLoader =false;
     const team = this.applicationSetting.team;
-    this.milestoneStatusLabels = team.MilestoneStatusLabels;    
+    this.milestoneStatusLabels = team.MilestoneStatus;    
   }
  
 
