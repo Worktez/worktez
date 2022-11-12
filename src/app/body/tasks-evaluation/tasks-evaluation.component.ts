@@ -49,6 +49,9 @@ export class TasksEvaluationComponent implements OnInit {
   fieldToEdit: string = "";
   expandedIcons: boolean = true ;
   toogleClosedSprint: number[] = [];
+  currentScrollPos: number = 200;
+  trackScroll: boolean = false;
+  firstUserData: boolean = false;
 
   nextSprintTasksToFetch: number;
 
@@ -69,6 +72,23 @@ export class TasksEvaluationComponent implements OnInit {
         }
       });
     }
+    window.addEventListener('scroll', this.scrollEvent, true);
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.scrollEvent, true);
+  }
+  
+  scrollEvent = (event): void => {
+    let scrollPos = event.target.scrollingElement.scrollTop;
+    if(scrollPos >= this.currentScrollPos+500) {
+      // down
+      this.currentScrollPos = scrollPos;
+      this.readTasks();
+    }
+
+    if(this.trackScroll)
+      this.currentScrollPos = scrollPos;
   }
 
   getData() {
@@ -106,6 +126,9 @@ export class TasksEvaluationComponent implements OnInit {
 
   readTasks() {
     this.showLoader = true;
+    this.trackScroll = true;
+    if(this.tasks.length == 0)
+      this.firstUserData = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('tasksEvaluation/readTasksEvaluationData');
       let result;
@@ -118,6 +141,7 @@ export class TasksEvaluationComponent implements OnInit {
       callable({OrganizationDomain: orgDomain, TeamId: this.selectedTeamId, PageToLoad: pageToLoad, SprintNumber: this.nextSprintTasksToFetch }).subscribe ({
         next: (data) => {
           result = data;
+          this.trackScroll = false;
           if (result.BacklogTasks.length > 0) {
             this.tasks.push(result.BacklogTasks);
           }
@@ -138,9 +162,11 @@ export class TasksEvaluationComponent implements OnInit {
             });
             this.userService.fetchUserData().subscribe(()=>{
               this.showLoader = false;
+              this.firstUserData = false;
             });
           } else {
             this.showLoader = false;
+            this.firstUserData = false;
           }
           console.log("read tasks successfully!")
         },

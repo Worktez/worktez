@@ -6,7 +6,7 @@
                     <div class="col-md-10 col-10">
                         <h2>Create Post</h2>
                     </div>
-                        <div class="col-md-1 col-2 text-right ">
+                        <div class="col-md-2 col-2 text-right">
                             <span class="btn">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
                                     close
@@ -15,10 +15,10 @@
                         </div>
                     </div>
                     <div class="row px-4">
-                        <div class="col-md-2 col">
+                        <div class="col-md-2 col-3">
                             <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </div>
-                        <div class="col-md-4 col py-2">
+                        <div class="col-md-10 col-9 py-2">
                             <h3>{{authService.userAppSetting.displayName}}</h3>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                                         </div>
                                     </form>
                                     <textarea type="text" class="form-control" rows="5" [(ngModel)]="post.Content" [ngModelOptions]="{standalone: true}" placeholder="Post content"></textarea>   
-                                        <div class="col" style="padding-left:5px;">
+                                        <div class="col mt-2" style="padding-left:5px;">
                                             <!-- <button class="btn m-auto px-3 py-1" id="video_library"><mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle mr-3">video_library</mat-icon>Video</button> &nbsp; -->
                                             <input type="file" id="file" style="display: none;" (change)="onSelectFile($event)" multiple >
                                             <label class="btn" id="insert_photo" for="file" >

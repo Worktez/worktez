@@ -48,6 +48,7 @@
 </div>
 <div class="row pb-2">
     <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Project</span>
         <select data-style="btn-default" class="form-control" [(ngModel)]="project" (change)="onProjectChange()"
             [ngModelOptions]="{standalone: true}">
             <ng-container *ngFor="let item of teamIds">

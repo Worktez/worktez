@@ -122,3 +122,9 @@ input:focus {
 .close:hover {
     transform: scale(1.3);
 }
+
+@media only screen and (max-width: 600px) {
+    .modalAlign{
+        margin-left: 1.5px !important;
+    }
+}

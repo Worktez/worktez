@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
   }
 
   navigateToHome() {
-    this.router.navigate(['/Social']);
+    this.router.navigate(['/techverse']);
     this.startService.startApplication();
   }
   

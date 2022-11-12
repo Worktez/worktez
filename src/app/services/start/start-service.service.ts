@@ -135,7 +135,7 @@ export class StartServiceService {
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
     } else {
       this.authService.organizationAvailable = false;
-        this.router.navigate(['/Social']);
+        this.router.navigate(['/techverse']);
     }
     if (SelectedOrgAppKey) {
       if(this.currentUrl == '/') {
@@ -180,7 +180,7 @@ export class StartServiceService {
         console.log("TeamId doesn't exists");
       }
     } else {
-        this.router.navigate(['/Social']);
+        this.router.navigate(['/techverse']);
     }
   }
 
