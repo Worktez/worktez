@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -28,12 +28,12 @@ const { db } = require("../application/lib");
  * @return {any}
  */
 exports.setActivities = function(orgDomain, taskId, totalActions = 0, totalComments = 0) {
-    const setActivityPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).set({
-        TaskId: taskId,
-        TotalActions: totalActions,
-        TotalComments: totalComments,
-    });
-    return Promise.resolve(setActivityPromise);
+  const setActivityPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).set({
+    TaskId: taskId,
+    TotalActions: totalActions,
+    TotalComments: totalComments,
+  });
+  return Promise.resolve(setActivityPromise);
 };
 
 /**
@@ -44,8 +44,8 @@ exports.setActivities = function(orgDomain, taskId, totalActions = 0, totalComme
  * @return {any}
  */
 exports.updateActivities = function(inputJson, orgDomain, taskId) {
-    const updateActivitiesPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).update(inputJson);
-    return Promise.resolve(updateActivitiesPromise);
+  const updateActivitiesPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).update(inputJson);
+  return Promise.resolve(updateActivitiesPromise);
 };
 
 /**
@@ -55,15 +55,15 @@ exports.updateActivities = function(inputJson, orgDomain, taskId) {
  * @return {any}
  */
 exports.getActivities = function(orgDomain, taskId) {
-    const getActivitiesPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).get().then((doc) => {
-        if (doc.exists) {
-            return doc.data();
-        } else {
-            return;
-        }
-    });
+  const getActivitiesPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).get().then((doc) => {
+    if (doc.exists) {
+      return doc.data();
+    } else {
+      return;
+    }
+  });
 
-    return Promise.resolve(getActivitiesPromise);
+  return Promise.resolve(getActivitiesPromise);
 };
 
 /**
@@ -79,15 +79,15 @@ exports.getActivities = function(orgDomain, taskId) {
  * @return {any}
  */
 exports.setAction = function(orgDomain, taskId, actionId, type, comment, date, time, uid) {
-    const setActionPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
-        Type: type,
-        Comment: comment,
-        Date: date,
-        Time: time,
-        Uid: uid,
-    });
+  const setActionPromise = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action").doc(actionId).set({
+    Type: type,
+    Comment: comment,
+    Date: date,
+    Time: time,
+    Uid: uid,
+  });
 
-    return Promise.resolve(setActionPromise);
+  return Promise.resolve(setActionPromise);
 };
 
 /**
@@ -98,13 +98,13 @@ exports.setAction = function(orgDomain, taskId, actionId, type, comment, date, t
  * @return {any}
  */
 exports.getAction = function(orgDomain, taskId, type) {
-    let query = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action");
+  let query = db.collection("Organizations").doc(orgDomain).collection("Activity").doc(taskId).collection("Action");
 
-    if (type!="") {
-        query = query.where("Type", "==", type);
-    }
+  if (type!="") {
+    query = query.where("Type", "==", type);
+  }
 
-    const getActionPromise = query.get();
+  const getActionPromise = query.get();
 
-    return Promise.resolve(getActionPromise);
+  return Promise.resolve(getActionPromise);
 };

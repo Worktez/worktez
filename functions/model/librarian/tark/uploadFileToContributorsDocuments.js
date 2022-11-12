@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable max-len */
-/* eslint-disable no-trailing-spaces */
 /* eslint-disable object-curly-spacing */
-/* eslint-disable no-unused-vars */
+/* eslint-disable eol-last */
+/* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -31,11 +31,11 @@ exports.uploadFileToContributorsDocuments = function(request, response) {
 
   let result;
   let status = 200;
-  
+
   const promise = getApplicationData().then((data) => {
     let filesCounter = data.TotalNumberOfContributors;
     filesCounter++;
-    
+
     const orgFileDocumentName = "File"+filesCounter;
     const updateOrgFileJson = {
       FileName: fileName,

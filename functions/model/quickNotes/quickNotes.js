@@ -1,9 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -32,7 +31,7 @@ const { editNote } = require("./tark/editNote");
  * @returns {any}
  */
 fastify.post("/addNote", (req, res) => {
-    addNote(req, res);
+  addNote(req, res);
 });
 
 /**
@@ -43,7 +42,7 @@ fastify.post("/addNote", (req, res) => {
  * @returns {any}
  */
 fastify.post("/getMyNotesList", (req, res) => {
-    getMyNotesList(req, res);
+  getMyNotesList(req, res);
 });
 
 /**
@@ -54,7 +53,7 @@ fastify.post("/getMyNotesList", (req, res) => {
  * @returns {any}
  */
 fastify.post("/deleteNote", (req, res) => {
-    deleteNote(req, res);
+  deleteNote(req, res);
 });
 
 /**
@@ -65,7 +64,7 @@ fastify.post("/deleteNote", (req, res) => {
  * @returns {any}
  */
 fastify.post("/editNote", (req, res) => {
-    editNote(req, res);
+  editNote(req, res);
 });
 
 /**
@@ -75,10 +74,10 @@ fastify.post("/editNote", (req, res) => {
  * @returns {any}
  */
 exports.quickNotes = functions.https.onRequest((req, res) => {
-    cors(req, res, () => {
-        fastify.ready((err) => {
-            if (err) throw err;
-            requestHandler(req, res);
-        });
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
     });
+  });
 });

@@ -60,11 +60,14 @@ export class CreateNewSprintComponent implements OnInit {
   nextSprintId: number;
   showContent: boolean;
   todayDate: string;
+  minDate: string;
   showClose: boolean = false
   constructor(private applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public validationService: ValidationService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private authService: AuthService, public popupHandlerService: PopupHandlerService, public toolsService:ToolsService) { }
 
   ngOnInit(): void {
     this.todayDate = this.toolsService.date();
+    const dateArray = this.todayDate.split('-');
+    this.minDate = dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];
     this.authService.afauth.user.subscribe(data => {
       this.userTeam = this.authService.getTeamId();
       this.authService.userAppSettingObservable.subscribe(data => {
@@ -81,11 +84,11 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   readApplicationData() {
-    this.applicationSettingsService.getTeamDetails(this.selectedTeamId).subscribe(team => {
-      this.teamCurrentSprintNumber = team.CurrentSprintId;
+    this.applicationSettingsService.getTeamDetails(this.selectedTeamId);
+    const team = this.applicationSettingsService.team;
+    this.teamCurrentSprintNumber = team.CurrentSprintId;
       this.nextSprintId = team.CurrentSprintId + 1;
       this.readSprintData();
-    });
   }
 
   readSprintData() {

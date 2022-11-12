@@ -17,6 +17,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Subject } from 'rxjs';
 import { Team, TeamLabels } from 'src/app/Interface/TeamInterface'
+import { StartServiceService } from '../start/start-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,8 @@ export class TeamServiceService {
   public teamLabelDataStateObservable = this.teamLabelDataState.asObservable();
   public teamsDataJson: Team[] = [];
   public teamsLabelsJson: TeamLabels[] = [];
+  public labelsReady: boolean = false;
+  public teamsReady: boolean = false;
   constructor(private functions: AngularFireFunctions) { }
   
   getTeams(orgDomain) {
@@ -45,9 +48,20 @@ export class TeamServiceService {
       },
       complete: () => {
         this.teamDataState.next(true);
+        this.teamsReady = true;
         console.info('Getting Team Data Successful')
       }
     });
+    return this.teamDataStateObservable;
+  }
+
+  getTeamUsingId(teamId: string) {
+    return this.teamsDataJson[teamId];
+  }
+
+  getLabelsByScope(teamId, scope){
+        const labelsArray = this.teamsLabelsJson[teamId][scope];
+        return Object.keys(labelsArray);
   }
 
   getLabels(orgDomain) {
@@ -55,17 +69,17 @@ export class TeamServiceService {
     const callable = this.functions.httpsCallable('teams/getAllLabels');
     callable({ OrganizationDomain: orgDomain }).subscribe({
       next: (data) => {
-        this.teamsLabelsJson = data;
-       // console.log(this.teamsLabelsJson["Development"]["Difficulty"]["High"].ColorCode);
-        //Example to access the Label Properties
+        this.teamsLabelsJson = data as TeamLabels[];
+        this.labelsReady = true;
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {
-        this.teamLabelDataState.next(false);
+        this.teamLabelDataState.next(true);
         console.info('Getting Label Data Successful')
       }
     });
+    return this.teamLabelDataStateObservable;
   }
 }

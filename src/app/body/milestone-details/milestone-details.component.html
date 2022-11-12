@@ -16,29 +16,29 @@
   <div class="col-1"></div>
   <div class="col">
     <div class="row header">
-      <div class="col-2">
+      <div class="col-md-2">
       </div>
-      <div class="col-9">
-        <div class="float-right m-1">
+      <div class="col-md-9 col-9">
+        <div class="float-right m-1 buttonFloat">
           <button type="button" id="button" class="btn" (click)="activateAdd()"
             data-toggle="modal" data-target="#exampleModalCenter">
             Add Task
           </button>
         </div>
-        <div class="float-right m-1">
+        <div class="float-right m-1 buttonFloat">
           <button type="button" id="button" class="btn" data-toggle="modal"
             data-target="#createNewTask" (click)="createTask()">
             Create Task
           </button>
         </div>
-        <div class="float-right m-1">
+        <div class="float-right m-1 buttonFloat">
           <button type="button" id="button" class="btn" data-toggle="modal"
             data-target="#editModal" (click)="editMilestone()">
             Edit Milestone
           </button>
         </div>
       </div>
-      <div class="col-1">
+      <div class="col-md-1 col-3">
         <span type="button" class="btn ml-2 align-bottom" (click)="backToMilestones()">
           <mat-icon fontSet="material-icons-outlined" class="align-middle">
             close
@@ -126,7 +126,7 @@
       </div>
       <div class="col-md-8"  *ngIf="taskDataReady">
         <div class="row">
-          <div class="col text-center">
+          <div class="col text-center title2">
             <span class="title mt-2">Task Tracker</span>
           </div>
         </div>
@@ -159,10 +159,10 @@
       </div>
     </div>
     <hr>
-    <ng-container *ngIf="milestoneService.taskDataStateObservable">
+    <ng-container *ngIf="taskDataReady">
       <div class="row tableBox p-2 pt-4" *ngIf="milestoneService.taskData.length>0">
         <div class="col">
-            <app-data-table [dataForTable]="milestoneService.taskData" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
+            <app-data-table [dataForTable]="tasks" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
         </div>
       </div>
     </ng-container>

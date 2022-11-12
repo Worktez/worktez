@@ -22,8 +22,16 @@ mat-icon {
 }
 
 .card {
-    background-color: var(--secondary-bg);
+    box-shadow: var(--box-shadow-bottom);
+    background: var(--secondary-bg);
     color: var(--text);
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
     width: 18rem;
     height: 18rem;
+}
+
+.card:hover {
+    border: 1px solid var(--primary-color);
 }

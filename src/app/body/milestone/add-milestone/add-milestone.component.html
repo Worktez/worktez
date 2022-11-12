@@ -35,7 +35,7 @@
                 <div class="form-group col-md-6 col">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
                   <input type="text" [(ngModel)]="title" [ngModelOptions]="{ standalone: true }"
-                    class="form-control p-3" id="recipient-name" placeholder="Enter the title" required />
+                    class="form-control form-control-sm" id="recipient-name" placeholder="Enter the title" required autocomplete="off"/>
                 </div>
                 <div class="form-group col-md-6 col ml-auto">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
@@ -60,26 +60,26 @@
                     </select>
                 </div>
               </div>
-              <div class="form-row mb-2">
+              <div class="form-row my-4 mb-2">
                 <div class="form-group col-md-12 col">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                   <textarea required type="text" [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"
-                    class="form-control p-3" id="recipient-name"
+                    class="form-control form-control-sm" id="recipient-name"
                     placeholder="Enter the Description of the Milestone"></textarea>
                 </div>
               </div>
               <div class="form-row my-2">
                 <div class="form-group col-md-6 col">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Start Date</span>
-                  <input required class="form-control" type="text" onfocus="(this.type='date')"
+                  <input required class="form-control form-control-sm" type="text" onfocus="(this.type='date')"
                     onblur="(this.type='text')" [(ngModel)]="startDate" [ngModelOptions]="{standalone: true}"
-                    min="{{todayDate}}" placeholder="Select The Start Date ">
+                    min="{{minDate}}" placeholder="Select The Start Date ">
                 </div>
                 <div class="form-group col-md-6 col ml-auto">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">End Date</span>
-                  <input required class="form-control" type="text" onfocus="(this.type='date')"
+                  <input required class="form-control form-control-sm" type="text" onfocus="(this.type='date')"
                     onblur="(this.type='text')" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
-                    min="{{todayDate}}" placeholder="Select The End Date ">
+                    min="{{startDate}}" placeholder="Select The End Date ">
                 </div>
               </div>
               <div class="modal-footer">

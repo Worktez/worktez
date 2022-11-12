@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,40 +17,31 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable require-jsdoc */
-/* eslint-disable object-curly-spacing */
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
+const {functions, cors, fastify, requestHandler} = require("../application/lib");
+const {getSubscriptionDetails} = require("./tark/getSubscriptionDetails");
+const {upgradeSubscriptionsToStandard} = require("./tark/upgradeSubscriptionsToStandard");
 
-
- const {functions, cors, fastify, requestHandler} = require("../application/lib");
- const {getSubscriptionDetails} = require("./tark/getSubscriptionDetails");
- const {upgradeSubscriptionsToStandard} = require("./tark/upgradeSubscriptionsToStandard");
-
- /**
+/**
   * Description
   * @param {any} "/getSubscriptionDetails"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
-  fastify.post("/getSubscriptionDetails", (req, res) => {
-    getSubscriptionDetails(req, res);
- });
+fastify.post("/getSubscriptionDetails", (req, res) => {
+  getSubscriptionDetails(req, res);
+});
 
- /**
+/**
   * Description
   * @param {any} "/upgradeSubscriptionsToStandard"
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
-  fastify.post("/upgradeSubscriptionsToStandard", (req, res) => {
-    upgradeSubscriptionsToStandard(req, res);
- });
+fastify.post("/upgradeSubscriptionsToStandard", (req, res) => {
+  upgradeSubscriptionsToStandard(req, res);
+});
 
 //  /**
 //  * Description
@@ -59,17 +54,17 @@
 //   getPaymentDetails(req, res);
 // });
 
- /**
+/**
   * Description
   * @param {any} req
   * @param {any} res
   * @returns {any}
   */
- exports.subscriptions = functions.https.onRequest((req, res) => {
-   cors(req, res, () => {
-     fastify.ready((err) => {
-       if (err) throw err;
-       requestHandler(req, res);
-     });
-   });
- });
+exports.subscriptions = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    fastify.ready((err) => {
+      if (err) throw err;
+      requestHandler(req, res);
+    });
+  });
+});

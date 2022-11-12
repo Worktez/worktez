@@ -11,112 +11,135 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container p-0">
-    <div class="row align-items-center justify-content-center m-0 p-0 ">
-        <div class="col-md-11 ml-auto col-8 text-left" >
-            <h3 class="font-weight-bold mt-4" >Create New Team</h3>
+<div class="container mt-4 pb-0">
+    <div class="row px-3 pt-3">
+        <div class="col-md-11 col-8 pt-2">
+            <h2>Create New Team</h2>
         </div>
-        <div class="col-md-1 col-4">
-            <div class="pl-lg-0" id="navbarTexts">
-                <ul class="nav navbar-nav ml-auto align-items-center">
-                    <span class="btn">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal"
-                          data-target="#updateTeam" (click)="close()" title="manage accounts" data-bs-toggle="tooltip">
-                          close
-                        </mat-icon>
-                    </span>
-                </ul>
-            </div>
+        <div class="col-md-1 col-4 text-right">
+            <span class="btn">
+                <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal"
+                    data-target="#updateTeam" (click)="close()" title="manage accounts" data-bs-toggle="tooltip">
+                    close
+                </mat-icon>
+            </span>
         </div>
     </div>
     <form id="form" class="p-2 align-items-center justify-content-center">
-            <div class="form-group row pl-1">
-                <div class="col-md-8">
-                    <div class="team-details">
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-6">
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Name</span>
-                            <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" (ngModelChange)="handleIdInput()" (input)="checkTeamNameAvailabilityLive()"placeholder="Enter Team Name*">
-                        </div>
-                        
-                            <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(teamName)"> Please enter a TeamName </p>
-                            <p class="pl-4" style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(TeamNameAvailable) && (teamName)"> TeamName is Available</p>
-                            <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(TeamNameAvailable) && !(teamNameIsSame)" >
-                                {{teamName}} is already taken</p>
-                        </div>
-                        
-                        <div class="col-sm-5">
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Apply Labels</span>
-                            <select class="form-control" [(ngModel)]="labelName"
-                                [ngModelOptions]="{standalone: true}">
-                                <option [ngValue]="null" [disabled]="true">Select Label</option>
-                                <ng-container *ngFor='let label of filteredOptionsLabels'>
-                                    <option>{{ label }}</option>
-                                </ng-container>
-                            </select>
-                        </div>
+        <div class="form-group row pl-1">
+            <div class="col-md-12">
+                <div class="form-group row pt-2">
+                    <div class="col-sm-6">
+                        <span class="ml-2 text-muted" style="font-size: 0.8rem" id="label">Team Name</span>
+                        <input type="text" class="form-control" [(ngModel)]="teamName"
+                            [ngModelOptions]="{ standalone: true }" (ngModelChange)="handleIdInput()"
+                            (input)="checkTeamNameAvailabilityLive()" placeholder="Enter Team Name*" (blur)="check()" />
+                        <p class="pl-2" style="color: #c13638; padding-left: 5px; size: 10px"
+                            *ngIf="!teamName && !flag1">
+                            TeamName is required
+                        </p>
+                        <p class="pl-2" style="color: #36c14b; padding-left: 5px; size: 10px"
+                            *ngIf="TeamNameAvailable && teamName">
+                            TeamName is Available
+                        </p>
+                        <p class="pl-2" style="color: #c13638; padding-left: 5px; size: 10px"
+                            *ngIf="!TeamNameAvailable && !teamNameIsSame">
+                            {{ teamName }} is already taken
+                        </p>
                     </div>
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-10">
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Id</span>
-                            <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()" (input)="checkTeamIdAvailabilityLive()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID*">
-                        </div>
-                        
-                        <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(teamId)"> Please enter a TeamID </p>
-                            <p class="pl-4" style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(TeamIdAvailable) && (teamId)"> TeamID is Available</p>
-                            <p class="pl-4" style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(TeamIdAvailable) && !(teamIdIsSame)" >
-                                {{teamId}} is already taken</p>
+                    <div class="col-sm-6">
+                        <span class="ml-2 text-muted" style="font-size: 0.8rem" id="label">Team Id</span>
+                        <input type="text" class="form-control" required [(ngModel)]="teamId" (click)="handleIdInput()"
+                            (input)="checkTeamIdAvailabilityLive()" [ngModelOptions]="{ standalone: true }"
+                            placeholder="Enter TeamID*" (blur)="check()" />
+                        <p class="pl-2" style="color: #c13638; padding-left: 5px; size: 10px" *ngIf="!teamId && !flag2">
+                            TeamId is required
+                        </p>
+                        <p class="pl-2" style="color: #36c14b; padding-left: 5px; size: 10px"
+                            *ngIf="TeamIdAvailable && teamId">
+                            TeamID is Available
+                        </p>
+                        <p class="pl-2" style="color: #c13638; padding-left: 5px; size: 10px"
+                            *ngIf="!TeamIdAvailable && !teamIdIsSame">
+                            {{ teamId }} is already taken
+                        </p>
                     </div>
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-10">
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Manager Email</span>
-                            <input type="text" class="form-control" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Manager's Email Id*">
-                        </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <div class="col-sm-6">
+                        <span class="ml-2 text-muted" style="font-size: 0.8rem" id="label">Team Manager Email</span>
+                        <input type="text" class="form-control" [(ngModel)]="teamManagerEmail"
+                            [ngModelOptions]="{ standalone: true }" placeholder="Enter Team Manager's Email Id*" />
                     </div>
-                    <div class="form-group row pt-2">
-                        <div class="col-sm-12 col">
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Admin Email</span>
-                            <input type="text" readonly  class="form-control" value={{this.teamAdmin}} [(ngModel)]="teamAdmin" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Admin's Email Id*">
-                        </div>
+                    <div class="col-sm-6 col">
+                        <span class="ml-2 text-muted" style="font-size: 0.8rem" id="label">Team Admin Email</span>
+                        <input type="text" readonly class="form-control" value="{{ this.teamAdmin }}"
+                            [(ngModel)]="teamAdmin" [ngModelOptions]="{ standalone: true }"
+                            placeholder="Enter Team Admin's Email Id*" />
                     </div>
+                </div>
+                <div class="form-group row pt-2">
+                    <div class="col-sm-6">
+                        <span class="ml-2 text-muted" style="font-size: 0.8rem" id="label">Apply Labels</span>
+                        <select class="form-control" [(ngModel)]="labelName" [ngModelOptions]="{ standalone: true }">
+                            <option [ngValue]="labelName" [disabled]="true">
+                                Select Label
+                            </option>
+                            <ng-container *ngFor="let label of filteredOptionsLabels">
+                                <option>{{ label }}</option>
+                            </ng-container>
+                        </select>
                     </div>
-                    <div class="form-group row  pt-2">
-                        <div class="col-md-10" >
-                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Description</span>
-                            <textarea type="text" class="form-control"  style="width: 1100px;" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description*"></textarea>
-                        </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row pt-2">
+                    <div class="col-md-12">
+                        <span class="mx-2 text-muted" style="font-size: 0.8rem; width: 100%" id="label">Team
+                            Description</span>
+                        <textarea type="text" class="form-control" rows="3" [(ngModel)]="teamDescription"
+                            [ngModelOptions]="{ standalone: true }" placeholder="Write a Team Description*"></textarea>
                     </div>
-                    <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Members Email</span>
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal" data-target="#memberModal" title="add-member"  (click)="addMember()" style="height: 10rem; width: 1100px;">
-                                <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
-                                    <div class="row">
-                                        <ng-container *ngFor="let item of teamMembers">
-                                            <div class="col-md-5 member-email mx-2 mt-2 p-2">
-                                                {{item}}
-                                                <span aria-hidden="true" class="btn material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMember(item)">close</span>
-                                            </div>
-                                        </ng-container>
-                                        <ng-container *ngIf="!teamMembers.length">
-                                            <div class="col text-muted h6 font-weight-normal">
-                                                Enter Team Members Email Id*
-                                            </div>
-                                        </ng-container>
-                                    </div>
+                    <div class="col-sm-12">
+                        <span class="mx-2 text-muted" style="font-size: 0.8rem" id="label">Team Members Email</span>
+                        <div class="card p-0" data-bs-toggle="tooltip" data-bs-placement="top" data-toggle="modal"
+                            data-target="#memberModal" title="add-member" (click)="addMember()"
+                            style="height: 10rem; margin: 0px !important">
+                            <div class="card-body" style="overflow-y: auto; overflow-x: hidden">
+                                <div class="row">
+                                    <ng-container *ngFor="let item of teamMembers">
+                                        <div class="col-md-5 member-email mx-2 mt-2 p-2">
+                                            {{ item }}
+                                            <span aria-hidden="true"
+                                                class="btn material-icons text-danger float-right px-2"
+                                                style="cursor: pointer" (click)="removeMember(item)">close</span>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="!teamMembers.length">
+                                        <div class="col text-muted h6 font-weight-normal">
+                                            Enter Team Members Email Id*
+                                        </div>
+                                    </ng-container>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            <div class="form-group row align-items-center justify-content-center">
-                <div class="col text-right">
-                    <button class="btn btn-md" id="button" [disabled]="enableLoader || !TeamIdAvailable || !TeamIdAvailable" (click)="submit()">Create Team</button>
-                </div>
             </div>
+        </div>
+        <div class="form-group row align-items-center justify-content-center">
+            <div class="col text-right">
+                <button class="btn btn-md" id="button"
+                    [disabled]="enableLoader || !TeamNameAvailable || !TeamIdAvailable" (click)="submit()">
+                    Create Team
+                </button>
+            </div>
+        </div>
         <app-loader *ngIf="enableLoader"></app-loader>
     </form>
 </div>
 <ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
-    <app-add-member [teamId]="teamId" [teamName]="teamName" [teamMembers]="teamMembers" [teamManager]="teamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="isUpdateTeam" (addedMember)="addedMember($event)"></app-add-member>
+    <app-add-member [teamId]="teamId" [teamName]="teamName" [teamMembers]="teamMembers" [teamManager]="teamManagerEmail"
+        [teamDescription]="teamDescription" [isUpdateTeam]="isUpdateTeam" (addedMember)="addedMember($event)">
+    </app-add-member>
 </ng-container>

@@ -47,24 +47,23 @@ export class AddWatchersComponent implements OnInit {
   }
 
   readTeamMembers(teamId :string){
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-          this.teamMembers = team.TeamMembers;
+    this.applicationSetting.getTeamDetails(teamId); 
+    const team = this.applicationSetting.team;
+    this.teamMembers = team.TeamMembers;
 
-          this.watcherName.valueChanges.pipe(
-            startWith(''),
-            map((value) => {
-              return this._filter(value)
-            }),
-          ).subscribe({
-            next :(data) => {
-              this.filteredOptionsWatcher = data
-            },
-            error:(error) => {
-              console.error(error)
-            },
-            complete:() => console.info("Getting filtered options Watcher was successfull")
-          });
-    }); 
+    this.watcherName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        return this._filter(value)
+      })).subscribe({
+      next :(data) => {
+        this.filteredOptionsWatcher = data
+      },
+      error:(error) => {
+        console.error(error)
+      },
+      complete:() => console.info("Getting filtered options Watcher was successfull")
+    });
   }
 
   selectedWatcher(item) {

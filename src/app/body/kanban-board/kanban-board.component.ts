@@ -11,6 +11,7 @@ import { ToolsService } from 'src/app/services/tool/tools.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Sprint } from 'src/app/Interface/TeamInterface';
 import { CookieService } from 'ngx-cookie-service';
+import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 
 @Component({
   selector: 'app-kanban-board',
@@ -38,7 +39,7 @@ export class KanbanBoardComponent implements OnInit {
   currentSelectedStatusLabels: string;
   allTasks : Tasks[];
 
-  constructor(public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService, public cookieService: CookieService) { }
+  constructor(public userService: UserServiceService, public navbarHandlerService: NavbarHandlerService, public startService: StartServiceService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public toolsService: ToolsService, public authService: AuthService, public cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.navbarHandlerService.resetNavbar();
@@ -50,17 +51,9 @@ export class KanbanBoardComponent implements OnInit {
     if(this.startService.showTeamsData) {
       this.readData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
         if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  this.readData();
-                }
-              });
-            }
-          });
+            this.readData();
         }
       });
     }
@@ -148,8 +141,17 @@ export class KanbanBoardComponent implements OnInit {
       next: (data) => {
         this.putDataInTasksArray(data.data);
         this.allTasks = data.data;
-        this.showLoader = false;
-        console.log("read tasks successfully!")
+        if(this.allTasks.length) {
+          this.allTasks.forEach(element => {
+            this.userService.checkAndAddToUsersUsingEmail(element.Assignee);
+            this.userService.checkAndAddToUsersUsingEmail(element.Reporter);
+            this.userService.checkAndAddToUsersUsingEmail(element.Creator);
+          });
+          this.userService.fetchUserData().subscribe(()=>{
+            this.showLoader = false;
+          });
+        }
+          console.log("read tasks successfully!")
       },
       error: (error) => {
         this.errorHandlerService.showError = true;

@@ -52,26 +52,26 @@ input:focus {
     color: var(--button-text);
     cursor: pointer;
     font-size: 12px;
+    background-color: var(--primary-bg);
 }
 
 .dropdown-item:hover {
     color: var(--button-text-hover);
-    background-color: var(--secondary-bg);
+    background-color: var(--primary-bg);
 }
 
 #dropdownMenu {
-    /*background-color: var(--secondary-bg);*/
     border-color: var(--primary-color);
-    background: var(--primary-bg);
-    background-color: var(--secondary-bg);
-
+    /* background: var(--secondary-bg); */
+    background-color: var(--primary-bg);
 }
 
 .form-control {
     display: inline-block;
 }
 
-.dropdown-menu{
+.dropdown-menu {
+    background-color: var(--primary-bg);
     height: auto;
     max-height: 300px;
     overflow-y: auto;

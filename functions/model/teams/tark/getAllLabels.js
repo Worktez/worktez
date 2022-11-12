@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -15,49 +19,43 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable  object-curly-spacing*/
-// /* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
-
-const { getAllLabels } = require("../lib");
-const { getOrg } = require("../../organization/lib");
+const { getAllLabels, getAllTeams } = require("../lib");
 
 exports.getAllLabels = function(request, response) {
-    const orgDomain = request.body.data.OrganizationDomain;
-    let status = 200;
-    let result;
-    const res = {};
+  const orgDomain = request.body.data.OrganizationDomain;
+  let status = 200;
+  let result;
+  const res = {};
 
-    const p = getOrg(orgDomain).then((data)=>{
-        const teams = data.TeamsName;
-        let p2;
-       teams.forEach((element) => {
-            res[element] ={};
-            p2 = getAllLabels(orgDomain, element).then((data)=>{
-                data.forEach((d) => {
-                    res[element][d.Scope] = {};
-                });
-                data.forEach((d) => {
-                    res[element][d.Scope][d.DisplayName] = d;
-                });
-            });
+  const p = getAllTeams(orgDomain).then((docs) => {
+    let p2;
+    docs.forEach((element) => {
+      const teamdata = element.data();
+      const teamName = teamdata.TeamName;
+      const teamId = teamdata.TeamId;
+      res[teamId]={};
+      p2 = getAllLabels(orgDomain, teamName).then((data)=>{
+        data.forEach((d) => {
+          res[teamId][d.Scope] = {};
         });
-        return Promise.resolve(p2);
-    }).catch((error) => {
-        status = 500;
-        console.log("Error: ", error);
+        data.forEach((d) => {
+          res[teamId][d.Scope][d.DisplayName] = d;
+        });
+      });
     });
-    return Promise.resolve(p).then(() => {
-        console.log(res.Development[0]);
-        result = { data: res };
-        return response.status(status).send(result);
-    })
-    .catch((error) => {
+    return Promise.resolve(p2);
+  }).catch((error) => {
+    status = 500;
+    console.log("Error: ", error);
+  });
+  return Promise.resolve(p).then(() => {
+    console.log(res);
+    result = { data: res };
+    return response.status(status).send(result);
+  })
+      .catch((error) => {
         result = { data: error };
         console.error("Error Getting labels", error);
         return response.status(status).send(result);
-    });
+      });
 };

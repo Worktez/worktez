@@ -1,4 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable max-len */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable eol-last */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -13,34 +17,29 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-/* eslint-disable object-curly-spacing */
-/* eslint-disable no-undef */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable max-len */
-// eslint-disable-next-line no-dupe-else-if
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getMyOrgCollectionDoc } = require("../lib");
 
 exports.getMyOrgCollectionDocs = function(request, response) {
-    const uid = request.body.data.Uid;
-    const orgAppKey = request.body.data.OrgAppKey;
+  const uid = request.body.data.Uid;
+  const orgAppKey = request.body.data.OrgAppKey;
 
-    let status = 200;
+  let status = 200;
+  let result;
 
-    getOrgUseAppKey(orgAppKey).then((data) => {
-        const orgDomain = data.OrganizationDomain;
-        getMyOrgCollectionDoc(uid, orgDomain).then((orgDoc)=>{
-            result = { data: {status: "Ok", data: orgDoc} };
-            return response.status(status).send(result);
-        }).catch((err) => {
-            status = 500;
-            console.error(err);
-            return response.status(status).send(err);
-        });
+  getOrgUseAppKey(orgAppKey).then((data) => {
+    const orgDomain = data.OrganizationDomain;
+    getMyOrgCollectionDoc(uid, orgDomain).then((orgDoc)=>{
+      result = { data: {status: "Ok", data: orgDoc} };
+      return response.status(status).send(result);
     }).catch((err) => {
-        status = 500;
-        console.error(err);
-        return response.status(status).send(err);
+      status = 500;
+      console.error(err);
+      return response.status(status).send(err);
     });
+  }).catch((err) => {
+    status = 500;
+    console.error(err);
+    return response.status(status).send(err);
+  });
 };

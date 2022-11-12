@@ -122,27 +122,25 @@
                 <br>
                 <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="filterByProperties()">Apply</button>
             </div>
-            <ng-container >
-                <div class="row">
-            <div class="col">
-                <span class="ml-2 text-muted" style="font-size:0.8rem; display: none;" id="dropdownMenuButton" >Custom Filter</span>
-                <br/>
-                <select class="form-control form-control-sm" [(ngModel)]="this.filters.FilterName" [ngModelOptions]="{standalone: true}" >
-                    <option [ngValue]="Null" [disabled]="true">Select Filter</option>
-                    <ng-container *ngFor='let item of this.filters'>
-                        <option>{{ item.FilterName }}</option>
-                    </ng-container>
-                </select>
-            </div>
-            <div class="col">
-                <br>
-                        <button type="submit" class="btn submitButton" id="button" style="font-size: 10px;" (click)="customfilterByProperties(this.filters.FilterName)">Apply</button>
-            </div>
-        </div>
-        </ng-container>
         </div>
     </div>
-    <br>
+</div>
+<br>
+<div class="row" *ngIf="filtersReady">
+    <div class="col">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select custom filter
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenu">
+                <ng-container *ngFor='let item of this.filters'>
+                    <div class="dropdown-item form-check">
+                        <label class="form-check-label" for="{{ item.FilterName }}" (click)="customfilterByProperties(item.FilterName)">{{ item.FilterName }}</label>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
 </div>
 <br>
 <ng-container *ngIf="showLoader">

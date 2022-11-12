@@ -62,6 +62,7 @@ export class MilestoneDetailsComponent implements OnInit {
   appkey: string = "";
   addTaskActive: boolean = true;
   editMilestoneActive: boolean = false;
+  tasks: Tasks [] =[];
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
@@ -69,6 +70,7 @@ export class MilestoneDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tasks = [];
     this.milestoneId = this.route.snapshot.params['MilestoneId'];
     this.navbarHandler.addToNavbar(this.milestoneId);
     if (this.startService.showTeams) {
@@ -85,10 +87,11 @@ export class MilestoneDetailsComponent implements OnInit {
       this.getMilestoneDetails();
       this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
       this.milestoneService.taskDataStateObservable.subscribe(()=>{
+        this.tasks = this.milestoneService.taskData;
         this.getNumberData();
         this.taskDataReady = true;
       });
-      this.prevVal = [this.milestoneData.MilestoneStatus];
+     
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
@@ -100,16 +103,15 @@ export class MilestoneDetailsComponent implements OnInit {
             this.milestoneDataReady = false;
             this.sprintNumber = this.startService.currentSprintNumber;
             this.getMilestoneDetails();
-            console.log("hit in else");
             this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
             this.milestoneService.taskDataStateObservable.subscribe(()=>{
-                  this.getNumberData();
-                  this.taskDataReady = true;
+              this.tasks = this.milestoneService.taskData;
+              this.getNumberData();
+              this.taskDataReady = true;
             });
             this.project = this.authService.getTeamId();
             this.teamIds = this.backendService.getOrganizationTeamIds();
             this.readTeamData(this.project); 
-            this.prevVal = [this.milestoneData.MilestoneStatus];
           });
    
         }
@@ -179,11 +181,10 @@ export class MilestoneDetailsComponent implements OnInit {
 
   readTeamData(teamId :string){
     this.showLoader = true;
-    this.applicationSetting.getTeamDetails(teamId).subscribe(team => {
-         this.milestoneStatusLabels = team.MilestoneStatus;
-         console.log(this.milestoneStatusLabels);
-    });
+    this.applicationSetting.getTeamDetails(teamId);
     this.showLoader =false;
+    const team = this.applicationSetting.team;
+    this.milestoneStatusLabels = team.MilestoneStatus;
   }
  
 
@@ -197,6 +198,7 @@ export class MilestoneDetailsComponent implements OnInit {
       })).subscribe({
         next: (data) => {
           this.milestoneData = data;
+          this.prevVal = [this.milestoneData.MilestoneStatus];
         },
         error: (error) => {
           console.log(error);

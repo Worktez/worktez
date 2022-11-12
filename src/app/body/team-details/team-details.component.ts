@@ -25,6 +25,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-team-details',
@@ -53,26 +54,24 @@ export class TeamDetailsComponent implements OnInit {
   difficultyLabels: string[]; 
   milestoneStatusLabels: string[];
 
-  constructor(private applicationSettingsService: ApplicationSettingsService,public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
+  constructor(private teamService: TeamServiceService, public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
     this.navbarHandler.addToNavbar(this.teamId);
 
-    if(this.startService.showTeamsData) {
+    if(this.teamService.teamsReady) {
       this.getTeamData();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
-          this.startService.applicationDataStateObservable.subscribe((data) => {
-            if(data) {
-              this.applicationSettingsService.teamData.subscribe((data) => {
-                if(data) {
-                  this.getTeamData();
-                }
-              });
-            }
-          });
+      this.teamService.teamDataStateObservable.subscribe({
+        next: () => {
+          this.getTeamData();
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("Completed getting Team Data");
         }
       });
     }
@@ -144,28 +143,18 @@ export class TeamDetailsComponent implements OnInit {
   
   getTeamData() {
     this.showLoader = true;
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable("teams/getTeamData");
-    callable({OrganizationDomain: orgDomain, TeamId: this.teamId}).pipe(
-      map(actions => {
-        const data = actions.resultData as Team
-        return data;
-      })).subscribe({
-        next: (data) => {
-          this.team = data;
-          data.TeamMembers.forEach((element: any) => {
-            this.userService.checkAndAddToUsersUsingEmail(element);
-          });
-          this.userService.fetchUserData().subscribe(()=>{
-            this.teamDataReady = true;
-            this.showLoader = false
-          });
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => console.info("Completed getting Team Data...")
-      });
+    // this.teamService.teamDataStateObservable.subscribe((data)=>{
+    //   if(data){
+        this.team = this.teamService.getTeamUsingId(this.teamId);
+    //   }
+    // });
+    this.team.TeamMembers.forEach((element: any) => {
+      this.userService.checkAndAddToUsersUsingEmail(element);
+    });
+    this.userService.fetchUserData().subscribe(()=>{
+      this.teamDataReady = true;
+      this.showLoader = false
+    });
   }
   updateTeam(team: Team) {
     this.teamToUpdate = team;
@@ -196,7 +185,7 @@ export class TeamDetailsComponent implements OnInit {
         } else {
           console.log("Error- Cannot remove member. Member not found");
         }
-        this.getTeamData();
+        this.teamService.getTeams(this.organizationDomain);
       },
       error: (error) => {
         this.enableLoader = false;
