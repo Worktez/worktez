@@ -1,10 +1,9 @@
-/* eslint-disable no-const-assign */
 const {getAllPosts, getCommentsContent} = require("../lib");
 const {getReactionsContent} = require("../lib");
 
 exports.getAllSocialPageData = function(request, response) {
   const currentEpochTime = request.body.data.CurrentEpochTime;
-  const status =200;
+  let status =200;
   let result;
   const socialPageData={};
   const promise = getAllPosts(currentEpochTime).then((postDoc) => {
