@@ -37,8 +37,6 @@ exports.deleteMeet = function(request, response) {
       console.log("meet details check");
     }
   }).catch((error) => {
-    // eslint-disable-next-line no-const-assign
-    status = 500;
     console.log("Error:", error);
   });
 

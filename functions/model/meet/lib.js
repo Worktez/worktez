@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable valid-jsdoc */
+
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -91,15 +90,13 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
 
 /**
  * Description
-label/fix
  * @param {any} uid
  * @param {any} docId
- * @param {any} inputJson
+ * @param {any} updateMeetDetailsToJson
  * @param {any} orgDomain
- * @param {any} title
- * @return {any}
- */
+ * @param {any} title */
 exports.updateUserMeetDetails= function(uid, docId, updateMeetDetailsToJson) {
+  // eslint-disable-next-line no-unused-vars
   const updateMeet = db.collection("Users").doc(uid).collection("Meet").doc(docId).update(updateMeetDetailsToJson);
   /**
  * Description
@@ -168,8 +165,6 @@ exports.updateUserMeetDetails= function(uid, docId, updateMeetDetailsToJson) {
 
   /**
  * Description
- * @param {any} orgDomain
- * @param {any} teamName
  * @param {any} uid
  * @param {any} docId
  * @return {any}
