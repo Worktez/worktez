@@ -124,6 +124,11 @@
     transition: all ease 0.9s;
 }
 
+.line{
+    display: flex;
+    align-items: end;
+}
+
 #progress-bar-container #line-progress {
     content: " ";
     width: 1%;

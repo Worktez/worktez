@@ -63,6 +63,7 @@ export class MilestoneDetailsComponent implements OnInit {
   addTaskActive: boolean = true;
   editMilestoneActive: boolean = false;
   tasks: Tasks [] =[];
+  milestoneCompleted: boolean = false;
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
@@ -176,6 +177,9 @@ export class MilestoneDetailsComponent implements OnInit {
   setProgressWidth() {
     //Calculations are adjusted for UI Improvisations
     var width = ((((this.totalCompletedTasks - 1) / (this.totalTasks)) * 100)+3).toString() + "%";
+    if(this.milestoneCompleted){
+      width = (100).toString()+"%";
+    }
     return width;
   }
 
@@ -198,6 +202,12 @@ export class MilestoneDetailsComponent implements OnInit {
       })).subscribe({
         next: (data) => {
           this.milestoneData = data;
+          if(this.milestoneData.MilestoneStatus == "Completed"){
+            this.milestoneCompleted =true;
+          }
+          else{
+            this.milestoneCompleted =false;
+          }
           this.prevVal = [this.milestoneData.MilestoneStatus];
         },
         error: (error) => {
@@ -237,5 +247,6 @@ export class MilestoneDetailsComponent implements OnInit {
 
   editMilestoneCompleted(){
     this.getMilestoneDetails();
+    this.editMilestoneActive = false;
   }
 }
