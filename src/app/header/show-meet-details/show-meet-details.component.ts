@@ -20,6 +20,8 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { map, Observable } from "rxjs";
+import { Console } from 'console';
+import { ThisReceiver } from '@angular/compiler';
 
 
 
@@ -43,6 +45,8 @@ export class ShowMeetDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getMeetData();
   }  
+
+
 
   getMeetData() {
     const uid = this.authService.getLoggedInUser();

@@ -1,3 +1,4 @@
+
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -145,7 +146,6 @@ exports.getMeetDetails=function(uid) {
         data.push( element.data());
       }
     });
-    return data;
   });
 
   return Promise.resolve(promise);

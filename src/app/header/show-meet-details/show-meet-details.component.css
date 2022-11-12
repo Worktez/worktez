@@ -23,6 +23,7 @@
     height: 35px;
     
 }
+
 .btn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
