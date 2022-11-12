@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable valid-jsdoc */
 /* eslint-disable linebreak-style */
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
@@ -99,71 +101,72 @@ label/fix
  */
 exports.updateUserMeetDetails= function(uid, docId, updateMeetDetailsToJson) {
   const updateMeet = db.collection("Users").doc(uid).collection("Meet").doc(docId).update(updateMeetDetailsToJson);
+  /**
+ * Description
  * @param {any} updateJson
  * @param {any} meetDocId
  * @param {any} title
  * @return {any}
  */
-exports.updateMeetDetails= function(updateJson, meetDocId) {
-  const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
-  return Promise.resolve(updateMeet);
-};
+  exports.updateMeetDetails= function(updateJson, meetDocId) {
+    const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
+    return Promise.resolve(updateMeet);
+  };
 
-/**
+  /**
  * Description
  * @param {any} meetDocId
  * @return {any}
  */
-exports.getWorktezMeetDetails=function(meetDocId) {
-  const query = db.collection("Meet").doc(meetDocId);
-  const promise = query.get().then((doc) => {
-    const data=[];
-    doc.forEach((element) => {
-      if (element.exists) {
-        data.push( element.data());
-      }
+  exports.getWorktezMeetDetails=function(meetDocId) {
+    const query = db.collection("Meet").doc(meetDocId);
+    const promise = query.get().then((doc) => {
+      const data=[];
+      doc.forEach((element) => {
+        if (element.exists) {
+          data.push( element.data());
+        }
+      });
+      return data;
     });
-    return data;
-  });
-  return Promise.resolve(promise);
-};
+    return Promise.resolve(promise);
+  };
 
-/**
+  /**
  * Description
  * @param {any} uid
  * @return {any}
  */
-exports.getMeetDetails=function(uid) {
- label/fix
-  const query = db.collection("Users").doc(uid).collection("Meet").where("Status", "==", "OK");
-  const query = db.collection("Users").doc(uid).collection("Meet");
+  exports.getMeetDetails=function(uid) {
+    let query = db.collection("Users").doc(uid).collection("Meet").where("Status", "==", "OK");
+    query = db.collection("Users").doc(uid).collection("Meet");
 
-  const promise = query.get().then((doc) => {
-    const data=[];
-    doc.forEach((element) => {
-      if (element.exists) {
-        data.push( element.data());
-      }
+    const promise = query.get().then((doc) => {
+      const data=[];
+      doc.forEach((element) => {
+        if (element.exists) {
+          data.push( element.data());
+        }
+      });
+      return data;
     });
-    return data;
-  });
 
-  return Promise.resolve(promise);
-};
+    return Promise.resolve(promise);
+  };
 
-/**
+  /**
  * Description
  * @param {any} updateJson
  * @param {any} meetDocId
  * @return {any}
  */
-exports.updateMeetDetailsAtWorktez= function(updateJson, meetDocId) {
-  const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
-  return Promise.resolve(updateMeet);
-};
+  exports.updateMeetDetailsAtWorktez= function(updateJson, meetDocId) {
+    const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
+    return Promise.resolve(updateMeet);
+  };
 
 
-/**
+  /**
  * Description
  * @param {any} orgDomain
  * @param {any} teamName
@@ -171,10 +174,11 @@ exports.updateMeetDetailsAtWorktez= function(updateJson, meetDocId) {
  * @param {any} docId
  * @return {any}
  */
- exports.getUserMeetDetailsById = function(uid, docId) {
-  const getUserMeetDetailsById = db.collection("Users").doc(uid).collection("Meet").doc(docId).get().then((doc) => {
-    const data = doc.data();
-    return data;
-  });
-  return Promise.resolve(getUserMeetDetailsById);
+  exports.getUserMeetDetailsById = function(uid, docId) {
+    const getUserMeetDetailsById = db.collection("Users").doc(uid).collection("Meet").doc(docId).get().then((doc) => {
+      const data = doc.data();
+      return data;
+    });
+    return Promise.resolve(getUserMeetDetailsById);
+  };
 };
