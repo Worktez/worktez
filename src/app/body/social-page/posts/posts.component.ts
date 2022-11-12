@@ -25,6 +25,7 @@ import { map } from 'rxjs';
 import { defaultUser, User } from 'src/app/Interface/UserInterface';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { FileUpload } from 'src/app/Interface/FileInterface';
+import { SocialPageServiceService } from 'src/app/services/social-page-service/social-page-service.service';
 
 
 @Component({
@@ -47,20 +48,18 @@ export class PostsComponent implements OnInit {
   dataReady: boolean = false;
   noOfStars: number = 0;
   noOfComments: number = 0;
-
+  public reactions: Reaction[]
   
-  componentName:string ="POSTS"
-  public posts: Post[];
-  public recentPosts: Post[] = [];
+  componentName:string ="POST"
   showloader: boolean = false;
   pageReady:boolean = false;
   postStarred: boolean = false;
 
   @Input('post') post : Post;
-  @Input('Image') Image: string;
+  // @Input('Image') Image: string;
   images: string[];
   @Output() switchReactionCompleted = new EventEmitter<{ Uid: string, reactionAdded: boolean, reactionRemoved: boolean}>();
-  constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService,  public uploadService: FileUploadService) { }
+  constructor(public toolService: ToolsService, private functions: AngularFireFunctions, public authService: AuthService, private userService: UserServiceService, public errorHandlerService: ErrorHandlerService,  public uploadService: FileUploadService, public socialPageService: SocialPageServiceService) { }
 
   ngOnInit(): void {
     // console.log(this.post.PostId.slice(0));
@@ -168,48 +167,39 @@ export class PostsComponent implements OnInit {
 
   getComments(postId: string) {
     this.noOfComments=0;
-      const callable = this.functions.httpsCallable("socialPage/getComments");
-      callable({PostId: postId}).pipe(map(res=>{
-        const data = res.data as Comment[];
-        return data
-      })).subscribe((data) => {
-        if (data) {
-          this.enableLoader= true;
-          this.comments = data;
-          this.comments.forEach(element => {
-            this.noOfComments += 1;
+    this.enableLoader= true;
+    this.comments = this.post.Comments;
+    if(this.comments == undefined){
+      this.comments=[];
+    }
+    this.comments.forEach(element => {
+      this.noOfComments += 1;
+      this.userService.checkAndAddToUsersUsingUid(element.Uid);
+    });
+    this.userService.fetchUserDataUsingUID().subscribe(()=>{
+      this.dataReady = true;
+    });
+    this.enableLoader=false;
+  }
+
+  getReactions(postId: string) {
+    this.noOfStars=0;
+    this.enableLoader= true;
+    this.reactions = this.post.Reactionss;
+    if (this.reactions == undefined) {
+      this.reactions=[];
+    }
+    this.reactions.forEach(element => {
+            this.noOfStars+=1
+            if(element.Uid==this.authService.getLoggedInUser()){
+              this.postStarred=true;
+            }
             this.userService.checkAndAddToUsersUsingUid(element.Uid);
           });
           this.userService.fetchUserDataUsingUID().subscribe(()=>{
             this.dataReady = true;
           });
-        }
-        this.enableLoader = false;
-      });
-  }
-
-  getReactions(postId: string) {
-    this.noOfStars=0;
-    const callable = this.functions.httpsCallable("socialPage/getReactions");
-    callable({PostId: postId}).pipe(map(res=>{
-      const data = res.data as Reaction[];
-      return data
-    })).subscribe((data) => {
-      if (data) {
-        this.enableLoader= true;
-        data.forEach(element => {
-          this.noOfStars+=1
-          if(element.Uid==this.authService.getLoggedInUser()){
-            this.postStarred=true;
-          }
-          this.userService.checkAndAddToUsersUsingUid(element.Uid);
-        });
-        this.userService.fetchUserDataUsingUID().subscribe(()=>{
-          this.dataReady = true;
-        });
-      }
-      this.enableLoader = false;
-    });
+     this.enableLoader = false;
 }
 
   getCreatorDetails() {

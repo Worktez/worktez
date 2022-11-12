@@ -27,9 +27,11 @@ const { db } = require("../application/lib");
  * @param {any} lastUpdatedDate
  * @param {any} lastUpdatedTime
  * @param {any} photoURLs
+ * @param {any} lastUpdatedEpochTime
+ * @param {any} postCreationEpochTime
  * @return {any}
  */
-exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTime, photoURLs) {
+exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTime, photoURLs, lastUpdatedEpochTime, postCreationEpochTime) {
   const addPostPromise = db.collection("Social").doc(postId).set({
     Uid: uid,
     Content: content,
@@ -41,6 +43,8 @@ exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTim
     CommentCounter: 0,
     LastUpdatedDate: lastUpdatedDate,
     LastUpdatedTime: lastUpdatedTime,
+    LastUpdatedEpochTime: lastUpdatedEpochTime,
+    PostCreationEpochTime: postCreationEpochTime,
     Status: "OK",
   });
   return Promise.resolve(addPostPromise);
@@ -48,21 +52,21 @@ exports.setPost = function(uid, content, postId, lastUpdatedDate, lastUpdatedTim
 
 /**
  * Description
+ * @param {any} currentEpochTime
  * @return {any}
  */
-exports.getAllPosts = function() {
-  const query = db.collection("Social");
-  const getAllPosts = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get().then((doc) => {
+exports.getAllPosts = function(currentEpochTime) {
+  let query = db.collection("Social");
+  query = query.where("Status", "==", "OK");
+  if (currentEpochTime!="") {
+    query = query.where("LastUpdatedEpochTime", "<", currentEpochTime);
+  }
+  const getAllPosts = query.orderBy( "LastUpdatedEpochTime", "desc" ).limit(10).get().then((doc) => {
     return doc;
   });
   return Promise.resolve(getAllPosts);
 };
 
-exports.getAllPostsData = function() {
-  const query = db.collection("Social");
-  const getAllPostsData = query.where("Status", "==", "OK").orderBy( "LastUpdatedTime" ).get();
-  return Promise.resolve(getAllPostsData);
-};
 
 /**
  * Description

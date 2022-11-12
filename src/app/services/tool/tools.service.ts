@@ -33,6 +33,10 @@ export class ToolsService {
     return this.todayDate = dd + "-" + mm + "-" + yyyy;
   }
 
+  today(){
+    return new Date();
+  }
+
   time(){
     var today = new Date();
     var hh = String(today.getHours()).padStart(2, '0');

@@ -18,7 +18,7 @@
  ***********************************************************/
 
 const { setPost } = require("../lib");
-const { getApplicationData, updateApplication } = require("../../application/lib");
+const { getApplicationData, updateApplication, currentEpochTime } = require("../../application/lib");
 const { incrementNumberofPostsforUser } = require("../../users/tark/incrementUserCounters");
 
 exports.addPost = function(request, response) {
@@ -26,7 +26,9 @@ exports.addPost = function(request, response) {
   const content = request.body.data.Content;
   const lastUpdatedDate = request.body.data.LastUpdatedDate;
   const lastUpdatedTime = request.body.data.LastUpdatedTime;
+  const lastUpdatedEpochTime = request.body.data.LastUpdatedEpochTime;
   const photoURLs = request.body.data.Urls;
+
   let result;
   let postId;
   let status = 200;
@@ -37,8 +39,8 @@ exports.addPost = function(request, response) {
       let postcounter = rawData.PostCounter;
       postcounter = postcounter + 1;
       postId = "P" + postcounter;
-
-      setPost(uid, content, postId, lastUpdatedDate, lastUpdatedTime, photoURLs).then((postData) => {
+      const postCreationEpochTime = currentEpochTime;
+      setPost(uid, content, postId, lastUpdatedDate, lastUpdatedTime, photoURLs, lastUpdatedEpochTime, postCreationEpochTime).then((postData) => {
         incrementNumberofPostsforUser(uid);
       }).catch((error) => {
         result = { data: error };

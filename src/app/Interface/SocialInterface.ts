@@ -11,12 +11,26 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+export interface Comment {
+  Uid: string;
+  LastUpdatedTime: string;
+  LastUpdatedDate: string;
+  Content: string;
+  CommentStatus: number;
+  Status: string;
+  PostId: string;
+  CommentId: string;
+  ImagesUrl: string[];
+  PostStatus: number;
+}
 export interface Post{
   Uid: string;
   CreationTime: string;
   CreationDate: string;
   LastUpdatedDate: string,
   LastUpdatedTime: string,
+  LastUpdatedEpochTime: number,
+  PostCreationEpochTime: number,
   Content: string;
   PostStatus: number;
   Reach: number;
@@ -25,34 +39,30 @@ export interface Post{
   PostId: string;
   Status: string;
   ImagesUrl: string[];
+  Comments: Comment[];
+  Reactionss: Reaction[]; 
 }
 
-export interface Comment {
+export interface SocialPageData{
   Uid: string;
-  LastUpdatedTime: string;
-  LastUpdatedDate: string;
+  CreationTime: string;
+  CreationDate: string;
+  LastUpdatedDate: string,
+  LastUpdatedTime: string,
   Content: string;
-  CommentStatus: number;
-  Status: string;
-  PostId: string;
-  CommentId: string;
-  ImagesUrl: string[];
   PostStatus: number;
-}
-
-export interface Comment {
-  Uid: string;
-  LastUpdatedTime: string;
-  LastUpdatedDate: string;
-  Content: string;
-  CommentStatus: number;
-  Status: string;
+  LastUpdatedEpochTime: number,
+  PostCreationEpochTime: number,
+  LastUpdated
+  Reach: number;
+  Reactions: number;
+  CommentCounter: number;
   PostId: string;
-  CommentId: string;
+  Status: string;
   ImagesUrl: string[];
-  PostStatus: number;
+  Comments: Comment[];
+  Reactionss: Reaction[]; 
 }
-
 export interface Reaction {
   Uid: string;
   CreationTime: string;
@@ -67,6 +77,8 @@ export const defaultPost = {
   CreationDate: "",
   LastUpdatedDate: "",
   LastUpdatedTime: "",
+  LastUpdatedEpochTime: null,
+  PostCreationEpochTime: null,
   Content: "",
   PostStatus: null,
   Reach: null,
@@ -75,4 +87,6 @@ export const defaultPost = {
   PostId: "",
   Status: "",
   ImagesUrl: [],
+  Comments: [],
+  Reactionss: [],
 }

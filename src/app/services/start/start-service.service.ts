@@ -22,6 +22,7 @@ import { AuthService } from '../auth/auth.service';
 import { BackendService } from '../backend/backend.service';
 import { QuickNotesService } from '../quickNotes/quick-notes.service';
 import { RBAService } from '../RBA/rba.service';
+import { SocialPageServiceService } from '../social-page-service/social-page-service.service';
 import { SubscriptionService } from '../subscription/subscription.service';
 import { TeamServiceService } from '../team/team-service.service';
 
@@ -58,7 +59,7 @@ export class StartServiceService {
   private applicationDataState: Subject<boolean> = new Subject<boolean>();
   public applicationDataStateObservable = this.applicationDataState.asObservable();
 
-  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService, public teamService: TeamServiceService) { }
+  constructor(private quickNotes: QuickNotesService, public rbaService: RBAService, private cookieService: CookieService, private router: Router, public authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public backendService: BackendService, public subscriptionService: SubscriptionService, public teamService: TeamServiceService, private socialPageService: SocialPageServiceService) { }
 
   startApplication() {
     this.applicationStarted = true
@@ -83,6 +84,7 @@ export class StartServiceService {
             this.router.navigate(['/Home']);
         }
         this.authService.completedLoadingApplication = true;
+        this.socialPageService.getSocialPageData();
       },
       error: (error) => {
         console.error(error);

@@ -20,11 +20,12 @@
 const { getAllPosts } = require("../lib");
 
 exports.getPosts = function(request, response) {
+  const currentEpochTime = request.body.data.CurrentEpochTime;
   const postsData = [];
   let status = 200;
   let result;
 
-  const getPostsPromise = getAllPosts().then((postData) => {
+  const getPostsPromise = getAllPosts(currentEpochTime).then((postData) => {
     postData.forEach((postDoc) => {
       postsData.push(postDoc.data());
     });

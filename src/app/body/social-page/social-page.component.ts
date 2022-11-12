@@ -18,11 +18,15 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { map } from 'rxjs';
 import { Post } from 'src/app/Interface/SocialInterface';
+import { SocialPageData } from 'src/app/Interface/SocialInterface'
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ToolsService } from 'src/app/services/tool/tools.service';
+import { SocialPageServiceService } from 'src/app/services/social-page-service/social-page-service.service';
 @Component({
   selector: 'app-social-page',
   templateUrl: './social-page.component.html',
@@ -30,43 +34,23 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 })
 
 export class SocialPageComponent implements OnInit {
-  currentPosition: number = 0
-  endPosition: number = 0
   componentName: string = "SOCIAL-PAGE"
+  createPostEnabled: boolean = false;
+  currentScrollPos: number = 300;
+  trackScroll: boolean = false;
+  disableLoadMore: boolean = false;
+  posts: {};
+  public posts1: Post[]
   showloader: boolean = false
   dataReady: boolean = false
-  createPostEnabled: boolean = false
-  public posts: Post[]
-  public recentPosts: Post[] = []
-  getPostsMaximumLimit:number = 5;
-  currentScrollPos: number = 0;
-  pageReady:boolean = false;
-  currentPost: number;
-  remainingPostsToFetch: number;
-  PostId: string
-  postsToShow: string[] =[];
 
-  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, public startService: StartServiceService) { }
+  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, public startService: StartServiceService, public applicationService: ApplicationSettingsService, private toolsService: ToolsService, public socialPageService: SocialPageServiceService) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
-    // this.authService.getUserSettings();
-    if(this.startService.showTeamsData) {
-      this.pageReady = true;
-      console.log(this.pageReady);
-      this.loadSocialPageData();
-      window.addEventListener('scroll', this.scrollEvent, true);
-    } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data) {
-          this.authService.userAppSettingObservable.subscribe((data)=>{
-            this.pageReady = true;
-            this.loadSocialPageData();
-            window.addEventListener('scroll', this.scrollEvent, true);
-          });
-        }
-      });
-    }
+    window.addEventListener('scroll', this.scrollEvent, true);
+    this.posts = this.socialPageService.socialPageDataJson;
+    this.authService.getUserSettings();
   }
 
   ngOnDestroy(){
@@ -76,65 +60,28 @@ export class SocialPageComponent implements OnInit {
   scrollEvent = (event): void => {
     let scrollPos = event.target.scrollingElement.scrollTop;
     console.log(scrollPos);
-    if(scrollPos >= this.currentScrollPos + 700){
+    if(scrollPos >= this.currentScrollPos + 1000){
       this.currentScrollPos = scrollPos;
-      this.getPosts("down");
+      this.showOlderPosts();
+      this.trackScroll=false;
+    }
+    if(this.trackScroll){
+      this.currentScrollPos = scrollPos;
     }
   }
 
-  getPostsWithLimit(start, end) {
-    if(end>this.posts.length) {
-      end = this.posts.length;
-    }
-    if(start<this.posts.length && end<this.posts.length) {
-      return this.posts.slice(start, end);
-    }
+  showOlderPosts(){
+    this.trackScroll = true;
+    this.socialPageService.getSocialPageData(); 
+    this.disableLoadMore=true;
+    const posts1 = this.socialPageService.socialPageDataJson;
+    this.posts=Array.prototype.push.apply(posts1);
   }
-
-  getPosts(pos:string) {
-    if(pos == "down") {
-      this.currentPosition = this.endPosition
-      this.endPosition = this.endPosition + this.getPostsMaximumLimit;
-    } 
-    const postData = this.getPostsWithLimit(this.currentPosition, this.endPosition);
-    this.posts = this.posts.concat(postData);
-  }
-
-  loadSocialPageData() {
+  
+  loadSocialPageData(){
     this.showloader = true;
-    let result;
-    let pageToLoad = "";
-    if(this.remainingPostsToFetch == this.currentPost){
-      pageToLoad = "initial";
-    } else {
-      pageToLoad = "loadMore";
-    }
-    const callable = this.functions.httpsCallable("socialPage/getAllPosts");
-    callable({}).pipe(map(res=>{
-      const data = res.data as Post[];
-      return data
-    })).subscribe({
-      next:(data)=>{
-        if(data) {
-          this.posts = data;
-          this.posts.forEach(element => {
-            this.userService.checkAndAddToUsersUsingUid(element.Uid);
-          });
-          this.userService.fetchUserDataUsingUID().subscribe(()=>{
-            this.dataReady = true;
-          });
-          this.loadRecentActivity();
-        }
-      },
-      error:(error)=>{
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        console.error(error);
-      },
-      complete:()=>{
-        this.showloader = false;
-      }
-    });
+    this.socialPageService.getSocialPageData();
+    this.showloader=false
   }
 
   createPost() {
@@ -142,8 +89,10 @@ export class SocialPageComponent implements OnInit {
   }
 
   createPostCompleted ( data: { completed: boolean, post: Post } ) {
-    this.createPostEnabled = false;
-    this.posts.push(data.post);
+      this.createPostEnabled = false;
+      this.loadSocialPageData();
+      console.log(data.post);
+    // this.posts.push(data.post);
   }
 
   postReactionSwitched(data: { Uid: string, reactionAdded: boolean, reactionRemoved: boolean } ){
@@ -156,21 +105,5 @@ export class SocialPageComponent implements OnInit {
       }
     }
   }
-
-  loadRecentActivity(){
-    const newarray = this.posts.filter((data)=>{
-      if(this.authService.userAppSetting != undefined && data.Uid == this.authService.userAppSetting.uid) {
-        return data;
-      }
-    });
-    if(newarray.length) {
-      this.recentPosts = newarray.reverse();
-      this.recentPosts.splice(3)
-    } else {
-      console.log("User Not Found Loading empty User")
-      return this.recentPosts[0]
-    }
-  }
-
 }
 
