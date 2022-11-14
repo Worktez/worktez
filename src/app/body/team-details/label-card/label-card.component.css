@@ -11,86 +11,61 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-
-#editPageTaskContainer {
+#editPageTaskContainer,
+.card {
     color: var(--text);
     border-radius: 10px;
     border: 1px solid var(--primary-bg);
-    }
-    
-    .card-header {
+}
+
+.card-header {
     background-color: var(--secondary-bg);
-    }
-    
-    .modal-content {
-    background-color: var(--card-bg);
-    color: var(--text);
-    border-radius: 6px;
-    min-height: 30px;
-    justify-content: space-evenly;
-    }
-    
-    
-    .btn {
-    color: var(--text);
-    }
-    
-    #button{
-    background-color: var(--primary-color);
-    color: #ffffff;
-    width: 100%;
-    }
-    
-    #button.btn:hover{
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover)
-    
-    }
-    
-    .btn:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-    }
-    
-    .card {
+}
+
+.modal-content {
+    border: var(--primary-border);
     background-color: var(--secondary-bg);
     color: var(--text);
-    width: 384px
-    }
-    
-    .icons {
+}
+
+.icons {
     cursor: pointer;
-    }
-    .list-group-item{
+}
+.list-group-item{
     background: var(--secondary-bg);
     color: var(--text);
-    }
-    
-    .icons {
+}
+
+.icons {
     color: var(--text);
-    }
-    
-    .icons:hover {
+}
+
+.icons:hover {
     color: var(--button-text-hover);
-    }
-    
-    .header {
+}
+
+.header {
     font-weight: bold;
-    }
-    
-    .head {
+}
+
+.head {
     font-weight: bolder;
-    }
-    
-    #font {
+}
+
+#font {
     font-size: 20px;
     background-color: var(--secondary-color);
     color: var(--button-text);
-    }
-    
-    select:focus,
-    input:focus {
+}
+
+#navbarMenu,
+.modal-header {
+    background-color: var(--primary-color);
+}
+
+select:focus,
+input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
-    }
+}
