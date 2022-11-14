@@ -39,8 +39,6 @@ export class ShowMeetDetailsComponent implements OnInit {
     this.getMeetData();
   }  
 
-
-
   getMeetData() {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("meet/getMeetDetails");
