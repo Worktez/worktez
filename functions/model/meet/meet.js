@@ -22,7 +22,6 @@ const {scheduleMeet} = require("./tark/scheduleMeet");
 const {addAttendee} = require("./tark/addAttendee");
 // const {addAttendeeAtWorktez} = require("./tark/addAttendeeAtworktez");
 const { getMeetDetails } = require("./tark/getMeetDetails");
-const {deleteMeet} = require("./tark/deleteMeet");
 
 /**
  * Description
@@ -74,19 +73,6 @@ fastify.post("/getMeetDetails", (req, res) => {
  * @param {any} res
  * @returns {any}
  */
-
-/**
- * Description
- * @param {any} "/deleteMeet"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/deleteMeet", (req, res) => {
-  deleteMeet(req, res);
-});
-
-
 exports.meet = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     fastify.ready((err) => {
