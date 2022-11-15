@@ -160,7 +160,7 @@
     </div>
     <hr>
     <ng-container *ngIf="taskDataReady">
-      <div class="row tableBox p-2 pt-4" *ngIf="milestoneService.taskData.length>0">
+      <div class="row tableBox p-2 pt-4 table-responsive-sm" *ngIf="milestoneService.taskData.length>0">
         <div class="col">
             <app-data-table [dataForTable]="tasks" [displayColoumns]="displayColoumns" [pageSize]="10"></app-data-table>
         </div>
