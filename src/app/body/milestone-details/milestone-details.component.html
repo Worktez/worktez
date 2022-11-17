@@ -130,7 +130,7 @@
             <span class="title mt-2">Task Tracker</span>
           </div>
         </div>
-        <div class="process-wrapper" *ngIf="milestoneService.taskData.length > 0 && !milestoneCompleted">
+        <div class="process-wrapper" *ngIf="milestoneService.taskData.length > 0 && !milestoneService.incompleteTasks.length == 0">
           <div id="progress-bar-container">
             <ul>
               <ng-container *ngFor="let item of milestoneService.completedTasks">
@@ -153,26 +153,35 @@
             </div>
           </div>
         </div>
-        <div class="process-wrapper" *ngIf="milestoneCompleted">
+        <div class="process-wrapper" *ngIf="milestoneService.taskData.length > 0 && milestoneService.incompleteTasks == 0">
           <div id="progress-bar-container">
             <ul>
               <ng-container *ngFor="let item of milestoneService.completedTasks">
                 <a (click)="openTaskDetails(item.Id)">
-                  <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
+                  <li class="step" [ngStyle]="{'width': setMilestoneWidth2()}">
                     <div class="step-inner">{{item.Id}}</div>
                   </li>
                 </a>
               </ng-container>
               <ng-container *ngFor="let item of milestoneService.incompleteTasks">
                 <a (click)="openTaskDetails(item.Id)">
-                  <li class="step" [ngStyle]="{'width': setMilestoneWidth()}">
+                  <li class="step" [ngStyle]="{'width': setMilestoneWidth2()}">
                     <div class="step-inner">{{item.Id}}</div>
+                  </li>
+                </a>
+              </ng-container>
+              <ng-container>
+                <a>
+                  <li class="step text-center">
+                    <div class="step-inner">
+                      <mat-icon aria-hidden="false">check_circle_outline</mat-icon>
+                    </div>
                   </li>
                 </a>
               </ng-container>
             </ul>
             <div id="line" style="background:none;">
-              <div id="line-progress" [ngStyle]="{'width': setProgressWidth()}"></div>
+              <div id="line-progress" [ngStyle]="{'width': setProgressWidth2()}"></div>
             </div>
           </div>
         </div> 

@@ -81,6 +81,7 @@
     bottom: 0;
     font-size: 14px;
     word-break: break-all; 
+    margin-left: 5px;
 }
 
 #progress-bar-container li.active,
@@ -115,7 +116,7 @@
 #progress-bar-container #line {
     width: 100%;
     margin: auto;
-    background: #eee;
+    background: rgb(169, 169, 169);
     height: 6px;
     position: absolute;
     top: 57px;
@@ -144,6 +145,12 @@
 #button {
     background-color: var(--secondary-bg);
     color: var(--text);
+}
+
+#mat{
+    display: flex;  
+    justify-content: center;  
+    align-items: center;
 }
 
 #button:hover {
