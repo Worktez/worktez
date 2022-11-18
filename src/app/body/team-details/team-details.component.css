@@ -48,6 +48,10 @@
     color: var(--button-text-hover); 
 }
 
+span, mat-icon {
+    color: var(--text);
+}
+
 #button:focus {
     outline:none;
     box-shadow: none;

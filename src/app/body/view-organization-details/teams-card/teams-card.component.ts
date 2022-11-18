@@ -19,6 +19,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-teams-card',
@@ -44,7 +45,7 @@ export class TeamsCardComponent implements OnInit {
   githubProjectAdded: boolean=false;
   repoLink: string;
   projectLinked: boolean= false;
-  constructor(public router: Router, private functions: AngularFireFunctions,public rbaService: RBAService, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService) { }
+  constructor(public router: Router, private functions: AngularFireFunctions,public rbaService: RBAService, public backendService: BackendService, public popupHandlerService: PopupHandlerService, public errorHandlerService: ErrorHandlerService, private teamService: TeamServiceService) { }
 
   ngOnInit(): void {
     this.checkGitProject();
@@ -116,6 +117,7 @@ export class TeamsCardComponent implements OnInit {
     if(data.completed==true){
     this.projectLinked=data.completed;
     this.repoLink=data.projLink;
+    this.teamService.teamsDataJson[this.team.TeamId].ProjectLink = this.repoLink;
     }
   }
   teamUpdated(data: { completed: boolean }) {
