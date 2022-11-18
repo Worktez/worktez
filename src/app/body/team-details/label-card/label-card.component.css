@@ -11,8 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-#editPageTaskContainer,
-.card {
+#editPageTaskContainer {
     color: var(--text);
     border-radius: 10px;
     border: 1px solid var(--primary-bg);
@@ -23,10 +22,35 @@
 }
 
 .modal-content {
-    border: var(--primary-border);
-    background-color: var(--secondary-bg);
-    color: var(--text);
+background-color: var(--card-bg);
+color: var(--text);
+border-radius: 6px;
+min-height: 30px;
+justify-content: space-evenly;
 }
+
+
+.btn {
+color: var(--text);
+}
+
+#button{
+background-color: var(--primary-color);
+color: #ffffff;
+width: 100%;
+}
+
+#button.btn:hover{
+background-color: var(--dropdown-hover);
+color: var(--button-text-hover)
+
+}
+
+.btn:hover {
+background-color: var(--dropdown-hover);
+color: var(--button-text-hover);
+}
+
 
 .icons {
     cursor: pointer;
@@ -56,11 +80,6 @@
     font-size: 20px;
     background-color: var(--secondary-color);
     color: var(--button-text);
-}
-
-#navbarMenu,
-.modal-header {
-    background-color: var(--primary-color);
 }
 
 select:focus,
