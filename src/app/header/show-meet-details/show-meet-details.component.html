@@ -12,20 +12,29 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 
-<div  class="meet-details" *ngFor="let meet of meetData">
+<div  class="meet-details" *ngFor="let meet of meetData; let i = index">
+
     <div class="row  mx-1 " id="notificationBox" >
         <div class="col-12">
             <div class="meet-card row text-left">
-                <div class="Meet-time col">
+                <div class="col-2 Meet-time col">
                         {{meet.StartTime}}
                 </div>
-                <div class="col meet-title" style="margin-top: 7px;">
+                <div class="col-2 meet-title" style="margin-top: 7px;">
                     <h4 style="width:100px;">{{meet.Title}}</h4>
                 </div>
-                <div class="col align-center" style="padding-top: 6px;">
+                <div class="col-4 align-center" style="padding-top: 6px;">
                     <a href="https://meet.worktez.com/{{meet.RoomId}}" class="ml-2 join-btn" target=”_blank”>JOIN</a>
                 </div>
-            </div>
+                <div class="col-4">
+                    <span class="btn align-center" (click)="deletedMeet(i)" style="padding-top: 6px;" >
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="close()">
+                            close
+                        </mat-icon>
+                    </span>
+                </div>
+                </div>
+        
         </div>
     </div>
 </div>
