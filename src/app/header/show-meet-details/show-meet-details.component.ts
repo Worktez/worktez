@@ -29,7 +29,11 @@ export class ShowMeetDetailsComponent implements OnInit {
   meetData:Meet[]=[];
 
   @Input('meet') meet:Meet;
-  constructor(public authService: AuthService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) {}
+  teamName: any;
+  MeetToDelete: any;
+  deletedMeetEnabled: boolean;
+  applicationSettings: any;
+  constructor(public authService: AuthService, private functions: AngularFireFunctions,private backendService: BackendService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) {}
 
   ngOnInit(): void {
     this.getMeetData();
