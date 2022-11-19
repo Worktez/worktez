@@ -18,7 +18,7 @@
  ***********************************************************/
 
 const { getAllTasks } = require("../../tasks/lib");
-const { setOrganizationsChart } = require("../lib");
+const { setOrganizationsChart, updateChart, getOrganizationsChartDetails } = require("../lib");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { updatedUserPerformanceChartData } = require("./updatedUserPerformanceChartData");
 
@@ -50,8 +50,17 @@ exports.updatePerformanceChartData = function(orgDomain, teamId, assignee, sprin
         responseData.push(["S" + i, storyPoint]);
         inputJson["S"+i]=storyPoint;
       }
-      setOrganizationsChart(orgDomain, teamName, "PerformanceChart", inputJson);
-      return null;
+      const promise = getOrganizationsChartDetails(orgDomain, teamName, "PerformanceChart").then((data) => {
+        if (data != undefined) {
+          updateChart(orgDomain, teamName, "PerformanceChart", inputJson);
+        } else {
+          setOrganizationsChart(orgDomain, teamName, "PerformanceChart", inputJson);
+        }
+        return null;
+      }).catch((err) => {
+        console.log(err);
+      });
+      return Promise.resolve(promise);
     });
     return Promise.resolve(promise1);
   }).catch((error) => {

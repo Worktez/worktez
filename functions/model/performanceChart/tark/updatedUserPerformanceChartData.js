@@ -17,7 +17,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { setOrganizationsChart } = require("../lib");
+const { setOrganizationsChart, updateChart, getOrganizationsChartDetails } = require("../lib");
 const { getAllTasks } = require("../../tasks/lib");
 
 exports.updatedUserPerformanceChartData =function(orgDomain, assignee, sprintRange, teamId, teamName) {
@@ -37,7 +37,17 @@ exports.updatedUserPerformanceChartData =function(orgDomain, assignee, sprintRan
       responseData.push(["S" + i, storyPoint]);
       inputJson["S"+i]=storyPoint;
     }
-    setOrganizationsChart(orgDomain, teamName, assignee, inputJson);
+    const promise = getOrganizationsChartDetails(orgDomain, teamName, "UserPerformanceChart").then((data) => {
+      if (data != undefined) {
+        updateChart(orgDomain, teamName, "UserPerformanceChart", inputJson);
+      } else {
+        setOrganizationsChart(orgDomain, teamName, "UserPerformanceChart", inputJson);
+      }
+      return null;
+    }).catch((err) => {
+      console.log(err);
+    });
+    return Promise.resolve(promise);
   });
 
   // getUserUseEmail(assignee).then((data) => {
