@@ -47,6 +47,7 @@
                 data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
                 edit
               </mat-icon>
+              
             </span>
             <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
               <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam"

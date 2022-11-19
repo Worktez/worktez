@@ -6,6 +6,13 @@ export const environment = {
   production: false,
   firebase: {
     
+    apiKey: "AIzaSyCBBI-W2yiHz__855tt7xE8vCcZts9EvCg",
+    authDomain: "worktez-first-3349d.firebaseapp.com",
+    projectId: "worktez-first-3349d",
+    storageBucket: "worktez-first-3349d.appspot.com",
+    messagingSenderId: "355318633391",
+    appId: "1:355318633391:web:5103b4b94bc481af2c955a",
+    measurementId: "G-TQT0JHZG7K"
   },
   useEmulators: true,
   gitApiUrl: "https://api.github.com/repos/Worktez/worktez",
