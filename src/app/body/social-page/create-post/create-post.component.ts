@@ -13,6 +13,7 @@ import { event } from 'firebase-functions/v1/analytics';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { FileUpload } from 'src/app/Interface/FileInterface';
 import { defaultPost, Post } from 'src/app/Interface/SocialInterface';
+import { SocialPageServiceService } from 'src/app/services/social-page-service/social-page-service.service';
 
 
 declare var jQuery:any;
@@ -44,7 +45,7 @@ export class CreatePostComponent implements OnInit {
   postId : string;
   date : string;
   
-  constructor(private functions: AngularFireFunctions, private toolService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService, public uploadService: FileUploadService) { }
+  constructor(private functions: AngularFireFunctions, private toolService: ToolsService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public authService: AuthService, public applicationSetting: ApplicationSettingsService, public popupHandlerService: PopupHandlerService, public uploadService: FileUploadService, private toolsService: ToolsService, public socialPageService: SocialPageServiceService) { }
   ngOnInit(): void {
     this.post = defaultPost;
     this.post.ImagesUrl=[];
@@ -105,13 +106,14 @@ export class CreatePostComponent implements OnInit {
     this.post.Uid = uid;
     this.post.CreationDate=date;
     this.post.CreationTime=time;
+    const lastUpdatedEpochTime = this.toolsService.today().valueOf();
 
     const callable = this.functions.httpsCallable('socialPage/addPost');
-    callable({Uid: this.post.Uid, Content: this.post.Content, Urls: this.post.ImagesUrl, LastUpdatedDate: this.post.CreationDate, LastUpdatedTime: this.post.CreationTime  }).subscribe({
+    callable({Uid: this.post.Uid, Content: this.post.Content, Urls: this.post.ImagesUrl, LastUpdatedDate: this.post.CreationDate, LastUpdatedTime: this.post.CreationTime,  LastUpdatedEpochTime: lastUpdatedEpochTime}).subscribe({
       next: (data) => {
         this.post.PostId= data.PostId;
-        console.log(this.post.PostId)
         console.log("Successfully");
+        this.socialPageService.getSocialPageData();
       },
       error: (error) => {
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError");
@@ -133,6 +135,7 @@ export class CreatePostComponent implements OnInit {
     close() {
       jQuery('#createPost').modal('hide');
       jQuery('#form').trigger("reset");
+      window.location.reload();
     }
 
     removeImg(remove: string) {
