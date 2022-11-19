@@ -38,20 +38,20 @@
       "port": 7001
     },
     "firestore": {
-      "port": 3354
+      "port": 7002
     },
     "hosting": {
       "port": 7004
     },
     "ui": {
       "enabled": true,
-      "port": 4556
+      "port": 7000
     },
     "storage": {
       "port": 9199
     },
     "pubsub": {
-      "port": 2234
+      "port": 8085
     }
   },
   "storage": {
