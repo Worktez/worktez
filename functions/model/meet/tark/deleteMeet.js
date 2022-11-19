@@ -24,9 +24,7 @@ exports.deleteMeet = function(request, response) {
   const uid = request.body.data.Uid;
   let result;
   const status = 200;
-  console.log(docId, uid, "check");
   const promise = getUserMeetDetailsById(uid, docId).then((MeetData) => {
-    console.log(MeetData);
     if (MeetData == undefined) {
       result = {data: {status: "Meet does not exist"}};
     } else {
