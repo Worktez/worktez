@@ -87,6 +87,10 @@
     color: var(--button-text-hover);
 }
 
+.noHover {
+    pointer-events: none;
+  }
+
 .extra {
     background-color: var(--primary-color);
     color: #1B1F23;
