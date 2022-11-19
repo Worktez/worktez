@@ -116,7 +116,7 @@
 #progress-bar-container #line {
     width: 100%;
     margin: auto;
-    background: rgb(169, 169, 169);
+    background-color: var(--mile-progress-bg);
     height: 6px;
     position: absolute;
     top: 57px;

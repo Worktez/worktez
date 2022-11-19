@@ -53,6 +53,7 @@ body {
     --togglebutton-color: #f3d4d6;
     --text-color: #ccc4c4;
     --home-bg: #5559D9;
+    --mile-progress-bg:rgba(70, 70, 70, 0.23);
     --font: 'Plus Jakarta Sans', sans-serif;
     /* font-family: 'Plus Jakarta Sans', sans-serif; */
 }
@@ -88,5 +89,6 @@ body {
     --togglebutton-color: #29382c;
     --text-color: #ccc4c4;
     --home-bg: #5559D9;
+    --mile-progress-bg:rgb(169, 169, 169);
     --font: 'Plus Jakarta Sans', sans-serif;
 }
