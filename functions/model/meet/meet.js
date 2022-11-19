@@ -22,6 +22,7 @@ const {scheduleMeet} = require("./tark/scheduleMeet");
 const {addAttendee} = require("./tark/addAttendee");
 // const {addAttendeeAtWorktez} = require("./tark/addAttendeeAtworktez");
 const { getMeetDetails } = require("./tark/getMeetDetails");
+const {deleteMeet} = require("./tark/deleteMeet");
 
 /**
  * Description
