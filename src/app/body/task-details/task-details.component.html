@@ -59,6 +59,24 @@
                                     </a>
                                 </span>
                             </li>
+                            <li class="nav-item"  *ngIf="githubRepoExists">
+                                <div class="dropdown"> 
+                                    <span class="btn dropdown" title="Get Pr Details" data-toggle="dropdown" style="margin-top: 2px;">
+                                        <mat-icon >
+                                            track_changes
+                                        </mat-icon>
+                                    </span>
+                                    <div class="dropdown-menu">
+                                        <div>
+                                            <h5 style="text-align: center;">1 Pr Found!</h5>
+                                        </div>
+                                        <hr style="color: var(--text);">
+                                        <button class="btn prBtn"  (click)="showPrDetails()">
+                                             <img src="../../../assets/git.png" height="20" class="rounded-circle" width="20" style="margin-right: 5px;">Get Pr Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </li>
                             <li class="nav-item" *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                 <span class="btn" data-toggle="modal" title="Log Work" data-target="#Modal" (click)="logWorkPage()">
                                     <mat-icon fontSet="material-icons-outlined" class="align-middle">

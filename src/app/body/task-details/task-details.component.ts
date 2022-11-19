@@ -13,7 +13,7 @@
 ***********************************************************/
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators'
 import { Tasks, Link } from 'src/app/Interface/TasksInterface';
 import { CloneTaskService } from 'src/app/services/cloneTask/clone-task.service';
@@ -34,6 +34,7 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { error } from 'console';
 
 @Component( {
   selector: 'app-task-details',
@@ -95,7 +96,7 @@ export class TaskDetailsComponent implements OnInit {
   githubRepoExists: boolean = false;
 
 
-  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
+  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService,  public router: Router ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -357,6 +358,7 @@ export class TaskDetailsComponent implements OnInit {
 
   }
 
+
   reopenTask () {
     this.showLoader = true;
     const callable = this.functions.httpsCallable( 'tasks/log' );
@@ -422,7 +424,15 @@ export class TaskDetailsComponent implements OnInit {
     this.gitPrEnabled = true;
     // this.showLoader = true;
   }
+  
 
+  showPrDetails() {
+      if(this.prLink){
+        window.open(this.prLink,'_blank');
+      }else{
+        console.error("error in  getting the pr");
+      }
+  }
   
 }
 

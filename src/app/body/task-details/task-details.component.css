@@ -153,3 +153,11 @@ a.nav-link{
         font-size: 10px;
     }
 }
+
+.prBtn{
+    width: max-content;
+    border-color: black;
+    border-radius: 15px;
+    font-size: xx-small;
+    margin-left: 25px;
+}
