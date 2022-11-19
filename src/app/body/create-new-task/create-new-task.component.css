@@ -47,7 +47,6 @@
 #button {
     background-color: var(--primary-color);
     color: white;
-    border: none;
 }
 
 #button:focus,
