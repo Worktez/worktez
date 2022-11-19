@@ -27,6 +27,7 @@ const { getComments } = require("./tark/getComments");
 const { deletePost } = require("./tark/deletePost");
 const { deleteComment } = require("./tark/deleteComment");
 const { getReactions } = require("./tark/getReactions");
+const {getAllSocialPageData} = require("./tark/getAllSocialPageData");
 /**
  * Description
  * @param {any} "/addPost"
@@ -36,6 +37,17 @@ const { getReactions } = require("./tark/getReactions");
  */
 fastify.post("/addPost", (req, res) => {
   addPost(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getAllSocialPageData"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getAllSocialPageData", (req, res) => {
+  getAllSocialPageData(req, res);
 });
 
 /**
