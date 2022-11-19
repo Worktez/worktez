@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -33,6 +33,9 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
   styleUrls: ['./team-details.component.css']
 })
 export class TeamDetailsComponent implements OnInit {
+
+  @Output() githubDetails = new EventEmitter<boolean>();
+  
   ComponentName: string;
   labelName: string = "Select label";
   organizationDomain: string
@@ -53,6 +56,11 @@ export class TeamDetailsComponent implements OnInit {
   priorityLabels: string[]; 
   difficultyLabels: string[]; 
   milestoneStatusLabels: string[];
+  teamToAddGithub: Team;
+  addProjectEnabled: boolean = false;
+  typeLink: string;
+  projectLinked: boolean= false;
+  repoLink: string;
 
   constructor(private teamService: TeamServiceService, public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -74,6 +82,18 @@ export class TeamDetailsComponent implements OnInit {
           console.log("Completed getting Team Data");
         }
       });
+    }
+  }
+
+  checkGitProject(){
+    if(this.team.ProjectLink!=undefined){
+      if(this.team.ProjectLink==""){
+        this.projectLinked=false;
+      }
+      else{
+        this.projectLinked=true;
+        this.repoLink=this.team.ProjectLink;
+      }
     }
   }
 
@@ -154,6 +174,7 @@ export class TeamDetailsComponent implements OnInit {
     this.userService.fetchUserData().subscribe(()=>{
       this.teamDataReady = true;
       this.showLoader = false
+      this.checkGitProject();
     });
   }
   updateTeam(team: Team) {
@@ -246,6 +267,23 @@ export class TeamDetailsComponent implements OnInit {
       complete: () => console.info('Successful ')
   });
   }
+
+  enableAddOrganisationLink(team: Team) {
+    this.teamToAddGithub = team;
+    this.addProjectEnabled = true;
+    this.typeLink = "Organisation";
+  }
+
+  addedProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
+    this.githubDetails.emit(true);
+    this.addProjectEnabled = false;
+    if(data.completed==true){
+    this.projectLinked=data.completed;
+    this.repoLink=data.projLink;
+    this.teamService.teamsDataJson[this.teamId].ProjectLink = this.repoLink;
+    }
+  }
+
   close () {
     this.router.navigate(['ViewOrganizationDetails']);
   }

@@ -89,10 +89,10 @@ export class SocialPageComponent implements OnInit {
   }
 
   createPostCompleted ( data: { completed: boolean, post: Post } ) {
-      this.createPostEnabled = false;
+    this.createPostEnabled = false;
+    if(data.completed==true){
       this.loadSocialPageData();
-      console.log(data.post);
-    // this.posts.push(data.post);
+    }
   }
 
   postReactionSwitched(data: { Uid: string, reactionAdded: boolean, reactionRemoved: boolean } ){
