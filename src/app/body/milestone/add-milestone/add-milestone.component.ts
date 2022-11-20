@@ -39,7 +39,7 @@ export class AddMilestoneComponent implements OnInit {
   startDate: string
   endDate: string
   todayDate: string
-  milestoneStatus: string
+  milestoneStatus: string = null;
   addMilestoneActive: boolean = true;
   minDate:string;
 

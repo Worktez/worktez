@@ -19,10 +19,10 @@
                 <span type="button" class="close" data-dismiss="modal" aria-label="Close" class="material-icons" (click)="editSkillCompleted()" style="color: var(--secondary-color);">close</span>
             </div> -->
             <div class="row px-3 pb-0 pt-3">
-                <div class="col-md-10 col-10">
-                    <span>Your Skills</span>
+                <div class="col-md-10 col-10 pt-1">
+                    <h2>Your Skills</h2>
                 </div>
-                <div class="col-md-1 col-2 text-right ">
+                <div class="col-md-1 col-2 text-right">
                     <span class="btn">
                         <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editSkillCompleted()" title="Close">
                             close
@@ -30,13 +30,14 @@
                     </span>
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body pt-0">
                 <form *ngIf="!enableLoader">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group mb-4">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Skill</span>
-                                <input type="text" [(ngModel)]="skill" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Skill">
+                                <input type="text" [(ngModel)]="skill" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Enter your Skill" autocomplete="off">
+
                             </div>
                         </div>
                         <div class="col-12">

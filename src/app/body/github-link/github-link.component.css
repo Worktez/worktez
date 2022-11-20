@@ -104,3 +104,11 @@ input:focus {
     border-radius: 6px;
     opacity: 1;
 }
+
+.dropdown-menu {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item{
+    color: var(--text);
+}

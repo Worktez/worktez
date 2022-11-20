@@ -26,6 +26,7 @@
 
 .card {
     background-color: var(--secondary-bg);
+    border: none;
 }
 
 /* h2 {
@@ -58,5 +59,8 @@ button {
 
     .profileCard{
         margin-left: 8px;
+    }
+    #profileTheme{
+        padding-left: 3.5px;
     }
 }

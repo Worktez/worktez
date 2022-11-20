@@ -13,12 +13,11 @@
 ***********************************************************/
 .modal-header {
     border-bottom: none !important;
-    padding: 1.1rem;
+    padding: 1rem;
 }
 
 .modal-footer {
     border-top: none !important;
-    padding: 1.1rem;
     padding-bottom: 0 !important;
 }
 
@@ -27,9 +26,8 @@
     color: var(--text);
     border-radius: 6px; 
     min-height: 350px;
-    padding: 1.1rem;
+    padding: 0 1.1rem;
     justify-content: space-evenly;
-    padding-top: 0 !important;
 }
 
 .modal-title {
@@ -56,7 +54,7 @@
     padding: 7px;
     border-radius: 6px;
     opacity: 1;
-    margin: 5px !important;
+    margin: 5px 0px !important;
 }
 
 #button {

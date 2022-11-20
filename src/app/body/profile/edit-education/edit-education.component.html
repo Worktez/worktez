@@ -16,10 +16,10 @@
         <div class="modal-content p-2">
                 <ng-container *ngIf="educationModalMode == 'add'">
                     <div class="row px-3 pb-0 pt-3">
-                        <div class="col-md-10 col-10">
-                            <span>Add Your Education</span>
+                        <div class="col-md-10 col-10 pt-1">
+                            <h2>Add Your Education</h2>
                         </div>
-                        <div class="col-md-1 col-2 text-right ">
+                        <div class="col-md-1 col-2 text-right">
                             <span class="btn">
                                 <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="editEducationDone()" title="Close">
                                     close
@@ -30,8 +30,8 @@
                 </ng-container>
                 <ng-container *ngIf="educationModalMode == 'edit'">
                     <div class="row px-3 pb-0 pt-3">
-                        <div class="col-md-10 col-10">
-                            <span>Edit Education</span>
+                        <div class="col-md-10 col-10 pt-1">
+                            <h2>Edit Education</h2>
                         </div>
                         <div class="col-md-1 col-2 text-right ">
                             <span class="btn">

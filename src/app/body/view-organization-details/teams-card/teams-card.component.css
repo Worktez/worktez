@@ -65,6 +65,17 @@
 
 .modal-title{
     color: var(--text);
+    margin-bottom: 0px;
+}
+
+.modal-header{
+    align-items: center;
+}
+
+.modal-body{
+    color: var(--text);
+    margin: 0px 10%;
+    text-align: center;
 }
 
 .btn {

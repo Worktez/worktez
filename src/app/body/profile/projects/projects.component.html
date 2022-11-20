@@ -1,9 +1,7 @@
-<div class="card p-4 mb-4">
+<div class="card p-3 mb-2">
     <div class="row pb-2">
-        <div class="col-10">
-            <span>Projects</span>
-        </div>
-        <div class="col-2">
+        <div class="col-12">
+            <span class="align-middle">Projects</span>
             <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                     add
@@ -35,12 +33,12 @@
             </div>
         </div>
         <div class="row text-muted">
-            <div class="col-7" id="projectDescription">
+            <div class="col-xl-4" id="projectDescription">
                 <span>{{ project.Description }}</span>
             </div>
-            <div class="col-5">
+            <div class="col-xl-8" style="font-size: 10px;">
                 <ul>
-                    <li>{{ project.Start }} - {{ project.End }}</li>
+                    <li class="float-right">{{ project.Start }} to {{ project.End }}</li>
                 </ul>
             </div>
         </div>

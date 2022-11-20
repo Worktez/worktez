@@ -17,6 +17,8 @@ import { Meet } from 'src/app/Interface/MeetInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { map, Observable } from "rxjs";
 
 
@@ -32,7 +34,11 @@ export class ShowMeetDetailsComponent implements OnInit {
   meetData:Meet[]=[];
 
   @Input('meet') meet:Meet;
-  constructor(public authService: AuthService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) {}
+  teamName: any;
+  MeetToDelete: any;
+  deletedMeetEnabled: boolean;
+  applicationSettings: any;
+  constructor(public authService: AuthService, private functions: AngularFireFunctions,private backendService: BackendService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) {}
 
   ngOnInit(): void {
     this.getMeetData();
@@ -56,5 +62,26 @@ export class ShowMeetDetailsComponent implements OnInit {
           console.info("Fetched Meet Data Successfully");
         }
       })
+  }
+  deletedMeet(index) {
+    const uid = this.authService.getLoggedInUser();
+    const orgDomain = this.backendService.getOrganizationDomain();
+       this.teamName =  this.startService.teamName;
+    const callable = this.functions.httpsCallable("meet/deleteMeet");
+      callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
+        next(data) { 
+         console.log("Meet deleted Successfully") 
+        },
+        error: (error) => {
+          console.log("Error", error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode("InternalError","Api");
+          console.error(error);
+        },
+        complete: () => {
+          console.info("Successfully updated in db");
+          this.getMeetData();
+        } 
+      });
   }
 }

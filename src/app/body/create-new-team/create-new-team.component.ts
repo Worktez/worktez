@@ -57,6 +57,8 @@ export class CreateNewTeamComponent implements OnInit {
   teamNameIsSame: boolean = true;
   public TeamNameAvailable: boolean = true;
   teamIdIsSame: boolean = true;
+  flag1: boolean = true;
+  flag2: boolean = true;
   public TeamIdAvailable: boolean = true;
   teamIds: string[] = [];
   teamNames: string[] = [];
@@ -88,6 +90,14 @@ export class CreateNewTeamComponent implements OnInit {
     this.teamNames = this.backendService.getOrganizationTeamNames();
   }
 
+  check(){
+    if (!this.teamName) {
+      this.flag1= false;
+    }
+    if (!this.teamId) {
+      this.flag2= false;
+    }
+  }
   setTeamId(){
     if(!this.teamChanged){
     this.teamId = this.teamName.slice(0, 3);

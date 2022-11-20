@@ -43,6 +43,7 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
     Title: title,
     StartTime: startTime,
     EndTime: endTime,
+    Status: "OK",
     HostName: hostName,
     Description: description,
     Date: date,
@@ -77,6 +78,7 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
     StartTime: startTime,
     EndTime: endTime,
     HostName: hostName,
+    Status: "OK",
     Description: description,
     Date: date,
     Uid: uid,
@@ -84,6 +86,19 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
   });
   return Promise.resolve(setMeetDoc1);
 };
+
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} docId
+ * @param {any} updateMeetDetailsToJson
+ * @return {any}
+ */
+exports.updateUserMeetDetails= function(uid, docId, updateMeetDetailsToJson) {
+  const updateMeet = db.collection("Users").doc(uid).collection("Meet").doc(docId).update(updateMeetDetailsToJson);
+  return Promise.resolve(updateMeet);
+};
+
 
 /**
  * Description
@@ -122,8 +137,7 @@ exports.getWorktezMeetDetails=function(meetDocId) {
  * @return {any}
  */
 exports.getMeetDetails=function(uid) {
-  const query = db.collection("Users").doc(uid).collection("Meet");
-
+  const query = db.collection("Users").doc(uid).collection("Meet").where("Status", "==", "OK");
   const promise = query.get().then((doc) => {
     const data=[];
     doc.forEach((element) => {
@@ -146,4 +160,18 @@ exports.getMeetDetails=function(uid) {
 exports.updateMeetDetailsAtWorktez= function(updateJson, meetDocId) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
+};
+
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} docId
+ * @return {any}
+ */
+exports.getUserMeetDetailsById = function(uid, docId) {
+  const getUserMeetDetailsById = db.collection("Users").doc(uid).collection("Meet").doc(docId).get().then((doc) => {
+    const data = doc.data();
+    return data;
+  });
+  return Promise.resolve(getUserMeetDetailsById);
 };

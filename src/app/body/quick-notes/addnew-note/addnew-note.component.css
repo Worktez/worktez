@@ -56,3 +56,13 @@ input:focus {
   background-color: var(--primary-color);
   color: white;
 }
+
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus {
+  outline:0px !important;
+  box-shadow: none !important;
+}

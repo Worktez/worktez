@@ -13,11 +13,20 @@
 ***********************************************************/
 
 .btn {
-    background-color: var(--primary-color);
+    float: right;
+    left: 60px;
+    top: 0px;
+    margin-left:90px;
+    margin-top: 4px;
+    padding-top: 9px;
+    width: 50px;
+    height: 35px;
+    
 }
 .btn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
+    align-items: center;
 }
 a {
     color: var(--text);
@@ -40,8 +49,8 @@ a {
 
 .join-btn{
     float: right;
-    margin-left:100px;
-    margin-top: 5px;
+    left: 60px;
+    margin-top: 3px;
     padding-top: 6px;
     width: 60px;
     height: 35px;
@@ -49,6 +58,7 @@ a {
     color: #fff;
     border-radius: 6px;
     text-align: center;
+    margin-right: -42px;
 }
 
 .join-btn:hover {
