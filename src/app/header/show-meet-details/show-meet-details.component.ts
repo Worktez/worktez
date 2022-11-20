@@ -33,7 +33,7 @@ export class ShowMeetDetailsComponent implements OnInit {
   MeetToDelete: any;
   deletedMeetEnabled: boolean;
   applicationSettings: any;
-  constructor(public authService: AuthService, private functions: AngularFireFunctions,private backendService: BackendService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) {}
+  constructor(public authService: AuthService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) {}
 
   ngOnInit(): void {
     this.getMeetData();
