@@ -33,7 +33,6 @@ exports.addPost = function(request, response) {
   let postId;
   let status = 200;
 
-
   const promise1 = getApplicationData().then((rawData) => {
     if (rawData) {
       let postcounter = rawData.PostCounter;
