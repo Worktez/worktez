@@ -41,7 +41,6 @@ exports.createDefaultLabels = function(request, response) {
     status = 500;
     console.log("Error: ", error);
   });
-
   const promise2 = getTeam(orgDomain, teamName).then((team) => {
     if (team) {
       const updateJson = {

@@ -65,6 +65,6 @@ mat-icon {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color); 
+    background: var(--scrollbar-color);
     border-radius: 10px;
 }

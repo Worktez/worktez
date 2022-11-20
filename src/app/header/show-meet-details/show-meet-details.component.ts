@@ -17,12 +17,7 @@ import { Meet } from 'src/app/Interface/MeetInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { BackendService } from 'src/app/services/backend/backend.service';
-import { StartServiceService } from 'src/app/services/start/start-service.service';
-import { map, Observable } from "rxjs";
-
-
-
+import { map } from "rxjs";
 
 @Component({
   selector: 'app-show-meet-details',
@@ -65,8 +60,6 @@ export class ShowMeetDetailsComponent implements OnInit {
   }
   deletedMeet(index) {
     const uid = this.authService.getLoggedInUser();
-    const orgDomain = this.backendService.getOrganizationDomain();
-       this.teamName =  this.startService.teamName;
     const callable = this.functions.httpsCallable("meet/deleteMeet");
       callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
         next(data) { 
