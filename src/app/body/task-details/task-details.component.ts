@@ -94,6 +94,10 @@ export class TaskDetailsComponent implements OnInit {
   remainingTimeHrs: number;
   remainingTimeMins: number
   githubRepoExists: boolean = false;
+  pullData: GitPrData[];
+  bodyArray: string[] = [];
+  updatesArray: string[] = [];
+
 
 
   constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService,  public router: Router ) { }
@@ -110,6 +114,7 @@ export class TaskDetailsComponent implements OnInit {
 
     this.navbarHandler.addToNavbar( this.Id );
     this.getTaskPageData();
+    this.checkPrDetails();
   }
   
   checkPrLinked(){
@@ -432,6 +437,65 @@ export class TaskDetailsComponent implements OnInit {
       }else{
         console.error("error in  getting the pr");
       }
+  }
+
+  checkPrDetails() {
+    this.httpService.getPullRequests("worktez/worktez").pipe(map(data => {
+      const objData = data as GitPrData[];
+      // console.log(objData);
+      
+      return objData;
+
+    })).subscribe({
+      next:(data) => {
+        this.pullData = data;
+        console.log(this.pullData);
+        
+        for(const key in this.pullData) {
+          this.bodyArray = []; 
+
+          if (this.pullData[key]) {
+            const stmp =  this.pullData[key].body.indexOf("### TaskId:")
+            // console.log( this.pullData[key].body);
+             if(stmp != -1) {
+              const etmp = this.pullData[key].body.indexOf("## ", stmp+4);
+
+              var temp = this.pullData[key].body.slice(stmp, etmp);
+              // console.log(temp);
+              temp = temp.slice(temp.indexOf("\n")+1, temp.lastIndexOf("\r")-1);
+              this.bodyArray = temp.split("\n");
+
+             }
+          }
+          if(this.bodyArray.length) {
+            // console.log(this.bodyArray.length);
+
+            for (const key in this.bodyArray) { 
+              if (this.bodyArray[key].length) {
+                var element = this.bodyArray[key];
+                console.log(element,"prLink");
+                // console.log(element.substring(4));
+                
+                if(element = this.Id){
+                  const url = this.pullData[key].html_url;
+                  console.log(url);
+                  this.prLink = url;
+                  return this.showPrDetails();
+                }
+              }
+                // console.log(this.updatesArray);
+            }
+            
+          }
+        }
+      },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+        console.log("completed fetching data");
+        }
+    });
   }
   
 }
