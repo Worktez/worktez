@@ -32,10 +32,12 @@
 
 .modal-header {
     border-bottom: none !important;
+    align-items: center;
 }
 
 .modal-footer {
     border-top: none !important;
+    padding:  0.75rem 0;
 }
 
 .modal-content {
