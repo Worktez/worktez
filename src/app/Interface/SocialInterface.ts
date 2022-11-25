@@ -47,13 +47,11 @@ export interface SocialPageData{
   Uid: string;
   CreationTime: string;
   CreationDate: string;
-  LastUpdatedDate: string,
-  LastUpdatedTime: string,
+  LastUpdatedDate: string;
+  LastUpdatedTime: string;
   Content: string;
-  PostStatus: number;
-  LastUpdatedEpochTime: number,
-  PostCreationEpochTime: number,
-  LastUpdated
+  LastUpdatedEpochTime: number;
+  PostCreationEpochTime: number;
   Reach: number;
   Reactions: number;
   CommentCounter: number;

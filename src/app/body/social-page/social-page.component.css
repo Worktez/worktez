@@ -3,10 +3,6 @@
   border: none;
 }
 
-/* .currentUserInfo {
-  display: block;
-} */
-
 .card {
   background-color: var(--secondary-bg);
   color: var(--text);
@@ -23,5 +19,20 @@
 
 .btn {
   background-color: var(--primary-color);
-  color: white;
+  color: #FFFFFF;
+}
+
+.btn:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--primary-color);
+}
+
+.loadMore {
+  background-color: transparent;
+  color: #FFFFFF;
+}
+
+.loadMore:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--primary-color);
 }

@@ -27,8 +27,6 @@ import { Milestones } from 'src/app/Interface/MilestoneInterface';
 import { MilestoneServiceService } from 'src/app/services/milestone/milestone-service.service';
 import { Router } from '@angular/router';
 
-declare var jQuery:any;
-
 @Component({
   selector: 'app-create-new-task',
   templateUrl: './create-new-task.component.html',
@@ -226,8 +224,6 @@ export class CreateNewTaskComponent implements OnInit {
 }
 
   close() {
-    jQuery('#createNewTask').modal('hide');
-    jQuery('#form').trigger("reset");
     this.taskCreated.emit({ completed: true });
   }
 }

@@ -43,38 +43,38 @@ export class ShowMeetDetailsComponent implements OnInit {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("meet/getMeetDetails");
     callable({ Uid: uid }).pipe(map(actions => {
-        return actions.data as Meet[];
-      })).subscribe({
-        next: (data) => {
-          if (data) {
-            this.meetData = data            
-          }
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          console.info("Fetched Meet Data Successfully");
+      return actions.data as Meet[];
+    })).subscribe({
+      next: (data) => {
+        if (data) {
+          this.meetData = data            
         }
-      })
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info("Fetched Meet Data Successfully");
+      }
+    });
   }
   deletedMeet(index) {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("meet/deleteMeet");
-      callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
-        next(data) { 
-         console.log("Meet deleted Successfully") 
-        },
-        error: (error) => {
-          console.log("Error", error);
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode("InternalError","Api");
-          console.error(error);
-        },
-        complete: () => {
-          console.info("Successfully updated in db");
-          this.getMeetData();
-        } 
-      });
+    callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
+      next(data) { 
+        console.log("Meet deleted Successfully") 
+      },
+      error: (error) => {
+        console.log("Error", error);
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode("InternalError","Api");
+        console.error(error);
+      },
+      complete: () => {
+        console.info("Successfully updated in db");
+        this.getMeetData();
+      } 
+    });
   }
 }
