@@ -112,6 +112,7 @@ export class CreateFilterComponent implements OnInit {
 
   readTeamData(teamId :string){
     this.enableLoader = true;
+    this.appSettings.team = undefined;
     this.appSettings.getTeamDetails(teamId); 
     const team = this.appSettings.team;
     this.priorityLabels = team.Priority;
@@ -230,6 +231,7 @@ createFilterDone(){
 
   onProjectChange(){
     console.log("update teams");
+    this.appSettings.team = undefined;
     this.readTeamData(this.project);
   }
 }

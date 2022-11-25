@@ -102,6 +102,7 @@ export class CreateNewTaskComponent implements OnInit {
   
   readTeamData(teamId :string){
     this.enableLoader = true;
+    this.applicationSetting.team = undefined;
     this.applicationSetting.getTeamDetails(teamId);
     const team = this.applicationSetting.team;
     this.priorityLabels = team.Priority;
