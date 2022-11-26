@@ -16,12 +16,9 @@ export interface Comment {
   LastUpdatedTime: string;
   LastUpdatedDate: string;
   Content: string;
-  CommentStatus: number;
   Status: string;
   PostId: string;
   CommentId: string;
-  ImagesUrl: string[];
-  PostStatus: number;
 }
 export interface Post{
   Uid: string;
@@ -32,7 +29,6 @@ export interface Post{
   LastUpdatedEpochTime: number,
   PostCreationEpochTime: number,
   Content: string;
-  PostStatus: number;
   Reach: number;
   Reactions: number;
   CommentCounter: number;

@@ -98,7 +98,8 @@ export class CreateNewTaskComponent implements OnInit {
     return this.teamMembers.filter(option => option.toLowerCase().includes(filterValue));
   }
   
-  readTeamData(teamId :string){
+  readTeamData(teamId :string) {
+    console.log("c1");
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId);
     const team = this.applicationSetting.team;

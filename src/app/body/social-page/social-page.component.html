@@ -63,15 +63,15 @@
         <ng-container *ngIf="!disableLoadMore; else noMoreData">
             <div class="row">
                 <div class="col text-center">
-                    <button class="btn loadMore" (click)="showOlderPosts()"  [disabled]="disableLoadMore">Load More</button>
+                    <button class="btn" (click)="showOlderPosts()"  [disabled]="disableLoadMore">Load more</button>
                 </div>
             </div>
         </ng-container>
-            <ng-template #noMoreData>
-                <div class="text-center">
-                    <button class="btn btn-sm" [disabled]="disableLoadMore"> No more posts to load...</button>
-                </div>
-            </ng-template>
+        <ng-template #noMoreData>
+            <div class="text-center">
+                <button class="btn btn-sm" [disabled]="disableLoadMore"> No more posts to load...</button>
+            </div>
+        </ng-template>
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>

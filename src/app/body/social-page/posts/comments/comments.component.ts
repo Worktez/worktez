@@ -43,7 +43,7 @@ export class CommentsComponent implements OnInit {
       callable({Uid: uid, PostId: this.comment.PostId, CommentId: this.comment.CommentId}).subscribe({
         next: (data) => {
           console.log("Successfull");
-          this.comment.CommentStatus = -1;
+          this.comment.Status = "Deleted";
         },
         
         error: (error) => {

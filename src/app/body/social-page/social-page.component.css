@@ -26,13 +26,3 @@
   background-color: var(--dropdown-hover);
   color: var(--primary-color);
 }
-
-.loadMore {
-  background-color: transparent;
-  color: #FFFFFF;
-}
-
-.loadMore:hover {
-  background-color: var(--dropdown-hover);
-  color: var(--primary-color);
-}

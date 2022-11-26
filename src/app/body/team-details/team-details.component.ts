@@ -14,15 +14,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
-import { Location } from '@angular/common';
-import { Label, Team } from 'src/app/Interface/TeamInterface';
+import { Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
-import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
@@ -40,8 +36,6 @@ export class TeamDetailsComponent implements OnInit {
   labelName: string = "Select label";
   organizationDomain: string
   teamId: string;
-  teamName: string;
-  teamMembers: string[] = [];
   teamDataReady: boolean = false;
   componentName:string ="TEAM-DETAILS";
   team: Team;
@@ -62,7 +56,7 @@ export class TeamDetailsComponent implements OnInit {
   projectLinked: boolean= false;
   repoLink: string;
 
-  constructor(private teamService: TeamServiceService, public rbaService :RBAService, private startService: StartServiceService, private userService: UserServiceService, private location: Location, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
+  constructor(private teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];
@@ -72,8 +66,9 @@ export class TeamDetailsComponent implements OnInit {
       this.getTeamData();
     } else {
       this.teamService.teamDataStateObservable.subscribe({
-        next: () => {
-          this.getTeamData();
+        next: (data) => {
+          if(data)
+            this.getTeamData();
         },
         error: (error) => {
           console.error(error);
@@ -97,7 +92,7 @@ export class TeamDetailsComponent implements OnInit {
     }
   }
 
-  changeLabels(labelName){
+  changeLabels(labelName: string) {
     if(labelName == "Marketing"){
       this.type = marketingLabelsTempelate.type;
       this.statusLabels = marketingLabelsTempelate.statusLabels;
@@ -163,12 +158,8 @@ export class TeamDetailsComponent implements OnInit {
   
   getTeamData() {
     this.showLoader = true;
-    // this.teamService.teamDataStateObservable.subscribe((data)=>{
-    //   if(data){
-        this.team = this.teamService.getTeamUsingId(this.teamId);
-    //   }
-    // });
-    this.team.TeamMembers.forEach((element: any) => {
+    this.team = this.teamService.getTeamUsingId(this.teamId);
+    this.team.TeamMembers.forEach((element: string) => {
       this.userService.checkAndAddToUsersUsingEmail(element);
     });
     this.userService.fetchUserData().subscribe(()=>{
@@ -197,11 +188,11 @@ export class TeamDetailsComponent implements OnInit {
     
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamMembers: this.team.TeamMembers, Remove: remove}).subscribe({
       next: (data) => {
-        console.log(remove);
         this.enableLoader = false;
-        const index = this.teamMembers.indexOf(remove);
+        const index = this.team.TeamMembers.indexOf(remove);
+        console.log(index);
         if (index != -1) {
-          this.teamMembers.splice(index, 1);
+          this.team.TeamMembers.splice(index, 1);
           console.log("Successfully removed member");
         } else {
           console.log("Error- Cannot remove member. Member not found");
@@ -221,11 +212,10 @@ export class TeamDetailsComponent implements OnInit {
   teamUpdated(data: { completed: boolean }) {
     this.updateTeamEnabled = false;
   }
-  selectedAssignee(item) {
+  selectedAssignee(item: any) {
     console.log(item)
   }
   
-
   deleteTeam() {
     this.showLoader = true
     const orgDomain = this.backendService.getOrganizationDomain();

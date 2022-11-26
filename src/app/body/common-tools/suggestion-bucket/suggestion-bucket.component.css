@@ -21,11 +21,11 @@
     cursor: pointer;
 }
 
-#displayname {
+.displayname {
     font-size: 11px;
 }
 
-#email {
+.email {
     font-size: 11px;
 }
 
@@ -36,8 +36,14 @@
 }
 
 .card {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
     width: 15rem;
     z-index: 1;
+    cursor: pointer;
+    /* color: #000000; */
+    /* font-size: 12px; */
 }
 
 h4:hover{

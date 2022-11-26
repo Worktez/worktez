@@ -20,7 +20,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
 import { ToolsService } from '../../../services/tool/tools.service';
-import { map } from 'rxjs';
 import { defaultUser, User } from 'src/app/Interface/UserInterface';
 import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
 import { SocialPageServiceService } from 'src/app/services/social-page-service/social-page-service.service';
@@ -62,8 +61,8 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.post.PostId.slice(0));
     this.images = this.post.ImagesUrl;
-    this.getReactions(this.post.PostId);
-    this.getComments(this.post.PostId);
+    this.getReactions();
+    this.getComments();
     this.getCreatorDetails();
     this.authService.userAppSettingObservable.subscribe((data)=>{
       this.pageReady = true;
@@ -83,12 +82,21 @@ export class PostsComponent implements OnInit {
 
     if(this.content != "" ) {
       const callable = this.functions.httpsCallable("socialPage/addPostComment");
-      callable({Uid: uid, Content: this.content, LastUpdatedDate: date, LastUpdatedTime: time, PostId: postId}).pipe(map(res=>{
-        return res
-      })).subscribe((data) => {
+      callable({Uid: uid, Content: this.content, LastUpdatedDate: date, LastUpdatedTime: time, PostId: postId})
+      .subscribe((data) => {
         this.enableLoader = false;
+        const comment = {
+          Uid: uid,
+          LastUpdatedTime: time,
+          LastUpdatedDate: date,
+          Content: this.content,
+          Status: "OK",
+          PostId: postId,
+          CommentId: "string",
+        };
+        this.post.Comments.push(comment);
         this.content = "";
-        this.getComments(postId);
+        this.getComments();
       });
     } else {
       this.enableLoader = false;
@@ -160,7 +168,7 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  getComments(postId: string) {
+  getComments() {
     this.noOfComments=0;
     this.enableLoader= true;
     this.comments = this.post.Comments;
@@ -177,7 +185,7 @@ export class PostsComponent implements OnInit {
     this.enableLoader=false;
   }
 
-  getReactions(postId: string) {
+  getReactions() {
     this.noOfStars=0;
     this.enableLoader= true;
     this.reactions = this.post.Reactionss;
@@ -185,15 +193,15 @@ export class PostsComponent implements OnInit {
       this.reactions=[];
     }
     this.reactions.forEach(element => {
-            this.noOfStars+=1
-            if(element.Uid==this.authService.getLoggedInUser()){
-              this.postStarred=true;
-            }
-            this.userService.checkAndAddToUsersUsingUid(element.Uid);
-          });
-          this.userService.fetchUserDataUsingUID().subscribe(()=>{
-            this.dataReady = true;
-          });
+      this.noOfStars+=1
+      if(element.Uid==this.authService.getLoggedInUser()){
+        this.postStarred=true;
+      }
+      this.userService.checkAndAddToUsersUsingUid(element.Uid);
+    });
+    this.userService.fetchUserDataUsingUID().subscribe(()=>{
+      this.dataReady = true;
+    });
      this.enableLoader = false;
 }
 
