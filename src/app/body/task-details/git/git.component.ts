@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angu
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
-import { GitPrData,GitRepoData } from 'src/app/Interface/githubOrgData';
+import { GitRepoData } from 'src/app/Interface/githubOrgData';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
@@ -23,11 +23,11 @@ export class GitComponent implements OnInit {
   @ViewChild('form') form: NgForm;
   @Input('taskId') taskId: string;
   @Input('orgDomain') orgDomain: string;
-  @Input('prLink') prLink:string;
-  @Input('prApiLink') prApiLink:string;
+  @Input('prLink') prLink: string;
+  @Input('prApiLink') prApiLink: string;
   @Input('PrNumber') PrNumber: number;
-  @Input('prState') prState:string;
-  @Output() addedPrLink = new EventEmitter<{ completed: boolean, prLink: string, prApiLink: string}>();
+  @Input('prState') prState: string;
+  @Output() addedPrLink = new EventEmitter<{ completed: boolean, prLink: string, prApiLink: string }>();
   componentName: string = "LINK"
   linkURL: string;
   linkType: string;
@@ -42,6 +42,8 @@ export class GitComponent implements OnInit {
   noPrExist: boolean = false;
   prLinked: boolean = false;
   prtitle: string;
+  prTask: GitRepoData;
+  prFound: boolean =false;
   constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
@@ -76,6 +78,39 @@ export class GitComponent implements OnInit {
       this.prData = data;
       if(this.prData.length==0){
           this.noPrExist=true;
+      } else {
+        this.autoCheckPr(this.prData);
+      }
+    });
+  }
+
+  autoCheckPr(prData:GitRepoData[]) {
+    prData.forEach(element => {
+      let body = element.body;      
+      // console.log(body);
+      if(body){
+        const sp = body.indexOf("## WtId:")
+        // const sp = body.indexOf("### Functionality:")
+        // console.log(sp);
+        if(sp != -1){
+          const ep = body.indexOf("## ",sp+4);
+          // const ep = body.indexOf("## ",sp+4);
+          var tp = body.slice(sp, ep);
+          // console.log(tp,"ohi")
+          tp = tp.slice(tp.indexOf(":")+1, tp.lastIndexOf("\r"));
+          // tp = tp.slice(tp.indexOf("\n")+1, tp.lastIndexOf("\r"));
+
+          if(tp.includes(this.taskId)){
+            this.prFound = true;
+            this.prTask = element;
+            // console.log(this.prTask.title,"hihi");
+            // return this.prTask
+          }else{
+            this.prFound = false;
+            console.log("No pr Data found");
+            
+          }
+        }      
       }
     });
   }
@@ -86,15 +121,15 @@ export class GitComponent implements OnInit {
     this.prNumber=prNumber;
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('tasks/addPrLink');
-    callable({OrganizationDomain: this.orgDomain,  TaskID: this.taskId, PrLink: this.prLink, PrApiLink: this.prApiLink, PrNumber: this.prNumber}).subscribe({
+    callable({ OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: this.prLink, PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
       next: (data) => {
         console.log("Successfully added PR link");
-        this.prLinked=true;
+        this.prLinked = true;
         this.onAddingPr();
       },
       error: (error) => {
         console.error(error);
-        this.enableLoader=false;
+        this.enableLoader = false;
         this.showClose = true;
       },
       complete: () => console.info('Successfully created PR link')

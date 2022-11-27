@@ -19,52 +19,81 @@
             <div class="container modal-body align-items-center px-4" id="addPrPage">
                 <div class="row px-4">
                     <ul class="navbar-nav mr-auto">
-                            <h4 class="active nav-link head bold" id="memberModalLabel">Link Github PR</h4>
+                        <h4 class="active nav-link head bold" id="memberModalLabel">Link Github PR</h4>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons text" (click)="close()">close</span>
-                            </button>
+                        <span class="prBtn btn" (click)="close()">
+                            <mat-icon class="close" data-dismiss="modal" aria-label="Close"
+                                fontSet="material-icons-outlined" class="align-middle " title="Close">
+                                close
+                            </mat-icon>
+                        </span>
                     </ul>
                 </div>
-                    <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
-                        <div class="card">
-                            <ng-container *ngFor="let item of prData; let prIndex=index;">
-                                <div *ngIf="PrNumber == item.number" >
-                                    <div class="card-header">
-                                        <strong>Selected PR:</strong> 
-                                    </div>  
-                                    <ul class="list-group list-group-flush">
-                                        <ng-container>
-                                            <li class="list-group-item">
-                                                <a href="{{item.html_url}}" class="btn btn-status text-wrap text-left">    
-                                                    {{item.title}}
-                                                    <div class="prlist"> PrNumber  #{{PrNumber}} and Pr Status : {{item.state}}</div></a>
-                                            </li>
-                                        </ng-container>
-                                    </ul>
+                <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
+                    <div class="card">
+                        <ng-container *ngFor="let item of prData; let prIndex=index;">
+                            <div *ngIf="PrNumber == item.number">
+                                <div class="card-header">
+                                    <strong>Selected PR:</strong>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <ng-container>
+                                        <li class="list-group-item">
+                                            <a href="{{item.html_url}}" class="btn btn-status text-wrap text-left">
+                                                {{item.title}}
+                                                <div class="prlist"> PrNumber #{{PrNumber}} and Pr Status :
+                                                    {{item.state}}</div>
+                                            </a>
+                                        </li>
+                                    </ng-container>
+                                </ul>
                             </div>
-                            </ng-container>
+                        </ng-container>
+                    </div>
+                    <br>
+                    <ng-container *ngIf="prFound">
+                            <div class="card">
+                                <div class="class-header p-3 ml-1">
+                                    <strong>Found PR: </strong>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <ng-container>
+                                        <li  
+                                            (click)="addPrLink(prTask.html_url, prTask.url, prTask.number)"
+                                            class="list-group-item">
+                                            <div class="btn btn-status text-wrap text-left">
+                                                {{prTask.title}}
+                                                <div class="prlist"> PrNumber #{{prTask.number}} and Pr Status :
+                                                    {{prTask.state}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                    </ng-container>
+                    <br>
+                    <div class="card">
+                        <div class="class-header p-3 ml-1">
+                            <strong>Select A Pull Request: </strong>
                         </div>
-                        <br>
-                        <div class="card">
-                            <div class="class-header p-3 ml-1">
-                                <strong>Select A Pull Request: </strong> 
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <ng-container *ngFor="let item of prData; let prIndex=index;">
-                                    <li *ngIf="PrNumber != item.number" (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
-                                        <div >
-                                            
+                        <ul class="list-group list-group-flush">
+                            <ng-container *ngFor="let item of prData; let prIndex=index;">
+                                <li *ngIf="PrNumber != item.number"
+                                    (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
+                                    <div>
+
                                         <div class="btn btn-status text-wrap text-left">
                                             {{item.title}}
-                                            <div class="prlist"> PrNumber:  #{{item.number}} and Pr Status : {{item.state}}</div>
+                                            <div class="prlist"> PrNumber: #{{item.number}} and Pr Status :
+                                                {{item.state}}</div>
                                         </div>
-                                    </div> 
-                                    </li>
-                                </ng-container>
-                            </ul>
-                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </div>
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="noRepoLinked || noPrExist">
@@ -77,25 +106,28 @@
                     <div class="row pt-3">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 px-4">
-                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()"
+                                style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
                 </ng-container>
-                
-               <ng-container *ngIf="!PopupHandlerService.addPrActive">
+
+                <ng-container *ngIf="!PopupHandlerService.addPrActive">
                     <div *ngIf="prLinked">
-                       <div class="row mx-5">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
-                        </div>
-                        <div class="col-md-4"></div>
+                        <div class="row mx-5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">
+                                    check_circle_outline</mat-icon>
+                            </div>
+                            <div class="col-md-4"></div>
                         </div>
                         <div class="row">
                             <div class="col-md-3"></div>
                             <div class="col-md-6">
-                                <div class="row font-weight-bold" style="font-size: medium;flex-wrap: wrap;"> Successfully Linked The PR!</div>
+                                <div class="row font-weight-bold" style="font-size: medium;flex-wrap: wrap;">
+                                    Successfully Linked The PR!</div>
                             </div>
                             <div class="col-md-3"></div>
                         </div>
@@ -106,7 +138,8 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()"
+                                style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
