@@ -6,7 +6,7 @@
 
 .modal-content {
     background-color: var(--secondary-bg);
-    border-radius: 8px;
+    border-radius: 0.3rem;
     color: var(--text);
 }
 
@@ -81,7 +81,7 @@
     color: var(--text);
 }
 
-.btn:hover,
+.prBtn:hover,
 #button:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);

@@ -42,8 +42,8 @@
                                         <li class="list-group-item">
                                             <a href="{{item.html_url}}" class="btn btn-status text-wrap text-left">
                                                 {{item.title}}
-                                                <div class="prlist"> PrNumber #{{PrNumber}} and Pr Status :
-                                                    {{item.state}}</div>
+                                                <div class="prlist">#{{PrNumber}}  |  Pr Status :
+                                                    {{item.state}} </div>
                                             </a>
                                         </li>
                                     </ng-container>
@@ -51,8 +51,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <br>
-                    <ng-container *ngIf="prFound">
+                    <ng-container *ngIf="prFound && PrNumber != prTask.number">
+                        <br>
                             <div class="card">
                                 <div class="class-header p-3 ml-1">
                                     <strong>Found PR: </strong>
@@ -64,8 +64,8 @@
                                             class="list-group-item">
                                             <div class="btn btn-status text-wrap text-left">
                                                 {{prTask.title}}
-                                                <div class="prlist"> PrNumber #{{prTask.number}} and Pr Status :
-                                                    {{prTask.state}}
+                                                <div class="prlist">#{{prTask.number}}  |  Pr Status :
+                                                    {{prTask.state}} {{WtId}}
                                                 </div>
                                             </div>
                                         </li>
@@ -86,8 +86,8 @@
 
                                         <div class="btn btn-status text-wrap text-left">
                                             {{item.title}}
-                                            <div class="prlist"> PrNumber: #{{item.number}} and Pr Status :
-                                                {{item.state}}</div>
+                                            <div class="prlist"> #{{item.number}}  |  Pr Status :
+                                                {{item.state}} </div>
                                         </div>
                                     </div>
                                 </li>

@@ -426,18 +426,18 @@ export class TaskDetailsComponent implements OnInit {
     // this.showLoader = true;
   }
 
-  showPrDetails() {
-    if(this.prLink){
-      window.open(this.prLink,'_blank');
-      this.prFound = true;
-    }else{
-      console.error("error in  getting the pr");
-    }
-}
+//   showPrDetails() {
+//     if(this.prLink){
+//       window.open(this.prLink,'_blank');
+//       this.prFound = true;
+//     }else{
+//       console.error("error in  getting the pr");
+//     }
+// }
 
-  close(){
-    jQuery('#getPrDetails').modal('hide');
-  }
+//   close(){
+//     jQuery('#getPrDetails').modal('hide');
+//   }
   
 }
 

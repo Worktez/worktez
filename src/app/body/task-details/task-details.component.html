@@ -59,7 +59,7 @@
                                     </a>
                                 </span>
                             </li>
-                            <li class="nav-item"  *ngIf="githubRepoExists">
+                            <!-- <li class="nav-item"  *ngIf="githubRepoExists">
                                 <div class="dropdown" id="getPrDetails" *ngIf="prLinked"> 
                                     <span class="btn dropdown" title="Get Pr Details" data-toggle="dropdown" style="margin-top: 2px;">
                                         <mat-icon >
@@ -88,7 +88,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="nav-item" *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                 <span class="btn" data-toggle="modal" title="Log Work" data-target="#Modal" (click)="logWorkPage()">
                                     <mat-icon fontSet="material-icons-outlined" class="align-middle">

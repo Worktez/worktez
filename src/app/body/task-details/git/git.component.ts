@@ -44,6 +44,7 @@ export class GitComponent implements OnInit {
   prtitle: string;
   prTask: GitRepoData;
   prFound: boolean =false;
+  WtId: string;
   constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
@@ -87,24 +88,18 @@ export class GitComponent implements OnInit {
   autoCheckPr(prData:GitRepoData[]) {
     prData.forEach(element => {
       let body = element.body;      
-      // console.log(body);
       if(body){
         const sp = body.indexOf("## WtId:")
-        // const sp = body.indexOf("### Functionality:")
-        // console.log(sp);
+
         if(sp != -1){
           const ep = body.indexOf("## ",sp+4);
-          // const ep = body.indexOf("## ",sp+4);
           var tp = body.slice(sp, ep);
-          // console.log(tp,"ohi")
           tp = tp.slice(tp.indexOf(":")+1, tp.lastIndexOf("\r"));
-          // tp = tp.slice(tp.indexOf("\n")+1, tp.lastIndexOf("\r"));
 
           if(tp.includes(this.taskId)){
             this.prFound = true;
             this.prTask = element;
-            // console.log(this.prTask.title,"hihi");
-            // return this.prTask
+            this.WtId = ` | WtId:${tp}`            
           }else{
             this.prFound = false;
             console.log("No pr Data found");
