@@ -6,7 +6,7 @@
 
 .modal-content {
     background-color: var(--secondary-bg);
-    border-radius: 0.3rem;
+    border-radius: 5px;
     color: var(--text);
 }
 
@@ -90,5 +90,4 @@
 
 .close {
     color: var(--text);
-    justify-content: center;
 }
