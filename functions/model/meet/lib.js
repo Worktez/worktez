@@ -2,7 +2,6 @@
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable max-len */
-
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
@@ -16,24 +15,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-
 const {db} = require("../application/lib");
-
 /**
- * Description
- * @param {any} meetDocId
- * @param {any} orgDomain
- * @param {any} teamId
- * @param {any} teamMembers
- * @param {any} title
- * @param {any} startTime
- * @param {any} endTime
- * @param {any} hostName
- * @param {any} description
- * @param {any} date
- * @param {any} roomId
- * @return {any}
- */
+  * Description
+  * @param {any} meetDocId
+  * @param {any} orgDomain
+  * @param {any} teamId
+  * @param {any} teamMembers
+  * @param {any} title
+  * @param {any} startTime
+  * @param {any} endTime
+  * @param {any} hostName
+  * @param {any} description
+  * @param {any} date
+  * @param {any} roomId
+  * @return {any}
+  */
 exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId) {
   const setMeetDoc = db.collection("Meet").doc(meetDocId).set({
     MeetDocId: meetDocId,
@@ -43,7 +40,6 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
     Title: title,
     StartTime: startTime,
     EndTime: endTime,
-    Status: "OK",
     HostName: hostName,
     Description: description,
     Date: date,
@@ -51,23 +47,22 @@ exports.setMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, sta
   });
   return Promise.resolve(setMeetDoc);
 };
-
 /**
- * Description
- * @param {any} meetDocId
- * @param {any} orgDomain
- * @param {any} teamId
- * @param {any} teamMembers
- * @param {any} title
- * @param {any} startTime
- * @param {any} endTime
- * @param {any} hostName
- * @param {any} description
- * @param {any} date
- * @param {any} uid
- * @param {any} roomId
- * @return {any}
- */
+  * Description
+  * @param {any} meetDocId
+  * @param {any} orgDomain
+  * @param {any} teamId
+  * @param {any} teamMembers
+  * @param {any} title
+  * @param {any} startTime
+  * @param {any} endTime
+  * @param {any} hostName
+  * @param {any} description
+  * @param {any} date
+  * @param {any} uid
+  * @param {any} roomId
+  * @return {any}
+  */
 exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId) {
   const setMeetDoc1 = db.collection("Users").doc(uid).collection("Meet").doc(meetDocId).set({
     MeetDocId: meetDocId,
@@ -78,7 +73,6 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
     StartTime: startTime,
     EndTime: endTime,
     HostName: hostName,
-    Status: "OK",
     Description: description,
     Date: date,
     Uid: uid,
@@ -88,35 +82,22 @@ exports.setUserMeet = function(meetDocId, orgDomain, teamId, teamMembers, title,
 };
 
 /**
- * Description
- * @param {any} uid
- * @param {any} docId
- * @param {any} updateMeetDetailsToJson
- * @return {any}
- */
-exports.updateUserMeetDetails= function(uid, docId, updateMeetDetailsToJson) {
-  const updateMeet = db.collection("Users").doc(uid).collection("Meet").doc(docId).update(updateMeetDetailsToJson);
-  return Promise.resolve(updateMeet);
-};
-
-
-/**
- * Description
- * @param {any} updateJson
- * @param {any} meetDocId
- * @param {any} title
- * @return {any}
- */
+  * Description
+  * @param {any} updateJson
+  * @param {any} meetDocId
+  * @param {any} title
+  * @return {any}
+  */
 exports.updateMeetDetails= function(updateJson, meetDocId) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
 };
 
 /**
- * Description
- * @param {any} meetDocId
- * @return {any}
- */
+  * Description
+  * @param {any} meetDocId
+  * @return {any}
+  */
 exports.getWorktezMeetDetails=function(meetDocId) {
   const query = db.collection("Meet").doc(meetDocId);
   const promise = query.get().then((doc) => {
@@ -132,12 +113,12 @@ exports.getWorktezMeetDetails=function(meetDocId) {
 };
 
 /**
- * Description
- * @param {any} uid
- * @return {any}
- */
+  * Description
+  * @param {any} uid
+  * @return {any}
+  */
 exports.getMeetDetails=function(uid) {
-  const query = db.collection("Users").doc(uid).collection("Meet").where("Status", "==", "OK");
+  const query = db.collection("Users").doc(uid).collection("Meet");
   const promise = query.get().then((doc) => {
     const data=[];
     doc.forEach((element) => {
@@ -145,32 +126,19 @@ exports.getMeetDetails=function(uid) {
         data.push( element.data());
       }
     });
+    return data;
   });
 
   return Promise.resolve(promise);
 };
 
 /**
- * Description
- * @param {any} updateJson
- * @param {any} meetDocId
- * @return {any}
- */
+  * Description
+  * @param {any} updateJson
+  * @param {any} meetDocId
+  * @return {any}
+  */
 exports.updateMeetDetailsAtWorktez= function(updateJson, meetDocId) {
   const updateMeet = db.collection("Meet").doc(meetDocId).update(updateJson);
   return Promise.resolve(updateMeet);
-};
-
-/**
- * Description
- * @param {any} uid
- * @param {any} docId
- * @return {any}
- */
-exports.getUserMeetDetailsById = function(uid, docId) {
-  const getUserMeetDetailsById = db.collection("Users").doc(uid).collection("Meet").doc(docId).get().then((doc) => {
-    const data = doc.data();
-    return data;
-  });
-  return Promise.resolve(getUserMeetDetailsById);
 };

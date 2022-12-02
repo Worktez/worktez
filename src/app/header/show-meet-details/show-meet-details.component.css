@@ -13,81 +13,58 @@
 ***********************************************************/
 
 .btn {
-    float: right;
-    left: 60px;
-    top: 0px;
-    margin-left:90px;
-    margin-top: 4px;
-    padding-top: 9px;
-    width: 50px;
-    height: 35px;
-    
-}
-
-.btn {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
 }
 .btn:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-    align-items: center;
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
 }
 a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 12px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 12px;
 }
-
 #notificationBox:hover {
-    padding: 0%;
+  padding: 0%;
 }
-
-#notificationBox{
-    border: 1px solid var(--button-text-hover);
-    border-radius: 6px;
+#notificationBox {
+  border: 1px solid var(--button-text-hover);
+  border-radius: 6px;
 }
-
 #dt {
-    color: var(--button-text);
+  color: var(--button-text);
 }
-
-.join-btn{
-    float: right;
-    left: 60px;
-    margin-top: 3px;
-    padding-top: 6px;
-    width: 60px;
-    height: 35px;
-    background-color: var(--primary-color);
-    color: #fff;
-    border-radius: 6px;
-    text-align: center;
-    margin-right: -42px;
+.join-btn {
+  float: right;
+  margin-left: 100px;
+  margin-top: 5px;
+  padding-top: 6px;
+  width: 60px;
+  height: 35px;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 6px;
+  text-align: center;
 }
-
 .join-btn:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
 }
-
-.meet-details{
-    padding: 5px;
+.meet-details {
+  padding: 5px;
 }
-
-.meet-card{
-    background-color: transparent;
-    border-radius: 3px;
-    color: #fff;
+.meet-card {
+  background-color: transparent;
+  border-radius: 3px;
+  color: #fff;
 }
-
-.Meet-time{
-    margin-top: 15px;
-    width: 60px;
-    color: var(--text);
+.Meet-time {
+  margin-top: 15px;
+  width: 60px;
+  color: var(--text);
 }
-
-.meet-title{
-    padding-top: 5px;
-    color: var(--text);
-    text-align: center;
+.meet-title {
+  padding-top: 5px;
+  color: var(--text);
+  text-align: center;
 }
