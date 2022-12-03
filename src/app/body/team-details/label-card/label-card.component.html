@@ -55,26 +55,30 @@
                 <nav class="modal-header navbar  navbar-dark" id="navbarMenu">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <h5 class="active nav-link head" id="exampleModalDelLabel">Are You Sure?</h5>
+                            <h3 class="modal-title" id="exampleModalDelLabel">Are You Sure?</h3>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="material-icons text-light">close</span>
-                            </button>
-                        </li>
-                    </ul>
+               <div class="close" data-dismiss="modal" aria-label="Close">
+           <span class="btn">
+              <mat-icon fontSet="material-icons-outlined" class="align-middle "title="Close">
+                close
+               </mat-icon>
+           </span>
+              </div> 
+              </li>
+                  </ul>
                 </nav>
                 <div class="container modal-body" id="editPageTaskContainer">
                     <ng-container>
                         <div class="row">
-                            <div class="col">You are about to delete this Label.</div>
+                            <div class="col">You are about to delete this.</div>
                         </div>
                         <div class="row">
                             <div class="col-md-9"></div>
                             <div class="col-md-3 pb-2 px-4">
-                                <button class="btn" id="button" type="button"  (click)="deletedLabel()">Delete</button>
+                                <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deletedLabel()">Delete</button>
                             </div>
                         </div>
                     </ng-container>

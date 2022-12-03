@@ -173,9 +173,9 @@ export class ScheduleMeetComponent implements OnInit {
       })
     }
   }
-  
 
   close(){
+    this.popupHandlerService.scheduleMeetEnabled = false;
       this.meetScheduled.emit({ completed: true });
   }
 }

@@ -147,13 +147,13 @@ export class UpdateTeamComponent implements OnInit {
     this.childStep -= 1
   }
 
-  async removeMemberDB(remove: string) {
+  removeMemberDB(remove: string) {
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('teams/removeMember');
     if (this.organizationDomain == undefined) {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
-    await callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamMembers: this.teamMembers, Remove: remove}).subscribe({
       next: (data) => {
         this.enableLoader = false;
         console.log("Successful removed member");

@@ -340,7 +340,6 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   editTaskCompleted ( data: { completed: boolean, task:Tasks } ) {
-    console.log(data);
     this.getTaskPageData();
     this.editTaskEnabled = false;
   }

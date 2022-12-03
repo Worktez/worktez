@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
 
   userData : User[]
 
-  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
+  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {
   }
 
   ngOnInit(): void {
@@ -111,6 +111,14 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
+  }
+
+  linkWithGithub() {
+    this.authService.linkGithub();
+  }
+
+  unlinkWithGithub() {
+    this.authService.unlinkGithub();
   }
 
   checkSameUser(){
