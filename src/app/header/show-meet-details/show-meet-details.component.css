@@ -13,19 +13,15 @@
 ***********************************************************/
 
 .btn {
-    float: right;
+    position: absolute;
     left: 60px;
     top: 0px;
-    margin-left:90px;
+    margin-left:100px;
     margin-top: 4px;
     padding-top: 9px;
     width: 50px;
     height: 35px;
     
-}
-
-.btn {
-    background-color: var(--primary-color);
 }
 .btn:hover {
     background-color: var(--dropdown-hover);
@@ -53,8 +49,8 @@ a {
 
 .join-btn{
     float: right;
-    left: 60px;
-    margin-top: 3px;
+    margin-left:100px;
+    margin-top: 5px;
     padding-top: 6px;
     width: 60px;
     height: 35px;
@@ -62,7 +58,6 @@ a {
     color: #fff;
     border-radius: 6px;
     text-align: center;
-    margin-right: -42px;
 }
 
 .join-btn:hover {
