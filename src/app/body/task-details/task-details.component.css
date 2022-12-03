@@ -95,8 +95,10 @@ nav {
     color: var(--text);
 }
 
+.remove:hover,
 .btn:hover {
     background-color: var(--dropdown-hover);
+    cursor: pointer;
     color: var(--button-text-hover);
 }
 
