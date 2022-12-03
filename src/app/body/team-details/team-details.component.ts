@@ -22,6 +22,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-team-details',

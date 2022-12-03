@@ -99,7 +99,6 @@ export class CreateNewTaskComponent implements OnInit {
   }
   
   readTeamData(teamId :string) {
-    console.log("c1");
     this.enableLoader = true;
     this.applicationSetting.getTeamDetails(teamId);
     const team = this.applicationSetting.team;
