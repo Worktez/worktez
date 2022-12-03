@@ -12,82 +12,82 @@
 * See the MIT License for more details. 
 ***********************************************************/
 #editPageTaskContainer {
-  color: var(--text);
-  border-radius: 10px;
-  border: 1px solid var(--primary-bg);
+   color: var(--text);
+   border-radius: 10px;
+   border: 1px solid var(--primary-bg);
 }
 
 .card-header {
-  background-color: var(--secondary-bg);
+   background-color: var(--secondary-bg);
 }
 
 .modal-content {
-  background-color: var(--card-bg);
-  color: var(--text);
-  border-radius: 6px;
-  min-height: 30px;
-  justify-content: space-evenly;
+   background-color: var(--card-bg);
+   color: var(--text);
+   border-radius: 6px;
+   min-height: 30px;
+   justify-content: space-evenly;
 }
 
 .btn {
-  color: var(--text);
+   color: var(--text);
 }
 
 #button {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  width: 100%;
+   background-color: var(--primary-color);
+   color: #ffffff;
+   width: 100%;
 }
 
 #button.btn:hover {
-  background-color: var(--dropdown-hover);
-  color: var(--button-text-hover);
+   background-color: var(--dropdown-hover);
+   color: var(--button-text-hover);
 }
 
 .btn:hover {
-  background-color: var(--dropdown-hover);
-  color: var(--button-text-hover);
+   background-color: var(--dropdown-hover);
+   color: var(--button-text-hover);
 }
 
 .card {
-  background-color: var(--secondary-bg);
-  color: var(--text);
-  width: 384px;
+   background-color: var(--secondary-bg);
+   color: var(--text);
+   width: 384px;
 }
 
 .icons {
-  cursor: pointer;
+   cursor: pointer;
 }
 .list-group-item {
-  background: var(--secondary-bg);
-  color: var(--text);
+   background: var(--secondary-bg);
+   color: var(--text);
 }
 
 .icons {
-  color: var(--text);
+   color: var(--text);
 }
 
 .icons:hover {
-  color: var(--button-text-hover);
+   color: var(--button-text-hover);
 }
 
 .header {
-  font-weight: bold;
+   font-weight: bold;
 }
 
 .head {
-  font-weight: bolder;
+   font-weight: bolder;
 }
 
 #font {
-  font-size: 20px;
-  background-color: var(--secondary-color);
-  color: var(--button-text);
+   font-size: 20px;
+   background-color: var(--secondary-color);
+   color: var(--button-text);
 }
 
 select:focus,
 input:focus {
-  box-shadow: none;
-  outline: 0 none;
-  border-color: var(--primary-color);
+   box-shadow: none;
+   outline: 0 none;
+   border-color: var(--primary-color);
 }

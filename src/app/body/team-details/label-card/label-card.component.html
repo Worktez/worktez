@@ -1,92 +1,147 @@
 <!-- /*********************************************************** 
-   * Copyright (C) 2022 
-   * Worktez 
-   * 
-   * This program is free software; you can redistribute it and/or 
-   * modify it under the terms of the MIT License 
-   * 
-   * 
-   * This program is distributed in the hope that it will be useful, 
-   * but WITHOUT ANY WARRANTY; without even the implied warranty of 
-   * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-   * See the MIT License for more details. 
-   ***********************************************************/ -->
-   <div class="card" style="width: 18rem;" *ngIf="labelsReady">
-    <div class="card-header">
-       {{scope}}
-       <span *ngIf="rbaService.isRbaReady && rbaService.permissions.createNewLabel" class="icons float-right">
-          <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="addLabel()" data-toggle="modal" data-target="#addLabel">
-             add
-          </mat-icon>
-       </span>
-    </div>
-    <ul class="list-group list-group-flush">
-       <ng-container *ngFor="let item of labels">
-          <li class="list-group-item">
-             <div class="row p-0">
-                <div class="col-6">
-                   <span class="label float-left">{{item.DisplayName}}</span>
-                   <span class="value float-left">
-                      <app-generate-icon [icon]="item"></app-generate-icon>
-                   </span>
-                </div>
-                <div class="col-6 text-right">
-                   <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
-                   edit 
-                   </mat-icon>
-                   <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelTodelete(item)" data-toggle="modal" data-target="#deletedLabel">
-                   delete
-                   </mat-icon>
-                </div>
-             </div>
-          </li>
-       </ng-container>
-    </ul>
- </div>
- <ng-container *ngIf="addLabelEnabled" id="exampleModalCenterLabel">
-    <app-add-label [teamName]="teamName" (addLabelCompleted)=" addLabelCompleted($event)"></app-add-label>
- </ng-container>
- <ng-container *ngIf="showEditLabelProp" id="openEditProperties">
-    <app-edit-label-prop [label]="labelToEdit" [teamName]="teamName" (editLabelCompleted)="editLabelCompleted($event)" (getTeamLabelsByScope)="getTeamLabelsByScope()" [scope]="scope"></app-edit-label-prop>
- </ng-container>
- <ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
-    <div class="modal fade" id="deletedLabel" tabindex="-1" role="dialog" aria-labelledby="deletedLabelTitle" aria-hidden="true">
-       <div class="modal-dialog modal-dialog-centered p-0" role="document">
-          <div class="modal-content">
-             <nav class="modal-header navbar navbar-dark" id="navbarMenu">
-                <ul class="navbar-nav mr-auto">
-                   <li class="nav-item">
-                      <h3 class="modal-title" id="exampleModalDelLabel">Are You Sure?</h3>
-                   </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                   <li class="nav-item">
-                      <div class="close" data-dismiss="modal" aria-label="Close">
-                         <span class="btn">
-                            <mat-icon fontSet="material-icons-outlined" class="align-middle "title="Close">
-                               close
-                            </mat-icon>
-                         </span>
-                      </div>
-                   </li>
-                </ul>
-             </nav>
-             <div class="container modal-body" id="editPageTaskContainer">
-                <ng-container>
-                   <div class="row">
-                      <div class="col">You are about to delete this <Label></Label>.</div>
-                   </div>
-                   <div class="row">
-                      <div class="col-md-9"></div>
-                      <div class="col-md-3 pb-2 px-4">
-                         <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deletedLabel()">Delete</button>
-                      </div>
-                   </div>
-                </ng-container>
-             </div>
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="card" style="width: 18rem" *ngIf="labelsReady">
+  <div class="card-header">
+    {{ scope }}
+    <span
+      *ngIf="rbaService.isRbaReady && rbaService.permissions.createNewLabel"
+      class="icons float-right"
+    >
+      <mat-icon
+        fontSet="material-icons-outlined"
+        class="align-middle"
+        (click)="addLabel()"
+        data-toggle="modal"
+        data-target="#addLabel"
+      >
+        add
+      </mat-icon>
+    </span>
+  </div>
+  <ul class="list-group list-group-flush">
+    <ng-container *ngFor="let item of labels">
+      <li class="list-group-item">
+        <div class="row p-0">
+          <div class="col-6">
+            <span class="label float-left">{{ item.DisplayName }}</span>
+            <span class="value float-left">
+              <app-generate-icon [icon]="item"></app-generate-icon>
+            </span>
           </div>
-       </div>
+          <div class="col-6 text-right">
+            <mat-icon
+              *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel"
+              fontSet="material-icons-outlined"
+              class="align-middle p-2 icons"
+              (click)="setLabelToEdit(item)"
+              data-toggle="modal"
+              data-target="#openEditProperties"
+            >
+              edit
+            </mat-icon>
+            <mat-icon
+              *ngIf="
+                rbaService.isRbaReady && rbaService.permissions.deleteLabel
+              "
+              fontSet="material-icons-outlined"
+              class="align-middle p-2 icons"
+              (click)="setLabelTodelete(item)"
+              data-toggle="modal"
+              data-target="#deletedLabel"
+            >
+              delete
+            </mat-icon>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+<ng-container *ngIf="addLabelEnabled" id="exampleModalCenterLabel">
+  <app-add-label
+    [teamName]="teamName"
+    (addLabelCompleted)="addLabelCompleted($event)"
+  ></app-add-label>
+</ng-container>
+<ng-container *ngIf="showEditLabelProp" id="openEditProperties">
+  <app-edit-label-prop
+    [label]="labelToEdit"
+    [teamName]="teamName"
+    (editLabelCompleted)="editLabelCompleted($event)"
+    (getTeamLabelsByScope)="getTeamLabelsByScope()"
+    [scope]="scope"
+  ></app-edit-label-prop>
+</ng-container>
+<ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
+  <div
+    class="modal fade"
+    id="deletedLabel"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="deletedLabelTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered p-0" role="document">
+      <div class="modal-content">
+        <nav class="modal-header navbar navbar-dark" id="navbarMenu">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <h3 class="modal-title" id="exampleModalDelLabel">
+                Are You Sure?
+              </h3>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+              <div class="close" data-dismiss="modal" aria-label="Close">
+                <span class="btn">
+                  <mat-icon
+                    fontSet="material-icons-outlined"
+                    class="align-middle"
+                    title="Close"
+                  >
+                    close
+                  </mat-icon>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div class="container modal-body" id="editPageTaskContainer">
+          <ng-container>
+            <div class="row">
+              <div class="col">
+                You are about to delete this <Label></Label>.
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-9"></div>
+              <div class="col-md-3 pb-2 px-4">
+                <button
+                  class="btn"
+                  id="button"
+                  type="button"
+                  data-dismiss="modal"
+                  (click)="deletedLabel()"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
     </div>
- </ng-container>
-
-
+  </div>
+</ng-container>
