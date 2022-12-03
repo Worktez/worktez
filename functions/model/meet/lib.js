@@ -145,6 +145,7 @@ exports.getMeetDetails=function(uid) {
         data.push( element.data());
       }
     });
+    return data;
   });
 
   return Promise.resolve(promise);
