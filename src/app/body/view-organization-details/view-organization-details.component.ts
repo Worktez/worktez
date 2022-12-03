@@ -58,12 +58,19 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar("ORGANIZATION DETAILS");
-    if(this.startService.showTeams) {
+    if(this.teamService.teamsReady) {
       this.getOrganizationDetails();
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
-        if(data){
-          this.getOrganizationDetails();
+      this.teamService.teamDataStateObservable.subscribe({
+        next: (data) => {
+          if(data)
+            this.getOrganizationDetails();
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("Completed getting Team Data");
         }
       });
     }
@@ -86,7 +93,6 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   }
 
   readOrganizationLogo(orgDomain: string) {
-    console.log("got here");
     this.authService.getOrganizationLogo(orgDomain).subscribe(fileData => {
       if(fileData[fileData.length-1] != undefined) {
         this.imageUrl = fileData[fileData.length-1].FileUrl;
