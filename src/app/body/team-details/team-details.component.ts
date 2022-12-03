@@ -210,8 +210,10 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   teamUpdated(data: { completed: boolean }) {
+    this.getTeamData();
     this.updateTeamEnabled = false;
   }
+  
   selectedAssignee(item: any) {
     console.log(item)
   }
