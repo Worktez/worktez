@@ -19,8 +19,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
-declare var jQuery:any;
-
 @Component({
   selector: 'app-add-label',
   templateUrl: './add-label.component.html',
@@ -53,7 +51,6 @@ export class AddLabelComponent implements OnInit {
      this.enableLoader=true;
      const orgDomain = this.backendService.getOrganizationDomain();
      const callable = this.functions.httpsCallable('teams/addLabel');
-     console.log(this.colorCode.value);
      callable({ColorCode:this.colorCode.value, DisplayName:this.displayName, IconName:this.iconName.value, Scope:this.scope, OrgDomain: orgDomain ,TeamName: this.teamName}).subscribe({
        next:() => {
          console.log("Added New Label");
@@ -92,8 +89,6 @@ export class AddLabelComponent implements OnInit {
   }
 
   close(){
-    jQuery('#addLabel').modal('hide');
-    jQuery('#form').trigger("reset");
     this.addLabelCompleted.emit();
   }
 

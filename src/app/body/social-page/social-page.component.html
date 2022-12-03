@@ -19,16 +19,6 @@
                 </div>
             </div>
             <hr>
-            <!-- <div class="px-4">
-                <h3 *ngIf="recentPosts" > <b>Recent Posts: </b> </h3>
-                <ng-container *ngFor="let post of recentPosts">
-                    <hr>
-                    <p>
-                        <p class="row font-weight-light"> <span class="col-6">{{post.LastUpdatedDate}}</span><span class="col-6">{{post.LastUpdatedTime}}</span> </p>
-                        {{post.Post}}
-                    </p>
-                </ng-container>
-            </div> -->
         </div>
         
         <ng-template #loader>
@@ -50,8 +40,11 @@
     <div class="col col-md-4">
         <div  class="pb-4">
             <button *ngIf="startService.userReady; else noUser" class="btn" (click)="createPost()" data-toggle="modal" data-target="#createPost">
-            Create post<mat-icon fontSet="material-icons-outlined" class="align-middle ml-2">
-            add_circle</mat-icon></button>
+                Create post
+                <mat-icon fontSet="material-icons-outlined" class="align-middle ml-2">
+                    add_circle
+                </mat-icon>
+            </button>
         </div>
         <ng-container *ngIf="socialPageService.socialPageDataReady && socialPageService.dataReady; else loader">
             <ng-container *ngIf="(socialPageService.socialPageDataJson).length==0">
@@ -68,13 +61,17 @@
             </ng-container>
         </ng-container>
         <ng-container *ngIf="!disableLoadMore; else noMoreData">
-            <a class="btn btn-outline-secondary oldNotificationBtn" (click)="showOlderPosts()"  [disabled]="disableLoadMore">Show old Posts</a>
-        </ng-container>
-            <ng-template #noMoreData>
-                <div class="text-center">
-                    <button class="btn btn-sm" [disabled]="disableLoadMore"> No more data to load...</button>
+            <div class="row">
+                <div class="col text-center">
+                    <button class="btn" (click)="showOlderPosts()"  [disabled]="disableLoadMore">Load more</button>
                 </div>
-            </ng-template>
+            </div>
+        </ng-container>
+        <ng-template #noMoreData>
+            <div class="text-center">
+                <button class="btn btn-sm" [disabled]="disableLoadMore"> No more posts to load...</button>
+            </div>
+        </ng-template>
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>
@@ -87,4 +84,3 @@
 <ng-container *ngIf="createPostEnabled" id="exampleModalCenterLabel">
     <app-create-post (createPostCompleted)="createPostCompleted($event)"></app-create-post>
 </ng-container>
-<!-- <app-loader *ngIf="showloader"></app-loader> -->

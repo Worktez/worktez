@@ -1,5 +1,5 @@
 <ng-container *ngIf="commentDataReady; else loader ">
-  <div class="card mt-2" *ngIf="comment.CommentStatus != -1">
+  <div class="card mt-2" *ngIf="comment.Status != 'Deleted'">
     <div class="card-header">
       <div class="row">
         <div class="col">

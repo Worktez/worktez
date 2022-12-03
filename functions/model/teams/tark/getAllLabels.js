@@ -49,7 +49,6 @@ exports.getAllLabels = function(request, response) {
     console.log("Error: ", error);
   });
   return Promise.resolve(p).then(() => {
-    console.log(res);
     result = { data: res };
     return response.status(status).send(result);
   })

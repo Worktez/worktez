@@ -121,7 +121,6 @@ export class GithubLinkComponent implements OnInit {
             complete: () => console.info('Successfull')
           })
         } else if(this.linkType=='All') {
-          console.log("check2");
           this.httpService.getGithubAllRepos(this.bearerToken).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;

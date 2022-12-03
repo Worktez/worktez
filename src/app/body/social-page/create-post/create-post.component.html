@@ -8,7 +8,7 @@
                     </div>
                         <div class="col-md-2 col-2 text-right">
                             <span class="btn">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" (click)="close()" title="Close">
                                     close
                                 </mat-icon>
                             </span>
@@ -29,7 +29,7 @@
                                     <form class="row imageData" id="imageData">
                                         <div *ngFor="let url of post.ImagesUrl" class="col-p-0 ml-3">
                                             <div class="col" >
-                                                <span class="btn btn-close ">
+                                                <span class="btn btn-close">
                                                     <mat-icon fontSet="material-icons-outlined" id="close"class="align-middle "(click)="removeImg(url)" title="Close">
                                                         close
                                                     </mat-icon>
@@ -52,8 +52,10 @@
                             <app-loader *ngIf="enableLoader"></app-loader>
                         </form>
                     </div>
-                    <div class="modal-footer mt-n1">
-                            <div class="col-md-5 col "> <button type="submit" class="btn btn-lg btn-block py-1" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()" >Post</button></div>
+                    <div class="modal-footer mt-1">
+                        <div class="col-md-5 col">
+                            <button type="submit" class="btn btn-lg btn-block py-1" id="button" [disabled]="enableLoader" aria-label="Close" data-dismiss="modal" (click)="submit()">Post</button>
+                        </div>
                     </div>
                 </div>
             </div>

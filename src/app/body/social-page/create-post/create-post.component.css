@@ -19,10 +19,6 @@
     padding-top: 0 !important;
 }
 
-.close {
-    color: var(--text);
-}
-
 .form-group {
     margin-bottom: 0;
 }

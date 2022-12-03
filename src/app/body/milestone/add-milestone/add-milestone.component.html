@@ -14,9 +14,9 @@
   <div class="modal fade" id="exampleModalCenter" style="z-index: 1050" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+      <div class="modal-content px-2">
         <div class="modal-header">
-          <h2 class="modal-title" id="exampleModalLongTitle">
+          <h2 class="modal-title mb-0" id="exampleModalLongTitle">
             Add a Milestone
           </h2>
           <!-- <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
@@ -29,7 +29,7 @@
             <!-- <span class="material-icons">close</span> -->
         </span>
         </div>
-        <div class="modal-body">
+        <div class="modal-body pt-0">
           <form *ngIf="popupHandlerService.addMilestoneActive">
               <div class="form-row my-2">
                 <div class="form-group col-md-6 col">
@@ -48,7 +48,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-row my-4">
+              <div class="form-row my-2">
                 <div class="form-group col-md-12 col">
                     <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone Status</span>
                     <select class="form-control form-control-sm" [(ngModel)]="milestoneStatus"
@@ -60,7 +60,7 @@
                     </select>
                 </div>
               </div>
-              <div class="form-row my-4 mb-2">
+              <div class="form-row my-2">
                 <div class="form-group col-md-12 col">
                   <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                   <textarea required type="text" [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"

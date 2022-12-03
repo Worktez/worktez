@@ -53,6 +53,8 @@ export class AuthService {
   filesData: FileData[];
   public filesCollectionData: Observable<FileData[]>
 
+  public githubProvider: boolean = false;
+
   constructor(private cookieService: CookieService, public afauth: AngularFireAuth, private functions: AngularFireFunctions, public themeService: ThemeService) { }
 
   async createUser(email: string, password: string, username: string) {
@@ -90,6 +92,28 @@ export class AuthService {
     const credential = await this.afauth.signInWithPopup(provider);
     this.user = credential.user;
     return this.createUserData(credential.user);
+  }
+
+  async linkGithub() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    await (await this.afauth.currentUser).linkWithPopup(provider);
+    this.updateProvidersList();
+  }
+
+  async unlinkGithub() {
+    const provider = new firebase.auth.GithubAuthProvider();
+    await (await this.afauth.currentUser).unlink("github.com");
+    this.updateProvidersList();
+  }
+
+  updateProvidersList() {
+    const pData = this.user.providerData;
+    this.githubProvider = false;
+    pData.forEach(element => {
+      if (element.providerId == "github.com") {
+        this.githubProvider = true;
+      }
+    });
   }
 
   async logout() {

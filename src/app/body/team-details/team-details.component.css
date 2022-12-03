@@ -48,9 +48,9 @@
     color: var(--button-text-hover); 
 }
 
-span, mat-icon {
+/* span, mat-icon {
     color: var(--text);
-}
+} */
 
 #button:focus {
     outline:none;
@@ -127,7 +127,7 @@ hr {
 
 .btn:hover {
     background-color: var(--dropdown-hover);
-    color: var(--button-text-hover); 
+    color: var(--primary-color); 
 }
 
 .teamLabels{

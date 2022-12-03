@@ -14,7 +14,7 @@
 
 <ng-container *ngIf="!showLoader">
   <ng-container *ngIf="teamDataReady">
-    <div class="row" id="contentBox">
+    <div class="row contentBox">
       <div class="col-md-2 col-1"></div>
       <div class="col">
         <div class="row">
@@ -61,7 +61,6 @@
                 data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
                 edit
               </mat-icon>
-              
             </span>
             <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
               <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam"

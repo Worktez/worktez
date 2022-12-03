@@ -20,6 +20,7 @@ export class SocialPageServiceService {
     if(this.currentEpochTime==0){
       this.currentEpochTime = this.toolsService.today().valueOf();
     } else {
+      console.log(this.socialPageDataJson);
       this.currentEpochTime = this.socialPageDataJson[this.socialPageDataJson.length-1].LastUpdatedEpochTime;
     }
     const callable = this.functions.httpsCallable('socialPage/getAllSocialPageData');
@@ -27,7 +28,6 @@ export class SocialPageServiceService {
       next: (data) => {
         const postsDataArray = data as SocialPageData[];
         this.socialPageDataReady=true;
-        // this.socialPageDataJson = this.socialPageDataJson.concat(postsDataArray);
         for (const key in postsDataArray) {
           if (Object.prototype.hasOwnProperty.call(postsDataArray, key)) {
             const element = postsDataArray[key];

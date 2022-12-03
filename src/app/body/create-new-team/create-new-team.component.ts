@@ -28,7 +28,6 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { CookieService } from 'ngx-cookie-service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
-declare var jQuery:any;
 
 @Component({
   selector: 'app-create-new-team',

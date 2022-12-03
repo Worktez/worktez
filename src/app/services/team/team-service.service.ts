@@ -17,7 +17,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Subject } from 'rxjs';
 import { Team, TeamLabels } from 'src/app/Interface/TeamInterface'
-import { StartServiceService } from '../start/start-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +32,14 @@ export class TeamServiceService {
   public teamsReady: boolean = false;
   constructor(private functions: AngularFireFunctions) { }
   
-  getTeams(orgDomain) {
+  getTeams(orgDomain: string) {
     this.teamDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getAllTeams');
     callable({ OrganizationDomain: orgDomain }).subscribe({
       next: (data) => {
         const teamsDataArray = data.resultData as Team[];
         teamsDataArray.forEach(element => {
-            this.teamsDataJson[element.TeamId] = element as Team;
+          this.teamsDataJson[element.TeamId] = element as Team;
         });
       },
       error: (error) => {
@@ -59,12 +58,12 @@ export class TeamServiceService {
     return this.teamsDataJson[teamId];
   }
 
-  getLabelsByScope(teamId, scope){
-        const labelsArray = this.teamsLabelsJson[teamId][scope];
-        return Object.keys(labelsArray);
+  getLabelsByScope(teamId: string, scope: string) {
+    const labelsArray = this.teamsLabelsJson[teamId][scope];
+    return Object.keys(labelsArray);
   }
 
-  getLabels(orgDomain) {
+  getLabels(orgDomain: string) {
     this.teamLabelDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getAllLabels');
     callable({ OrganizationDomain: orgDomain }).subscribe({

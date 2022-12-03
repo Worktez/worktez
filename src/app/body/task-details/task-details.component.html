@@ -59,6 +59,36 @@
                                     </a>
                                 </span>
                             </li>
+                            <!-- <li class="nav-item"  *ngIf="githubRepoExists">
+                                <div class="dropdown" id="getPrDetails" *ngIf="prLinked"> 
+                                    <span class="btn dropdown" title="Get Pr Details" data-toggle="dropdown" style="margin-top: 2px;">
+                                        <mat-icon >
+                                            track_changes
+                                        </mat-icon>
+                                    </span>
+                                    <div class="dropdown-menu pt-0">
+                                        <div class="row">
+                                            <div class="ml-4 pt-2" style="text-align: center;">
+                                                <div  style="width: 90px;font-weight: bolder;">
+                                                    <h4>Pr Details</h4>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 col-0  close">
+                                                <span class="btn">
+                                                    <mat-icon (click)="close()"
+                                                        fontSet="material-icons-outlined" class="align-middle">
+                                                        close
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <hr class="mt-0">
+                                        <button class="btn prBtn"  (click)="showPrDetails()" id="button">
+                                             <img src="../../../assets/git.png" height="20" class="rounded-circle" width="20" style="margin-right: 5px;">View
+                                        </button>
+                                    </div>
+                                </div>
+                            </li> -->
                             <li class="nav-item" *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                 <span class="btn" data-toggle="modal" title="Log Work" data-target="#Modal" (click)="logWorkPage()">
                                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -229,7 +259,7 @@
                                         <th colspan="6">Link URL</th>
                                         <th colspan="3">
                                             <mat-icon id="icon" fontSet="material-icons-outlined" data-toggle="modal"
-                                                data-target="#linkModal" (click)="addLink()">
+                                                data-target="#linkModal" (click)="addLink()" class="remove">
                                                 add_circle</mat-icon>
                                         </th>
                                     </tr>
@@ -250,7 +280,7 @@
                                                     target="_blank">{{link.LinkURL}}</a></td>
                                             <td colspan="2">
                                                 <mat-icon (click)="removeLink(link.LinkID, link.LinkType)"
-                                                    fontSet="material-icons-outlined" class="align-middle text-danger">
+                                                    fontSet="material-icons-outlined" class="align-middle text-danger remove">
                                                     close
                                                 </mat-icon>
                                             </td>
