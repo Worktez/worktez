@@ -60,7 +60,7 @@
 .modal-content {
     margin: 0 auto;
     background-color: var(--secondary-bg);
-    color: var(--primary-color);
+    color: var(--text);
 }
 
 .modal-title{
@@ -70,6 +70,7 @@
 
 .modal-header{
     align-items: center;
+    border-bottom: none !important;
 }
 
 .modal-body{
