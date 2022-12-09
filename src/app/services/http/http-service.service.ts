@@ -58,4 +58,24 @@ export class HttpServiceService {
     const url = environment.githubApiUrl+ "/orgs/" + memberOrgName + "/repos";
     return this.httpClient.get(url);
   }
+
+  createGithubIssue(title,description,repoLink,bearerToken) {
+    const url = environment.githubApiUrl + "/repos/"+repoLink+"/issues";
+    const token = bearerToken;
+    const headers = {
+        "Authorization" : `Bearer ${token}`
+    }
+
+    const payLoad = {
+        title: title,
+        body: description
+    }
+
+    const response = fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(payLoad)
+    })
+  }
+
 }

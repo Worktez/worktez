@@ -183,6 +183,7 @@ import { AllNotificationComponent } from './header/notification-center/all-notif
 import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
+import { CreateGitIssueComponent } from './body/task-details/create-git-issue/create-git-issue.component';
 
 @NgModule({
   declarations: [
@@ -333,6 +334,7 @@ import { StandardSubscriptionComponent } from './body/standard-subscription/stan
     AllNotificationCardComponent,
     AddWatchersComponent,
     PaymentStatusComponent,
+    CreateGitIssueComponent,
   ],
   imports: [
     BrowserModule,

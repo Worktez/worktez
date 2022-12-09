@@ -56,7 +56,14 @@ export class TeamDetailsComponent implements OnInit {
   typeLink: string;
   projectLinked: boolean= false;
   repoLink: string;
-
+  enableAddToken : boolean = false;
+  githubRepoExists : boolean = false;
+  showClose : boolean = false;
+  teamName: string;
+  bearerToken: string;
+  githubTokenExists: boolean = false;
+  gitToken: string;
+  
   constructor(private teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
@@ -89,6 +96,17 @@ export class TeamDetailsComponent implements OnInit {
       else{
         this.projectLinked=true;
         this.repoLink=this.team.ProjectLink;
+      }
+    }
+  }
+
+  checkGitToken(){
+    if(this.team.GitToken!=undefined){
+      if(this.team.GitToken==""){
+        this.githubTokenExists=false;
+      }
+      else{
+        this.githubTokenExists=true;
       }
     }
   }
@@ -167,8 +185,10 @@ export class TeamDetailsComponent implements OnInit {
       this.teamDataReady = true;
       this.showLoader = false
       this.checkGitProject();
+      this.checkGitToken();
     });
   }
+
   updateTeam(team: Team) {
     this.teamToUpdate = team;
     this.updateTeamEnabled = true;
@@ -279,6 +299,41 @@ export class TeamDetailsComponent implements OnInit {
 
   close () {
     this.router.navigate(['ViewOrganizationDetails']);
+  }
+
+
+  addToken() {
+    this.enableLoader=true;
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    console.log(this.organizationDomain);
+    this.teamName = this.team.TeamName
+    // console.log(this.teamName+("kkkkkkkkkkkkkkkkkkkkkkkkkkkkk"));
+    this.gitToken = btoa(this.bearerToken)
+    console.log(this.gitToken);
+    const callable = this.functions.httpsCallable('teams/addGitToken');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, GitToken: this.gitToken}).subscribe({
+      next: (data) => {
+        console.log("Successfully added Token");
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully Added Token')
+    })
+  }
+
+  addTokenEnable(){
+    this.enableAddToken = true
+  }
+
+  back() {
+    this.enableAddToken= false;
+    this.showClose = false
+    this.getTeamData();
   }
 
 }

@@ -1,0 +1,74 @@
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { NgForm } from '@angular/forms';
+import { Tasks } from 'src/app/Interface/TasksInterface';
+import { Team } from 'src/app/Interface/TeamInterface';
+import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { ValidationService } from 'src/app/services/validation/validation.service';
+
+@Component({
+  selector: 'app-create-git-issue',
+  templateUrl: './create-git-issue.component.html',
+  styleUrls: ['./create-git-issue.component.css']
+})
+export class CreateGitIssueComponent implements OnInit {
+
+  @ViewChild('form') form: NgForm;
+  @Input('taskId') taskId: string;
+  @Input('orgDomain') orgDomain: string;
+  @Input('task') task: Tasks
+  title: string;
+  description: string;
+  gitToken:string;
+  team: Team;
+  enableLoader: boolean = false;
+  showClose: boolean = false;
+  teamId:string;
+  repoLink: string;
+  
+  @Output() createIssue = new EventEmitter<{ completed: boolean }>();
+  componentName:string = "Create Issue";
+
+  constructor(private functions: AngularFireFunctions,private startService: StartServiceService,private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService,public teamService: TeamServiceService) { }
+
+  ngOnInit(): void {
+    this.title=this.task.Title;
+    this.description=this.task.Description;
+    this.gitToken=this.teamService.teamsDataJson[this.task.TeamId].GitToken;
+    this.gitToken=atob(this.teamService.teamsDataJson[this.task.TeamId].GitToken);
+    console.log(this.gitToken);
+    console.log("GitToken : "+this.teamService.teamsDataJson[this.task.TeamId].GitToken)
+    this.showClose = false;
+    this.teamId = this.taskId.slice(0,3);
+    if(this.startService.showTeams) {
+      this.getTeamDetails(this.teamId);
+    } else {
+      this.startService.userDataStateObservable.subscribe((data) => {
+        if(data){
+          this.getTeamDetails(this.teamId);
+        }
+      });
+    }
+  }
+
+  getTeamDetails(teamId: string) {
+    this.applicationSettingsService.getTeamDetails(teamId);
+    this.team = this.applicationSettingsService.team;
+    this.repoLink=this.team.ProjectLink;
+    console.log(this.repoLink)
+  }
+
+  submit() {
+    this.httpService.createGithubIssue(this.title,this.description,this.repoLink,this.gitToken);
+    this.showClose = true;
+  }
+  
+  close() {
+    this.createIssue.emit({ completed: true });
+  }
+}
+
