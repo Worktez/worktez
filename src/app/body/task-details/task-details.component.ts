@@ -451,7 +451,6 @@ createIssue(data: { completed:boolean } ){
 }
 
 checkGitTokenExists(){
-  console.log(this.teamService.teamsDataJson[this.task.TeamId].GitToken);
   if(this.teamService.teamsDataJson[this.task.TeamId].GitToken != undefined && this.teamService.teamsDataJson[this.task.TeamId].GitToken != "" && this.teamService.teamsDataJson[this.task.TeamId].GitToken != null){
     this.githubTokenExists = true;
   }

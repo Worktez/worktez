@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
@@ -40,8 +53,6 @@ export class CreateGitIssueComponent implements OnInit {
     this.description=this.task.Description;
     this.gitToken=this.teamService.teamsDataJson[this.task.TeamId].GitToken;
     this.gitToken=atob(this.teamService.teamsDataJson[this.task.TeamId].GitToken);
-    console.log(this.gitToken);
-    console.log("GitToken : "+this.teamService.teamsDataJson[this.task.TeamId].GitToken)
     this.showClose = false;
     this.teamId = this.taskId.slice(0,3);
     if(this.startService.showTeams) {
@@ -59,7 +70,6 @@ export class CreateGitIssueComponent implements OnInit {
     this.applicationSettingsService.getTeamDetails(teamId);
     this.team = this.applicationSettingsService.team;
     this.repoLink=this.team.ProjectLink;
-    console.log(this.repoLink)
   }
 
   submit() {

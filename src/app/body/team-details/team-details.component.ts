@@ -305,11 +305,8 @@ export class TeamDetailsComponent implements OnInit {
   addToken() {
     this.enableLoader=true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
-    console.log(this.organizationDomain);
     this.teamName = this.team.TeamName
-    // console.log(this.teamName+("kkkkkkkkkkkkkkkkkkkkkkkkkkkkk"));
     this.gitToken = btoa(this.bearerToken)
-    console.log(this.gitToken);
     const callable = this.functions.httpsCallable('teams/addGitToken');
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, GitToken: this.gitToken}).subscribe({
       next: (data) => {
