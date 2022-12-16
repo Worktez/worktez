@@ -24,6 +24,7 @@ const { getOrgRawData, updateOrgRawData } = require("../../organization/lib");
 const { getSprint, updateSprint } = require("../../sprints/lib");
 const { getTask, updateTask } = require("../lib");
 const { taskMailer } = require("../../mailer/lib");
+const { updateSprintBurndownChartData } = require("../../performanceChart/tark/updateSprintBurndownChart");
 
 exports.logWork = function(request, response) {
   const assignee = request.body.data.Assignee;
@@ -93,6 +94,8 @@ exports.logWork = function(request, response) {
           TotalUnCompletedTask: totalUnCompletedTask,
         };
         updateOrgRawData(updateRawDataInputJson, orgDomain);
+        console.log(taskId.slice(0, 4), "TEam id");
+        updateSprintBurndownChartData(orgDomain, taskId.slice(0, 3), fullSprintName);
       }).catch((error) => {
         status = 500;
         console.log("Error:", error);

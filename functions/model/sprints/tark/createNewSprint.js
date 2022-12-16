@@ -22,6 +22,7 @@ const { getSprint, setSprint, updateSprint, setSprintActivity } = require("../li
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId, updateTeamDetails } = require("../../teams/lib");
 const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
+const { updateSprintBurndownChartData } = require("../../performanceChart/tark/updateSprintBurndownChart");
 
 exports.createNewSprint = function(request, response) {
   const appKey = request.body.data.AppKey;
@@ -104,6 +105,7 @@ exports.createNewSprint = function(request, response) {
   let result;
   return Promise.all(Promises).then(() => {
     updateSprintEvaluationGraphData(orgDomain, teamId, createSprintName(newSprintId));
+    updateSprintBurndownChartData(orgDomain, teamId, createSprintName(newSprintId));
     result = { data: "Sprint Created Successfully" };
     console.log("Sprint Created Successfully");
     return response.status(status).send(result);

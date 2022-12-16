@@ -21,6 +21,7 @@ const { functions, cors, fastify, requestHandler } = require("../application/lib
 const { getPerformanceChartData } = require("./tark/getPerformanceChartData");
 const { getUserPerformanceChartData } = require("./tark/getUserPerformanceChartData");
 const { getSprintEvaluationGraph } = require("./tark/getSprintEvaluationGraph");
+const { getSprintBurndownChartData } = require("./tark/getSprintBurndownChart");
 
 /**
  * Description
@@ -53,6 +54,17 @@ fastify.post("/userPerformanceChartData", (req, res) => {
  */
 fastify.post("/sprintEvaluationGraph", (req, res) => {
   getSprintEvaluationGraph(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getSprintBurndownChart"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getSprintBurndownChart", (req, res) => {
+  getSprintBurndownChartData(req, res);
 });
 
 /**
