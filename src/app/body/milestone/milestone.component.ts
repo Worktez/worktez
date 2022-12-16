@@ -33,6 +33,7 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
  export class MilestoneComponent implements OnInit {
    componentName = "MILESTONES"
    milestoneData: Milestones[] = [];
+   completedMilestoneData: Milestones[] = [];
    milestoneDataReady: boolean = false;
    addMilestoneActive: boolean = false;
    teamIds: string[] = [];
@@ -110,6 +111,11 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
          next: (data) => {
            if (data) {
              this.milestoneData = data;
+             this.milestoneData.forEach(milestone => {
+              if(milestone.MilestoneStatus == "Completed"){
+                this.completedMilestoneData.push(milestone);
+              }
+             })
            }
          },
          error: (error) => {

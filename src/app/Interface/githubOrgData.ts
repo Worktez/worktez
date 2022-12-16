@@ -16,9 +16,16 @@ export interface GitData {
 }
 
 export interface GitRepoData {
+    title: string;
+    body: string;
     url: string;
-    html_url; string;
+    html_url: string;
+    number: number;
+    state: string;
 }
 export interface GitPrData{
-    state; string
+    title: string;
+    body: string;
+    url: string;
+    html_url: string;
 }

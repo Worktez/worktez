@@ -78,6 +78,7 @@ export class StartServiceService {
           this.authService.getUserSettings();
           this.rbaService.setDefaultPermissions();
           this.loadUserAppSettings();
+          this.authService.updateProvidersList();
         } else {
           this.userReady = false;
           if(this.currentUrl == '/')

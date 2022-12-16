@@ -22,13 +22,6 @@ const { updateTeamDetails, getTeam } = require("../lib");
 
 exports.updateTeam = function(request, response) {
   const teamDescription = request.body.data.TeamDescription;
-  const teamManagerEmail = request.body.data.TeamManagerEmail;
-  const type = request.body.data.TypeLabels;
-  const statusLabels = request.body.data.StatusLabels;
-  const priorityLabels = request.body.data.PriorityLabels;
-  const difficultyLabels = request.body.data.DifficultyLabels;
-  const milestoneStatusLabels = request.body.data.MilestoneStatusLabels;
-
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
 
@@ -39,12 +32,6 @@ exports.updateTeam = function(request, response) {
     if (team) {
       const updateJson = {
         TeamDescription: teamDescription,
-        TeamManagerEmail: teamManagerEmail,
-        Type: type,
-        StatusLabels: statusLabels,
-        PriorityLabels: priorityLabels,
-        DifficultyLabels: difficultyLabels,
-        MilestoneStatusLabels: milestoneStatusLabels,
       };
       updateTeamDetails(updateJson, orgDomain, teamName);
       result = { data: "Team Updated Successfully" };

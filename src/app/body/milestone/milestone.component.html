@@ -38,16 +38,18 @@
       </ng-container>
     </div>
     <hr>
-    <!-- <div style="font-family: 'Plus Jakarta Sans', sans-serif;">
-      <h1 style="font-weight: lighter;">Completed Milestones</h1>
-    </div> -->
-    <div class="row pt-2 px-4" *ngIf="milestoneData.length > 0">
-      <ng-container *ngFor="let milestone of milestoneData">
-        <div class="col-md-4 p-3" *ngIf = "milestone.MilestoneStatus == 'Completed'">
-          <app-milestone-card [milestone]="milestone"></app-milestone-card>
-        </div>
-      </ng-container>
-    </div>
+    <div *ngIf="completedMilestoneData.length > 0">
+      <div>
+        <h1>Completed Milestones</h1>
+      </div>
+      <div class="row pt-2 px-4">
+        <ng-container *ngFor="let milestone of completedMilestoneData">
+          <div class="col-md-4 p-3">
+            <app-milestone-card [milestone]="milestone"></app-milestone-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>   
 </div>
 <app-add-milestone *ngIf="addMilestoneActive" [teamIds]="teamIds" [teamId]="teamId" (getMilestones)="getMilestoneData()"></app-add-milestone>
 </ng-container>
