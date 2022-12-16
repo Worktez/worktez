@@ -38,9 +38,7 @@ export class SprintBurndownChartComponent implements OnInit {
             return data
         })).subscribe({
           next: (data) => {
-            console.log(data);
             this.data=data;
-            console.log(data);
             this.data.forEach((element, index) => {
               this.data[index] = [index, element]
             })

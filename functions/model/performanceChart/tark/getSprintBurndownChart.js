@@ -31,6 +31,7 @@ exports.getSprintBurndownChartData = function(request, response) {
   let result;
   let teamName;
   let status = 200;
+  let dataFound = false;
 
   const sprintEvaluationGraphPromise = getTeamUseTeamId(orgDomain, teamId).then((team) => {
     teamName = team.TeamName;
@@ -44,7 +45,12 @@ exports.getSprintBurndownChartData = function(request, response) {
           if (i===fullSprintName) {
             const chartData = doc[i];
             responseData = chartData;
+            dataFound = true;
           }
+        }
+        if (dataFound == false) {
+          console.log("got here");
+          updateSprintBurndownChartData(orgDomain, teamId, fullSprintName);
         }
         result = { data: { status: "OK", data: responseData } };
       }
