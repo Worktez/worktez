@@ -29,6 +29,7 @@ export class GithubLinkComponent implements OnInit {
   noRepoFound: boolean=false
   linkType: string = "Public";
   bearerToken: string;
+  gitToken: string;
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
   constructor(private httpService: HttpServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
@@ -141,8 +142,24 @@ export class GithubLinkComponent implements OnInit {
          
   }
 
-  setBearerToken(token: string) {
-    this.bearerToken = token;
+  setBearerToken() {
+    this.enableLoader=true;
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    this.gitToken = btoa(this.bearerToken)
+    const callable = this.functions.httpsCallable('teams/addGitToken');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, GitToken: this.gitToken}).subscribe({
+      next: (data) => {
+        console.log("Successfully added Token");
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully Added Token')
+    })
   }
 
   setLinkType(linkType: string) {
@@ -165,6 +182,7 @@ export class GithubLinkComponent implements OnInit {
     const callable = this.functions.httpsCallable('teams/addProjLink');
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink}).subscribe({
       next: (data) => {
+        this.setBearerToken()
         console.log("Successfully added project link");
         this.enableLoader=false;
         this.showClose = true;
