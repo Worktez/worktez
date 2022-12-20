@@ -24,13 +24,14 @@ exports.updateTeam = function(request, response) {
   const teamDescription = request.body.data.TeamDescription;
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
-
+  const teamManagerEmail = request.body.data.TeamManagerEmail;
   let status = 200;
   let result = { data: "Error in updating team" };
 
   const promise1 = getTeam(orgDomain, teamName).then((team) => {
     if (team) {
       const updateJson = {
+        TeamManagerEmail: teamManagerEmail,
         TeamDescription: teamDescription,
       };
       updateTeamDetails(updateJson, orgDomain, teamName);
