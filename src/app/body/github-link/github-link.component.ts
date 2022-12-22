@@ -145,7 +145,11 @@ export class GithubLinkComponent implements OnInit {
   setBearerToken() {
     this.enableLoader=true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
-    this.gitToken = btoa(this.bearerToken)
+    if(this.bearerToken != undefined){
+      this.gitToken = btoa(this.bearerToken)
+    }else{
+      this.gitToken = "";
+    }
     const callable = this.functions.httpsCallable('teams/addGitToken');
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, GitToken: this.gitToken}).subscribe({
       next: (data) => {
