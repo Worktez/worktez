@@ -25,7 +25,6 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
-import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 
 @Component({
@@ -61,11 +60,11 @@ export class GitComponent implements OnInit {
   prTask: GitRepoData;
   prFound: boolean =false;
   WtId: string;
-  constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService,public teamService: TeamServiceService) { }
+  constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.showClose = false;
-    this.teamId = this.teamService.teamsDataJson[this.task.TeamId].TeamId;
+    this.teamId = this.task.TeamId;
     if(this.startService.showTeams) {
       this.getTeamDetails(this.teamId);
     } else {

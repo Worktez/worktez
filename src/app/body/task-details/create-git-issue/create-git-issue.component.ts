@@ -54,7 +54,7 @@ export class CreateGitIssueComponent implements OnInit {
     this.gitToken=this.teamService.teamsDataJson[this.task.TeamId].GitToken;
     this.gitToken=atob(this.teamService.teamsDataJson[this.task.TeamId].GitToken);
     this.showClose = false;
-    this.teamId = this.teamService.teamsDataJson[this.task.TeamId].TeamId;
+    this.teamId = this.task.TeamId;
     if(this.startService.showTeams) {
       this.getTeamDetails(this.teamId);
     } else {
