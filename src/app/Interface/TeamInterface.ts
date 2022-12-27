@@ -42,6 +42,7 @@ export interface Team {
     CurrentSprintId: number;
     Scope: string[];
     ProjectLink: string;
+    GitToken: string;
 }
 
 export interface TeamDataId extends Team {id: string;}

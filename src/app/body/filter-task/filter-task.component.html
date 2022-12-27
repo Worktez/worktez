@@ -134,8 +134,8 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenu">
                 <ng-container *ngFor='let item of this.filters'>
-                    <div class="dropdown-item form-check">
-                        <label class="form-check-label" for="{{ item.FilterName }}" (click)="customfilterByProperties(item.FilterName)">{{ item.FilterName }}</label>
+                    <div class="dropdown-item form-check" (click)="customfilterByProperties(item.FilterName)">
+                        <label class="form-check-label" for="{{ item.FilterName }}">{{ item.FilterName }}</label>
                     </div>
                 </ng-container>
             </div>

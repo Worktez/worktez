@@ -1,3 +1,4 @@
+
 /*********************************************************** 
 * Copyright (C) 2022 
 * Worktez 
@@ -38,6 +39,7 @@ export class UpdateTeamComponent implements OnInit {
   teamData: TeamDataId[] = [];
   teamName: string;
   teamId: string;
+  teamManagerEmail: string;
   teamDescription: string = "";
   enableLoader: boolean = false;
   showClose: boolean = false;
@@ -64,7 +66,27 @@ export class UpdateTeamComponent implements OnInit {
     this.organizationDomain = this.backendService.getOrganizationDomain();
     this.teamName = this.teamToUpdate.TeamName;
     this.teamId = this.teamToUpdate.TeamId;
+    this.teamManagerEmail = this.teamToUpdate.TeamManagerEmail;
     this.teamDescription = this.teamToUpdate.TeamDescription;
+  }
+
+  
+  async submit() {
+    let data = [
+      { label: "teamName", value: this.teamName },
+      { label: "teamId", value: this.teamId },
+      { label: "teamDescription", value: this.teamDescription },
+      { label: "teamManagerEmail", value: this.teamManagerEmail },
+    ];
+    var condition = await (this.validationService.checkValidity(this.componentName, data)).then(res => {
+      return res;
+    });
+    if (condition) {
+      console.log("Inputs are valid");
+      this.updateExistingTeam()
+    }
+    else
+      console.log("Team not updated! Validation error");
   }
 
   updateExistingTeam() {
@@ -74,7 +96,7 @@ export class UpdateTeamComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId, TeamDescription: this.teamDescription}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, TeamId: this.teamId,TeamManagerEmail: this.teamManagerEmail, TeamDescription: this.teamDescription}).subscribe({
       next: (data) => {
         this.enableLoader = false;
         this.showClose= true
@@ -92,6 +114,10 @@ export class UpdateTeamComponent implements OnInit {
 
   updateTeamDone() {
     this.teamUpdated.emit({ completed: true });
+    this.showClose =false;
+  }
+
+  close(){
     this.showClose =false;
   }
 }

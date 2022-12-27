@@ -21,7 +21,7 @@
                         <h2>Update Team</h2>
                     </div>
                     <div class="col-md-1 col-2 text-right">
-                        <span class="btn" data-dismiss="modal" (click)="updateTeamDone()">
+                        <span class="btn" data-dismiss="modal" (click)="close()">
                             <mat-icon fontSet="material-icons-outlined" class="align-middle" title="Close">
                                 close
                             </mat-icon>
@@ -43,6 +43,12 @@
                             </div>
                         </div>
                         <div class="form-row pt-2">
+                            <div class="col-md-12 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Manager Email</span>
+                                <input type="text" class="form-control" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Manager's Email Id">
+                            </div>
+                        </div>
+                        <div class="form-row pt-2">
                             <div class="form-group col-md-12 col">
                                 <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
                                 <textarea type="text" class="form-control form-control-md" rows="3"
@@ -53,7 +59,7 @@
 
                         <div class="modal-footer pt-2">
                             <button class="btn btn-md btn-block" id="button" [disabled]="enableLoader"
-                                (click)="updateExistingTeam()">
+                                (click)="submit()">
                                 Update Team
                             </button>
                         </div>

@@ -13,21 +13,19 @@
 ***********************************************************/
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GitComponent } from './git.component';
+import { CreateGitIssueComponent } from './create-git-issue.component';
 
-describe('GitComponent', () => {
-  let component: GitComponent;
-  let fixture: ComponentFixture<GitComponent>;
+describe('CreateGitIssueComponent', () => {
+  let component: CreateGitIssueComponent;
+  let fixture: ComponentFixture<CreateGitIssueComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GitComponent ]
+      declarations: [ CreateGitIssueComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GitComponent);
+    fixture = TestBed.createComponent(CreateGitIssueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

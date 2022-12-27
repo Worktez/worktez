@@ -29,6 +29,7 @@ const { getUserUseEmail } = require("../../users/lib");
 const { sendNotification } = require("../../notifications/lib");
 const { linkSubtask } = require("../../linker/tark/linkSubTask");
 const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
+const { updateSprintBurndownChartData } = require("../../performanceChart/tark/updateSprintBurndownChart");
 
 exports.createNewTask = function(request, response) {
   const appKey = request.body.data.AppKey;
@@ -198,6 +199,7 @@ exports.createNewTask = function(request, response) {
 
       const link = "https://worktez.com/TaskDetails/" + taskId;
       updateSprintEvaluationGraphData(orgDomain, teamId, fullSprintName);
+      updateSprintBurndownChartData(orgDomain, teamId, fullSprintName);
 
       taskMailer("Create_Task", taskId, orgDomain, senderName);
       sendNotification(notificationMessage, senderEmail, assigneeUid, creationDate, time, orgDomain, link);

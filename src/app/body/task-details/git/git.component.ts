@@ -1,3 +1,16 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Swapnil Bankar <swapnilbankar1010@gmail.com>
+*
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
 import { PopupHandlerService } from './../../../services/popup-handler/popup-handler.service';
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
@@ -12,6 +25,7 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
+import { Tasks } from 'src/app/Interface/TasksInterface';
 
 @Component({
   selector: 'app-git',
@@ -27,6 +41,7 @@ export class GitComponent implements OnInit {
   @Input('prApiLink') prApiLink: string;
   @Input('PrNumber') PrNumber: number;
   @Input('prState') prState: string;
+  @Input('task') task: Tasks
   @Output() addedPrLink = new EventEmitter<{ completed: boolean, prLink: string, prApiLink: string }>();
   componentName: string = "LINK"
   linkURL: string;
@@ -49,7 +64,7 @@ export class GitComponent implements OnInit {
 
   ngOnInit(): void {
     this.showClose = false;
-    this.teamId = this.taskId.slice(0,3);
+    this.teamId = this.task.TeamId;
     if(this.startService.showTeams) {
       this.getTeamDetails(this.teamId);
     } else {
