@@ -27,7 +27,7 @@ const { getUser } = require("../../users/lib");
 const { updateSprintData } = require("../../sprints/tark/updateSprint");
 const { getTeamUseTeamId } = require("../../teams/lib");
 const { updateSprintEvaluationGraphData } = require("../../performanceChart/tark/updateSprintEvaluationGraph");
-
+const { updateSprintBurndownChartData } = require("../../performanceChart/tark/updateSprintBurndownChart");
 
 exports.editTask = function(request, response) {
   const appKey = request.body.data.AppKey;
@@ -79,6 +79,8 @@ exports.editTask = function(request, response) {
           updateSprintData(teamId, project, orgDomain, previousSprintName, oldStoryPointNumber, storyPointNumber, editedSprintNumber, orgId, editedSprintName, currentSprint).then(()=>{
             updateSprintEvaluationGraphData(orgDomain, teamId, editedSprintName);
             updateSprintEvaluationGraphData(orgDomain, teamId, previousSprintName);
+            updateSprintBurndownChartData(orgDomain, teamId, editedSprintName);
+            updateSprintBurndownChartData(orgDomain, teamId, previousSprintName);
           });
         });
         return null;
@@ -110,6 +112,7 @@ exports.editTask = function(request, response) {
             }
             updateSprint(updateNewSprintJson, orgDomain, teamName, previousSprintName).then(()=>{
               updateSprintEvaluationGraphData(orgDomain, teamId, previousSprintName);
+              updateSprintBurndownChartData(orgDomain, teamId, previousSprintName);
             });
           });
         });
