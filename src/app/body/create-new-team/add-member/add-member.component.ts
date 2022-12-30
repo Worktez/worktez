@@ -55,7 +55,7 @@ export class AddMemberComponent implements OnInit {
     });
 
     if (condition) {
-      if (this.memberEmail) {
+      if (!this.teamMembers.includes(this.memberEmail) && this.teamMembers.indexOf(this.memberEmail) === -1) {
         this.teamMembers.push(this.memberEmail);
         if (this.isUpdateTeam == true) {
           this.addUpdateTeam();
