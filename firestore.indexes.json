@@ -65,7 +65,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "Status", "order": "ASCENDING" },
-        { "fieldPath": "LastUpdatedEpochTime", "order": "Descending" }
+        { "fieldPath": "LastUpdatedEpochTime", "order": "DESCENDING" }
       ]
     }
   ]

@@ -29,6 +29,7 @@ export class GithubLinkComponent implements OnInit {
   noRepoFound: boolean=false
   linkType: string = "Public";
   bearerToken: string;
+  gitToken: string;
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
   constructor(private httpService: HttpServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
@@ -121,7 +122,6 @@ export class GithubLinkComponent implements OnInit {
             complete: () => console.info('Successfull')
           })
         } else if(this.linkType=='All') {
-          console.log("check2");
           this.httpService.getGithubAllRepos(this.bearerToken).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
@@ -142,8 +142,28 @@ export class GithubLinkComponent implements OnInit {
          
   }
 
-  setBearerToken(token: string) {
-    this.bearerToken = token;
+  setBearerToken() {
+    this.enableLoader=true;
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    if(this.bearerToken != undefined){
+      this.gitToken = btoa(this.bearerToken)
+    }else{
+      this.gitToken = "";
+    }
+    const callable = this.functions.httpsCallable('teams/addGitToken');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, GitToken: this.gitToken}).subscribe({
+      next: (data) => {
+        console.log("Successfully added Token");
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully Added Token')
+    })
   }
 
   setLinkType(linkType: string) {
@@ -166,6 +186,7 @@ export class GithubLinkComponent implements OnInit {
     const callable = this.functions.httpsCallable('teams/addProjLink');
     callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink}).subscribe({
       next: (data) => {
+        this.setBearerToken()
         console.log("Successfully added project link");
         this.enableLoader=false;
         this.showClose = true;

@@ -21,7 +21,6 @@ export class GetIconComponent implements OnInit {
   constructor(private teamService: TeamServiceService) { }
 
   ngOnInit(): void {
-    console.log(this.teamId, this.scope);
     if(this.teamService.labelsReady)
       this.getlabelProperties();
     else {

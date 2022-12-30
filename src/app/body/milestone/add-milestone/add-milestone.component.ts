@@ -61,7 +61,6 @@ export class AddMilestoneComponent implements OnInit {
   ];
     
      this.validationService.checkValidity(this.componentName, data).then(res => {
-      console.log("condition ", res);
       if (res) {
         console.log("Inputs are valid");
         this.addMilestone();
