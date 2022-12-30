@@ -71,7 +71,6 @@ export class MembersAccessComponent implements OnInit {
         const index = this.membersEmail.indexOf(remove);
         if (index != -1) {
           this.membersEmail.splice(index, 1);
-          this.team.TeamMembers.splice(index, 1);
           console.log("Successfully removed member");
         } else {
           console.log("Error- Cannot remove member. Member not found");

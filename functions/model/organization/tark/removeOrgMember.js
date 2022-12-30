@@ -17,7 +17,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-const { updateApplication } = require("../../application/lib");
+// const { updateApplication, getApplicationData} = require("../../application/lib");
 const { updateMember, updateOrgRawData, getOrgRawData } = require("../../organization/lib");
 const { getAllTeams, updateTeamDetails } = require("../../teams/lib");
 const { getUserUseEmail, updateUser } = require("../../users/lib");
@@ -41,13 +41,20 @@ exports.removeOrgMember = function(request, response) {
     if (!flag) {
       getOrgRawData(orgDomain).then((rawData) => {
         let totalNumberOfMembers = parseInt(rawData.TotalNumberOfMembers);
-        totalNumberOfMembers =totalNumberOfMembers- 1;
+        totalNumberOfMembers = totalNumberOfMembers- 1;
         const updateRawDataInputJson = {
           TotalNumberOfMembers: totalNumberOfMembers,
         };
-        updateApplication(updateRawDataInputJson);
         updateOrgRawData(updateRawDataInputJson, orgDomain);
       });
+      // getApplicationData(orgDomain).then((rawData)=>{
+      //   let totalNoOfMembers = parseInt(rawData.TotalNumberOfMembers);
+      //   totalNoOfMembers = totalNoOfMembers - 1;
+      //   const updateAppDataInputJson = {
+      //     TotalNumberOfMembers: totalNoOfMembers,
+      //   };
+      //   updateApplication(updateAppDataInputJson);
+      // });
     }
     const p2 = getAllTeams(orgDomain).then((data)=>{
       data.forEach((element) => {

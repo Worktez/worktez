@@ -123,7 +123,6 @@ export interface MemberData{
     TeamManager: boolean;
     Teams: [];
     Email: string;
-    OrgMember: string[];
 }
 
 export interface QuickNote {
