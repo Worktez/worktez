@@ -123,6 +123,7 @@ export interface MemberData{
     TeamManager: boolean;
     Teams: [];
     Email: string;
+    OrgMember: string[];
 }
 
 export interface QuickNote {
@@ -166,7 +167,7 @@ export const defaultPermissions = {
     completeSprint: true,
     editOrganization: true,
     viewMemberRoles: true,
-    editMemberRoles:true,
+    editMemberRoles:false,
     addDefaultLabel: true,
     createNewLabel: true,
     editLabel: true,
