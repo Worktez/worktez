@@ -163,7 +163,7 @@ export class FilterTaskComponent implements OnInit {
 
   customfilterByProperties(item) {
     for(let i of this.filters ){
-      if(i['FilterName'] == item){console.log(i);
+      if(i['FilterName'] == item){
         if (!this.isAssigneeChecked) {
           this.assignee = i.FilterJson.Assignee;
         }

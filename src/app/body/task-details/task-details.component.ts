@@ -34,6 +34,7 @@ import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
+declare var jQuery:any;
 
 @Component( {
   selector: 'app-task-details',
@@ -93,7 +94,9 @@ export class TaskDetailsComponent implements OnInit {
   remainingTimeHrs: number;
   remainingTimeMins: number
   githubRepoExists: boolean = false;
-
+  prFound: boolean = false;
+  createGitIssue: boolean = false;
+  githubTokenExists: boolean = false;
 
   constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
 
@@ -121,6 +124,7 @@ export class TaskDetailsComponent implements OnInit {
         this.prApiLink=this.task.PrApiLink;
         this.getPrDetails();
         this.prLinked=true;
+        this.prFound = true;
       }
     }
   }
@@ -165,7 +169,8 @@ export class TaskDetailsComponent implements OnInit {
       next: (data) => {
         this.task = data;
         this.getTimeDetails();
-        this.checkGitRepoExists()
+        this.checkGitRepoExists();
+        this.checkGitTokenExists();
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
         }
@@ -337,7 +342,6 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   editTaskCompleted ( data: { completed: boolean, task:Tasks } ) {
-    console.log(data);
     this.getTaskPageData();
     this.editTaskEnabled = false;
   }
@@ -423,6 +427,34 @@ export class TaskDetailsComponent implements OnInit {
     // this.showLoader = true;
   }
 
+//   showPrDetails() {
+//     if(this.prLink){
+//       window.open(this.prLink,'_blank');
+//       this.prFound = true;
+//     }else{
+//       console.error("error in  getting the pr");
+//     }
+// }
+
+//   close(){
+//     jQuery('#getPrDetails').modal('hide');
+//   }
   
+
+createGithubIssue(){
+  this.createGitIssue = true;
+}
+
+createIssue(data: { completed:boolean } ){
+  this.createGitIssue = false;
+  this.getTaskPageData()
+}
+
+checkGitTokenExists(){
+  if(this.teamService.teamsDataJson[this.task.TeamId].GitToken != undefined && this.teamService.teamsDataJson[this.task.TeamId].GitToken != "" && this.teamService.teamsDataJson[this.task.TeamId].GitToken != null){
+    this.githubTokenExists = true;
+  }
+}
+
 }
 

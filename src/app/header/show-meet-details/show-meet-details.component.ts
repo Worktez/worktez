@@ -17,7 +17,12 @@ import { Meet } from 'src/app/Interface/MeetInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { map } from "rxjs";
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { map, Observable } from "rxjs";
+
+
+
 
 @Component({
   selector: 'app-show-meet-details',
@@ -33,7 +38,7 @@ export class ShowMeetDetailsComponent implements OnInit {
   MeetToDelete: any;
   deletedMeetEnabled: boolean;
   applicationSettings: any;
-  constructor(public authService: AuthService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService) {}
+  constructor(public authService: AuthService, private functions: AngularFireFunctions,private backendService: BackendService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) {}
 
   ngOnInit(): void {
     this.getMeetData();
@@ -47,34 +52,36 @@ export class ShowMeetDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         if (data) {
-          this.meetData = data.reverse();
+          this.meetData = data.reverse();           
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.info("Fetched Meet Data Successfully");
         }
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.info("Fetched Meet Data Successfully");
-      }
-    });
+      })
   }
   deletedMeet(index) {
     const uid = this.authService.getLoggedInUser();
+    const orgDomain = this.backendService.getOrganizationDomain();
+       this.teamName =  this.startService.teamName;
     const callable = this.functions.httpsCallable("meet/deleteMeet");
-    callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
-      next(data) { 
-        console.log("Meet deleted Successfully") 
-      },
-      error: (error) => {
-        console.log("Error", error);
-        this.errorHandlerService.showError = true;
-        this.errorHandlerService.getErrorCode("InternalError","Api");
-        console.error(error);
-      },
-      complete: () => {
-        console.info("Successfully updated in db");
-        this.getMeetData();
-      } 
-    });
+      callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
+        next(data) { 
+         console.log("Meet deleted Successfully") 
+        },
+        error: (error) => {
+          console.log("Error", error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode("InternalError","Api");
+          console.error(error);
+        },
+        complete: () => {
+          console.info("Successfully updated in db");
+          this.getMeetData();
+        } 
+      });
   }
 }

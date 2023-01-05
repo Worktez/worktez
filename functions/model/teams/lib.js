@@ -59,6 +59,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
     FilterCounter: 0,
     Scope: scope,
     ProjectLink: "",
+    GitToken: "",
   });
   return Promise.resolve(setTeam);
 };
