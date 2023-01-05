@@ -28,7 +28,7 @@ export class ShowMeetDetailsComponent implements OnInit {
 
   meetData:Meet[]=[];
 
-  @Input('meet') meet:Meet;
+  meet: Meet;
   teamName: any;
   MeetToDelete: any;
   deletedMeetEnabled: boolean;
@@ -47,7 +47,7 @@ export class ShowMeetDetailsComponent implements OnInit {
     })).subscribe({
       next: (data) => {
         if (data) {
-          this.meetData = data            
+          this.meetData = data.reverse();
         }
       },
       error: (error) => {

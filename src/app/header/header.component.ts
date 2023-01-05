@@ -70,10 +70,6 @@ export class HeaderComponent implements OnInit {
     this.popupHandlerService.scheduleMeetEnabled = true;
   }
 
-  JoinMeet(){
-
-  }
-
   Board() {
     this.router.navigate(['/Board']);
   }
