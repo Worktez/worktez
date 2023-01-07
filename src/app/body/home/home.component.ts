@@ -30,19 +30,19 @@ export class HomeComponent implements OnInit {
 
   testimonials = [
     {
-      Image: "../../../../assets/testimonial images/Testimonial1.jpeg",
+      Image: "../../../../assets/testimonial_images/Testimonial1.jpeg",
       Name: "Prashant Pandey",
       Position: "C.E.O Global Child Prodigy",
       Content: "Worktez has revolutionised the complex DevOps operations for our project. It is helping us understand our team and individual strength."
     },
     {
-      Image: "../../../../assets/testimonial images/Testimonial2.jpeg",
+      Image: "../../../../assets/testimonial_images/Testimonial2.jpeg",
       Name: "Praveen Das",
       Position: "Senior Regional Partnerships Manager, South Asia at Wikimedia",
       Content: "Worktez is a great product designed to add value to your team and project. The milestone-based scrum innovation helps the project to be on time with better quality."
     },
     {
-      Image: "../../../../assets/testimonial images/Testimonial3.jpeg",
+      Image: "../../../../assets/testimonial_images/Testimonial3.jpeg",
       Name: "Jitendra Singh",
       Position: "Product Manager at Hewlett Packard Inc.",
       Content: "The simplified model of the scrum with an automated approach helps focus on dedicated innovation and quality."
