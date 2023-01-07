@@ -180,7 +180,7 @@ exports.getOrgMember = function(orgDomain, email) {
  * @return {any}
  */
 exports.getAllMembers = function(orgDomain) {
-  const MembersDetails = db.collection("Organizations").doc(orgDomain).collection("Members").get();
+  const MembersDetails = db.collection("Organizations").doc(orgDomain).collection("Members").where("Active", "==", true).get();
   return Promise.resolve(MembersDetails);
 };
 
