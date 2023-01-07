@@ -33,7 +33,7 @@ export class ShowMeetDetailsComponent implements OnInit {
 
   meetData:Meet[]=[];
 
-  @Input('meet') meet:Meet;
+  meet: Meet;
   teamName: any;
   MeetToDelete: any;
   deletedMeetEnabled: boolean;
@@ -48,11 +48,11 @@ export class ShowMeetDetailsComponent implements OnInit {
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("meet/getMeetDetails");
     callable({ Uid: uid }).pipe(map(actions => {
-        return actions.data as Meet[];
-      })).subscribe({
-        next: (data) => {
-          if (data) {
-            this.meetData = data            
+      return actions.data as Meet[];
+    })).subscribe({
+      next: (data) => {
+        if (data) {
+          this.meetData = data.reverse();           
           }
         },
         error: (error) => {
