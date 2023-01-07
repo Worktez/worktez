@@ -1,0 +1,128 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+
+#teamId {
+    font-size: 18px;
+    font-family: var(--font);
+    color: var(--text);
+}
+
+#EndDate {
+    color: var(--danger-color);
+}
+.container-fluid{
+    padding: 20px 110px 0px 110px;
+    color: var(--text);
+}
+
+p{
+white-space: normal;
+white-space: nowrap;
+white-space: pre;
+white-space: pre-wrap;
+white-space: pre-line;
+white-space: break-spaces;
+}
+
+.process-wrapper {
+    margin: auto;
+}
+
+.title {
+    font-size: 18px;
+    font-family: var(--font);
+    color: var(--text);
+}
+
+#button {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
+}
+
+.card {
+    background: var(--secondary-bg);
+    color: var(--text);
+    border: none;
+    height: 100%;
+}
+
+#milestoneStatus{
+    cursor: pointer;
+}
+
+@keyframes FadeInUp {
+    0% {
+        transform: translateY(15px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .container-fluid {
+        padding: 4px 40px 0px 40px;
+    }  
+
+    #completeTaskText{
+        padding-top: 0px;
+    }
+
+    .title2{
+        padding-top: 20px;
+    }
+
+    .buttonFloat{
+        float: left !important;
+    }
+}
+
+#button{
+    background-color: var(--button-hover-bg);
+    color: var(--button-text);
+}
+
+#button:hover,
+#dropdownButton:hover, .dropdown-item:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover); 
+}
+
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+}
+
+#StartDate {
+    color: var(--danger-color);
+}

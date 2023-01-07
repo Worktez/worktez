@@ -1,0 +1,164 @@
+<!-- /***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+
+ <div *ngIf="releaseDataReady" class="row">
+    <div class="col-1"></div>
+    <div class="col">
+      <div class="row header">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-9 col-9">
+          <div class="float-right m-1 buttonFloat">
+            <button type="button" id="button" class="btn" data-toggle="modal"
+              data-target="#editModal" (click)="updateRelease()">
+              <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
+                edit
+            </mat-icon>
+            </button>
+          </div>
+          <div class="float-right m-1 buttonFloat">
+            <button type="button" id="button" class="btn" data-toggle="modal"
+              data-target="#deleteModal" (click)="setDeleteRelease()">
+            <mat-icon fontSet="material-icons" class="align-middle float-right">
+                delete
+            </mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-1 col-3">
+          <span type="button" class="btn ml-2 align-bottom" (click)="backToReleases()">
+            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+              close
+            </mat-icon>
+        </span>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-4">
+            <div class="row py-3">
+              <div class="col" id="teamId">
+                <span class="heading">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                      groups_3
+                    </mat-icon><span class="align-middle">{{releaseData.TeamId}}</span>
+                  </span>
+              </div>
+            </div>
+            <div class="row py-2">
+                <div class="col">
+                    <span class="title">
+                      Tag Name: {{releaseData.TagName}}
+                    </span>
+                  </div>
+              </div>
+              <div class="row py-2">
+                <div class="col">
+                    <span class="title">
+                        Release Title: {{releaseData.ReleaseName}}
+                      </span>
+                  </div>
+              </div>
+            <div class="row pt-2">
+                <div class="colr">
+                  <span type="button" class="btn align-bottom" id="StartDate">
+                      <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        date_range
+                      </mat-icon>
+                      Release Date: <span id="sprintStartDate">{{ releaseData.ReleaseDate }}</span> 
+                  </span>
+                </div>
+              </div>
+            <div class="row py-2">
+              <ng-container>
+                  <span class="heading">
+                  <div class="row" style="padding-left: 30px; font-size: large;">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                      toc
+                    </mat-icon>
+                    Description
+                  </div>
+                    <div class="row">
+                      <div class="col">
+                          <h2 class="font-weight-bold ">{{versionName}}</h2>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                        <h3 class="font-weight-bold text-muted">&emsp;{{releaseDate}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                      <h3 class="font-weight-bold text-muted" >&emsp;
+                      <ul><p>
+                          {{releaseData.Description}}
+                      </p></ul></h3>
+
+              </div>
+                  </span>
+              </ng-container>
+            </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <ng-container *ngIf="deleteReleaseEnabled" id="exampleModalCenterLabel">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deletedFilterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered  p-0" role="document">
+            <div class="modal-content modalAlign">
+                <nav class="modal-header navbar  navbar-dark pr-0 pt-0" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mt-2">
+                            <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <div data-dismiss="modal" aria-label="Close">
+                                <span class="btn">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="container modal-body" id="editPageTaskContainer">
+                    <ng-container>
+                        <div class="row">
+                            <div class="col text">You are about to delete this Release.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3 pb-2 px-4 deleteButton">
+                                <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deleteRelease(releaseData.TagName)">Delete</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+  <ng-container *ngIf="showLoader">
+    <app-loader></app-loader>
+  </ng-container>
+  <ng-container *ngIf="editReleaseActive" id="editModal">
+    <app-edit-release [description]="releaseData.Description" [id]="releaseData.ReleaseId" [targetBranch]="releaseData.TargetBranch" [tagName]="releaseData.TagName" [repoName]="releaseData.RepoName" [teamId]="releaseData.TeamId" [releaseName]="releaseData.ReleaseName" [generateRelease]="releaseData.GenerateRelease" [ifDraft]="releaseData.IfDraft" [preRelease]="releaseData.PreRelease" (editReleaseCompleted)="editReleaseCompleted($event)">
+    </app-edit-release>
+  </ng-container>

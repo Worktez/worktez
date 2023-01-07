@@ -1,0 +1,54 @@
+<!-- /***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+ <ng-container *ngIf="releaseDataReady; else loader">
+  <div class="btn-group smallButton">
+    <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+    <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+        <ng-container *ngFor="let item of startService.teams">
+            <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+        </ng-container>
+    </div>
+    <div class="d-flex justify-content-center m-2">
+      <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="createRelease()">Add Release</button>
+    </div>
+  </div>
+  <div class="row"></div>
+  <div class="row" id="GithubDetails">
+     Project Link : {{projectLink}}
+  </div>
+  <div id="milestoneContainer" class="m-2">
+    <div *ngIf="releaseData.length == 0">
+      <h3 class="text-center pt-5">No Releases to Show!</h3>
+      <ng-template *ngIf="showLoader">
+        <app-loader></app-loader>
+      </ng-template>  
+    </div>
+      <div class="row pt-2 px-4" *ngIf="releaseData.length>0">
+        <ng-container *ngFor="let release of releaseData">
+          <div class="col-md-4 p-3">
+            <app-release-card [release]="release"></app-release-card>
+          </div>
+        </ng-container>
+      </div>
+  
+      <hr>
+      <!-- <div style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <h1 style="font-weight: lighter;">Completed Milestones</h1>
+      </div> -->
+  </div>
+  <app-add-release *ngIf="addReleaseActive" [teamIds]="teamIds" [teamId]="teamId" (getReleases)="getReleaseData()"></app-add-release>
+  </ng-container>
+  <ng-template #loader>
+    <app-loader></app-loader>
+  </ng-template>  

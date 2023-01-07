@@ -74,6 +74,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/Board']);
   }
 
+  releases() {
+    this.router.navigate(['/Releases']);
+  }
+
   myDashBoard() {
     this.router.navigate(["/MyDashboard"])
   }

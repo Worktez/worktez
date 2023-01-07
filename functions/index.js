@@ -46,6 +46,7 @@ const { meet } = require("./model/meet/meet");
 const { payment } = require("./model/payment/payment");
 const { subscriptions } = require("./model/subscriptions/subscriptions");
 const { scheduledSubFnManually } = require("./model/scheduledCheckSub/scheduledCheckSub");
+const { makeRelease } = require("./model/makeRelease/makeRelease");
 
 exports.users = users;
 exports.tasks = tasks;
@@ -71,3 +72,4 @@ exports.meet = meet;
 exports.payment = payment;
 exports.subscriptions = subscriptions;
 exports.scheduledSubFnManually = scheduledSubFnManually;
+exports.makeRelease = makeRelease;
