@@ -36,7 +36,34 @@
                     <td class="align-middle">
                         <app-member-card [member] = "member"></app-member-card>
                     </td>
+                    <td class="align-middle" *ngIf="deleteAccess">
+                      <div class="btn" data-target="#deleteMember" data-toggle="modal" data-bs-toggle="tooltip">
+                        <mat-icon class="ml-mt-2" id="button" fontSet="material-icons-outlined">delete</mat-icon>
+                      </div>
+                    </td>
                   </tr>
+                  <div class="modal fade" id="deleteMember" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="DeleteModalLabel">Are you sure to delete the user? </h2>
+                                <span class="btn">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" aria-label="Close">close</mat-icon>
+                                </span>
+                            </div>
+                            <div class="row p-m-2 px-4 text-center">
+                                <div class="col" style="font-size: small;flex-wrap: wrap;"><h4> This Action will delete the user from all the teams the user is part of and cannot be undone.</h4></div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 py-2 px-4">
+                                        <button type="button" class="btn extra2" (click)="removeOrgMember(member.Email)" style="margin-left: 10px;" aria-label="Close" data-dismiss="modal">Delete</button>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ng-container>
         </tbody>
       </table>

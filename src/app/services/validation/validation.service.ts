@@ -29,6 +29,18 @@ export class ValidationService {
             case 'title': {
                 return this.checkTitle(value);
             }
+            case 'targetBranch': {
+                return (this.checkTargetBranch(value));
+            }
+            case 'ownerName': {
+                return (this.checkOwnerName(value));
+            }
+            case 'tagName': {
+                return (this.checkTagName(value));
+            }
+            case 'repoName': {
+                return (this.checkRepoName(value));
+            }
             case 'status': {
                 return this.checkStatus(value);
             }
@@ -186,6 +198,50 @@ export class ValidationService {
         else {
             let errorType = this.componentName + "_VALIDATION_TITLE";
             this.errorHandlerService.addError(errorType, "Title field is required")
+            return (false);
+        }
+    }
+
+    async checkTargetBranch(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "Target branch field is required")
+            return (false);
+        }
+    }
+
+    async checkRepoName(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "Repository Name field is required")
+            return (false);
+        }
+    }
+
+    async checkTagName(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "Tag Name field is required")
+            return (false);
+        }
+    }
+
+    async checkOwnerName(value: String) {
+        const control = new UntypedFormControl(value, Validators.required);
+        if (control.errors === null)
+            return (true);
+        else {
+            let errorType = this.componentName + "_VALIDATION_TITLE";
+            this.errorHandlerService.addError(errorType, "Owner Name field is required")
             return (false);
         }
     }
