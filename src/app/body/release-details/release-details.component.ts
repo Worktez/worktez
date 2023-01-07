@@ -42,6 +42,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    updatesArray: Array<string>
    versionName: string;
    releaseDate: string;
+   deleteReleaseEnabled: boolean = false;
 
    constructor(private functions: AngularFireFunctions, public backendService: BackendService, private httpService: HttpServiceService,private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService) { }
  
@@ -56,17 +57,21 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    }
  
    deleteRelease(tagName: string){
-     this.deleteGithubReleaseDb();
        this.httpService.getReleaseDetails().subscribe((data) => {
          for(let i in data){
            if(data[i].tag_name==tagName){
              const release_Id = data[i].id;
-             this.bearerToken = this.teamService.teamsDataJson[data[i].TeamId].GitToken;
+             this.bearerToken = this.teamService.teamsDataJson[this.releaseData.TeamId].GitToken;
              this.bearerToken = atob(this.bearerToken);
              this.httpService.deleteGithubRelease(release_Id, this.bearerToken);
+             this.deleteGithubReleaseDb();
            }
          }
        });
+   }
+
+   setDeleteRelease(){
+     this.deleteReleaseEnabled = true;
    }
  
    deleteGithubReleaseDb(){

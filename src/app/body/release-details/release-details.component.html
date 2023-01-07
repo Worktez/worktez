@@ -29,8 +29,8 @@
           </div>
           <div class="float-right m-1 buttonFloat">
             <button type="button" id="button" class="btn" data-toggle="modal"
-              data-target="#deleteModal" (click)="deleteRelease(releaseData.TagName)">
-            <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
+              data-target="#deleteModal" (click)="setDeleteRelease()">
+            <mat-icon fontSet="material-icons" class="align-middle float-right">
                 delete
             </mat-icon>
             </button>
@@ -115,6 +115,46 @@
     </div>
     <div class="col-1"></div>
   </div>
+  <ng-container *ngIf="deleteReleaseEnabled" id="exampleModalCenterLabel">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deletedFilterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered  p-0" role="document">
+            <div class="modal-content modalAlign">
+                <nav class="modal-header navbar  navbar-dark pr-0 pt-0" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item mt-2">
+                            <h3 class="modal-title" id="exampleModalDelFilter">Are You Sure?</h3>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <div data-dismiss="modal" aria-label="Close">
+                                <span class="btn">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="container modal-body" id="editPageTaskContainer">
+                    <ng-container>
+                        <div class="row">
+                            <div class="col text">You are about to delete this Release.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3 pb-2 px-4 deleteButton">
+                                <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deleteRelease(releaseData.TagName)">Delete</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
   <ng-container *ngIf="showLoader">
     <app-loader></app-loader>
   </ng-container>
