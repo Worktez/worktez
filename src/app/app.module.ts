@@ -184,6 +184,8 @@ import { AllNotificationCardComponent } from './header/notification-center/all-n
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
 import { CreateGitIssueComponent } from './body/task-details/create-git-issue/create-git-issue.component';
+import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
+import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
 
 @NgModule({
   declarations: [
@@ -335,6 +337,8 @@ import { CreateGitIssueComponent } from './body/task-details/create-git-issue/cr
     AddWatchersComponent,
     PaymentStatusComponent,
     CreateGitIssueComponent,
+    GitlabLinkComponent,
+    GitlabComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
@@ -46,7 +46,7 @@ export class CreateGitIssueComponent implements OnInit {
   @Output() createIssue = new EventEmitter<{ completed: boolean }>();
   componentName:string = "Create Issue";
 
-  constructor(private functions: AngularFireFunctions,private startService: StartServiceService,private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService,public teamService: TeamServiceService) { }
+  constructor(private functions: AngularFireFunctions,private startService: StartServiceService,private githubService: GithubServiceService,public applicationSettingsService: ApplicationSettingsService, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService,public teamService: TeamServiceService) { }
 
   ngOnInit(): void {
     this.title=this.task.Title;
@@ -73,7 +73,7 @@ export class CreateGitIssueComponent implements OnInit {
   }
 
   submit() {
-    this.httpService.createGithubIssue(this.title,this.description,this.repoLink,this.gitToken);
+    this.githubService.createGithubIssue(this.title,this.description,this.repoLink,this.gitToken);
     this.showClose = true;
   }
   
