@@ -138,6 +138,11 @@ hr {
     border-left: 2px solid var(--scrollbar-color); height: auto;
 }
 
+.integrationBox{
+    border: 1px solid var(--secondary-bg);
+    border-radius: 5px;
+}
+
 @media only screen and (max-width: 600px) {
     
 }
@@ -153,3 +158,4 @@ input:focus {
     color: var(--secondary-color);
     font-size: 48px;
 }
+

@@ -63,6 +63,7 @@ export class TeamDetailsComponent implements OnInit {
   bearerToken: string;
   githubTokenExists: boolean = false;
   gitToken: string;
+  repoLoc: string;
   
   constructor(private teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -96,6 +97,7 @@ export class TeamDetailsComponent implements OnInit {
       else{
         this.projectLinked=true;
         this.repoLink=this.team.ProjectLink;
+        this.repoLoc=this.team.ProjectLocation;
       }
     }
   }
@@ -288,13 +290,27 @@ export class TeamDetailsComponent implements OnInit {
   }
 
   addedProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
-    this.githubDetails.emit(true);
     this.addProjectEnabled = false;
     if(data.completed==true){
     this.projectLinked=data.completed;
     this.repoLink=data.projLink;
+    this.repoLoc='github';
     this.teamService.teamsDataJson[this.teamId].ProjectLink = this.repoLink;
+    this.teamService.teamsDataJson[this.teamId].ProjectLocation = this.repoLoc;
     }
+    // this.githubDetails.emit(true);
+  }
+
+  addedGitlabProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
+    this.addProjectEnabled = false;
+    if(data.completed==true){
+    this.projectLinked=data.completed;
+    this.repoLink=data.projLink;
+    this.repoLoc='gitlab';
+    this.teamService.teamsDataJson[this.teamId].ProjectLink = this.repoLink;
+    this.teamService.teamsDataJson[this.teamId].ProjectLocation = this.repoLoc;
+    }
+    // this.githubDetails.emit(true);
   }
 
   close () {

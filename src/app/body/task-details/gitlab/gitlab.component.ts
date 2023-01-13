@@ -28,11 +28,11 @@ import { Tasks } from 'src/app/Interface/TasksInterface';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 
 @Component({
-  selector: 'app-git',
-  templateUrl: './git.component.html',
-  styleUrls: ['./git.component.css']
+  selector: 'app-gitlab',
+  templateUrl: './gitlab.component.html',
+  styleUrls: ['./gitlab.component.css']
 })
-export class GitComponent implements OnInit {
+export class GitlabComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Input('taskId') taskId: string;
