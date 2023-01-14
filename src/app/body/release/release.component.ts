@@ -23,10 +23,10 @@
  import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
  import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
  import { StartServiceService } from 'src/app/services/start/start-service.service';
- import { CreateReleaseData } from "src/app/Interface/ReleaseInterface";
  import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
- 
+import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { GitData } from 'src/app/Interface/githubReleaseData'; 
  @Component({
    selector: 'app-release',
    templateUrl: './release.component.html',
@@ -34,7 +34,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
  })
  export class ReleaseComponent implements OnInit {
    componentName = "RELEASES"
-   releaseData: CreateReleaseData[] = [];
+   releaseData: GitData[];
    releaseDataReady: boolean;
    showLoader: boolean;
    teamIds: string[] = [];
@@ -44,7 +44,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    projectLink: string;
    team: Team;
  
-   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService) { }
+   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private httpService: HttpServiceService) { }
  
    ngOnInit(): void {
      this.showLoader = true;
@@ -55,7 +55,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
        this.appkey = this.authService.getAppKey();
        this.backendService.getOrgDetails(this.appkey);
        this.teamIds = this.backendService.getOrganizationTeamIds();
-       this.getReleaseData();
+       this.getReleaseDetails();
        this.teamId = this.authService.getTeamId();
        this.applicationSettingsService.getTeamDetails(this.teamId);
        this.team = this.applicationSettingsService.team;
@@ -67,7 +67,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
            this.backendService.getOrgDetails(this.appkey).subscribe((data) => {
              this.teamIds = this.backendService.getOrganizationTeamIds();
            });
-           this.getReleaseData();
+           this.getReleaseDetails();
            this.teamId = this.authService.getTeamId();
            this.applicationSettingsService.getTeamDetails(this.teamId);
            this.team = this.applicationSettingsService.team;
@@ -104,34 +104,24 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
        })
      })
    }
- 
-   getReleaseData() {
+
+   getReleaseDetails(){
+    try {
+      this.teamId = this.authService.getTeamId();
+      const repoLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+      this.httpService.getProjectReleaseDetails(repoLink).pipe(map(data => {
+        const objData = data as GitData[];
+        this.releaseData=objData;
+        return this.releaseData;
+      })).subscribe(data => {
+
+      });
+    } catch (error) {    
+      this.errorHandlerService.showError = true;
+      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+    }
      this.showLoader = true;
-     const orgDomain = this.backendService.getOrganizationDomain();
-     this.teamIds = this.backendService.getOrganizationTeamIds();
-     const callable = this.functions.httpsCallable("makeRelease/getAllReleases");
-     callable({OrgDomain: orgDomain, TeamId: this.startService.selectedTeamId}).pipe(
-       map( actions => {
-         return actions.data as CreateReleaseData[];
-       })).subscribe({
-         next: (data) => {
-           if(data){
-             this.releaseData = data;
-           }
-         },
-         error: (error) => {
-           console.error(error);
-         },
-         complete: () => {
-           console.info("Releases fetched successfully");
-           this.showLoader = true;
-           this.releaseDataReady = true;
-         }
-       })
-   }
- 
-   getReleaseDetails(releaseId: number){
-     
+     this.releaseDataReady = true;
    }
  
  }

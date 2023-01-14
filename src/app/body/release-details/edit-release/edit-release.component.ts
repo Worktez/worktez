@@ -29,7 +29,6 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    componentName: string = "EDITRELEASE"
    @Input('tagName') tagName: string
    @Input('description') description: string;
-   @Input('repoName') repoName: string;
    @Input('targetBranch') targetBranch: string; 
    @Input('id') releaseId: string;
    @Input('teamId') teamId: string;
@@ -55,44 +54,25 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    }
  
    editRelease(){
-     this.httpService.getReleaseDetails().subscribe((data) => {
+    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+     this.httpService.getProjectReleaseDetails(projectLink).subscribe((data) => {
        for(let i in data){
          if(data[i].tag_name==this.tagName){
            const release_Id = data[i].id;
            this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
            this.bearerToken = atob(this.bearerToken);
-           this.httpService.updateGithubRelease(release_Id, this.bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.response1, this.response2, this.response3);
-           this.editReleaseInDb();
+           this.httpService.updateGithubRelease(release_Id, this.bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.response1, this.response2, this.response3, projectLink);
          }
        }
+         console.info('Successful');
+         this.enableLoader = false;
+         this.showClose = true;
      })
    }
  
     editReleaseDone() {
       this.editReleaseCompleted.emit({completed:true});
     }
- 
-   editReleaseInDb(){
-     this.enableLoader = true;
-     const orgDomain = this.backendService.getOrganizationDomain();
-     const callable = this.functions.httpsCallable('makeRelease/editRelease');
-     callable({ReleaseName: this.releaseName, TagName: this.tagName, TargetBranch: this.targetBranch, Description: this.description, IfDraft: this.ifDraft, PreRelease: this.preRelease, GenerateRelease :this.generateRelease, TeamId: this.teamId, OrgDomain: orgDomain, ReleaseId: this.releaseId}).subscribe({
-       next: (data) => {
-         console.log("Successfully updated!");
-       }, 
-       error: (error)  => {
-         this.errorHandlerService.showError = true;
-         this.errorHandlerService.getErrorCode(this.componentName,"InternalError","Api");
-         this.enableLoader = false;
-         console.error(error);
-       },
-       complete: () => {
-         console.info('Successful');
-         this.enableLoader = false;
-         this.showClose = true;
-       }
-     });
-   }
  
    validateRelease() {
      if(this.generateRelease=="true"){
@@ -116,7 +96,6 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    ];
      this.validationService.checkValidity(this.componentName, data).then(
        res => {
-         console.log("condition", res);
          if(res) {
            console.log("Inputs are valid");
            this.editRelease();

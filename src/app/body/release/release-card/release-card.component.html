@@ -11,34 +11,34 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
- <div class="card p-3" (click)="getReleaseDetails(release.ReleaseId)">
-    <span class="heading py-2">
-      <span class="headId px-2">
-        {{release.Title}}
-      </span>{{release.TagName}}
-    </span>
-    <div class="row py-2">
-      <div class="col-md-3 col-4">
-        <span class="teamId">
-          <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
-            groups_3
-          </mat-icon><span class="align-middle ">{{release.TeamId}}</span>
-        </span>
-      </div>
-      <div class="col-md-9 col-8">
-        <span class="teamId">
-          Target Branch:<span>{{release.TargetBranch}}</span>
-        </span>
-      </div>
+ <div class="card p-3" (click)="getReleaseDetails(release['id'])">
+  <span class="heading py-2">
+    <span class="headId px-2">
+      {{release['name']}}
+    </span>{{release['tag_name']}}
+  </span>
+  <div class="row py-2">
+    <div class="col-md-3 col-4">
+      <span class="teamId">
+        <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+          groups_3
+        </mat-icon><span class="align-middle ">{{teamId}}</span>
+      </span>
     </div>
-    <div class="row py-2">
-      <div class="col"id="dateAlign">
-        <span type="button" class="btn align-bottom p-0 m-0" id="StartDate">
-            <mat-icon fontSet="material-icons-outlined" class="align-middle">
-              date_range
-            </mat-icon>
-            Release Date: <span id="sprintStartDate">{{release.ReleaseDate}}</span> 
-        </span>
-      </div>
+    <div class="col-md-9 col-8">
+      <span class="teamId">
+        Target Branch:<span>{{release['target_commitish']}}</span>
+      </span>
     </div>
   </div>
+  <div class="row py-2">
+    <div class="col"id="dateAlign">
+      <span type="button" class="btn align-bottom p-0 m-0" id="StartDate">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle">
+            date_range
+          </mat-icon>
+          Release Date: <span id="sprintStartDate">{{release['created_at']}}</span> 
+      </span>
+    </div>
+  </div>
+</div>
