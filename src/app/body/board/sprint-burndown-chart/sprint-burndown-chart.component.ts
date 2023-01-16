@@ -14,7 +14,7 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 export class SprintBurndownChartComponent implements OnInit {
 
   constructor(public backendService: BackendService, private functions: AngularFireFunctions, public toolsService: ToolsService, public errorHandlerService: ErrorHandlerService) { }
-  showLoader: boolean = false;
+  showLoader: boolean = true;
   totalStoryPoints: number = 0;
   componentName: string = "SPRINT-BURNDOWN-CHART";
   @Input("currentSprint") currentSprintNumber: number;
@@ -42,7 +42,7 @@ export class SprintBurndownChartComponent implements OnInit {
             this.data.forEach((element, index) => {
               this.data[index] = [index, element]
             })
-            this.showLoader = false;
+            // this.showLoader = false;
           },
           error: (error) => {
             this.errorHandlerService.showError = true;
@@ -50,7 +50,11 @@ export class SprintBurndownChartComponent implements OnInit {
             this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
             console.error(error);
           },
-          complete: () => console.info('Getting Sprint Burndown data successful')
+          complete: () => 
+          {
+            console.info('Getting Sprint Burndown data successful');
+            this.showLoader = false;
+          }
         });
   }
 }
