@@ -23,6 +23,8 @@
  import { TeamServiceService } from 'src/app/services/team/team-service.service';
  import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
  import { AuthService } from 'src/app/services/auth/auth.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
  
  @Component({
    selector: 'app-release-details',
@@ -34,7 +36,6 @@
    releaseData: CreateReleaseData;
    releaseDataReady: boolean;
    showLoader: boolean;
-   orgDomain: string;
    releaseId: string;
    editReleaseActive: boolean = false;
    releaseDescription: GitData[];
@@ -46,13 +47,30 @@
    deleteReleaseEnabled: boolean = false;
    teamId: string;
 
-   constructor(private functions: AngularFireFunctions, public backendService: BackendService, private httpService: HttpServiceService,private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, private authService: AuthService) { }
+   constructor(private functions: AngularFireFunctions, public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private httpService: HttpServiceService,private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
  
    ngOnInit(): void {
      this.releaseId = this.route.snapshot.params['ReleaseId'];
-     this.orgDomain = this.backendService.getOrganizationDomain();
-     this.teamId = this.authService.getTeamId();
-     this.getReleaseDetails();
+     this.navbarHandler.addToNavbar(this.releaseId);
+     if(this.teamService.teamsReady) {
+      this.teamId = this.startService.selectedTeamId;
+      this.getReleaseDetails();
+      } else {
+        this.teamService.teamDataStateObservable.subscribe({
+          next: (data) => {
+            if(data){
+              this.teamId = this.startService.selectedTeamId;
+              this.getReleaseDetails();
+            }
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => {
+            console.log("Completed getting Team Data");
+          }
+        });
+      }
    }
  
    updateRelease(){
@@ -87,11 +105,11 @@
     this.bearerToken = atob(this.bearerToken);
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     this.httpService.getReleaseByReleaseId(this.releaseId, this.bearerToken, projectLink).subscribe((data) => {  
-    const objData = data as CreateReleaseData
-    this.releaseData = objData;
-    this.releaseDataReady = true;
-    this.showLoader = false;
-   })
+      const objData = data as CreateReleaseData
+      this.releaseData = objData;
+      this.releaseDataReady = true;
+      this.showLoader = false;
+    });
   }
  
    editReleaseCompleted(boolean){

@@ -36,45 +36,42 @@ import { GitData } from 'src/app/Interface/githubReleaseData';
    componentName = "RELEASES"
    releaseData: GitData[];
    releaseDataReady: boolean;
-   showLoader: boolean;
+   showLoader: boolean = false;
    teamIds: string[] = [];
    appkey:string;
    teamId: string;
    addReleaseActive: boolean = false;
    projectLink: string;
-   team: Team;
  
    constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private httpService: HttpServiceService) { }
  
    ngOnInit(): void {
-     this.showLoader = true;
      this.navbarHandler.resetNavbar();
      this.navbarHandler.addToNavbar(this.componentName);
      this.releaseDataReady = false;
-     if (this.startService.showTeams) {
-       this.appkey = this.authService.getAppKey();
-       this.backendService.getOrgDetails(this.appkey);
-       this.teamIds = this.backendService.getOrganizationTeamIds();
-       this.getReleaseDetails();
-       this.teamId = this.authService.getTeamId();
-       this.applicationSettingsService.getTeamDetails(this.teamId);
-       this.team = this.applicationSettingsService.team;
-       this.projectLink=this.team.ProjectLink;
-     } else {
-       this.startService.userDataStateObservable.subscribe((data) => {
-         if (data) {
-           this.appkey = this.authService.getAppKey();
-           this.backendService.getOrgDetails(this.appkey).subscribe((data) => {
-             this.teamIds = this.backendService.getOrganizationTeamIds();
-           });
-           this.getReleaseDetails();
-           this.teamId = this.authService.getTeamId();
-           this.applicationSettingsService.getTeamDetails(this.teamId);
-           this.team = this.applicationSettingsService.team;
-           this.projectLink=this.team.ProjectLink;
-         }
-       })
-     }
+     if(this.teamService.teamsReady) {
+      this.teamIds = this.backendService.getOrganizationTeamIds();
+      this.teamId = this.startService.selectedTeamId;
+      this.projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+      this.getReleaseDetails();
+      } else {
+        this.teamService.teamDataStateObservable.subscribe({
+          next: (data) => {
+            if(data){
+              this.teamIds = this.backendService.getOrganizationTeamIds();
+              this.teamId = this.startService.selectedTeamId;
+              this.projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+              this.getReleaseDetails();
+            }
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => {
+            console.log("Completed getting Team Data");
+          }
+        });
+      }
    }
  
    createRelease() {
@@ -90,6 +87,8 @@ import { GitData } from 'src/app/Interface/githubReleaseData';
      this.authService.userAppSetting.SelectedTeamId = teamId;
      this.startService.readApplicationData();
      this.startService.changeTeam = true;
+     this.teamId = teamId;
+     this.projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
  
      const callable = this.functions.httpsCallable('users/updateSelectedTeam');
      callable({Uid: this.startService.uid , SelectedTeam: this.startService.selectedTeamId}).subscribe({
@@ -101,27 +100,36 @@ import { GitData } from 'src/app/Interface/githubReleaseData';
        complete: (()=>{
          this.cookieService.set("userSelectedTeamId", teamId);
          this.showLoader = false;
+         this.getReleaseDetails();
        })
      })
    }
 
-   getReleaseDetails(){
-    try {
-      this.teamId = this.authService.getTeamId();
-      const repoLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+  getReleaseDetails(){
+    this.showLoader=true;
+    const repoLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+    if(repoLink!="" && repoLink!=undefined){
       this.httpService.getProjectReleaseDetails(repoLink).pipe(map(data => {
         const objData = data as GitData[];
-        this.releaseData=objData;
-        return this.releaseData;
-      })).subscribe(data => {
-
+        return objData;
+      })).subscribe({
+        next: (data) => {
+          this.releaseData=data;
+        },
+        error: (error) => {
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => {
+          this.showLoader = false;
+          this.releaseDataReady = true;
+        }
       });
-    } catch (error) {    
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+    } else{
+      this.releaseData=undefined;
+      this.showLoader = false;
+      this.releaseDataReady = true;
     }
-     this.showLoader = true;
-     this.releaseDataReady = true;
-   }
+  } 
  
  }

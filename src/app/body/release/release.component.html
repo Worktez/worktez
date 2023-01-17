@@ -12,7 +12,7 @@
  * See the MIT License for more details.
  ***********************************************************/ -->
  <ng-container *ngIf="releaseDataReady; else loader">
-  <div class="btn-group smallButton">
+  <div class="btn-group smallButton p-4">
     <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
     <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
         <ng-container *ngFor="let item of startService.teams">
@@ -23,26 +23,26 @@
       <button type="button" class="btn" id="button" data-toggle="modal" data-target="#exampleModalCenter" (click)="createRelease()">Add Release</button>
     </div>
   </div>
-  <div class="row"></div>
-  <div class="row" id="GithubDetails">
-     Project Link : {{projectLink}}
-  </div>
-  <div id="milestoneContainer" class="m-2">
-    <div *ngIf="releaseData.length == 0">
-      <h3 class="text-center pt-5">No Releases to Show!</h3>
-      <ng-template *ngIf="showLoader">
-        <app-loader></app-loader>
-      </ng-template>  
+  <div class="row py-4 px-2">
+    <div class="col" id="GithubDetails" *ngIf="projectLink!=undefined && projectLink!=''">
+      Project Link : {{projectLink}}
     </div>
-      <div class="row pt-2 px-4" *ngIf="releaseData.length>0">
-        <ng-container *ngFor="let release of releaseData">
-          <div class="col-md-4 p-3">
-            <app-release-card [release]="release" [teamId]="teamId"></app-release-card>
-          </div>
-        </ng-container>
-      </div>
-  
-      <hr>
+  </div>
+  <div id="milestoneContainer" class="p-2">
+    <div *ngIf="releaseData==undefined">
+      <h3 class="text-center pt-5">No Releases to Show!</h3>
+    </div>
+    <div class="row pt-2 px-4">
+      <ng-container *ngFor="let release of releaseData">
+        <div class="col-md-4 p-2">
+          <app-release-card [release]="release" [teamId]="teamId"></app-release-card>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template *ngIf="showLoader">
+      <app-loader></app-loader>
+    </ng-template>  
+    <hr>
       <!-- <div style="font-family: 'Plus Jakarta Sans', sans-serif;">
         <h1 style="font-weight: lighter;">Completed Milestones</h1>
       </div> -->

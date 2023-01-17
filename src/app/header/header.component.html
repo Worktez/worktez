@@ -98,9 +98,16 @@
                         <ng-container>
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="releases()">
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                        new_releases
-                                    </mat-icon> Releases
+                                    <div class="row">
+                                        <div class="col pr-1">
+                                            <span class="material-symbols-outlined" >
+                                                new_releases
+                                            </span> 
+                                        </div>
+                                        <div class="col pl-1">
+                                            Releases
+                                        </div>
+                                    </div>
                                 </a>
                             </li>
                         </ng-container>

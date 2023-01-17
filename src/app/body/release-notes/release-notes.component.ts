@@ -34,19 +34,22 @@ export class ReleaseNotesComponent implements OnInit {
 
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
+    this.httpService.getReleaseDetails().pipe(map(data => {
+      const objData = data as GitData[];
+      return objData;
+    })).subscribe({
+      next: (data) => {
+        this.releaseData=data;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => {
+        
+      }
+    });
     
-    try {
-      this.httpService.getReleaseDetails().pipe(map(data => {
-        const objData = data as GitData[];
-        this.releaseData=objData;
-        return objData;
-      })).subscribe(data => {
-
-      });
-    } catch (error) {    
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
   }
 
 }
