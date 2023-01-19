@@ -131,5 +131,5 @@ input:focus {
 }
 
 input::-webkit-calendar-picker-indicator {
-    filter: invert(0.5);
+    filter: invert(0.6);
 }

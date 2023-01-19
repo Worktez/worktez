@@ -1,0 +1,138 @@
+<!-- /** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author: Simran Nigam <nigamsimran14@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+ <div class="modal fade" id="exampleModalCenter" style="z-index: 1050" tabindex="-1" role="dialog"
+ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h2 class="modal-title" id="exampleModalLongTitle">
+         Add a Release
+       </h2>
+       <!-- <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button> -->
+       <span type="button" class="btn" aria-label="Close" data-dismiss="modal" aria-hidden="true" >
+         <mat-icon fontSet="material-icons-outlined" class="align-middle">
+             close
+         </mat-icon>
+         <!-- <span class="material-icons">close</span> -->
+     </span>
+     </div>
+     <div class="modal-body">
+       <form *ngIf="popupHandlerService.addReleaseActive">
+           <div class="form-row my-2">
+             <div class="form-group col-md-6 col">
+               <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Title</span>
+               <input type="text" [(ngModel)]="title" [ngModelOptions]="{ standalone: true }"
+                 class="form-control form-control-sm" id="recipient-name" placeholder="Enter the title" required autocomplete="off"/>
+             </div>
+             <div class="form-group col-md-6 col ml-auto">
+               <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">TeamId</span>
+               <select class="form-control form-control-sm" [(ngModel)]="teamId"
+                 [ngModelOptions]="{standalone: true}">
+                 <option [ngValue]="teamId" [disabled]="true">{{ teamId }}</option>
+                 <ng-container *ngFor='let id of teamIds'>
+                   <option>{{ id }}</option>
+                 </ng-container>
+               </select>
+             </div>
+           </div>
+           <div class="form-row my-4 mb-2">
+             <div class="form-group col-md-12 col">
+               <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
+               <textarea required type="text" [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"
+                 class="form-control form-control-sm" id="recipient-name"
+                 placeholder="Enter Release Description" rows="7"></textarea>
+             </div>
+           </div>
+           <div class="form-row mb-2">
+            <div class="form-group col-md-6 col">
+              <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Target Branch</span>
+              <input type="text" [(ngModel)]="targetBranch" [ngModelOptions]="{ standalone: true }"
+                class="form-control form-control-sm" id="recipient-name" placeholder="Enter target branch" required autocomplete="off"/>
+            </div>
+            <div class="form-group col-md-6 col">
+              <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Release Name</span>
+              <input type="text" [(ngModel)]="releaseName" [ngModelOptions]="{ standalone: true }"
+                class="form-control form-control-sm" id="recipient-name" placeholder="Enter Release Name" required autocomplete="off"/>
+            </div>
+        </div>
+      <div class="row">
+        <div class="col">
+          <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Generate Release</span>
+          <select class="form-control form-control-sm" [(ngModel)]="generateRelease" [ngModelOptions]="{standalone: true}">
+              <option [ngValue]="generateRelease" [disabled]="true">{{generateRelease}} </option>
+              <ng-container *ngFor='let label of choose'>
+                <option>{{ label }}</option>
+            </ng-container>
+          </select>
+      </div>
+      <div class="col">
+        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Pre Release</span>
+        <select class="form-control form-control-sm" [(ngModel)]="preRelease" [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="preRelease" [disabled]="true">{{preRelease}}</option>
+            <ng-container *ngFor='let label of choose'>
+              <option>{{ label }}</option>
+          </ng-container>
+        </select>
+    </div>
+    <div class="col">
+      <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Draft</span>
+      <select class="form-control form-control-sm" [(ngModel)]="ifDraft" [ngModelOptions]="{standalone: true}">
+          <option [ngValue]="ifDraft" [disabled]="true">{{ifDraft}}</option>
+          <ng-container *ngFor='let label of choose'>
+              <option>{{ label }}</option>
+          </ng-container>
+      </select>
+  </div>
+      </div>
+        <div class="form-row my-2">
+          <div class="form-group col-md-6 col">
+            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Tag Name</span>
+            <input type="text" [(ngModel)]="tagName" [ngModelOptions]="{ standalone: true }"
+              class="form-control form-control-sm" id="recipient-name" placeholder="Enter Tag Name" required autocomplete="off"/>
+          </div>
+          <div class="form-group col-md-6 col">
+            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Release Date</span>
+            <input required class="form-control form-control-sm" type="text" onfocus="(this.type='date')"
+              onblur="(this.type='text')" [(ngModel)]="releaseDate" [ngModelOptions]="{standalone: true}"
+              min="{{minDate}}" placeholder="Select The Start Date ">
+          </div>
+      </div>
+           <div class="modal-footer" *ngIf="githubTokenExists">
+             <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="showLoader" aria-label="Close" (click)="validateRelease()">Create New Release</button>
+           </div>
+           <div class="modal-footer" *ngIf="!githubTokenExists">
+            <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="showLoader" aria-label="Close" (click)="generateToken()">Generate Token</button>
+          </div>
+       </form>
+       <div *ngIf="!popupHandlerService.addReleaseActive">
+         <div class="row mx-5">
+           <div class="col-md-4"></div>
+           <div class="col-md-4">
+             <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">
+                 check_circle_outline
+             </mat-icon>
+           </div>
+           <div class="col-md-4"></div>
+         </div>
+         <h1 class="text-center">Successfully Added Release</h1>
+       </div>
+     </div>
+   </div>
+   <ng-template *ngIf="showLoader">
+     <app-loader></app-loader>
+   </ng-template>
+ </div>
+</div>

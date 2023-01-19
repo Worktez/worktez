@@ -166,7 +166,7 @@ export const defaultPermissions = {
     completeSprint: true,
     editOrganization: true,
     viewMemberRoles: true,
-    editMemberRoles:true,
+    editMemberRoles:false,
     addDefaultLabel: true,
     createNewLabel: true,
     editLabel: true,

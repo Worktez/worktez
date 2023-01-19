@@ -12,77 +12,35 @@
 * See the MIT License for more details. 
 ***********************************************************/
 
-.btn {
-    position: absolute;
-    left: 60px;
-    top: 0px;
-    margin-left:100px;
-    margin-top: 4px;
-    padding-top: 9px;
-    width: 50px;
-    height: 35px;
+*{
+    font-size: 12px;
+    color: var(--text);
+}
+
+.meet-details {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+}
+.meet-details:hover {
+    background-color: var(--primary-bg);
+}
+.linkBtn {
+    width: auto;
+    height: 30px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 6px;
     
 }
-.btn:hover {
+.deleteBtn:hover{
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+.linkBtn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
-    align-items: center;
 }
 a {
     color: var(--text);
     text-decoration: none;
-    font-size: 12px;
-}
-
-#notificationBox:hover {
-    padding: 0%;
-}
-
-#notificationBox{
-    border: 1px solid var(--button-text-hover);
-    border-radius: 6px;
-}
-
-#dt {
-    color: var(--button-text);
-}
-
-.join-btn{
-    float: right;
-    margin-left:100px;
-    margin-top: 5px;
-    padding-top: 6px;
-    width: 60px;
-    height: 35px;
-    background-color: var(--primary-color);
-    color: #fff;
-    border-radius: 6px;
-    text-align: center;
-}
-
-.join-btn:hover {
-    background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
-}
-
-.meet-details{
-    padding: 5px;
-}
-
-.meet-card{
-    background-color: transparent;
-    border-radius: 3px;
-    color: #fff;
-}
-
-.Meet-time{
-    margin-top: 15px;
-    width: 60px;
-    color: var(--text);
-}
-
-.meet-title{
-    padding-top: 5px;
-    color: var(--text);
-    text-align: center;
 }

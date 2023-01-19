@@ -186,6 +186,11 @@ import { StandardSubscriptionComponent } from './body/standard-subscription/stan
 import { CreateGitIssueComponent } from './body/task-details/create-git-issue/create-git-issue.component';
 import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
 import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
+import { ReleaseComponent } from './body/release/release.component';
+import { AddReleaseComponent } from './body/release/add-release/add-release.component';
+import { ReleaseCardComponent } from './body/release/release-card/release-card.component';
+import { ReleaseDetailsComponent } from './body/release-details/release-details.component';
+import { EditReleaseComponent } from './body/release-details/edit-release/edit-release.component';
 
 @NgModule({
   declarations: [
@@ -339,6 +344,11 @@ import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
     CreateGitIssueComponent,
     GitlabLinkComponent,
     GitlabComponent,
+    ReleaseComponent,
+    AddReleaseComponent,
+    ReleaseCardComponent,
+    ReleaseDetailsComponent,
+    EditReleaseComponent,
   ],
   imports: [
     BrowserModule,
