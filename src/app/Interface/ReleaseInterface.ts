@@ -27,3 +27,8 @@
     Title: string;
     generateRelease: boolean;
 }
+
+export interface AssetData {
+    url: string;
+    browser_download_url: string;
+}

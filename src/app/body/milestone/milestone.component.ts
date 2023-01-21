@@ -54,8 +54,8 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
      this.appkey = this.authService.getAppKey();
      this.backendService.getOrgDetails(this.appkey);
        this.teamIds = this.backendService.getOrganizationTeamIds();
-       this.getMilestoneData();
        this.teamId = this.authService.getTeamId();
+       this.getMilestoneData();
      } else {
        this.startService.userDataStateObservable.subscribe((data) => {
          if (data) {
@@ -63,8 +63,8 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
            this.backendService.getOrgDetails(this.appkey).subscribe(()=>{
             this.teamIds = this.backendService.getOrganizationTeamIds();
            });
-           this.getMilestoneData();
            this.teamId = this.authService.getTeamId();
+           this.getMilestoneData();
          }
        });
      }
@@ -92,16 +92,15 @@ import { PopupHandlerService } from "src/app/services/popup-handler/popup-handle
           console.error(error);
         },
         complete: (()=>{
-          this.getMilestoneData();
           this.cookieService.set("userSelectedTeamId", teamId);
           this.showLoader = false;
+          this.getMilestoneData();
         })
     });
   }
  
    getMilestoneData() {
      this.showLoader = true;
-     this.teamIds = this.backendService.getOrganizationTeamIds();
      const orgDomain = this.backendService.getOrganizationDomain();
      const callable = this.functions.httpsCallable("milestone/getAllMilestones");
      callable({ OrgDomain: orgDomain, TeamId: this.startService.selectedTeamId  }).pipe(

@@ -17,11 +17,14 @@
  import { CreateReleaseData } from 'src/app/Interface/ReleaseInterface';
  import { Location } from '@angular/common';
  import { BackendService } from 'src/app/services/backend/backend.service';
- import { map } from 'rxjs';
  import { ActivatedRoute } from '@angular/router';
  import { HttpServiceService } from 'src/app/services/http/http-service.service';
  import { GitData } from 'src/app/Interface/githubReleaseData';
-import { TeamServiceService } from 'src/app/services/team/team-service.service';
+ import { TeamServiceService } from 'src/app/services/team/team-service.service';
+ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+ import { AuthService } from 'src/app/services/auth/auth.service';
+import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
  
  @Component({
    selector: 'app-release-details',
@@ -33,7 +36,6 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    releaseData: CreateReleaseData;
    releaseDataReady: boolean;
    showLoader: boolean;
-   orgDomain: string;
    releaseId: string;
    editReleaseActive: boolean = false;
    releaseDescription: GitData[];
@@ -43,13 +45,32 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    versionName: string;
    releaseDate: string;
    deleteReleaseEnabled: boolean = false;
+   teamId: string;
 
-   constructor(private functions: AngularFireFunctions, public backendService: BackendService, private httpService: HttpServiceService,private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService) { }
+   constructor(private functions: AngularFireFunctions, public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private httpService: HttpServiceService,private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
  
    ngOnInit(): void {
      this.releaseId = this.route.snapshot.params['ReleaseId'];
-     this.orgDomain = this.backendService.getOrganizationDomain();
-     this.getReleaseDetails();
+     this.navbarHandler.addToNavbar(this.releaseId);
+     if(this.teamService.teamsReady) {
+      this.teamId = this.startService.selectedTeamId;
+      this.getReleaseDetails();
+      } else {
+        this.teamService.teamDataStateObservable.subscribe({
+          next: (data) => {
+            if(data){
+              this.teamId = this.startService.selectedTeamId;
+              this.getReleaseDetails();
+            }
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => {
+            console.log("Completed getting Team Data");
+          }
+        });
+      }
    }
  
    updateRelease(){
@@ -57,16 +78,17 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    }
  
    deleteRelease(tagName: string){
-       this.httpService.getReleaseDetails().subscribe((data) => {
+    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+       this.httpService.getProjectReleaseDetails(projectLink).subscribe((data) => {
          for(let i in data){
            if(data[i].tag_name==tagName){
              const release_Id = data[i].id;
-             this.bearerToken = this.teamService.teamsDataJson[this.releaseData.TeamId].GitToken;
+             this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
              this.bearerToken = atob(this.bearerToken);
-             this.httpService.deleteGithubRelease(release_Id, this.bearerToken);
-             this.deleteGithubReleaseDb();
+             this.httpService.deleteGithubRelease(release_Id, this.bearerToken, projectLink);
            }
          }
+         this.getReleaseDetails();
        });
    }
 
@@ -74,60 +96,21 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
      this.deleteReleaseEnabled = true;
    }
  
-   deleteGithubReleaseDb(){
-     const callable = this.functions.httpsCallable('makeRelease/deleteRelease')
-     callable({OrgDomain: this.orgDomain, ReleaseId: this.releaseId}).subscribe({
-       next: (data) => {
-         console.log("Successfull");
-       },
-       error: (error) => {
-         console.log("Error", error);
-         console.error(error);
-       },
-       complete: () => console.info("Successfully updated in db")
-     });
-     console.info("Deleting Release");
-   }
- 
    backToReleases(){
      this.location.back()
    }
  
-   getReleaseDetails(){
-     this.showLoader = true;
-     const callable = this.functions.httpsCallable('makeRelease/getRelease')
- 
-     callable({ OrgDomain: this.orgDomain, ReleaseId: this.releaseId}).pipe(
-       map(actions => {
-         return actions.data as CreateReleaseData;
-       })).subscribe({
-         next: (data) => {
-           this.releaseData = data;
-           this.httpService.getReleaseDetails().subscribe((data) => {
-             for(let i in data){
-               if(data[i].tag_name==this.releaseData.TagName){
-                 const release_Id = data[i].id;
-                 const bearerToken = "";
-                 this.httpService.getReleaseByReleaseId(release_Id, bearerToken).subscribe(data => {
-                   const objData = data as GitData[];
-                   this.releaseDescription=objData;
-                   return this.releaseDescription;
-                 })
-               }
-             }
-             this.bodyArray = this.releaseData.Description.split("\n");
-           });
-         },
-         error: (error) => {
-           console.log(error);
-         },
-         complete: () => {
-           console.info("Fetched Release Details Successfully");
-           this.releaseDataReady = true;
-           this.showLoader = false;
-         },
-       });
-   }
+  getReleaseDetails(){
+    this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
+    this.bearerToken = atob(this.bearerToken);
+    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+    this.httpService.getReleaseByReleaseId(this.releaseId, this.bearerToken, projectLink).subscribe((data) => {  
+      const objData = data as CreateReleaseData
+      this.releaseData = objData;
+      this.releaseDataReady = true;
+      this.showLoader = false;
+    });
+  }
  
    editReleaseCompleted(boolean){
      this.getReleaseDetails();

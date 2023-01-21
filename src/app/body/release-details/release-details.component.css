@@ -46,7 +46,7 @@ white-space: break-spaces;
 }
 
 #button {
-    background-color: var(--secondary-bg);
+    /* background-color: var(--secondary-bg); */
     color: var(--text);
 }
 
@@ -103,7 +103,7 @@ white-space: break-spaces;
 }
 
 #button{
-    background-color: var(--button-hover-bg);
+    /* background-color: var(--button-hover-bg); */
     color: var(--button-text);
 }
 
@@ -113,6 +113,9 @@ white-space: break-spaces;
     color: var(--button-text-hover); 
 }
 
+#description{
+    color: var(--text);
+}
 
 .btn {
     color: var(--text);

@@ -135,7 +135,6 @@ export class AddReleaseComponent implements OnInit {
   ];
     this.validationService.checkValidity(this.componentName, data).then(
       res => {
-        console.log("condition", res);
         if(res) {
           console.log("Inputs are valid");
           this.addRelease();
@@ -151,12 +150,25 @@ export class AddReleaseComponent implements OnInit {
     this.showLoader = true;
     this.gitToken = this.teamService.teamsDataJson[this.teamId].GitToken;
     this.gitToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.httpService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1).then((data) => {
+    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
+    this.httpService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).then((data) => {
       if(data.status == 201){
-        this.addReleaseDetailsToDB();
         this.showLoader = false;
         this.popupHandlerService.addReleaseActive = false;
       }
     })
+    this.releaseName = "";
+        this.description = "";
+        this.tagName = "";
+        this.targetBranch = "";
+        this.ifDraft = "";
+        this.preRelease = "";
+        this.generateRelease = "";
+        this.releaseDate = "";
+        this.teamId = "";
+        this.title = "";
+        this.getReleases.emit();
+        this.popupHandlerService.addReleaseActive = false;
+        this.showLoader = false;
   }
 }

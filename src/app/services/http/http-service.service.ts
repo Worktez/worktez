@@ -26,6 +26,11 @@ export class HttpServiceService {
     return this.httpClient.get(this.gitReleaseApiUrl);
   }
 
+  getProjectReleaseDetails(projectLink){
+    const url = environment.githubApiUrl +"/repos/"+projectLink+"/releases";
+    return this.httpClient.get(url);
+  }
+
   getGithubUserRepos(memberUserName) {
     const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
     return this.httpClient.get(url);
@@ -78,8 +83,8 @@ export class HttpServiceService {
     })
   }
 
-  updateGithubRelease(release_id, bearerToken, tagName, targetBranch, releaseName, releaseDescription, response, response1, response2){
-    const url = environment.gitApiUrl+"/releases/"+release_id;
+  updateGithubRelease(release_id, bearerToken, tagName, targetBranch, releaseName, releaseDescription, response, response1, response2, projectLink){
+    const url = environment.githubApiUrl+"/repos/"+projectLink+"/releases/"+release_id;
     const headers = {
       'Authorization': 'Bearer ' + bearerToken
     }
@@ -101,8 +106,8 @@ export class HttpServiceService {
     
   }
 
-  deleteGithubRelease(release_id, bearerToken){
-    const url = environment.gitApiUrl+"/releases/"+release_id;
+  deleteGithubRelease(release_id, bearerToken, projectLink){
+    const url = environment.githubApiUrl+"/repos/"+projectLink+"/releases/"+release_id;
     const headers = {
       'Authorization': 'Bearer ' + bearerToken
     }
@@ -112,9 +117,8 @@ export class HttpServiceService {
     })
   }
 
-  getReleaseByReleaseId(release_id, bearerToken){
-    const url = environment.gitApiUrl+"/releases/"+release_id;
-
+  getReleaseByReleaseId(release_id, bearerToken, projectLink){
+    const url = environment.githubApiUrl+"/repos/"+projectLink+"/releases/"+release_id;
     let httpOptions = {
       headers: {
         'Authorization': 'Bearer ' + bearerToken
@@ -124,9 +128,8 @@ export class HttpServiceService {
     return this.httpClient.get(url, httpOptions);
   }
 
-  createGithubRelease(bearerToken,releaseName, tagName, targetBranch, releaseDescription, response, response1, response2){
-    console.log(bearerToken);
-    const url = environment.gitApiUrl+"/releases";
+  createGithubRelease(bearerToken,releaseName, tagName, targetBranch, releaseDescription, response, response1, response2, projectLink){
+    const url = environment.githubApiUrl+"/repos/"+projectLink+"/releases";
 
     const headers = {
       'Authorization': 'Bearer ' + bearerToken
