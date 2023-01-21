@@ -1,9 +1,11 @@
 <div class="row pt-5">
     <div class="col-1"></div>
-    <div *ngIf="startService.userReady; else noUser"  class="col col-md-3 currentUserInfo">
+    <div *ngIf="startService.userReady; else noUser" class="col col-md-3 currentUserInfo">
         <div class="card" id="profileCard" *ngIf="authService.userAppSetting != undefined; else loader">
             <div class="text-center">
-                <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle mt-2" width="120" height="120">
+                <img src="{{authService.userAppSetting.photoURL}}"
+                    onerror="this.src = '../../../assets/defaultavatar.jpg' " alt="profile-pic"
+                    class="rounded-circle mt-2" width="120" height="120">
                 <h1>{{authService.userAppSetting.displayName}}</h1>
                 <p class="text-muted">Developer</p>
             </div>
@@ -11,59 +13,90 @@
             <div class="col">
                 <div class="row px-4">
                     <h3>Number of Posts:</h3>
-                    <h3 class="text-right ml-auto" id="sprintStatus">{{authService.userAppSetting.UserPostsCounter}}</h3>
+                    <h3 class="text-right ml-auto" id="sprintStatus">{{authService.userAppSetting.UserPostsCounter}}
+                    </h3>
                 </div>
                 <div class="row px-4">
                     <h3>Number of Stars:</h3>
-                    <h3 class="text-right ml-auto" id="sprintStatus" >{{authService.userAppSetting.UserReactionCounter}}</h3>
+                    <h3 class="text-right ml-auto" id="sprintStatus">{{authService.userAppSetting.UserReactionCounter}}
+                    </h3>
                 </div>
             </div>
             <hr>
         </div>
-        
+
         <ng-template #loader>
             <app-loader></app-loader>
         </ng-template>
-        
+
         <div class="card mt-3 p-4" id="profileCard">
             <h3>Followings</h3>
             <p>Geeks for Geeks</p>
             <p>Machine Learning</p>
             <p>#graphicDesign</p>
             <p>Business</p>
-        </div>   
+        </div>
     </div>
     <ng-template #noUser>
         <div class="col col-md-3 currentUserInfo"></div>
     </ng-template>
-    
+
     <div class="col col-md-4">
-        <div  class="pb-4">
-            <button *ngIf="startService.userReady; else noUser" class="btn" (click)="createPost()" data-toggle="modal" data-target="#createPost">
+        <!-- <div class="pb-4">
+            <button *ngIf="startService.userReady; else noUser" class="btn" (click)="createPost()" data-toggle="modal"
+                data-target="#createPost">
                 Create post
                 <mat-icon fontSet="material-icons-outlined" class="align-middle ml-2">
                     add_circle
                 </mat-icon>
             </button>
+        </div> -->
+        <div class="card post mb-2" *ngIf="pageReady==true">
+            <div class="card-header">
+                <div class="row pl-3 pr-0">
+                    <div class="col-md-2 col-3 pr-0">
+                        <img src="{{authService.userAppSetting.photoURL}}"
+                            onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic"
+                            class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                    </div>
+                    <div class="col-md-10 col-9 pl-0">
+                        <div class="pb-4 py-2">
+                            <button *ngIf="startService.userReady; else noUser" class="createPost"
+                                (click)="createPost()" data-toggle="modal" data-target="#createPost">
+                                Start a post
+                            </button>
+                        </div>
+                    </div>
+                    <div  class="postBtn" (click)="choosePhoto()" data-toggle="modal" data-target="#createPost">
+                        <label class="btn" id="insert_photo" for="file">
+                            <mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle">
+                                insert_photo</mat-icon>
+                            Photo
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         <ng-container *ngIf="socialPageService.socialPageDataReady && socialPageService.dataReady; else loader">
             <ng-container *ngIf="(socialPageService.socialPageDataJson).length==0">
                 <div class="row">
-                    <div class="col text-center pt-2" id="noActivityDesc" style="color: var(--text);">No Posts Available.
+                    <div class="col text-center pt-2" id="noActivityDesc" style="color: var(--text);">No Posts
+                        Available.
                     </div>
                 </div>
             </ng-container>
-    
+
             <ng-container *ngIf="(socialPageService.socialPageDataJson).length!=0">
                 <ng-container *ngFor="let post of socialPageService.socialPageDataJson">
                     <app-posts [post]="post" (switchReactionCompleted)="postReactionSwitched($event)"></app-posts>
                 </ng-container>
             </ng-container>
         </ng-container>
-        <ng-container *ngIf="!disableLoadMore; else noMoreData">
-            <div class="row">
+        <ng-container *ngIf="posts[0]">
+            <div class="row" *ngIf="!disableLoadMore  ; else noMoreData">
                 <div class="col text-center">
-                    <button class="btn" (click)="showOlderPosts()"  [disabled]="disableLoadMore">Load more</button>
+                    <button class="btn" (click)="showOlderPosts()" [disabled]="disableLoadMore">Load more</button>
                 </div>
             </div>
         </ng-container>
@@ -82,5 +115,5 @@
     <div class="col-1"></div>
 </div>
 <ng-container *ngIf="createPostEnabled" id="exampleModalCenterLabel">
-    <app-create-post (createPostCompleted)="createPostCompleted($event)"></app-create-post>
+    <app-create-post (createPostCompleted)="createPostCompleted($event)" [choosePhoto]="selectPhoto" ></app-create-post>
 </ng-container>

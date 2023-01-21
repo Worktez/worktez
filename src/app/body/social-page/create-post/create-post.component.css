@@ -97,6 +97,9 @@ input:focus {
 } 
 
 .btn-close{
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
     position: absolute;
     float: right;
     right: 0px;
