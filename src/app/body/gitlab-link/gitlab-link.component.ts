@@ -4,7 +4,6 @@ import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
 import { GitOrgData } from 'src/app/Interface/githubUserData';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
 
 @Component({
@@ -14,7 +13,6 @@ import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-ser
 })
 export class GitlabLinkComponent implements OnInit {
 
-  @ViewChild('form') form: NgForm;
   @Input("teamName") teamName: string;
   @Input("teamId") teamId: string;
   @Input("typeLink") typeLink: string;
@@ -34,7 +32,7 @@ export class GitlabLinkComponent implements OnInit {
   projLoc: string;
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
-  constructor(private githubService: GithubServiceService, public backendService: BackendService, private functions: AngularFireFunctions,private gitlabService: GitlabServiceService) { }
+  constructor(public backendService: BackendService, private functions: AngularFireFunctions,private gitlabService: GitlabServiceService) { }
 
   ngOnInit(): void {
 

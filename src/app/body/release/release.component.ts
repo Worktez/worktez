@@ -16,7 +16,6 @@
  import { AngularFireFunctions } from '@angular/fire/compat/functions';
  import { CookieService } from 'ngx-cookie-service';
  import { map } from "rxjs";
- import { Team } from 'src/app/Interface/TeamInterface';
  import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
  import { AuthService } from 'src/app/services/auth/auth.service';
  import { BackendService } from 'src/app/services/backend/backend.service';
@@ -25,8 +24,8 @@
  import { StartServiceService } from 'src/app/services/start/start-service.service';
  import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
-import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { GitData } from 'src/app/Interface/githubReleaseData'; 
+import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
  @Component({
    selector: 'app-release',
    templateUrl: './release.component.html',
@@ -43,7 +42,7 @@ import { GitData } from 'src/app/Interface/githubReleaseData';
    addReleaseActive: boolean = false;
    projectLink: string;
  
-   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private httpService: HttpServiceService) { }
+   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private githubService: GithubServiceService) { }
  
    ngOnInit(): void {
      this.navbarHandler.resetNavbar();
@@ -109,7 +108,7 @@ import { GitData } from 'src/app/Interface/githubReleaseData';
     this.showLoader=true;
     const repoLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     if(repoLink!="" && repoLink!=undefined){
-      this.httpService.getProjectReleaseDetails(repoLink).pipe(map(data => {
+      this.githubService.getProjectReleaseDetails(repoLink).pipe(map(data => {
         const objData = data as GitData[];
         return objData;
       })).subscribe({

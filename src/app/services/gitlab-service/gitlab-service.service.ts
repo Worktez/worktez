@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { StringParam } from 'firebase-functions/lib/params/types';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -57,20 +56,17 @@ export class GitlabServiceService {
 
   createGitlabIssue(title: any,description: any,projectID: string,bearerToken: string) { ///////
     const url = environment.gitlabApiUrl + "/projects/" + projectID + "/issues";
-    const token = bearerToken;
-    const headers = {
-        "Authorization" : `Bearer ${token}`
-    }
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
 
     const payLoad = {
         title: title,
         body: description
-    }
+    };
 
-    const response = fetch(url, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(payLoad)
-    })
+    return this.httpClient.post(url, JSON.stringify(payLoad), httpOptions);
   }
 }

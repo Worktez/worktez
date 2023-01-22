@@ -31,7 +31,6 @@ export class ReleaseNotesComponent implements OnInit {
   constructor(public navbarHandler: NavbarHandlerService, private httpService: HttpServiceService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
     this.httpService.getReleaseDetails().pipe(map(data => {
@@ -49,7 +48,6 @@ export class ReleaseNotesComponent implements OnInit {
         
       }
     });
-    
   }
 
 }

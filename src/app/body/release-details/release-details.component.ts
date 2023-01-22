@@ -13,18 +13,17 @@
  ***********************************************************/
 
 import { Component, OnInit } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { CreateReleaseData } from 'src/app/Interface/ReleaseInterface';
+import { ReleaseData } from 'src/app/Interface/ReleaseInterface';
 import { Location } from '@angular/common';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ActivatedRoute } from '@angular/router';
 import { GitData } from 'src/app/Interface/githubReleaseData';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { map } from 'rxjs';
  
  @Component({
    selector: 'app-release-details',
@@ -32,14 +31,14 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
    styleUrls: ['./release-details.component.css']
  })
  export class ReleaseDetailsComponent implements OnInit {
-   componentName: string = "RELEASEDETAILS"
-   releaseData: CreateReleaseData;
+   componentName: string = "RELEASE DETAILS"
+
+   releaseData: ReleaseData;
    releaseDataReady: boolean;
    showLoader: boolean;
    releaseId: string;
    editReleaseActive: boolean = false;
    releaseDescription: GitData[];
-   bearerToken: string;
    bodyArray: Array<string>
    updatesArray: Array<string>
    versionName: string;
@@ -47,7 +46,7 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
    deleteReleaseEnabled: boolean = false;
    teamId: string;
 
-   constructor(private functions: AngularFireFunctions, public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
+   constructor(public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
 
    ngOnInit(): void {
      this.releaseId = this.route.snapshot.params['ReleaseId'];
@@ -77,21 +76,9 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
      this.editReleaseActive = true;
    }
  
-   deleteRelease(tagName: string){
-    // Same as edit this method is also not implemented correctly
-
-      // this.githubService.getReleaseDetails().subscribe((data) => {
-      //   for(let i in data){
-      //     if(data[i].tag_name==tagName){
-      //       const release_Id = data[i].id;
-      //       this.bearerToken = this.teamService.teamsDataJson[this.releaseData.TeamId].GitToken;
-      //       this.bearerToken = atob(this.bearerToken);
-      //       this.githubService.deleteGithubRelease(release_Id, this.bearerToken);
-      //       this.deleteGithubReleaseDb();
-      //     }
-      //   }
-      // });
->>>>>>> 514a32d0 (feat(git): Improved git funtionality)
+   deleteRelease(id: string) {
+    const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
+    this.githubService.deleteGithubRelease(id, bearerToken);
    }
 
    setDeleteRelease(){
@@ -103,18 +90,27 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
    }
  
   getReleaseDetails(){
-    this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
-    this.bearerToken = atob(this.bearerToken);
+    const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-    this.githubService.getReleaseByReleaseId(this.releaseId, this.bearerToken, projectLink).subscribe((data) => {  
-      const objData = data as CreateReleaseData
-      this.releaseData = objData;
-      this.releaseDataReady = true;
-      this.showLoader = false;
+    this.githubService.getReleaseByReleaseId(this.releaseId, bearerToken, projectLink).pipe(map(data => {
+      const objData = data as ReleaseData;
+      return objData;
+    })).subscribe({
+      next: (data) => {
+          this.releaseData = data;
+          this.releaseDataReady = true;
+          this.showLoader = false;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete() {
+        console.log("Success");
+      },
     });
   }
  
-   editReleaseCompleted(boolean){
+   editReleaseCompleted(){
      this.getReleaseDetails();
    }
  

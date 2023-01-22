@@ -193,6 +193,7 @@ import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
 import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
 import { GithubIntegrationComponent } from './body/team-details/github-integration/github-integration.component';
 import { GitlabIntegrationComponent } from './body/team-details/gitlab-integration/gitlab-integration.component';
+import { DocumentationsComponent } from './body/documentations/documentations.component';
 
 @NgModule({
   declarations: [
@@ -353,6 +354,7 @@ import { GitlabIntegrationComponent } from './body/team-details/gitlab-integrati
     GitlabComponent,
     GithubIntegrationComponent,
     GitlabIntegrationComponent,
+    DocumentationsComponent,
   ],
   imports: [
     BrowserModule,

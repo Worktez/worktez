@@ -19,7 +19,10 @@
     </div>
     <div class="col" *ngIf="repoLink && team.ProjectLocation == 'gitlab'">
         <ng-container *ngIf="gitlabTokenExists; else noToken">
-            Bearer token * * *
+            Bearer token
+            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                password
+            </mat-icon>
         </ng-container>
         <ng-template #noToken>
             No token found

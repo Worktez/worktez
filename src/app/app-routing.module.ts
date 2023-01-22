@@ -58,6 +58,7 @@ import { PaymentStatusComponent } from './body/payment-status/payment-status.com
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
 import { ReleaseComponent } from './body/release/release.component';
 import { ReleaseDetailsComponent } from './body/release-details/release-details.component';
+import { DocumentationsComponent } from './body/documentations/documentations.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -109,6 +110,7 @@ const routes: Routes = [
   { path: 'Notifications', component:AllNotificationComponent },
   { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
   { path: 'Standard', component:StandardSubscriptionComponent},
+  { path: 'Documentations', component:DocumentationsComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

@@ -66,4 +66,8 @@ export class FooterComponent implements OnInit {
   requestDemo() {
     this.popupHandlerService.requestDemoEnabled = true;
   }
+
+  documentations() {
+    this.router.navigate(['/Documentations']);
+  }
 }
