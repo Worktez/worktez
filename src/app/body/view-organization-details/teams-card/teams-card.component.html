@@ -77,7 +77,7 @@
                     Add Member
                 </button>
             </div>
-            <div class="col">
+            <!-- <div class="col">
                 <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
                     data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
                     title="Add Organisation">
@@ -89,7 +89,20 @@
                         {{repoLink}}
                     </span>
                 </button>
-            </div>
+            </div> -->
+            <!-- <div class="col">
+                <button class="btn extra" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-toggle="modal" data-target="#gitlabModel" (click)="enableAddOrganisationLink(team)"
+                    title="Add Organisation">
+                    <div>
+                        <img src="../../../assets/gitlabIcon.svg" alt="git" height="25" width="25">
+                    </div>
+                    <span class="p-2" *ngIf="!repoLink">Integrate Github</span>
+                    <span class="p-2" *ngIf="repoLink">
+                        {{repoLink}}
+                    </span>
+                </button>
+            </div> -->
         </div>
         <div class="row py-3">
             <div class="col">
@@ -141,8 +154,14 @@
     </app-add-member>
 </ng-container>
 
-<ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
+<!-- <ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
     <app-github-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
         (addedProject)="addedProject($event)">
     </app-github-link>
 </ng-container>
+
+<ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
+    <app-gitlab-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
+        (addedProject)="addedProject($event)">
+    </app-gitlab-link>
+</ng-container> -->

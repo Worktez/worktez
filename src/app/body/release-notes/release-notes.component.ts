@@ -31,22 +31,23 @@ export class ReleaseNotesComponent implements OnInit {
   constructor(public navbarHandler: NavbarHandlerService, private httpService: HttpServiceService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-    
-    try {
-      this.httpService.getReleaseDetails().pipe(map(data => {
-        const objData = data as GitData[];
-        this.releaseData=objData;
-        return objData;
-      })).subscribe(data => {
-
-      });
-    } catch (error) {    
-      this.errorHandlerService.showError = true;
-      this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-    }
+    this.httpService.getReleaseDetails().pipe(map(data => {
+      const objData = data as GitData[];
+      return objData;
+    })).subscribe({
+      next: (data) => {
+        this.releaseData=data;
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+      },
+      complete: () => {
+        
+      }
+    });
   }
 
 }

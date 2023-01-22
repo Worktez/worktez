@@ -22,7 +22,7 @@ const { updateTeamDetails, getTeam } = require("../lib");
 exports.addGitToken = function(request, response) {
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
-  const gitToken = request.body.data.GitToken;
+  const token = request.body.data.Token;
 
   let status = 200;
   let result = { data: "Error in updating team" };
@@ -31,7 +31,7 @@ exports.addGitToken = function(request, response) {
       .then((team) => {
         if (team) {
           const updateJson = {
-            GitToken: gitToken,
+            GitToken: token,
           };
           updateTeamDetails(updateJson, orgDomain, teamName);
           result = { data: "Team Updated Successfully" };

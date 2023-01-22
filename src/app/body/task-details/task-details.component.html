@@ -59,6 +59,15 @@
                                     </a>
                                 </span>
                             </li>
+                            <li class="nav-item" *ngIf="githubRepoExists">
+                                <span class="btn">
+                                    <img src="../../../assets/gitlabIcon.svg" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
+                                    alt="user" data-toggle="modal" title="Select PR" data-target="#gitlabPrModel" (click)="linkPr()">
+                                    <a *ngIf="prLinked" data-target="#gitlabPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
+                                        PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
+                                    </a>
+                                </span>
+                            </li>
                             <!-- <li class="nav-item"  *ngIf="githubRepoExists">
                                 <div class="dropdown" id="getPrDetails" *ngIf="prLinked"> 
                                     <span class="btn dropdown" title="Get Pr Details" data-toggle="dropdown" style="margin-top: 2px;">
@@ -368,6 +377,9 @@
     </ng-container>
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
         <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-git>
+    </ng-container>
+    <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
+        <app-gitlab [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-gitlab>
     </ng-container>
     <ng-container *ngIf="addWatcherEnabled" id="addWatcherModal">
         <app-add-watchers [task]="task" [orgDomain]="orgDomain" [watcherList]="task.Watcher" (addWatcherCompleted)="addWatcherCompleted($event)"></app-add-watchers>

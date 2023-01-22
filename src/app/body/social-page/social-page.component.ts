@@ -16,9 +16,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { map } from 'rxjs';
-import { Post } from 'src/app/Interface/SocialInterface';
-import { SocialPageData } from 'src/app/Interface/SocialInterface'
+import {  Post } from 'src/app/Interface/SocialInterface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
@@ -27,6 +25,8 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { SocialPageServiceService } from 'src/app/services/social-page-service/social-page-service.service';
+import { FileUploadService } from 'src/app/services/fileUploadService/file-upload.service';
+
 @Component({
   selector: 'app-social-page',
   templateUrl: './social-page.component.html',
@@ -43,14 +43,19 @@ export class SocialPageComponent implements OnInit {
   public posts1: Post[]
   showloader: boolean = false
   dataReady: boolean = false
+  pageReady: boolean = false
+  selectPhoto:boolean = false;
 
-  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, public startService: StartServiceService, public applicationService: ApplicationSettingsService, private toolsService: ToolsService, public socialPageService: SocialPageServiceService) { }
-
+  constructor(private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public popupHandlerService: PopupHandlerService, public userService:UserServiceService, public authService: AuthService, public startService: StartServiceService, public applicationService: ApplicationSettingsService, private toolsService: ToolsService, public socialPageService: SocialPageServiceService, public uploadService: FileUploadService) { }
+ 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     window.addEventListener('scroll', this.scrollEvent, true);
     this.posts = this.socialPageService.socialPageDataJson;
     this.authService.getUserSettings();
+    this.authService.userAppSettingObservable.subscribe((data)=>{
+      this.pageReady = true;
+    });
   }
 
   ngOnDestroy(){
@@ -69,6 +74,11 @@ export class SocialPageComponent implements OnInit {
       this.currentScrollPos = scrollPos;
     }
   }
+
+  // choosePhoto(){
+  //   this.selectPhoto = true;
+  //   this.createPost()
+  // }
 
   showOlderPosts(){
     this.trackScroll = true;
@@ -89,6 +99,7 @@ export class SocialPageComponent implements OnInit {
   }
 
   createPostCompleted ( data: { completed: boolean, post: Post } ) {
+    this.selectPhoto = false;
     this.createPostEnabled = false;
     if(data.completed==true){
       this.loadSocialPageData();

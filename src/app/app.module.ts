@@ -189,6 +189,11 @@ import { AddReleaseComponent } from './body/release/add-release/add-release.comp
 import { ReleaseCardComponent } from './body/release/release-card/release-card.component';
 import { ReleaseDetailsComponent } from './body/release-details/release-details.component';
 import { EditReleaseComponent } from './body/release-details/edit-release/edit-release.component';
+import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
+import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
+import { GithubIntegrationComponent } from './body/team-details/github-integration/github-integration.component';
+import { GitlabIntegrationComponent } from './body/team-details/gitlab-integration/gitlab-integration.component';
+import { DocumentationsComponent } from './body/documentations/documentations.component';
 
 @NgModule({
   declarations: [
@@ -345,6 +350,11 @@ import { EditReleaseComponent } from './body/release-details/edit-release/edit-r
     ReleaseCardComponent,
     ReleaseDetailsComponent,
     EditReleaseComponent,
+    GitlabLinkComponent,
+    GitlabComponent,
+    GithubIntegrationComponent,
+    GitlabIntegrationComponent,
+    DocumentationsComponent,
   ],
   imports: [
     BrowserModule,

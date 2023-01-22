@@ -43,6 +43,7 @@ export interface Team {
     Scope: string[];
     ProjectLink: string;
     GitToken: string;
+    ProjectLocation: string;
 }
 
 export interface TeamDataId extends Team {id: string;}

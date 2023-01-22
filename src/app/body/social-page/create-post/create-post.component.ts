@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm } from '@angular/forms';
 import { ToolsService } from 'src/app/services/tool/tools.service';
@@ -21,14 +21,12 @@ export class CreatePostComponent implements OnInit {
 
   @ViewChild('form') form: NgForm;
   @Output() createPostCompleted = new EventEmitter<{ completed: boolean, post: Post }>();
-
-
+  @Input('choosePhoto') choosePhoto: boolean;
   componentName: string = "CREATE-POST";
 
   post : Post;
   company: string;
   enableLoader: boolean;
-  choosePhoto: boolean = true
   selectedFile: FileList
 
   basePath:string;
@@ -44,7 +42,6 @@ export class CreatePostComponent implements OnInit {
     this.post = defaultPost;
     this.post.ImagesUrl=[];
     this.post.Content="";
-    this.choosePhoto = true;
     const uid = this.authService.user.uid
     this.basePath = '/Social/' + 'posts/' + uid + '/postImages'  ;
   }
@@ -144,6 +141,7 @@ export class CreatePostComponent implements OnInit {
     close() {
       // jQuery('#createPost').modal('hide');
       // jQuery('#form').trigger("reset");
+      this.post.ImagesUrl = [];
     }
 
     removeImg(remove: string) {
@@ -155,10 +153,5 @@ export class CreatePostComponent implements OnInit {
       }
     }
 
-  } 
-
-
-function generateBase64String(arg0: string): any {
-  throw new Error('Function not implemented.');
-}
+  }
   

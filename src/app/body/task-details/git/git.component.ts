@@ -18,7 +18,6 @@ import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
 import { GitRepoData } from 'src/app/Interface/githubOrgData';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { HttpServiceService } from 'src/app/services/http/http-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { UserServiceService } from 'src/app/services/user-service/user-service.service';
@@ -26,6 +25,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
+import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 
 @Component({
   selector: 'app-git',
@@ -60,7 +60,7 @@ export class GitComponent implements OnInit {
   prTask: GitRepoData;
   prFound: boolean =false;
   WtId: string;
-  constructor(private httpService: HttpServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
+  constructor(private githubService: GithubServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
     this.showClose = false;
@@ -87,7 +87,7 @@ export class GitComponent implements OnInit {
   }
 
   getPullRequests() {
-    this.httpService.getPullRequests(this.repoLink).pipe(map(data => {
+    this.githubService.getPullRequests(this.repoLink).pipe(map(data => {
       const prData = data as GitRepoData[];     
       return prData;
     })).subscribe(data => {

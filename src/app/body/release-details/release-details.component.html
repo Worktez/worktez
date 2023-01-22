@@ -22,9 +22,9 @@
           <div class="float-right m-1 buttonFloat">
             <button type="button" id="button" class="btn" data-toggle="modal"
               data-target="#editModal" (click)="updateRelease()">
-              <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
+              <mat-icon fontSet="material-icons" class="align-middle float-right">
                 edit
-            </mat-icon>
+              </mat-icon>
             </button>
           </div>
           <div class="float-right m-1 buttonFloat">
@@ -46,27 +46,49 @@
       </div>
       <hr>
       <div class="row">
-        <div class="col-md-4">
-            <div class="row py-3">
+        <div class="col">
+            <div class="row ">
               <div class="col" id="teamId">
                 <span class="heading">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
                       groups_3
-                    </mat-icon><span class="align-middle">{{releaseData.TeamId}}</span>
+                    </mat-icon><span class="align-middle">{{this.teamId}}</span>
                   </span>
               </div>
+              <div class="col">
+                <a href="{{releaseData.zipball_url}}" class="float-right">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                    folder_zip
+                  </mat-icon><span class="align-middle">Source Code(zip)</span>
+                </a>
+              </div>
+              <div class="col">
+                <a href="{{releaseData.tarball_url}}" class="float-end">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+                    folder_zip
+                  </mat-icon><span class="align-middle">Source Code(tar)</span>
+                </a>
+              </div>
             </div>
+            <div class="row py-2"></div>
             <div class="row py-2">
                 <div class="col">
                     <span class="title">
-                      Tag Name: {{releaseData.TagName}}
+                      Tag Name: {{releaseData.tag_name}}
                     </span>
                   </div>
               </div>
               <div class="row py-2">
                 <div class="col">
                     <span class="title">
-                        Release Title: {{releaseData.ReleaseName}}
+                        Target Branch: {{releaseData.target_commitish}}
+                      </span>
+                  </div>
+              </div>
+              <div class="row py-2">
+                <div class="col">
+                    <span class="title">
+                        Release Title: {{releaseData.name}}
                       </span>
                   </div>
               </div>
@@ -76,34 +98,43 @@
                       <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         date_range
                       </mat-icon>
-                      Release Date: <span id="sprintStartDate">{{ releaseData.ReleaseDate }}</span> 
+                      Release Date: <span id="sprintStartDate">{{ releaseData.created_at.slice(0,10)}}</span> 
                   </span>
+                  <span type="button" class="btn align-bottom" id="StartDate">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                      date_range
+                    </mat-icon>
+                    Publishe Date: <span id="sprintStartDate">{{ releaseData.published_at.slice(0,10)}}</span> 
+                </span>
                 </div>
               </div>
             <div class="row py-2">
               <ng-container>
                   <span class="heading">
-                  <div class="row" style="padding-left: 30px; font-size: large;">
+                  <div class="row" style="padding-left: 30px; font-size: large;" id="description">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
                       toc
                     </mat-icon>
                     Description
                   </div>
-                    <div class="row">
+                    <div class="row" id="description">
                       <div class="col">
-                          <h2 class="font-weight-bold ">{{versionName}}</h2>
+                          <h2 class="font-weight-bold ">&emsp;{{releaseData.name}}</h2>
                       </div>
                   </div>
                   <div class="row">
                     <div class="col">
-                        <h3 class="font-weight-bold text-muted">&emsp;{{releaseDate}}</h3>
+                        <h3 class="font-weight-bold text-muted">&emsp;{{releaseData.created_at.split("T")}}</h3>
                     </div>
                 </div>
                 <div class="row">
                       <h3 class="font-weight-bold text-muted" >&emsp;
-                      <ul><p>
-                          {{releaseData.Description}}
-                      </p></ul></h3>
+                        <ul>
+                          <p>
+                            {{releaseData.body}}
+                          </p>
+                        </ul>
+                      </h3>
 
               </div>
                   </span>
@@ -146,7 +177,7 @@
                         <div class="row">
                             <div class="col-md-9"></div>
                             <div class="col-md-3 pb-2 px-4 deleteButton">
-                                <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deleteRelease(releaseData.TagName)">Delete</button>
+                                <button class="btn" id="button" type="button" data-dismiss="modal" (click)="deleteRelease(releaseData.id)">Delete</button>
                             </div>
                         </div>
                     </ng-container>
@@ -159,6 +190,6 @@
     <app-loader></app-loader>
   </ng-container>
   <ng-container *ngIf="editReleaseActive" id="editModal">
-    <app-edit-release [description]="releaseData.Description" [id]="releaseData.ReleaseId" [targetBranch]="releaseData.TargetBranch" [tagName]="releaseData.TagName" [repoName]="releaseData.RepoName" [teamId]="releaseData.TeamId" [releaseName]="releaseData.ReleaseName" [generateRelease]="releaseData.GenerateRelease" [ifDraft]="releaseData.IfDraft" [preRelease]="releaseData.PreRelease" (editReleaseCompleted)="editReleaseCompleted($event)">
+    <app-edit-release [releaseData]="releaseData" [teamId]="teamId" (editReleaseCompleted)="editReleaseCompleted($event)">
     </app-edit-release>
   </ng-container>
