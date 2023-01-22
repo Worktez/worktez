@@ -31,7 +31,7 @@ exports.addGitToken = function(request, response) {
       .then((team) => {
         if (team) {
           const updateJson = {
-            Token: token,
+            GitToken: token,
           };
           updateTeamDetails(updateJson, orgDomain, teamName);
           result = { data: "Team Updated Successfully" };

@@ -103,7 +103,7 @@ export class GitlabComponent implements OnInit {
   autoCheckPr(prData:GitRepoData[]) {
     prData.forEach(element => {
       let body = element.body;      
-      if(body){
+      if(body) {
         const sp = body.indexOf("## WtId:")
 
         if(sp != -1){

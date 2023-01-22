@@ -13,7 +13,6 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
 })
 export class GithubLinkComponent implements OnInit {
 
-  @ViewChild('form') form: NgForm;
   @Input("teamName") teamName: string;
   @Input("teamId") teamId: string;
   @Input("typeLink") typeLink: string;
@@ -30,12 +29,12 @@ export class GithubLinkComponent implements OnInit {
   linkType: string = "Public";
   bearerToken: string;
   gitToken: string;
+
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
   constructor(private githubService: GithubServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-
   }
 
   submit() {

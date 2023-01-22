@@ -12,19 +12,19 @@
  * See the MIT License for more details.
  ***********************************************************/
 
- import { Component, OnInit, Input, Output } from '@angular/core';
- import { AngularFireFunctions } from '@angular/fire/compat/functions';
- import { CreateReleaseData } from 'src/app/Interface/ReleaseInterface';
- import { Location } from '@angular/common';
- import { BackendService } from 'src/app/services/backend/backend.service';
- import { ActivatedRoute } from '@angular/router';
- import { HttpServiceService } from 'src/app/services/http/http-service.service';
- import { GitData } from 'src/app/Interface/githubReleaseData';
- import { TeamServiceService } from 'src/app/services/team/team-service.service';
- import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
- import { AuthService } from 'src/app/services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { CreateReleaseData } from 'src/app/Interface/ReleaseInterface';
+import { Location } from '@angular/common';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { ActivatedRoute } from '@angular/router';
+import { GitData } from 'src/app/Interface/githubReleaseData';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
  
  @Component({
    selector: 'app-release-details',
@@ -47,8 +47,8 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
    deleteReleaseEnabled: boolean = false;
    teamId: string;
 
-   constructor(private functions: AngularFireFunctions, public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private httpService: HttpServiceService,private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
- 
+   constructor(private functions: AngularFireFunctions, public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
+
    ngOnInit(): void {
      this.releaseId = this.route.snapshot.params['ReleaseId'];
      this.navbarHandler.addToNavbar(this.releaseId);
@@ -78,18 +78,20 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
    }
  
    deleteRelease(tagName: string){
-    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-       this.httpService.getProjectReleaseDetails(projectLink).subscribe((data) => {
-         for(let i in data){
-           if(data[i].tag_name==tagName){
-             const release_Id = data[i].id;
-             this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
-             this.bearerToken = atob(this.bearerToken);
-             this.httpService.deleteGithubRelease(release_Id, this.bearerToken, projectLink);
-           }
-         }
-         this.getReleaseDetails();
-       });
+    // Same as edit this method is also not implemented correctly
+
+      // this.githubService.getReleaseDetails().subscribe((data) => {
+      //   for(let i in data){
+      //     if(data[i].tag_name==tagName){
+      //       const release_Id = data[i].id;
+      //       this.bearerToken = this.teamService.teamsDataJson[this.releaseData.TeamId].GitToken;
+      //       this.bearerToken = atob(this.bearerToken);
+      //       this.githubService.deleteGithubRelease(release_Id, this.bearerToken);
+      //       this.deleteGithubReleaseDb();
+      //     }
+      //   }
+      // });
+>>>>>>> 514a32d0 (feat(git): Improved git funtionality)
    }
 
    setDeleteRelease(){
@@ -104,7 +106,7 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
     this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
     this.bearerToken = atob(this.bearerToken);
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-    this.httpService.getReleaseByReleaseId(this.releaseId, this.bearerToken, projectLink).subscribe((data) => {  
+    this.githubService.getReleaseByReleaseId(this.releaseId, this.bearerToken, projectLink).subscribe((data) => {  
       const objData = data as CreateReleaseData
       this.releaseData = objData;
       this.releaseDataReady = true;

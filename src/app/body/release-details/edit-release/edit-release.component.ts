@@ -15,7 +15,7 @@
  import { AngularFireFunctions } from '@angular/fire/compat/functions';
  import { BackendService } from 'src/app/services/backend/backend.service';
  import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
- import { HttpServiceService } from 'src/app/services/http/http-service.service';
+import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
  import { ValidationService } from 'src/app/services/validation/validation.service';
  
@@ -46,7 +46,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    enableLoader: boolean = true;
    showClose: boolean;
    @Output() editReleaseCompleted = new EventEmitter<{ completed: boolean }>();
-   constructor(private validationService:ValidationService, private backendService: BackendService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private httpService: HttpServiceService, public teamService: TeamServiceService) { }
+   constructor(private validationService:ValidationService, private backendService: BackendService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private githubService: GithubServiceService, public teamService: TeamServiceService) { }
  
    ngOnInit(): void {
      this.enableLoader = false;
@@ -54,20 +54,19 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
    }
  
    editRelease(){
-    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-     this.httpService.getProjectReleaseDetails(projectLink).subscribe((data) => {
-       for(let i in data){
-         if(data[i].tag_name==this.tagName){
-           const release_Id = data[i].id;
-           this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
-           this.bearerToken = atob(this.bearerToken);
-           this.httpService.updateGithubRelease(release_Id, this.bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.response1, this.response2, this.response3, projectLink);
-         }
-       }
-         console.info('Successful');
-         this.enableLoader = false;
-         this.showClose = true;
-     })
+    // the implementation is not correct
+
+    //  this.httpService.getReleaseDetails().subscribe((data) => {
+    //    for(let i in data){
+    //      if(data[i].tag_name==this.tagName){
+    //        const release_Id = data[i].id;
+    //        this.bearerToken = this.teamService.teamsDataJson[this.teamId].GitToken;
+    //        this.bearerToken = atob(this.bearerToken);
+    //        this.httpService.updateGithubRelease(release_Id, this.bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.response1, this.response2, this.response3);
+    //        this.editReleaseInDb();
+    //      }
+    //    }
+    //  })
    }
  
     editReleaseDone() {

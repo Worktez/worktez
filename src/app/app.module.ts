@@ -191,6 +191,8 @@ import { ReleaseDetailsComponent } from './body/release-details/release-details.
 import { EditReleaseComponent } from './body/release-details/edit-release/edit-release.component';
 import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
 import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
+import { GithubIntegrationComponent } from './body/team-details/github-integration/github-integration.component';
+import { GitlabIntegrationComponent } from './body/team-details/gitlab-integration/gitlab-integration.component';
 
 @NgModule({
   declarations: [
@@ -349,6 +351,8 @@ import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
     EditReleaseComponent,
     GitlabLinkComponent,
     GitlabComponent,
+    GithubIntegrationComponent,
+    GitlabIntegrationComponent,
   ],
   imports: [
     BrowserModule,

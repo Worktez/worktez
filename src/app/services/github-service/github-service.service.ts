@@ -54,22 +54,88 @@ export class GithubServiceService {
     return this.httpClient.get(url);
   }
 
-  createGithubIssue(title: any,description: any,repoLink: string,bearerToken: any) {
+  createGithubIssue(title: any, description: any, repoLink: string, bearerToken: any) {
     const url = environment.githubApiUrl + "/repos/"+repoLink+"/issues";
-    const token = bearerToken;
-    const headers = {
-        "Authorization" : `Bearer ${token}`
-    }
 
-    const payLoad = {
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+
+    const payload = {
         title: title,
         body: description
     }
 
-    const response = fetch(url, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(payLoad)
-    })
+    return this.httpClient.post(url, JSON.stringify(payload), httpOptions);
+  }
+
+  updateGithubRelease(release_id: string, bearerToken: string, tagName: string, targetBranch: string, releaseName: string, releaseDescription: string, response: boolean, response1: boolean, response2: boolean){
+    const url = environment.gitApiUrl+"/releases/"+release_id;
+
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+
+    const data = {    
+      tag_name: tagName,
+      target_commitish: targetBranch,
+      name: releaseName,
+      body: releaseDescription,
+      draft: response,
+      prerelease: response1,
+      generate_release_notes: response2,
+    };
+
+    return this.httpClient.post(url, JSON.stringify(data), httpOptions);
+  }
+
+  deleteGithubRelease(release_id: string, bearerToken: string){
+    const url = environment.gitApiUrl+"/releases/"+release_id;
+    
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+
+    return this.httpClient.delete(url, httpOptions);
+  }
+
+  getReleaseByReleaseId(release_id: string, bearerToken: string){
+    const url = environment.gitApiUrl+"/releases/"+release_id;
+
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+
+    return this.httpClient.get(url, httpOptions);
+  }
+
+  createGithubRelease(bearerToken: string,releaseName: string, tagName: string, targetBranch: string, releaseDescription: string, response: boolean, response1: boolean, response2: boolean){
+    const url = environment.gitApiUrl+"/releases";
+
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+    
+    const data = {    
+      tag_name:tagName,
+      target_commitish:targetBranch,
+      name:releaseName,
+      body:releaseDescription,
+      draft: response,
+      prerelease: response1,
+      generate_release_notes: response2,
+    };
+
+    return this.httpClient.post(url, JSON.stringify(data), httpOptions);
   }
 }
