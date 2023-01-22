@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <hr>
-                    <ng-container *ngIf="dataReady; else loader">
+                    <ng-container *ngIf="dataReady && !enableLoader; else loader">
                         <ng-container *ngIf="comments?.length == 0">
                             No comments to show
                         </ng-container>
