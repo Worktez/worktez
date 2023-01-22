@@ -27,8 +27,24 @@
     Title: string;
     generateRelease: boolean;
 }
-
 export interface AssetData {
     url: string;
     browser_download_url: string;
+}
+
+export interface ReleaseData {
+    id: string;
+    name: string;
+    created_at: string;
+    body: string;
+    draft: boolean;
+    prerelease: boolean;
+    ReleaseDate: string;
+    ReleaseName: string;
+    RepoName:string;
+    tag_name: string;
+    target_commitish: string;
+    published_at: string;
+    zipball_url: string;
+    tarball_url: string;
 }

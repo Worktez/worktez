@@ -22,7 +22,6 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { marketingLabelsTempelate, developmentLabelsTempelate } from 'src/app/Interface/TeamLabelsTempelate';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
-import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-team-details',
@@ -51,18 +50,6 @@ export class TeamDetailsComponent implements OnInit {
   priorityLabels: string[]; 
   difficultyLabels: string[]; 
   milestoneStatusLabels: string[];
-  teamToAddGithub: Team;
-  addProjectEnabled: boolean = false;
-  typeLink: string;
-  projectLinked: boolean= false;
-  repoLink: string;
-  enableAddToken : boolean = false;
-  githubRepoExists : boolean = false;
-  showClose : boolean = false;
-  teamName: string;
-  bearerToken: string;
-  githubTokenExists: boolean = false;
-  gitToken: string;
   
   constructor(private teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -85,29 +72,6 @@ export class TeamDetailsComponent implements OnInit {
           console.log("Completed getting Team Data");
         }
       });
-    }
-  }
-
-  checkGitProject(){
-    if(this.team.ProjectLink!=undefined){
-      if(this.team.ProjectLink==""){
-        this.projectLinked=false;
-      }
-      else{
-        this.projectLinked=true;
-        this.repoLink=this.team.ProjectLink;
-      }
-    }
-  }
-
-  checkGitToken(){
-    if(this.team.GitToken!=undefined){
-      if(this.team.GitToken==""){
-        this.githubTokenExists=false;
-      }
-      else{
-        this.githubTokenExists=true;
-      }
     }
   }
 
@@ -183,9 +147,7 @@ export class TeamDetailsComponent implements OnInit {
     });
     this.userService.fetchUserData().subscribe(()=>{
       this.teamDataReady = true;
-      this.showLoader = false
-      this.checkGitProject();
-      this.checkGitToken();
+      this.showLoader = false;
     });
   }
 
@@ -278,59 +240,10 @@ export class TeamDetailsComponent implements OnInit {
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       },
       complete: () => console.info('Successful ')
-  });
-  }
-
-  enableAddOrganisationLink(team: Team) {
-    this.teamToAddGithub = team;
-    this.addProjectEnabled = true;
-    this.typeLink = "Organisation";
-  }
-
-  addedProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
-    this.githubDetails.emit(true);
-    this.addProjectEnabled = false;
-    if(data.completed==true){
-    this.projectLinked=data.completed;
-    this.repoLink=data.projLink;
-    this.teamService.teamsDataJson[this.teamId].ProjectLink = this.repoLink;
-    }
+    });
   }
 
   close () {
     this.router.navigate(['ViewOrganizationDetails']);
   }
-
-
-  addToken() {
-    this.enableLoader=true;
-    this.organizationDomain = this.backendService.getOrganizationDomain();
-    this.teamName = this.team.TeamName
-    this.gitToken = btoa(this.bearerToken)
-    const callable = this.functions.httpsCallable('teams/addGitToken');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, GitToken: this.gitToken}).subscribe({
-      next: (data) => {
-        console.log("Successfully added Token");
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully Added Token')
-    })
-  }
-
-  addTokenEnable(){
-    this.enableAddToken = true
-  }
-
-  back() {
-    this.enableAddToken= false;
-    this.showClose = false
-    this.getTeamData();
-  }
-
 }
