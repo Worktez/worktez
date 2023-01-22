@@ -26,16 +26,18 @@
                         <form #form="ngForm">
                             <div class="form-row">
                                 <div class="form-group col-md-12 col">
-                                    <form class="row imageData" id="imageData">
-                                        <div *ngFor="let url of post.ImagesUrl" class="col-p-0 ml-3">
+                                    <form class="row d-flex flex-wrap justify-content-center align-items-center mx-auto">
+                                        <div *ngFor="let url of post.ImagesUrl" class="col-p-0">
                                             <div class="col" >
                                                 <span class="btn btn-close">
-                                                    <mat-icon fontSet="material-icons-outlined" id="close"class="align-middle "(click)="removeImg(url)" title="Close">
+                                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="removeImg(url)" title="Close">
                                                         close
                                                     </mat-icon>
                                                 </span>
                                             </div>
-                                            <img  class="img ml-md-2 mb-3" id="image" [src]="url" width="200" #image crossorigin height="200" alt="image"  placeholder="Post content">
+                                            <div class="">
+                                                <img  class="img ml-md-2 mb-3 mx-auto" id="image" [src]="url" width="200" #image crossorigin height="200" alt="image"  placeholder="Post content">
+                                            </div>
                                         </div>
                                     </form>
                                     <textarea type="text" class="form-control" rows="5" [(ngModel)]="post.Content" [ngModelOptions]="{standalone: true}" placeholder="What do you want to talk about?"></textarea>   

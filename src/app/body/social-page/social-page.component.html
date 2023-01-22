@@ -42,22 +42,13 @@
     </ng-template>
 
     <div class="col col-md-4">
-        <!-- <div class="pb-4">
-            <button *ngIf="startService.userReady; else noUser" class="btn" (click)="createPost()" data-toggle="modal"
-                data-target="#createPost">
-                Create post
-                <mat-icon fontSet="material-icons-outlined" class="align-middle ml-2">
-                    add_circle
-                </mat-icon>
-            </button>
-        </div> -->
         <div class="card post mb-2" *ngIf="pageReady==true">
             <div class="card-header">
                 <div class="row pl-3 pr-0">
                     <div class="col-md-2 col-3 pr-0">
                         <img src="{{authService.userAppSetting.photoURL}}"
                             onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic"
-                            class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown"
+                            class="rounded-circle dropdown-toggle profilPic" width="50" height="50" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                     </div>
                     <div class="col-md-10 col-9 pl-0">
@@ -68,13 +59,13 @@
                             </button>
                         </div>
                     </div>
-                    <div  class="postBtn" (click)="choosePhoto()" data-toggle="modal" data-target="#createPost">
+                    <!-- <div  class="postBtn" (click)="choosePhoto()" data-toggle="modal" data-target="#createPost">
                         <label class="btn" id="insert_photo" for="file">
                             <mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle">
                                 insert_photo</mat-icon>
                             Photo
                         </label>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

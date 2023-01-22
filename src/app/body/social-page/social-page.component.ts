@@ -75,10 +75,10 @@ export class SocialPageComponent implements OnInit {
     }
   }
 
-  choosePhoto(){
-    this.selectPhoto = true;
-    this.createPost()
-  }
+  // choosePhoto(){
+  //   this.selectPhoto = true;
+  //   this.createPost()
+  // }
 
   showOlderPosts(){
     this.trackScroll = true;
