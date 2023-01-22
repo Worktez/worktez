@@ -6,6 +6,7 @@
 .card {
   background-color: var(--secondary-bg);
   color: var(--text);
+  border-radius: 10px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -25,4 +26,30 @@
 .btn:hover {
   background-color: var(--dropdown-hover);
   color: var(--primary-color);
+}
+
+.createPost{
+  font-weight: 600;
+  color: #6c757d;
+  border: 1px solid #6c757d;
+  font-family: var(--font);
+  width: 95%;
+  height: 55px;
+  border-radius: 15px;
+  text-justify: auto;
+  background-color: transparent;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.createPost:hover{
+  background-color: rgba(0,0,0,0.04);
+}
+
+.postBtn {
+  color: #FFFFFF;
+}
+
+.profilPic{
+  margin-top: 10px;
 }
