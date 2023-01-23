@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-documentations',
@@ -8,10 +9,14 @@ import { Title } from '@angular/platform-browser';
 })
 export class DocumentationsComponent implements OnInit {
 
-  constructor(private titleService: Title) { }
+  constructor(private titleService: Title, public router: Router) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Docs");
+  }
+
+  getStarted() {
+    this.router.navigate(['/GettingStarted']);
   }
 
 }

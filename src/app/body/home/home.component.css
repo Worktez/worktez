@@ -65,6 +65,10 @@
     box-shadow: 0px 7px 6px 1px #ebecefa5;
 }
 
+.boxShadow:hover {
+    box-shadow: 0px 0px 8px 5px #f2fde4;
+}
+
 #services,
 #features {
     background-color: #ffffff;

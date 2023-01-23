@@ -1,0 +1,36 @@
+.page {
+    /* background-color: var(--secondary-bg); */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.title {
+    font-size: xx-large;
+    /* color: #0000e4; */
+}
+
+p {
+    font-size: large;
+    line-height: 1.8rem;
+    text-align: justify;
+    color: var(--text);
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    border: none;
+}
+
+.submenu {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+}
+
+li {
+    cursor: pointer;
+    font-size: medium;
+}
+
+li:hover {
+    color: var(--primary-color);
+    /* font-size: medium; */
+}
