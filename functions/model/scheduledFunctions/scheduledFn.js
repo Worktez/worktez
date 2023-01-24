@@ -29,7 +29,7 @@ const { startSchedular } = require("./tark/startSchedular");
  */
 // exports.scheduledFn = functions.https.onRequest((req, res) => {
 //   cors(req, res, () => {
-exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) => {
+exports.scheduledFn = functions.pubsub.schedule("1 23 * * *").onRun((context) => {
   startSchedular();
 });
 //   });
@@ -59,6 +59,7 @@ exports.scheduledFn = functions.pubsub.schedule("1 21 * * *").onRun((context) =>
  * @returns {any}
  */
 fastify.post("/startSchedular", (req, res) => {
+  console.log("Running Schedular for charts");
   startSchedular();
   return res.status(200).send("Success");
 });
