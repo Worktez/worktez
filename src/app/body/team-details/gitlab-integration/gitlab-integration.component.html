@@ -1,6 +1,6 @@
 <div class="row p-2 mt-2 integrationBox">
     <div class="col p-0">
-        <button class="btn etc" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+        <button class="btn etc mr-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
             data-toggle="modal" data-target="#gitlabModel" (click)="enableAddOrganisationLink(team)"
             title="Add Organisation">
             <img src="../../../assets/gitlabIcon.svg" alt="git" height="25" width="25">
@@ -13,7 +13,7 @@
               <span> Integrate Gitlab </span>
             </ng-template>
         </button>
-        <button *ngIf="repoLink && team.ProjectLocation == 'gitlab'" class="btn etc" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
+        <button *ngIf="repoLink && team.ProjectLocation == 'gitlab'" class="btn etc mr-2" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
             <span>Add Token</span>
         </button>
     </div>
@@ -28,6 +28,9 @@
             No token found
         </ng-template>
     </div>
+    <button *ngIf="repoLink && team.ProjectLocation == 'gitlab'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub(team)">
+        <span>Remove</span>
+    </button>
 </div>
 <ng-container *ngIf="addProjectEnabled" id="projectModalLabel2">
     <app-gitlab-link [teamId]="teamToAddGitlab.TeamId" [teamName]="teamToAddGitlab.TeamName" [typeLink]="typeLink"
