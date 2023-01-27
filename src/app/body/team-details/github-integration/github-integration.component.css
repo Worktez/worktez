@@ -15,3 +15,14 @@
     background-color: var(--dropdown-hover);
     color: var(--primary-color); 
 }
+
+#modalBody{
+    background-color: var(--secondary-bg);
+}
+
+.form-control{
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    opacity: 1;
+}

@@ -1,6 +1,6 @@
 <div class="row p-2 mt-2 integrationBox">
     <div class="col p-0">
-        <button class="btn etc" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+        <button class="btn etc mr-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
             data-toggle="modal" data-target="#gitlabModel" (click)="enableAddOrganisationLink(team)"
             title="Add Organisation">
             <img src="../../../assets/gitlabIcon.svg" alt="git" height="25" width="25">
@@ -13,7 +13,7 @@
               <span> Integrate Gitlab </span>
             </ng-template>
         </button>
-        <button *ngIf="repoLink && team.ProjectLocation == 'gitlab'" class="btn etc" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
+        <button *ngIf="repoLink && team.ProjectLocation == 'gitlab'" class="btn etc" data-target="#GitlabBearerToken" title="GitlabBearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
             <span>Add Token</span>
         </button>
     </div>
@@ -37,7 +37,7 @@
 <ng-container *ngIf="enableAddToken">
     <div class="modal fade" id="GitlabBearerToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
+          <div class="modal-content" id="modalBody">
               <nav class="modal-header navbar navbar-expand px-4 pt-3 pb-1"  id="navbarMenu">
                   <ul class="navbar-nav mr-auto">
                       <li class="nav-item">
@@ -65,7 +65,7 @@
                       </div>
                       <div class="row">
                             <div class="col-12 pb-2 px-3 mt-4">
-                                <button class="btn btn-block etc" [disabled]="bearerToken" type="submit" (click)="addToken()">Add Token</button>
+                                <button class="btn btn-block etc" [disabled]="!bearerToken" type="submit" (click)="addToken()">Add Token</button>
                             </div>
                       </div>
                       <app-loader *ngIf="enableLoader"></app-loader>
