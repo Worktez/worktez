@@ -154,5 +154,5 @@ label:hover {
     background-color: #5C60EC;
 }
 .meetScrollBar::-webkit-scrollbar {
-    width: 6px;              
+    width: 2px;              
 }

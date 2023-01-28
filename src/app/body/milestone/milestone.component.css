@@ -29,6 +29,12 @@ h3{
     font-weight: bold;
 }
 
+h1{
+    color:var(--text) !important;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: lighter;
+}
+
 .modal-header {
     border-bottom: none !important;
 }

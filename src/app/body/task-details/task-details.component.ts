@@ -28,12 +28,12 @@ import { UserServiceService } from 'src/app/services/user-service/user-service.s
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { PopupHandlerService } from '../../services/popup-handler/popup-handler.service';
-
 import { ValidationService } from 'src/app/services/validation/validation.service';
-import { HttpServiceService } from 'src/app/services/http/http-service.service';
-import { GitPrData, GitRepoData } from 'src/app/Interface/githubOrgData';
+import { GitPrData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+declare var jQuery:any;
 
 @Component( {
   selector: 'app-task-details',
@@ -93,9 +93,11 @@ export class TaskDetailsComponent implements OnInit {
   remainingTimeHrs: number;
   remainingTimeMins: number
   githubRepoExists: boolean = false;
+  prFound: boolean = false;
+  createGitIssue: boolean = false;
+  githubTokenExists: boolean = false;
 
-
-  constructor (private httpService: HttpServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
+  constructor (private githubService: GithubServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -121,17 +123,35 @@ export class TaskDetailsComponent implements OnInit {
         this.prApiLink=this.task.PrApiLink;
         this.getPrDetails();
         this.prLinked=true;
+        this.prFound = true;
       }
     }
   }
+
+  checkMrLinked(){
+    if(this.task.PrLink!=undefined && this.task.PrNumber != undefined){
+      if(this.task.PrLink=="" || this.task.PrApiLink=="" || this.task.PrNumber==null ){
+        this.prLinked=false;
+      }
+      else{
+        this.prLink=this.task.PrLink;
+        this.prApiLink=this.task.PrApiLink;
+        this.getPrDetails();
+        this.prLinked=true;
+        this.prFound = true;
+      }
+    }
+  }
+
   getPrDetails() {
-    this.httpService.getPrDetails(this.prApiLink.slice(29)).pipe(map(data => {
+    this.githubService.getPrDetails(this.prApiLink.slice(29)).pipe(map(data => {
       const prData = data as GitPrData[];     
       return prData;
     })).subscribe(data => {
       this.prData = data;
     });
   }
+
   getTaskPageData(){
     if(this.startService.showTeams) {
       this.orgDomain = this.backendService.getOrganizationDomain();
@@ -165,7 +185,8 @@ export class TaskDetailsComponent implements OnInit {
       next: (data) => {
         this.task = data;
         this.getTimeDetails();
-        this.checkGitRepoExists()
+        this.checkGitRepoExists();
+        this.checkGitTokenExists();
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
         }
@@ -337,7 +358,6 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   editTaskCompleted ( data: { completed: boolean, task:Tasks } ) {
-    console.log(data);
     this.getTaskPageData();
     this.editTaskEnabled = false;
   }
@@ -423,6 +443,34 @@ export class TaskDetailsComponent implements OnInit {
     // this.showLoader = true;
   }
 
+//   showPrDetails() {
+//     if(this.prLink){
+//       window.open(this.prLink,'_blank');
+//       this.prFound = true;
+//     }else{
+//       console.error("error in  getting the pr");
+//     }
+// }
+
+//   close(){
+//     jQuery('#getPrDetails').modal('hide');
+//   }
   
+
+createGithubIssue(){
+  this.createGitIssue = true;
+}
+
+createIssue(data: { completed:boolean } ){
+  this.createGitIssue = false;
+  this.getTaskPageData()
+}
+
+checkGitTokenExists(){
+  if(this.teamService.teamsDataJson[this.task.TeamId].GitToken != undefined && this.teamService.teamsDataJson[this.task.TeamId].GitToken != "" && this.teamService.teamsDataJson[this.task.TeamId].GitToken != null){
+    this.githubTokenExists = true;
+  }
+}
+
 }
 

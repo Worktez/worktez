@@ -58,18 +58,15 @@ export class ApplicationSettingsService {
 
   getTeamDetails(teamId: string) {
       this.teamDataReady = false;
-      if(this.team == undefined) {
-        this.team = this.teamService.teamsDataJson[teamId];
-        this.teamAvailable = true;
-        this.status = this.team.Status;
-        this.priority = this.team.Priority;
-        this.difficulty = this.team.Difficulty;
-        this.milestoneStatus = this.team.MilestoneStatus;
-        this.type = this.team.Type;
-        this.project = this.backendService.organizationDetails.TeamsId;
-        this.projectLink= this.team.ProjectLink;
-        // this.getLabelProperties(this.team.TeamId);
-      }
+      this.team = this.teamService.teamsDataJson[teamId];
+      this.teamAvailable = true;
+      this.status = this.team.Status;
+      this.priority = this.team.Priority;
+      this.difficulty = this.team.Difficulty;
+      this.milestoneStatus = this.team.MilestoneStatus;
+      this.type = this.team.Type;
+      this.project = this.backendService.organizationDetails.TeamsId;
+      this.projectLink= this.team.ProjectLink;
       this.teamService.teamsDataJson[teamId].TeamMembers.forEach(element => {
         this.userService.checkAndAddToUsersUsingEmail(element);
       });
@@ -81,18 +78,7 @@ export class ApplicationSettingsService {
         this.teamDataReady = true;
       }
   }
-
-  // getLabelProperties(teamId: string) {
-  //   const scopes = this.teamService.teamsLabelsJson[teamId];
-  //   const labelsArray = [];
-  //   scopes.forEach(element => {
-  //     labelsArray.concat(element);
-  //   });
-  //   console.log(labelsArray);
-  //   this.labels = labelsArray;
-  //   this.labelDataReady = true;
-  // }
-
+  
   getSprintsDetails(SprintNumber: number) {
     const orgDomain = this.backendService.getOrganizationDomain();
     const teamName = this.team.TeamName;

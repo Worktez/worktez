@@ -14,7 +14,7 @@
 
 <ng-container *ngIf="!showLoader">
   <ng-container *ngIf="teamDataReady">
-    <div class="row" id="contentBox">
+    <div class="row contentBox">
       <div class="col-md-2 col-1"></div>
       <div class="col">
         <div class="row">
@@ -39,21 +39,7 @@
                 </mat-icon>
                 <span class="align-middle"> Team Id: {{ team.TeamId }}</span>
               </div>
-            </div>
-            <div class="row py-2">
-              <div class="col">
-                <button class="btn etc" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
-                    title="Add Organisation">
-                    <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
-                    <span *ngIf="!repoLink"> Integrate Github </span>
-                    <span *ngIf="repoLink">
-                        {{repoLink}}
-                    </span>
-                </button>
-            </div>
-            </div>
-            
+            </div>  
           </div>
           <div class="col text-right">
             <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editTeam" class="btn ml-2">
@@ -61,7 +47,6 @@
                 data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
                 edit
               </mat-icon>
-              
             </span>
             <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
               <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam"
@@ -76,6 +61,8 @@
             </span>
           </div>
         </div>
+        <app-github-integration [team]="team"></app-github-integration>
+        <app-gitlab-integration [team]="team"></app-gitlab-integration>
         <hr>
         <div class="row">
           <div class="col-12 col-md-4">
@@ -192,9 +179,4 @@
   <app-add-member [teamId]="teamId" [teamName]="team.TeamName" [teamMembers]="team.TeamMembers"
     [teamManager]="team.TeamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="true"
     (addedMember)="addedMember($event)"></app-add-member>
-</ng-container>
-<ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
-  <app-github-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
-      (addedProject)="addedProject($event)">
-  </app-github-link>
 </ng-container>

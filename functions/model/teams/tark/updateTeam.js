@@ -22,29 +22,17 @@ const { updateTeamDetails, getTeam } = require("../lib");
 
 exports.updateTeam = function(request, response) {
   const teamDescription = request.body.data.TeamDescription;
-  const teamManagerEmail = request.body.data.TeamManagerEmail;
-  const type = request.body.data.TypeLabels;
-  const statusLabels = request.body.data.StatusLabels;
-  const priorityLabels = request.body.data.PriorityLabels;
-  const difficultyLabels = request.body.data.DifficultyLabels;
-  const milestoneStatusLabels = request.body.data.MilestoneStatusLabels;
-
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
-
+  const teamManagerEmail = request.body.data.TeamManagerEmail;
   let status = 200;
   let result = { data: "Error in updating team" };
 
   const promise1 = getTeam(orgDomain, teamName).then((team) => {
     if (team) {
       const updateJson = {
-        TeamDescription: teamDescription,
         TeamManagerEmail: teamManagerEmail,
-        Type: type,
-        StatusLabels: statusLabels,
-        PriorityLabels: priorityLabels,
-        DifficultyLabels: difficultyLabels,
-        MilestoneStatusLabels: milestoneStatusLabels,
+        TeamDescription: teamDescription,
       };
       updateTeamDetails(updateJson, orgDomain, teamName);
       result = { data: "Team Updated Successfully" };

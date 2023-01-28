@@ -13,4 +13,5 @@
 ***********************************************************/
 export interface GitOrgData {
     html_url: string;
+    path_with_namespace: string;
 }

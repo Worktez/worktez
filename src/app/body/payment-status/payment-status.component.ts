@@ -26,7 +26,6 @@ export class PaymentStatusComponent implements OnInit {
   }
 
   verifyPayment(){
-    console.log("hit");
     // const uid = this.startService.uid;
     // this.subscriptionId = this.subscriptionService.subscriptionPackage.SubscriptionId;
     console.log(this.subscriptionId);

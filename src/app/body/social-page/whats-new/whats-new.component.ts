@@ -19,11 +19,9 @@ export class WhatsNewComponent implements OnInit {
   constructor(private httpService: HttpServiceService, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
-
       this.httpService.getReleaseDetails().pipe(map(data => {
         const objData = data as GitData[];
         return objData;
-      
       })).subscribe({
         next:(data) => {
           this.releaseData = data;
@@ -54,12 +52,12 @@ export class WhatsNewComponent implements OnInit {
             }
           }
         },
-          error: (error) => {
-            console.error(error);
-          },
-          complete: () => {
-           console.log("completed fetching data");
-          }
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("completed fetching data");
+        }
        });
              
 }

@@ -183,6 +183,17 @@ import { AllNotificationComponent } from './header/notification-center/all-notif
 import { AllNotificationCardComponent } from './header/notification-center/all-notification/all-notification-card/all-notification-card.component';
 import { AddWatchersComponent } from './body/task-details/add-watchers/add-watchers.component';
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
+import { CreateGitIssueComponent } from './body/task-details/create-git-issue/create-git-issue.component';
+import { ReleaseComponent } from './body/release/release.component';
+import { AddReleaseComponent } from './body/release/add-release/add-release.component';
+import { ReleaseCardComponent } from './body/release/release-card/release-card.component';
+import { ReleaseDetailsComponent } from './body/release-details/release-details.component';
+import { EditReleaseComponent } from './body/release-details/edit-release/edit-release.component';
+import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
+import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
+import { GithubIntegrationComponent } from './body/team-details/github-integration/github-integration.component';
+import { GitlabIntegrationComponent } from './body/team-details/gitlab-integration/gitlab-integration.component';
+import { DocumentationsComponent } from './body/documentations/documentations.component';
 
 @NgModule({
   declarations: [
@@ -333,6 +344,17 @@ import { StandardSubscriptionComponent } from './body/standard-subscription/stan
     AllNotificationCardComponent,
     AddWatchersComponent,
     PaymentStatusComponent,
+    CreateGitIssueComponent,
+    ReleaseComponent,
+    AddReleaseComponent,
+    ReleaseCardComponent,
+    ReleaseDetailsComponent,
+    EditReleaseComponent,
+    GitlabLinkComponent,
+    GitlabComponent,
+    GithubIntegrationComponent,
+    GitlabIntegrationComponent,
+    DocumentationsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,107 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* 
+* Author : Simran Nigam <nigamsimran14@gmail.com>
+*
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content ">
+            <div class="row px-3 pb-0 pt-2">
+                <div class="col-md-10 col-10">
+                    <h2>Edit Release</h2>
+                </div>
+                <div class="col-md-1 col-2 text-right">
+                    <span class="btn"  data-dismiss="modal" (click)="editReleaseDone()">
+                        <mat-icon  fontSet="material-icons-outlined" class="align-middle" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="!enableLoader && !showClose && dataReady">
+                    <div class="form-group">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Tag Name</span>
+                        <input type="text" [(ngModel)]="tagName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Tag Name" autocomplete="off">
+                    </div>
+                    <div class="my-1 form-group">
+                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
+                        <textarea class="form-control" rows="10" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" id="message-text" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="form-group col-md-12">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Target Branch</span>
+                            <input type="text" [(ngModel)]="targetBranch" [ngModelOptions]="{ standalone: true }"
+                            class="form-control form-control-sm" id="recipient-name" placeholder="Enter target branch" required autocomplete="off"/>
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Generate Release</span>
+                            <select class="form-control form-control-sm" [(ngModel)]="generateRelease" [ngModelOptions]="{standalone: true}">
+                                <option [ngValue]="generateRelease" [disabled]="true">{{generateRelease}} </option>
+                                <ng-container *ngFor='let label of choose'>
+                                    <option>{{ label }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Pre Release</span>
+                            <select class="form-control form-control-sm" [(ngModel)]="preRelease" [ngModelOptions]="{standalone: true}">
+                                <option [ngValue]="preRelease" [disabled]="true">{{preRelease}}</option>
+                                <ng-container *ngFor='let label of choose'>
+                                <option>{{ label }}</option>
+                            </ng-container>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Draft</span>
+                            <select class="form-control form-control-sm" [(ngModel)]="ifDraft" [ngModelOptions]="{standalone: true}">
+                                <option [ngValue]="ifDraft" [disabled]="true">{{ifDraft}}</option>
+                                <ng-container *ngFor='let label of choose'>
+                                    <option>{{ label }}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="my-1 form-group text-center success pt-1">
+                        <button type="submit" class="btn btn-lg btn-block" id="button" (click)="validateRelease()">Save Changes</button>
+                    </div>
+                </ng-container>
+                <app-loader *ngIf="enableLoader && !showClose"></app-loader> 
+                <ng-container *ngIf="showClose">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <!-- <div class="row"></div> -->
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Release Updated Successfully !</div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-secondary" type="button" id="button" data-dismiss="modal" (click)="editReleaseDone()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+  </div>

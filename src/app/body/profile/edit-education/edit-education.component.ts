@@ -96,49 +96,49 @@ export class EditEducationComponent implements OnInit {
   }
 
 
-  async submitaddEducation() {
+  submitaddEducation() {
     this.enableLoader = true
     if (this.endDate == undefined || this.endDate == "") {
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/addEducation');
     
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate }).subscribe({
-        next: (data) => {
-          console.log("Successful");
-          this.showClose = true;
-        },
-        error: (error) => {
-          this.enableLoader = false;
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-          console.error(error);
-        },
-        complete: () => console.info('Successful ')
+    callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate }).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        this.showClose = true;
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successful ')
     });
-      console.log("Successful");
-      this.showClose = true;
+    console.log("Successful");
+    this.showClose = true;
   }
 
-  async editEducation() {
+  editEducation() {
     this.enableLoader = true
     if (this.endDate == undefined || this.endDate == "") {
       this.endDate = "Present";
     }
     const callable = this.functions.httpsCallable('users/updateEducation');
     
-      await callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).subscribe({
-        next: (data) => {
-          console.log("Successful");
-          this.showClose = true;
-        },
-        error: (error) => {
-          this.enableLoader = false;
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-          console.error(error);
-        },
-        complete: () => console.info('Successfully edited education')
+    callable({Uid: this.uid, DisplayName: this.displayName, Email: this.email, InstituteName: this.instituteName, Degree: this.degree, Start: this.startDate, End: this.endDate, EducationId: this.educationModalData.EducationId }).subscribe({
+      next: (data) => {
+        console.log("Successful");
+        this.showClose = true;
+      },
+      error: (error) => {
+        this.enableLoader = false;
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error(error);
+      },
+      complete: () => console.info('Successfully edited education')
     });
       console.log("Successful");
       this.showClose = true;

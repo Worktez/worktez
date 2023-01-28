@@ -1,0 +1,17 @@
+.integrationBox{
+    border: 1px solid var(--secondary-bg);
+    border-radius: 5px;
+}
+.btn {
+    color: var(--text);
+}
+
+.etc {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--primary-color); 
+}

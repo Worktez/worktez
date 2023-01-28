@@ -56,6 +56,9 @@ import { AllNotificationComponent } from './header/notification-center/all-notif
 import { CurrenPlanComponent } from './body/curren-plan/curren-plan.component';
 import { PaymentStatusComponent } from './body/payment-status/payment-status.component';
 import { StandardSubscriptionComponent } from './body/standard-subscription/standard-subscription.component';
+import { ReleaseComponent } from './body/release/release.component';
+import { ReleaseDetailsComponent } from './body/release-details/release-details.component';
+import { DocumentationsComponent } from './body/documentations/documentations.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -90,6 +93,7 @@ const routes: Routes = [
   { path: 'UpdateTeam/:teamId', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'Releases', component:ReleaseComponent},
   { path: 'ListPatches', component: ListPatchesComponent },
   { path: 'privacy', component: PrivacyComponent, title: "Privacy" },
   { path: 'copyright', component: CopyrightComponent, title: "Copyright" },
@@ -98,6 +102,7 @@ const routes: Routes = [
   { path: 'releasenotes', component: ReleaseNotesComponent },
   { path: 'KanbanBoard', component: KanbanBoardComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'Milestones', component:MilestoneComponent, canActivate: [AngularFireAuthGuard]},
+  { path: 'ReleaseDetails/:ReleaseId', component:ReleaseDetailsComponent, canActivate:[AngularFireAuthGuard]},
   { path: 'MilestoneDetails/:MilestoneId', component:MilestoneDetailsComponent, canActivate:[AngularFireAuthGuard]},
   { path: 'Pricing', component:PricingComponent, title: "Pricing" },
   { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
@@ -105,6 +110,7 @@ const routes: Routes = [
   { path: 'Notifications', component:AllNotificationComponent },
   { path: 'PaymentStatus/:orderId/:paymentId/:signature/:subscriptionId', component:PaymentStatusComponent, canActivate:[AngularFireAuthGuard] },
   { path: 'Standard', component:StandardSubscriptionComponent},
+  { path: 'Documentations', component:DocumentationsComponent },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

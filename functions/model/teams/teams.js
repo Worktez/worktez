@@ -34,6 +34,7 @@ const {createDefaultLabels} = require("./tark/createDefaultLabels");
 const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 const {getAllTeamData} = require("./tark/getAllTeamData");
 const {getAllLabels} = require("./tark/getAllLabels");
+const {addGitToken} = require("./tark/addGitToken");
 /**
  * Description
  * @param {any} "/addMember"
@@ -115,6 +116,9 @@ fastify.post("/addProjLink", (req, res) => {
   addProjLink(req, res);
 });
 
+fastify.post("/addGitToken", (req, res) => {
+  addGitToken(req, res);
+});
 /**
  * Description
  * @param {any} "/deleteLabel"

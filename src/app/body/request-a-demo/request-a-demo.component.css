@@ -53,9 +53,9 @@ input:focus {
     color: var(--secondary-color);
     font-size: 55px;
 }
-.close:hover {
+.btn:hover {
     background-color: var(--dropdown-hover);
-    color: var(--button-text-hover);
+    color: var(--primary-color);
     cursor: pointer;
 }
 input[type=number]::-webkit-inner-spin-button, 

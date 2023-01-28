@@ -59,6 +59,14 @@
         { "fieldPath": "Status", "order": "ASCENDING" },
         { "fieldPath": "LastUpdatedTime", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "Social",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "Status", "order": "ASCENDING" },
+        { "fieldPath": "LastUpdatedEpochTime", "order": "DESCENDING" }
+      ]
     }
   ]
 }

@@ -1,0 +1,149 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author: Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="modal fade" id="gitlabPrModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="container modal-body align-items-center px-4" id="addPrPage">
+                <div class="row px-4">
+                    <ul class="navbar-nav mr-auto">
+                        <h4 class="active nav-link head bold" id="memberModalLabel">Link Gitlab MR</h4>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <span class="prBtn btn align-middle" (click)="close()">
+                            <mat-icon class="close" data-dismiss="modal" aria-label="Close"
+                                fontSet="material-icons-outlined" class="align-middle " title="Close">
+                                close
+                            </mat-icon>
+                        </span>
+                    </ul>
+                </div>
+                <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
+                    <div class="card">
+                        <ng-container *ngFor="let item of prData; let prIndex=index;">
+                            <div *ngIf="PrNumber == item.number">
+                                <div class="card-header">
+                                    <strong>Selected MR:</strong>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <ng-container>
+                                        <li class="list-group-item">
+                                            <a href="{{item.html_url}}" class="btn btn-status text-wrap text-left">
+                                                {{item.title}}
+                                                <div class="prlist">#{{PrNumber}}  |  Mr Status :
+                                                    {{item.state}} </div>
+                                            </a>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <ng-container *ngIf="prFound && PrNumber != prTask.number">
+                        <br>
+                            <div class="card">
+                                <div class="class-header p-3 ml-1">
+                                    <strong>Found MR: </strong>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <ng-container>
+                                        <li  
+                                            (click)="addPrLink(prTask.html_url, prTask.url, prTask.number)"
+                                            class="list-group-item">
+                                            <div class="btn btn-status text-wrap text-left">
+                                                {{prTask.title}}
+                                                <div class="prlist">#{{prTask.number}}  |  Mr Status :
+                                                    {{prTask.state}} {{WtId}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                    </ng-container>
+                    <br>
+                    <div class="card">
+                        <div class="class-header p-3 ml-1">
+                            <strong>Select A Merge Request: </strong>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <ng-container *ngFor="let item of prData; let prIndex=index;">
+                                <li *ngIf="PrNumber != item.number"
+                                    (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
+                                    <div>
+
+                                        <div class="btn btn-status text-wrap text-left">
+                                            {{item.title}}
+                                            <div class="prlist"> #{{item.number}}  |  Mr Status :
+                                                {{item.state}} </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                </form>
+                <ng-container *ngIf="noRepoLinked || noPrExist">
+                    <div class="row pl-2 text-center" *ngIf="noRepoLinked">
+                        <div class="col font-weight-bold"> No Gitlab Repository Exists, Please Integrate One !</div>
+                    </div>
+                    <div class="row pl-2 text-center" *ngIf="noPrExist">
+                        <div class="col font-weight-bold"> No Active Merge Requests !</div>
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 px-4">
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()"
+                                style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!PopupHandlerService.addPrActive">
+                    <div *ngIf="prLinked">
+                        <div class="row mx-5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">
+                                    check_circle_outline</mat-icon>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <div class="row font-weight-bold" style="font-size: medium;flex-wrap: wrap;">
+                                    Successfully Linked The MR!</div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                    <div class="row pl-2 text-center" *ngIf="!prLinked">
+                        <div class="col font-weight-bold">Error! MR Couldn't be Linked </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-success" id="close" type="button" data-dismiss="modal" (click)="close()"
+                                style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

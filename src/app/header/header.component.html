@@ -95,6 +95,22 @@
                                 <a class="dropdown-item " (click)="kanbanBoard() ">Kanban Board</a>
                             </div>
                         </li>
+                        <ng-container>
+                            <li class="nav-item px-1">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="releases()">
+                                    <div class="row">
+                                        <div class="col pr-1">
+                                            <span class="material-symbols-outlined" >
+                                                new_releases
+                                            </span> 
+                                        </div>
+                                        <div class="col pl-1">
+                                            Releases
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ng-container>
                         <ng-container *ngIf="(authService.organizationAvailable) && startService.userReady">
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button"
@@ -112,11 +128,11 @@
                                     </mat-icon>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right meetScrollBar" aria-labelledby="navbarDropdownBoards" id="notificationCenter">
-                                    <div class="text-center align-middle" >
+                                    <div class="text-center" >
                                         <div>
-                                            <a class="dropdown-item ScheduleBtn ScheduleBtn-outline-secondary" style="margin-bottom: 2rem;" (click)="ScheduleMeet()" data-toggle="modal" data-target="#scheduleMeet">Schedule a Meet</a>
+                                            <a class="dropdown-item ScheduleBtn ScheduleBtn-outline-secondary mb-2" (click)="ScheduleMeet()" data-toggle="modal" data-target="#scheduleMeet">Schedule a Meet</a>
                                         </div>
-                                        <ng-container>
+                                        <ng-container class="my-0">
                                             <app-show-meet-details></app-show-meet-details>
                                         </ng-container>
                                         <!-- <a  class=" dropdown-item" >Show Scheduled Meets</a> -->

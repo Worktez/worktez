@@ -26,7 +26,6 @@ exports.getAllTeamData = function(request, response) {
   let status = 200;
   let result;
   const teamData = [];
-  console.log("Orgdomain", orgDomain);
 
   getAllTeams(orgDomain).then((team) => {
     team.forEach((element) => {

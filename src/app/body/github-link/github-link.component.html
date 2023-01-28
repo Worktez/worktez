@@ -18,7 +18,7 @@
             <div class="container modal-body align-items-center px-4" id="addMemberPage">
                 <div class="row px-4 pt-1">
                     <ul class="navbar-nav mr-auto">
-                            <h4 class="active nav-link head bold" id="memberModalLabel">Link Github Repo</h4>
+                        <h4 class="active nav-link head bold" id="memberModalLabel">Link Github Repo</h4>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <span class="btn">
@@ -32,34 +32,32 @@
                 <div class="row px-4">
                     <h3>Team Name: <span class="bold">{{ teamName }}</span></h3>
                 </div>
-                
-                <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
-                    <ng-container *ngIf="!dataFetched">
+                <ng-container *ngIf="!showClose && !dataFetched">
                     <div class="row px-2">
-                            <div class="col-md-12 py-0">
-                                <div class="btn-group">
-                                    <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
-                                      aria-expanded="false">
-                                      {{linkType}}
+                        <div class="col-md-12 py-0">
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle box" type="button" id="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    {{linkType}}
+                                </button>
+                        
+                                <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+                                    <button class="dropdown-item" type="button" (click)="setLinkType('Private')">
+                                    Private
                                     </button>
-                            
-                                    <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-                                      <button class="dropdown-item" type="button" (click)="setLinkType('Private')">
-                                        Private
-                                      </button>
-                                      <button class="dropdown-item" type="button" (click)="setLinkType('Public')">
-                                        Public
-                                      </button>
-                                      <button class="dropdown-item" type="button" (click)="setLinkType('All')">
-                                        All
-                                      </button>
-                                    </div>
-                                  </div>
+                                    <button class="dropdown-item" type="button" (click)="setLinkType('Public')">
+                                    Public
+                                    </button>
+                                    <button class="dropdown-item" type="button" (click)="setLinkType('All')">
+                                    All
+                                    </button>
+                                </div>
                             </div>
+                        </div>
                         <ng-container *ngIf="linkType=='Private' || linkType == 'All'">
                             <div class="col-md-12 my-0 py-0">
                                 <input type="text" class="form-control" id="bearerTokenInput" [(ngModel)]="bearerToken"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the bearer token" (click)=" setBearerToken(bearerToken)">
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter the bearer token">
                             </div>
                         </ng-container>
                         <div class="col-md-5 py-0">
@@ -69,38 +67,36 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="organisation" [(ngModel)]="searchType" checked>
                                 <label class="form-check-label" for="exampleRadios1">
-                                  Organisation
+                                    Organisation
                                 </label>
-                              </div>
-                              <div class="form-check">
+                            </div>
+                            <div class="form-check">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="username" [(ngModel)]="searchType">
                                 <label class="form-check-label" for="exampleRadios2">
-                                  Username
+                                    Username
                                 </label>
-                              </div>
-                              <br>
-                              <input *ngIf="searchType==='organisation'" type="text" class="form-control" [(ngModel)]="memberOrgName"
-                                [ngModelOptions]="{standalone: true}" placeholder="Enter the Organisation Name">
+                            </div>
+                                <br>
+                            <input *ngIf="searchType==='organisation'" type="text" class="form-control" [(ngModel)]="memberOrgName" [ngModelOptions]="{standalone: true}" placeholder="Enter the Organisation Name">
                             <input type="text" *ngIf="searchType==='username'" class="form-control" [(ngModel)]="memberOrgName"
                                 [ngModelOptions]="{standalone: true}" placeholder="Enter the Username"><br>
-                            <button type="submit" class="btn btn-primary px-4" id="button" >Fetch Repos</button>
+                            <button type="submit" (click)="submit()" class="btn btn-primary px-4" id="button" >Fetch Repos</button>
                         </div>
                     </div>
                 </ng-container>
-                        <form *ngIf="dataFetched">
-                            <div class="card">
-                                <div class="card-header">
-                                    Select Github Repo
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <ng-container *ngFor="let item of objData">
-                                        <li (click)="addProjLink(item.html_url.slice(19))" class="list-group-item">{{ item.html_url.slice(19) }}</li>
-                                    </ng-container>
-                                </ul>
-                            </div>
-                    </form>
-                    <app-loader *ngIf="enableLoader"></app-loader>
-                </form>
+                <ng-container *ngIf="dataFetched && !showClose">
+                    <div class="card">
+                        <div class="card-header">
+                            Select Github Repo
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <ng-container *ngFor="let item of objData">
+                                <li (click)="addProjLink(item.html_url.slice(19))" class="list-group-item">{{ item.html_url.slice(19) }}</li>
+                            </ng-container>
+                        </ul>
+                    </div>
+                </ng-container>
+                <app-loader *ngIf="enableLoader"></app-loader>
                 <ng-container *ngIf="showClose">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
@@ -110,7 +106,7 @@
                         <div class="col-md-4"></div>
                     </div>
                     <div class="row px-2 text-center">
-                        <div class="col" style="font-size: medium;flex-wrap: wrap;">Successfully Integrated: <div>{{projLink}}!</div></div>
+                        <div class="col" style="font-size: medium;flex-wrap: wrap;">Successfully Integrated: {{projLink}}</div>
                     </div>
                     <div class="row pt-2">
                         <div class="col-md-4"></div>

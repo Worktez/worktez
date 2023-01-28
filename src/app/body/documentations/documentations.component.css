@@ -1,0 +1,26 @@
+.page {
+    background-color: var(--secondary-bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.card {
+    width: 18rem;
+    /* height: 20rem; */
+    border: none;
+    border-radius: 5px;
+}
+
+.b1 {
+    background-color: #311B92;
+    color: #B39DDB;
+}
+
+.b2 {
+    background-color: #512DA8;
+    color: #B39DDB;
+}
+
+.b3 {
+    background-color: #EDE7F6;
+    color: #4527A0;
+}

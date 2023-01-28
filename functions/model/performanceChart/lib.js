@@ -22,26 +22,26 @@ const { db } = require("../application/lib");
 /**
  * Description
  * @param {any} orgDomain
- * @param {any} teamId
+ * @param {any} teamName
  * @param {any} chartName
  * @param {any} inputJson
  * @return {any}
  */
-exports.setOrganizationsChart = function(orgDomain, teamId, chartName, inputJson) {
-  const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).set(inputJson);
+exports.setOrganizationsChart = function(orgDomain, teamName, chartName, inputJson) {
+  const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Charts").doc(chartName).set(inputJson);
   return Promise.resolve(setChart);
 };
 
 /**
  * Description
  * @param {any} orgDomain
- * @param {any} teamId
+ * @param {any} teamName
  * @param {any} chartName
  * @param {any} inputJson
  * @return {any}
  */
-exports.updateChart = function(orgDomain, teamId, chartName, inputJson) {
-  const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamId).collection("Charts").doc(chartName).update(inputJson);
+exports.updateChart = function(orgDomain, teamName, chartName, inputJson) {
+  const setChart = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("Charts").doc(chartName).update(inputJson);
   return Promise.resolve(setChart);
 };
 

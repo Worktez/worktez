@@ -1,0 +1,61 @@
+/***********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author : Simran Nigam <nigamsimran14@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+ #SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
+}
+
+.headId {
+    color: var(--primary-color);
+}
+
+.heading{
+    font-size: 18px;
+    font-family: var(--font);
+}
+
+.teamId {
+    font-family: var(--font);
+}
+
+#StartDate {
+    color: var(--danger-color);
+}
+
+#button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.card {
+    box-shadow: var(--box-shadow-bottom);
+    background: var(--secondary-bg);
+    color: var(--text);
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.card:hover {
+    border: 1px solid var(--primary-color);
+}
+
+#sprintStartDate {
+    color: var(--text);
+}
+#dateAlign{
+    padding-left: 12px;
+}

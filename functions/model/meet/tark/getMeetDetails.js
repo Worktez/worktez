@@ -27,19 +27,20 @@ exports.getMeetDetails = function(request, response) {
   const getMeetDetailsPromise = getMeetDetails(uid).then((meetData) => {
     if (meetData) {
       result = {data: {status: "OK", data: meetData}};
+    } else {
+      result = {data: {status: "Not Found", data: undefined}};
     }
   }).catch((error) => {
     status = 500;
-    console.log("Error:", error);
+    console.error("Error:", error);
   });
 
   const promises = [getMeetDetailsPromise];
   Promise.all(promises).then(() => {
-    console.log("Got Task Sucessfully");
+    console.log("Got Meetings Sucessfully");
     return response.status(status).send(result);
-  })
-      .catch((error) => {
-        console.error("Error Getting Tasks", error);
-        return response.status(status).send(result);
-      });
+  }).catch((error) => {
+    console.error("Error Getting Meetings", error);
+    return response.status(status).send(result);
+  });
 };
