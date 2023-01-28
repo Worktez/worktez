@@ -63,6 +63,7 @@ export class MilestoneDetailsComponent implements OnInit {
   addTaskActive: boolean = true;
   editMilestoneActive: boolean = false;
   tasks: Tasks [] =[];
+  color: string;
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
@@ -117,6 +118,7 @@ export class MilestoneDetailsComponent implements OnInit {
         }
       });
     }
+    
   }
 
   backToMilestones() {
@@ -249,6 +251,8 @@ export class MilestoneDetailsComponent implements OnInit {
         next: (data) => {
           this.milestoneData = data;
           this.prevVal = [this.milestoneData.MilestoneStatus];
+          this.color="#"+this.milestoneData.ColorCode;
+          console.log(this.color)
         },
         error: (error) => {
           console.log(error);
