@@ -73,6 +73,31 @@ export class GitlabIntegrationComponent implements OnInit {
     }
   }
 
+  unLinkGithub(){
+    this.repoLink="";
+    this.addProjLink(this.repoLink);
+  }
+
+  addProjLink(projLink: string){
+    this.repoLink=projLink;
+    this.enableLoader=true;
+    const organizationDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/addProjLink');
+    callable({OrganizationDomain: organizationDomain, TeamName: this.team.TeamName, ProjLink: this.repoLink, ProjLocation: ''}).subscribe({
+      next: (data) => {
+        console.log("Successfully added project link");
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully created project link')
+    })
+  }
+
   addTokenEnable(){
     this.enableAddToken = true
   }

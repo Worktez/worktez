@@ -13,7 +13,7 @@
                 <span> Integrate Github </span>
             </ng-template>
         </button>
-        <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
+        <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc mr-2" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
             <span>Add Token</span>
         </button>
     </div>
@@ -28,6 +28,9 @@
             No token found
         </ng-template>
     </div>
+    <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub()">
+        <span>Remove</span>
+    </button>
 </div>
 <ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
     <app-github-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
