@@ -72,12 +72,6 @@ input:focus {
     font-size: 55px;
 }
 
-:host {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
 .dropdown-menu {
     width: 300px;
     height: auto;
