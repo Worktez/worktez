@@ -25,6 +25,7 @@ exports.editMilestone = function(request, response) {
   const description = request.body.data.Description;
   const startDate = request.body.data.StartDate;
   const endDate = request.body.data.EndDate;
+  const colorCode = request.body.data.ColorCode;
 
   let result;
   let status = 200;
@@ -39,6 +40,7 @@ exports.editMilestone = function(request, response) {
         MilestoneStatus: milestoneStatus,
         StartDate: startDate,
         EndDate: endDate,
+        ColorCode: colorCode,
       };
       updateMilestone(inputJson, orgDomain, milestoneId);
     }

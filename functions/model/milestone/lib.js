@@ -32,9 +32,10 @@ const { db } = require("../application/lib");
  * @param {any} startDate
  * @param {any} endDate
  * @param {any} milestoneStatus
+ * @param {any} colorCode
  * @return {any}
  */
-exports.setMilestone = function(uid, orgDomain, title, description, milestoneId, teamId, creationDate, creationTime, startDate, endDate, milestoneStatus) {
+exports.setMilestone = function(uid, orgDomain, title, description, milestoneId, teamId, creationDate, creationTime, startDate, endDate, milestoneStatus, colorCode) {
   const addMilestonePromise = db.collection("Organizations").doc(orgDomain).collection("Milestones").doc(milestoneId).set({
     CreatorUid: uid,
     TeamId: teamId,
@@ -46,6 +47,7 @@ exports.setMilestone = function(uid, orgDomain, title, description, milestoneId,
     StartDate: startDate,
     EndDate: endDate,
     MilestoneStatus: milestoneStatus,
+    ColorCode: colorCode,
   });
   return Promise.resolve(addMilestonePromise);
 };

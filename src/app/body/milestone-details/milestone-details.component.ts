@@ -287,5 +287,6 @@ export class MilestoneDetailsComponent implements OnInit {
 
   editMilestoneCompleted(){
     this.getMilestoneDetails();
+    this.editMilestoneActive=false;
   }
 }

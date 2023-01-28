@@ -37,7 +37,7 @@
                         <textarea class="form-control" [(ngModel)]="description" [ngModelOptions]="{standalone: true}" id="message-text" placeholder="Description"></textarea>
                     </div>
 
-                    <div class="my-1 form-group">
+                    <!-- <div class="my-1 form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Status</span>
                         <select class="custom-select form-control" value={{this.Status}} [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
                             <option [ngValue]="null" [disabled]="true">Select Status</option>
@@ -45,6 +45,27 @@
                                 <option>{{item}}</option>
                             </ng-container>
                         </select>
+                        
+                    </div> -->
+                    <div class="form-row my-4">
+                        <div class="form-group col-md-6 col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Milestone Status</span>
+                            <select class="custom-select form-control" value={{this.status}} [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+                                <option [ngValue]="null" [disabled]="true">Select Status</option>
+                                <ng-container *ngFor="let item of statusLabels">
+                                    <option>{{item}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 col">
+                          <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Color Code</span>
+                          <div class="dropdown">
+                              <input type="text" autocomplete="off" class="form-control "[(ngModel)]="colorCodes"  [formControl]="colorCode" placeholder="Enter color code" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
+                                <app-colors-base (selectedColorName)="selectedColorName($event)"></app-colors-base>
+                              </div>
+                          </div>
+                        </div>
                     </div>
 
                     <div class="form-row my-2">

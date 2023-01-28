@@ -219,3 +219,9 @@
 #EndDate {
     color: var(--danger-color);
 }
+
+#milColor{
+    float: right;
+    font-size: 28px;
+    margin-top: -5px;
+}

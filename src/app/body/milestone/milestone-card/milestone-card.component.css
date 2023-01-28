@@ -63,3 +63,9 @@
 #dateAlign{
     padding-left: 12px;
 }
+
+#milColor{
+    float: right;
+    font-size: 30px;
+    margin-top: -5px;
+}
