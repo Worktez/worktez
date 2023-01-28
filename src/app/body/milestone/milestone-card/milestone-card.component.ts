@@ -27,7 +27,6 @@ export class MilestoneCardComponent implements OnInit {
   color: string;
   ngOnInit(): void {
     this.color="#"+this.milestone.ColorCode;
-    console.log(this.color)
   }
 
   getMilestoneDetails(milestoneId: any) {
