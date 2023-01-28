@@ -31,7 +31,6 @@
 }
 
 .dropdown-menu {
-    border-color: var(--primary-color) ;
     color: var(--text);
     background-color: var(--secondary-bg);
     width: 70px !important;

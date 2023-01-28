@@ -22,16 +22,14 @@ export class GitlabIntegrationComponent implements OnInit {
   gitlabTokenExists: boolean = false;
   enableAddToken : boolean = false;
   showClose : boolean = false;
-
   bearerToken: string = "";
-
   enableLoader: boolean = false;
 
   constructor(private teamService: TeamServiceService, private backendService: BackendService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.checkGitProject();
-    this.checkGitToken();
+    this.checkGitToken(this.team.GitToken);
   }
 
   enableAddOrganisationLink(team: Team) {
@@ -53,9 +51,9 @@ export class GitlabIntegrationComponent implements OnInit {
     }
   }
 
-  checkGitToken(){
-    if(this.team.GitToken!=undefined){
-      if(this.team.GitToken==""){
+  checkGitToken(gitToken: string){
+    if(gitToken!=undefined){
+      if(gitToken==""){
         this.gitlabTokenExists=false;
       }
       else{
@@ -94,6 +92,7 @@ export class GitlabIntegrationComponent implements OnInit {
     callable({OrganizationDomain: organizationDomain, TeamName: teamName, Token: gitToken}).subscribe({
       next: (data) => {
         console.log("Successfully added Token");
+        this.checkGitToken(gitToken);
         this.enableLoader=false;
         this.showClose = true;
       },
