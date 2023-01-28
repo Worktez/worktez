@@ -148,9 +148,10 @@ export class AddReleaseComponent implements OnInit {
 
   addRelease() {
     this.showLoader = true;
+    const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     this.gitToken = this.teamService.teamsDataJson[this.teamId].GitToken;
     this.gitToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1).subscribe({
+    this.githubService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).subscribe({
       next: (data) => {
         this.addReleaseDetailsToDB();
         this.showLoader = false;
