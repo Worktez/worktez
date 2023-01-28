@@ -41,6 +41,7 @@ export class MembersAccessComponent implements OnInit {
   memberCard: boolean = true;
   deleteAccess: boolean = false;
   componentName:string ="MEMBER-ACCESS";
+  memberToBeDeleted:string;
 
 
   constructor(public userService: UserServiceService, public rbaService: RBAService, private functions: AngularFireFunctions, private backendService: BackendService,   public errorHandlerService: ErrorHandlerService, private teamService: TeamServiceService, private route: ActivatedRoute) { }
@@ -55,6 +56,10 @@ export class MembersAccessComponent implements OnInit {
         this.membersEmail.push(element.Email)
       }
       })
+  }
+
+  confirmDeleteMember(email:string){
+    this.memberToBeDeleted = email;
   }
 
   removeOrgMember(remove: string) {
