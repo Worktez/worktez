@@ -195,6 +195,17 @@ import { GithubIntegrationComponent } from './body/team-details/github-integrati
 import { GitlabIntegrationComponent } from './body/team-details/gitlab-integration/gitlab-integration.component';
 import { DocumentationsComponent } from './body/documentations/documentations.component';
 import { GetStartedComponent } from './body/get-started/get-started.component';
+import { FeaturesPageComponent } from './body/features-page/features-page.component';
+import { BoardsFeatureComponent } from './body/features-page/boards-feature/boards-feature.component';
+import { ChartsFeatureComponent } from './body/features-page/charts-feature/charts-feature.component';
+import { DevopsFeatureComponent } from './body/features-page/devops-feature/devops-feature.component';
+import { TechtagFeatureComponent } from './body/features-page/techtag-feature/techtag-feature.component';
+import { MilestonesFeatureComponent } from './body/features-page/milestones-feature/milestones-feature.component';
+import { MeetingsFeatureComponent } from './body/features-page/meetings-feature/meetings-feature.component';
+import { OrganisationsFeatureComponent } from './body/features-page/organisations-feature/organisations-feature.component';
+import { ProfileFeatureComponent } from './body/features-page/profile-feature/profile-feature.component';
+import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feature/quicknotes-feature.component';
+import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
 
 @NgModule({
   declarations: [
@@ -357,6 +368,17 @@ import { GetStartedComponent } from './body/get-started/get-started.component';
     GitlabIntegrationComponent,
     DocumentationsComponent,
     GetStartedComponent,
+    FeaturesPageComponent,
+    BoardsFeatureComponent,
+    ChartsFeatureComponent,
+    DevopsFeatureComponent,
+    TechtagFeatureComponent,
+    MilestonesFeatureComponent,
+    MeetingsFeatureComponent,
+    OrganisationsFeatureComponent,
+    ProfileFeatureComponent,
+    QuicknotesFeatureComponent,
+    TasksFeatureComponent,
   ],
   imports: [
     BrowserModule,

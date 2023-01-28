@@ -8,6 +8,10 @@
     /* color: #0000e4; */
 }
 
+.sub-title {
+    font-size: 22px;
+}
+
 p {
     font-size: large;
     line-height: 1.8rem;
@@ -30,7 +34,14 @@ li {
     font-size: medium;
 }
 
+.feature-item{
+    cursor: pointer;
+    font-size: small;
+    line-height: normal;
+    text-align: left;
+}
+
+
 li:hover {
     color: var(--primary-color);
-    /* font-size: medium; */
 }

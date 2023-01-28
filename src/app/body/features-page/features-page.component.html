@@ -1,0 +1,108 @@
+<!-- *********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+*********************************************************** -->
+<div class="page p-4">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-md-2 col-0">
+            <div class="card submenu p-2 py-4">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" (click)="gettingStarted()">Get Started</li>
+                  <li class="list-group-item features" type="button" data-target="#features" data-toggle="collapse" aria-expanded="true" aria-controls="#features" (click)="changeArrowDirection()">Features
+                    <span class="material-icons arrow-icon align-middle">{{arrowDirection}}</span>
+                 </li>
+                  <ul class="collapse show list-group-flush list-group pl-3" id="features">
+                    <li class="list-group-item feature-item" (click)="changeSection('boards')">Board</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('charts')">Charts</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('devOps')">DevOps</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('techTag')">TechTag</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('milestones')">Milestones</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('meetings')">Meetings</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('organisations')">Organisaitons</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('profile')">Profile</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('quickNotes')">QuickNotes</li>
+                    <li class="list-group-item feature-item" (click)="changeSection('tasks')">Tasks</li>
+                  </ul>
+                  <li class="list-group-item">Blogs & News</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8 col-12">
+            <div class="card p-4">
+                <div class="card-body text-center">
+                    <p class="title pb-4">
+                        <span class="align-middle">
+                            <img src="../../../assets/docs-page-svg/undraw_flagged_2uty.svg" alt="graphs" width="10%" height="10%"> 
+                        </span>
+                        Features
+                    </p>
+                    <!-- B  -->
+                    <section *ngIf="currentSection == 'boards'">
+                        <app-boards-feature></app-boards-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'charts'" >
+                        <app-charts-feature></app-charts-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'devOps'" >
+                        <app-devops-feature></app-devops-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'techTag'" >
+                        <app-techtag-feature></app-techtag-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'milestones'" >
+                        <app-milestones-feature></app-milestones-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'meetings'" >
+                        <app-meetings-feature></app-meetings-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'organisations'" >
+                        <app-organisations-feature></app-organisations-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'profile'" >
+                        <app-profile-feature></app-profile-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'quickNotes'" >
+                        <app-quicknotes-feature></app-quicknotes-feature>
+                    </section>
+
+                    <section *ngIf="currentSection == 'tasks'" >
+                        <app-tasks-feature></app-tasks-feature>
+                     </section>
+                     <div class="row pt-4">
+                        <div class="col align-middle">
+                            <span class="card-title align-top pt-2"> Content Author: </span>
+                            <span class="card-text align-top px-2 text-left" style="display: inline-block;"> Bhavya Singh<br>bhavya.singh220@gmail.com</span>
+                            <img class="rounded-circle" src="../../../assets/contributor-bhavya_singh.jpg" alt="Card image cap" height="50px" width="50px">
+                        </div>
+                        <div class="col align-middle">
+                            <span class="card-title align-top pt-2"> Code Author: </span>
+                            <span class="card-text align-top px-2 text-left" style="display: inline-block;"> Abhishek Mishra<br>am1426620@gmail.com</span>
+                            <img class="rounded-circle" src="../../../assets/contributor-Abhishek_Mishra.jpeg" alt="Card image cap" height="50px" width="50px">
+                        </div>
+                     </div>
+                </div>
+              </div>
+            
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>

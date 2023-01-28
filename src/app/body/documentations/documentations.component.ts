@@ -18,5 +18,7 @@ export class DocumentationsComponent implements OnInit {
   getStarted() {
     this.router.navigate(['/GettingStarted']);
   }
-
+  features() {
+    this.router.navigate(['/Features', 'boards'])
+  }
 }
