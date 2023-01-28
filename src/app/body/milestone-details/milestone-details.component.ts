@@ -257,6 +257,9 @@ export class MilestoneDetailsComponent implements OnInit {
           this.milestoneData = data;
           this.prevVal = [this.milestoneData.MilestoneStatus];
           this.color="#"+this.milestoneData.ColorCode;
+          if(this.milestoneData.ColorCode=="" || this.milestoneData.ColorCode==null){
+            this.color="#ffffff"
+          }
         },
         error: (error) => {
           console.log(error);

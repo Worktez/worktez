@@ -12,12 +12,14 @@
  * See the MIT License for more details.
  ***********************************************************/ -->
     <div class="card p-3" (click)="getMilestoneDetails(milestone.MilestoneId)">
-      <span class="heading py-2" >
-        <span class="headId px-2">
-          {{milestone.MilestoneId}}
-        </span>{{milestone.Title}}
-        <mat-icon [style.color]="color" id="milColor">lightbulb</mat-icon>
-      </span>
+      <div class="milestone d-flex justify-content-between">
+        <span class="heading py-2" >
+          <span class="headId px-2">
+            {{milestone.MilestoneId}}
+          </span>{{milestone.Title}}
+        </span>
+        <div id="milColor" [ngStyle]="{'background-color': color}"></div>
+      </div>
       <div class="row py-2">
         <div class="col">
             <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">

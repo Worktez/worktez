@@ -221,7 +221,7 @@
 }
 
 #milColor{
-    float: right;
-    font-size: 28px;
-    margin-top: -5px;
+    width:1rem;
+    height:1rem; 
+    border-radius: 50px;
 }
