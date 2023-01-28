@@ -70,6 +70,20 @@ export class GithubServiceService {
     return this.httpClient.post(url, JSON.stringify(payload), httpOptions);
   }
 
+  markdownGithubDocument(bearerToken: string, body:string){
+    const url = environment.githubApiUrl+"/markdown/raw"
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken,
+      },
+    };
+    const payload = {
+      body: body
+  }
+
+    return this.httpClient.post(url, JSON.stringify(payload), httpOptions);
+  }
+
   updateGithubRelease(release_id: string, bearerToken: string, tagName: string, targetBranch: string, releaseName: string, releaseDescription: string, draft: boolean, prerelease: boolean, generate_release_notes: boolean, projectLink: string){
     const url = environment.githubApiUrl+"/repos/"+projectLink+"/releases/"+release_id;
 

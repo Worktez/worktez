@@ -98,6 +98,10 @@ import { map } from 'rxjs';
     })).subscribe({
       next: (data) => {
           this.releaseData = data;
+          this.githubService.markdownGithubDocument(bearerToken, this.releaseData.body).subscribe((data)=>{
+            const desc=data;
+            console.log(desc);
+          });
           this.releaseDataReady = true;
           this.showLoader = false;
       },
