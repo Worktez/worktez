@@ -116,8 +116,8 @@ export class GithubServiceService {
     return this.httpClient.get(url, httpOptions);
   }
 
-  createGithubRelease(bearerToken: string,releaseName: string, tagName: string, targetBranch: string, releaseDescription: string, response: boolean, response1: boolean, response2: boolean){
-    const url = environment.gitApiUrl+"/releases";
+  createGithubRelease(bearerToken: string,releaseName: string, tagName: string, targetBranch: string, releaseDescription: string, response: boolean, response1: boolean, response2: boolean, projectLink: string){
+    const url = environment.githubApiUrl+"/repos/"+projectLink+"/releases";
 
     let httpOptions = {
       headers: {
