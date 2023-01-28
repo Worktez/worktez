@@ -85,7 +85,7 @@ export class GitlabIntegrationComponent implements OnInit {
     this.enableLoader=true;
     const organizationDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/addProjLink');
-    callable({OrganizationDomain: organizationDomain, TeamName: this.team.TeamName, ProjLink: this.repoLink, ProjLocation: 'github'}).subscribe({
+    callable({OrganizationDomain: organizationDomain, TeamName: this.team.TeamName, ProjLink: this.repoLink, ProjLocation: ''}).subscribe({
       next: (data) => {
         console.log("Successfully added project link");
         this.enableLoader=false;
