@@ -22,16 +22,14 @@ export class GitlabIntegrationComponent implements OnInit {
   gitlabTokenExists: boolean = false;
   enableAddToken : boolean = false;
   showClose : boolean = false;
-
   bearerToken: string = "";
-
   enableLoader: boolean = false;
 
   constructor(private teamService: TeamServiceService, private backendService: BackendService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.checkGitProject();
-    this.checkGitToken();
+    this.checkGitToken(this.team.GitToken);
   }
 
   enableAddOrganisationLink(team: Team) {
@@ -53,9 +51,9 @@ export class GitlabIntegrationComponent implements OnInit {
     }
   }
 
-  checkGitToken(){
-    if(this.team.GitToken!=undefined){
-      if(this.team.GitToken==""){
+  checkGitToken(gitToken: string){
+    if(gitToken!=undefined){
+      if(gitToken==""){
         this.gitlabTokenExists=false;
       }
       else{
@@ -73,6 +71,31 @@ export class GitlabIntegrationComponent implements OnInit {
       this.teamService.teamsDataJson[this.team.TeamId].ProjectLink = this.repoLink;
       this.teamService.teamsDataJson[this.team.TeamId].ProjectLocation = this.repoLoc;
     }
+  }
+
+  unLinkGithub(){
+    this.repoLink="";
+    this.addProjLink(this.repoLink);
+  }
+
+  addProjLink(projLink: string){
+    this.repoLink=projLink;
+    this.enableLoader=true;
+    const organizationDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/addProjLink');
+    callable({OrganizationDomain: organizationDomain, TeamName: this.team.TeamName, ProjLink: this.repoLink, ProjLocation: ''}).subscribe({
+      next: (data) => {
+        console.log("Successfully added project link");
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully created project link')
+    })
   }
 
   addTokenEnable(){
@@ -94,6 +117,7 @@ export class GitlabIntegrationComponent implements OnInit {
     callable({OrganizationDomain: organizationDomain, TeamName: teamName, Token: gitToken}).subscribe({
       next: (data) => {
         console.log("Successfully added Token");
+        this.checkGitToken(gitToken);
         this.enableLoader=false;
         this.showClose = true;
       },

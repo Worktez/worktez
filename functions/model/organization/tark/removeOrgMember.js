@@ -17,10 +17,10 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-// const { updateApplication, getApplicationData} = require("../../application/lib");
+const { currentDate } = require("../../application/lib");
 const { updateMember, updateOrgRawData, getOrgRawData } = require("../../organization/lib");
 const { getAllTeams, updateTeamDetails } = require("../../teams/lib");
-const { getUserUseEmail, updateUser } = require("../../users/lib");
+const { getUserUseEmail, updateUser, updateMyOrgCollection } = require("../../users/lib");
 exports.removeOrgMember = function(request, response) {
   const orgDomain = request.body.data.OrganizationDomain;
   const orgMembers = request.body.data.OrgMembers;
@@ -36,6 +36,7 @@ exports.removeOrgMember = function(request, response) {
     orgMembers.splice(index, 1);
     const updateJson = {
       Active: false,
+      DateOfExit: currentDate,
     };
     const p1 = updateMember(updateJson, orgDomain, remove);
     if (!flag) {
@@ -77,6 +78,13 @@ exports.removeOrgMember = function(request, response) {
         SelectedOrgAppKey: "",
         SelectedTeamId: "",
       };
+
+      const updateUserOrgjson ={
+        DefaultTeam: "",
+        OrgAppKey: "",
+        Status: "Inactive",
+      };
+      updateMyOrgCollection(updateUserOrgjson, uid, orgDomain);
       updateUser(updateUserJson, uid);
     });
 

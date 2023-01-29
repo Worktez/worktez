@@ -22,11 +22,12 @@
                 <span class="smallDoj">DOJ</span>
             </th>
             <th scope="col" class="py-4">Teams</th>
-            <th scope="col" class="py-4">Role</th>
+            <th scope="col" class="py-4">Role(permissions)</th>
+            <th scope="col" class="py-4">Manage</th>
           </tr>
         </thead>
         <tbody>
-            <ng-container class="member" *ngFor="let member of members">
+            <ng-container class="member" *ngFor="let member of members; index as i">
                 <tr>
                     <td class="align-middle">
                         <app-suggestion-bucket [email]="member.Email" [showEmail]=" true"></app-suggestion-bucket>
@@ -37,8 +38,8 @@
                         <app-member-card [member] = "member"></app-member-card>
                     </td>
                     <td class="align-middle" *ngIf="deleteAccess">
-                      <div class="btn" data-target="#deleteMember" data-toggle="modal" data-bs-toggle="tooltip">
-                        <mat-icon class="ml-mt-2" id="button" fontSet="material-icons-outlined">delete</mat-icon>
+                      <div data-target="#deleteMember" data-toggle="modal" data-bs-toggle="tooltip" (click)= "confirmDeleteMember(member.Email)">
+                        <button class="red-text text-danger btn">Remove</button>
                       </div>
                     </td>
                   </tr>
@@ -48,7 +49,7 @@
                             <div class="modal-header">
                                 <h2 class="modal-title" id="DeleteModalLabel">Are you sure to delete the user? </h2>
                                 <span class="btn">
-                                    <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" aria-label="Close">close</mat-icon>
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" aria-label="Close" >close</mat-icon>
                                 </span>
                             </div>
                             <div class="row p-m-2 px-4 text-center">
@@ -57,7 +58,7 @@
                             <div class="row pt-2">
                                 <div class="col-md-4"></div>
                                 <div class="col-md-4 py-2 px-4">
-                                        <button type="button" class="btn extra2" (click)="removeOrgMember(member.Email)" style="margin-left: 10px;" aria-label="Close" data-dismiss="modal">Delete</button>
+                                        <button type="button" class="btn extra2" (click)="removeOrgMember(memberToBeDeleted)" style="margin-left: 10px;" aria-label="Close" data-dismiss="modal">Delete</button>
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>

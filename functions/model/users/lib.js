@@ -207,6 +207,7 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
     DefaultTeam: defaultTeam,
     OrgDomain: orgDomain,
     ActiveNotifications: 0,
+    Status: "Active",
   });
   return Promise.resolve(setMyOrgPromise);
 };

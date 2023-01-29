@@ -29,43 +29,41 @@ exports.startSchedular = function() {
       sched.forEach((schDoc) => {
         // const orgId = schDoc.data().OrgId;
         const orgAppKey = schDoc.data().OrgAppKey;
-
         getOrgUseAppKey(orgAppKey).then((data) => {
-          const teamIds = data.TeamsId;
-          const orgDomain = data.OrganizationDomain;
-          teamIds.forEach((teamId) => {
-            getTeamUseTeamId(orgDomain, teamId).then((team) => {
-              if (team.SchedularJob == undefined) {
-                const teamName = team.TeamName;
-                setSchedularJob(orgDomain, teamName);
-              } else {
+          if (data!=undefined) {
+            const teamIds = data.TeamsId;
+            const orgDomain = data.OrganizationDomain;
+            teamIds.forEach((teamId) => {
+              getTeamUseTeamId(orgDomain, teamId).then((team) => {
+                if (team.SchedularJob == undefined) {
+                  const teamName = team.TeamName;
+                  setSchedularJob(orgDomain, teamName);
+                } else {
                 // const sprintEvalChart = team.SchedularJob.SprintEvaluationChart;
-                const performanceChart = team.SchedularJob.PerformanceChart;
-                // const userPerformanceChart = team.SchedularJob.UserPerformanceChart;
+                  const performanceChart = team.SchedularJob.PerformanceChart;
+                  // const userPerformanceChart = team.SchedularJob.UserPerformanceChart;
 
-                const currentSprintID = team.CurrentSprintId;
-                const sprintRange = {
-                  SprintRange1: currentSprintID - 4,
-                  SprintRange2: currentSprintID,
-                };
-                // if (sprintEvalChart) {
+                  const currentSprintID = team.CurrentSprintId;
+                  const sprintRange = {
+                    SprintRange1: currentSprintID - 4,
+                    SprintRange2: currentSprintID,
+                  };
+                  // if (sprintEvalChart) {
                   // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
-                // } else if (type == "UserPerformanceChart") {
-                //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
-                // }
+                  // } else if (type == "UserPerformanceChart") {
+                  //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
+                  // }
 
-                if (performanceChart) {
-                  updatePerformanceChartData(orgDomain, teamId, "Team", sprintRange);
-                }
+                  if (performanceChart) {
+                    updatePerformanceChartData(orgDomain, teamId, "Team", sprintRange);
+                  }
                 // else if (userPerformanceChart) {
                 // updateAutoSprintStatus(schDoc.data().OrgAppKey, schDoc.data().TeamId);
                 // }
-              }
-
-              return null;
+                }
+              });
             });
-          });
-          return null;
+          }
         });
       });
     }

@@ -37,11 +37,11 @@ exports.updatedUserPerformanceChartData =function(orgDomain, assignee, sprintRan
       responseData.push(["S" + i, storyPoint]);
       inputJson["S"+i]=storyPoint;
     }
-    const promise = getOrganizationsChartDetails(orgDomain, teamName, "UserPerformanceChart").then((data) => {
+    const promise = getOrganizationsChartDetails(orgDomain, teamName, assignee).then((data) => {
       if (data != undefined) {
-        updateChart(orgDomain, teamName, "UserPerformanceChart", inputJson);
+        updateChart(orgDomain, teamName, assignee, inputJson);
       } else {
-        setOrganizationsChart(orgDomain, teamName, "UserPerformanceChart", inputJson);
+        setOrganizationsChart(orgDomain, teamName, assignee, inputJson);
       }
       return null;
     }).catch((err) => {
