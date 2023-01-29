@@ -4,10 +4,24 @@
         <div class="col-md-2 col-0">
             <div class="card submenu p-2 py-4">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Get Started</li>
-                  <li class="list-group-item">Features</li>
-                  <li class="list-group-item">Blogs & News</li>
-                </ul>
+                    <li class="list-group-item">Get Started</li>
+                    <li class="list-group-item features" type="button" data-target="#features" data-toggle="collapse" aria-expanded="true" aria-controls="#features" (click)="changeArrowDirection()">Features
+                      <span class="material-icons arrow-icon align-middle">{{arrowDirection}}</span>
+                   </li>
+                    <ul class="collapse list-group-flush list-group pl-3" id="features">
+                      <li class="list-group-item feature-item" (click)="changeSection('boards')">Board</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('charts')">Charts</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('devOps')">DevOps</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('techTag')">TechTag</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('milestones')">Milestones</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('meetings')">Meetings</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('organisations')">Organisaitons</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('profile')">Profile</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('quickNotes')">QuickNotes</li>
+                      <li class="list-group-item feature-item" (click)="changeSection('tasks')">Tasks</li>
+                    </ul>
+                    <li class="list-group-item">Blogs & News</li>
+                  </ul>
             </div>
         </div>
         <div class="col-md-8 col-12">
@@ -15,7 +29,7 @@
                 <div class="card-body text-center">
                     <p class="title pb-4">
                         <span class="align-middle">
-                            <img src="../../../assets/undraw_flagged_2uty.svg" alt="graphs" width="10%" height="10%"> 
+                            <img src="../../../assets/docs-page-svg/undraw_flagged_2uty.svg" alt="graphs" width="10%" height="10%"> 
                         </span>
                         Introduction
                     </p>
@@ -23,13 +37,13 @@
                         Worktez is an innovative solution to simplify your project and team with powerful frameworks to plan, track, deploy and collaborate over ideas and projects. Worktez is an executive solution for your organisation, that help you simplify complex industrial practices development workflow and remote work solution.
                     </p>
                     <span class="align-middle">
-                        <img src="../../../assets/undraw_outer_space_re_u9vd.svg" alt="graphs" width="25%" height="25%"> 
+                        <img src="../../../assets/docs-page-svg/undraw_outer_space_re_u9vd.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
                     <p class="py-5">
                         Our solution is focused on agile-based DevOps automation, which helps in more organised remote team management. You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore.
                     </p>
                     <span class="align-middle">
-                        <img src="../../../assets/undraw_choose_re_7d5a.svg" alt="graphs" width="25%" height="25%"> 
+                        <img src="../../../assets/docs-page-svg/undraw_choose_re_7d5a.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
                     <p class="py-2 pt-5">
                         Worktez consists of various easy-to-use options to get started with your project. While one might need to switch tabs for doing trivial tasks, you can do all of your tasks under a single place using the Worktez tool - from syncing tasks on Calendars to marking the tasks done before time, you name it and there you have it.
@@ -47,7 +61,7 @@
                         Worktez is an application based on Agile based DevOps Automation, this system ensures quality customer service with ease. Hence, it helps in providing efficient work to teams that work in a remote environment.
                     </p> -->
                     <span class="align-middle">
-                        <img src="../../../assets/undraw_runner_start_x-0-uu.svg" alt="graphs" width="25%" height="25%"> 
+                        <img src="../../../assets/docs-page-svg/undraw_runner_start_x-0-uu.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
                     <p class="title py-4">Getting started</p>
                     <p class="py-2">
@@ -63,7 +77,7 @@
                         3. Create a team inside the organization.
                     </p>
                     <span class="align-middle">
-                        <img src="../../../assets/undraw_setup_wizard_re_nday.svg" alt="graphs" width="25%" height="25%"> 
+                        <img src="../../../assets/docs-page-svg/undraw_setup_wizard_re_nday.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
                     <br>
                     <p class="py-2 text-center">
