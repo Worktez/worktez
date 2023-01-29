@@ -27,16 +27,10 @@ export class ProfileFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - Profile");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
         content: 'Add or edit your details, create an impressive profile using the profile page of worktez ',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+      });
   }
 }

@@ -27,16 +27,10 @@ export class MilestonesFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - Milestones");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
         content: 'Create a milestone for bigger implementations. Plan and track your progress on a functionality that might include multiple tasks using milestones.',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+      });
   }
 }

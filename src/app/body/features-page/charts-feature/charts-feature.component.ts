@@ -27,17 +27,11 @@ export class ChartsFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - Charts");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
         content: 'Learn more about different types of Charts used in worktez such as team performance chart, velocity chart, and sprint burndown chart',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+      });
   }
 
 }

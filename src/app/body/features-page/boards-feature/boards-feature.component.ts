@@ -27,17 +27,11 @@ export class BoardsFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - Boards");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
         content: 'Explore the Boards features of worktez, Learn more about the different kind to boards such as board page, kanban board, task evaluation boards, and make it easy to track the team',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+      });
   }
 
 }

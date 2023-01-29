@@ -27,17 +27,11 @@ export class TasksFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - Tasks");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
         content: 'Create, Edit and track the tasks for your team using the different features such as create task, task-details page, and task evaluation board in worktez ',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+      });
   }
   
 }

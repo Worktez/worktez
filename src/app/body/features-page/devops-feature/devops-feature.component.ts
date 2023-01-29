@@ -27,17 +27,11 @@ export class DevopsFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - DevOps");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
-        content: 'get familiar with devOps and discover how worktez has DevOps with the help of Git and its functionalities',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+        content: 'get familiar with devOps features of worktez and discover how worktez has DevOps with the help of Git and its functionalities',
+      });
   }
 
 }

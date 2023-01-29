@@ -27,16 +27,10 @@ export class QuicknotesFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - QuickNotes");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
-        content: 'Use the quicknotes feature to capture important key points over scrum meets, calls and progresively take faster decisions for healthy code',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+        content: 'Use the quicknotes feature to write memos and important points during meetings',
+      });
   }
 }

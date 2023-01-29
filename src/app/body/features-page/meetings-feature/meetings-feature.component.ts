@@ -27,17 +27,11 @@ export class MeetingsFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - Meetings");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
-        content: 'Collaborate, plan, brainstorm with the meetings of Worktez. Schedule or Join a meeting to connect with your teammates',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+        content: 'Schedule or Join a meeting to connect with your teammates using the meetings feature of worktez',
+      });
   }
 
 }

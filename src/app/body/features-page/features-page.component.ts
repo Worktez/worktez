@@ -32,17 +32,13 @@ export class FeaturesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Worktez: Features");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
         content: 'Explore the multiple features of worktez, Learn more about the product and get more familiar with the tool',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-25', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+      });
+      this.metaTagService.updateTag({ name: 'author', content: 'Abhishek Mishra' });
+      this.metaTagService.updateTag({ name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },)
 
     this.currentSection = this.route.snapshot.params[ 'currentSection' ]
   }

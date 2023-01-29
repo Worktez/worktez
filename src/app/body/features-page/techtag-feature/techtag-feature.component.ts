@@ -27,17 +27,11 @@ export class TechtagFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Features - TechTag");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
-        content: 'Work the genz way, for more social and balanced work culture, to make it more rewarding. socialize and interact with the workverse using the techtag page in worktez',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Abhishek Mishra' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+        content: 'Socialize and interact with the workverse, create and interact with posts, using the techtag page in worktez',
+      });
   }
 
 }

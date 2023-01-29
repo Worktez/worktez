@@ -75,4 +75,7 @@ li{
     .card-text {
         font-size: 10px;
     }
+    .submenu{
+        font-size: 10px !important;
+    }
 }

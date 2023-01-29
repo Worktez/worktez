@@ -17,17 +17,12 @@ export class GetStartedComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle("Worktez: Getting Started");
-    this.metaTagService.addTags([
+    this.metaTagService.updateTag(
       {
         name: 'description',
-        content: 'Track it, from everywhere. One step to hybrid work environment. Without worrying about time, and location. Enable your team to work more on ideas, and automate the process.',
-      },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Vivek Kumar' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2022-11-07', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' },
-    ]);
+        content: 'Get yourself familiar with worktez and see how it would help to boost your team\'s performance',
+      });
+      this.metaTagService.updateTag({ name: 'date', content: '2023-01-23', scheme: 'YYYY-MM-DD' })
   }
   changeArrowDirection(){
     if(this.featuresExpanded){
