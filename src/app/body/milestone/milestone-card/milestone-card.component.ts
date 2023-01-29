@@ -24,8 +24,12 @@ export class MilestoneCardComponent implements OnInit {
 
   @Input("milestone") milestone:Milestones
   constructor( private router: Router) { }
-
+  color: string;
   ngOnInit(): void {
+    this.color="#"+this.milestone.ColorCode;
+    if(this.milestone.ColorCode==null || this.milestone.ColorCode==""){
+      this.color="#ffffff"
+    }
   }
 
   getMilestoneDetails(milestoneId: any) {

@@ -13,6 +13,7 @@
  ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { UntypedFormControl } from '@angular/forms';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -33,6 +34,7 @@ export class AddMilestoneComponent implements OnInit {
   @Input("teamIds") teamIds: string[];
   @Output() getMilestones: EventEmitter<string> = new EventEmitter();
 
+  colorCode = new UntypedFormControl();
   title: string = ""
   description: string = ""
   showLoader: boolean = false;
@@ -79,7 +81,7 @@ export class AddMilestoneComponent implements OnInit {
     const orgDomain = this.backendService.organizationDetails.OrganizationDomain;
     const uid = this.authService.getLoggedInUser();
 
-    callable({ Uid: uid, OrgDomain: orgDomain, Title: this.title, Description: this.description, TeamId: this.teamId, CreationDate: date, CreationTime: time, StartDate:this.startDate, EndDate: this.endDate, MilestoneStatus: this.milestoneStatus }).subscribe({
+    callable({ Uid: uid, OrgDomain: orgDomain, Title: this.title, Description: this.description, TeamId: this.teamId, CreationDate: date, CreationTime: time, StartDate:this.startDate, EndDate: this.endDate, MilestoneStatus: this.milestoneStatus, ColorCode: this.colorCode.value }).subscribe({
       next: (data) => {
         console.log("Successful Next");
       },
@@ -102,4 +104,13 @@ export class AddMilestoneComponent implements OnInit {
     });
   }
 
+  selectedColorName(item) {
+    if(item.selected == false) {
+      this.colorCode.setValue("");
+    } else {
+      var temp = item.data as string
+      temp = temp.slice(1);
+      this.colorCode.setValue(temp);
+    }
+  }
 }

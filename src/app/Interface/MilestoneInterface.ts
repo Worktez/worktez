@@ -22,4 +22,5 @@ export interface Milestones {
     CreatorUid: string;
     StartDate: string;
     EndDate: string;
+    ColorCode: string;
   }

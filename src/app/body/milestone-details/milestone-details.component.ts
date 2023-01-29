@@ -64,6 +64,7 @@ export class MilestoneDetailsComponent implements OnInit {
   editMilestoneActive: boolean = false;
   addTask: boolean = false;
   tasks: Tasks [] =[];
+  color: string;
 
   public tasksObservable: Observable<Tasks[]>;
   public milestoneObservable: Observable<Milestones[]>
@@ -118,6 +119,7 @@ export class MilestoneDetailsComponent implements OnInit {
         }
       });
     }
+    
   }
 
   backToMilestones() {
@@ -254,6 +256,10 @@ export class MilestoneDetailsComponent implements OnInit {
         next: (data) => {
           this.milestoneData = data;
           this.prevVal = [this.milestoneData.MilestoneStatus];
+          this.color="#"+this.milestoneData.ColorCode;
+          if(this.milestoneData.ColorCode=="" || this.milestoneData.ColorCode==null){
+            this.color="#ffffff"
+          }
         },
         error: (error) => {
           console.log(error);
@@ -295,6 +301,6 @@ export class MilestoneDetailsComponent implements OnInit {
 
   editMilestoneCompleted(){
     this.getMilestoneDetails();
-    this.editMilestoneActive = false;
+    this.editMilestoneActive=false;
   }
 }
