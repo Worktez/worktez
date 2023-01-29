@@ -23,6 +23,7 @@
 .heading{
     font-size: 18px;
     font-family: var(--font);
+    width: 90%;
 }
 
 .teamId {
