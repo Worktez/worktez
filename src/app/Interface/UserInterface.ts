@@ -40,6 +40,7 @@ export interface UserAppSetting extends User {
     LinkedInProfile: string;
     DateOfJoining: string;
     Skills: string[];
+    NotesOrder: string[];
     Education: string;
     Experience: string;
     Projects: string;
