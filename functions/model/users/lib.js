@@ -56,6 +56,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     LinkedInProfile: "",
     DateOfJoining: "",
     Skills: [],
+    NotesOrder: [],
     Website: "",
     Notification: 0,
     EducationCounter: 0,
