@@ -48,6 +48,7 @@ export interface UserAppSetting extends User {
     UserPostsCounter: number;
     UserReactionCounter: number;
     UserCommentCounter: number;
+    NotesOrder: string[];
 }
 
 export interface UserBasicSetting extends User{

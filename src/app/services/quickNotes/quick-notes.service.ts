@@ -46,4 +46,17 @@ export class QuickNotesService {
         console.info('Getting Notes List successful')}
     });
   }
+
+  reorderQuickNotes(notesOrder: string[]) {
+    const uid = this.authService.getLoggedInUser();
+    this.authService.userAppSetting.NotesOrder = notesOrder;
+ 
+      const callable = this.functions.httpsCallable("quickNotes/reorderNotes");
+      callable({Uid: uid, NotesOrder: notesOrder }).pipe(map(res=>{
+        return res
+      })).subscribe((data) => {
+          console.log("quickNotes reordered");
+      });
+    
+  }
 }

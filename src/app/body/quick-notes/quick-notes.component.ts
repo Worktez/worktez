@@ -19,6 +19,8 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { QuickNotesService } from 'src/app/services/quickNotes/quick-notes.service';
 import { RBAService } from 'src/app/services/RBA/rba.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { notEqual } from 'assert';
 
 @Component({
   selector: 'app-quick-notes',
@@ -33,15 +35,18 @@ export class QuickNotesComponent implements OnInit {
   openEditNote: boolean = false
   selectedNote: QuickNote;
   enableLoader: boolean = false
+  notesOrder: string[] = [];
   constructor(private quickNotes: QuickNotesService, private functions: AngularFireFunctions, public authService: AuthService, public errorHandlerService: ErrorHandlerService, public popupHandlerService:PopupHandlerService) { }
 
   ngOnInit(): void {
+    
   }
 
   showList() {
     this.showNotesList = true
     this.showAddNote = false
     this.quickNotes.getQuickNotes();
+    this.reorderQuickNotes();
   }
 
   openAddNote() {
@@ -72,6 +77,25 @@ export class QuickNotesComponent implements OnInit {
       this.openEditNote = false
     }
   }
+
+  onDrop(event: CdkDragDrop<QuickNote[]>) {
+    moveItemInArray(this.quickNotes.notes, event.previousIndex, event.currentIndex);
+    // console.log("after", this.quickNotes.notes[0].DocId);
+    this.reorderQuickNotes();
+  }
+  
+  reorderQuickNotes(){
+    this.notesOrder = [];
+    this.quickNotes.notes.forEach(note=>{
+      this.notesOrder.push(note.DocId);
+    });
+    console.log("array", this.notesOrder);
+    this.quickNotes.reorderQuickNotes(this.notesOrder);
+    console.log("after reordering", this.quickNotes.notes);
+  }
+    
+    
+  
 
   deleteNote(docId: string) {
     for(let i=0; i<this.quickNotes.notes.length; i++){

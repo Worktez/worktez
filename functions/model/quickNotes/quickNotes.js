@@ -22,6 +22,7 @@ const { addNote } = require("./tark/addNote");
 const { getMyNotesList } = require("./tark/getMyNotes");
 const { deleteNote } = require("./tark/deleteNote");
 const { editNote } = require("./tark/editNote");
+const { reorderNotes } = require("./tark/reorderNotes");
 
 /**
  * Description
@@ -65,6 +66,17 @@ fastify.post("/deleteNote", (req, res) => {
  */
 fastify.post("/editNote", (req, res) => {
   editNote(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/reorderNotes"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/reorderNotes", (req, res) => {
+  reorderNotes(req, res);
 });
 
 /**

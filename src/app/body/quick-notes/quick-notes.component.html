@@ -37,23 +37,24 @@
             <ul class="list-group list-group-flush">
                 <ng-container *ngIf="!quickNotes.showloader; else loader">
                 <div *ngIf="quickNotes.noNotes;" class="noNotes">No Notes Added</div>
-
-                    <ng-container *ngFor="let item of quickNotes.notes">
-                        <li class="list-group-item" id="note">
-                            <div class="row">
-                                <div class="col-8" (click)="openNote(item)">
-                                    {{item.Title}}
+                    <div cdkDropList (cdkDropListDropped)="onDrop($event)">
+                        <ng-container *ngFor="let item of quickNotes.notes">
+                            <li class="list-group-item" id="note" cdkDrag>
+                                <div class="row">
+                                    <div class="col-8" (click)="openNote(item)">
+                                        {{item.Title}}
+                                    </div>
+                                    <div class="col-4 pl-4">
+                                        <span class="btn">
+                                            <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
+                                                delete
+                                            </mat-icon>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="col-4 pl-4">
-                                    <span class="btn">
-                                        <mat-icon fontSet="material-icons" class="align-middle float-right" (click)="deleteNote(item.DocId)">
-                                            delete
-                                        </mat-icon>
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                    </ng-container>
+                            </li>
+                        </ng-container>
+                    </div>
                 </ng-container>
                 <li class="list-group-item ml-auto">
                     <span class="btn">

@@ -90,6 +90,20 @@ exports.addUserNote = function(uid, title, note, docId, lastUpdatedDate, lastUpd
 
 /**
  * Description
+ * @param {any} uid
+ * @param {any} noteId
+ * @param {any} note
+ * @return {any}
+ */
+exports.reorderQuickNotes = function(uid, noteId, note) {
+  console.log("reach lib", uid, noteId, note);
+  const reorderNotesPromise = db.collection("Users").doc(uid).collection("QuickNotes").doc(noteId).update(note);
+  return Promise.resolve(reorderNotesPromise);
+};
+
+
+/**
+ * Description
  * @param {any} updateNoteToJson
  * @param {any} uid
  * @param {any} docId

@@ -63,6 +63,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     ProjectCounter: 0,
     TotalPhotoCounter: 0,
     NoteCounter: 0,
+    NotesOrder: [],
     UserPostsCounter: 0,
     UserReactionCounter: 0,
     UserCommentCounter: 0,
@@ -77,6 +78,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
  * @return {any}
  */
 exports.updateUser = function(inputJson, Uid) {
+  console.log("json", inputJson, Uid);
   const promise = db.collection("Users").doc(Uid).update(inputJson);
   return Promise.resolve(promise);
 };
