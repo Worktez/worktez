@@ -35,6 +35,7 @@ export class PopupHandlerService {
   addPrActive:boolean = true;
   addTaskActive:boolean = true;
   requestDemoEnabled:boolean = false;
+  contactUsEnabled:boolean = false;
   constructor() { }
 
   resetPopUps() {

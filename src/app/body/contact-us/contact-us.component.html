@@ -1,0 +1,101 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+<div class="container-fluid" *ngIf="popupHandlerService.contactUsEnabled">
+    <div class="modal fade" id="contactUs" tabindex="-1" role="dialog" aria-labelledby="contactUsTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content p-2">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-10 col-10">
+                            <h2>Request a Demo</h2>
+                        </div>
+                            <div class="col-md-2 col-2 text-right ">
+                                <span class="btn close">
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle close"(click)="close()" title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
+                        </div>
+
+                    <form #form="ngForm" [formGroup]="contactUsForm"  *ngIf="!showClose" (ngSubmit)="onSubmit()">
+                        <div class="form-row my-2">
+                            <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Name <span style="color: red;">*</span></span>
+                                <input type="text" class="form-control form-control-sm" formControlName="personName" placeholder="Enter your name"> 
+                                <span class="ml-2" *ngIf="personName.invalid && personName.touched" style="color: red; font-size: 10px; ">Name is required</span> 
+                            </div>
+                        </div>
+                        <div class="form-row mb-2">
+                            <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Email <span style="color: red;">*</span></span>
+                                <input type="email" class="form-control form-control-sm" formControlName="emailAddress" placeholder="Enter your Email"> 
+                                <span class="ml-2" *ngIf="emailAddress.value=='' && emailAddress.touched" style="color: red; font-size: 10px; ">email is required</span>
+                                <span class="ml-2" *ngIf="emailAddress.value!='' && emailAddress.touched && emailAddress.invalid" style="color: red; font-size: 10px; ">Enter a valid email address</span>
+                            </div>
+
+                        </div>
+                        <div class="form-row mb-2">
+                            <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Contact <span style="color: red;">*</span></span>
+                                <input type="number" class="form-control form-control-sm" formControlName="contactNumber" placeholder="Enter your Contact No.">
+                                <span class="ml-2" *ngIf="contactNumber.value==null && contactNumber.touched" style="color: red; font-size: 10px; ">Contact No. is required</span>
+                                <span class="ml-2" *ngIf="contactNumber.value!=null && contactNumber.touched && contactNumber.invalid" style="color: red; font-size: 10px; ">Enter a valid Contact No.</span> 
+                            </div>
+                        </div>
+                        <div class="form-row my-2">
+                            <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organisation/Project Name (optional)</span>
+                                <input type="text" class="form-control form-control-sm" formControlName="orgName" placeholder="Enter the Organisation or Project Name"> 
+                            </div>
+                        </div>
+                        <ng-container>
+                    </ng-container>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12 mx-1 col">
+                            <button type="submit" class="btn btn-block" id="button" [disabled]="enableLoader || contactUsForm.invalid" aria-label="Close" >Submit</button>
+                        </div>
+                    </div>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                </form>
+                <ng-container *ngIf="showClose">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 5px;">check_circle_outline</mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                            <div class="row" style="font-size: medium;flex-wrap: wrap;">Contact Us Created Successfully!</div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn" type="button" id="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
