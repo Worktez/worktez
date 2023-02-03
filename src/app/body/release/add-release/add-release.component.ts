@@ -23,6 +23,7 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { Router } from '@angular/router';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
 @Component({
   selector: 'app-add-release',
@@ -62,8 +63,9 @@ export class AddReleaseComponent implements OnInit {
   teamName: string;
   gitToken: string;
   title: string;
+  tokenExpired: boolean =false;
 
-  constructor(public popupHandlerService: PopupHandlerService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService,  private githubService: GithubServiceService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router) { }
+  constructor(public popupHandlerService: PopupHandlerService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService,  private githubService: GithubServiceService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router, public errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit(): void {
     this.releaseDate = this.toolService.date();
@@ -147,35 +149,53 @@ export class AddReleaseComponent implements OnInit {
   }
 
   addRelease() {
-    this.showLoader = true;
+    this.showLoader = false;
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     this.gitToken = this.teamService.teamsDataJson[this.teamId].GitToken;
     this.gitToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
     this.githubService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).subscribe({
       next: (data) => {
-        this.addReleaseDetailsToDB();
-        this.showLoader = false;
+        // this.addReleaseDetailsToDB();
+        if(data['status']==201){
         this.popupHandlerService.addReleaseActive = false;
+        this.showLoader = false;
+        }
       },
-      error: (error) => {
-        console.error(error);
+      error: (data) => {
+        if(data['status']==403){
+          console.log("Token is expired");
+          this.tokenExpired=true;
+          this.showLoader = false;
+          let errorType = this.componentName + "_VALIDATION_TITLE";
+          this.errorHandlerService.addError(errorType, "Token expired")
+          return (false);
+        } else if(data['status']==401) {
+          let errorType = this.componentName + "_VALIDATION_TITLE";
+          this.errorHandlerService.addError(errorType, "Bad Credentials-check the permissions given to git token")
+        } else {
+          let errorType = this.componentName + "_VALIDATION_TITLE";
+          this.errorHandlerService.addError(errorType, "All Fields are mandatory")
+        }
       },
       complete: () => {
         console.log("successful");
+        this.getReleases.emit();
+        this.popupHandlerService.addReleaseActive = false;
+        this.showLoader = false;
       }
     });
-    this.releaseName = "";
-    this.description = "";
-    this.tagName = "";
-    this.targetBranch = "";
-    this.ifDraft = "";
-    this.preRelease = "";
-    this.generateRelease = "";
-    this.releaseDate = "";
-    this.teamId = "";
-    this.title = "";
-    this.getReleases.emit();
-    this.popupHandlerService.addReleaseActive = false;
-    this.showLoader = false;
+    // this.releaseName = "";
+    // this.description = "";
+    // this.tagName = "";
+    // this.targetBranch = "";
+    // this.ifDraft = "";
+    // this.preRelease = "";
+    // this.generateRelease = "";
+    // this.releaseDate = "";
+    // this.teamId = "";
+    // this.title = "";
+    // this.getReleases.emit();
+    // this.popupHandlerService.addReleaseActive = false;
+    // this.showLoader = false;
   }
 }
