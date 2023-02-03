@@ -92,7 +92,7 @@
                             <a href="{{linkedInProfile}}" class="card-link" target="_blank">
                                 <app-profile-icons [profileIcon]="'linkedIn'"></app-profile-icons>
                             </a>
-                            <a href="{{githubProfile}}" class="card-link" target="_blank">
+                            <a href="{{githubProfile}}" class="card-link" target="_blank" *ngIf="githubProfile || gitLink">
                                 <app-profile-icons [profileIcon]="'github'"></app-profile-icons>
                             </a>
                         </div>
