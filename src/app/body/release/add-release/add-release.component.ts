@@ -184,18 +184,5 @@ export class AddReleaseComponent implements OnInit {
         this.showLoader = false;
       }
     });
-    // this.releaseName = "";
-    // this.description = "";
-    // this.tagName = "";
-    // this.targetBranch = "";
-    // this.ifDraft = "";
-    // this.preRelease = "";
-    // this.generateRelease = "";
-    // this.releaseDate = "";
-    // this.teamId = "";
-    // this.title = "";
-    // this.getReleases.emit();
-    // this.popupHandlerService.addReleaseActive = false;
-    // this.showLoader = false;
   }
 }
