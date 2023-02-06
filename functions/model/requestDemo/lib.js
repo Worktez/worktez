@@ -21,6 +21,7 @@ const { db } = require("../application/lib");
 
 /**
  * Description
+ * @param {any} componentName
  * @param {any} personName
  * @param {any} emailAddress
  * @param {any} requestId
@@ -30,8 +31,9 @@ const { db } = require("../application/lib");
  * @param {any} time
  * @return {any}
  */
-exports.setRequest = function(personName, emailAddress, requestId, contactNumber, orgName, date, time) {
+exports.setRequest = function(componentName, personName, emailAddress, requestId, contactNumber, orgName, date, time) {
   const addRequestPromise = db.collection("DemoRequests").doc(requestId).set({
+    ComponentName: componentName,
     PersonName: personName,
     EmailAddress: emailAddress,
     ContactNumber: contactNumber,

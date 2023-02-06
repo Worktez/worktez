@@ -21,6 +21,7 @@ const { setRequest, getDemoRequestData, setDemoRequestData, updateDemoRequestDat
 const { demoRequestMailer } = require("../../mailer/lib");
 
 exports.addRequest = function(request, response) {
+  const componentName = request.body.data.ComponentName;
   const personName = request.body.data.PersonName;
   const emailAddress = request.body.data.EmailAddress;
   const contactNumber = request.body.data.ContactNumber;
@@ -39,7 +40,7 @@ exports.addRequest = function(request, response) {
         demoRequestCounter = 1;
         const requestId = "R" + demoRequestCounter;
 
-        setRequest(personName, emailAddress, requestId, contactNumber, orgName, date, time).then((postData) => {
+        setRequest(componentName, personName, emailAddress, requestId, contactNumber, orgName, date, time).then((postData) => {
         }).catch((error) => {
           result = { data: error };
           status = 500;
@@ -51,7 +52,7 @@ exports.addRequest = function(request, response) {
       demoRequestCounter = demoRequestCounter + 1;
       const requestId = "R" + demoRequestCounter;
 
-      setRequest(personName, emailAddress, requestId, contactNumber, orgName, date, time).then((postData) => {
+      setRequest(componentName ,personName, emailAddress, requestId, contactNumber, orgName, date, time).then((postData) => {
       }).catch((error) => {
         result = { data: error };
         status = 500;

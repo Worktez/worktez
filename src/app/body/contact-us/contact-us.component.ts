@@ -60,7 +60,7 @@ export class ContactUsComponent implements OnInit {
       const time = this.toolService.time();
   
       const callable = this.functions.httpsCallable('requestDemo/addRequest');
-      callable({PersonName: personName, EmailAddress: emailAddress, ContactNumber: contactNumber, OrgName: orgName, CreationDate: date, CreationTime: time}).subscribe({
+      callable({ComponentName: this.componentName, PersonName: personName, EmailAddress: emailAddress, ContactNumber: contactNumber, OrgName: orgName, CreationDate: date, CreationTime: time}).subscribe({
         next: (data) => {
           console.log("Successful initiated contact us");
         },
@@ -77,7 +77,7 @@ export class ContactUsComponent implements OnInit {
       });
     }
     close() {
-      jQuery('#contactUs').modal('hide');
+      this.popupHandlerService.contactUsEnabled = false;
       this.showClose=false;
       this.contactUsForm.reset();
     }
