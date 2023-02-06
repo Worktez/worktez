@@ -87,7 +87,7 @@ export class HeaderComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/Home']);
+    this.router.navigate(['/']);
   }
 
   organizationDetails() {
