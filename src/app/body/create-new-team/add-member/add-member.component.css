@@ -97,3 +97,13 @@ input:focus {
     color: var(--button-text-hover);
     border: none;
 }
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 55px;
+}
+
+#ErrorIcon{
+    color: var(--danger-color);
+    font-size: 55px;
+}
