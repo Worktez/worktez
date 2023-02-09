@@ -14,7 +14,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content ">
-            <div class="row px-3 pb-0 pt-2">
+            <div class="row pl-3 pb-0">
                 <div class="col-md-10 col-10">
                     <h2>Edit Profile</h2>
                 </div>
@@ -33,15 +33,19 @@
                         <input type="text" [(ngModel)]="displayName" [ngModelOptions]="{standalone: true}" class="form-control" id="recipient-name" placeholder="Name">
                     </div>
                     <div class="form-group">
-                        <!-- <label for="recipient-name">Username:</label> -->
-                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Username</span>
-                        <div class="row">
+                        <div class="row my-2">
                             <div class="col-6">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Username</span>
                                 <input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}"
                                     class="form-control" id="recipient-name" (input)="checkAvailabilityLive()">
                             </div>
+                            <div class="form-group col-6">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Phone Number</span>
+                                <input type="text" class="form-control" id="recipient-phoneNo" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}" placeholder="Enter Phone Number">
+                                
+                            </div> 
                         </div>
-                        <a *ngIf="userAvailable" >
+                        <a *ngIf="(userAvailable) && (userName)" >
                             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                                 <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
                                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
@@ -56,29 +60,24 @@
                         </a>
                             
                             <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(userName)"> Please enter a username </p>
-                            <p style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(userAvailable) && (userName)"> Username is Available</p>
+                            <!-- <p style="color: #36c14b; padding-left: 5px; size: 10px;"*ngIf="(userAvailable) && (userName)"> Username is Available</p> -->
                             <p style="color: #c13638; padding-left: 5px; size: 10px;"*ngIf="!(userAvailable) && !(userNameIsSame)" >
                                 {{userName}} is already taken</p>
 
                     </div>
-                    <div class="form-group">
-                        <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Phone Number</span>
-                        <input type="text" class="form-control" id="recipient-phoneNo" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}" placeholder="Enter Phone Number">
-                        
-                    </div>       
-                    <div class="my-1 form-group">
+                    <div class="my-2 form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Email</span>
                             <input type="email" class="form-control" name="email" id="email" [(ngModel)]="email" placeholder="Enter Email"> 
                         </div>
-                    <div class="my-1 form-group">
+                    <div class="my-2 form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Github Profile</span>
                         <input type="text" class="form-control" id="recipient-github" [(ngModel)]="githubProfile" [ngModelOptions]="{standalone: true}" placeholder="Enter Github Profile URL">
                     </div>
-                    <div class="my-1 form-group">
+                    <div class="my-2 form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">LinkedIn Profile</span>
                         <input type="text" class="form-control" id="recipient-linkedIn" [(ngModel)]="linkedInProfile" [ngModelOptions]="{standalone: true}" placeholder="Enter LinkedIn Profile URL">
                     </div>
-                    <div class="my-1 form-group">
+                    <div class="my-2 form-group">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Bio</span>
                         <textarea class="form-control" [(ngModel)]="aboutMe" [ngModelOptions]="{standalone: true}" id="message-text" placeholder="About Me"></textarea>
                     </div>
@@ -86,7 +85,7 @@
                         <!-- <label for="recipient-website" class="col-form-label">Website</label> -->
                         <!-- <input type="text" class="form-control" id="recipient-website" [(ngModel)]="website" [ngModelOptions]="{standalone: true}"> -->
                     <!-- </div> -->
-                    <div class="my-1 form-group text-center success pt-1">
+                    <div class="my-2 form-group text-center success pt-1">
                         <button type="submit" class="btn btn-lg btn-block" id="button" (click)="editProfile()">Save Changes</button>
                     </div>
                 </form>

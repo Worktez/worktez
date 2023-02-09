@@ -60,11 +60,13 @@ mat-icon {
     margin-bottom: 0.5rem;
 }
 
-::-webkit-scrollbar {
-    width: 5px;
+.whatsnew::-webkit-scrollbar {
+    width: 6px;              
+  }
+.whatsnew::-webkit-scrollbar-track {
+    background: var(--secondary-bg);        
 }
-
-::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color);
-    border-radius: 10px;
-}
+.whatsnew::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #5C60EC;
+} 

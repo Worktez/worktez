@@ -45,6 +45,7 @@ import { map } from 'rxjs';
    releaseDate: string;
    deleteReleaseEnabled: boolean = false;
    teamId: string;
+   releaseDesc: string
 
    constructor(public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
 
@@ -98,6 +99,17 @@ import { map } from 'rxjs';
     })).subscribe({
       next: (data) => {
           this.releaseData = data;
+          this.githubService.markdownGithubDoc(bearerToken, this.releaseData.body).subscribe({
+            next: (data) => {
+              this.releaseDesc=data;
+            },
+            error: (error) => {
+              console.log(error);
+            },  
+            complete: () => {
+              console.log("Successfull release markdown")
+            }
+          });
           this.releaseDataReady = true;
           this.showLoader = false;
       },

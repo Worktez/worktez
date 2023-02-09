@@ -53,6 +53,15 @@ export class GithubServiceService {
     return this.httpClient.get(url);
   }
 
+  markdownGithubDoc(bearerToken: string, body: string){
+    const url = environment.githubApiUrl +"/markdown/raw";
+
+    return this.httpClient.post(url, body.toString(), { responseType: 'text', headers: {
+      'Authorization': 'Bearer'+bearerToken,
+      'Content-Type': 'text/plain',
+    },});
+  }
+
   createGithubIssue(title: any, description: any, repoLink: string, bearerToken: any) {
     const url = environment.githubApiUrl + "/repos/"+repoLink+"/issues";
 

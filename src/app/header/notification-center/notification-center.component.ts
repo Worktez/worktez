@@ -52,10 +52,13 @@ export class NotificationCenterComponent implements OnInit {
   }
 
   showNotification() {
+    this.showLoader = true
     this.applicationSettingService.newNotificationListObservable.subscribe((data) => {
       if(!data) {
+        this.showLoader = false
         this.loadNotifications(1);
       } else {
+        this.showLoader = false
         this.notificationsList = data;
         this.showNotificationsList = !(this.showNotificationsList);
         this.showOldNotificationsList = false;
