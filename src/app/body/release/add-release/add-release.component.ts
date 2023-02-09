@@ -64,6 +64,7 @@ export class AddReleaseComponent implements OnInit {
   gitToken: string;
   title: string;
   tokenExpired: boolean =false;
+  badCredencials: boolean=false;
 
   constructor(public popupHandlerService: PopupHandlerService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService,  private githubService: GithubServiceService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router, public errorHandlerService: ErrorHandlerService) { }
 
@@ -164,17 +165,15 @@ export class AddReleaseComponent implements OnInit {
       error: (data) => {
         if(data['status']==403){
           console.log("Token is expired");
+          this.popupHandlerService.addReleaseActive = false;
           this.tokenExpired=true;
           this.showLoader = false;
-          let errorType = this.componentName + "_VALIDATION_TITLE";
-          this.errorHandlerService.addError(errorType, "Token expired")
           return (false);
         } else if(data['status']==401) {
-          let errorType = this.componentName + "_VALIDATION_TITLE";
-          this.errorHandlerService.addError(errorType, "Bad Credentials-check the permissions given to git token")
-        } else {
-          let errorType = this.componentName + "_VALIDATION_TITLE";
-          this.errorHandlerService.addError(errorType, "All Fields are mandatory")
+          console.log("Bad Credentials");
+          this.popupHandlerService.addReleaseActive = false;
+          this.badCredencials=true;
+          this.showLoader = false;
         }
       },
       complete: () => {
