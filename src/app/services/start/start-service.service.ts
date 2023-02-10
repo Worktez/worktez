@@ -134,6 +134,7 @@ export class StartServiceService {
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
       this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
+      this.applicationSettingsService.getNotificationsList(1);
     } else {
       this.authService.organizationAvailable = false;
         this.router.navigate(['/techverse']);

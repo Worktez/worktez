@@ -37,9 +37,9 @@
             <ul class="list-group list-group-flush">
                 <ng-container *ngIf="!quickNotes.showloader; else loader">
                 <div *ngIf="quickNotes.noNotes;" class="noNotes">No Notes Added</div>
-
-                    <ng-container *ngFor="let item of quickNotes.notes">
-                        <li class="list-group-item" id="note">
+                <div cdkDropList (cdkDropListDropped)="onDrop($event)">
+                    <ng-container *ngFor="let item of quickNotes.notes" >
+                        <li class="list-group-item" id="note" cdkDrag>
                             <div class="row">
                                 <div class="col-8" (click)="openNote(item)">
                                     {{item.Title}}
@@ -54,6 +54,8 @@
                             </div>
                         </li>
                     </ng-container>
+                </div>
+                    
                 </ng-container>
                 <li class="list-group-item ml-auto">
                     <span class="btn">

@@ -11,6 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { QuickNote } from 'src/app/Interface/UserInterface';
@@ -76,9 +77,11 @@ export class QuickNotesComponent implements OnInit {
   deleteNote(docId: string) {
     for(let i=0; i<this.quickNotes.notes.length; i++){
      if(this.quickNotes.notes[i].DocId==docId){ 
-      delete this.quickNotes.notes[i]; 
+      this.quickNotes.notes.splice(i,1); 
       }
       }
+    this.authService.userAppSetting.NotesOrder.splice(this.authService.userAppSetting.NotesOrder.indexOf(docId),1);
+    console.log(this.authService.userAppSetting.NotesOrder);
     const uid = this.authService.getLoggedInUser();
     const callable = this.functions.httpsCallable("quickNotes/deleteNote");
     this.enableLoader = true
@@ -97,6 +100,17 @@ export class QuickNotesComponent implements OnInit {
       complete: () => console.info('Successful updated Selected Team in db')
   });
   
+  }
+  onDrop(event: CdkDragDrop<QuickNote[]>){
+    moveItemInArray(this.quickNotes.notes, event.previousIndex, event.currentIndex);
+    this.changeNotesOrder();
+  }
+  changeNotesOrder(){
+    this.quickNotes.notesOrder = []
+    this.quickNotes.notes.forEach(note => {
+      this.quickNotes.notesOrder.push(note.DocId);
+    })
+    this.quickNotes.reorderQuicknotes();
   }
 
   close() {
