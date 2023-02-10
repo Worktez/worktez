@@ -35,6 +35,8 @@ const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 const {getAllTeamData} = require("./tark/getAllTeamData");
 const {getAllLabels} = require("./tark/getAllLabels");
 const {addGitToken} = require("./tark/addGitToken");
+const {addGitDetails} = require("./tark/addGitDetails");
+const {getGitDetails} = require("./tark/getGitDetails");
 /**
  * Description
  * @param {any} "/addMember"
@@ -77,6 +79,28 @@ fastify.post("/createTeam", (req, res) => {
  */
 fastify.post("/deleteTeam", (req, res) => {
   deleteTeam(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/addGitDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/addGitDetails", (req, res) => {
+  addGitDetails(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getGitDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getGitDetails", (req, res) => {
+  getGitDetails(req, res);
 });
 
 /**

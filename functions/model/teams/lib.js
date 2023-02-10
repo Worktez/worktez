@@ -158,6 +158,20 @@ exports.deleteScopeLabel = function(updateLabelToJson, orgDomain, teamName, scop
   return Promise.resolve(deleteLabelPromise);
 };
 
+exports.setGitDetails = function(orgDomain, teamName, addedOn, owner, bearerToken, projectId, projectLink, projectUrl, ProjectLocation, docId) {
+  const setGitDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("GitDetails").doc(docId).set({
+    AddedOn: addedOn,
+    BearerToken: bearerToken,
+    Owner: owner,
+    ProjectId: projectId,
+    ProjectLink: projectLink,
+    ProjectUrl: projectUrl,
+    Provider: ProjectLocation,
+    Id: docId,
+  });
+  return Promise.resolve(setGitDetails);
+};
+
 /**
  * Description
  * @param {any} orgDomain
