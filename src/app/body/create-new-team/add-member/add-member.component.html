@@ -30,7 +30,7 @@
                     </ul>
                 </div>
                 <div class="row px-4">
-                    <h3>Team Name: <span class="bold">{{ teamName }}</span></h3>
+                    <h3  class="bold">Team: <span style="font-weight: lighter;">{{ teamName }}</span></h3>
                 </div>
                 <form *ngIf="!showClose" (ngSubmit)="submit()" #form="ngForm">
                     <div class="row px-2 my-2">
@@ -47,14 +47,44 @@
                     <app-loader *ngIf="enableLoader"></app-loader>
                 </form>
                 <ng-container *ngIf="showClose">
-                    <div class="row">
-                        <div class="col" style="margin-left: 10px;">Successfully Updated!</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-9"></div>
-                        <div class="col-md-3 pb-2 px-4">
-                            <button class="btn btn-secondary" id="button" type="button" data-dismiss="modal" (click)="close()">Close</button>
+                    <div *ngIf="alreadyAdded; else showSuccessful">
+                        <div class="row mx-5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <mat-icon aria-hidden="false" id="ErrorIcon" style="padding-left: 12px;">error_outline</mat-icon>
+                            </div>
+                            <div class="col-md-4"></div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-5">
+                                <div class="row" style="font-size: medium;flex-wrap: wrap; text-align: center;">Member Already Exist!</div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                    <ng-template #showSuccessful>
+                        <div class="row mx-5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <mat-icon aria-hidden="false" id="SuccessIcon" style="padding-left: 12px;">check_circle_outline</mat-icon>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-5">
+                                <div class="row" style="font-size: medium;flex-wrap: wrap; text-align: center;">Successfully Updated!</div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </ng-template>
+                    <div class="row pt-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 pt-2 px-4">
+                            <button class="btn btn-secondary" type="button" id="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                        </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </ng-container>
             </div>
