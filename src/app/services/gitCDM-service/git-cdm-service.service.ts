@@ -48,8 +48,6 @@ export class GitCDMServiceService {
       this.projectLinked=data.completed;
       this.repoLink=data.projLink;
       this.repoLoc=repoLoc;
-      console.log(this.repoLoc)
-      console.log(this.repoLink);
       this.teamService.teamsDataJson[TeamId].ProjectLink = this.repoLink;
       this.teamService.teamsDataJson[TeamId].ProjectLocation = this.repoLoc;
     }
