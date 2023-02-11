@@ -1,24 +1,24 @@
 <div class="row p-2 integrationBox">
     <div class="col p-0">
         <button class="btn etc mr-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-            data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
+            data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team,projectLoc1)"
             title="Add Organisation">
             <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
-            <ng-container *ngIf="repoLink && team.ProjectLocation == 'github'; else integrateGithub">
+            <ng-container *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'github'; else integrateGithub">
                 <span>
-                {{repoLink}}
+                {{gitCDMService.repoLink}}
                 </span>
             </ng-container>
             <ng-template #integrateGithub>
                 <span> Integrate Github </span>
             </ng-template>
         </button>
-        <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc mr-2" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
+        <button *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'github'" class="btn etc mr-2" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
             <span>Add Token</span>
         </button>
     </div>
-    <div class="col" *ngIf="repoLink && team.ProjectLocation == 'github'">
-        <ng-container *ngIf="githubTokenExists; else noToken">
+    <div class="col" *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'github' ">
+        <ng-container *ngIf="gitCDMService.gitTokenExists; else noToken">
             Bearer token
             <mat-icon fontSet="material-icons-outlined" class="align-middle">
                 password
@@ -28,17 +28,58 @@
             No token found
         </ng-template>
     </div>
-    <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub()">
+    <button *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'github'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub()">
         <span>Remove</span>
     </button>
 </div>
-<ng-container *ngIf="addProjectEnabled" id="projectModalLabel1">
+<ng-container *ngIf="addProjectEnabled1" id="projectModalLabel1">
     <app-github-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
-        (addedProject)="addedProject($event)">
+        (addedProject)="addedProject1($event)">
     </app-github-link>
 </ng-container>
 
-<ng-container *ngIf="enableAddToken">
+<div class="row p-2 mt-2 integrationBox">
+    <div class="col p-0">
+        <button class="btn etc mr-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-toggle="modal" data-target="#gitlabModel" (click)="enableAddOrganisationLink(team,projectLoc2)"
+            title="Add Organisation">
+            <img src="../../../assets/gitlabIcon.svg" alt="git" height="25" width="25">
+            <ng-container *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'gitlab'; else integrateGitlab">
+              <span>
+                {{gitCDMService.repoLink}}
+              </span>
+            </ng-container>
+            <ng-template #integrateGitlab>
+              <span> Integrate Gitlab </span>
+            </ng-template>
+        </button>
+        <button *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'gitlab'" class="btn etc mr-2" data-target="#BearerToken" title="GitlabBearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
+            <span>Add Token</span>
+        </button>
+    </div>
+    <div class="col" *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'gitlab'">
+        <ng-container *ngIf="gitCDMService.gitTokenExists; else noToken">
+            Bearer token
+            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                password
+            </mat-icon>
+        </ng-container>
+        <ng-template #noToken>
+            No token found
+        </ng-template>
+    </div>
+    <button *ngIf="gitCDMService.repoLink && team.ProjectLocation == 'gitlab'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub(team)">
+        <span>Remove</span>
+    </button>
+</div>
+
+<ng-container *ngIf="addProjectEnabled2" id="projectModalLabel2">
+    <app-gitlab-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
+        (addedProject)="addedProject2($event)">
+    </app-gitlab-link>
+</ng-container>
+
+<ng-container *ngIf="gitCDMService.enableAddToken">
     <div class="modal fade" id="BearerToken" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content" id="modalBody">
@@ -60,7 +101,7 @@
                   </ul>
               </nav>
               <div class="container modal-body px-4 pt-0" id="addLinkPage">
-                    <ng-container *ngIf="!showClose">
+                    <ng-container *ngIf="!gitCDMService.showClose">
                       <div class="row pt-3">
                           <div class="col-md">
                               <label for="Title" class="form-label" id="logHead">Github Token:</label>
@@ -72,9 +113,9 @@
                               <button class="btn btn-block etc" [disabled]="!bearerToken"  type="submit" (click)="addToken()">Add Token</button>
                           </div>
                       </div>
-                      <app-loader *ngIf="enableLoader"></app-loader>
+                      <app-loader *ngIf="gitCDMService.enableLoader"></app-loader>
                     </ng-container>
-                    <ng-container *ngIf="showClose">
+                    <ng-container *ngIf="gitCDMService.showClose">
                         <div class="row mx-5 pt-2">
                             <div class="col-md-4"></div>
                             <div class="col-md-4">

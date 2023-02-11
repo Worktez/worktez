@@ -191,8 +191,6 @@ import { ReleaseDetailsComponent } from './body/release-details/release-details.
 import { EditReleaseComponent } from './body/release-details/edit-release/edit-release.component';
 import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
 import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
-import { GithubIntegrationComponent } from './body/team-details/github-integration/github-integration.component';
-import { GitlabIntegrationComponent } from './body/team-details/gitlab-integration/gitlab-integration.component';
 import { DocumentationsComponent } from './body/documentations/documentations.component';
 import { GetStartedComponent } from './body/get-started/get-started.component';
 import { FeaturesPageComponent } from './body/features-page/features-page.component';
@@ -206,6 +204,7 @@ import { OrganisationsFeatureComponent } from './body/features-page/organisation
 import { ProfileFeatureComponent } from './body/features-page/profile-feature/profile-feature.component';
 import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feature/quicknotes-feature.component';
 import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
+import { GitIntegrationComponent } from './body/team-details/git-integration/git-integration.component';
 
 @NgModule({
   declarations: [
@@ -364,8 +363,6 @@ import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-
     EditReleaseComponent,
     GitlabLinkComponent,
     GitlabComponent,
-    GithubIntegrationComponent,
-    GitlabIntegrationComponent,
     DocumentationsComponent,
     GetStartedComponent,
     FeaturesPageComponent,
@@ -379,6 +376,7 @@ import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-
     ProfileFeatureComponent,
     QuicknotesFeatureComponent,
     TasksFeatureComponent,
+    GitIntegrationComponent,
   ],
   imports: [
     BrowserModule,
