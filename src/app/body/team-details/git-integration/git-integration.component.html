@@ -46,7 +46,7 @@
     </button>
 </div>
 <ng-container *ngIf="addProjectEnabled1" id="projectModalLabel1">
-    <app-github-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
+    <app-github-link [teamId]="teamToAddGit.TeamId" [teamName]="teamToAddGit.TeamName" [typeLink]="typeLink"
         (addedProject)="addedProject1($event)">
     </app-github-link>
 </ng-container>
@@ -87,7 +87,7 @@
 </div>
 
 <ng-container *ngIf="addProjectEnabled2" id="projectModalLabel2">
-    <app-gitlab-link [teamId]="teamToAddGithub.TeamId" [teamName]="teamToAddGithub.TeamName" [typeLink]="typeLink"
+    <app-gitlab-link [teamId]="teamToAddGit.TeamId" [teamName]="teamToAddGit.TeamName" [typeLink]="typeLink"
         (addedProject)="addedProject2($event)">
     </app-gitlab-link>
 </ng-container>

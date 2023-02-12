@@ -25,7 +25,7 @@ export class GitIntegrationComponent implements OnInit {
 
   @Input('team') team: Team
 
-  teamToAddGithub: Team;
+  teamToAddGit: Team;
   addProjectEnabled1: boolean = false;
   addProjectEnabled2: boolean = false;
   typeLink: string;
@@ -47,7 +47,7 @@ export class GitIntegrationComponent implements OnInit {
   }
 
   enableAddOrganisationLink(team: Team,loca:string) {
-    this.teamToAddGithub = team;
+    this.teamToAddGit = team;
     if(loca == 'github'){
       this.addProjectEnabled1 = true;
       this.addProjectEnabled2 = false;
