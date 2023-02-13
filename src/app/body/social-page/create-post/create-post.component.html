@@ -4,21 +4,21 @@
             <div class="modal-content">
                 <div class="row px-3 py-2">
                     <div class="col-md-10 col-10">
-                        <h2>Create Post</h2>
+                        <h2>Create a post</h2>
                     </div>
-                        <div class="col-md-2 col-2 text-right">
+                        <div class="col-md-2 col-2 p-0 text-right">
                             <span class="btn">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" (click)="close()" title="Close">
                                     close
                                 </mat-icon>
                             </span>
                         </div>
                     </div>
-                    <div class="row px-4">
-                        <div class="col-md-2 col-3">
+                    <div class="row pl-3 pr-0">
+                        <div class="col-md-2 col-3 pr-0">
                             <img src="{{authService.userAppSetting.photoURL}}" onerror="this.src = '../../../../assets/defaultavatar.jpg' " alt="profile-pic" class="rounded-circle dropdown-toggle" width="50" height="50" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </div>
-                        <div class="col-md-10 col-9 py-2">
+                        <div class="col-md-10 col-9 pl-0">
                             <h3>{{authService.userAppSetting.displayName}}</h3>
                         </div>
                     </div>
@@ -26,23 +26,25 @@
                         <form #form="ngForm">
                             <div class="form-row">
                                 <div class="form-group col-md-12 col">
-                                    <form class="row imageData" id="imageData">
-                                        <div *ngFor="let url of post.ImagesUrl" class="col-p-0 ml-3">
+                                    <form class="row d-flex flex-wrap justify-content-center align-items-center mx-auto">
+                                        <div *ngFor="let url of post.ImagesUrl" class="col-p-0">
                                             <div class="col" >
-                                                <span class="btn btn-close ">
-                                                    <mat-icon fontSet="material-icons-outlined" id="close"class="align-middle "(click)="removeImg(url)" title="Close">
+                                                <span class="btn btn-close">
+                                                    <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="removeImg(url)" title="Close">
                                                         close
                                                     </mat-icon>
                                                 </span>
                                             </div>
-                                            <img  class="img ml-md-2 mb-3" id="image" [src]="url" width="200" #image crossorigin height="200" alt="image"  placeholder="Post content">
+                                            <div class="">
+                                                <img  class="img ml-md-2 mb-3 mx-auto" id="image" [src]="url" width="200" #image crossorigin height="200" alt="image"  placeholder="Post content">
+                                            </div>
                                         </div>
                                     </form>
-                                    <textarea type="text" class="form-control" rows="5" [(ngModel)]="post.Content" [ngModelOptions]="{standalone: true}" placeholder="Post content"></textarea>   
+                                    <textarea type="text" class="form-control" rows="5" [(ngModel)]="post.Content" [ngModelOptions]="{standalone: true}" placeholder="What do you want to talk about?"></textarea>   
                                         <div class="col mt-2" style="padding-left:5px;">
                                             <!-- <button class="btn m-auto px-3 py-1" id="video_library"><mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle mr-3">video_library</mat-icon>Video</button> &nbsp; -->
-                                            <input type="file" id="file" style="display: none;" (change)="onSelectFile($event)" multiple >
-                                            <label class="btn" id="insert_photo" for="file" >
+                                            <input type="file" id="file" style="display: none;"  (change)="onSelectFile($event)" multiple >
+                                            <label class="btn" id="insert_photo" for="file">
                                             <mat-icon aria-hidden="true" fontSet="material-icons-outlined" class="align-middle ">insert_photo</mat-icon>
                                             Photo
                                             </label>
@@ -52,8 +54,10 @@
                             <app-loader *ngIf="enableLoader"></app-loader>
                         </form>
                     </div>
-                    <div class="modal-footer mt-n1">
-                            <div class="col-md-5 col "> <button type="submit" class="btn btn-lg btn-block py-1" id="button" [disabled]="enableLoader" aria-label="Close" (click)="submit()" >Post</button></div>
+                    <div class="modal-footer mt-1">
+                        <div class="col-md-5 col">
+                            <button type="submit" class="btn btn-lg btn-block py-1" id="button" [disabled]="enableLoader" aria-label="Close" data-dismiss="modal" (click)="submit()">Post</button>
+                        </div>
                     </div>
                 </div>
             </div>

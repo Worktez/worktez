@@ -56,6 +56,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     LinkedInProfile: "",
     DateOfJoining: "",
     Skills: [],
+    NotesOrder: [],
     Website: "",
     Notification: 0,
     EducationCounter: 0,
@@ -207,6 +208,7 @@ exports.setMyOrgCollection = function(Uid, orgDomain, orgAppKey, teams = [], def
     DefaultTeam: defaultTeam,
     OrgDomain: orgDomain,
     ActiveNotifications: 0,
+    Status: "Active",
   });
   return Promise.resolve(setMyOrgPromise);
 };

@@ -19,9 +19,6 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 
-
-declare var jQuery:any;
-
 @Component({
   selector: 'app-request-a-demo',
   templateUrl: './request-a-demo.component.html',
@@ -75,7 +72,6 @@ export class RequestADemoComponent implements OnInit {
     });
   }
   close() {
-    jQuery('#requestDemo').modal('hide');
     this.showClose=false;
     this.requestDemoForm.reset();
   }

@@ -23,6 +23,7 @@ exports.addProjLink = function(request, response) {
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
   const projectLink = request.body.data.ProjLink;
+  const projLoc = request.body.data.ProjLocation;
 
   let status = 200;
   let result = { data: "Error in updating team" };
@@ -31,6 +32,7 @@ exports.addProjLink = function(request, response) {
     if (team) {
       const updateJson = {
         ProjectLink: projectLink,
+        ProjectLocation: projLoc,
       };
       updateTeamDetails(updateJson, orgDomain, teamName);
       result = { data: "Team Updated Successfully" };

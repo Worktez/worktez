@@ -23,6 +23,7 @@
 .heading{
     font-size: 18px;
     font-family: var(--font);
+    width: 90%;
 }
 
 .teamId {
@@ -62,4 +63,14 @@
 }
 #dateAlign{
     padding-left: 12px;
+}
+
+#milColor{
+    width:1rem;
+    height:1rem; 
+    border-radius: 50px;
+}
+
+.milestone{
+    display: flex;
 }

@@ -20,14 +20,17 @@
 }
 
 .form-control {
-    background-color: var(--secondary-bg);
+    background-color: var(--input-field);
     color: var(--text);
-    font-size: 12px;
+    font-size: 0.875rem;
     border: none;
+    border-radius: 6px;
+    padding: 7px;
+    opacity: 1;
+    margin: -2px !important;
 }
 
 .dropdown-menu {
-    border-color: var(--primary-color) ;
     color: var(--text);
     background-color: var(--secondary-bg);
     width: 70px !important;
@@ -41,16 +44,16 @@
     background-color: var(--button-hover-bg);
     color: var(--button-text);
 }
-
+.btn:hover,
 #button:hover,
 #dropdownButton:hover, .dropdown-item:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover); 
 }
 
-span, mat-icon {
+/* span, mat-icon {
     color: var(--text);
-}
+} */
 
 #button:focus {
     outline:none;
@@ -81,13 +84,13 @@ hr {
 }
 
 .modal-header{
+    color: var(--text);
     align-items: center;
+    border: none;
 }
 
 .modal-body{
     color: var(--text);
-    margin: 0px 10%;
-    text-align: center;
 }
 
 .modal-title{
@@ -127,7 +130,7 @@ hr {
 
 .btn:hover {
     background-color: var(--dropdown-hover);
-    color: var(--button-text-hover); 
+    color: var(--primary-color); 
 }
 
 .teamLabels{
@@ -137,3 +140,16 @@ hr {
 @media only screen and (max-width: 600px) {
     
 }
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+}
+

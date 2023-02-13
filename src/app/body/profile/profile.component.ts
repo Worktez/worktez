@@ -73,6 +73,7 @@ export class ProfileComponent implements OnInit {
   imageUrl: string = "";
   profilePicFile: FileData;
   imageReady: boolean = false
+  gitLink: boolean = false
 
   educations: MyEducationData[];
   experiences: MyExperienceData[];
@@ -80,7 +81,7 @@ export class ProfileComponent implements OnInit {
 
   userData : User[]
 
-  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
+  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {
   }
 
   ngOnInit(): void {
@@ -111,6 +112,16 @@ export class ProfileComponent implements OnInit {
         }
       });
     }
+  }
+
+  linkWithGithub() {
+    this.authService.linkGithub();
+    this.gitLink = true;
+  }
+
+  unlinkWithGithub() {
+    this.authService.unlinkGithub();
+    this.gitLink = false;
   }
 
   checkSameUser(){
@@ -228,7 +239,7 @@ export class ProfileComponent implements OnInit {
           this.photoURL = data.photoURL;
           this.phoneNumber = data.phoneNumber;
           this.linkedInProfile = data.LinkedInProfile;
-          this.githubProfile = data.LinkedInProfile;
+          this.githubProfile = data.GithubProfile;
           this.dateOfJoining = data.DateOfJoining;
           this.skills = data.Skills;
           this.website = data.Website;

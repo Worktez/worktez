@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 
-declare var jQuery:any;
-
 @Component({
   selector: 'app-all-notification',
   templateUrl: './all-notification.component.html',

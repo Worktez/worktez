@@ -1,0 +1,64 @@
+.page {
+    background-color: var(--secondary-bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.card {
+    width: 18rem;
+    /* height: 20rem; */
+    border: none;
+    border-radius: 5px;
+}
+
+.title {
+    font-size: xx-large;
+    color: #0000e4;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* .des {
+    color: #4a26fd;
+} */
+
+mat-icon {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+.learn {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: #0000e4;
+}
+
+.des {
+    font-size: large;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.b1 {
+    background-color: #021aee;
+    color: #eee6ff;
+    cursor: pointer;
+}
+
+.b2 {
+    background-color: #0013e9;
+    color: #eee6ff;
+    cursor: pointer;
+}
+
+.b3 {
+    background-color: #0000e4;
+    color: #eee6ff;
+    cursor: pointer;
+}
+
+.b1:hover,
+.b2:hover,
+.b3:hover {
+    background-color: #eee6ff;
+    color: #0000e4;
+}

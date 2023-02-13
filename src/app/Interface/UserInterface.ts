@@ -13,6 +13,15 @@ import { ActivatedRoute } from "@angular/router";
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
+
+export interface ProviderData {
+    displayName: string;
+    email: string;
+    phoneNumber: string;
+    photoURL: string;
+    providerId: string;
+    uid: string;
+}
 export interface User {
     uid: string;
     photoURL: string;
@@ -20,8 +29,8 @@ export interface User {
     email: string;
     phoneNumber: string;
     providerId: string;
+    providerData: ProviderData[];
 }
-
 export interface UserAppSetting extends User {
     SelectedOrgAppKey: string;
     SelectedTeamId: string;
@@ -31,6 +40,7 @@ export interface UserAppSetting extends User {
     LinkedInProfile: string;
     DateOfJoining: string;
     Skills: string[];
+    NotesOrder: string[];
     Education: string;
     Experience: string;
     Projects: string;
@@ -103,6 +113,7 @@ export const defaultUser = {
     Projects: "",
     Website: "",
     Username: "",
+    providerData: [],
 };
 
 export interface MemberData{
@@ -156,7 +167,7 @@ export const defaultPermissions = {
     completeSprint: true,
     editOrganization: true,
     viewMemberRoles: true,
-    editMemberRoles:true,
+    editMemberRoles:false,
     addDefaultLabel: true,
     createNewLabel: true,
     editLabel: true,

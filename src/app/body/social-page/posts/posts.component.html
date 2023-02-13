@@ -13,7 +13,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
-<div class="card post mb-3"  *ngIf="post.PostStatus != -1 && pageReady==true">
+<div class="card post mb-3"  *ngIf="pageReady==true">
     <div class="card-header">
         <div class="row">
             <div class="col">
@@ -21,9 +21,9 @@
             </div>
             <div class="col">
                 <div class="dropdown text-right" *ngIf="post.Uid == this.authService.getLoggedInUser()">
-                    <mat-icon role="button" type="button" class="btn dropdown" data-toggle="dropdown"> 
-                        <span class="material-icons">more_vert</span>
-                    </mat-icon>
+                    <span class="btn py-2" type="button" class="btn dropdown" data-toggle="dropdown">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">more_vert</mat-icon>
+                    </span>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                         <button class="dropdown-item" type="button" (click)="deletePost(post.PostId)">Delete</button>   
                     </div>    
@@ -59,18 +59,18 @@
             <div class="col-6  d-flex justify-content-center">
                 <span class="btn btn-star py-2" (click)="switchReaction(post.PostId); " [ngClass]="{'reacted': postStarred}">
                     <ng-container *ngIf="postStarred; else normalIcon">
-                        <mat-icon class="reacted" fontSet="material-icons" class="align-middle pr-3">blur_circular</mat-icon>
+                        <mat-icon class="reacted" fontSet="material-icons-outlined" class="align-middle pr-3">star</mat-icon>
                     </ng-container>
                     <ng-template #normalIcon>
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">blur_circular</mat-icon>
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">auto_awesome</mat-icon>
                     </ng-template>
-                    <span class="align-middle">Star</span>
+                    <span class="align-middle px-1">Star</span>
                 </span>
             </div>
             <div class="col-6 d-flex justify-content-center">
                 <span class="btn btn-comment py-2" (click)="showCommentBox(post.PostId)">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle pr-3">chat</mat-icon>
-                    <span class="align-middle">Comment</span> 
+                    <span class="align-middle px-1">Comment</span> 
                 </span>
             </div>
         </div>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <hr>
-                    <ng-container *ngIf="dataReady; else loader">
+                    <ng-container *ngIf="dataReady && !enableLoader; else loader">
                         <ng-container *ngIf="comments?.length == 0">
                             No comments to show
                         </ng-container>

@@ -42,6 +42,7 @@ export class AddMemberComponent implements OnInit {
   enableLoader: boolean = false;
   showClose: boolean = false;
   add: boolean = false;
+  alreadyAdded: boolean = false;
 
   constructor(private startService: StartServiceService, public backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public authservice: AuthService, public validationService: ValidationService) { }
 
@@ -55,7 +56,7 @@ export class AddMemberComponent implements OnInit {
     });
 
     if (condition) {
-      if (this.memberEmail) {
+      if (!this.teamMembers.includes(this.memberEmail)) {
         this.teamMembers.push(this.memberEmail);
         if (this.isUpdateTeam == true) {
           this.addUpdateTeam();
@@ -63,7 +64,10 @@ export class AddMemberComponent implements OnInit {
           this.addCreateTeam();
         }
       }
-
+      else{
+        this.alreadyAdded = true;
+        this.showClose = true;
+      }
     }
     else {
       console.log("input is invalid");
@@ -103,6 +107,9 @@ export class AddMemberComponent implements OnInit {
 
   close(){
     this.showClose= false;
-    this.added();
+    if(!this.alreadyAdded){
+      this.added();
+    }
+    this.alreadyAdded = false;
   }
 }

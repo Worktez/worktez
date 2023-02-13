@@ -52,7 +52,6 @@ export class PerformanceChartComponent implements OnInit {
         })).subscribe({
             next: (data) => {
               this.data=data.sort();
-              console.log(data);
               this.showLoader = false;
             },
             error: (error) => {

@@ -57,6 +57,7 @@ export class AddnewNoteComponent implements OnInit {
       callable({Uid: uid, Title: this.title, Note: this.notesContent, LastUpdatedDate: date, LastUpdatedTime: time }).pipe(map(res=>{
         return res
       })).subscribe((data) => {
+        this.authService.userAppSetting.NotesOrder.push(data.DocId)
         this.addNoteCompleted.emit(true);
         this.enableLoader = false
       });

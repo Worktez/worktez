@@ -15,8 +15,8 @@
     <mat-icon fontSet="material-icons-outlined" matBadge="{{authService.myOrgCollectionDocData.ActiveNotifications}}"
         matBadgeColor="warn" [matBadgeHidden]="authService.myOrgCollectionDocData.ActiveNotifications==0" (click)="showNotification()"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">notifications</mat-icon>
    
-    <div class="dropdown-menu dropdown-menu-right" id="notificationCenter">
-        <div class="text-center align-middle" >
+    <div class="dropdown-menu dropdown-menu-right whatsnew" id="notificationCenter">
+        <div class="text-center align-middle">
             <ng-container *ngIf="!showLoader; else loader">
                 <ng-container *ngIf="notificationsList.length == 0">
                     No New Notification!!

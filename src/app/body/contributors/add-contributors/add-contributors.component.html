@@ -19,7 +19,7 @@
                 <div class="modal-header">
                     <h2 class="modal-title" id="createNewTaskTitle">Add New Contributor</h2>
                     <span class="btn">
-                        <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" title="Close">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" (click)="close()" title="Close">
                             close
                         </mat-icon>
                     </span>
@@ -71,7 +71,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader || !fileUpload" aria-label="Close" (click)= "submit()">Add New Contributor</button>
+                    <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="enableLoader || !fileUpload" aria-label="Close" data-dismiss="modal" (click)= "submit()">Add New Contributor</button>
                 </div>
             </div>
         </div>

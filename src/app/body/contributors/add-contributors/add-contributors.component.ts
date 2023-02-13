@@ -18,8 +18,6 @@ import { FileUploadService } from 'src/app/services/fileUploadService/file-uploa
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 
-declare var jQuery:any;
-
 @Component({
   selector: 'app-add-contributors',
   templateUrl: './add-contributors.component.html',
@@ -51,8 +49,6 @@ export class AddContributorsComponent implements OnInit {
   }
 
   close() {
-    jQuery('#addNewMember').modal('hide');
-    jQuery('#form').trigger("reset");
     this.addNewContributorCompleted.emit({ completed: true });
   }
 
@@ -77,10 +73,10 @@ export class AddContributorsComponent implements OnInit {
     );
   }
 
-  async submit() {
+  submit() {
     this.enableLoader = true
     const callable = this.functions.httpsCallable('contributors/addContributor');
-      const result = await callable({ email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name }).subscribe({
+      callable({ email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name }).subscribe({
         next: (data) => {
           console.log("Successful ");
         },
@@ -90,7 +86,7 @@ export class AddContributorsComponent implements OnInit {
           this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
         },
         complete: () => console.info('Successful ')
-    })
+    });
     this.close();
   }
 }

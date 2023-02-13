@@ -17,7 +17,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 const {deleteUserNote, getNote} = require("../lib");
-const { getUser } = require("../../users/lib");
+const { getUser, updateUser } = require("../../users/lib");
 
 exports.deleteNote = function(request, response) {
   const uid = request.body.data.Uid;
@@ -27,6 +27,11 @@ exports.deleteNote = function(request, response) {
   let status = 200;
 
   const promise = getUser(uid, "").then((doc) => {
+    const notesOrder = doc.NotesOrder;
+    notesOrder.splice(notesOrder.indexOf(docId), 1);
+    const updateUserInputJson = {
+      NotesOrder: notesOrder,
+    };
     const p1 = getNote(uid, docId).then((noteData) => {
       if (noteData == undefined) {
         result = {data: {status: "Note doesn't exist"}};
@@ -35,6 +40,7 @@ exports.deleteNote = function(request, response) {
           Status: "DELETED",
         };
         deleteUserNote(updateNoteToJson, uid, docId);
+        updateUser(updateUserInputJson, uid);
 
         // const comment = "Removed ";
       }

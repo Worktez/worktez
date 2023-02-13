@@ -9,7 +9,8 @@ export const environment = {
   },
   useEmulators: true,
   gitApiUrl: "https://api.github.com/repos/Worktez/worktez",
-  githubApiUrl: "https://api.github.com"
+  githubApiUrl: "https://api.github.com",
+  gitlabApiUrl: "https://gitlab.com/api/v4"
 };
 
 /*

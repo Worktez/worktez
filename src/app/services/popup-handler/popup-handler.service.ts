@@ -31,6 +31,7 @@ export class PopupHandlerService {
   addLabelEnabled: boolean = false
   milestoneId:string = ""
   addMilestoneActive:boolean = true;
+  addReleaseActive:boolean = true;
   addPrActive:boolean = true;
   addTaskActive:boolean = true;
   requestDemoEnabled:boolean = false;

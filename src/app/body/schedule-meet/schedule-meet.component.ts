@@ -17,7 +17,6 @@ import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/cor
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { NgForm, UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, Observable, startWith } from 'rxjs';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -25,8 +24,6 @@ import { ErrorHandlerService } from 'src/app/services/error-handler/error-handle
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
-
-declare var jQuery:any;
 
 @Component({
   selector: 'app-schedule-meet',
@@ -176,11 +173,9 @@ export class ScheduleMeetComponent implements OnInit {
       })
     }
   }
-  
 
   close(){
-      jQuery('#scheduleMeet').modal('hide');
-      jQuery('#form').trigger("reset");
+    this.popupHandlerService.scheduleMeetEnabled = false;
       this.meetScheduled.emit({ completed: true });
   }
 }

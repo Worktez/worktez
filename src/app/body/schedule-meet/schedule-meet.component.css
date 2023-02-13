@@ -129,3 +129,7 @@ input:focus {
     color: var(--secondary-color);
     font-size: 55px;
 }
+
+input::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+}

@@ -51,11 +51,12 @@
       <div class="col-md-4">
         <div class="card p-3">
           <div class="row py-3">
-            <div class="col text-center">
+            <div class="col-11 text-center">
               <span class="title">
                 {{milestoneData.Title}}
               </span>
             </div>
+            <div id="milColor" [ngStyle]="{'background-color': color}"></div>
           </div>
           <div class="row py-2">
             <div class="col-md-12 col">
@@ -147,6 +148,15 @@
                   </li>
                 </a>
               </ng-container>
+              <ng-container>
+                <a>
+                  <li class="step "[ngStyle]="{'width': '8%' }" >
+                    <div class="step-inner">
+                      <mat-icon aria-hidden="false" class="mx-2">check_circle_outline</mat-icon>
+                    </div>
+                  </li>
+                </a>
+              </ng-container>
             </ul>
             <div id="line">
               <div id="line-progress" [ngStyle]="{'width': setProgressWidth()}"></div>
@@ -181,6 +191,7 @@
     [endDate]="milestoneData.EndDate"
     [statusLabels]="milestoneStatusLabels"
     [id]="milestoneId"
+    [colorCode]="milestoneData.ColorCode"
     (editMilestoneCompleted)="editMilestoneCompleted($event)">
   </app-edit-milestone>
 </ng-container>

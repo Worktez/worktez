@@ -13,6 +13,7 @@
  ***********************************************************/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -33,6 +34,8 @@ export class EditMilestoneComponent implements OnInit {
   @Input('endDate') endDate: any
   @Input('statusLabels') statusLabels: any
   @Input('id') milestoneId:string
+  @Input('colorCode') colorCodes:string
+  colorCode = new UntypedFormControl();
   enableLoader:boolean =true;
   minDate: string;
   showClose:boolean;
@@ -42,6 +45,7 @@ export class EditMilestoneComponent implements OnInit {
   ngOnInit(): void {
     this.enableLoader = false;
     this.minDate = this.startDate;
+    console.log(this.colorCodes)
   }
 
   
@@ -53,7 +57,7 @@ export class EditMilestoneComponent implements OnInit {
       this.enableLoader=true;
       const orgDomain = this.backendService.getOrganizationDomain();
       const callable = this.functions.httpsCallable('milestone/editMilestone');
-      callable({MilestoneId:this.milestoneId, OrgDomain:orgDomain,MilestoneStatus:this.status, Title: this.title, Description: this.description, StartDate: this.startDate, EndDate: this.endDate}).subscribe({
+      callable({MilestoneId:this.milestoneId, OrgDomain:orgDomain,MilestoneStatus:this.status, Title: this.title, Description: this.description, StartDate: this.startDate, EndDate: this.endDate,ColorCode: this.colorCode.value}).subscribe({
         error: (error) => {
           this.errorHandlerService.showError = true;
           this.errorHandlerService.getErrorCode(this.componentName,"InternalError","Api");
@@ -87,4 +91,13 @@ export class EditMilestoneComponent implements OnInit {
     
   }
 
+  selectedColorName(item) {
+    if(item.selected == false) {
+      this.colorCode.setValue("");
+    } else {
+      var temp = item.data as string
+      temp = temp.slice(1);
+      this.colorCode.setValue(temp);
+    }
+  }
 }

@@ -22,10 +22,6 @@
     justify-content: space-evenly;
 }
 
-.close {
-    color: var(--text);
-}
-
 .form-group {
     margin-bottom: 0;
 }
@@ -33,6 +29,16 @@
 .form-control {
     background-color: var(--input-field);
     color: var(--text);
+    border: none;
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
     border: none;
 }
 

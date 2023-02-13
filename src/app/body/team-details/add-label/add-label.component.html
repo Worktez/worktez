@@ -15,10 +15,12 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title " id="addLabelTitle"><strong>Create New Label</strong></h2>
-                    <button type="button" class="close" (click)="close()" aria-label="Close">
-                        <span aria-hidden="true" class="material-icons">close</span>
-                    </button>
+                    <h2 class="modal-title" id="addLabelTitle">Create New Label</h2>
+                    <span class="btn">
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" (click)="close()" title="Close">
+                            close
+                        </mat-icon>
+                    </span>
                 </div>
                 <div class="modal-body">
                     <form #form="ngForm" *ngIf="!showClose" >
@@ -78,7 +80,7 @@
                     <div class="row pt-2">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 pt-2 px-4">
-                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" style="margin-left: 10px;">Close</button>
+                            <button class="btn btn-success" type="button" data-dismiss="modal" (click)="close()" data-dismiss="modal" style="margin-left: 10px;">Close</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>

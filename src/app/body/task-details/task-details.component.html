@@ -59,6 +59,45 @@
                                     </a>
                                 </span>
                             </li>
+                            <li class="nav-item" *ngIf="githubRepoExists">
+                                <span class="btn">
+                                    <img src="../../../assets/gitlabIcon.svg" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
+                                    alt="user" data-toggle="modal" title="Select PR" data-target="#gitlabPrModel" (click)="linkPr()">
+                                    <a *ngIf="prLinked" data-target="#gitlabPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
+                                        PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
+                                    </a>
+                                </span>
+                            </li>
+                            <!-- <li class="nav-item"  *ngIf="githubRepoExists">
+                                <div class="dropdown" id="getPrDetails" *ngIf="prLinked"> 
+                                    <span class="btn dropdown" title="Get Pr Details" data-toggle="dropdown" style="margin-top: 2px;">
+                                        <mat-icon >
+                                            track_changes
+                                        </mat-icon>
+                                    </span>
+                                    <div class="dropdown-menu pt-0">
+                                        <div class="row">
+                                            <div class="ml-4 pt-2" style="text-align: center;">
+                                                <div  style="width: 90px;font-weight: bolder;">
+                                                    <h4>Pr Details</h4>
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 col-0  close">
+                                                <span class="btn">
+                                                    <mat-icon (click)="close()"
+                                                        fontSet="material-icons-outlined" class="align-middle">
+                                                        close
+                                                    </mat-icon>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <hr class="mt-0">
+                                        <button class="btn prBtn"  (click)="showPrDetails()" id="button">
+                                             <img src="../../../assets/git.png" height="20" class="rounded-circle" width="20" style="margin-right: 5px;">View
+                                        </button>
+                                    </div>
+                                </div>
+                            </li> -->
                             <li class="nav-item" *ngIf="startService.userReady && task.Status!=='Completed' && task.SprintNumber !== -2">
                                 <span class="btn" data-toggle="modal" title="Log Work" data-target="#Modal" (click)="logWorkPage()">
                                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -102,6 +141,10 @@
                                         <div class="delete" *ngIf="startService.userReady && task.SprintNumber !== -2">
                                             <button *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTask" class="dropdown-item" type="button" data-toggle="modal"
                                             data-target="#exampleModalDel" (click)="deleteTask()">Delete Task</button>
+                                        </div>
+                                        <div  *ngIf="githubRepoExists && githubTokenExists && startService.userReady && task.SprintNumber !== -2">
+                                            <button *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTask" 
+                                            data-toggle="modal" data-target="#issueModal" class="dropdown-item" type="button"(click)="createGithubIssue()">Report to Git</button>
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +272,7 @@
                                         <th colspan="6">Link URL</th>
                                         <th colspan="3">
                                             <mat-icon id="icon" fontSet="material-icons-outlined" data-toggle="modal"
-                                                data-target="#linkModal" (click)="addLink()">
+                                                data-target="#linkModal" (click)="addLink()" class="remove">
                                                 add_circle</mat-icon>
                                         </th>
                                     </tr>
@@ -250,7 +293,7 @@
                                                     target="_blank">{{link.LinkURL}}</a></td>
                                             <td colspan="2">
                                                 <mat-icon (click)="removeLink(link.LinkID, link.LinkType)"
-                                                    fontSet="material-icons-outlined" class="align-middle text-danger">
+                                                    fontSet="material-icons-outlined" class="align-middle text-danger remove">
                                                     close
                                                 </mat-icon>
                                             </td>
@@ -335,8 +378,14 @@
     <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
         <app-git [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-git>
     </ng-container>
+    <ng-container *ngIf="gitPrEnabled" id="PrModalLabel">
+        <app-gitlab [taskId]="Id" [orgDomain]="orgDomain" [task]="task" [prLink]="prLink" [prApiLink]="prApiLink" [PrNumber]="task.PrNumber" [prState]="prData.state" (addedPrLink)="addedPrLink($event)"></app-gitlab>
+    </ng-container>
     <ng-container *ngIf="addWatcherEnabled" id="addWatcherModal">
         <app-add-watchers [task]="task" [orgDomain]="orgDomain" [watcherList]="task.Watcher" (addWatcherCompleted)="addWatcherCompleted($event)"></app-add-watchers>
+    </ng-container>
+    <ng-container *ngIf="createGitIssue" id="issueModalLabel">
+        <app-create-git-issue [orgDomain]="orgDomain" [taskId]="Id" [task]="task" (createIssue)="createIssue($event)"></app-create-git-issue>
     </ng-container>
 </ng-container>
 <ng-container *ngIf="showLoader || !(gotTaskData)">

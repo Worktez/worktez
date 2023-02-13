@@ -12,198 +12,86 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 <div class="container pb-0">
-    <div class="modal fade" id="updateTeam" tabindex="-1" role="dialog" aria-labelledby="updateTeamTitle" aria-hidden="true">
+    <div class="modal fade" id="updateTeam" tabindex="-1" role="dialog" aria-labelledby="updateTeamTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="updateTeamTitle">
-                        <ng-container *ngIf="childStep===2">
-                            <span class="material-icons float-left" data-toggle="tooltip" data-placement="top" title="Back" (click)="prevChildStep()" style="position: relative;top: 5px;cursor: pointer;">arrow_back_ios</span>
-                        </ng-container>
-                            Update Team
-                    </h2>
-                    <span class="btn">
-                        <mat-icon fontSet="material-icons-outlined" data-dismiss="modal"class="align-middle "(click)="close()" title="Close">
-                            close
-                        </mat-icon>
-                    </span>
+                <div class="row px-3 pb-0 pt-4">
+                    <div class="col-md-10 col-10">
+                        <h2>Update Team</h2>
+                    </div>
+                    <div class="col-md-1 col-2 text-right">
+                        <span class="btn" data-dismiss="modal" (click)="close()">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle" title="Close">
+                                close
+                            </mat-icon>
+                        </span>
+                    </div>
                 </div>
                 <div class="modal-body container-fluid pt-0">
-                    <form #form="ngForm">
-                        <ng-container *ngIf="childStep===1">
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col">
-                                    <input type="text" class="form-control" [(ngModel)]="teamName" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Name">
-                                </div>
-                                <div class="form-group col-md-6 col ml-auto">
-                                    <input type="text" class="form-control" [(ngModel)]="teamId" (click)="handleIdInput()" [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID">
-                                </div>
+                    <form #form="ngForm" *ngIf="!enableLoader && !showClose">
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Name</span>
+                                <input type="text" class="form-control" readonly [(ngModel)]="teamName"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Enter Team Name">
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col">
-                                    <textarea type="text" class="form-control form-control-md" rows="3" [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}" placeholder="Write a Team Description..."></textarea>
-                                </div>
+                            <div class="form-group col-md-6 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team ID</span>
+                                <input type="text" class="form-control" readonly [(ngModel)]="teamId"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Enter TeamID">
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-12 col ml-auto">
-                                    <input type="text" class="form-control" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Manager's Email Id">
-                                </div>
+                        </div>
+                        <div class="form-row pt-2">
+                            <div class="col-md-12 col ml-auto">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Team Manager Email</span>
+                                <input type="text" class="form-control" [(ngModel)]="teamManagerEmail" [ngModelOptions]="{standalone: true}" placeholder="Enter Team Manager's Email Id">
                             </div>
-                            <div class="form-row ">
-                                <div class="col-md-12 col ml-auto">
-                                    <div class="card" data-bs-toggle="tooltip" data-bs-placement="top" style="height: 10rem;">
-                                        <div class="card-body p-1" style="overflow-y: auto;overflow-x: hidden;">
-                                            <div class="row">
-                                                <ng-container *ngFor="let item of teamMembers">
-                                                    <div class="col-md-5 member-email mx-2 mt-2 p-2">
-                                                        {{item}}
-                                                        <!-- <span aria-hidden="true" class="material-icons text-danger float-right px-2" style="cursor: pointer;" (click)="removeMemberDB(item)">close</span> -->
-                                                    </div>
-                                                </ng-container>
-                                                <ng-container *ngIf="!teamMembers.length">
-                                                    <div class="col text-muted h6 font-weight-normal">
-                                                        Enter Team Members Email Id
-                                                    </div>
-                                                </ng-container>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="form-row pt-2">
+                            <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Description</span>
+                                <textarea type="text" class="form-control form-control-md" rows="3"
+                                    [(ngModel)]="teamDescription" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Write a Team Description..."></textarea>
                             </div>
-                            <div class="modal-footer px-0">
-                                <button class="btn btn-md btn-block" id="button" [disabled]="enableLoader" (click)="nextChildStep()">Next</button>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="childStep===2">
-                            <div class="row">
-                                <div class="col-md-12 col">
-                                    <h3 class="modal-title">{{teamName}}</h3>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 col">
-                                    <h5 class="modal-title">Setup task labels*</h5>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-start pl-4">
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Task1" name="Task" (change)="getLabels($event)" value="Bug" checked />
-                                    <label class="form-check-label" for="Task1">Bug</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Task2" name="Task" (change)="getLabels($event)" value="Story" checked/>
-                                    <label class="form-check-label" for="Task2">Story</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Task3" name="Task" (change)="getLabels($event)" value="Sub Task" checked/>
-                                    <label class="form-check-label" for="Task4">Sub Task</label>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-12 col">
-                                    <h5 class="modal-title">Setup Status labels*</h5>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-start pl-4">
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Status1" name="Status" (change)="getLabels($event)" value="Ice Box" checked />
-                                    <label class="form-check-label" for="Status1">Ice Box</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Status2" name="Status" (change)="getLabels($event)" value="Ready to start" checked />
-                                    <label class="form-check-label" for="Status2">Ready to start</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Status3" name="Status" (change)="getLabels($event)" value="Under Progress" checked />
-                                    <label class="form-check-label" for="Status3">Under Progress</label>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-start pl-4 mt-2">
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Status4" name="Status" (change)="getLabels($event)" value="Blocked" checked/>
-                                    <label class="form-check-label" for="Status4">Blocked</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Status5" name="Status" (change)="getLabels($event)" value="Completed" checked />
-                                    <label class="form-check-label" for="Status5">Completed</label>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-12 col">
-                                    <h5 class="modal-title">Setup Priority labels*</h5>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-start pl-4">
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Priority1" name="Priority" (change)="getLabels($event)" value="High" checked />
-                                    <label class="form-check-label" for="Priority1">High</label>                               
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Priority2" name="Priority" (change)="getLabels($event)" value="Medium" checked />
-                                    <label class="form-check-label" for="Priority2">Medium</label>                              
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Priority3" name="Priority" (change)="getLabels($event)" value="Low" checked />
-                                    <label class="form-check-label" for="Priority3">Low</label>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-12 col">
-                                    <h5 class="modal-title">Setup Milestone Status labels*</h5>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-start pl-4">
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus1" name="MilestoneStatus" (change)="getLabels($event)" value="Ice Box" checked />
-                                    <label class="form-check-label" for="MilestoneStatus1">Ice Box</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus2" name="MilestoneStatus" (change)="getLabels($event)" value="Ready to start" checked />
-                                    <label class="form-check-label" for="MilestoneStatus2">Ready to start</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus3" name="MilestoneStatus" (change)="getLabels($event)" value="Under Progress" checked />
-                                    <label class="form-check-label" for="MilestoneStatus3">Under Progress</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="MilestoneStatus4" name="MilestoneStatus" (change)="getLabels($event)" value="Completed" checked />
-                                    <label class="form-check-label" for="MilestoneStatus4">Completed</label>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-12 col">
-                                    <h5 class="modal-title">Setup Difficulty labels*</h5>
-                                </div>
-                            </div>
-                            <div class="form-row justify-content-start pl-4">
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Difficulty1" name="Difficulty" (change)="getLabels($event)" value="High" checked/>
-                                    <label class="form-check-label" for="Difficulty1">High</label>                            
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Difficulty2" name="Difficulty" (change)="getLabels($event)" value="Medium" checked />
-                                    <label class="form-check-label" for="Difficulty2">Medium</label>
-                                </div>
-                                <div class="form-group form-check col-md-4 text-left">
-                                    <input type="checkbox" class="form-check-input" id="Difficulty3" name="Difficulty" (change)="getLabels($event)" value="Low" checked />
-                                    <label class="form-check-label" for="Difficulty3">Low</label>
-                                </div>
-                            </div>
-                            <div class="modal-footer px-0">
-                                    <button class="btn btn-md btn-block" id="button" [disabled]="enableLoader" (click)="updateExistingTeam()">
-                                        Update Team
-                                    </button>
-                            </div>
-                            <app-loader *ngIf="enableLoader"></app-loader>
-                        </ng-container>
-                        <app-loader *ngIf="enableLoader"></app-loader>
+                        </div>
+
+                        <div class="modal-footer pt-2">
+                            <button class="btn btn-md btn-block" id="button" [disabled]="enableLoader"
+                                (click)="submit()">
+                                Update Team
+                            </button>
+                        </div>
                     </form>
+                    <app-loader *ngIf="enableLoader"></app-loader>
+                    <ng-container *ngIf="showClose && !enableLoader">
+                        <div class="row mx-5">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <mat-icon aria-hidden="false" id="SuccessIcon">check_circle_outline</mat-icon>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-7">
+                                <div class="row" style="font-size: medium;flex-wrap: wrap;">Team Updated Successfully !
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4 pt-2 px-4">
+                                <button class="btn btn-secondary" type="button" id="button" data-dismiss="modal"
+                                    (click)="updateTeamDone()" style="margin-left: 10px;">Close</button>
+                            </div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </ng-container>
                 </div>
-                
             </div>
         </div>
     </div>
 </div>
-<ng-container *ngIf="addMemberEnabled" id="memberModalLabel">
-    <app-add-member [teamId]="teamId" [teamName]="teamName" [teamMembers]="teamMembers" [teamManager]="teamManagerEmail" [teamDescription]="teamDescription" [isUpdateTeam]="true" (addedMember)="addedMember($event)"></app-add-member>
-</ng-container>

@@ -27,11 +27,11 @@
                 <div class="row text-center">
                     <div class="col">
                         <img class="rounded-circle" src={{photoURL}} onerror="this.src = '../../assets/defaultavatar.jpg' " alt="{{displayName}}" width="100" height="100" style=" border-radius: 50%;">
-                            <span *ngIf="sameUser" type="button" class="btn align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
-                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                                    edit
-                                </mat-icon> 
-                            </span>
+                        <span *ngIf="sameUser" type="button" class="btn align-bottom" data-toggle="modal" data-target="#profilePicModal" data-whatever="@mdo" (click)="editProfilePic()">
+                            <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                edit
+                            </mat-icon> 
+                        </span>
                     </div>
                 </div>
                 <div class="card-body">
@@ -92,7 +92,7 @@
                             <a href="{{linkedInProfile}}" class="card-link" target="_blank">
                                 <app-profile-icons [profileIcon]="'linkedIn'"></app-profile-icons>
                             </a>
-                            <a href="{{githubProfile}}" class="card-link" target="_blank">
+                            <a href="{{githubProfile}}" class="card-link" target="_blank" *ngIf="githubProfile || gitLink">
                                 <app-profile-icons [profileIcon]="'github'"></app-profile-icons>
                             </a>
                         </div>
@@ -102,7 +102,27 @@
             <div *ngIf="sameUser" class="row my-2 editProfile">
                 <div class="col">
                     <button class="btn p-2 text-center" type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" (click)="editProfile()">
-                        <span class="material-icons-outlined">edit</span>Edit Profile
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
+                            edit
+                        </mat-icon> Edit Profile
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="sameUser" class="row my-2 editProfile">
+                <div class="col">
+                    <button class="btn etc" type="button" *ngIf="!authService.githubProvider" (click)="linkWithGithub()"
+                        title="Add Organisation">
+                        <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
+                        <span>
+                            Link Github
+                        </span>
+                    </button>
+                    <button class="btn etc" type="button" *ngIf="authService.githubProvider" (click)="unlinkWithGithub()"
+                        title="Add Organisation">
+                        <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
+                        <span>
+                            Unlink Github
+                        </span>
                     </button>
                 </div>
             </div>

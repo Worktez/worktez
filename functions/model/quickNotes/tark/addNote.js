@@ -29,17 +29,20 @@ exports.addNote = function(request, response) {
 
   let result;
   let status = 200;
+  let docId = "";
 
 
   const promise1 = getUser(uid, "").then((userData) => {
-    let docId = "";
     if (userData) {
       let notecounter=userData.NoteCounter;
+      const notesOrder=userData.NotesOrder;
       notecounter = notecounter+1;
       docId= "q" + notecounter;
+      notesOrder.push(docId);
 
       const updateUserInputJson = {
         NoteCounter: notecounter,
+        NotesOrder: notesOrder,
       };
       updateUser(updateUserInputJson, uid);
 
@@ -55,10 +58,10 @@ exports.addNote = function(request, response) {
 
   const Promises = [promise1];
   return Promise.all(Promises).then(() => {
-    result = { data: "User Note Added successfully" };
+    result = { data: { data: "User Note Added successfully", DocId: docId }};
     return response.status(status).send(result);
   }).catch((error) => {
-    result = { data: error };
+    result = { data: {data: error, DocId: undefined} };
     console.error("Error adding Note", error);
     return response.status(status).send(result);
   });

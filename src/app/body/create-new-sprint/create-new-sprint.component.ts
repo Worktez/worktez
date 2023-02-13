@@ -25,8 +25,6 @@ import { Sprint, TeamDataId } from 'src/app/Interface/TeamInterface';
 import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { ToolsService } from 'src/app/services/tool/tools.service';
 
-declare var jQuery:any;
-
 @Component({
   selector: 'app-create-new-sprint',
   templateUrl: './create-new-sprint.component.html',
@@ -144,8 +142,6 @@ export class CreateNewSprintComponent implements OnInit {
   }
 
   close() {
-    jQuery('#createNewSprint').modal('hide');
-    jQuery('#form').trigger("reset");
     // window.location.reload();
     this.sprintCreated.emit({ completed: true });
   }
