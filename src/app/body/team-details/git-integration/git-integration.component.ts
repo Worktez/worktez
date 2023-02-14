@@ -12,9 +12,10 @@
 * See the MIT License for more details. 
 ***********************************************************/ 
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-git-integration',
@@ -26,22 +27,27 @@ export class GitIntegrationComponent implements OnInit {
   @Input('team') team: Team
 
   teamToAddGit: Team;
+  addProjectEnabled: boolean = false;
   addProjectEnabled1: boolean = false;
   addProjectEnabled2: boolean = false;
   typeLink: string;
   repoLink: string;
   repoLoc: string;
   bearerToken: string = "";
-  organizationDomain:string
-  projectLoc: string;
+  organizationDomain:string;
   projectLoc1: string ="github";
   projectLoc2: string ="gitlab";
+  projectLinked: boolean= false;
+  gitTokenExists: boolean = false;
+  enableAddToken: boolean = false;
+  showClose: boolean = false;
+  enableLoader: boolean = false;
 
-  constructor(private backendService: BackendService,public gitCDMService:GitCDMServiceService) { }
+  constructor(private backendService: BackendService,private teamService: TeamServiceService,private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-    this.gitCDMService.checkGitProject(this.team.ProjectLink,this.team.ProjectLocation)
-    this.gitCDMService.checkGitToken(this.team.GitToken);
+    this.checkGitProject(this.team.ProjectLink,this.team.ProjectLocation)
+    this.checkGitToken(this.team.GitToken);
     this.organizationDomain = this.backendService.getOrganizationDomain();
 
   }
@@ -51,47 +57,115 @@ export class GitIntegrationComponent implements OnInit {
     if(loca == 'github'){
       this.addProjectEnabled1 = true;
       this.addProjectEnabled2 = false;
-      this.gitCDMService.showClose = false;
+      this.showClose = false;
     }
     if(loca == 'gitlab'){
       this.addProjectEnabled2 = true;
       this.addProjectEnabled1 = false;
-      this.gitCDMService.showClose = false;
+      this.showClose = false;
     }
     this.typeLink = "Organisation";
   }
 
-  addedProject1(data: { completed: boolean, memberEmail: string, projLink: string}) {
-    this.projectLoc = "github";
-    this.bearerToken ="";
-    this.gitCDMService.gitTokenExists = false;
-    this.gitCDMService.addedProject(data,this.team.TeamId,this.projectLoc);
+  
+  checkGitToken(gitToken: string){
+    if(gitToken!=undefined){
+      if(gitToken==""){
+        this.gitTokenExists=false;
+      }
+      else{
+        this.gitTokenExists=true;
+      }
+    }
   }
-
-  addedProject2(data: { completed: boolean, memberEmail: string, projLink: string}) {
-    this.projectLoc = "gitlab";
-    this.bearerToken ="";
-    this.gitCDMService.gitTokenExists = false;
-    this.gitCDMService.addedProject(data,this.team.TeamId,this.projectLoc);
+  
+  checkGitProject(ProjectLink:string,ProjectLocation:string){
+    if(ProjectLink!=undefined){
+      if(ProjectLink==""){
+        this.projectLinked=false;
+      }
+      else{
+        this.projectLinked=true;
+        this.repoLink=ProjectLink;
+        this.repoLoc=ProjectLocation;
+      }
+    }
   }
-
+  
   unLinkGithub(){
-    this.gitCDMService.repoLink="";
-    this.gitCDMService.addProjLink(this.repoLink,this.team.TeamName,this.organizationDomain,this.team.ProjectLocation)
+    this.repoLink="";
+    this.addProjLink(this.repoLink,this.team.TeamName,this.organizationDomain,this.team.ProjectLocation)
   }
 
   addTokenEnable(){
-    this.gitCDMService.enableAddToken = true;
+    this.enableAddToken = true;
   }
 
   back() {
-    this.gitCDMService.enableAddToken = false;
-    this.gitCDMService.showClose = false
+    this.enableAddToken = false;
+    this.showClose = false
+  }
+
+  addedGithubProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
+    this.addProjectEnabled = false;
+    this.bearerToken ="";
+    this.gitTokenExists = false;
+    if(data.completed==true){
+      this.projectLinked=data.completed;
+      this.repoLink=data.projLink;
+      this.repoLoc=this.projectLoc1;
+      this.teamService.teamsDataJson[this.team.TeamId].ProjectLink = this.repoLink;
+      this.teamService.teamsDataJson[this.team.TeamId].ProjectLocation = this.repoLoc;
+    }
+  }
+
+  addedGitlabProject(data: { completed: boolean, memberEmail: string, projLink: string}) {
+    this.addProjectEnabled = false;
+    this.bearerToken ="";
+    this.gitTokenExists = false;
+    if(data.completed==true){
+      this.projectLinked=data.completed;
+      this.repoLink=data.projLink;
+      this.repoLoc=this.projectLoc2;
+      this.teamService.teamsDataJson[this.team.TeamId].ProjectLink = this.repoLink;
+      this.teamService.teamsDataJson[this.team.TeamId].ProjectLocation = this.repoLoc;
+    }
+  }
+
+  addProjLink(projLink: string,teamName: string,organizationDomain: string,projLocation:string){
+    this.enableLoader=true;
+    const callable = this.functions.httpsCallable('teams/addProjLink');
+    callable({OrganizationDomain: organizationDomain, TeamName: teamName , ProjLink: projLink, ProjLocation: projLocation}).subscribe({
+      next: (data) => {
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully created project link')
+    })
   }
 
   addToken() {
     const gitToken = btoa(this.bearerToken)
-    this.gitCDMService.addToken(this.team.TeamName,this.organizationDomain,gitToken);
+    this.enableLoader=true;
+    const callable = this.functions.httpsCallable('teams/addGitToken');
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, Token: gitToken}).subscribe({
+      next: (data) => {
+        this.checkGitToken(gitToken);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully Added Token')
+    });
   }
 
 }
