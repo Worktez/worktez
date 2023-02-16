@@ -25,7 +25,7 @@
  import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { GitData } from 'src/app/Interface/githubReleaseData'; 
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
  @Component({
    selector: 'app-release',
    templateUrl: './release.component.html',
@@ -42,7 +42,7 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
    addReleaseActive: boolean = false;
    projectLink: string;
  
-   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private githubService: GithubServiceService) { }
+   constructor( public startService: StartServiceService,private gitService: GitCDMServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService) { }
  
    ngOnInit(): void {
      this.navbarHandler.resetNavbar();
@@ -108,7 +108,7 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
     this.showLoader=true;
     const repoLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     if(repoLink!="" && repoLink!=undefined){
-      this.githubService.getProjectReleaseDetails(repoLink).pipe(map(data => {
+      this.gitService.getProjectReleaseDetails(repoLink).pipe(map(data => {
         const objData = data as GitData[];
         return objData;
       })).subscribe({

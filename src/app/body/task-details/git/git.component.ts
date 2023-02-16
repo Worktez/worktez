@@ -25,7 +25,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
 
 @Component({
   selector: 'app-git',
@@ -60,7 +60,7 @@ export class GitComponent implements OnInit {
   prTask: GitRepoData;
   prFound: boolean =false;
   WtId: string;
-  constructor(private githubService: GithubServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
+  constructor(public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService,private gitService:GitCDMServiceService) { }
 
   ngOnInit(): void {
     this.showClose = false;
@@ -86,8 +86,9 @@ export class GitComponent implements OnInit {
     }
   }
 
+
   getPullRequests() {
-    this.githubService.getPullRequests(this.repoLink).pipe(map(data => {
+    this.gitService.getPullRequests(this.repoLink,this.team.ProjectLocation).pipe(map(data => {
       const prData = data as GitRepoData[];     
       return prData;
     })).subscribe(data => {

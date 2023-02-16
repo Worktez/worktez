@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GithubLinkComponent } from './github-link.component';
+import { GitLinkComponent } from './git-link.component';
 
-describe('GithubLinkComponent', () => {
-  let component: GithubLinkComponent;
-  let fixture: ComponentFixture<GithubLinkComponent>;
+describe('GitLinkComponent', () => {
+  let component: GitLinkComponent;
+  let fixture: ComponentFixture<GitLinkComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GithubLinkComponent ]
+      declarations: [ GitLinkComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GithubLinkComponent);
+    fixture = TestBed.createComponent(GitLinkComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

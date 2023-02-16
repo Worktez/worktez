@@ -46,15 +46,14 @@
     </button>
 </div>
 <ng-container *ngIf="addProjectEnabled1" id="projectModalLabel1">
-    <app-github-link [teamId]="teamToAddGit.TeamId" [teamName]="teamToAddGit.TeamName" [typeLink]="typeLink"
-        (addedProject)="addedGithubProject($event)">
-    </app-github-link>
+    <app-git-link [teamId]="teamToAddGit.TeamId" [teamName]="teamToAddGit.TeamName" [typeLink]="typeLink" [projectLoc]="projectLoc1"
+    (addedProject)="addedGithubProject($event)" ></app-git-link>
 </ng-container>
 
 <div class="row p-2 mt-2 integrationBox">
     <div class="col p-0">
         <button class="btn etc mr-2" type="button" data-bs-toggle="tooltip" data-bs-placement="top"
-            data-toggle="modal" data-target="#gitlabModel" (click)="enableAddOrganisationLink(team,projectLoc2)"
+            data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team,projectLoc2)"
             title="Add Organisation">
             <img src="../../../assets/gitlabIcon.svg" alt="git" height="25" width="25">
             <ng-container *ngIf="repoLink && team.ProjectLocation == 'gitlab'; else integrateGitlab">
@@ -87,9 +86,8 @@
 </div>
 
 <ng-container *ngIf="addProjectEnabled2" id="projectModalLabel2">
-    <app-gitlab-link [teamId]="teamToAddGit.TeamId" [teamName]="teamToAddGit.TeamName" [typeLink]="typeLink"
-        (addedProject)="addedGitlabProject($event)">
-    </app-gitlab-link>
+    <app-git-link [teamId]="teamToAddGit.TeamId" [teamName]="teamToAddGit.TeamName" [typeLink]="typeLink" [projectLoc]="projectLoc2"
+    (addedProject)="addedGitlabProject($event)" ></app-git-link>
 </ng-container>
 
 <ng-container *ngIf="enableAddToken">

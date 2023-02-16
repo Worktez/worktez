@@ -22,7 +22,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { Router } from '@angular/router';
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
 
 @Component({
   selector: 'app-add-release',
@@ -63,7 +63,7 @@ export class AddReleaseComponent implements OnInit {
   gitToken: string;
   title: string;
 
-  constructor(public popupHandlerService: PopupHandlerService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService,  private githubService: GithubServiceService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router) { }
+  constructor(public popupHandlerService: PopupHandlerService,private gitService: GitCDMServiceService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router) { }
 
   ngOnInit(): void {
     this.releaseDate = this.toolService.date();
@@ -151,7 +151,7 @@ export class AddReleaseComponent implements OnInit {
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     this.gitToken = this.teamService.teamsDataJson[this.teamId].GitToken;
     this.gitToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).subscribe({
+    this.gitService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).subscribe({
       next: (data) => {
         this.addReleaseDetailsToDB();
         this.showLoader = false;

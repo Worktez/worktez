@@ -133,7 +133,6 @@ import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreatePostComponent } from './body/social-page/create-post/create-post.component';
 import { PostsComponent } from './body/social-page/posts/posts.component';
 import { WhatsNewComponent } from './body/social-page/whats-new/whats-new.component';
-import { GithubLinkComponent } from './body/github-link/github-link.component';
 import { KanbanBoardComponent } from './body/kanban-board/kanban-board.component';
 import { UpdateTeamComponent } from './body/update-team/update-team.component';
 import { SchedularPatchComponent } from './patches/schedular-patch/schedular-patch.component';
@@ -189,7 +188,6 @@ import { AddReleaseComponent } from './body/release/add-release/add-release.comp
 import { ReleaseCardComponent } from './body/release/release-card/release-card.component';
 import { ReleaseDetailsComponent } from './body/release-details/release-details.component';
 import { EditReleaseComponent } from './body/release-details/edit-release/edit-release.component';
-import { GitlabLinkComponent } from './body/gitlab-link/gitlab-link.component';
 import { GitlabComponent } from './body/task-details/gitlab/gitlab.component';
 import { DocumentationsComponent } from './body/documentations/documentations.component';
 import { GetStartedComponent } from './body/get-started/get-started.component';
@@ -205,6 +203,7 @@ import { ProfileFeatureComponent } from './body/features-page/profile-feature/pr
 import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feature/quicknotes-feature.component';
 import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
 import { GitIntegrationComponent } from './body/team-details/git-integration/git-integration.component';
+import { GitLinkComponent } from './body/git-link/git-link.component';
 
 @NgModule({
   declarations: [
@@ -307,7 +306,6 @@ import { GitIntegrationComponent } from './body/team-details/git-integration/git
     CreatePostComponent,
     PostsComponent,
     WhatsNewComponent,
-    GithubLinkComponent,
     KanbanBoardComponent,
     SchedularPatchComponent,
     UpdateTeamComponent,
@@ -361,7 +359,6 @@ import { GitIntegrationComponent } from './body/team-details/git-integration/git
     ReleaseCardComponent,
     ReleaseDetailsComponent,
     EditReleaseComponent,
-    GitlabLinkComponent,
     GitlabComponent,
     DocumentationsComponent,
     GetStartedComponent,
@@ -377,6 +374,7 @@ import { GitIntegrationComponent } from './body/team-details/git-integration/git
     QuicknotesFeatureComponent,
     TasksFeatureComponent,
     GitIntegrationComponent,
+    GitLinkComponent,
   ],
   imports: [
     BrowserModule,

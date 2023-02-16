@@ -1,16 +1,3 @@
-<!-- /*********************************************************** 
-* Copyright (C) 2022 
-* Worktez 
-* 
-* This program is free software; you can redistribute it and/or 
-* modify it under the terms of the MIT License 
-* 
-* 
-* This program is distributed in the hope that it will be useful, 
-* but WITHOUT ANY WARRANTY; without even the implied warranty of 
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-* See the MIT License for more details. 
-***********************************************************/ -->
 <div class="modal fade" id="gitModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -18,7 +5,7 @@
             <div class="container modal-body align-items-center px-4" id="addMemberPage">
                 <div class="row px-4 pt-1">
                     <ul class="navbar-nav mr-auto">
-                        <h4 class="active nav-link head bold" id="memberModalLabel">Link Github Repo</h4>
+                        <h4 class="active nav-link head bold" id="memberModalLabel">Link {{projectLoc}} Repo</h4>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <span class="btn">
@@ -87,11 +74,17 @@
                 <ng-container *ngIf="dataFetched && !showClose">
                     <div class="card">
                         <div class="card-header">
-                            Select Github Repo
+                            Select {{projectLoc}} Repo
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <ul *ngIf="projectLoc =='github'" class="list-group list-group-flush">
                             <ng-container *ngFor="let item of objData">
                                 <li (click)="addProjLink(item.html_url.slice(19))" class="list-group-item">{{ item.html_url.slice(19) }}</li>
+                            </ng-container>
+                        </ul>
+                        <ul *ngIf="projectLoc =='gitlab'" class="list-group list-group-flush">
+                            <ng-container *ngFor="let item of objData">
+                                <li (click)="addProjLink(item.path_with_namespace, 'gitlab')" class="list-group-item">{{
+                                    item.path_with_namespace }}</li>
                             </ng-container>
                         </ul>
                     </div>

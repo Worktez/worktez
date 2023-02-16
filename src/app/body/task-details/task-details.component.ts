@@ -32,7 +32,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 import { GitPrData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
 declare var jQuery:any;
 
 @Component( {
@@ -96,8 +96,9 @@ export class TaskDetailsComponent implements OnInit {
   prFound: boolean = false;
   createGitIssue: boolean = false;
   githubTokenExists: boolean = false;
+  gitLocation: string;
 
-  constructor (private githubService: GithubServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
+  constructor (public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService, private gitService: GitCDMServiceService) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -144,7 +145,8 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getPrDetails() {
-    this.githubService.getPrDetails(this.prApiLink.slice(29)).pipe(map(data => {
+    this.gitLocation=this.teamService.teamsDataJson[this.task.TeamId].ProjectLocation;
+    this.gitService.getPrDetails(this.prApiLink.slice(29),'',this.gitLocation).pipe(map(data => {
       const prData = data as GitPrData[];     
       return prData;
     })).subscribe(data => {

@@ -2,56 +2,130 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class GithubServiceService {
+export class GitCDMServiceService {
 
-  constructor(private httpClient: HttpClient) { 
-  }
+  constructor(private httpClient: HttpClient) { }
 
-  getPullRequests(repoLink: string){
-    const url = environment.githubApiUrl + "/repos/"+repoLink+"/pulls";
+  getPullRequests(repoLink: string,projectLoc:string){
+    var url='';
+    
+    if(projectLoc=='github'){
+       url = environment.githubApiUrl + "/repos/"+repoLink+"/pulls";
+    }
+    else{
+      url = environment.gitlabApiUrl + "/projects/"+repoLink+"/merge_requests?state=open";
+   }
     return this.httpClient.get(url);
   }
 
-  getPrDetails(prApiLink: string){
-    const url = environment.githubApiUrl + "/repos/"+prApiLink;
+  getPrDetails(prApiLink: string, mergeRequestID: string,projectLoc:string){
+    var url='';
+
+    if(projectLoc=='github'){
+       url = environment.githubApiUrl + "/repos/"+prApiLink;
+    }
+    else{
+      url = environment.gitlabApiUrl + "/projects/"+prApiLink+"/merge_requests/"+mergeRequestID;
+    }
+
     return this.httpClient.get(url);
   }
   
-  getGithubUserRepos(memberUserName: string) {
-    const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
+  getGitUserRepos(memberUserName: string,projectLoc:string) {
+    var url='';
+
+    if(projectLoc=='github'){
+         url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";
+    }
+    else{
+         url = environment.gitlabApiUrl + "/users/" + memberUserName + "/projects";
+    }
+
     return this.httpClient.get(url);
   }
 
-  getGithubPrivateRepos(bearerToken: string) {
+  getGitPrivateRepos(bearerToken: string,memberUserName: string,projectLoc:string) {
+    var url='';
+
     let httpOptions = {
       headers: {
         'Authorization': 'Bearer ' + bearerToken
       }
     };
 
-    const url = environment.githubApiUrl + "/user/" + "repos?visibility=private";
+    if(projectLoc=='github'){
+       url = environment.githubApiUrl + "/user/" + "repos?visibility=private";
+    }
+    else{
+         url = environment.gitlabApiUrl + "/users/" + memberUserName +"/projects?visibility=private";
+    }
+
     return this.httpClient.get(url, httpOptions);
 
   }
 
-  getGithubAllRepos(bearerToken: string) {
+  getGitAllRepos(bearerToken: string,memberUserName: string,projectLoc:string) {
+    var url='';
+
     let httpOptions = {
       headers: {
         'Authorization': 'Bearer ' + bearerToken
       }
     };
 
-    const url = environment.githubApiUrl + "/user/" +"repos?";
+    if(projectLoc=='github'){
+       url = environment.githubApiUrl + "/user/" +"repos?";
+    }
+    else{
+         url = environment.gitlabApiUrl + "/users/" + memberUserName + "/projects";
+    }
+
     return this.httpClient.get(url, httpOptions);
   }
 
-  getGithubOrgRepos(memberOrgName: string) {
-    const url = environment.githubApiUrl+ "/orgs/" + memberOrgName + "/repos";
+  getGitOrgRepos(memberOrgName: string,projectLoc:string) {
+    var url='';
+
+    if(projectLoc=='github'){
+      url = environment.githubApiUrl+ "/orgs/" + memberOrgName + "/repos";
+    }
+    else{
+      const url = environment.gitlabApiUrl + "/groups?custom_attributes[search]=" + memberOrgName; 
+    }
+
     return this.httpClient.get(url);
   }
+
+  createGitIssue(title: any, description: any, repoLink: string, bearerToken: any,projectLoc:string) {
+
+    let httpOptions = {
+      headers: {
+        'Authorization': 'Bearer ' + bearerToken
+      }
+    };
+    
+    var url='';
+
+    if(projectLoc=='github'){
+       url = environment.githubApiUrl + "/repos/"+repoLink+"/issues";
+    }
+    else{
+       url = environment.gitlabApiUrl + "/projects/" + repoLink + "/issues";
+    }
+
+    const payload = {
+        title: title,
+        body: description
+    }
+
+    return this.httpClient.post(url, JSON.stringify(payload), httpOptions);
+
+  }
+
 
   markdownGithubDoc(bearerToken: string, body: string){
     const url = environment.githubApiUrl +"/markdown/raw";
@@ -60,23 +134,6 @@ export class GithubServiceService {
       'Authorization': 'Bearer'+bearerToken,
       'Content-Type': 'text/plain',
     },});
-  }
-
-  createGithubIssue(title: any, description: any, repoLink: string, bearerToken: any) {
-    const url = environment.githubApiUrl + "/repos/"+repoLink+"/issues";
-
-    let httpOptions = {
-      headers: {
-        'Authorization': 'Bearer ' + bearerToken
-      }
-    };
-
-    const payload = {
-        title: title,
-        body: description
-    }
-
-    return this.httpClient.post(url, JSON.stringify(payload), httpOptions);
   }
 
   updateGithubRelease(release_id: string, bearerToken: string, tagName: string, targetBranch: string, releaseName: string, releaseDescription: string, draft: boolean, prerelease: boolean, generate_release_notes: boolean, projectLink: string){
@@ -151,4 +208,6 @@ export class GithubServiceService {
     const url = environment.githubApiUrl +"/repos/"+projectLink+"/releases";
     return this.httpClient.get(url);
   }
+
+
 }

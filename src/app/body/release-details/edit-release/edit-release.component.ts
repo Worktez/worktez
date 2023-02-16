@@ -15,7 +15,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ReleaseData } from 'src/app/Interface/ReleaseInterface';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
  
@@ -45,7 +45,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
    enableLoader: boolean = false;
    showClose: boolean = false;
    @Output() editReleaseCompleted = new EventEmitter<{ completed: boolean }>();
-   constructor(private validationService:ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private githubService: GithubServiceService, public teamService: TeamServiceService) { }
+   constructor(private validationService:ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService,private gitService: GitCDMServiceService, public teamService: TeamServiceService) { }
  
    ngOnInit(): void {
      this.tagName = this.releaseData.tag_name;
@@ -64,7 +64,7 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
     this.enableLoader = true;
     const projectLink = this.teamService.teamsDataJson[this.teamId].ProjectLink;
     const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.updateGithubRelease(this.releaseId, bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.ifDraft, this.preRelease, this.generateRelease, projectLink).subscribe({
+    this.gitService.updateGithubRelease(this.releaseId, bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.ifDraft, this.preRelease, this.generateRelease, projectLink).subscribe({
       next: () => {
 
       },

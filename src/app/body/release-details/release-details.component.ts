@@ -22,8 +22,8 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 import { map } from 'rxjs';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
  
  @Component({
    selector: 'app-release-details',
@@ -47,7 +47,7 @@ import { map } from 'rxjs';
    teamId: string;
    releaseDesc: string
 
-   constructor(public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
+   constructor(public navbarHandler: NavbarHandlerService ,public backendService: BackendService,private gitService: GitCDMServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
 
    ngOnInit(): void {
      this.releaseId = this.route.snapshot.params['ReleaseId'];
@@ -79,7 +79,7 @@ import { map } from 'rxjs';
  
    deleteRelease(id: string) {
     const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.deleteGithubRelease(id, bearerToken);
+    this.gitService.deleteGithubRelease(id, bearerToken);
    }
 
    setDeleteRelease(){
@@ -93,13 +93,13 @@ import { map } from 'rxjs';
   getReleaseDetails(){
     const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-    this.githubService.getReleaseByReleaseId(this.releaseId, bearerToken, projectLink).pipe(map(data => {
+    this.gitService.getReleaseByReleaseId(this.releaseId, bearerToken, projectLink).pipe(map(data => {
       const objData = data as ReleaseData;
       return objData;
     })).subscribe({
       next: (data) => {
           this.releaseData = data;
-          this.githubService.markdownGithubDoc(bearerToken, this.releaseData.body).subscribe({
+          this.gitService.markdownGithubDoc(bearerToken, this.releaseData.body).subscribe({
             next: (data) => {
               this.releaseDesc=data;
             },

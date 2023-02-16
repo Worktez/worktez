@@ -4,18 +4,19 @@ import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
 import { GitOrgData } from 'src/app/Interface/githubUserData';
 import { BackendService } from 'src/app/services/backend/backend.service';
-import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { GitCDMServiceService } from 'src/app/services/gitCDM-service/git-cdm-service.service';
 
 @Component({
-  selector: 'app-gitlab-link',
-  templateUrl: './gitlab-link.component.html',
-  styleUrls: ['./gitlab-link.component.css']
+  selector: 'app-git-link',
+  templateUrl: './git-link.component.html',
+  styleUrls: ['./git-link.component.css']
 })
-export class GitlabLinkComponent implements OnInit {
+export class GitLinkComponent implements OnInit {
 
   @Input("teamName") teamName: string;
   @Input("teamId") teamId: string;
   @Input("typeLink") typeLink: string;
+  @Input("projectLoc") projectLoc: string;
   memberOrgName: string;
   searchType: string = 'organisation';
   projLink: string;
@@ -28,20 +29,20 @@ export class GitlabLinkComponent implements OnInit {
   noRepoFound: boolean=false
   linkType: string = "Public";
   bearerToken: string;
-  gitlabToken: string
+  gitToken: string;
   projLoc: string;
+  
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions,private gitlabService: GitlabServiceService) { }
+  constructor(private gitService: GitCDMServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
-
   }
-  
+
   submit() {
     if (this.memberOrgName) {
       if (this.searchType == 'organisation' && this.linkType == 'Public') {
-        this.gitlabService.getGitlabUserRepos(this.memberOrgName).pipe(map(data => {
+        this.gitService.getGitUserRepos(this.memberOrgName,this.projectLoc).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
         })).subscribe({
@@ -57,7 +58,7 @@ export class GitlabLinkComponent implements OnInit {
         });
       } else if (this.searchType == 'organisation') {
         if (this.linkType=='Private'){
-          this.gitlabService.getGitlabPrivateRepos(this.bearerToken, this.memberOrgName).pipe(map(data => {
+          this.gitService.getGitPrivateRepos(this.bearerToken,this.memberOrgName,this.projectLoc).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
           })).subscribe({
@@ -72,7 +73,7 @@ export class GitlabLinkComponent implements OnInit {
             complete: () => console.info('Successfull')
           })
         } else if(this.linkType=='All') {
-          this.gitlabService.getGitlabAllRepos(this.bearerToken, this.memberOrgName).pipe(map(data => {
+          this.gitService.getGitAllRepos(this.bearerToken,this.memberOrgName,this.projectLoc).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
           })).subscribe({
@@ -89,7 +90,7 @@ export class GitlabLinkComponent implements OnInit {
         }
       }
       else if(this.searchType == 'username' && this.linkType == 'Public') {
-        this.gitlabService.getGitlabUserRepos(this.memberOrgName).pipe(map(data => {
+        this.gitService.getGitUserRepos(this.memberOrgName,this.projectLoc).pipe(map(data => {
           const objData = data as GitOrgData[];
           return objData;
         })).subscribe({
@@ -107,7 +108,7 @@ export class GitlabLinkComponent implements OnInit {
       }
       else if (this.searchType == 'username') {
         if (this.linkType=='Private'){
-          this.gitlabService.getGitlabPrivateRepos(this.bearerToken, this.memberOrgName).pipe(map(data => {
+          this.gitService.getGitPrivateRepos(this.bearerToken,this.memberOrgName,this.projectLoc).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
           })).subscribe({
@@ -122,7 +123,7 @@ export class GitlabLinkComponent implements OnInit {
             complete: () => console.info('Successfull')
           })
         } else if(this.linkType=='All') {
-          this.gitlabService.getGitlabAllRepos(this.bearerToken, this.memberOrgName).pipe(map(data => {
+          this.gitService.getGitAllRepos(this.bearerToken,this.memberOrgName,this.projectLoc).pipe(map(data => {
             const objData =data as GitOrgData[];
             return objData;
           })).subscribe({
@@ -146,12 +147,12 @@ export class GitlabLinkComponent implements OnInit {
     this.enableLoader=true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
     if(this.bearerToken != undefined){
-      this.gitlabToken = btoa(this.bearerToken)
+      this.gitToken = btoa(this.bearerToken)
     }else{
-      this.gitlabToken = "";
+      this.gitToken = "";
     }
     const callable = this.functions.httpsCallable('teams/addGitToken');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, Token: this.gitlabToken, ProjLocation: 'gitlab'}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, Token: this.gitToken, ProjLocation: this.projectLoc}).subscribe({
       next: (data) => {
         console.log("Successfully added Token");
         this.enableLoader=false;
@@ -184,7 +185,7 @@ export class GitlabLinkComponent implements OnInit {
     this.enableLoader=true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/addProjLink');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink, ProjLocation: 'gitlab'}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink, ProjLocation: this.projectLoc}).subscribe({
       next: (data) => {
         this.setBearerToken()
         console.log("Successfully added project link");
@@ -209,6 +210,5 @@ export class GitlabLinkComponent implements OnInit {
       this.addedProject.emit({ completed: false, memberOrgName: this.memberOrgName, projLink:this.projLink, searchType:this.searchType});
     }
   }
-
 
 }
