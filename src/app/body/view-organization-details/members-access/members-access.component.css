@@ -99,3 +99,10 @@ th{
     background-color: var(--primary-color);
     color: #FFFFFF;
 }
+
+.red-text {
+    background-color: var(--primary-bg);
+    color: var(--text);
+    border: none;
+    font-size: large;
+}

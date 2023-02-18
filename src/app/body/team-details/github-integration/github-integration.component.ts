@@ -21,9 +21,7 @@ export class GithubIntegrationComponent implements OnInit {
   repoLoc: string;
   githubTokenExists: boolean = false;
   enableAddToken: boolean = false;
-
   bearerToken: string = "";
-
   showClose: boolean = false;
   enableLoader: boolean = false;
 
@@ -31,7 +29,7 @@ export class GithubIntegrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkGitProject();
-    this.checkGitToken();
+    this.checkGitToken(this.team.GitToken);
   }
 
   enableAddOrganisationLink(team: Team) {
@@ -53,9 +51,9 @@ export class GithubIntegrationComponent implements OnInit {
     }
   }
 
-  checkGitToken(){
-    if(this.team.GitToken!=undefined){
-      if(this.team.GitToken==""){
+  checkGitToken(gitToken: string){
+    if(gitToken!=undefined){
+      if(gitToken==""){
         this.githubTokenExists=false;
       }
       else{
@@ -79,6 +77,32 @@ export class GithubIntegrationComponent implements OnInit {
     this.enableAddToken = true
   }
 
+  unLinkGithub(){
+    this.repoLoc='github';
+    this.repoLink="";
+    this.addProjLink(this.repoLink);
+  }
+
+  addProjLink(projLink: string){
+    this.repoLink=projLink;
+    this.enableLoader=true;
+    const organizationDomain = this.backendService.getOrganizationDomain();
+    const callable = this.functions.httpsCallable('teams/addProjLink');
+    callable({OrganizationDomain: organizationDomain, TeamName: this.team.TeamName, ProjLink: this.repoLink, ProjLocation: ''}).subscribe({
+      next: (data) => {
+        console.log("Successfully added project link");
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      error: (error) => {
+        console.error(error);
+        this.enableLoader=false;
+        this.showClose = true;
+      },
+      complete: () => console.info('Successfully created project link')
+    })
+  }
+
   back() {
     this.enableAddToken= false;
     this.showClose = false
@@ -94,6 +118,7 @@ export class GithubIntegrationComponent implements OnInit {
     callable({OrganizationDomain: organizationDomain, TeamName: teamName, Token: gitToken}).subscribe({
       next: (data) => {
         console.log("Successfully added Token");
+        this.checkGitToken(gitToken);
         this.enableLoader=false;
         this.showClose = true;
       },

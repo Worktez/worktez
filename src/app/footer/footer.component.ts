@@ -32,24 +32,24 @@ export class FooterComponent implements OnInit {
   constructor(public startService: StartServiceService, public authService: AuthService, private httpService: HttpServiceService, public router: Router, public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-        this.httpService.getReleaseDetails().pipe(map(data => {
-          const objData = data[0] as GitData;
-          return objData;
-        })).subscribe({
-          next: (data) => {
-            this.tag_name = data.tag_name;
-          },
-          error: (error) => {
-            console.error(error);
-          },
-          complete: () => console.info('Getting Release data successful')
-        });
+    this.httpService.getReleaseDetails().pipe(map(data => {
+      const objData = data[0] as GitData;
+      return objData;
+    })).subscribe({
+      next: (data) => {
+        this.tag_name = data.tag_name;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.info('Getting Release data successful')
+    });
   }
-  privacy(){
+  privacy() {
     this.router.navigate(['/privacy']);
   }
 
-  copyright(){
+  copyright() {
     this.router.navigate(['/copyright']);
   }
 

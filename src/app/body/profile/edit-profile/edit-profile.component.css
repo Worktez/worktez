@@ -28,12 +28,10 @@
     border-radius: 6px; 
     padding: 0.75rem;
     justify-content: space-evenly;
-    padding-top: 0 !important;
 }
 
 .modal-body {
-    padding-top: 0px !important;
-    padding:1rem;
+    padding: 0rem 1rem;
     
 }
 
