@@ -44,20 +44,20 @@ exports.startSchedular = function() {
                   const performanceChart = team.SchedularJob.PerformanceChart;
                   // const userPerformanceChart = team.SchedularJob.UserPerformanceChart;
 
-                const currentSprintID = team.CurrentSprintId;
-                const sprintRange = {
-                  SprintRange1: currentSprintID - 4,
-                  SprintRange2: currentSprintID,
-                };
-                // This can be called for all the sprints if needed
-                updateTotalTasks(orgDomain, team.TeamName, teamId, currentSprintID);
-                updateTotalTasks(orgDomain, team.TeamName, teamId, -1); // Backlog
+                  const currentSprintID = team.CurrentSprintId;
+                  const sprintRange = {
+                    SprintRange1: currentSprintID - 4,
+                    SprintRange2: currentSprintID,
+                  };
+                  // This can be called for all the sprints if needed
+                  updateTotalTasks(orgDomain, team.TeamName, teamId, currentSprintID);
+                  updateTotalTasks(orgDomain, team.TeamName, teamId, -1); // Backlog
 
-                // if (sprintEvalChart) {
-                // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
-                // } else if (type == "UserPerformanceChart") {
-                //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
-                // }
+                  // if (sprintEvalChart) {
+                  // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
+                  // } else if (type == "UserPerformanceChart") {
+                  //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
+                  // }
 
 
                   if (performanceChart) {
