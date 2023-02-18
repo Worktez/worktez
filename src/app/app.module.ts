@@ -206,6 +206,7 @@ import { OrganisationsFeatureComponent } from './body/features-page/organisation
 import { ProfileFeatureComponent } from './body/features-page/profile-feature/profile-feature.component';
 import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feature/quicknotes-feature.component';
 import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -400,7 +401,8 @@ import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-
     MatInputModule,
     MatFormFieldModule,
     DragDropModule,
-    ImageCropperModule
+    ImageCropperModule,
+    MatTooltipModule
   ],
   providers: [
     AuthService,
