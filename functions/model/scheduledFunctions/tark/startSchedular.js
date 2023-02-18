@@ -21,6 +21,7 @@ const { getAllSchedular } = require("../lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { getTeamUseTeamId, setSchedularJob } = require("../../teams/lib");
 const { updatePerformanceChartData } = require("../../performanceChart/tark/updatePerformanceChartData");
+const { updateTotalTasks } = require("../../sprints/tark/updateTotalTasks");
 // const { updateAutoSprintStatus } = require("../../performanceChart/tark/")
 
 exports.startSchedular = function() {
@@ -48,8 +49,12 @@ exports.startSchedular = function() {
                   SprintRange1: currentSprintID - 4,
                   SprintRange2: currentSprintID,
                 };
+                // This can be called for all the sprints if needed
+                updateTotalTasks(orgDomain, team.TeamName, teamId, currentSprintID);
+                updateTotalTasks(orgDomain, team.TeamName, teamId, -1); // Backlog
+
                 // if (sprintEvalChart) {
-                  // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
+                // updateSprintEvaluationGraphData(orgDomain, teamId, sprintRange);
                 // } else if (type == "UserPerformanceChart") {
                 //   updatedUserPerformanceChartData(schDoc.data().OrgDomain, schDoc.data().Assignee, sprintRange, schDoc.data().TeamId, teamName);
                 // }
