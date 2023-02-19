@@ -33,10 +33,10 @@
         <app-create-post></app-create-post>
     </ng-container>
     
-    <ng-container *ngIf="authService.completedLoadingApplication; else loader">
+    <!-- <ng-container *ngIf="authService.completedLoadingApplication; else loader"> -->
         <router-outlet></router-outlet>
         <app-quick-notes *ngIf="startService.userReady" ></app-quick-notes>
-    </ng-container>
+    <!-- </ng-container> -->
 
     <ng-container class="float-left theme" *ngIf="useEmulator && startService.showTeamsData">
         <div id="themeButton">

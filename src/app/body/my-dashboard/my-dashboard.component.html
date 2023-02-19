@@ -22,7 +22,7 @@
                 <div class="col p-1 col-md-5" *ngIf="startService.showTeamsData && startService.currentSprintNumber != 0">
                     <app-performance-chart [userEmail]="startService.userEmail" [uid]="startService.uid" [currentSprint]="startService.teamCurrentSprintNumber" [teamId]="startService.selectedTeamId"></app-performance-chart>
                 </div>
-                <div class="col p-1 col-md-7" *ngIf="startService.showTeamsData">
+                <div class="col p-1 col-md-7" *ngIf="startService.showTeamsData && teamService.labelsReady">
                     <app-my-tasks [userEmail]="startService.userEmail" [currentSprint]="startService.teamCurrentSprintNumber"></app-my-tasks>
                 </div>
             </div>
