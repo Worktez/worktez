@@ -46,6 +46,8 @@ export class CreateNewOrganizationComponent implements OnInit {
   basePath: string
   fileName: string
   percentage: number = 0;
+  OrgDomains =[];
+  orgDomainsAvailable: boolean = true
 
   createNewOrgForm= new FormGroup({
     orgName: new FormControl('', Validators.required),
@@ -64,6 +66,14 @@ export class CreateNewOrganizationComponent implements OnInit {
     this.orgAdminUid = this.authService.getLoggedInUser()
     this.navbarHandler.resetNavbar()
     this.navbarHandler.addToNavbar(this.componentName);
+    ((this.authService.myOrgCollectionsData.forEach(item=>{
+      (item.forEach(item=>{
+        console.log(item.OrgDomain)
+        this.OrgDomains.push(item.OrgDomain);
+      }));
+    })))
+
+    
    }
 
   submit() {
@@ -107,5 +117,18 @@ export class CreateNewOrganizationComponent implements OnInit {
 
   close() {
     this.location.back();
+  }
+
+  checkOrgDomainAvailabilityLive() {
+    console.log(this.orgDomain.value)
+    for (let i = 0; i < this.OrgDomains.length; i++) {
+      if (this.OrgDomains[i]==this.orgDomain.value) {
+        this.orgDomainsAvailable = false;
+        break;
+      }else {
+          this.orgDomainsAvailable = true;
+          this.enableLoader = false;
+      }
+    }
   }
 }
