@@ -68,7 +68,6 @@ export class CreateNewOrganizationComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.componentName);
     ((this.authService.myOrgCollectionsData.forEach(item=>{
       (item.forEach(item=>{
-        console.log(item.OrgDomain)
         this.OrgDomains.push(item.OrgDomain);
       }));
     })))
@@ -120,7 +119,6 @@ export class CreateNewOrganizationComponent implements OnInit {
   }
 
   checkOrgDomainAvailabilityLive() {
-    console.log(this.orgDomain.value)
     for (let i = 0; i < this.OrgDomains.length; i++) {
       if (this.OrgDomains[i]==this.orgDomain.value) {
         this.orgDomainsAvailable = false;
