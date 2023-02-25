@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="!enableLoader">
     <div class="row p-3">
         <div class="col-md-10 col-10 pt-2">
             <h2>Create New Organization</h2>
@@ -79,3 +79,4 @@
         </div>
     </form>
 </div>
+<app-loader *ngIf="enableLoader"></app-loader>
