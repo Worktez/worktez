@@ -38,6 +38,7 @@ const {addGitToken} = require("./tark/addGitToken");
 const {addGitDetails} = require("./tark/addGitDetails");
 const {getGitDetails} = require("./tark/getGitDetails");
 const {updateGitDetails} = require("./tark/updateGitDetails");
+const { reorderLabels } = require("./tark/reorderLabels");
 /**
  * Description
  * @param {any} "/addMember"
@@ -175,6 +176,17 @@ fastify.post("/deleteLabel", (req, res) => {
  */
 fastify.post("/addLabel", (req, res) => {
   addLabel(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/reOrderLabels"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/reOrderLabels", (req, res) => {
+  reorderLabels(req, res);
 });
 
 /**

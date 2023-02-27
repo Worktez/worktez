@@ -63,6 +63,11 @@
     color: var(--text);
 }
 
+.list-group-item:hover{
+  background: var(--primary-bg);
+  cursor: grab;
+}
+
 .icons {
     color: var(--text);
 }
@@ -89,4 +94,7 @@ input:focus {
     box-shadow: none;
     outline: 0 none;
     border-color: var(--primary-color);
+}
+.cdk-drop-list-dragging {
+  cursor: grabbing;
 }

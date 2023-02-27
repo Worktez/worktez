@@ -19,6 +19,7 @@ import { Label ,Team} from 'src/app/Interface/TeamInterface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 
 @Component({
@@ -30,28 +31,34 @@ export class EditLabelPropComponent implements OnInit {
   componentName: string = "EDIT-LABEL-PROP";
 
   @ViewChild('form') form: NgForm;
-  @Input('label') label: Label;
-  @Input('teamName') teamName: string;
-  @Output() editLabelCompleted = new EventEmitter<{ completed: boolean }>();
+  @Input('labelName') labelName: string;
+  @Input('team') team: Team;
+  @Input('scope') scope: string;
+  @Input('prevLabelsArray') prevLabelsArray: string[]
+  @Output() editLabelCompleted = new EventEmitter<{ completed: boolean, updatedLabelsArray: string[] }>();
   @Output() getTeamLabelsByScope = new EventEmitter();
+  label: Label
   iconName = new UntypedFormControl();
   colorCode = new UntypedFormControl();
   enableLoader: boolean = false;
   showClose: boolean=false;
 
-  constructor(private fuctions:AngularFireFunctions, private authService: AuthService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService) { }
+  updatedLabelsArray: string[] 
+
+  constructor(private fuctions:AngularFireFunctions, private authService: AuthService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, private teamService: TeamServiceService) { }
 
   ngOnInit(): void {
-
+    this.label = this.teamService.teamsLabelsJson[this.team.TeamId][this.scope][this.labelName];
+    this.updatedLabelsArray = this.prevLabelsArray;
   }
 
     submit(){
     this.enableLoader=true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.fuctions.httpsCallable('teams/editLabel');
-     callable({DisplayName: this.label.DisplayName, Status: this.label.Status, ColorCode: this.label.ColorCode, IconName: this.label.IconName, Id: this.label.Id, TeamName: this.teamName, OrgDomain: orgDomain}).subscribe({
+     callable({DisplayName: this.label.DisplayName, Status: this.label.Status, ColorCode: this.label.ColorCode, IconName: this.label.IconName, Id: this.label.Id, TeamName: this.team.TeamName, TeamId: this.team.TeamId, OrgDomain: orgDomain, Scope: this.label.Scope}).subscribe({
       next: (data) => {
-        this.getTeamLabelsByScope.emit();
+        this.updatedLabelsArray = data.labelsArray;
         this.enableLoader=false;
         this.showClose=true;
       },
@@ -61,7 +68,10 @@ export class EditLabelPropComponent implements OnInit {
         this.enableLoader = false;
         console.error(error);
       },
-      complete: () => console.info('Successful ')
+      complete: () => {
+        this.teamService.teamsLabelsJson[this.team.TeamId][this.scope][this.label.DisplayName] = this.label;
+        console.info('Successful ');
+      }
     });
   }
 
@@ -86,7 +96,7 @@ export class EditLabelPropComponent implements OnInit {
   }
 
   editLabelDone(){
-    this.editLabelCompleted.emit({ completed:true });
+    this.editLabelCompleted.emit({ completed:true, updatedLabelsArray: this.updatedLabelsArray });
   }
 
   backToLabelDetails() {
