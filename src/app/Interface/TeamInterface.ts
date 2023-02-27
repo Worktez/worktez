@@ -31,6 +31,7 @@ export interface Team {
     TeamStatus: number;
     TeamDescription: string;
     TeamManagerEmail: string;
+    teamAdmin: string;
     TeamMembers: string[];
     Type: string[];
     Status: string[];
@@ -44,6 +45,7 @@ export interface Team {
     ProjectLink: string;
     GitToken: string;
     ProjectLocation: string;
+    TotalBacklogTask: number;
 }
 
 export interface TeamDataId extends Team {id: string;}

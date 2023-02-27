@@ -153,3 +153,13 @@ input:focus {
     font-size: 48px;
 }
 
+.teamDetailsBox{
+    border: 1px solid var(--secondary-bg);
+    border-radius: 5px;
+}
+.counters{
+    font-size: medium;
+    text-align: left;
+    margin-left: auto;
+    margin-right: 20px;
+}
