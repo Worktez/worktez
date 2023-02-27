@@ -64,6 +64,7 @@ export class TeamServiceService {
   }
 
   getLabels(orgDomain: string) {
+    this.labelsReady = false
     this.teamLabelDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getAllLabels');
     callable({ OrganizationDomain: orgDomain }).subscribe({
@@ -75,10 +76,27 @@ export class TeamServiceService {
         console.error(error);
       },
       complete: () => {
+        this.labelsReady = true;
         this.teamLabelDataState.next(true);
         console.info('Getting Label Data Successful')
       }
     });
     return this.teamLabelDataStateObservable;
   }
+
+  reorderLabels(orgDomain: string, teamName: string, scope: string, labelsArray: string[]){
+       const callable = this.functions.httpsCallable('teams/reOrderLabels');
+       callable({OrgDomain: orgDomain, TeamName: teamName, Scope: scope, LabelsArray: labelsArray}).subscribe({
+         next:() => {
+           console.log("Labels ReOrdered");
+         },
+         error: (error) =>{
+           console.error(error);
+         },
+         complete: () => {
+           console.log("Successfully ReOrdered Label");
+         }
+       });
+  }
+
 }

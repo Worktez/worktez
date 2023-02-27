@@ -35,6 +35,7 @@ const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 const {getAllTeamData} = require("./tark/getAllTeamData");
 const {getAllLabels} = require("./tark/getAllLabels");
 const {addGitToken} = require("./tark/addGitToken");
+const { reorderLabels } = require("./tark/reorderLabels");
 /**
  * Description
  * @param {any} "/addMember"
@@ -139,6 +140,17 @@ fastify.post("/deleteLabel", (req, res) => {
  */
 fastify.post("/addLabel", (req, res) => {
   addLabel(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/reOrderLabels"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/reOrderLabels", (req, res) => {
+  reorderLabels(req, res);
 });
 
 /**
