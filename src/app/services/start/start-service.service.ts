@@ -159,6 +159,7 @@ export class StartServiceService {
         this.backendService.organizationsData.subscribe(data => {
           this.teamService.getTeams(this.backendService.getOrganizationDomain());
           this.teamService.getLabels(this.backendService.getOrganizationDomain());
+          this.teamService.getGitDetails(this.backendService.getOrganizationDomain(), this.teamName);
           this.teamService.teamDataStateObservable.subscribe({
             next: (data) =>{
               if(data)

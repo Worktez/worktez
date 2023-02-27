@@ -67,7 +67,7 @@ export class GithubIntegrationComponent implements OnInit {
     if(data.completed==true){
       this.projectLinked=data.completed;
       this.repoLink=data.projLink;
-      this.repoLoc='github';
+      this.repoLoc='Github';
       this.teamService.teamsDataJson[this.team.TeamId].ProjectLink = this.repoLink;
       this.teamService.teamsDataJson[this.team.TeamId].ProjectLocation = this.repoLoc;
     }
@@ -78,7 +78,7 @@ export class GithubIntegrationComponent implements OnInit {
   }
 
   unLinkGithub(){
-    this.repoLoc='github';
+    this.repoLoc='Github';
     this.repoLink="";
     this.addProjLink(this.repoLink);
   }
@@ -87,20 +87,10 @@ export class GithubIntegrationComponent implements OnInit {
     this.repoLink=projLink;
     this.enableLoader=true;
     const organizationDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/addProjLink');
-    callable({OrganizationDomain: organizationDomain, TeamName: this.team.TeamName, ProjLink: this.repoLink, ProjLocation: ''}).subscribe({
-      next: (data) => {
-        console.log("Successfully added project link");
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully created project link')
-    })
+    this.team.ProjectLink=projLink;
+    this.teamService.addGitDetails(organizationDomain, this.team.TeamName, '', '', '', null, '' ,'','');
+    this.enableLoader=false;
+    this.showClose = true;
   }
 
   back() {
@@ -114,20 +104,10 @@ export class GithubIntegrationComponent implements OnInit {
     const organizationDomain = this.backendService.getOrganizationDomain();
     const teamName = this.team.TeamName
     const gitToken = btoa(this.bearerToken)
-    const callable = this.functions.httpsCallable('teams/addGitToken');
-    callable({OrganizationDomain: organizationDomain, TeamName: teamName, Token: gitToken}).subscribe({
-      next: (data) => {
-        console.log("Successfully added Token");
-        this.checkGitToken(gitToken);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully Added Token')
-    });
+    this.teamService.updateGitDetails(organizationDomain, teamName, gitToken);
+    this.checkGitToken(gitToken);
+    this.enableLoader=false;
+    this.showClose = true;
+   
   }
 }

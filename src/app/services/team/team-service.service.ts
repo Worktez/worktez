@@ -16,7 +16,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Subject } from 'rxjs';
-import { Team, TeamLabels } from 'src/app/Interface/TeamInterface'
+import { Team, TeamLabels, GitDetails } from 'src/app/Interface/TeamInterface'
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +26,12 @@ export class TeamServiceService {
   public teamDataStateObservable = this.teamDataState.asObservable();
   private teamLabelDataState: Subject<boolean> = new Subject<boolean>();
   public teamLabelDataStateObservable = this.teamLabelDataState.asObservable();
+  private teamGitDataState: Subject<boolean> = new Subject<boolean>();
+  public teamGitDataStateObservable = this.teamGitDataState.asObservable();
   public teamsDataJson: Team[] = [];
   public teamsLabelsJson: TeamLabels[] = [];
+  public teamsGitDataJson: GitDetails[] = [];
+  public gitDataReay: boolean = false;
   public labelsReady: boolean = false;
   public teamsReady: boolean = false;
   constructor(private functions: AngularFireFunctions) { }
@@ -61,6 +65,53 @@ export class TeamServiceService {
   getLabelsByScope(teamId: string, scope: string) {
     const labelsArray = this.teamsLabelsJson[teamId][scope];
     return Object.keys(labelsArray);
+  }
+
+  addGitDetails(organizationDomain: string, teamName: string, addedOn: string, owner: string, bearerToken: string, projectId: number, projLink: string, projectUrl: string, projectLocation: string) {
+    const callable = this.functions.httpsCallable('teams/addGitDetails');
+    callable({OrgDomain: organizationDomain, TeamName: teamName, AddedOn: addedOn, Owner: owner, BearerToken: bearerToken, ProjectId: projectId, ProjectLink: projLink, ProjectUrl: projectUrl, ProjectLocation: projectLocation}).subscribe({
+      next: (data) => {
+        console.log("Successfully added project link");
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.info('Successfully created project link')
+    })
+  }
+
+  updateGitDetails( organizationDomain: string, teamName: string, gitToken: string) {
+    const callable = this.functions.httpsCallable('teams/updateGitDetails');
+    callable({OrganizationDomain: organizationDomain, TeamName: teamName, Token: gitToken}).subscribe({
+      next: (data) => {
+        console.log("Successfully added Token");
+      }, 
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => console.info('Successfully Added Token')
+    })
+  }
+
+  getGitDetails(orgDomain: string, teamName: string) {
+    this.teamGitDataState.next(false);
+    const callable = this.functions.httpsCallable('teams/getGitDetails');
+    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+      next: (data) => {
+        console.log(data[0]);
+        this.teamsGitDataJson = data[0] as GitDetails[];
+        console.log(this.teamsGitDataJson);
+        this.gitDataReay = true;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        this.teamGitDataState.next(true);
+        console.info('Getting Label Data Successful');
+      }
+    });
+    return this.teamsGitDataJson;
   }
 
   getLabels(orgDomain: string) {

@@ -5,6 +5,7 @@ import { map } from 'rxjs';
 import { GitOrgData } from 'src/app/Interface/githubUserData';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-github-link',
@@ -29,10 +30,14 @@ export class GithubLinkComponent implements OnInit {
   linkType: string = "Public";
   bearerToken: string;
   gitToken: string;
+  owner: string;
+  projectUrl: string;
+  createdAt: string;
+  projectId: number;
 
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
-  constructor(private githubService: GithubServiceService, public backendService: BackendService, private functions: AngularFireFunctions) { }
+  constructor(private githubService: GithubServiceService, public backendService: BackendService, private functions: AngularFireFunctions, public teamService: TeamServiceService) { }
 
   ngOnInit(): void {
   }
@@ -141,6 +146,28 @@ export class GithubLinkComponent implements OnInit {
          
   }
 
+  getGitDetails(){
+    this.organizationDomain = this.backendService.getOrganizationDomain();
+    console.log(this.bearerToken);
+    this.githubService.getGithubRepoDetails(this.bearerToken, this.projLink).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.owner=data['owner']['login'];
+        this.projectUrl=data['clone_url'];
+        this.createdAt=data['created_at'];
+        this.projectId = data['id'];
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log("Successfully fetched repo details");
+        this.teamService.addGitDetails(this.organizationDomain, this.teamName, this.createdAt, this.owner, this.bearerToken, this.projectId, this.projLink, this.projectUrl, "Github");
+      }
+      
+    })
+  }
+
   setBearerToken() {
     this.enableLoader=true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
@@ -149,20 +176,10 @@ export class GithubLinkComponent implements OnInit {
     }else{
       this.gitToken = "";
     }
-    const callable = this.functions.httpsCallable('teams/addGitToken');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, Token: this.gitToken, ProjLocation: 'github'}).subscribe({
-      next: (data) => {
-        console.log("Successfully added Token");
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully Added Token')
-    })
+    this.teamService.updateGitDetails(this.organizationDomain, this.teamName, this.gitToken);
+    this.getGitDetails();
+    this.enableLoader=false;
+    this.showClose = true;
   }
 
   setLinkType(linkType: string) {
@@ -179,25 +196,9 @@ export class GithubLinkComponent implements OnInit {
   }
 
   addProjLink(projLink: string) {
-    this.projLink=projLink;
+    this.projLink=projLink;   
     this.enableLoader=true;
-    this.organizationDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/addProjLink');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink, ProjLocation: 'github'}).subscribe({
-      next: (data) => {
-        this.setBearerToken()
-        console.log("Successfully added project link");
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully created project link')
-    })
-    
+    this.setBearerToken()
   }
 
   added() {

@@ -99,7 +99,7 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <ng-container *ngFor="let item of objData">
-                                <li (click)="addProjLink(item.path_with_namespace, 'gitlab')" class="list-group-item">{{
+                                <li (click)="addProjLink(item.path_with_namespace, item.id,'gitlab')" class="list-group-item">{{
                                     item.path_with_namespace }}</li>
                             </ng-container>
                         </ul>
