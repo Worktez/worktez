@@ -38,6 +38,21 @@ export class GitlabServiceService {
 
   }
 
+  getGitlabProjDetails(bearerToken: string, projId: number){
+    const url =  environment.gitlabApiUrl + "/projects/"+ projId;
+    if(bearerToken!=undefined){
+      let httpOptions = {
+        headers: {
+          'Authorization': 'Bearer ' + bearerToken
+        }
+      };
+      return this.httpClient.get(url, httpOptions);
+    } else {
+      return this.httpClient.get(url);
+    }
+
+  }
+
   getGitlabAllRepos(bearerToken: string, memberUserName: string) { ///////
     let httpOptions = {
       headers: {

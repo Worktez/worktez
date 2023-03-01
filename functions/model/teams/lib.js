@@ -61,6 +61,7 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
     ProjectLink: "",
     ProjectLocation: "",
     GitToken: "",
+    GitCounter: 0,
     TotalCompletedTask: 0,
   });
   return Promise.resolve(setTeam);
@@ -157,6 +158,66 @@ exports.getTeamUseTeamId = function(orgDomain, teamId) {
 exports.deleteScopeLabel = function(updateLabelToJson, orgDomain, teamName, scope, docId) {
   const deleteLabelPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("LabelProperties").doc(docId).where("Id", "==", docId).update(updateLabelToJson);
   return Promise.resolve(deleteLabelPromise);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} addedOn
+ * @param {any} owner
+ * @param {any} bearerToken
+ * @param {any} projectId
+ * @param {any} projectLink
+ * @param {any} projectUrl
+ * @param {any} projectLocation
+ * @param {any} docId
+ * @return {any}
+ */
+exports.setGitDetails = function(orgDomain, teamName, addedOn, owner, bearerToken, projectId, projectLink, projectUrl, projectLocation, docId) {
+  const setGitDetails = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("GitDetails").doc(docId).set({
+    AddedOn: addedOn,
+    GitToken: bearerToken,
+    Owner: owner,
+    ProjectId: projectId,
+    ProjectLink: projectLink,
+    ProjectUrl: projectUrl,
+    Provider: projectLocation,
+    Id: docId,
+    Status: "OK",
+  });
+  return Promise.resolve(setGitDetails);
+};
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} docId
+ * @return {any}
+ */
+exports.getGitDetailsById = function(orgDomain, teamName) {
+  const getGitDetailsByIdPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("GitDetails").get().then((doc) => {
+    const data = [];
+    doc.forEach((gitData) => {
+      data.push(gitData.data());
+    });
+    return data;
+  });
+  return Promise.resolve(getGitDetailsByIdPromise);
+};
+
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} docId
+ * @return {any}
+ */
+exports.updateGitDetails = function(inputJson, orgDomain, teamName, docId) {
+  const updateGitDetailsPromise = db.collection("Organizations").doc(orgDomain).collection("Teams").doc(teamName).collection("GitDetails").doc(docId).update(inputJson);
+  return Promise.resolve(updateGitDetailsPromise);
 };
 
 /**

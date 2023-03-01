@@ -50,6 +50,18 @@ export interface Team {
 
 export interface TeamDataId extends Team {id: string;}
 
+export interface GitDetails {
+    AddedOn: string;
+    GitToken: string;
+    Id: string;
+    Owner: string;
+    ProjectId: number;
+    ProjectLink: string;
+    ProjectUrl: string;
+    Provider: string;
+    Status: string;
+}
+
 export interface Label {
     ColorCode: string;
     DisplayName: string;
