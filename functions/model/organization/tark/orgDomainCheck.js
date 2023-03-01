@@ -26,7 +26,6 @@ exports.orgDomainCheck = function(request, response) {
 
   getApplicationData().then((orgDoc) => {
     for (let i = 0; i < orgDoc.OrgDomains.length; i++) {
-      console.log(orgDoc.OrgDomains[i]);
       if (orgDoc.OrgDomains[i] == orgDomain) {
         resultData = "orgDomain Already taken";
         break;
