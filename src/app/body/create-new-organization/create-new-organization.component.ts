@@ -119,14 +119,25 @@ export class CreateNewOrganizationComponent implements OnInit {
   }
 
   checkOrgDomainAvailabilityLive() {
-    for (let i = 0; i < this.OrgDomains.length; i++) {
-      if (this.OrgDomains[i]==this.orgDomain.value) {
-        this.orgDomainsAvailable = false;
-        break;
-      }else {
-          this.orgDomainsAvailable = true;
-          this.enableLoader = false;
-      }
-    }
+    const orgDomain = this.orgDomain.value;
+    const callable = this.functions.httpsCallable('teams/orgDomainCheck');
+       callable({OrganizationDomain: orgDomain}).subscribe({
+        next: (result) => {
+          if(result == "orgDomain Already taken"){   
+            this.orgDomainsAvailable = false;
+
+          } else {
+            this.orgDomainsAvailable = true;
+            this.enableLoader = false;
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          console.log("error is here")
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        },
+        complete: () => {console.info('Successful ')}
+    });
   }
 }
