@@ -51,7 +51,7 @@ export class TeamDetailsComponent implements OnInit {
   difficultyLabels: string[]; 
   milestoneStatusLabels: string[];
   
-  constructor(private teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
+  constructor(public teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
   ngOnInit(): void {
     this.teamId = this.route.snapshot.params['teamId'];

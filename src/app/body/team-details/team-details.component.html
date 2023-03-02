@@ -161,7 +161,7 @@
                 </div>
               </ng-container>
             </div>
-            <div class="row scopeLabels">
+            <div class="row scopeLabels" *ngIf="teamService.labelsReady">
               <ng-container *ngFor="let item of team.Scope">
                 <div class="col p-2">
                   <app-label-card [scope]="item" [team]="team"></app-label-card>
