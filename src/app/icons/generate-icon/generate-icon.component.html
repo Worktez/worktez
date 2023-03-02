@@ -1,14 +1,16 @@
-<ng-container *ngIf="Border; else noBorder">
-    <div class='Border py-1' [style.color]="colorCode" [style.border-color]="colorCode">
-        <mat-icon fontSet="material-icons-outlined icon" class="align-middle" data-toggle="tooltip" data-placement="top" [title]="icon.DisplayName">
-            {{icon.IconName}}
-        </mat-icon>
-    </div>
+<ng-container *ngIf="iconReady">
+    <ng-container *ngIf="Border; else noBorder">
+        <div class='Border py-1' [style.color]="colorCode" [style.border-color]="colorCode">
+            <mat-icon fontSet="material-icons-outlined icon" class="align-middle" data-toggle="tooltip" data-placement="top" [title]="icon.DisplayName">
+                {{icon.IconName}}
+            </mat-icon>
+        </div>
+    </ng-container>
+    <ng-template #noBorder>
+        <div class='icon' [style.color]="colorCode" >
+            <mat-icon fontSet="material-icons-outlined icon" data-toggle="tooltip" data-placement="top" [title]="icon.DisplayName" class="align-middle">
+                {{icon.IconName}}
+            </mat-icon>
+        </div>
+    </ng-template>
 </ng-container>
-<ng-template #noBorder>
-    <div class='icon' [style.color]="colorCode" >
-        <mat-icon fontSet="material-icons-outlined icon" data-toggle="tooltip" data-placement="top" [title]="icon.DisplayName" class="align-middle">
-            {{icon.IconName}}
-        </mat-icon>
-    </div>
-</ng-template>

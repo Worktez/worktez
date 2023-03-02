@@ -26,7 +26,7 @@
                 </select>
             </ng-container>
             <ng-template #showDifficultyIcon>
-                <app-get-icon [DisplayName]="task.Difficulty" [Border]="false" [TeamId]="task.TeamId" [Scope]="'Difficulty'"></app-get-icon>
+                <app-generate-icon [label]="task.Difficulty" [Border]="false" [teamId]="task.TeamId" [scope]="'Difficulty'"></app-generate-icon>
             </ng-template>
         </div>
         <div class="col"></div>
@@ -45,7 +45,7 @@
                 </select>
             </ng-container>
             <ng-template #showPriorityIcon>
-                <app-get-icon [DisplayName]="task.Priority" [Border]="false" [TeamId]="task.TeamId" [Scope]="'Priority'"></app-get-icon>
+                <app-generate-icon [label]="task.Priority" [Border]="false" [teamId]="task.TeamId" [scope]="'Priority'"></app-generate-icon>
             </ng-template>
         </div>
         <div class="col"></div>

@@ -8,7 +8,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
   styleUrls: ['./get-icon.component.css']
 })
 export class GetIconComponent implements OnInit {
-
+  // THIS COMPONENT IS NOT BEING USED ANYWHERE ANYMORE, All ITS FUNCTIONALITIES ARE NOW IN APP/GENERATE-ICON-COMPONENT
   @Input('DisplayName') displayName: string;
   @Input('Border') border: boolean;
   @Input('TeamId') teamId: string;
@@ -16,38 +16,11 @@ export class GetIconComponent implements OnInit {
 
 
   icon: Label;
-  iconReady: boolean = false;
+  
 
   constructor(private teamService: TeamServiceService) { }
 
   ngOnInit(): void {
-    if(this.teamService.labelsReady)
-      this.getlabelProperties();
-    else {
-      this.teamService.teamLabelDataStateObservable.subscribe({
-        next: () => {
-          this.getlabelProperties();
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          console.log("Completed getting labels");
-        }
-      })
-    }
-  }
 
-  getlabelProperties() {
-    if(this.teamService.teamsLabelsJson.length != 0 && this.teamService.teamsLabelsJson[this.teamId][this.scope][this.displayName] != undefined) {
-      const label = this.teamService.teamsLabelsJson[this.teamId][this.scope][this.displayName];
-      this.icon = label;
-      this.iconReady = true;
-    } else {
-      const label = defaultLabel;
-      this.icon = label;
-      this.iconReady = true;
-    }
   }
-
 }
