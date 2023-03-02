@@ -61,6 +61,7 @@ import { ReleaseDetailsComponent } from './body/release-details/release-details.
 import { DocumentationsComponent } from './body/documentations/documentations.component';
 import { GetStartedComponent } from './body/get-started/get-started.component';
 import { FeaturesPageComponent } from './body/features-page/features-page.component';
+import { ResetPasswordComponent } from './body/reset-password/reset-password.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -115,6 +116,16 @@ const routes: Routes = [
   { path: 'Documentations', component:DocumentationsComponent },
   { path: 'GettingStarted', component: GetStartedComponent },
   { path: 'Features/:currentSection', component: FeaturesPageComponent,},
+  {
+    path: 'auth',
+    children: [
+      {
+        path: 'resetPass',
+        component: ResetPasswordComponent,
+        data: { title: 'Reset Password' }
+      }
+    ]
+  },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 

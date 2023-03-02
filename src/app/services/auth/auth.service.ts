@@ -69,6 +69,18 @@ export class AuthService {
     });
   }
 
+  async forgotPassword(email: string){
+    console.log("REached", email);
+    await this.afauth.sendPasswordResetEmail(email);
+  }
+  async verifyPasswordResetActionCode(actionCode: string){
+    await this.afauth.verifyPasswordResetCode(actionCode);
+  }
+  async confirmPasswordReset(actionCode: string, newPassword: string){
+    console.log(actionCode, newPassword);
+    await this.afauth.confirmPasswordReset(actionCode, newPassword);
+  }
+
   async loginUser(email: string, password: string) {
     await this.afauth.signInWithEmailAndPassword(email, password);
   }

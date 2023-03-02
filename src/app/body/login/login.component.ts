@@ -27,10 +27,12 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 export class LoginComponent implements OnInit {
 
   email: string
+  emailSent: boolean = false
   password: string
   username: string
   showPassword: boolean = false
   componentName: string = "LOGIN"
+  currentMode: string = "loginOrSignUp"
 
   activeLogin: boolean = true
   userExistChecked=false;
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
     this.authService.afauth.user.subscribe((data) => {
       this.userExistChecked=true;
     })
+    this.currentMode="loginOrSignUp";
   }
 
   onSignInWithGoogle() {
@@ -100,5 +103,16 @@ export class LoginComponent implements OnInit {
 
   changeTab() {
     this.activeLogin = !this.activeLogin;
+  }
+  changeMode(mode: string){
+    this.currentMode=mode
+  }
+  onForgotPassword(){
+    this.authService.forgotPassword(this.email).then(() => {
+      this.email='';
+      this.emailSent=true
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
