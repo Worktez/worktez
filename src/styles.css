@@ -12,11 +12,24 @@
  * See the MIT License for more details.
  ***********************************************************/
 /* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
+html, body {
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 16px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+p, a, span, li, ul, th, td {
+  font-size: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
 body {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }

@@ -22,16 +22,16 @@ import { MyDashBoardComponent } from './body/my-dashboard/my-dashboard.component
 import { SocialPageComponent } from './body/social-page/social-page.component';
 import { CreateNewOrganizationComponent } from './body/create-new-organization/create-new-organization.component';
 import { CreateNewTeamComponent } from './body/create-new-team/create-new-team.component';
-import { Patch1Component } from './patches/patch1/patch1.component';
-import { Patch2Component } from './patches/patch2/patch2.component';
-import { Patch3Component } from './patches/patch3/patch3.component';
-import { Patch4Component } from './patches/patch4/patch4.component';
-import { Patch5Component } from './patches/patch5/patch5.component';
-import { Patch6Component } from './patches/patch6/patch6.component';
-import { Patch7Component } from './patches/patch7/patch7.component';
-import { Patch8Component } from './patches/patch8/patch8.component';
-import { Patch9Component } from './patches/patch9/patch9.component';
-import { Patch10Component } from './patches/patch10/patch10.component';
+// import { Patch1Component } from './patches/patch1/patch1.component';
+// import { Patch2Component } from './patches/patch2/patch2.component';
+// import { Patch3Component } from './patches/patch3/patch3.component';
+// import { Patch4Component } from './patches/patch4/patch4.component';
+// import { Patch5Component } from './patches/patch5/patch5.component';
+// import { Patch6Component } from './patches/patch6/patch6.component';
+// import { Patch7Component } from './patches/patch7/patch7.component';
+// import { Patch8Component } from './patches/patch8/patch8.component';
+// import { Patch9Component } from './patches/patch9/patch9.component';
+// import { Patch10Component } from './patches/patch10/patch10.component';
 import { UserVerificationComponent } from './user-verification/user-verification.component';
 import { ProfileComponent } from './body/profile/profile.component';
 import { SetupComponent } from './body/setup/setup.component';
@@ -65,8 +65,8 @@ import { FeaturesPageComponent } from './body/features-page/features-page.compon
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'Home', component: HomeComponent, title: "Worktez"},
+  { path: '', component: HomeComponent, title: "Worktez"},
+  // { path: 'Home', component: HomeComponent, title: "Worktez"},
   { path: 'verifyUser/:organizationDomain/:teamName/:teamId/:userEmail', component: UserVerificationComponent },
   { path: 'Board', component: BoardComponent, title: "Board", canActivate: [AngularFireAuthGuard]},
   { path: 'Tasks/:teamId/:currentSprintName', component: TasksComponent, canActivate: [AngularFireAuthGuard] },
@@ -79,16 +79,16 @@ const routes: Routes = [
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CurrentPlan', component: CurrenPlanComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'Patch1', component: Patch1Component },
-  { path: 'Patch2', component: Patch2Component },
-  { path: 'Patch3', component: Patch3Component },
-  { path: 'Patch4', component: Patch4Component },
-  { path: 'Patch5', component: Patch5Component },
-  { path: 'Patch6', component: Patch6Component },
-  { path: 'Patch7', component: Patch7Component },
-  { path: 'Patch8', component: Patch8Component },
-  { path: 'Patch9', component: Patch9Component },
-  { path: 'Patch10', component: Patch10Component },
+  // { path: 'Patch1', component: Patch1Component },
+  // { path: 'Patch2', component: Patch2Component },
+  // { path: 'Patch3', component: Patch3Component },
+  // { path: 'Patch4', component: Patch4Component },
+  // { path: 'Patch5', component: Patch5Component },
+  // { path: 'Patch6', component: Patch6Component },
+  // { path: 'Patch7', component: Patch7Component },
+  // { path: 'Patch8', component: Patch8Component },
+  // { path: 'Patch9', component: Patch9Component },
+  // { path: 'Patch10', component: Patch10Component },
   { path: 'SchedularPatch', component: SchedularPatchComponent },
   { path: "login", component: LoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLoggedInToDashboard } },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AngularFireAuthGuard] },

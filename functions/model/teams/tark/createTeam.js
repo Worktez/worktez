@@ -19,7 +19,7 @@
 
 
 const admin = require("firebase-admin");
-const { setTeam, getTeam, setSchedularJob } = require("../lib");
+const { setTeam, getTeam, setSchedularJob, setGitDetails } = require("../lib");
 const { getOrg, updateOrg, getOrgRawData } = require("../../organization/lib");
 const { updateOrgRawData } = require("../../organization/lib");
 const { setSprint } = require("../../sprints/lib");
@@ -44,6 +44,7 @@ exports.createTeam = function(request, response) {
   const orgAppKey = request.body.data.OrganizationAppKey;
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
+
   const scope = ["Priority", "Difficulty", "Status", "Type", "MilestoneStatus"];
   let orgId;
   const teamStatus = 1;
@@ -86,6 +87,8 @@ exports.createTeam = function(request, response) {
       if (team == undefined) {
         setTeam(orgDomain, teamName, teamDescription, teamAdmin, teamManagerEmail, teamMembers, scope, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels, orgId, teamId, teamStatus).then(() => {
           createLabelProperties(orgDomain, teamName, type, statusLabels, priorityLabels, difficultyLabels, milestoneStatusLabels);
+          setGitDetails(orgDomain, teamName, "", "",
+              "", "", "", "", "", "GitInfo");
           // setSchedularUnit("PerformanceChart", orgAppKey, "Team", teamId, orgDomain);
           // setSchedularUnit("SprintEvaluationChart", orgAppKey, "Team", teamId, orgDomain);
           setSchedularJob(orgDomain, teamName);

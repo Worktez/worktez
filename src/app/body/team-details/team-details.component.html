@@ -18,47 +18,73 @@
       <div class="col-md-2 col-1"></div>
       <div class="col">
         <div class="row">
-          <div class="col">
-            <div class="row py-2">
-              <div class="col">
+          <div class="col align-middle">
+            <div class="row">
+              <div class="col mt-3">
                 <span class="head">{{ team.TeamName }}</span>
               </div>
-            </div>
-            <div class="row py-2">
-              <div class="col">
-                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
-                  toc
-                </mat-icon>
-                <span class="align-middle">{{ team.TeamDescription }}</span>
+              <div class="col text-right">
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editTeam" class="btn ml-2">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle " data-toggle="modal"
+                    data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
+                    edit
+                  </mat-icon>
+                </span>
+                <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam"
+                    title="delete Team" type="button" data-toggle="modal" data-bs-toggle="tooltip">
+                    delete
+                  </mat-icon>
+                </span>
+                <span class="btn">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="close()">
+                    close
+                  </mat-icon>
+                </span>
               </div>
             </div>
-            <div class="row py-2">
-              <div class="col">
-                <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
-                  badge
-                </mat-icon>
-                <span class="align-middle"> Team Id: {{ team.TeamId }}</span>
+            <div class="row py-2 my-2 teamDetailsBox">
+              <div class="col-5">
+                <div class="row py-2">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle ml-3 mr-2">
+                    toc
+                  </mat-icon>
+                  <span class="align-middle">{{ team.TeamDescription }}</span>
+                </div>
+                <div class="row py-2">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle ml-3 mr-2" matTooltip="Team Id">
+                    badge
+                  </mat-icon>
+                  <span class="align-middle">{{ team.TeamId }}</span>
+                </div>
+                <div class="row py-2">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle ml-3 mr-2" matTooltip="Team Admin">
+                    assignment_ind
+                  </mat-icon>
+                  <span class="align-middle">{{ team.TeamAdmin }}</span>
+                </div>
+                <div class="row py-2">
+                  <mat-icon fontSet="material-icons-outlined" class="align-middle ml-3 mr-2" matTooltip="Team Manager">
+                    admin_panel_settings
+                  </mat-icon>
+                  <span class="align-middle">{{ team.TeamManagerEmail }}</span>
+                </div>
               </div>
-            </div>  
-          </div>
-          <div class="col text-right">
-            <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editTeam" class="btn ml-2">
-              <mat-icon fontSet="material-icons-outlined" class="align-middle " data-toggle="modal"
-                data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
-                edit
-              </mat-icon>
-            </span>
-            <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" class="btn ml-2">
-              <mat-icon fontSet="material-icons-outlined" class="align-middle" data-target="#deleteTeam"
-                title="delete Team" type="button" data-toggle="modal" data-bs-toggle="tooltip">
-                delete
-              </mat-icon>
-            </span>
-            <span class="btn" >
-              <mat-icon fontSet="material-icons-outlined" class="align-middle" (click)="close()">
-                close
-              </mat-icon>
-            </span>
+              <div class="col-4 mx-2 counters">
+                <div class="row py-2">
+                  <span> Active Sprint: {{ team.CurrentSprintId }}</span>
+                </div>
+                <div class="row py-2">
+                  <span > Total Team Task: {{ team.TotalTeamTasks }}</span>
+                </div>
+                <div class="row py-2">
+                  <span > Total Completed Task: {{ team.TotalCompletedTask }}</span>
+                </div>
+                <div class="row py-2">
+                  <span> Total Backlog Task: {{team.TotalBacklogTask}}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <app-github-integration [team]="team"></app-github-integration>
@@ -138,7 +164,7 @@
             <div class="row scopeLabels">
               <ng-container *ngFor="let item of team.Scope">
                 <div class="col p-2">
-                  <app-label-card [scope]="item" [teamName]="team.TeamName"></app-label-card>
+                  <app-label-card [scope]="item" [team]="team"></app-label-card>
                 </div>
               </ng-container>
             </div>
@@ -154,22 +180,22 @@
 </ng-container>
 <div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title" id="DeleteModalLabel">Delete</h1>
-              <span class="btn">
-                  <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal"aria-label="Close">
-                    close
-                  </mat-icon>
-              </span>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="DeleteModalLabel">Delete</h1>
+        <span class="btn">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle" data-dismiss="modal" aria-label="Close">
+            close
+          </mat-icon>
+        </span>
+      </div>
       <div class="modal-body">
-          <h2>Are you sure you want to delete this team?</h2>
+        <h2>Are you sure you want to delete this team?</h2>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn etc" (click) = "deleteTeam()">Delete</button>
+        <button type="button" class="btn etc" (click)="deleteTeam()">Delete</button>
       </div>
-      </div>
+    </div>
   </div>
 </div>
 <ng-container *ngIf="updateTeamEnabled">

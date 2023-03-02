@@ -81,8 +81,8 @@ export class StartServiceService {
           this.authService.updateProvidersList();
         } else {
           this.userReady = false;
-          if(this.currentUrl == '/')
-            this.router.navigate(['/Home']);
+          // if(this.currentUrl == '/')
+          //   this.router.navigate(['/Home']);
         }
         this.authService.completedLoadingApplication = true;
         this.socialPageService.getSocialPageData();
@@ -90,16 +90,16 @@ export class StartServiceService {
       error: (error) => {
         console.error(error);
         this.userReady = false;
-        if(this.currentUrl == '/')
-          this.router.navigate(['/Home']);
+        // if(this.currentUrl == '/')
+        //   this.router.navigate(['/Home']);
       },
       complete: () => console.log("Getting User Data Complete")
     });
   }
 
   loadUserAppSettings() {
-    if(this.currentUrl == '/')
-    this.router.navigate(['/Home']);
+    // if(this.currentUrl == '/')
+    // this.router.navigate(['/Home']);
     const userSelectedOrgAppKeyCookie = this.cookieService.get("userSelectedOrgAppKey");
     const userSelectedTeamId = this.cookieService.get("userSelectedTeamId");
 
@@ -137,14 +137,14 @@ export class StartServiceService {
       this.applicationSettingsService.getNotificationsList(1);
     } else {
       this.authService.organizationAvailable = false;
-        this.router.navigate(['/techverse']);
+      this.router.navigate(['/techverse']);
     }
     if (SelectedOrgAppKey) {
       if(this.currentUrl == '/') {
         this.router.navigate(['/MyDashboard']);
       }
       if(SelectedTeamId != "" && SelectedTeamId!= "undefined") {
-        console.log(SelectedTeamId);
+        // console.log(SelectedTeamId);
         this.selectedTeamId = SelectedTeamId;
         this.teamIdExists = true;
         
@@ -159,6 +159,7 @@ export class StartServiceService {
         this.backendService.organizationsData.subscribe(data => {
           this.teamService.getTeams(this.backendService.getOrganizationDomain());
           this.teamService.getLabels(this.backendService.getOrganizationDomain());
+          this.teamService.getGitDetails(this.backendService.getOrganizationDomain(), this.teamName);
           this.teamService.teamDataStateObservable.subscribe({
             next: (data) =>{
               if(data)

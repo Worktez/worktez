@@ -67,6 +67,7 @@ textarea:focus {
 
 .btn-secondary {
     background-color: var(--secondary-color);
+    border: none;
 }
 
 .btn-secondary:hover {
