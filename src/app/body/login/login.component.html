@@ -124,7 +124,7 @@
             <div class="container">
                 <div class="row align-middle">
                     <div class="col-md-4"></div>
-                    <div class="col-12 col-sm-6 col-md-4" id="forgotPasswordContainer">
+                    <div class="col-12 col-sm-6 col-md-4 my-2" id="forgotPasswordContainer">
                         <div class="row px-4" >
                             <div class="col">
                                 <button type="button" class="btn" (click)="changeMode('loginOrSignUp')">
@@ -132,8 +132,8 @@
                                         arrow_back
                                     </span>
                                 </button>
-                                <h3 >Send Password Reset Link ! </h3>
-                                <form (submit)="onForgotPassword()">
+                                <h3 class="m-1">Trouble with logging in? </h3>
+                                <form *ngIf="!passwordResetLinkSent" (submit)="onForgotPassword()">
                                     <div class="input-group pb-3">
                                         <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter your email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                                         <div class="input-group-append">
@@ -144,8 +144,12 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-lg btn-block" id="button">Send Link</button>
+                                    <button type="submit" class="btn btn-block mb-2" id="button">Send Link</button>
                                 </form>
+                                <div *ngIf="passwordResetLinkSent">
+                                    <span style="font-size: 13px;" >A password reset link has been sent to your email. </span>
+                                    <button class="btn btn-block my-2" id="button" (click)="sendLinkCompleted()">Login</button>
+                                </div>
                             </div>
                         </div>
                     </div>

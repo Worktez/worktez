@@ -56,6 +56,7 @@
 }
 
 input:focus,
+.btn:focus
 select:focus,
 textarea:focus {
     box-shadow: none;
@@ -75,7 +76,6 @@ textarea {
 
 .icons {
     color: var(--primary-color);
-    background-color: var(--input-field);
 }
 
 .forgotPassword {

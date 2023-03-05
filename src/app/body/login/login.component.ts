@@ -27,7 +27,6 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 export class LoginComponent implements OnInit {
 
   email: string
-  emailSent: boolean = false
   password: string
   username: string
   showPassword: boolean = false
@@ -35,11 +34,13 @@ export class LoginComponent implements OnInit {
   currentMode: string = "loginOrSignUp"
 
   activeLogin: boolean = true
-  userExistChecked=false;
+  userExistChecked: boolean = false;
+  passwordResetLinkSent: boolean;
 
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location, public startService: StartServiceService) { }
 
   ngOnInit(): void {
+    this.passwordResetLinkSent = false;
     this.navbarHandler.resetNavbar();
     this.authService.afauth.user.subscribe((data) => {
       this.userExistChecked=true;
@@ -107,10 +108,14 @@ export class LoginComponent implements OnInit {
   changeMode(mode: string){
     this.currentMode=mode
   }
+  sendLinkCompleted(){
+    this.changeMode('loginOrSignUp');
+    this.passwordResetLinkSent=false;
+  }
   onForgotPassword(){
     this.authService.forgotPassword(this.email).then(() => {
       this.email='';
-      this.emailSent=true
+      this.passwordResetLinkSent=true;
     }).catch((error) => {
       console.log(error);
     });

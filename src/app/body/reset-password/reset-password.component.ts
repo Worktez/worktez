@@ -17,10 +17,17 @@ export class ResetPasswordComponent implements OnInit {
   actionCode: string;
   apiKey: string;
   email: any;
-  newPassword: string;
-  confirmPassword: string;
-
+  newPassword: string = '';
+  confirmPassword: string = '';
+  letters = /[a-zA-z]/;
+  numbers = /\d/;
+  showPassword:boolean;
+  containsLetters: boolean;
+  containsNumbers: boolean;
+  minLength:boolean;
   actionCodeChecked: boolean;
+  passwordsMatched:boolean;
+  passwordResetCompleted: boolean = false;
 
   constructor(public authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, public afauth: AngularFireAuth) { }
 
@@ -30,31 +37,40 @@ export class ResetPasswordComponent implements OnInit {
     this.apiKey= this.activatedRoute.snapshot.queryParams['apiKey']
     if (this.mode ==  undefined || this.actionCode == undefined){
       this.router.navigate(['/Home']);
-    }  
-    console.log(this.mode, this.actionCode, this.apiKey);
+    }
     this.afauth.verifyPasswordResetCode(this.actionCode).then(email => {
       this.email= email;
-      console.log("email: ", this.email);
       this.actionCodeChecked = true;
     }).catch(e => {
       this.router.navigate(['/login']);
     });
   }
 
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
   handleResetPassword() {
     if (this.newPassword != this.confirmPassword) {
       alert('New Password and Confirm Password do not match');
-      this.router.navigate(['/login']);
+      this.router.navigate(['/Home']);
       return;
     }
-    console.log(this.newPassword);
     // Save the new password.    /// this method is not working right now
     this.afauth.confirmPasswordReset(this.actionCode, this.newPassword).then(resp => {
       console.log(resp);
-      this.router.navigate(['/login']);
+      this.passwordResetCompleted = true;
     }).catch(error => {
       console.error(error)
     });
   }
-
+  checkInputField(){
+    this.newPassword.length >= 6? this.minLength = true: this.minLength = false;
+    this.newPassword == this.confirmPassword? this.passwordsMatched = true: this.passwordsMatched = false;
+    this.containsLetters=this.letters.test(this.newPassword);
+    this.containsNumbers=this.numbers.test(this.newPassword);
+  }
+  navigateToLogin(){
+    this.router.navigate(['/login']);
+  }
 }

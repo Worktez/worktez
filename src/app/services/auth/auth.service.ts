@@ -70,14 +70,12 @@ export class AuthService {
   }
 
   async forgotPassword(email: string){
-    console.log("REached", email);
     await this.afauth.sendPasswordResetEmail(email);
   }
   async verifyPasswordResetActionCode(actionCode: string){
     await this.afauth.verifyPasswordResetCode(actionCode);
   }
   async confirmPasswordReset(actionCode: string, newPassword: string){
-    console.log(actionCode, newPassword);
     await this.afauth.confirmPasswordReset(actionCode, newPassword);
   }
 
@@ -89,7 +87,7 @@ export class AuthService {
     const callable = this.functions.httpsCallable('users/createNewUser');
     callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
       next: (data) => {
-        console.log("Successful ");
+        console.log("Successfully Created UserData ");
       },
       error: (error) => {
         console.error("Error", error);
