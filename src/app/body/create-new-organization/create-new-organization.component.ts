@@ -46,7 +46,6 @@ export class CreateNewOrganizationComponent implements OnInit {
   basePath: string
   fileName: string
   percentage: number = 0;
-  OrgDomains =[];
   orgDomainsAvailable: boolean = true
 
   createNewOrgForm= new FormGroup({
@@ -66,13 +65,6 @@ export class CreateNewOrganizationComponent implements OnInit {
     this.orgAdminUid = this.authService.getLoggedInUser()
     this.navbarHandler.resetNavbar()
     this.navbarHandler.addToNavbar(this.componentName);
-    ((this.authService.myOrgCollectionsData.forEach(item=>{
-      (item.forEach(item=>{
-        this.OrgDomains.push(item.OrgDomain);
-      }));
-    })))
-
-    
    }
 
   submit() {
