@@ -139,6 +139,7 @@ export class StartServiceService {
       this.authService.organizationAvailable = false;
         this.router.navigate(['/techverse']);
     }
+    this.authService.getListedOrganizationDomains();
     if (SelectedOrgAppKey) {
       if(this.currentUrl == '/') {
         this.router.navigate(['/MyDashboard']);

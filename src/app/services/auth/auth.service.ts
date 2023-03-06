@@ -21,6 +21,7 @@ import { ThemeService } from '../theme/theme.service';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { FileData } from '../../Interface/FileInterface';
+import { Counters } from 'src/app/Interface/RawDataInterface';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,8 @@ export class AuthService {
   public myTeamsListObservable: Observable<string[]>
 
   public myOrgCollectionDocData: MyOrganizationData
+
+  public allOrgDomains: [];
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -147,6 +150,21 @@ export class AuthService {
     }));
   }
 
+  async getListedOrganizationDomains() {
+    const callable = this.functions.httpsCallable('teams/orgDomainCheck');
+       callable({}).subscribe({
+        next: (result) => {
+          this.allOrgDomains = result.resultData.OrgDomains;
+        },
+        error: (error) => {
+          console.log(error);
+          console.log("error is here")
+        },
+        complete: () => {console.info('Successful ')}
+    });
+   
+  }
+
   getMyOrgCollectionDocs(uid: string, appKey: string) {
     const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
      callable({Uid: uid, OrgAppKey: appKey}).pipe(
@@ -221,7 +239,7 @@ export class AuthService {
       }));
       return this.filesCollectionData;
   }
-
+  
   getAppKey() {
     return this.userAppSetting.SelectedOrgAppKey;
   }

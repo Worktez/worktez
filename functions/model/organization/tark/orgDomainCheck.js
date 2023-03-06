@@ -21,25 +21,17 @@ const { getApplicationData } = require("../../application/lib");
 
 exports.orgDomainCheck = function(request, response) {
   let status = 200;
-  let resultData = "";
-  const orgDomain = request.body.data.OrganizationDomain;
-
-  getApplicationData().then((orgDoc) => {
-    for (let i = 0; i < orgDoc.OrgDomains.length; i++) {
-      if (orgDoc.OrgDomains[i] == orgDomain) {
-        resultData = "orgDomain Already taken";
-        break;
-      } else {
-        resultData = "orgDomain Available";
-      }
+  let result;
+  getApplicationData().then((data) => {
+    if (data) {
+      result = { data: {status: "OK", resultData: data} };
+      console.log(result);
+      return response.status(status).send(result);
     }
-    const result = { data: resultData};
-    return response.status(status).send(result);
-  }).catch((err) => {
+  }).catch((error) => {
     status = 500;
-    resultData = "orgDomain Already taken";
-    console.error("Error : " + err);
-    const result = { data: resultData };
+    result = { data: error };
+    console.error("Error Getting Org Data", error);
     return response.status(status).send(result);
   });
 };
