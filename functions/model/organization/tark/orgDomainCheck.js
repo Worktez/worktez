@@ -25,7 +25,6 @@ exports.orgDomainCheck = function(request, response) {
   getApplicationData().then((data) => {
     if (data) {
       result = { data: {status: "OK", resultData: data} };
-      console.log(result);
       return response.status(status).send(result);
     }
   }).catch((error) => {

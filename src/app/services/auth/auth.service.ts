@@ -21,7 +21,6 @@ import { ThemeService } from '../theme/theme.service';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { FileData } from '../../Interface/FileInterface';
-import { Counters } from 'src/app/Interface/RawDataInterface';
 
 @Injectable({
   providedIn: 'root',
