@@ -111,15 +111,12 @@ export class CreateNewOrganizationComponent implements OnInit {
   }
 
   checkOrgDomainAvailabilityLive() {
-    for (let i = 0; i < this.authService.allOrgDomains.length; i++) {
-      if (this.authService.allOrgDomains[i]==this.orgDomain.value) {
-        this.orgDomainsAvailable = false;
-        break;
-      }else {
-        this.orgDomainsAvailable = true;
-          this.enableLoader = false;
-      }
-  }
+
+    if(this.authService.allOrgDomains.includes(this.orgDomain.value)){
+      this.orgDomainsAvailable = false;
+    }else{
+      this.orgDomainsAvailable = true;
+    }
   
   }
 }

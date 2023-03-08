@@ -34,7 +34,7 @@ export class AuthService {
 
   public myOrgCollectionDocData: MyOrganizationData
 
-  public allOrgDomains: [];
+  public allOrgDomains: string[];
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -153,7 +153,7 @@ export class AuthService {
     const callable = this.functions.httpsCallable('teams/orgDomainCheck');
        callable({}).subscribe({
         next: (result) => {
-          this.allOrgDomains = result.resultData.OrgDomains;
+          this.allOrgDomains = result.resultData;
         },
         error: (error) => {
           console.log(error);
