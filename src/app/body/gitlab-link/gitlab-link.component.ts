@@ -1,10 +1,10 @@
-import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { NgForm } from '@angular/forms';
 import { map } from 'rxjs';
 import { GitOrgData } from 'src/app/Interface/githubUserData';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
 
 @Component({
   selector: 'app-gitlab-link',
@@ -30,9 +30,14 @@ export class GitlabLinkComponent implements OnInit {
   bearerToken: string;
   gitlabToken: string
   projLoc: string;
+  owner: string;
+  projectUrl: string;
+  createdAt: string;
+  projectId: number;
+
   @Output() addedProject = new EventEmitter<{ completed: boolean, memberOrgName: string, projLink: string, searchType: string }>();
 
-  constructor(public backendService: BackendService, private functions: AngularFireFunctions,private gitlabService: GitlabServiceService) { }
+  constructor(public backendService: BackendService, private functions: AngularFireFunctions,private gitlabService: GitlabServiceService, public teamService: TeamServiceService) { }
 
   ngOnInit(): void {
 
@@ -142,6 +147,27 @@ export class GitlabLinkComponent implements OnInit {
          
   }
 
+  addGitDetails() {
+    this.gitlabService.getGitlabProjDetails(this.bearerToken, this.projectId).subscribe({
+      next: (data) => {
+        this.owner = data['namespace']['name'];
+        this.projectUrl = data['http_url_to_repo'];
+        this.projectId = data['id'];
+        this.createdAt = data['created_at']
+        console.log(this.owner, this.projectUrl, this.projLink, this.projectId);
+        this.organizationDomain = this.backendService.getOrganizationDomain();
+        this.teamService.addGitDetails(this.organizationDomain, this.teamName, this.createdAt, this.owner, this.bearerToken, this.projectId, this.projLink, this.projectUrl, "gitlab");
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.info("Successful")
+      }
+    })
+
+  }
+
   setBearerToken() {
     this.enableLoader=true;
     this.organizationDomain = this.backendService.getOrganizationDomain();
@@ -150,20 +176,10 @@ export class GitlabLinkComponent implements OnInit {
     }else{
       this.gitlabToken = "";
     }
-    const callable = this.functions.httpsCallable('teams/addGitToken');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, Token: this.gitlabToken, ProjLocation: 'gitlab'}).subscribe({
-      next: (data) => {
-        console.log("Successfully added Token");
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully Added Token')
-    })
+    this.teamService.updateGitDetails(this.organizationDomain, this.teamName, this.gitlabToken);
+    this.addGitDetails();
+    this.enableLoader=false;
+    this.showClose = true;
   }
 
   setLinkType(linkType: string) {
@@ -179,26 +195,11 @@ export class GitlabLinkComponent implements OnInit {
 
   }
 
-  addProjLink(projLink: string) {
+  addProjLink(projLink: string, projId: number) {
+    this.projectId=projId;
     this.projLink=projLink;
     this.enableLoader=true;
-    this.organizationDomain = this.backendService.getOrganizationDomain();
-    const callable = this.functions.httpsCallable('teams/addProjLink');
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.teamName, ProjLink: this.projLink, ProjLocation: 'gitlab'}).subscribe({
-      next: (data) => {
-        this.setBearerToken()
-        console.log("Successfully added project link");
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      error: (error) => {
-        console.error(error);
-        this.enableLoader=false;
-        this.showClose = true;
-      },
-      complete: () => console.info('Successfully created project link')
-    })
-    
+    this.setBearerToken();   
   }
 
   added() {

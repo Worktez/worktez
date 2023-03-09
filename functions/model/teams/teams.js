@@ -35,6 +35,10 @@ const {getLabelsInScopes} = require("./tark/getTeamLabelsInScope");
 const {getAllTeamData} = require("./tark/getAllTeamData");
 const {getAllLabels} = require("./tark/getAllLabels");
 const {addGitToken} = require("./tark/addGitToken");
+const {addGitDetails} = require("./tark/addGitDetails");
+const {getGitDetails} = require("./tark/getGitDetails");
+const {updateGitDetails} = require("./tark/updateGitDetails");
+const { reorderLabels } = require("./tark/reorderLabels");
 /**
  * Description
  * @param {any} "/addMember"
@@ -77,6 +81,39 @@ fastify.post("/createTeam", (req, res) => {
  */
 fastify.post("/deleteTeam", (req, res) => {
   deleteTeam(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/addGitDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/addGitDetails", (req, res) => {
+  addGitDetails(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/updateGitDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/updateGitDetails", (req, res) => {
+  updateGitDetails(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/getGitDetails"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getGitDetails", (req, res) => {
+  getGitDetails(req, res);
 });
 
 /**
@@ -139,6 +176,17 @@ fastify.post("/deleteLabel", (req, res) => {
  */
 fastify.post("/addLabel", (req, res) => {
   addLabel(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/reOrderLabels"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/reOrderLabels", (req, res) => {
+  reorderLabels(req, res);
 });
 
 /**

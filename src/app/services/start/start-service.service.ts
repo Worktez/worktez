@@ -130,7 +130,6 @@ export class StartServiceService {
       this.backendService.getOrgDetails(SelectedOrgAppKey);
       this.authService.getMyOrgCollectionDocs(uid, SelectedOrgAppKey);
       this.authService.themeService.changeTheme(AppTheme);
-      this.quickNotes.getQuickNotes();
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
       this.rbaService.getRbaDetails(SelectedOrgAppKey, this.userEmail);
       this.subscriptionService.getSubscriptionDetails(SelectedOrgAppKey);
@@ -159,6 +158,7 @@ export class StartServiceService {
         this.backendService.organizationsData.subscribe(data => {
           this.teamService.getTeams(this.backendService.getOrganizationDomain());
           this.teamService.getLabels(this.backendService.getOrganizationDomain());
+          this.teamService.getGitDetails(this.backendService.getOrganizationDomain(), this.teamName);
           this.teamService.teamDataStateObservable.subscribe({
             next: (data) =>{
               if(data)
@@ -193,6 +193,7 @@ export class StartServiceService {
     this.applicationSettingsService.teamAvailable = false;
     this.applicationSettingsService.getNotificationsList(1);
     this.applicationSettingsService.getTeamDetails(this.selectedTeamId);
+    this.quickNotes.getQuickNotes();
     
     const teams = this.applicationSettingsService.team;
     this.teamData = teams;

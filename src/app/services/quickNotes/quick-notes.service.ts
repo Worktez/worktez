@@ -23,7 +23,6 @@ export class QuickNotesService {
 
   getQuickNotes() {
     const uid = this.authService.getLoggedInUser();
-
     const callable = this.functions.httpsCallable("quickNotes/getMyNotesList");
     callable({Uid: uid }).pipe(map(res=>{
       const data = res.data as QuickNote[];
@@ -32,7 +31,9 @@ export class QuickNotesService {
       next: (data) => {
         if(data) {
           this.notes = [];
+          console.log(this.authService.userAppSetting);
           this.notesOrder = this.authService.userAppSetting.NotesOrder;
+
           this.notesOrder.forEach(element => {
             data.forEach(note => {
               if(note.DocId == element){

@@ -28,13 +28,13 @@ exports.getAllLabels = function(request, response) {
   const res = {};
 
   const p = getAllTeams(orgDomain).then((docs) => {
-    let p2;
+    const p2 = [];
     docs.forEach((element) => {
       const teamdata = element.data();
       const teamName = teamdata.TeamName;
       const teamId = teamdata.TeamId;
       res[teamId]={};
-      p2 = getAllLabels(orgDomain, teamName).then((data)=>{
+      const promise = getAllLabels(orgDomain, teamName).then((data)=>{
         data.forEach((d) => {
           res[teamId][d.Scope] = {};
         });
@@ -42,8 +42,9 @@ exports.getAllLabels = function(request, response) {
           res[teamId][d.Scope][d.DisplayName] = d;
         });
       });
+      p2.push(promise);
     });
-    return Promise.resolve(p2);
+    return Promise.all(p2);
   }).catch((error) => {
     status = 500;
     console.log("Error: ", error);

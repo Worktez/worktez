@@ -19,6 +19,21 @@ export class GithubServiceService {
     const url = environment.githubApiUrl + "/repos/"+prApiLink;
     return this.httpClient.get(url);
   }
+
+  getGithubRepoDetails(bearerToken: string, projLink: string){
+    const url = environment.githubApiUrl + "/repos/"+ projLink;
+    if(bearerToken!=undefined){
+      let httpOptions = {
+        headers: {
+          'Authorization': 'Bearer ' + bearerToken
+        }
+      };
+      return this.httpClient.get(url, httpOptions);
+    } else {
+      return this.httpClient.get(url);
+    }
+
+  }
   
   getGithubUserRepos(memberUserName: string) {
     const url = environment.githubApiUrl + "/users/" + memberUserName + "/repos";

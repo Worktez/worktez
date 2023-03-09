@@ -20,33 +20,38 @@
         </span> 
     </div>
     <ul class="list-group list-group-flush">
-    <ng-container *ngFor="let item of labels">
-        <li class="list-group-item">
+    <div cdkDropList (cdkDropListDropped)="onLabelDrop($event)">
+    <ng-container *ngFor="let element of labelsArray">
+        <li class="list-group-item" cdkDrag>
             <div class="row p-0">
                 <div class="col-6">
-                    <span class="label float-left">{{item.DisplayName}}</span>
+                    <span class="label float-left">{{element}}</span>
                     <span class="value float-left">
-                        <app-generate-icon [icon]="item"></app-generate-icon>
+                        <app-generate-icon [Border]="false" [icon]="labels[element]"></app-generate-icon>
                     </span>
                 </div>
-                <div class="col-6 text-right">
-                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(item)" data-toggle="modal" data-target="#openEditProperties"> 
+                <div class="col-6 text-right align-middle">
+                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(label)" data-toggle="modal" data-target="#openEditProperties"> 
                         edit 
                     </mat-icon>
-                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelTodelete(item)" data-toggle="modal" data-target="#deletedLabel">
+                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelTodelete(label)" data-toggle="modal" data-target="#deletedLabel">
                         delete
+                    </mat-icon>
+                    <mat-icon  fontSet="material-icons-outlined" class="align-middle p-2 pl-1 icons" style="cursor: grab;" (click)="setLabelTodelete(label)" data-toggle="modal" data-target="#deletedLabel">
+                        drag_indicator
                     </mat-icon>
                 </div>
             </div>
         </li>
     </ng-container>
+    </div>
     </ul>
 </div>
 <ng-container *ngIf="addLabelEnabled" id="exampleModalCenterLabel">
     <app-add-label [teamName]="teamName" (addLabelCompleted)=" addLabelCompleted($event)"></app-add-label>
 </ng-container>
 <ng-container *ngIf="showEditLabelProp" id="openEditProperties">
-    <app-edit-label-prop [label]="labelToEdit" [teamName]="teamName" (editLabelCompleted)="editLabelCompleted($event)" (getTeamLabelsByScope)="getTeamLabelsByScope()" [scope]="scope"></app-edit-label-prop>
+    <app-edit-label-prop [labelName]="labelToEdit" [team]="team" [scope]="scope" [prevLabelsArray]="labelsArray" (editLabelCompleted)="editLabelCompleted($event)"></app-edit-label-prop>
 </ng-container>
 <ng-container *ngIf="deletedLabelEnabled" id="exampleModalCenterLabel">
     <div class="modal fade" id="deletedLabel" tabindex="-1" role="dialog" aria-labelledby="deletedLabelTitle" aria-hidden="true">

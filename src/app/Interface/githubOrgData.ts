@@ -22,6 +22,9 @@ export interface GitRepoData {
     html_url: string;
     number: number;
     state: string;
+    description: string;
+    web_url:string;
+    iid: number;
 }
 export interface GitPrData{
     title: string;

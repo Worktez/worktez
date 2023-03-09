@@ -4,7 +4,7 @@
             data-toggle="modal" data-target="#gitModel" (click)="enableAddOrganisationLink(team)"
             title="Add Organisation">
             <img src="../../../assets/githubIcon.svg" alt="git" height="25" width="25">
-            <ng-container *ngIf="repoLink && team.ProjectLocation == 'github'; else integrateGithub">
+            <ng-container *ngIf="repoLink && team.ProjectLocation == 'Github'; else integrateGithub">
                 <span>
                 {{repoLink}}
                 </span>
@@ -13,11 +13,11 @@
                 <span> Integrate Github </span>
             </ng-template>
         </button>
-        <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc mr-2" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
+        <button *ngIf="repoLink && team.ProjectLocation == 'Github'" class="btn etc mr-2" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="addTokenEnable()">
             <span>Add Token</span>
         </button>
     </div>
-    <div class="col" *ngIf="repoLink && team.ProjectLocation == 'github'">
+    <div class="col" *ngIf="repoLink && team.ProjectLocation == 'Github'">
         <ng-container *ngIf="githubTokenExists; else noToken">
             Bearer token
             <mat-icon fontSet="material-icons-outlined" class="align-middle">
@@ -28,7 +28,7 @@
             No token found
         </ng-template>
     </div>
-    <button *ngIf="repoLink && team.ProjectLocation == 'github'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub()">
+    <button *ngIf="repoLink && team.ProjectLocation == 'Github'" class="btn etc float-right" data-target="#BearerToken" title="BearerToken" type="button" data-toggle="modal" data-bs-toggle="tooltip" (click)="unLinkGithub()">
         <span>Remove</span>
     </button>
 </div>
