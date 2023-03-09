@@ -18,6 +18,13 @@ p {
     text-align: justify;
     color: var(--text);
 }
+a {
+    font-size: large;
+    line-height: 1.8rem;
+    text-align: justify;
+    color: var(--primary-color) !important;
+    cursor: pointer;
+}
 
 .card {
     background-color: var(--secondary-bg);
@@ -32,6 +39,7 @@ p {
 li {
     cursor: pointer;
     font-size: medium;
+    color: var(--text);
 }
 
 .feature-item{

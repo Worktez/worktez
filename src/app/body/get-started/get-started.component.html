@@ -9,16 +9,16 @@
                       <span class="material-icons arrow-icon align-middle">{{arrowDirection}}</span>
                    </li>
                     <ul class="collapse list-group-flush list-group pl-3" id="features">
-                      <li class="list-group-item feature-item" (click)="changeSection('boards')">Board</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('charts')">Charts</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('devOps')">DevOps</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('techTag')">TechTag</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('milestones')">Milestones</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('meetings')">Meetings</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('organisations')">Organisaitons</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('profile')">Profile</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('quickNotes')">QuickNotes</li>
-                      <li class="list-group-item feature-item" (click)="changeSection('tasks')">Tasks</li>
+                      <li class="list-group-item feature-item" (click)="features('boards')">Board</li>
+                      <li class="list-group-item feature-item" (click)="features('charts')">Charts</li>
+                      <li class="list-group-item feature-item" (click)="features('devOps')">DevOps</li>
+                      <li class="list-group-item feature-item" (click)="features('techTag')">TechTag</li>
+                      <li class="list-group-item feature-item" (click)="features('milestones')">Milestones</li>
+                      <li class="list-group-item feature-item" (click)="features('meetings')">Meetings</li>
+                      <li class="list-group-item feature-item" (click)="features('organisations')">Organisatons</li>
+                      <li class="list-group-item feature-item" (click)="features('profile')">Profile</li>
+                      <li class="list-group-item feature-item" (click)="features('quickNotes')">QuickNotes</li>
+                      <li class="list-group-item feature-item" (click)="features('tasks')">Tasks</li>
                     </ul>
                     <li class="list-group-item">Blogs & News</li>
                   </ul>
@@ -34,32 +34,32 @@
                         Introduction
                     </p>
                     <p class="py-2 pb-5">
-                        Worktez is an innovative solution to simplify your project and team with powerful frameworks to plan, track, deploy and collaborate over ideas and projects. Worktez is an executive solution for your organisation, that help you simplify complex industrial practices development workflow and remote work solution.
+                        Worktez is an innovative solution that simplies your projects and teams with powerful frameworks to plan, track, deploy and collaborate over ideas and projects. Worktez is an executive solution for your organisation, that help you simplify complex industrial practices, development workflows and remote work solutions.
                     </p>
                     <span class="align-middle">
                         <img src="../../../assets/docs-page-svg/undraw_outer_space_re_u9vd.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
                     <p class="py-5">
-                        Our solution is focused on agile-based DevOps automation, which helps in more organised remote team management. You can assign, prioritise and fix feasible deadlines so that completion of tasks is not an ordeal anymore.
+                        Our solution is focused on agile-based DevOps automation, which helps in more organised remote team management. You can assign, prioritise and set feasible deadlines so that the completion of tasks is not an ordeal anymore.
                     </p>
                     <span class="align-middle">
                         <img src="../../../assets/docs-page-svg/undraw_choose_re_7d5a.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
                     <p class="py-2 pt-5">
-                        Worktez consists of various easy-to-use options to get started with your project. While one might need to switch tabs for doing trivial tasks, you can do all of your tasks under a single place using the Worktez tool - from syncing tasks on Calendars to marking the tasks done before time, you name it and there you have it.
+                        Worktez consists of various easy-to-use options to get you started with your project. While one might need to switch tabs for doing trivial tasks, you can do all of your tasks at a single place using the Worktez tools. From syncing tasks on calendars to marking the tasks "complete" before time, you name it and worktez has it.
                     </p>
                     <p class="title py-4">What is Agile?</p>
                     <p class="py-2">
-                        Agile is an iterative method of project management and software development that allows teams to serve customers more quickly and efficiently. Instead of putting all on a single launch, an agile team will generate discrete but manageable pieces of output.
+                        Agile is an iterative method of project management and software development that allows teams to serve customers more quickly and efficiently. Instead of putting everything on a single launch, an agile team generates discrete but manageable pieces of output.
+                    </p>
+                    <p class="title py-4">How is Agile related to Worktez?</p>
+                    <p class="py-2">
+                        Worktez is an Agile-based DevOps Automation application, this system ensures quality customer service with ease. Hence, it helps in providing efficient work environment to teams that work remotely.
                     </p>
                     <p class="title py-4">What is DevOps?</p>
                     <p class="py-2">
                         DevOps is the combination of cultural philosophies, practices, and tools that increases an organization ability to deliver applications and services at high velocity: evolving and improving products at a faster pace than organizations using traditional software development and infrastructure management processes. This speed enables organizations to better serve their customers and compete more effectively in the market.
                     </p>
-                    <!-- <p class="title py-4">How is Agile related to Worktez?</p>
-                    <p class="py-2">
-                        Worktez is an application based on Agile based DevOps Automation, this system ensures quality customer service with ease. Hence, it helps in providing efficient work to teams that work in a remote environment.
-                    </p> -->
                     <span class="align-middle">
                         <img src="../../../assets/docs-page-svg/undraw_runner_start_x-0-uu.svg" alt="graphs" width="25%" height="25%"> 
                     </span>
@@ -87,7 +87,7 @@
                         You are all set to plan, manage, set milestone, invite your team members, analyse, track and release your project with our help.
                     </p>
                     <p class="py-2 text-center">
-                        Explore submenu to know more in details.
+                        Explore <a (click)="features('boards')">Features Page</a> to know more in detail.
                     </p>
                 </div>
               </div>

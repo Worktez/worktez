@@ -26,7 +26,7 @@ export class ChartsFeatureComponent implements OnInit {
   constructor(public router: Router, private titleService: Title, private metaTagService: Meta ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Features - Charts");
+    this.titleService.setTitle("Worktez: Features - Charts");
     this.metaTagService.updateTag(
       {
         name: 'description',
