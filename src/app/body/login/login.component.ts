@@ -31,17 +31,21 @@ export class LoginComponent implements OnInit {
   username: string
   showPassword: boolean = false
   componentName: string = "LOGIN"
+  currentMode: string = "loginOrSignUp"
 
   activeLogin: boolean = true
-  userExistChecked=false;
+  userExistChecked: boolean = false;
+  passwordResetLinkSent: boolean;
 
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location, public startService: StartServiceService) { }
 
   ngOnInit(): void {
+    this.passwordResetLinkSent = false;
     this.navbarHandler.resetNavbar();
     this.authService.afauth.user.subscribe((data) => {
       this.userExistChecked=true;
     })
+    this.currentMode="loginOrSignUp";
   }
 
   onSignInWithGoogle() {
@@ -100,5 +104,20 @@ export class LoginComponent implements OnInit {
 
   changeTab() {
     this.activeLogin = !this.activeLogin;
+  }
+  changeMode(mode: string){
+    this.currentMode=mode
+  }
+  sendLinkCompleted(){
+    this.changeMode('loginOrSignUp');
+    this.passwordResetLinkSent=false;
+  }
+  onForgotPassword(){
+    this.authService.forgotPassword(this.email).then(() => {
+      this.email='';
+      this.passwordResetLinkSent=true;
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
