@@ -49,7 +49,7 @@ li{
 
 .list-group-item:hover {
     color: var(--primary-color);
-    /* font-size: medium; */
+    cursor: pointer;
 }
 
 .feature-item{

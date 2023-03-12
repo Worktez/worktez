@@ -26,7 +26,7 @@ export class TechtagFeatureComponent implements OnInit {
   constructor(public router: Router, private titleService: Title, private metaTagService: Meta ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Features - TechTag");
+    this.titleService.setTitle("Worktez: Features - TechTag");
     this.metaTagService.updateTag(
       {
         name: 'description',
