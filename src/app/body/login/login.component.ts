@@ -34,6 +34,9 @@ export class LoginComponent implements OnInit {
 
   activeLogin: boolean = true
   userExistChecked=false;
+  loginError = false;
+  errorTitle = ""
+  errorMessage = "";
 
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location, public startService: StartServiceService) { }
 
@@ -68,25 +71,44 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  onSignUpWithEmail() {
-    this.authService.createUser(this.email, this.password, this.username).then(() => {
+  async onSignUpWithEmail() {
+    const errorMessage = await this.authService.createUser(this.email, this.password, this.username);
+    if (errorMessage) {
+      this.errorTitle = "Sign Up Failed";
+      this.errorMessage = errorMessage;
+      this.loginError = true;
+    } else {
       this.navigateToHome();
-    }).catch((err) => {
-      console.log(err.message);
-    });
+    }
   }
+  
 
   onLoginWithEmail() {
-    this.authService.loginUser(this.email, this.password).then(() => {
-      const path = this.location.path();
-      if (path.startsWith('/verifyUser')) {
-        this.navigateToVerification(path);
-      } else {
-        this.navigateToHome();
-      }
-    }).catch((err) => {
-      console.log(err.message);
-    });
+      this.loginError = false;
+      this.authService.loginUser(this.email, this.password).then(() => {
+        if(this.authService.emailDoesNotExist === true){
+          this.errorTitle="Login Failed!";
+          this.errorMessage="User does not exist.";
+          this.loginError = true;
+        } else if(this.authService.incorrectPassword === true){
+          this.errorTitle="Login Failed!";
+          this.errorMessage="The password is invalid or the user does not have a password.";
+          this.loginError = true;
+        } else if(this.authService.emailBadlyFormated === true){
+          this.errorTitle="Login Failed!";
+          this.errorMessage="The email address is badly formatted.";
+          this.loginError = true;
+        } else {
+            const path = this.location.path();
+            if (path.startsWith('/verifyUser')) {
+              this.navigateToVerification(path);
+            } else {
+              this.navigateToHome();
+            }
+          }  
+      }).catch((err) => {
+        console.log(err.message);
+      });
   }
 
   navigateToHome() {
@@ -100,5 +122,12 @@ export class LoginComponent implements OnInit {
 
   changeTab() {
     this.activeLogin = !this.activeLogin;
+  }
+
+  closeError(value: boolean) {
+    this.authService.emailDoesNotExist = false;
+    this.authService.incorrectPassword = false;
+    this.authService.emailBadlyFormated = false;
+    this.loginError  = false;
   }
 }

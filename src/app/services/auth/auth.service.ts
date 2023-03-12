@@ -27,6 +27,10 @@ import { FileData } from '../../Interface/FileInterface';
 })
 
 export class AuthService {
+  emailDoesNotExist: boolean = false;
+  incorrectPassword: boolean = false;
+  emailBadlyFormated: boolean = false;
+
   public userAppSettingObservable: Observable<UserAppSetting>;
 
   public myOrgCollectionsData: Observable<MyOrganizationData[]>
@@ -39,8 +43,8 @@ export class AuthService {
 
   user: User;
   userAppSetting: UserAppSetting;
-  public userName:string = "";
- 
+  public userName: string = "";
+
   educations: MyEducationData[];
   public educationCollectionData: Observable<MyEducationData[]>
 
@@ -58,19 +62,40 @@ export class AuthService {
   constructor(private cookieService: CookieService, public afauth: AngularFireAuth, private functions: AngularFireFunctions, public themeService: ThemeService) { }
 
   async createUser(email: string, password: string, username: string) {
-    await this.afauth.createUserWithEmailAndPassword(email, password);
-    const user = firebase.auth().currentUser;
-    user.updateProfile({
-      displayName: username
-    }).then(() => {
+    try {
+      await this.afauth.createUserWithEmailAndPassword(email, password);
+      const user = firebase.auth().currentUser;
+      await user.updateProfile({
+        displayName: username
+      });
       this.createUserData(user);
-    }).catch((error) => {
-      console.log(error);
-    });
+      return null;
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        return 'User already exists, please try with another email';
+      } else {
+        return error.message;
+      }
+    }
   }
 
   async loginUser(email: string, password: string) {
-    await this.afauth.signInWithEmailAndPassword(email, password);
+    try {
+      await this.afauth.signInWithEmailAndPassword(email, password);
+
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        this.emailDoesNotExist = true;
+      } else if (error.code === 'auth/wrong-password') {
+        this.incorrectPassword = true;
+      } else if (error.code === 'auth/invalid-email') {
+        this.emailBadlyFormated = true;
+      } else {
+        throw error;
+      }
+
+    }
+
   }
 
   createUserData(user: User) {
@@ -126,9 +151,9 @@ export class AuthService {
   }
 
   getUserSettings() {
-    let uid="";
-    if(this.userName == ""){
-      uid = this.getLoggedInUser(); 
+    let uid = "";
+    if (this.userName == "") {
+      uid = this.getLoggedInUser();
     }
     const callable = this.functions.httpsCallable('users/getUserAppSettings');
 
@@ -136,90 +161,90 @@ export class AuthService {
       const data = res.userData as UserAppSetting;
       return { ...data };
     }));
-    this.completedLoadingApplication =true;
+    this.completedLoadingApplication = true;
   }
 
   getListedOrganizationData(uid: string) {
     const callable = this.functions.httpsCallable("users/getMyOrgList");
-    this.myOrgCollectionsData = callable({Uid: uid}).pipe(
+    this.myOrgCollectionsData = callable({ Uid: uid }).pipe(
       map(actions => {
         return actions.data as MyOrganizationData[];
-    }));
+      }));
   }
 
   getMyOrgCollectionDocs(uid: string, appKey: string) {
     const callable = this.functions.httpsCallable("users/getMyOrgCollectionDocs");
-     callable({Uid: uid, OrgAppKey: appKey}).pipe(
+    callable({ Uid: uid, OrgAppKey: appKey }).pipe(
       map(actions => {
         return actions.data as MyOrganizationData;
-    })).subscribe({
-      next: (data) =>{
-        this.myOrgCollectionDocData = data;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => console.log("Getting My Organisation Data Complete")
-    })
-      
+      })).subscribe({
+        next: (data) => {
+          this.myOrgCollectionDocData = data;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => console.log("Getting My Organisation Data Complete")
+      })
+
   }
 
   getListedTeams(uid: string, appKey: string) {
     const callable = this.functions.httpsCallable("users/getMyTeamsList");
-    this.myTeamsListObservable = callable({Uid: uid, OrgAppKey: appKey}).pipe(
+    this.myTeamsListObservable = callable({ Uid: uid, OrgAppKey: appKey }).pipe(
       map(actions => {
         return actions.data as string[];
-    }));  
+      }));
   }
 
   getUserEducation(uid: string) {
     const callable = this.functions.httpsCallable("users/getAllEducation");
-    this.educationCollectionData = callable({Uid: uid }).pipe(
+    this.educationCollectionData = callable({ Uid: uid }).pipe(
       map(actions => {
         this.educations = actions.data as MyEducationData[];
         return this.educations;
       }));
-      return this.educationCollectionData;
+    return this.educationCollectionData;
   }
 
   getUserExperience(uid: string) {
     const callable = this.functions.httpsCallable("users/getAllExperience");
-    this.experienceCollectionData = callable({Uid: uid }).pipe(
+    this.experienceCollectionData = callable({ Uid: uid }).pipe(
       map(actions => {
         this.experiences = actions.data as MyExperienceData[];
         return this.experiences;
       }));
-      return this.experienceCollectionData;
+    return this.experienceCollectionData;
   }
-  
+
   getUserProject(uid: string) {
     const callable = this.functions.httpsCallable("users/getAllProject");
-    this.projectCollectionData = callable({Uid: uid }).pipe(
+    this.projectCollectionData = callable({ Uid: uid }).pipe(
       map(actions => {
         this.projects = actions.data as MyProjectData[];
         return this.projects;
       }));
-      return this.projectCollectionData;
+    return this.projectCollectionData;
   }
 
   getUserProfilePic(uid: string) {
     const callable = this.functions.httpsCallable("librarian/getFilesInUser");
-    this.filesCollectionData = callable({UID: uid }).pipe(
+    this.filesCollectionData = callable({ UID: uid }).pipe(
       map(actions => {
         this.filesData = actions.data as FileData[];
         return this.filesData;
       }));
-      return this.filesCollectionData;
+    return this.filesCollectionData;
   }
-  
+
   getOrganizationLogo(orgDomain: string) {
     const callable = this.functions.httpsCallable("librarian/getFilesInOrganization");
-    this.filesCollectionData = callable({OrgDomain: orgDomain}).pipe(
+    this.filesCollectionData = callable({ OrgDomain: orgDomain }).pipe(
       map(actions => {
         this.filesData = actions.data as FileData[];
         return this.filesData;
       }));
-      return this.filesCollectionData;
+    return this.filesCollectionData;
   }
 
   getAppKey() {
@@ -229,7 +254,7 @@ export class AuthService {
   getTeamId() {
     return this.userAppSetting.SelectedTeamId;
   }
-  getUserEmail(){
+  getUserEmail() {
     return this.user.email;
   }
 
