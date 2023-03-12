@@ -46,6 +46,7 @@ export class CreateNewOrganizationComponent implements OnInit {
   basePath: string
   fileName: string
   percentage: number = 0;
+  orgDomainsAvailable: boolean = true
 
   createNewOrgForm= new FormGroup({
     orgName: new FormControl('', Validators.required),
@@ -107,5 +108,15 @@ export class CreateNewOrganizationComponent implements OnInit {
 
   close() {
     this.location.back();
+  }
+
+  checkOrgDomainAvailabilityLive() {
+
+    if(this.authService.allOrgDomains.includes(this.orgDomain.value)){
+      this.orgDomainsAvailable = false;
+    }else{
+      this.orgDomainsAvailable = true;
+    }
+  
   }
 }
