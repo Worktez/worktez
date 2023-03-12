@@ -102,6 +102,7 @@ import { map } from 'rxjs';
           this.githubService.markdownGithubDoc(bearerToken, this.releaseData.body).subscribe({
             next: (data) => {
               this.releaseDesc=data;
+              this.formatReleaseDescription();
             },
             error: (error) => {
               console.log(error);
@@ -120,6 +121,12 @@ import { map } from 'rxjs';
         console.log("Success");
       },
     });
+  }
+  formatReleaseDescription(){
+    const regExp1 = new RegExp('.com</a>', 'g');
+    this.releaseDesc = this.releaseDesc.replace(regExp1, '.com</a><br>');
+    const regExp2 = new RegExp('<a href="mailto', 'g')
+    this.releaseDesc = this.releaseDesc.replace(regExp2, ': <a href="mailto');
   }
  
    editReleaseCompleted(){
