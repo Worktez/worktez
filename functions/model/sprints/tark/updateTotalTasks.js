@@ -21,6 +21,7 @@
 const { getAllTasks } = require("../../tasks/lib");
 const { updateSprint } = require("../lib");
 const { createSprintName } = require("../../application/lib");
+const { updateTeamDetails } = require("../../teams/lib");
 
 
 exports.updateTotalTasks = function(orgDomain, teamName, teamId, sprintId) {
@@ -41,6 +42,9 @@ exports.updateTotalTasks = function(orgDomain, teamName, teamId, sprintId) {
       TotalUnCompletedTask: tasksData.length - completedCount,
     };
     updateSprint(inputJson, orgDomain, teamName, createSprintName(sprintId));
+    if (sprintId == -1) {
+      updateTeamDetails({TotalBacklogTask: tasksData.length}, orgDomain, teamName);
+    }
   });
   return Promise.resolve(promise).then(()=>{
     console.log("Updated Total no of tasks for ", orgDomain, teamName, sprintId);
