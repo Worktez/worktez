@@ -207,6 +207,7 @@ import { ProfileFeatureComponent } from './body/features-page/profile-feature/pr
 import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feature/quicknotes-feature.component';
 import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PipelineComponent } from './body/pipeline/pipeline.component';
 
 @NgModule({
   declarations: [
@@ -380,6 +381,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ProfileFeatureComponent,
     QuicknotesFeatureComponent,
     TasksFeatureComponent,
+    PipelineComponent,
   ],
   imports: [
     BrowserModule,

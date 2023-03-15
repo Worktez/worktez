@@ -61,6 +61,7 @@ import { ReleaseDetailsComponent } from './body/release-details/release-details.
 import { DocumentationsComponent } from './body/documentations/documentations.component';
 import { GetStartedComponent } from './body/get-started/get-started.component';
 import { FeaturesPageComponent } from './body/features-page/features-page.component';
+import { PipelineComponent } from './body/pipeline/pipeline.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -79,6 +80,7 @@ const routes: Routes = [
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CurrentPlan', component: CurrenPlanComponent, canActivate: [AngularFireAuthGuard] },
+  { path: 'Pipeline', component:PipelineComponent},
   // { path: 'Patch1', component: Patch1Component },
   // { path: 'Patch2', component: Patch2Component },
   // { path: 'Patch3', component: Patch3Component },

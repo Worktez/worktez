@@ -31,12 +31,13 @@ export class NavbarHandlerService {
     });
     componentName = componentName.trim();
 
-    if (this.navbarList.indexOf("Board") === -1 && this.navbarList.indexOf("Milestones") === -1 && this.navbarList.indexOf("Releases") ===- 1) {
+    if (this.navbarList.indexOf("Board") === -1 && this.navbarList.indexOf("Milestones") === -1 && this.navbarList.indexOf("Releases") ===- 1 && this.navbarList.indexOf("Pipeline") ===- 1) {
       this.resetNavbar();
     }
     if (this.navbarList.length === 3) {
       this.removeFromNavbar()
     }
+  
     let searchIndex = this.navbarList.indexOf(componentName);
 
     if (searchIndex == -1) {
