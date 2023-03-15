@@ -75,7 +75,10 @@ input:focus {
 }
 #SuccessIcon{
     color: var(--secondary-color);
-    font-size: 55px;
+    font-size: 48px;
+    padding-left: 5px;
+    width: 3.5rem;
+    height: 3rem;
 }
 
 .btn {
