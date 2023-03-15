@@ -46,7 +46,6 @@ export class ThemeService {
   clearDarkThemeFromCookies(theme: string){
     if(theme === "theme-dark"){
       this.cookieService.deleteAll("userAppTheme");
-      this.router.navigate(['/techverse']);
       location.reload();
     }
   }
