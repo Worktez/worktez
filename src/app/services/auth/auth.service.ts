@@ -111,10 +111,6 @@ export class AuthService {
     await this.afauth.confirmPasswordReset(actionCode, newPassword);
   }
 
-  // async loginUser(email: string, password: string) {
-  //   await this.afauth.signInWithEmailAndPassword(email, password);
-  // }
-
   createUserData(user: User) {
     const callable = this.functions.httpsCallable('users/createNewUser');
     callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
