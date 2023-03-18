@@ -1,0 +1,73 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+.page {
+    /* background-color: var(--secondary-bg); */
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.heading{
+    font-size: 56px;
+    line-height: 4rem;
+
+}
+.title {
+    font-size: xx-large;
+    /* color: #0000e4; */
+}
+
+.sub-title {
+    font-size: 22px;
+}
+
+p {
+    font-size: large;
+    line-height: 1.8rem;
+    text-align: justify;
+    color: var(--text);
+}
+a {
+    font-size: large;
+    line-height: 1.8rem;
+    text-align: justify;
+    color: var(--primary-color) !important;
+    cursor: pointer;
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    border: none;
+}
+
+.submenu {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+}
+
+li {
+    cursor: pointer;
+    font-size: medium;
+    color: var(--text);
+}
+
+.feature-item{
+    cursor: pointer;
+    font-size: small;
+    line-height: normal;
+    text-align: left;
+}
+
+
+li:hover {
+    color: var(--primary-color);
+}

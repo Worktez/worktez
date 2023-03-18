@@ -1,0 +1,130 @@
+<!-- *********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Abhishek Mishra <am1426620@gmail.com>
+* 
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+*********************************************************** -->
+<div id="blogPage" data-spy="scroll" data-target="#navbar" data-offset="0">
+    <section id="blog" class="pb-2">
+        <div class="row py-3">
+            <div class="col-md-1 col-1"></div>
+            <div class="col pt-5">
+                <div id="showContent">
+                    <img src="https://global-uploads.webflow.com/611a19b9853b7414a0f6b3f6/611a72f179c0f04dab2b18b2_Vector%2063.svg" loading="lazy" alt="" class="c-subtitle_line align-middle">
+                    <div style="font-size: 16px; display: inline;" class="align-middle">&emsp;Blogs</div>
+                    <h1 class="mt-2" id="headingLine" style="font-size: 52px; line-height: 4rem;" >
+                        Explore our blog and discover insightful articles on a variety of topics
+                    </h1>
+                </div> 
+            </div>
+            <div class="col-md-2 col-1"></div>
+        </div>
+    </section>
+    <section id="featured">
+        <div class="row" (click)="gitIntegration()">
+            <div class="col"></div>
+            <div class="col-6 featured px-0">
+                <img src="../../../assets/blogs-svg/git-img.png" style="width: 100%;" alt="">
+            </div>
+            <div class="col-4 featured px-3">
+                <p class="text-muted pt-3">Feb 26, 2023 <span class="leanrMore">&emsp;Feature </span></p>
+                <p class="serviceButton pt-3" id="gitText">Git Integration</p>
+                <p class="serviceText">A version control system that allows you to track changes, merge code, and revert to previous code versions as needed. The Git branching feature allows you to create multiple branches of a single project.</p>
+                <p class="leanrMore text-right">Read more
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        chevron_right
+                    </mat-icon>
+                </p>
+            </div>
+            <div class="col"></div>
+        </div>
+    </section>
+    <section id="services" class="py-2">
+        <div class="row pt-2">
+            <div class="col"></div>
+            <div class="col-10 px-0">
+                <div class="row py-1 mb-5">
+                    <div class="col-md-4 col-12 py-2" (click)="agile()">
+                        <img class="featured" src="../../../assets/blogs-svg/agile-img.jpeg" alt="graphs" width="100%" height="50%">
+                        <div class="p-4 featured">
+                            <div class="row align-middle pt-2">
+                                <div class="col">
+                                    <p class="text-muted pt-1">Feb 26, 2023 <span class="leanrMore">&emsp;Feature </span></p>
+                                    <p class="serviceButton" id="gitText">Agile Functionalities</p>
+                                    <p class="serviceText">Agile is a project management concept that puts a major emphasis on scalability and teamwork...</p>
+                                    <p class="leanrMore text-right">Read more
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                            chevron_right
+                                        </mat-icon>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12 py-2" (click)="devOps()">
+                        <img class="featured" src="../../../assets/blogs-svg/devOPs.jpeg" alt="graphs" width="100%" height="50%">
+                        <div class="p-4 featured">
+                            <div class="row align-middle pt-2">
+                                <div class="col">
+                                    <p class="text-muted pt-1">Feb 26, 2023 <span class="leanrMore">&emsp;Feature </span></p>
+                                    <p class="serviceButton" id="gitText">DevOps</p>
+                                    <p class="serviceText">DevOps is a set of practices and culture that aims to bridge the gap between development and operations...</p>
+                                    <p class="leanrMore text-right">Read more
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                            chevron_right
+                                        </mat-icon>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12 py-2" (click)="metaVerse()">
+                        <img class="featured" src="../../../assets/blogs-svg/metaVerse.jpg" alt="graphs" width="100%" height="50%">
+                        <div class="p-4 featured">
+                            <div class="row align-middle pt-2">
+                                <div class="col">
+                                    <p class="text-muted pt-1">Feb 26, 2023 <span class="leanrMore">&emsp;Technology </span></p>
+                                    <p class="serviceButton" id="gitText">MetaVerse</p>
+                                    <p class="serviceText">A virtual reality simulation that can be used for variety of purposes, including entertainment, social networking, and education</p>
+                                    <p class="leanrMore text-right">Read more
+                                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                            chevron_right
+                                        </mat-icon>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </section>
+    <section id="featured">
+        <div class="row" (click)="kanbanBoard()">
+            <div class="col"></div>
+            <div class="col-6 featured px-0">
+                <img src="../../../assets/blogs-svg/kanban board.png" style="width: 100%;" alt="">
+            </div>
+            <div class="col-4 featured px-3">
+                <p class="text-muted pt-3">Feb 26, 2023 <span class="leanrMore">&emsp;Feature </span></p>
+                <p class="serviceButton pt-3" id="gitText">Kanban Board</p>
+                <p class="serviceText">A fantastic visual tool that streamlines team communication and provides an overview of the current work progress is the Kanban Board. It is also a crucial component of the Kanban method, which aids in the optimization and ongoing improvement of any company process. Your workplace's efficiency will increase and confusion will be eliminated if you visualize your job on a kanban board....</p>
+                <p class="leanrMore text-right">Read more
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        chevron_right
+                    </mat-icon>
+                </p>
+            </div>
+            <div class="col"></div>
+        </div>
+    </section>
+</div>
