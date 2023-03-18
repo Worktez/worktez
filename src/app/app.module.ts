@@ -208,6 +208,7 @@ import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feat
 import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ResetPasswordComponent } from './body/reset-password/reset-password.component';
+import { ErrorModalComponent } from './body/error-modal/error-modal.component';
 
 @NgModule({
   declarations: [
@@ -382,6 +383,7 @@ import { ResetPasswordComponent } from './body/reset-password/reset-password.com
     QuicknotesFeatureComponent,
     TasksFeatureComponent,
     ResetPasswordComponent,
+    ErrorModalComponent,
   ],
   imports: [
     BrowserModule,

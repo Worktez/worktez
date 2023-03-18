@@ -36,6 +36,9 @@ export class LoginComponent implements OnInit {
   activeLogin: boolean = true
   userExistChecked: boolean = false;
   passwordResetLinkSent: boolean;
+  loginError = false;
+  errorTitle = ""
+  errorMessage = "";
 
   constructor(public authService: AuthService, public router: Router, public navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private location: Location, public startService: StartServiceService) { }
 
@@ -72,22 +75,44 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  onSignUpWithEmail() {
-    this.authService.createUser(this.email, this.password, this.username).then(() => {
+  async onSignUpWithEmail() {
+    const errorMessage = await this.authService.createUser(this.email, this.password, this.username);
+    if (errorMessage) {
+      this.errorTitle = "Sign Up Failed";
+      this.errorMessage = errorMessage;
+      this.loginError = true;
+    } else {
       this.navigateToHome();
-    }).catch((err) => {
-      console.log(err.message);
-    });
+    }
   }
 
   onLoginWithEmail() {
+    this.loginError = false;
     this.authService.loginUser(this.email, this.password).then(() => {
-      const path = this.location.path();
-      if (path.startsWith('/verifyUser')) {
-        this.navigateToVerification(path);
+      if(this.authService.emailDoesNotExist === true){
+        this.errorTitle="Login Failed!";
+        this.errorMessage="User does not exist.";
+        this.loginError = true;
+      } else if(this.authService.incorrectPassword === true){
+        this.errorTitle="Login Failed!";
+        this.errorMessage="The password is invalid or the user does not have a password.";
+        this.loginError = true;
+      } else if(this.authService.emailBadlyFormated === true){
+        this.errorTitle="Login Failed!";
+        this.errorMessage="The email address is badly formatted.";
+        this.loginError = true;
+      } else if(this.authService.genericError === true){
+        this.errorTitle="Login Failed!";
+        this.errorMessage="Cannot process your request at the moment.";
+        this.loginError = true;
       } else {
-        this.navigateToHome();
-      }
+          const path = this.location.path();
+          if (path.startsWith('/verifyUser')) {
+            this.navigateToVerification(path);
+          } else {
+            this.navigateToHome();
+          }
+        }  
     }).catch((err) => {
       console.log(err.message);
     });
@@ -119,5 +144,13 @@ export class LoginComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  closeError(value: boolean) {
+    this.authService.emailDoesNotExist = false;
+    this.authService.incorrectPassword = false;
+    this.authService.emailBadlyFormated = false;
+    this.authService.genericError = false;
+    this.loginError  = false;
   }
 }

@@ -70,7 +70,7 @@
                                     </h3>
                                     <form (submit)="onSignUpWithEmail()">
                                         <div class="input-group pb-3">
-                                            <input type="text" class="form-control" placeholder="Enter your username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+                                            <input type="text" class="form-control" placeholder="Enter your Full Name" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
                                             <div class="input-group-append">
                                                 <div class="input-group-text icons">
                                                     <span class="material-icons icons">
@@ -165,3 +165,6 @@
         </ng-container>
     </ng-container>    
 </div>
+<ng-container *ngIf = "loginError">
+    <app-error-modal [errorMessage]="errorMessage" [errorTitle]="errorTitle" (closeError)="closeError($event)"></app-error-modal>
+</ng-container>

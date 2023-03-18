@@ -27,6 +27,11 @@ import { FileData } from '../../Interface/FileInterface';
 })
 
 export class AuthService {
+  emailDoesNotExist: boolean = false;
+  incorrectPassword: boolean = false;
+  emailBadlyFormated: boolean = false;
+  genericError: boolean = false;
+
   public userAppSettingObservable: Observable<UserAppSetting>;
 
   public myOrgCollectionsData: Observable<MyOrganizationData[]>
@@ -59,16 +64,41 @@ export class AuthService {
 
   constructor(private cookieService: CookieService, public afauth: AngularFireAuth, private functions: AngularFireFunctions, public themeService: ThemeService) { }
 
-  async createUser(email: string, password: string, username: string) {
-    await this.afauth.createUserWithEmailAndPassword(email, password);
-    const user = firebase.auth().currentUser;
-    user.updateProfile({
-      displayName: username
-    }).then(() => {
+   async createUser(email: string, password: string, username: string) {
+    try {
+      await this.afauth.createUserWithEmailAndPassword(email, password);
+      const user = firebase.auth().currentUser;
+      await user.updateProfile({
+        displayName: username
+      });
       this.createUserData(user);
-    }).catch((error) => {
-      console.log(error);
-    });
+      return null;
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        return 'User already exists, please try with another email';
+      } else {
+        return error.message;
+      }
+    }
+  }
+
+  async loginUser(email: string, password: string) {
+    try {
+      await this.afauth.signInWithEmailAndPassword(email, password);
+
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        this.emailDoesNotExist = true;
+      } else if (error.code === 'auth/wrong-password') {
+        this.incorrectPassword = true;
+      } else if (error.code === 'auth/invalid-email') {
+        this.emailBadlyFormated = true;
+      } else {
+        this.genericError = true;
+      }
+
+    }
+
   }
 
   async forgotPassword(email: string){
@@ -79,10 +109,6 @@ export class AuthService {
   }
   async confirmPasswordReset(actionCode: string, newPassword: string){
     await this.afauth.confirmPasswordReset(actionCode, newPassword);
-  }
-
-  async loginUser(email: string, password: string) {
-    await this.afauth.signInWithEmailAndPassword(email, password);
   }
 
   createUserData(user: User) {
