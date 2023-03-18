@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { User, UserAppSetting } from 'src/app/Interface/UserInterface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { StartServiceService } from 'src/app/services/start/start-service.service';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'app-user-card',
@@ -26,7 +27,8 @@ export class UserCardComponent implements OnInit {
   @Input('user') user: User
   showCard: boolean = false
   photoUrl: string = ""
-  constructor(private startService: StartServiceService, public authService: AuthService, public router: Router) { }
+  appTheme:string
+  constructor(private startService: StartServiceService, public authService: AuthService, public router: Router, public themeService: ThemeService) { }
 
   ngOnInit(): void {
   }
@@ -36,7 +38,11 @@ export class UserCardComponent implements OnInit {
     this.showCard = !this.showCard
   }
   onLogout() {
+    this.appTheme = this.authService.userAppSetting.AppTheme;
     this.authService.logout().then(()=>{
+      if(this.appTheme){
+        this.themeService.clearDarkThemeFromCookies(this.appTheme);
+      }
       this.startService.stopApplication();
       this.router.navigate(['/techverse']);
     });
