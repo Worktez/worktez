@@ -51,7 +51,6 @@ exports.scheduleMeet = function(request, response) {
       setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
       teamMembers.forEach((email) => {
         getUserUseEmail(email).then((data)=>{
-          console.log(data);
           setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, data.uid, roomId);
         });
       });
