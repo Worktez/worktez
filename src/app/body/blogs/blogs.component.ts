@@ -12,18 +12,16 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-features-page',
-  templateUrl: './features-page.component.html',
-  styleUrls: ['./features-page.component.css']
+  selector: 'app-blogs',
+  templateUrl: './blogs.component.html',
+  styleUrls: ['./blogs.component.css']
 })
-export class FeaturesPageComponent implements OnInit {
-
+export class BlogsComponent {
   currentSection: string;
   arrowDirection: string = "expand_less";
   featuresExpanded: boolean = true;
@@ -31,16 +29,14 @@ export class FeaturesPageComponent implements OnInit {
   constructor(public router: Router, private titleService: Title, private metaTagService: Meta, private route: ActivatedRoute ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Worktez: Features");
+    this.titleService.setTitle("Worktez: Blogs");
     this.metaTagService.updateTag(
       {
         name: 'description',
-        content: 'Explore the multiple features of worktez, Learn more about the product and get more familiar with the tool',
+        content: 'Explore our blog and discover insightful articles on a variety of topics',
       });
       this.metaTagService.updateTag({ name: 'author', content: 'Abhishek Mishra' });
       this.metaTagService.updateTag({ name: 'date', content: '2023-01-28', scheme: 'YYYY-MM-DD' },)
-
-    this.currentSection = this.route.snapshot.params[ 'currentSection' ]
   }
   gettingStarted(){
     this.router.navigate(['/GettingStarted']);
@@ -59,7 +55,19 @@ export class FeaturesPageComponent implements OnInit {
       this.arrowDirection = "expand_less"
     }
   }
-  blogs(){
-    this.router.navigate(['/blogs']);
+  gitIntegration(){
+    this.router.navigate(['/blogs/git-integration']);
+  }
+  agile(){
+    this.router.navigate(['/blogs/agile-functionalities']);
+  }
+  devOps(){
+    this.router.navigate(['/blogs/devops-functionalities']);
+  }
+  metaVerse(){
+    this.router.navigate(['/blogs/metaverse']);
+  }
+  kanbanBoard(){
+    this.router.navigate(['/blogs/kanban-board']);
   }
 }
