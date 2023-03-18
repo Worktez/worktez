@@ -187,4 +187,7 @@ export class BoardComponent implements OnInit {
     this.applicationSettingsService.editedSprintId = filterSprintNumber;
     this.readSprintData();
   }
+  goToActiveSprint(){
+    location.reload();
+  }
 }
