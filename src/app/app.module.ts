@@ -207,6 +207,14 @@ import { ProfileFeatureComponent } from './body/features-page/profile-feature/pr
 import { QuicknotesFeatureComponent } from './body/features-page/quicknotes-feature/quicknotes-feature.component';
 import { TasksFeatureComponent } from './body/features-page/tasks-feature/tasks-feature.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ResetPasswordComponent } from './body/reset-password/reset-password.component';
+import { ErrorModalComponent } from './body/error-modal/error-modal.component';
+import { BlogsComponent } from './body/blogs/blogs.component';
+import { AgileFunctionalitiesComponent } from './body/blogs/agile-functionalities/agile-functionalities.component';
+import { DevOpsComponent } from './body/blogs/dev-ops/dev-ops.component';
+import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component';
+import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
+import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/git-integration-blog.component';
 
 @NgModule({
   declarations: [
@@ -380,6 +388,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ProfileFeatureComponent,
     QuicknotesFeatureComponent,
     TasksFeatureComponent,
+    ResetPasswordComponent,
+    ErrorModalComponent,
+    BlogsComponent,
+    AgileFunctionalitiesComponent,
+    DevOpsComponent,
+    MetaVerseComponent,
+    KanbanBoardBlogComponent,
+    GitIntegrationBlogComponent,
   ],
   imports: [
     BrowserModule,

@@ -26,7 +26,7 @@ export class MeetingsFeatureComponent implements OnInit {
   constructor(public router: Router, private titleService: Title, private metaTagService: Meta ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Features - Meetings");
+    this.titleService.setTitle("Worktez: Features - Meetings");
     this.metaTagService.updateTag(
       {
         name: 'description',

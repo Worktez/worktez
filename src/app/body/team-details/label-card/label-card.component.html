@@ -21,13 +21,13 @@
     </div>
     <ul class="list-group list-group-flush">
     <div cdkDropList (cdkDropListDropped)="onLabelDrop($event)">
-    <ng-container *ngFor="let label of labelsArray">
+    <ng-container *ngFor="let element of labelsArray">
         <li class="list-group-item" cdkDrag>
             <div class="row p-0">
                 <div class="col-6">
-                    <span class="label float-left">{{label}}</span>
+                    <span class="label float-left">{{element}}</span>
                     <span class="value float-left">
-                        <app-generate-icon [team]="team" [scope]="scope" [label]="label"></app-generate-icon>
+                        <app-generate-icon [Border]="false" [icon]="labels[element]"></app-generate-icon>
                     </span>
                 </div>
                 <div class="col-6 text-right align-middle">

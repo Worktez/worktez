@@ -28,7 +28,7 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
 })
 export class TeamsCardComponent implements OnInit {
 
-  @Input('team') team: Team
+  @Input('team') team: Team;
 
   @Output() updatedDetails = new EventEmitter<boolean>();
   @Output() githubDetails = new EventEmitter<boolean>();
@@ -36,7 +36,9 @@ export class TeamsCardComponent implements OnInit {
   addMemberEnabled: boolean = false
   addProjectEnabled: boolean = false
   addProjectLinkEnabled: boolean = false
+  deleteTeamEnabled: boolean = false
   teamToAddMember: Team
+  teamToDelete: Team
   teamToAddGithub: Team
   typeLink: string
   updateTeamEnabled: boolean = false
@@ -66,12 +68,15 @@ export class TeamsCardComponent implements OnInit {
     this.updateTeamEnabled = true;
   }
 
+  enableDeleteTeam(team: Team) {
+    this.teamToDelete = team;
+    this.deleteTeamEnabled = true;
+  }
 
-
-   deleteTeam() {
+  deleteTeam() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const callable = this.functions.httpsCallable('teams/deleteTeam');
-     callable({OrganizationDomain: orgDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId}).subscribe({
+     callable({OrganizationDomain: orgDomain, TeamName: this.teamToDelete.TeamName, TeamId: this.teamToDelete.TeamId}).subscribe({
       next: (data) => {
         this.team.TeamStatus = -1;
       },
@@ -80,8 +85,12 @@ export class TeamsCardComponent implements OnInit {
         this.errorHandlerService.showError = true;
         this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
       },
-      complete: () => console.info('Successful ')
-  });
+      complete: () => {
+        console.info('Successful ');
+        this.updatedDetails.emit(true);
+        this.deleteTeamEnabled = false;
+      }
+    });
   }
 
   openTeamDetails() {

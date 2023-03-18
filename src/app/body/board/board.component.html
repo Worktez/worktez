@@ -35,11 +35,13 @@
             <div class="row">
                 <ng-container *ngIf="showContent; else loader">     
                     <div class="col-md-4 col mb-2">
-                        <ng-container *ngIf="sprintNotExist">
-                            <p class="board-text">The Sprint does not exist</p>
-                        </ng-container>
                         <ng-container *ngIf="sprintNotExist == false">
                             <app-sprint-details [currentSprintName]="currentSprintName" [currentSprintNumber]="currentSprintNumber" [sprintData]="sprintData" [workPercentage]="workPercentage" (currentSprint)="changeSprintNumber($event)"></app-sprint-details>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="sprintNotExist">
+                        <ng-container >
+                            <p class="board-text" style="text-align: center;">The Sprint does not exist, <a style="text-decoration: underline;  color: blue;" (click)="goToActiveSprint()">click here</a> to go back to the active sprint.</p>
                         </ng-container>
                     </div>
                     <div class="col-md-8 col mb-2">
@@ -62,7 +64,7 @@
                 </ng-container>
             </div>
             <div class="col-md-6 col-12 pb-2">
-                <ng-container *ngIf="sprintNotExist == false && isBacklog==false && isDeleted==false || isActive==true">
+                <ng-container *ngIf="sprintNotExist == false && isBacklog==false && isDeleted==false && isActive==true">
                     <app-sprint-burndown-chart [currentSprint]="currentSprintNumber"  [teamId]="startService.selectedTeamId" [sprintStartDate]="SDate" [sprintEndDate]="EDate"></app-sprint-burndown-chart>
                 </ng-container>
             </div>

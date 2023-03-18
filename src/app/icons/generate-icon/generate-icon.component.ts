@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Label, Team } from 'src/app/Interface/TeamInterface';
-import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { Label } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-generate-icon',
@@ -9,17 +8,13 @@ import { TeamServiceService } from 'src/app/services/team/team-service.service';
 })
 export class GenerateIconComponent implements OnInit {
 
-  @Input('team') team: Team;
-  @Input('scope') scope: string;
-  @Input('label') label: string;
+  @Input('icon') icon: Label;
   @Input('Border') Border: boolean = false;
-  icon: Label;
 
   colorCode: string = "";
-  constructor(private teamService: TeamServiceService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.icon = this.teamService.teamsLabelsJson[this.team.TeamId][this.scope][this.label]
     this.colorCode = "#" + this.icon.ColorCode;
   }
 

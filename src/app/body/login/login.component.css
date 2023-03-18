@@ -16,6 +16,12 @@
     background-color: var(--secondary-bg);
     border-radius: 5px;
 }
+#forgotPasswordContainer {
+    box-shadow: var(--box-shadow-bottom);
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+    padding: 5px;
+}
 
 #button {
     background-color: var(--primary-color);
@@ -50,6 +56,7 @@
 }
 
 input:focus,
+.btn:focus
 select:focus,
 textarea:focus {
     box-shadow: none;
@@ -69,7 +76,6 @@ textarea {
 
 .icons {
     color: var(--primary-color);
-    background-color: var(--input-field);
 }
 
 .forgotPassword {

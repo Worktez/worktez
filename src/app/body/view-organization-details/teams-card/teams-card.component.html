@@ -19,7 +19,7 @@
             </div>
             <div class="col-6 text-right">
                 <span *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteTeam" type="button" class="btn ml-2 align-bottom" data-toggle="modal" data-target="#deleteTeam"
-                title="delete Team"  data-bs-toggle="tooltip">
+                title="delete Team"  data-bs-toggle="tooltip" (click)="enableDeleteTeam(team)">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         delete
                     </mat-icon>
@@ -122,7 +122,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="deleteTeam" tabindex="-1" role="dialog">
+        <div class="modal fade" *ngIf="deleteTeamEnabled" id="deleteTeam" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">

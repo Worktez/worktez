@@ -69,13 +69,13 @@
             <div class="col">
                 <div class="row py-1">
                     <div class="col-md-6 col-12 p-2">
-                        <div class="boxShadow p-4 gitService">
+                        <div class="boxShadow p-4 gitService" (click)="gitIntegration()">
                             <img class="icons" src="../../../assets/gitIconC.svg" alt="graphs" width="100%" height="100%">
                             <div class="row align-middle pt-2">
                                 <div class="col">
                                     <p class="serviceButton" id="gitText">Git Integration</p>
                                     <p class="serviceText">Track code changes, issues and mutiple releases, with Github and Gitlab.</p>
-                                    <p class="leanrMore text-right">Learn more
+                                    <p class="leanrMore text-right" >Learn more
                                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                             chevron_right
                                         </mat-icon>
@@ -85,13 +85,13 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-12 p-2">
-                        <div class="boxShadow p-4 kanbanService">
+                        <div class="boxShadow p-4 kanbanService" (click)="kanbanBoard()">
                             <img class="icons" src="../../../assets/kanbanIcon.svg" alt="graphs" width="100%" height="100%">
                             <div class="row align-middle pt-2">
-                                <div class="col text-center">
-                                    <p class="serviceButton" id="kanbanText">Kanban Board</p>
+                                <div class="col text-center" >
+                                    <p class="serviceButton" id="kanbanText" >Kanban Board</p>
                                     <p class="serviceText">Add value to your team, and customer with efficient Agile tools. To Plan, Track, Code and Ship.</p>
-                                    <p class="leanrMore text-right">Learn more
+                                    <p class="leanrMore text-right" >Learn more
                                         <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                             chevron_right
                                         </mat-icon>
@@ -155,7 +155,7 @@
                     <div class="col-md-6 col-12 p-2">
                         <div class="boxShadow p-4 tvService">
                             <div class="row align-middle p-2">
-                                <div class="col text-center">
+                                <div class="col text-center" (click)="metaVerse()">
                                     <img class="icons" src="../../../assets/ttIcon.svg" alt="graphs" width="100%" height="100%">
                                     <p class="serviceButton text-center" id="ttText">Techverse</p>
                                 </div>

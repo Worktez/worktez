@@ -27,12 +27,19 @@ import { FileData } from '../../Interface/FileInterface';
 })
 
 export class AuthService {
+  emailDoesNotExist: boolean = false;
+  incorrectPassword: boolean = false;
+  emailBadlyFormated: boolean = false;
+  genericError: boolean = false;
+
   public userAppSettingObservable: Observable<UserAppSetting>;
 
   public myOrgCollectionsData: Observable<MyOrganizationData[]>
   public myTeamsListObservable: Observable<string[]>
 
   public myOrgCollectionDocData: MyOrganizationData
+
+  public allOrgDomains: string[];
 
   public organizationAvailable: boolean = true;
   public completedLoadingApplication: boolean = false;
@@ -57,27 +64,58 @@ export class AuthService {
 
   constructor(private cookieService: CookieService, public afauth: AngularFireAuth, private functions: AngularFireFunctions, public themeService: ThemeService) { }
 
-  async createUser(email: string, password: string, username: string) {
-    await this.afauth.createUserWithEmailAndPassword(email, password);
-    const user = firebase.auth().currentUser;
-    user.updateProfile({
-      displayName: username
-    }).then(() => {
+   async createUser(email: string, password: string, username: string) {
+    try {
+      await this.afauth.createUserWithEmailAndPassword(email, password);
+      const user = firebase.auth().currentUser;
+      await user.updateProfile({
+        displayName: username
+      });
       this.createUserData(user);
-    }).catch((error) => {
-      console.log(error);
-    });
+      return null;
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        return 'User already exists, please try with another email';
+      } else {
+        return error.message;
+      }
+    }
   }
 
   async loginUser(email: string, password: string) {
-    await this.afauth.signInWithEmailAndPassword(email, password);
+    try {
+      await this.afauth.signInWithEmailAndPassword(email, password);
+
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        this.emailDoesNotExist = true;
+      } else if (error.code === 'auth/wrong-password') {
+        this.incorrectPassword = true;
+      } else if (error.code === 'auth/invalid-email') {
+        this.emailBadlyFormated = true;
+      } else {
+        this.genericError = true;
+      }
+
+    }
+
+  }
+
+  async forgotPassword(email: string){
+    await this.afauth.sendPasswordResetEmail(email);
+  }
+  async verifyPasswordResetActionCode(actionCode: string){
+    await this.afauth.verifyPasswordResetCode(actionCode);
+  }
+  async confirmPasswordReset(actionCode: string, newPassword: string){
+    await this.afauth.confirmPasswordReset(actionCode, newPassword);
   }
 
   createUserData(user: User) {
     const callable = this.functions.httpsCallable('users/createNewUser');
     callable({ uid: user.uid, photoURL: user.photoURL, displayName: user.displayName, email: user.email, phoneNumber: user.phoneNumber, providerId: user.providerId }).subscribe({
       next: (data) => {
-        console.log("Successful ");
+        console.log("Successfully Created UserData ");
       },
       error: (error) => {
         console.error("Error", error);
@@ -145,6 +183,21 @@ export class AuthService {
       map(actions => {
         return actions.data as MyOrganizationData[];
     }));
+  }
+
+  async getListedOrganizationDomains() {
+    const callable = this.functions.httpsCallable('teams/orgDomainCheck');
+       callable({}).subscribe({
+        next: (result) => {
+          this.allOrgDomains = result.resultData;
+        },
+        error: (error) => {
+          console.log(error);
+          console.log("error is here")
+        },
+        complete: () => {console.info('Successful ')}
+    });
+   
   }
 
   getMyOrgCollectionDocs(uid: string, appKey: string) {
@@ -221,7 +274,7 @@ export class AuthService {
       }));
       return this.filesCollectionData;
   }
-
+  
   getAppKey() {
     return this.userAppSetting.SelectedOrgAppKey;
   }

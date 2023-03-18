@@ -51,7 +51,10 @@ export class SprintDetailsComponent implements OnInit {
   constructor(public startService: StartServiceService,public rbaService: RBAService, private authService: AuthService, public applicationSettingsService: ApplicationSettingsService, public toolsService: ToolsService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private router: Router,public popupHandlerService: PopupHandlerService) { }
 
   ngOnInit(): void {
-    this.todayDate = this.toolsService.date();
+    this.todayDate = this.toolsService.date().split('-').reverse().join('-');
+    if(this.sprintData.Status == 'Completed'){
+      this.workPercentage = 100;
+    }
     this.applicationSettingsService.sprintDataObservable.subscribe((data) => {
       this.sprintDataReady = true;
       if(this.startService.currentSprintNumber == 0){
@@ -86,7 +89,7 @@ export class SprintDetailsComponent implements OnInit {
           this.sprintData = data;
           this.showLoader = false;
           if(sprintStatus=='Completed'){
-            this.sprintData.EndDate=  this.todayDate = this.toolsService.date().split('/').reverse().join('-');
+            this.sprintData.EndDate=  this.todayDate;
             this.workPercentage=100;
           
           }

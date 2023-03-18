@@ -80,4 +80,13 @@ export class HomeComponent implements OnInit {
   scrollRight() {
     this.imageContainer.nativeElement.scrollTo({ left: (this.imageContainer.nativeElement.scrollLeft + 400), block: "start", inline: "nearest" });
   }
+  gitIntegration(){
+    this.router.navigate(['/blogs/git-integration']);
+  }
+  metaVerse(){
+    this.router.navigate(['/blogs/metaverse']);
+  }
+  kanbanBoard(){
+    this.router.navigate(['/blogs/kanban-board']);
+  }
 }
