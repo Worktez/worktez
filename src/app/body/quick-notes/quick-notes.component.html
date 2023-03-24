@@ -17,7 +17,7 @@
     </mat-icon>
     Quick Note
 </button>
-<ng-container *ngIf="showNotesList">
+<ng-container  *ngIf="showNotesList">
     <div class="card" style="width: 18rem;">
         <div class="card-header">
             <div class="row">
@@ -33,7 +33,7 @@
                 </div>
             </div>
           </div>
-          <div class="card-body">
+          <div class="card-body notesList">
             <ul class="list-group list-group-flush">
                 <ng-container *ngIf="!quickNotes.showloader; else loader">
                 <div *ngIf="quickNotes.noNotes;" class="noNotes">No Notes Added</div>

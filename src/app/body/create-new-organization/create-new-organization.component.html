@@ -11,19 +11,18 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="!enableLoader">
     <div class="row p-3">
-        <div class="col-md-11 col-8 pt-2">
-            <h3>Create New Organization</h3>
+        <div class="col-md-10 col-10 pt-2">
+            <h2>Create New Organization</h2>
         </div>
-        <div class="col-md-1 col-4 text-right">
-            <span class="btn">
-                <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal"
-                  data-target="#updateTeam" (click)="close()" title="manage accounts" data-bs-toggle="tooltip">
-                  close
-                </mat-icon>
-            </span>
-        </div>
+            <div class="col-md-2 col-2 text-right">
+                <span class="btn">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" data-dismiss="modal"title="Close">
+                        close
+                    </mat-icon>
+                </span>
+            </div>
     </div>
     <form #form="ngForm" [formGroup]="createNewOrgForm" (ngSubmit)="submit()">
             <div class="form-row px-2">
@@ -34,9 +33,13 @@
                 <div class="form-row pt-2">
                     <div class=" form-group col-md-12">
                         <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Organization Domain<span style="color: red;">*</span></span>
-                        <input type="text" class="form-control" placeholder="Organization Domain" formControlName="orgDomain">
+                        <input type="text" class="form-control" placeholder="Organization Domain" (input)="checkOrgDomainAvailabilityLive()" formControlName="orgDomain">
                         <span class="ml-2" *ngIf="orgDomain.value=='' && orgDomain.touched" style="color: red; font-size: 10px; ">Organisation Domain is required</span>
                         <span class="ml-2" *ngIf="orgDomain.value!='' && orgDomain.touched && orgDomain.invalid" style="color: red; font-size: 10px; ">Enter a valid Organisation Domain</span> 
+                        <p class="ml-2" style="color: red; size: 10px"
+                                *ngIf="!orgDomainsAvailable">
+                                {{ orgDomain.value }} is already taken
+                        </p>
                     </div>
                 </div>
                 <div class="form-row">
@@ -48,14 +51,15 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-1 px-2"></div>
             <app-loader *ngIf="enableLoader"></app-loader>
-            <div class="col-md-2 col uploadLogo">
-                <div class="form-group col p-2" id="uploadButtonContainer">
+            <div class="col-md-2 col uploadLogo mt-4" >
+                <div class="form-group col p-2 mt-2" id="uploadButtonContainer">
                     <ng-container *ngIf="!logoUploaded; else uploadedImg">
                         <app-upload-logo  (uploadedLogo)="uploadedLogo($event)"></app-upload-logo>
                     </ng-container>
                     <ng-template #uploadedImg>
-                        <img src="{{orgLogoURL}}" alt="" srcset="" width="200" height="200">
+                        <img src="{{orgLogoURL}}" alt="" srcset="" width="200" height="200" class="uploadedImg">
                     </ng-template>
                 </div>
             </div>
@@ -68,10 +72,11 @@
             </div>
         </div>
         <div class="form-group row p-2">
-            <div class="col text-right">
-                <button type="submit" class="btn" id="button" [disabled]="!logoUploaded || enableLoader || createNewOrgForm.invalid">Submit
+            <div class="col text-center mb-4">
+                <button type="submit" class="btn btn-lg " id="button" [disabled]="!logoUploaded || enableLoader || createNewOrgForm.invalid || !orgDomainsAvailable">Create New Organization
                 </button>
             </div>
         </div>
     </form>
 </div>
+<app-loader *ngIf="enableLoader"></app-loader>

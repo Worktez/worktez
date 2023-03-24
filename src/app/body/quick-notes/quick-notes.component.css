@@ -56,9 +56,12 @@
     bottom: 70px;
     right: 30px;
     color: var(--text);
+    max-height: 50%;
 }
 .card-body{
     padding: 0.75rem 0.25rem !important;
+    max-height: 50%;
+    overflow-y: scroll;
 }
 .col{
     flex-grow: 0 !important;
@@ -82,6 +85,18 @@ margin: auto;
     position: relative;
     left: 50px;
 }
+
+.notesList::-webkit-scrollbar {
+    width: 6px;              
+  }
+.notesList::-webkit-scrollbar-track {
+    background: var(--secondary-bg); 
+           
+}
+.notesList::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: var(--scrollbar-color);
+} 
 
 @media only screen and (max-width: 600px) {
     #quickNotesButton {

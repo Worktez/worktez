@@ -59,4 +59,7 @@ export class FeaturesPageComponent implements OnInit {
       this.arrowDirection = "expand_less"
     }
   }
+  blogs(){
+    this.router.navigate(['/blogs']);
+  }
 }

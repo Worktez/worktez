@@ -13,7 +13,6 @@
 ***********************************************************/
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { map } from 'rxjs';
 import { Label, Team } from 'src/app/Interface/TeamInterface';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
@@ -47,23 +46,29 @@ export class LabelCardComponent implements OnInit {
   constructor(private functions: AngularFireFunctions,public rbaService :RBAService, private backendService: BackendService , public errorHandlerService: ErrorHandlerService, public teamService: TeamServiceService) { }
 
   ngOnInit(): void {
-    if(this.scope == "Priority"){
-      this.labelsArray = this.team.Priority;
-    }
-    else if(this.scope == "Difficulty"){
-      this.labelsArray = this.team.Difficulty;
-    }
-    else if(this.scope == "Type"){
-      this.labelsArray = this.team.Type;
-    }
-    else if(this.scope == "Status"){
-      this.labelsArray = this.team.Status;
-    } 
-    else if(this.scope == "MilestoneStatus"){
-      this.labelsArray = this.team.MilestoneStatus;
-    }
+    this.labelsArray = this.getLabelsArray(this.scope);
+    this.labels = this.teamService.teamsLabelsJson[this.team.TeamId][this.scope];
     this.labelsReady =  true;
   }
+
+  getLabelsArray(scope: string) {
+    if(scope == "Priority"){
+      return this.team.Priority;
+    }
+    else if(scope == "Difficulty"){
+      return this.team.Difficulty;
+    }
+    else if(scope == "Type"){
+      return this.team.Type;
+    }
+    else if(scope == "Status"){
+      return this.team.Status;
+    } 
+    else if(scope == "MilestoneStatus"){
+      return this.team.MilestoneStatus;
+    }
+  }
+
   onLabelDrop(event: CdkDragDrop<Label[]>){
     moveItemInArray(this.labelsArray, event.previousIndex, event.currentIndex);
     const orgDomain = this.backendService.getOrganizationDomain();

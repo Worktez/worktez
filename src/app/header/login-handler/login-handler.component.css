@@ -19,8 +19,12 @@
 }
 
 #button:hover,
-#button:active {
+#button:active
+#button:focus {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
+    box-shadow: none;
+
+
 }
 

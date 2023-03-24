@@ -62,6 +62,13 @@ import { DocumentationsComponent } from './body/documentations/documentations.co
 import { GetStartedComponent } from './body/get-started/get-started.component';
 import { FeaturesPageComponent } from './body/features-page/features-page.component';
 import { PipelineComponent } from './body/pipeline/pipeline.component';
+import { ResetPasswordComponent } from './body/reset-password/reset-password.component';
+import { BlogsComponent } from './body/blogs/blogs.component';
+import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/git-integration-blog.component';
+import { AgileFunctionalitiesComponent } from './body/blogs/agile-functionalities/agile-functionalities.component';
+import { DevOpsComponent } from './body/blogs/dev-ops/dev-ops.component';
+import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component';
+import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -117,11 +124,27 @@ const routes: Routes = [
   { path: 'Documentations', component:DocumentationsComponent },
   { path: 'GettingStarted', component: GetStartedComponent },
   { path: 'Features/:currentSection', component: FeaturesPageComponent,},
+  {
+    path: 'auth',
+    children: [
+      {
+        path: 'resetPass',
+        component: ResetPasswordComponent,
+        data: { title: 'Reset Password' }
+      }
+    ]
+  },
+  {path: 'blogs', component: BlogsComponent},
+  {path: 'blogs/git-integration', component: GitIntegrationBlogComponent},
+  {path: 'blogs/agile-functionalities', component: AgileFunctionalitiesComponent},
+  {path: 'blogs/devops-functionalities', component: DevOpsComponent},
+  {path: 'blogs/metaverse', component: MetaVerseComponent},
+  {path: 'blogs/kanban-board', component: KanbanBoardBlogComponent, },
   { path: '**', pathMatch: 'full', component: PagenotfoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

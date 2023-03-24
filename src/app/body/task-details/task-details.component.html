@@ -50,24 +50,28 @@
                     </div>
                     <div class="col-md-6 col-6 py-2 d-flex justify-content-end">
                         <ul class="nav">
-                            <li class="nav-item" *ngIf="githubRepoExists">
-                                <span class="btn">
-                                    <img src="../../../assets/git.png" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
-                                    alt="user" data-toggle="modal" title="Select PR" data-target="#gitPrModel" (click)="linkPr()">
-                                    <a *ngIf="prLinked" data-target="#gitPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
+                            <div >
+                                <ng-container *ngIf="provider === 'Github'">
+                                  <li class="nav-item">
+                                    <span class="btn">
+                                      <img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Select PR" data-target="#gitPrModel" (click)="linkPr()">
+                                      <a *ngIf="prLinked" data-target="#gitPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
                                         PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
-                                    </a>
-                                </span>
-                            </li>
-                            <li class="nav-item" *ngIf="githubRepoExists">
-                                <span class="btn">
-                                    <img src="../../../assets/gitlabIcon.svg" *ngIf="!prLinked" height="25" class="rounded-circle" width="25"
-                                    alt="user" data-toggle="modal" title="Select PR" data-target="#gitlabPrModel" (click)="linkPr()">
-                                    <a *ngIf="prLinked" data-target="#gitlabPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
+                                      </a>
+                                    </span>
+                                  </li>
+                                </ng-container>
+                                <ng-container *ngIf="provider === 'gitlab'">
+                                  <li class="nav-item">
+                                    <span class="btn">
+                                      <img src="../../../assets/gitlabIcon.svg" height="25" class="rounded-circle" width="25" alt="Gitlab icon" data-toggle="modal" title="Select PR" data-target="#gitlabPrModel" (click)="linkPr()">
+                                      <a *ngIf="prLinked" data-target="#gitlabPrModel" data-toggle="modal" title="Select PR" class="btn btn-status" data-placement="top" (click)="linkPr()">
                                         PR status: <span class="text-capitalize" style="color: green;">{{prData.state}}</span>
-                                    </a>
-                                </span>
-                            </li>
+                                      </a>
+                                    </span>
+                                  </li>
+                                </ng-container>
+                            </div>
                             <!-- <li class="nav-item"  *ngIf="githubRepoExists">
                                 <div class="dropdown" id="getPrDetails" *ngIf="prLinked"> 
                                     <span class="btn dropdown" title="Get Pr Details" data-toggle="dropdown" style="margin-top: 2px;">

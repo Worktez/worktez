@@ -26,6 +26,7 @@ const { getMemberDetails } = require("./tark/getMember");
 const { getAllOrgMembers } = require("./tark/getAllOrgMembers");
 const { editRole } = require("./tark/changeMemberRole");
 const { removeOrgMember } = require("./tark/removeOrgMember");
+const { orgDomainCheck } = require("./tark/orgDomainCheck");
 
 /**
  * Description
@@ -102,6 +103,17 @@ fastify.post("/changeMemberRole", (req, res) => {
  */
 fastify.post("/removeOrgMember", (req, res) => {
   removeOrgMember(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/orgDomainCheck"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/orgDomainCheck", (req, res)=>{
+  orgDomainCheck(req, res);
 });
 
 /**

@@ -19,6 +19,7 @@
 const {getApplicationData, updateApplication, generateBase64String, milliSeconds} = require("../../application/lib");
 const {setMeet} = require("../lib");
 const {setUserMeet} = require("../lib");
+const { getUserUseEmail } = require("../../users/lib");
 
 exports.scheduleMeet = function(request, response) {
   const orgDomain = request.body.data.OrgDomain;
@@ -48,6 +49,11 @@ exports.scheduleMeet = function(request, response) {
     } else {
       setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId);
       setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
+      teamMembers.forEach((email) => {
+        getUserUseEmail(email).then((data)=>{
+          setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, data.uid, roomId);
+        });
+      });
     }
     updateApplication(appDetailsUpdateJson);
   }).catch((error) => {
