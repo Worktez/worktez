@@ -15,8 +15,10 @@
 ***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Team, TeamLabels, GitDetails } from 'src/app/Interface/TeamInterface'
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +36,7 @@ export class TeamServiceService {
   public gitDataReay: boolean = false;
   public labelsReady: boolean = false;
   public teamsReady: boolean = false;
-  constructor(private functions: AngularFireFunctions) { }
+  constructor(private functions: AngularFireFunctions, private httpClient: HttpClient) { }
   
   getTeams(orgDomain: string) {
     this.teamDataState.next(false);
@@ -92,6 +94,13 @@ export class TeamServiceService {
       complete: () => console.info('Successfully Added Token')
     })
   }
+
+
+  getCompletedRuns(owner: string, repo: string): Observable<GitDetails[]> {
+    const url = `${environment.githubApiUrl}/repos/${owner}/${repo}/actions/runs?status=completed`;
+    return this.httpClient.get<GitDetails[]>(url);
+  }
+  
 
   getGitDetails(orgDomain: string, teamName: string) {
     this.teamGitDataState.next(false);

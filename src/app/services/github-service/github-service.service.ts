@@ -2,13 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+import { GitDetails } from 'src/app/Interface/TeamInterface';
+import { TeamServiceService } from '../team/team-service.service';
 @Injectable({
   providedIn: 'root'
 })
 export class GithubServiceService {
+  http: any;
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient, private teamService: TeamServiceService) { 
   }
 
   getPullRequests(repoLink: string){
@@ -168,8 +170,8 @@ export class GithubServiceService {
     return this.httpClient.get(url);
   }
 
-  getCompletedWorkflowRuns(owner: string, repo: string): Observable<any> {
-    const url = `${environment.githubApiUrl}/repos/${owner}/${repo}/actions/runs?status=completed`;
+  getCompletedWorkflowRuns(projectLink: string) {
+    const url = environment.githubApiUrl +"/repos/"+projectLink+"/actions/runs?status=completed";
     return this.httpClient.get(url);
   }
 }

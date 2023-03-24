@@ -80,31 +80,20 @@
   } 
 
   
-  .card-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 0;
-  }
-  
-  .card-header > div {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .card-header > div > input {
-    height: 50px;
-    font-size: 20px;
-    padding: 10px 20px;
-    margin-left: 15px;
-    border: none;
-    border-radius: 5px;
-    margin-right: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
+  .dropdown-item {
+    font-size: 12px;
+    color: var(--text);
+}
 
+.dropdown-item:hover{
+    color: var(--button-text-hover);
+    background-color: var(--dropdown-hover);
+}
+
+#dropdownUserCard {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
   #repoName {
     margin-left: 10px;
     
@@ -113,47 +102,29 @@
   #ownerName {
     margin-left: 5px;
   }
-  
-  .card-header > div > button {
-    height: 50px;
-    font-size: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #27ae60;
-    color: #fff;
+
+  #button {
+    color:var(--text);
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card-header > div > button:hover {
-    background-color: #219653;
-  }
-  
-  
-  
-  .card-header button {
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    background-color: #5559D9;
-    color: #fff;
-    border: none;
-    margin-top: 31px;
-    margin-left: 24px;
+}
 
-  }
-
-  .btn {
-    color: var(--text);
+.btn {
+    color: var(--button-text);
+    background-color: var(--secondary-bg);
 }
 
 .btn:hover {
     background-color: var(--dropdown-hover);
     color: var(--button-text-hover);
 }
+
 
 
 
