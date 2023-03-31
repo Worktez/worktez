@@ -110,3 +110,20 @@
 .close {
     color: var(--text);
 }
+
+#github{
+        max-height: 30rem;
+        overflow-y: scroll;
+        overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 6px;              
+  }
+::-webkit-scrollbar-track {
+    background: var(--secondary-bg);        
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: #5C60EC;
+} 

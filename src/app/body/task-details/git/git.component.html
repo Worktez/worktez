@@ -14,7 +14,7 @@
 <div class="modal fade" id="gitPrModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content" >
             <div class="container modal-body align-items-center px-4" id="addPrPage">
                 <div class="row px-4">
                     <ul class="navbar-nav mr-auto">
@@ -29,10 +29,11 @@
                         </span>
                     </ul>
                 </div>
-                <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
+                <hr>
+                <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist" id="github">
                     <div class="card">
-                        <ng-container *ngFor="let item of prData; let prIndex=index;">
-                            <div *ngIf="PrNumber == item.number">
+                        <ng-container *ngFor="let item of prData; let prIndex=index;" >
+                            <div *ngIf="PrNumber == item.number" >
                                 <div class="card-header">
                                     <strong>Selected PR:</strong>
                                 </div>
@@ -50,8 +51,9 @@
                             </div>
                         </ng-container>
                     </div>
+                    
                     <ng-container *ngIf="prFound && PrNumber != prTask.number">
-                        <br>
+                        
                             <div class="card">
                                 <div class="class-header p-3 ml-1">
                                     <strong>Found PR: </strong>
@@ -72,7 +74,7 @@
                                 </ul>
                             </div>
                     </ng-container>
-                    <br>
+                    
                     <div class="card">
                         <div class="class-header p-3 ml-1">
                             <strong>Select A Pull Request: </strong>
