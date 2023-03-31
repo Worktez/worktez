@@ -42,7 +42,7 @@
                                             </div>
                                         </div>
                                         <div class="input-group pb-3">
-                                            <input type="password" class="form-control" placeholder="Enter your password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
+                                            <input [type]="showPassword ? 'text':'password'" class="form-control" placeholder="Enter your password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}">
                                             <div class="input-group-append">
                                                 <div class="input-group-text icons">
                                                     <span class="material-icons icons">
@@ -50,6 +50,12 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-check form-group align-middle">
+                                            <input class="form-check-input forgotPassword" type="checkbox" value="" (click)="togglePassword()" id="flexCheckDefault">
+                                            <label class="form-check-label forgotPassword" for="flexCheckDefault">
+                                                Show Password
+                                            </label>
                                         </div>
                                         <div class="input-group pb-3">
                                             <a class="forgotPassword" (click)="changeMode('forgetPassword')" skipLocationChange>Forgot Password?</a>
@@ -64,7 +70,7 @@
                                     </h3>
                                     <form (submit)="onSignUpWithEmail()">
                                         <div class="input-group pb-3">
-                                            <input type="text" class="form-control" placeholder="Enter your username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
+                                            <input type="text" class="form-control" placeholder="Enter your Full Name" [(ngModel)]="username" [ngModelOptions]="{standalone: true}">
                                             <div class="input-group-append">
                                                 <div class="input-group-text icons">
                                                     <span class="material-icons icons">
@@ -159,3 +165,6 @@
         </ng-container>
     </ng-container>    
 </div>
+<ng-container *ngIf = "loginError">
+    <app-error-modal [errorMessage]="errorMessage" [errorTitle]="errorTitle" (closeError)="closeError($event)"></app-error-modal>
+</ng-container>

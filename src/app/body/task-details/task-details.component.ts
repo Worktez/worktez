@@ -96,6 +96,7 @@ export class TaskDetailsComponent implements OnInit {
   prFound: boolean = false;
   createGitIssue: boolean = false;
   githubTokenExists: boolean = false;
+  provider: string;
 
   constructor (private githubService: GithubServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
 
@@ -187,6 +188,7 @@ export class TaskDetailsComponent implements OnInit {
         this.getTimeDetails();
         this.checkGitRepoExists();
         this.checkGitTokenExists();
+        this.provider = this.teamService.teamsDataJson[this.task.TeamId].ProjectLocation;
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
         }

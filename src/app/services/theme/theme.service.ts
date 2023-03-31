@@ -14,6 +14,8 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +28,7 @@ export class ThemeService {
 
   public presentThemeSubject = new BehaviorSubject('theme-light');
   presentTheme$: Observable<string> = this.presentThemeSubject.asObservable();
-  constructor(private cookieService: CookieService) {}
+  constructor(private cookieService: CookieService, private router: Router) {}
 
   changeTheme(theme: string) {
     if(theme == "theme-light") {
@@ -39,5 +41,12 @@ export class ThemeService {
 
     this.cookieService.set("userAppTheme", theme);
     this.presentThemeSubject.next(theme);
+  }
+
+  clearDarkThemeFromCookies(theme: string){
+    if(theme === "theme-dark"){
+      this.cookieService.deleteAll("userAppTheme");
+      location.reload();
+    }
   }
 }
