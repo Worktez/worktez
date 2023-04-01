@@ -94,21 +94,22 @@ export class TeamServiceService {
   }
 
   getGitDetails(orgDomain: string, teamName: string) {
+    this.gitDataReay=false;
     this.teamGitDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getGitDetails');
     callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
       next: (data) => {
-        console.log(data[0]);
+        console.log(data);
         this.teamsGitDataJson = data[0] as GitDetails[];
-        console.log(this.teamsGitDataJson);
         this.gitDataReay = true;
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {
+        this.gitDataReay=true;
         this.teamGitDataState.next(true);
-        console.info('Getting Label Data Successful');
+        console.info('Getting Git Data Successful');
       }
     });
     return this.teamsGitDataJson;

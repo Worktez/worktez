@@ -43,7 +43,7 @@
                             class="form-control form-control-sm" id="recipient-name" placeholder="Enter target branch" required autocomplete="off"/>
                         </div>
                     </div>  
-                    <div class="row">
+                    <div class="row" *ngIf="provider=='Github'">
                         <div class="col">
                             <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Generate Release</span>
                             <select class="form-control form-control-sm" [(ngModel)]="generateRelease" [ngModelOptions]="{standalone: true}">
