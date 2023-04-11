@@ -32,7 +32,7 @@
                 <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
                     <div class="card">
                         <ng-container *ngFor="let item of prData; let prIndex=index;">
-                            <div *ngIf="PrNumber == item.number">
+                            <div *ngIf="PrNumber == item.iid">
                                 <div class="card-header">
                                     <strong>Selected MR:</strong>
                                 </div>
@@ -50,7 +50,7 @@
                             </div>
                         </ng-container>
                     </div>
-                    <ng-container *ngIf="prFound && PrNumber != prTask.number">
+                    <ng-container *ngIf="prFound && PrNumber != prTask.iid">
                         <br>
                             <div class="card">
                                 <div class="class-header p-3 ml-1">
@@ -59,11 +59,11 @@
                                 <ul class="list-group list-group-flush">
                                     <ng-container>
                                         <li  
-                                            (click)="addPrLink(prTask.html_url, prTask.url, prTask.number)"
+                                            (click)="addPrLink(prTask.html_url, prTask.web_url, prTask.iid)"
                                             class="list-group-item">
                                             <div class="btn btn-status text-wrap text-left">
                                                 {{prTask.title}}
-                                                <div class="prlist">#{{prTask.number}}  |  Mr Status :
+                                                <div class="prlist">#{{prTask.iid}}  |  Mr Status :
                                                     {{prTask.state}} {{WtId}}
                                                 </div>
                                             </div>
@@ -79,13 +79,13 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <ng-container *ngFor="let item of prData; let prIndex=index;">
-                                <li *ngIf="PrNumber != item.number"
-                                    (click)="addPrLink(item.html_url, item.url, item.number)" class="list-group-item">
+                                <li *ngIf="PrNumber != item.iid"
+                                    (click)="addPrLink(item.web_url, item.iid)" class="list-group-item">
                                     <div>
 
                                         <div class="btn btn-status text-wrap text-left">
                                             {{item.title}}
-                                            <div class="prlist"> #{{item.number}}  |  Mr Status :
+                                            <div class="prlist"> #{{item.iid}}  |  Mr Status :
                                                 {{item.state}} </div>
                                         </div>
                                     </div>

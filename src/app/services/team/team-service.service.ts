@@ -94,6 +94,7 @@ export class TeamServiceService {
   }
 
   getGitDetails(orgDomain: string, teamName: string) {
+    this.gitDataReay=false;
     this.teamGitDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getGitDetails');
     callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
@@ -107,6 +108,7 @@ export class TeamServiceService {
         console.error(error);
       },
       complete: () => {
+        this.gitDataReay=true;
         this.teamGitDataState.next(true);
         console.info('Getting Label Data Successful');
       }

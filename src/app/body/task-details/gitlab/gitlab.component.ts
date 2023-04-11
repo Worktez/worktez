@@ -26,6 +26,9 @@ import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-gitlab',
@@ -60,7 +63,11 @@ export class GitlabComponent implements OnInit {
   prTask: GitRepoData;
   prFound: boolean =false;
   WtId: string;
-  constructor(private githubService: GithubServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
+  gitData: GitDetails[];
+  projectId: number;
+
+  constructor(private githubService: GithubServiceService, public gitlabService: GitlabServiceService, public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService,
+    public teamService: TeamServiceService) { }
 
   ngOnInit(): void {
     this.showClose = false;
@@ -87,22 +94,30 @@ export class GitlabComponent implements OnInit {
   }
 
   getPullRequests() {
-    this.githubService.getPullRequests(this.repoLink).pipe(map(data => {
-      const prData = data as GitRepoData[];     
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+    console.log(teamName)
+    this.gitData=this.teamService.getGitDetails(orgDomain, teamName);
+    this.projectId = this.gitData['ProjectId'];
+    this.gitlabService.getMergeRequests(this.projectId).pipe(map(data => {
+      const prData = data as GitRepoData[];
+      console.log(prData);
       return prData;
     })).subscribe(data => {
-      this.prData = data;
+      this.prData=data;
       if(this.prData.length==0){
-          this.noPrExist=true;
-      } else {
-        this.autoCheckPr(this.prData);
-      }
-    });
+        console.log("2");
+        this.noPrExist=true;
+    } else {
+      this.autoCheckPr(this.prData);
+    }
+    })
   }
 
   autoCheckPr(prData:GitRepoData[]) {
     prData.forEach(element => {
-      let body = element.body;      
+      let body = element.body;   
+      console.log(body);   
       if(body) {
         const sp = body.indexOf("## WtId:")
 
@@ -125,13 +140,14 @@ export class GitlabComponent implements OnInit {
     });
   }
 
-  addPrLink(url, apiUrl, prNumber) {
-    this.prLink = url;
+  addPrLink(apiUrl, prNumber) {
+    console.log(apiUrl, prNumber);
+    // this.prLink = url;
     this.prApiLink=apiUrl;
     this.prNumber=prNumber;
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('tasks/addPrLink');
-    callable({ OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: this.prLink, PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
+    callable({ OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: "", PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
       next: (data) => {
         console.log("Successfully added PR link");
         this.prLinked = true;
@@ -147,7 +163,7 @@ export class GitlabComponent implements OnInit {
   }
   onAddingPr(){
     this.linkType = "PR";
-    this.linkURL = this.prLink
+    this.linkURL = this.prApiLink
     const callable = this.functions.httpsCallable('linker/setLink');
     callable({ OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL }).subscribe({
       next: (data) => {

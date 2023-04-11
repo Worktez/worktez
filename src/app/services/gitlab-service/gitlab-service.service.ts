@@ -10,8 +10,9 @@ export class GitlabServiceService {
   constructor(private httpClient: HttpClient) { 
   }
 
-  getMergeRequests(projectID: string){ //based on project ID
-    const url = environment.gitlabApiUrl + "/projects/"+projectID+"/merge_requests?state=open";
+  getMergeRequests(projectID: number){ //based on project ID
+    console.log(projectID);
+    const url = environment.gitlabApiUrl + "/projects/"+projectID+"/merge_requests?state=opened";
     return this.httpClient.get(url);
   }
 
