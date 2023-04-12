@@ -174,4 +174,11 @@ export class GithubServiceService {
     const url = environment.githubApiUrl +"/repos/"+projectLink+"/actions/runs?status=completed";
     return this.httpClient.get(url);
   }
+
+
+  getCompletedRuns(owner: string, repo: string): Observable<GitDetails[]> {
+    const url = `${environment.githubApiUrl}/repos/${owner}/${repo}/actions/runs?status=completed`;
+    return this.httpClient.get<GitDetails[]>(url);
+  }
+  
 }

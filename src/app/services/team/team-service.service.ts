@@ -96,12 +96,6 @@ export class TeamServiceService {
   }
 
 
-  getCompletedRuns(owner: string, repo: string): Observable<GitDetails[]> {
-    const url = `${environment.githubApiUrl}/repos/${owner}/${repo}/actions/runs?status=completed`;
-    return this.httpClient.get<GitDetails[]>(url);
-  }
-  
-
   getGitDetails(orgDomain: string, teamName: string) {
     this.teamGitDataState.next(false);
     const callable = this.functions.httpsCallable('teams/getGitDetails');
