@@ -21,7 +21,7 @@
     </div>
     <ul class="list-group list-group-flush">
     <div cdkDropList (cdkDropListDropped)="onLabelDrop($event)">
-    <ng-container *ngFor="let element of labelsArray">
+    <ng-container *ngFor="let element of labelsArray; index as index">
         <li class="list-group-item" cdkDrag>
             <div class="row p-0">
                 <div class="col-6">
@@ -31,7 +31,7 @@
                     </span>
                 </div>
                 <div class="col-6 text-right align-middle">
-                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(label)" data-toggle="modal" data-target="#openEditProperties"> 
+                    <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.editLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelToEdit(index)" data-toggle="modal" data-target="#openEditProperties"> 
                         edit 
                     </mat-icon>
                     <mat-icon *ngIf="rbaService.isRbaReady && rbaService.permissions.deleteLabel" fontSet="material-icons-outlined" class="align-middle p-2 icons" (click)="setLabelTodelete(label)" data-toggle="modal" data-target="#deletedLabel">
