@@ -116,8 +116,8 @@ export class LabelCardComponent implements OnInit {
      this.addLabelEnabled = false;
   }
 
-  setLabelToEdit(item: string){
-    this.labelToEdit=item;
+  setLabelToEdit(index: number){
+    this.labelToEdit = this.labelsArray[index];
     this.showEditLabelProp=true;
   }
   setLabelTodelete(item: string){
