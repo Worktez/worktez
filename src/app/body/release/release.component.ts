@@ -26,6 +26,8 @@
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { GitData } from 'src/app/Interface/githubReleaseData'; 
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
  @Component({
    selector: 'app-release',
    templateUrl: './release.component.html',
@@ -41,8 +43,13 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
    teamId: string;
    addReleaseActive: boolean = false;
    projectLink: string;
+   projectId: number;
+   teamName: string;
+   orgDomain: string;
+   gitData: GitDetails[];
+   provider: string;
  
-   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private githubService: GithubServiceService) { }
+   constructor( public startService: StartServiceService, public navbarHandler: NavbarHandlerService, public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, private functions: AngularFireFunctions, public cookieService: CookieService, public errorHandlerService: ErrorHandlerService,  public popupHandlerService: PopupHandlerService, public teamService: TeamServiceService, private githubService: GithubServiceService, private gitlabService: GitlabServiceService) { }
  
    ngOnInit(): void {
      this.navbarHandler.resetNavbar();
@@ -107,27 +114,59 @@ import { GithubServiceService } from 'src/app/services/github-service/github-ser
   getReleaseDetails(){
     this.showLoader=true;
     const repoLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-    if(repoLink!="" && repoLink!=undefined){
-      this.githubService.getProjectReleaseDetails(repoLink).pipe(map(data => {
-        const objData = data as GitData[];
-        return objData;
-      })).subscribe({
-        next: (data) => {
-          this.releaseData=data;
-        },
-        error: (error) => {
-          this.errorHandlerService.showError = true;
-          this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
-        },
-        complete: () => {
-          this.showLoader = false;
-          this.releaseDataReady = true;
-        }
-      });
-    } else{
-      this.releaseData=undefined;
-      this.showLoader = false;
-      this.releaseDataReady = true;
+    this.provider = this.teamService.teamsDataJson[this.teamId].ProjectLocation;
+    if (this.provider == "Github") {
+      if(repoLink!="" && repoLink!=undefined){
+        this.githubService.getProjectReleaseDetails(repoLink).pipe(map(data => {
+          const objData = data as GitData[];
+          return objData;
+        })).subscribe({
+          next: (data) => {
+            this.releaseData=data;
+          },
+          error: (error) => {
+            console.error(error);
+            this.errorHandlerService.showError = true;
+          },
+          complete: () => {
+            this.showLoader = false;
+            this.releaseDataReady = true;
+          }
+        });
+      } else{
+        this.releaseData=undefined;
+        this.showLoader = false;
+        this.releaseDataReady = true;
+      }
+    }
+    else if (this.provider == "gitlab"){
+      this.orgDomain = this.backendService.getOrganizationDomain();
+      this.teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+      this.gitData=this.teamService.getGitDetails(this.orgDomain, this.teamName);
+      this.projectId = this.gitData['ProjectId'];
+      console.log(this.teamService.teamsGitDataJson['']);
+      if (this.projectId!=null && this.projectId!=undefined) {
+        this.gitlabService.getProjectReleaseDetails(this.projectId).pipe(map (data => {
+          const objData = data as GitData[];
+          return objData;
+        })).subscribe({
+          next: (data) => {
+            this.releaseData = data;
+          },
+          error: (error) => {
+            this.errorHandlerService.showError = true;
+            this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+          },
+          complete: () => {
+            this.showLoader=false;
+            this.releaseDataReady=true;
+          }
+        })
+      } else{
+        this.releaseData=undefined;
+        this.showLoader = false;
+        this.releaseDataReady = true;
+      }
     }
   } 
  

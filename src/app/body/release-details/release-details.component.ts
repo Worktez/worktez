@@ -24,6 +24,8 @@ import { StartServiceService } from 'src/app/services/start/start-service.servic
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 import { map } from 'rxjs';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
  
  @Component({
    selector: 'app-release-details',
@@ -45,9 +47,12 @@ import { map } from 'rxjs';
    releaseDate: string;
    deleteReleaseEnabled: boolean = false;
    teamId: string;
-   releaseDesc: string
+   releaseDesc: string;
+   provider: string;
+   gitData: GitDetails[];
+   projectId: number;
 
-   constructor(public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService) { }
+   constructor(public navbarHandler: NavbarHandlerService ,public backendService: BackendService, private githubService: GithubServiceService, private route: ActivatedRoute, private location: Location, public teamService: TeamServiceService, public errorHandlerService: ErrorHandlerService, public startService: StartServiceService, private gitlabService: GitlabServiceService) { }
 
    ngOnInit(): void {
      this.releaseId = this.route.snapshot.params['ReleaseId'];
@@ -79,7 +84,25 @@ import { map } from 'rxjs';
  
    deleteRelease(id: string) {
     const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.deleteGithubRelease(id, bearerToken);
+    if (this.provider=="Github") {
+      this.githubService.deleteGithubRelease(id, bearerToken);
+    } else if (this.provider=="gitlab") {
+      const orgDomain = this.backendService.getOrganizationDomain();
+      const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+      this.gitData=this.teamService.getGitDetails(orgDomain, teamName);
+      this.projectId = this.gitData['ProjectId'];
+      this.gitlabService.deleteGitlabRelease(this.projectId, this.releaseData.tag_name, bearerToken).subscribe({
+        next: (data) => {
+          console.log("Successfull");
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("Successfull");
+        }
+      });
+    }
    }
 
    setDeleteRelease(){
@@ -93,35 +116,61 @@ import { map } from 'rxjs';
   getReleaseDetails(){
     const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
-    this.githubService.getReleaseByReleaseId(this.releaseId, bearerToken, projectLink).pipe(map(data => {
-      const objData = data as ReleaseData;
-      return objData;
-    })).subscribe({
-      next: (data) => {
+    this.provider = this.teamService.teamsDataJson[this.teamId].ProjectLocation;
+    if (this.provider == "Github") {
+      this.githubService.getReleaseByReleaseId(this.releaseId, bearerToken, projectLink).pipe(map(data => {
+        const objData = data as ReleaseData;
+        return objData;
+      })).subscribe({
+        next: (data) => {
+            this.releaseData = data;
+            this.githubService.markdownGithubDoc(bearerToken, this.releaseData.body).subscribe({
+              next: (data) => {
+                this.releaseDesc=data;
+                this.formatReleaseDescription();
+              },
+              error: (error) => {
+                console.log(error);
+              },  
+              complete: () => {
+                console.log("Successfull release markdown")
+              }
+            });
+            this.releaseDataReady = true;
+            this.showLoader = false;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete() {
+          console.log("Success");
+        },
+      });
+    } else if (this.provider == "gitlab") {
+      const orgDomain = this.backendService.getOrganizationDomain();
+      const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+      this.gitData=this.teamService.getGitDetails(orgDomain, teamName);
+      this.projectId = this.gitData['ProjectId'];
+      console.log(this.projectId);
+      this.gitlabService.getReleaseByTagName(this.projectId, bearerToken, this.releaseId).pipe(map(data => {
+        const objData = data as ReleaseData;
+        return objData;
+      })).subscribe({
+        next: (data) => {
           this.releaseData = data;
-          this.githubService.markdownGithubDoc(bearerToken, this.releaseData.body).subscribe({
-            next: (data) => {
-              this.releaseDesc=data;
-              this.formatReleaseDescription();
-            },
-            error: (error) => {
-              console.log(error);
-            },  
-            complete: () => {
-              console.log("Successfull release markdown")
-            }
-          });
           this.releaseDataReady = true;
           this.showLoader = false;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete() {
-        console.log("Success");
-      },
-    });
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete() {
+          console.log("Success");
+        },
+      })
+    }
   }
+
   formatReleaseDescription(){
     const regExp1 = new RegExp('.com</a>', 'g');
     this.releaseDesc = this.releaseDesc.replace(regExp1, '.com</a><br>');
