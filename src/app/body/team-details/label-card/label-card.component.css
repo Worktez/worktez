@@ -70,6 +70,7 @@
 
 .icons {
     color: var(--text);
+    font-size: 1.1rem;
 }
 
 .icons:hover {
