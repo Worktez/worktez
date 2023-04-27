@@ -241,11 +241,13 @@
 }
 
 .arrow {
+    font-size: 24px;
     cursor: pointer;
     color: #4006BA;
 }
 
 .arrow:hover {
+    font-size: 27px;
     font-weight: bolder;
     color: var(--primary-color);
 }
