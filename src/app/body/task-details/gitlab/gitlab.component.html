@@ -29,7 +29,8 @@
                         </span>
                     </ul>
                 </div>
-                <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist">
+                <hr>
+                <form *ngIf="PopupHandlerService.addPrActive && !noRepoLinked && !noPrExist" id="gitlab">
                     <div class="card">
                         <ng-container *ngFor="let item of prData; let prIndex=index;">
                             <div *ngIf="PrNumber == item.iid">
@@ -50,8 +51,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <ng-container *ngIf="prFound && PrNumber != prTask.iid">
-                        <br>
+                    <ng-container *ngIf="prFound && PrNumber != prTask.number">
+                
                             <div class="card">
                                 <div class="class-header p-3 ml-1">
                                     <strong>Found MR: </strong>
@@ -72,7 +73,7 @@
                                 </ul>
                             </div>
                     </ng-container>
-                    <br>
+                    
                     <div class="card">
                         <div class="class-header p-3 ml-1">
                             <strong>Select A Merge Request: </strong>
