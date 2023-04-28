@@ -153,8 +153,7 @@ export class GitlabLinkComponent implements OnInit {
         this.owner = data['namespace']['name'];
         this.projectUrl = data['http_url_to_repo'];
         this.projectId = data['id'];
-        this.createdAt = data['created_at']
-        console.log(this.owner, this.projectUrl, this.projLink, this.projectId);
+        this.createdAt = data['created_at'];
         this.organizationDomain = this.backendService.getOrganizationDomain();
         this.teamService.addGitDetails(this.organizationDomain, this.teamName, this.createdAt, this.owner, this.bearerToken, this.projectId, this.projLink, this.projectUrl, "gitlab");
       },

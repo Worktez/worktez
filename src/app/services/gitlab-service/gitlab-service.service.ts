@@ -11,12 +11,11 @@ export class GitlabServiceService {
   }
 
   getMergeRequests(projectID: number){ //based on project ID
-    console.log(projectID);
     const url = environment.gitlabApiUrl + "/projects/"+projectID+"/merge_requests?state=opened";
     return this.httpClient.get(url);
   }
 
-  getMrDetails(projectID: string, mergeRequestID: string){ //for each project using project id and merge request id
+  getMrDetails(projectID: number, mergeRequestID: string){ //for each project using project id and merge request id
     const url = environment.gitlabApiUrl + "/projects/"+projectID+"/merge_requests/"+mergeRequestID;
     return this.httpClient.get(url);
   }

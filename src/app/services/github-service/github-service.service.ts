@@ -12,6 +12,7 @@ export class GithubServiceService {
 
   getPullRequests(repoLink: string){
     const url = environment.githubApiUrl + "/repos/"+repoLink+"/pulls";
+    console.log(url);
     return this.httpClient.get(url);
   }
 

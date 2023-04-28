@@ -159,6 +159,7 @@ export class StartServiceService {
         this.backendService.organizationsData.subscribe(data => {
           this.teamService.getTeams(this.backendService.getOrganizationDomain());
           this.teamService.getLabels(this.backendService.getOrganizationDomain());
+          this.teamService.getGitDetails(this.backendService.getOrganizationDomain(), this.teamName);
           this.teamService.teamDataStateObservable.subscribe({
             next: (data) =>{
               if(data)
@@ -197,7 +198,6 @@ export class StartServiceService {
     
     const teams = this.applicationSettingsService.team;
     this.teamData = teams;
-    this.teamService.getGitDetails(this.backendService.getOrganizationDomain(), this.teamData.TeamName);
     if (this.teamData.TeamId == this.selectedTeamId) {
       if (this.applicationSettingsService.editedSprintId != this.teamData.CurrentSprintId && this.changeTeam == false && this.applicationSettingsService.editedSprintId != 0 ) {
         this.teamCurrentSprintNumber = this.applicationSettingsService.editedSprintId;

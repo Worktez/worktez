@@ -87,37 +87,62 @@ export class GitlabComponent implements OnInit {
     this.team = this.applicationSettingsService.team;
     this.repoLink=this.team.ProjectLink;
     if(this.repoLink!=""){
+      this.getGitDetails();
       this.getPullRequests();
     } else {
       this.noRepoLinked=true;
     }
   }
 
+  getGitDetails() {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+    const callable = this.functions.httpsCallable('teams/getGitDetails');
+    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+      next: (data) => {
+        this.projectId = data[0]['ProjectId'];
+        return this.projectId;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info('Getting Label Data Successful');
+      }
+    });
+  }
+
   getPullRequests() {
     const orgDomain = this.backendService.getOrganizationDomain();
     const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
-    console.log(teamName)
-    this.gitData=this.teamService.getGitDetails(orgDomain, teamName);
-    this.projectId = this.gitData['ProjectId'];
-    this.gitlabService.getMergeRequests(this.projectId).pipe(map(data => {
-      const prData = data as GitRepoData[];
-      console.log(prData);
-      return prData;
-    })).subscribe(data => {
-      this.prData=data;
-      if(this.prData.length==0){
-        console.log("2");
-        this.noPrExist=true;
-    } else {
-      this.autoCheckPr(this.prData);
-    }
-    })
+    const callable = this.functions.httpsCallable('teams/getGitDetails');
+    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+      next: (data) => {
+        this.projectId = data[0]['ProjectId'];
+        this.gitlabService.getMergeRequests(this.projectId).pipe(map(data => {
+          const prData = data as GitRepoData[];
+          return prData;
+        })).subscribe(data => {
+          this.prData=data;
+          if(this.prData.length==0){
+            this.noPrExist=true;
+        } else {
+          this.autoCheckPr(this.prData);
+        }
+        })
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info('Getting Label Data Successful');
+      }
+    });
   }
 
   autoCheckPr(prData:GitRepoData[]) {
     prData.forEach(element => {
-      let body = element.body;   
-      console.log(body);   
+      let body = element.body;     
       if(body) {
         const sp = body.indexOf("## WtId:")
 
@@ -141,7 +166,6 @@ export class GitlabComponent implements OnInit {
   }
 
   addPrLink(apiUrl, prNumber) {
-    console.log(apiUrl, prNumber);
     // this.prLink = url;
     this.prApiLink=apiUrl;
     this.prNumber=prNumber;
