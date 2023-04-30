@@ -23,6 +23,7 @@ const { setMyOrgCollection, getMyOrgCollectionDoc, getUser, updateUser } = requi
 const { setSchedularUnit } = require("../../scheduledFunctions/tark/setSchedular");
 const { addSubscription } = require("../../subscriptions/tark/addSubscription");
 const { createMember } = require("../tark/createMember");
+const admin = require("firebase-admin");
 
 exports.createOrg = functions.https.onRequest((request, response) => {
   const data = request.body.data;
@@ -59,6 +60,7 @@ exports.createOrg = functions.https.onRequest((request, response) => {
 
         const appDetailsUpdateJson = {
           TotalNumberOfOrganizations: totalNumberOfOrganizations + 1,
+          OrgDomains: admin.firestore.FieldValue.arrayUnion(orgDomain),
         };
 
         updateApplication(appDetailsUpdateJson);

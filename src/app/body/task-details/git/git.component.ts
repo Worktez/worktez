@@ -114,11 +114,9 @@ export class GitComponent implements OnInit {
           if(tp.includes(this.taskId)){
             this.prFound = true;
             this.prTask = element;
-            this.WtId = ` | WtId:${tp}`            
-          }else{
-            this.prFound = false;
+            this.WtId = ` | WtId:${tp}`   
+          } else {
             console.log("No pr Data found");
-            
           }
         }      
       }

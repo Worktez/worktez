@@ -102,6 +102,7 @@ exports.setApplication = function() {
     TotalNumberSchedularSubOrg: 0,
     MeetCounter: 0,
     PostCounter: 0,
+    OrgDomains: [],
   });
   return Promise.resolve(P1);
 };

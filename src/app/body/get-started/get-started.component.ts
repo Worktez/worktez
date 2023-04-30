@@ -34,7 +34,10 @@ export class GetStartedComponent implements OnInit {
       this.arrowDirection = "expand_less"
     }
   }
-  changeSection(section: string){
+  features(section: string){
     this.router.navigate(['/Features', section]);
+  }
+  blogs(){
+    this.router.navigate(['/blogs']);
   }
 }
