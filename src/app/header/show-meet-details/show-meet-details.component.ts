@@ -45,9 +45,9 @@ export class ShowMeetDetailsComponent implements OnInit {
   }  
 
   getMeetData() {
-    const uid = this.authService.getLoggedInUser();
+    const email = this.authService.getUserEmail();
     const callable = this.functions.httpsCallable("meet/getMeetDetails");
-    callable({ Uid: uid }).pipe(map(actions => {
+    callable({ Email: email }).pipe(map(actions => {
       return actions.data as Meet[];
     })).subscribe({
       next: (data) => {
@@ -63,14 +63,33 @@ export class ShowMeetDetailsComponent implements OnInit {
         }
       })
   }
+  // Delete Meet deletes the meeting for all the users.
   deletedMeet(index) {
-    const uid = this.authService.getLoggedInUser();
-    const orgDomain = this.backendService.getOrganizationDomain();
-       this.teamName =  this.startService.teamName;
     const callable = this.functions.httpsCallable("meet/deleteMeet");
-      callable({Uid: uid, Id: this.meetData[index].MeetDocId}).subscribe({
+      callable({RoomId: this.meetData[index].RoomId}).subscribe({
         next(data) { 
          console.log("Meet deleted Successfully") 
+        },
+        error: (error) => {
+          console.log("Error", error);
+          this.errorHandlerService.showError = true;
+          this.errorHandlerService.getErrorCode("InternalError","Api");
+          console.error(error);
+        },
+        complete: () => {
+          console.info("Successfully updated in db");
+          this.getMeetData();
+        } 
+      });
+  }
+
+  // Ignore meet removes the user from the meeting
+  igonreMeet(index) {
+    const email = this.authService.getUserEmail();
+    const callable = this.functions.httpsCallable("meet/ignoreMeet");
+      callable({Email: email, RoomId: this.meetData[index].RoomId}).subscribe({
+        next(data) { 
+         console.log("Meet Ignored Successfully") 
         },
         error: (error) => {
           console.log("Error", error);
