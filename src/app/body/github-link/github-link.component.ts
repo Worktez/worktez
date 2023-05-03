@@ -148,10 +148,8 @@ export class GithubLinkComponent implements OnInit {
 
   getGitDetails(){
     this.organizationDomain = this.backendService.getOrganizationDomain();
-    console.log(this.bearerToken);
     this.githubService.getGithubRepoDetails(this.bearerToken, this.projLink).subscribe({
       next: (data) => {
-        console.log(data);
         this.owner=data['owner']['login'];
         this.projectUrl=data['clone_url'];
         this.createdAt=data['created_at'];
