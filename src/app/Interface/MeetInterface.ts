@@ -1,8 +1,8 @@
 export interface Meet {
     MeetDocId: string;
     Title: string;
-    TeamMembers: string[];
-    HostName: string;
+    Attendees: string[];
+    HostEmail: string;
     Description: string;
     TeamId: string;
     Date: string;

@@ -18,11 +18,10 @@
  ***********************************************************/
 
 const {functions, cors, fastify, requestHandler} = require("../application/lib");
-const {scheduleMeet} = require("./tark/scheduleMeet");
-const {addAttendee} = require("./tark/addAttendee");
-// const {addAttendeeAtWorktez} = require("./tark/addAttendeeAtworktez");
+const { scheduleMeet } = require("./tark/scheduleMeet");
 const { getMeetDetails } = require("./tark/getMeetDetails");
-const {deleteMeet} = require("./tark/deleteMeet");
+const { deleteMeet } = require("./tark/deleteMeet");
+const { ignoreMeet } = require("./tark/ignoreMeet");
 
 /**
  * Description
@@ -37,17 +36,6 @@ fastify.post("/scheduleMeet", (req, res) => {
 
 /**
  * Description
- * @param {any} "/addAttendee"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/addAttendee", (req, res) => {
-  addAttendee(req, res);
-});
-
-/**
- * Description
  * @param {any} "/getMeetDetails"
  * @param {any} req
  * @param {any} res
@@ -57,16 +45,27 @@ fastify.post("/getMeetDetails", (req, res) => {
   getMeetDetails(req, res);
 });
 
-// /**
-//  * Description
-//  * @param {any} "/addAttendeeAtWorktez"
-//  * @param {any} req
-//  * @param {any} res
-//  * @returns {any}
-//  */
-// fastify.post("/addAttendeeAtWorktez", (req, res) => {
-//   addAttendeeAtWorktez(req, res);
-// });
+/**
+ * Description
+ * @param {any} "/deleteMeet"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/deleteMeet", (req, res) => {
+  deleteMeet(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/ignoreMeet"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/ignoreMeet", (req, res) => {
+  ignoreMeet(req, res);
+});
 
 /**
  * Description
@@ -83,13 +82,3 @@ exports.meet = functions.https.onRequest((req, res) => {
   });
 });
 
-/**
- * Description
- * @param {any} "/deleteMeet"
- * @param {any} req
- * @param {any} res
- * @returns {any}
- */
-fastify.post("/deleteMeet", (req, res) => {
-  deleteMeet(req, res);
-});

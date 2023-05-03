@@ -6,10 +6,10 @@
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author: Aditya Khedekar <aditya3034@gmail.com>
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
+ * Author : Sanjay Krishna S R <sanjaykrishna1203@gmail.com>
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -19,12 +19,15 @@
 const {getMeetDetails} = require("../lib");
 
 exports.getMeetDetails = function(request, response) {
-  const uid = request.body.data.Uid;
-
+  const email = request.body.data.Email;
+  const onlyToday = request.body.data.OnlyToday;
   let status = 200;
   let result;
-
-  const getMeetDetailsPromise = getMeetDetails(uid).then((meetData) => {
+  let date = "";
+  if (onlyToday) {
+    date = formatDate(new Date());
+  }
+  const getMeetDetailsPromise = getMeetDetails(email, date).then((meetData) => {
     if (meetData) {
       result = {data: {status: "OK", data: meetData}};
     } else {
@@ -37,10 +40,32 @@ exports.getMeetDetails = function(request, response) {
 
   const promises = [getMeetDetailsPromise];
   Promise.all(promises).then(() => {
-    console.log("Got Meetings Sucessfully");
+    console.log("Got Meetings Sucessfully", result);
     return response.status(status).send(result);
   }).catch((error) => {
     console.error("Error Getting Meetings", error);
     return response.status(status).send(result);
   });
 };
+
+/**
+ * Description
+ * @param {any} date
+ * @return {any} Formatted Date as yyyy-mm-dd
+ */
+function formatDate(date) {
+  const d = new Date(date);
+  // @TODO Convert GMT to IST or Get time from the client machines
+  let month = "" + (d.getMonth() + 1);
+  let day = "" + d.getDate();
+  const year = d.getFullYear();
+
+  if (month.length < 2) {
+    month = "0" + month;
+  }
+  if (day.length < 2) {
+    day = "0" + day;
+  }
+
+  return [year, month, day].join("-");
+}

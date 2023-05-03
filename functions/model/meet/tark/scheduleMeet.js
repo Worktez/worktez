@@ -10,29 +10,27 @@
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
+ * Author : Sanjay Krishna S R <sanjaykrishna1203@gmail.com>
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/
-const {getApplicationData, updateApplication, generateBase64String, milliSeconds} = require("../../application/lib");
-const {setMeet} = require("../lib");
+const {getApplicationData, updateApplication} = require("../../application/lib");
+const {setMeet, generateRoomId} = require("../lib");
 const {setUserMeet} = require("../lib");
-const { getUserUseEmail } = require("../../users/lib");
 
 exports.scheduleMeet = function(request, response) {
   const orgDomain = request.body.data.OrgDomain;
   const teamId = request.body.data.TeamId;
-  const teamMembers = request.body.data.TeamMembers;
+  const attendees = request.body.data.Attendees;
   const title = request.body.data.Title;
   const startTime = request.body.data.StartTime;
   const endTime = request.body.data.EndTime;
-  const hostName = request.body.data.HostName;
+  const hostEmail = request.body.data.HostEmail;
   const description = request.body.data.Description;
   const date = request.body.data.Date;
-  const uid = request.body.data.Uid;
-
   let status = 200;
   let result;
 
@@ -41,20 +39,21 @@ exports.scheduleMeet = function(request, response) {
     const appDetailsUpdateJson = {
       MeetCounter: meetCounter,
     };
+    let roomId = "";
+    roomId = generateRoomId();
 
-    const meetDocId = "m" + meetCounter;
-    const roomId = generateBase64String( milliSeconds+title);
-    if (teamId=="" && uid=="" && orgDomain=="") {
-      setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
-    } else {
-      setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, uid, roomId);
-      setMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, roomId);
-      teamMembers.forEach((email) => {
-        getUserUseEmail(email).then((data)=>{
-          setUserMeet(meetDocId, orgDomain, teamId, teamMembers, title, startTime, endTime, hostName, description, date, data.uid, roomId);
-        });
-      });
-    }
+    // @TODO Check if room id already exists, if exists generate another ID
+    //    getRoomDetailsById(roomId).then((data)=>{
+    //     if (data != undefined) retry;
+
+
+    console.log("Room Id", roomId);
+
+    setMeet(orgDomain, teamId, attendees, title, startTime, endTime, hostEmail, description, date, roomId);
+
+    attendees.forEach((email) => {
+      setUserMeet(email, orgDomain, teamId, attendees, title, startTime, endTime, hostEmail, description, date, roomId);
+    });
     updateApplication(appDetailsUpdateJson);
   }).catch((error) => {
     status = 500;

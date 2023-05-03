@@ -17,24 +17,21 @@
  * See the MIT License for more details.
  ***********************************************************/
 
+const {getUserMeetDetailsById, updateUserMeetDetails} = require("../lib");
 
-const {getRoomDetailsById, updateUserMeetDetails, updateMeetDetailsByID} = require("../lib");
-
-exports.deleteMeet = function(request, response) {
+exports.ignoreMeet = function(request, response) {
   const roomId = request.body.data.RoomId;
+  const email = request.body.data.Email;
   let result;
   const status = 200;
-  const promise = getRoomDetailsById(roomId).then((MeetData) => {
+  const promise = getUserMeetDetailsById(email, roomId).then((MeetData) => {
     if (MeetData == undefined) {
       result = {data: {status: "Meet does not exist"}};
     } else {
       const updateMeetDetailsToJson = {
-        Status: "DELETED",
+        Status: "IGNORED",
       };
-      updateMeetDetailsByID(updateMeetDetailsToJson, roomId);
-      MeetData.Attendees.forEach((element) => {
-        updateUserMeetDetails(element, roomId, updateMeetDetailsToJson);
-      });
+      updateUserMeetDetails(email, roomId, updateMeetDetailsToJson);
     }
   }).catch((error) => {
     console.log("Error:", error);

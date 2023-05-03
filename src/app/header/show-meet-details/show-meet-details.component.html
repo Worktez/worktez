@@ -11,17 +11,28 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-
-<div  class="meets" *ngFor="let meet of meetData; let i = index">
+<div class="meets" *ngFor="let meet of meetData; let i = index">
 
     <div class="row meet-details mb-1 mx-2" id="notificationBox">
-        <div class="col-1 pt-2" style="font-size: 10px;">  {{meet.StartTime}} </div>
-        <div class="col pt-1 mr-0 pr-0"> <h4>{{meet.Title}}</h4> </div>
-        <div class="col-2 py-2 ml-0 mr-2"> <a href="https://meet.worktez.com/{{meet.RoomId}}" class="btn linkBtn" target=”_blank”>Join</a></div>
-        <div class="col-2 pt-1"> 
-             <span (click)="deletedMeet(i)" >
-            <mat-icon fontSet="material-icons-outlined" class="mt-2 deleteBtn" (click)="close()" style="font-size: 20px;">delete</mat-icon>
-         </span> 
-    </div>
+        <div class="col-1 pt-2" style="font-size: 10px;"> {{meet.StartTime}} </div>
+        <div class="col pt-1 mr-0 pr-0">
+            <h4>{{meet.Title}}</h4>
+        </div>
+        <div class="col-2 py-2 ml-0 mr-2"> <a href="https://meet.worktez.com/{{meet.RoomId}}" class="btn linkBtn"
+                target=”_blank”>Join</a></div>
+        <div class="col-2 pt-1" *ngIf="authService.user.email == meet.HostEmail">
+            <!-- @TODO add delete confirmation -->
+            <span (click)="deletedMeet(i)">
+                <mat-icon fontSet="material-icons-outlined" class="mt-2 deleteBtn" 
+                    style="font-size: 20px;">delete</mat-icon>
+            </span>
+        </div>
+        <div class="col-2 pt-1" *ngIf="authService.user.email != meet.HostEmail">
+            <!-- @TODO add ignore confirmation -->
+            <span (click)="igonreMeet(i)">
+                <mat-icon fontSet="material-icons-outlined" class="mt-2 deleteBtn"
+                    style="font-size: 20px;">close</mat-icon>
+            </span>
+        </div>
     </div>
 </div>
