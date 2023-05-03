@@ -13,7 +13,8 @@
 * See the MIT License for more details. 
 ***********************************************************/
 .page {
-    /* background-color: var(--secondary-bg); */
+    background-color: #f4f5f7 ;
+    color: #4E4E4E;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -28,22 +29,18 @@ p {
     font-size: large;
     line-height: 1.8rem;
     text-align: justify;
-    color: var(--text);
 }
 
 li{
     font-size: medium;
     text-align: justify;
-    color: var(--text);
 }
 
 .card {
-    background-color: var(--secondary-bg);
     border: none;
 }
 
 .submenu {
-    background-color: var(--secondary-bg);
     border-radius: 5px;
 }
 

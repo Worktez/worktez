@@ -13,61 +13,52 @@
 * See the MIT License for more details. 
 ***********************************************************/
 .page {
-    /* background-color: var(--secondary-bg); */
+    background-color: #f4f5f7 ;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .heading{
     font-size: 56px;
     line-height: 4rem;
-
 }
+
 .title {
     font-size: xx-large;
     /* color: #0000e4; */
 }
-
 .sub-title {
     font-size: 22px;
 }
-
 p {
     font-size: large;
     line-height: 1.8rem;
     text-align: justify;
-    color: var(--text);
-}
-a {
-    font-size: large;
-    line-height: 1.8rem;
-    text-align: justify;
-    color: var(--primary-color) !important;
-    cursor: pointer;
 }
 
 .card {
-    background-color: var(--secondary-bg);
+    background-color: #FFFFFF;
     border: none;
 }
 
-.submenu {
-    background-color: var(--secondary-bg);
-    border-radius: 5px;
+.card-title {
+    font-size: 14px;
 }
 
-li {
-    cursor: pointer;
-    font-size: medium;
-    color: var(--text);
+.card-text {
+    font-size: 12px;
 }
 
-.feature-item{
-    cursor: pointer;
-    font-size: small;
-    line-height: normal;
-    text-align: left;
-}
+@media only screen and (max-width: 600px) {
+    .heading{
+        font-size: larger;
+    }
+    .card-title {
+        font-size: 12px;
+    }
 
-
-li:hover {
-    color: var(--primary-color);
+    .card-text {
+        font-size: 10px;
+    }
+    .submenu{
+        font-size: 10px !important;
+    }
 }

@@ -47,9 +47,11 @@ exports.getContributors = function() {
  * @param {any} photoUrl
  * @param {any} title
  * @param {any} name
+ * @param {any} github
+ * @param {any} linkedIn
  * @return {any}
  */
-exports.setContributors = function(docId, email, about, photoUrl, title, name) {
+exports.setContributors = function(docId, email, about, photoUrl, title, name, github, linkedIn) {
   const P1 = db.collection("Contributors").doc(docId).set({
     Email: email,
     About: about,
@@ -57,6 +59,8 @@ exports.setContributors = function(docId, email, about, photoUrl, title, name) {
     Title: title,
     Name: name,
     ContributorId: docId,
+    GithubProfile: github,
+    LinkedInProfile: linkedIn,
   });
   return Promise.resolve(P1);
 };

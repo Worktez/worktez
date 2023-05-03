@@ -35,9 +35,7 @@ export class ContributorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
-    this.navbarHandler.addToNavbar(this.ComponentName)
     this.contributorDataReady = false;
-    this.getContributors();
   }
 
   getContributors() {

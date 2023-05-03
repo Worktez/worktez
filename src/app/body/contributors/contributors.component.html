@@ -11,49 +11,210 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<ng-container *ngIf="contributorDataReady && !enableLoader; else loader">  
-  <div class="row mb-4">
-    <div class="col">
-      <div class="row pl-5">
-        <ng-container *ngFor="let item of contributorsData">
-          <div class="col-md-3 pt-2 mb-2">
-            <div class="card pt-2">
-              <img class="imageProp mx-auto rounded-circle" src="{{item.PhotoUrl}}" alt="Card image cap">
-              <div class="card-body text-center">
-                <div class="row">
-                  <div class="col">{{item.Name}}</div>
-                </div>
-                <div class="row">
-                  <div class="col">{{item.Title}}</div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <span class="pr-1">
-                      <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                          email
-                      </mat-icon>
-                    </span>{{item.Email}}
-                  </div>
-                </div> <hr>
-                <div class="row">
-                  <div class="col">{{item.About}}</div>
-                </div>
-              </div>
+
+  <div id="contributorsPage" data-spy="scroll" data-target="#navbar" data-offset="0">
+    <section id="home" class="pb-2">
+        <div class="row py-3">
+            <div class="col pt-5 text-center heading">
+              <h1 style="font-size: larger;">
+                Our Contributors
+              </h1>
             </div>
-          </div>
-        </ng-container>
-      </div>
-    </div>
-    <div class="col-1" (click)="openAddMember()">
-      <mat-icon fontSet="material-icons-outlined" class="align-middle" data-toggle="modal" data-target="#addNewMember">
-        person_add
-      </mat-icon>
-    </div>
+        </div>
+    </section>
+    <section id="Contributors" class="p-2">
+        <div class="row py-2">
+            <div class="col-md-1 col-1"></div>
+            <div class="col">
+              <div class="row card-deck py-2">
+                  <div class="card">
+                    <img class="card-img-top p-1" src="../../../assets/contributors/vivek_kumar.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title m-0 p-0">Vivek Kumar </h5>
+                      <span class="card-text text-muted">Architect @ Worktez</span>
+                    </div>
+                    <div class="card-footer">
+                      <span class="pr-2">
+                        <a href="https://github.com/viv9k" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                      </span>
+                      <span class="pr-2">
+                        <a href="https://www.linkedin.com/in/viv9k/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                      </span>
+                      <span>
+                        <a href="mailto:vivek3071997@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top p-1" src="../../../assets/contributors/thanvi_lahari.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title my-0">Thanvi Lahari</h5>
+                      <span class="card-text text-muted">developer @ Worktez</span>
+                    </div>
+                    <div class="card-footer">
+                      <span class="pr-2">
+                        <a href="https://github.com/Pendyala-thanvi" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                      </span>
+                      <span class="pr-2">
+                        <a href="https://www.linkedin.com/in/thanvi-lahari/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                      </span>
+                      <span>
+                        <a href="mailto:thanvipendyala194@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top p-1 text-center" src="../../../assets/contributors/Sanjay_krishna.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title my-0">Sanjay Krishna S R </h5>
+                      <span class="card-text text-muted">developer @ Worktez</span>
+                    </div>
+                    <div class="card-footer">
+                      <span class="pr-2">
+                        <a href="https://github.com/sanjaykrishna1203" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                      </span>
+                      <span class="pr-2">
+                        <a href="https://www.linkedin.com/in/sanjaykrishna1203/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                      </span>
+                      <span>
+                        <a href="mailto:sanjaykrishna1203@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top p-1" src="../../../assets/contributors/simran_nigam.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title my-0">Simran Nigam</h5>
+                      <span class="card-text text-muted">developer @ Worktez</span>
+                    </div>
+                    <div class="card-footer">
+                      <span class="pr-2">
+                        <a href="https://github.com/simran142002" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                      </span>
+                      <span class="pr-2">
+                        <a href="https://www.linkedin.com/in/nigamsimran/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                      </span>
+                      <span>
+                        <a href="mailto:nigamsimran14@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <img class="card-img-top p-1" src="../../../assets/contributors/Abhishek_Mishra.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title my-0">Abhishek Mishra</h5>
+                      <span class="card-text text-muted">developer @ Worktez</span>
+                    </div>
+                    <div class="card-footer">
+                      <span class="pr-2">
+                        <a href="https://github.com/abhishek-mishra019" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                      </span>
+                      <span class="pr-2">
+                        <a href="https://www.linkedin.com/in/abhishek-mishra019/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                      </span>
+                      <span>
+                        <a href="mailto:am1426620@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                      </span>
+                    </div>
+                  </div>
+             
+
+              </div>
+              <!-- second row -->
+              <div class="row card-deck py-2">
+                <div class="col-1"></div>
+                <div class="card">
+                  <img class="card-img-top p-1" src="../../../assets/contributors/Aditya_khedekar.jpeg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title my-0">Aditya Khedekar</h5>
+                    <span class="card-text text-muted">developer @ Worktez</span>
+                  </div>
+                  <div class="card-footer">
+                    <span class="pr-2">
+                      <a href="https://github.com/Aditya3034" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                    </span>
+                    <span class="pr-2">
+                      <a href="https://www.linkedin.com/in/aditya-khedekar-151840245/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                    </span>
+                    <span>
+                      <a href="mailto:aditya3034@gmail.com" target="_blank"> <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                    </span>
+                  </div>
+                </div>
+                <div class="card">
+                  <img class="card-img-top p-1" src="../../../assets/contributors/Swapnil_bankar.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title my-0">Swapnil Bankar</h5>
+                    <span class="card-text text-muted">developer @ Worktez</span>
+                  </div>
+                  <div class="card-footer">
+                    <span class="pr-2">
+                      <a href="https://github.com/Bankar-Swapnil" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                    </span>
+                    <span class="pr-2">
+                      <a href="https://www.linkedin.com/in/swapnil-bankar-57a28722b/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                    </span>
+                    <span>
+                      <a href="mailto:swapnilbankar1010@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                    </span>
+                  </div>
+                </div>
+                <div class="card">
+                  <img class="card-img-top p-1" src="../../../assets/contributors/muskan_singh.jpeg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title my-0">Muskan Singh</h5>
+                    <span class="card-text text-muted">developer @ Worktez</span>
+                  </div>
+                  <div class="card-footer">
+                    <span class="pr-2">
+                      <a href="https://github.com/muskan2622" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                    </span>
+                    <span class="pr-2">
+                      <a href="https://www.linkedin.com/in/muskan-singh-3833ba1ab/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                    </span>
+                    <span>
+                      <a href="mailto:singhmuskan2603@gmail.com" target="_blank">   <mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                    </span>
+                  </div>
+                </div>
+                <div class="card">
+                  <img class="card-img-top p-1" src="../../../assets/contributors/Raunak_Sharma.jpeg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title my-0">Raunak Sharma</h5>
+                    <span class="card-text text-muted">developer @ Worktez</span>
+                  </div>
+                  <div class="card-footer">
+                    <span class="pr-2">
+                      <a href="https://github.com/RaunakSharma002" target="_blank"><img src="../../../assets/git.png" height="25" class="rounded-circle" width="25" alt="Git icon" data-toggle="modal" title="Github Profile"></a>
+                    </span>
+                    <span class="pr-2">
+                      <a href="https://www.linkedin.com/in/raunak-sharma-10a078244/" target="_blank"><img src="../../../assets/LinkedIn.png" height="25" class="rounded-circle" width="25" alt="LinkedIn icon" data-toggle="modal" title="LinkedIn Profile"></a>
+                    </span>
+                    <span>
+                      <a href="mailto:raunaksharma22345@gmail.com" target="_blank"><mat-icon fontSet="material-icons-outlined" class="align-middle">email</mat-icon></a>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-1"></div>
+            </div>
+            </div>
+            <div class="col-md-1 col-1"></div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
+
+  <div class="row mb-4" id="contributors">
+    
   </div>
-</ng-container>
 <ng-container *ngIf="popupHandlerService.addNewContributorEnabled">
   <app-add-contributors (addNewContributorCompleted)="addNewContributorCompleted($event)"></app-add-contributors>
 </ng-container>
-<ng-template #loader>
-  <app-loader></app-loader>
-</ng-template>
