@@ -36,7 +36,7 @@ export class TeamServiceService {
   public gitDataReay: boolean = false;
   public labelsReady: boolean = false;
   public teamsReady: boolean = false;
-  constructor(private functions: AngularFireFunctions, private httpClient: HttpClient) { }
+  constructor(private functions: AngularFireFunctions) { }
   
   getTeams(orgDomain: string) {
     this.teamDataState.next(false);
