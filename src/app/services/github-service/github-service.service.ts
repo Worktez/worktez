@@ -177,7 +177,7 @@ export class GithubServiceService {
 
 
   getCompletedRuns(owner: string, repo: string): Observable<GitDetails[]> {
-    const url = `${environment.githubApiUrl}/repos/${owner}/${repo}/actions/runs?status=completed`;
+    const url = `${environment.githubApiUrl}/repos/${owner}/${repo}/actions/runs`;
     return this.httpClient.get<GitDetails[]>(url);
   }
   
