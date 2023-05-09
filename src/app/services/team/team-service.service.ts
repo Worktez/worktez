@@ -15,8 +15,10 @@
 ***********************************************************/
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Team, TeamLabels, GitDetails } from 'src/app/Interface/TeamInterface'
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +94,7 @@ export class TeamServiceService {
       complete: () => console.info('Successfully Added Token')
     })
   }
+
 
   getGitDetails(orgDomain: string, teamName: string) {
     this.gitDataReay=false;
