@@ -14,16 +14,23 @@
     border-collapse: collapse;
     margin-top: 20px;
   }
-  
+
+  .mat-mdc-table {
+    background: var(--secondary-bg);
+  }
+
+  .mdc-data-table__header-cell {
+    color: white;
+  }
+
   .table td,
   .table th {
     padding: 12px;
     text-align: left;
   }
-  
-  .table th {
-    background-color: white;
-    font-weight: bold;
+
+  .mat-mdc-cell {
+    color: currentColor;
   }
   
   .table td {

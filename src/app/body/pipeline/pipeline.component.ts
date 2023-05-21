@@ -9,6 +9,7 @@ import { ErrorHandlerService } from "src/app/services/error-handler/error-handle
 import { StartServiceService } from "src/app/services/start/start-service.service";
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 
 @Component({
   selector: 'app-pipeline',
@@ -25,9 +26,11 @@ export class PipelineComponent {
   teamId: string;
   projectLink: string;
 
-  constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService) {}
+  constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, public navbarHandler: NavbarHandlerService) {}
 
   ngOnInit() {
+    this.navbarHandler.resetNavbar();
+    this.navbarHandler.addToNavbar(this.componentName);
     this.showLoader = true;
     this.showLoader = true;
     if (this.startService.showTeams) {
