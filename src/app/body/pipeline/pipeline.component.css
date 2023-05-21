@@ -20,13 +20,15 @@
   }
 
   .mdc-data-table__header-cell {
-    color: white;
+    color: currentColor;
   }
 
   .table td,
   .table th {
     padding: 12px;
     text-align: left;
+    background-color: white;
+    font-weight: bold;
   }
 
   .mat-mdc-cell {
