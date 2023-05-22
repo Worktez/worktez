@@ -82,6 +82,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(["/MyDashboard"])
   }
 
+  pipeline(){
+    this.router.navigate(["/Pipeline"])
+  }
+
   createNewOrganization() {
     this.router.navigate(['/CreateNewOrganization']);
   }

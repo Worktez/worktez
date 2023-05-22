@@ -33,6 +33,8 @@ import { GitPrData } from 'src/app/Interface/githubOrgData';
 import { RBAService } from 'src/app/services/RBA/rba.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
 declare var jQuery:any;
 
 @Component( {
@@ -97,8 +99,10 @@ export class TaskDetailsComponent implements OnInit {
   createGitIssue: boolean = false;
   githubTokenExists: boolean = false;
   provider: string;
+  projectId: number;
+  gitData: GitDetails[];
 
-  constructor (private githubService: GithubServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService ) { }
+  constructor (private githubService: GithubServiceService, public gitlabService: GitlabServiceService,public rbaService: RBAService, public startService: StartServiceService, public applicationSettingService: ApplicationSettingsService, private route: ActivatedRoute, private functions: AngularFireFunctions, public authService: AuthService, private location: Location, public toolsService: ToolsService, private navbarHandler: NavbarHandlerService, public errorHandlerService: ErrorHandlerService, private backendService: BackendService, public cloneTask: CloneTaskService,public userService:UserServiceService,public popupHandlerService: PopupHandlerService, public validationService: ValidationService, public teamService: TeamServiceService  ) { }
 
   ngOnInit (): void {
     this.newWatcher = this.authService.getUserEmail();
@@ -122,6 +126,7 @@ export class TaskDetailsComponent implements OnInit {
       else{
         this.prLink=this.task.PrLink;
         this.prApiLink=this.task.PrApiLink;
+        this.provider = "Github"
         this.getPrDetails();
         this.prLinked=true;
         this.prFound = true;
@@ -131,12 +136,13 @@ export class TaskDetailsComponent implements OnInit {
 
   checkMrLinked(){
     if(this.task.PrLink!=undefined && this.task.PrNumber != undefined){
-      if(this.task.PrLink=="" || this.task.PrApiLink=="" || this.task.PrNumber==null ){
+      if(this.task.PrApiLink=="" || this.task.PrNumber==null){
         this.prLinked=false;
       }
       else{
-        this.prLink=this.task.PrLink;
+        this.prLink=this.task.PrApiLink;
         this.prApiLink=this.task.PrApiLink;
+        this.provider="gitlab";
         this.getPrDetails();
         this.prLinked=true;
         this.prFound = true;
@@ -145,12 +151,26 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   getPrDetails() {
-    this.githubService.getPrDetails(this.prApiLink.slice(29)).pipe(map(data => {
-      const prData = data as GitPrData[];     
-      return prData;
-    })).subscribe(data => {
-      this.prData = data;
-    });
+    if(this.provider == "Github") {
+      this.githubService.getPrDetails(this.prApiLink.slice(29)).pipe(map(data => {
+        const prData = data as GitPrData[];     
+        return prData;
+      })).subscribe(data => {
+        this.prData = data;
+      });
+    } 
+    else if(this.provider == "gitlab") {
+      const orgDomain = this.backendService.getOrganizationDomain();
+      const teamName = this.teamService.teamsDataJson[this.task.TeamId].TeamName;
+      this.gitData=this.teamService.getGitDetails(orgDomain, teamName);
+      this.projectId = this.gitData['ProjectId'];
+      this.gitlabService.getMrDetails(this.projectId,this.task.PrNumber).pipe(map(data => {
+        const prData = data as GitPrData[];    
+        return prData;
+      })).subscribe(data => {
+        this.prData = data;
+      });
+    }
   }
 
   getTaskPageData(){
@@ -217,6 +237,7 @@ export class TaskDetailsComponent implements OnInit {
     if(this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != undefined && this.teamService.teamsDataJson[this.task.TeamId].ProjectLink != ""){
       this.githubRepoExists = true;
       this.checkPrLinked();
+      this.checkMrLinked();
     }
   }
   

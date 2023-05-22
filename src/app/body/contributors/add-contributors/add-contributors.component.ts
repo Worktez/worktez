@@ -38,6 +38,8 @@ export class AddContributorsComponent implements OnInit {
   public name: string;
   public aboutme: string;
   public email: string;
+  public githubAccount: string;
+  public linkedInAccount: string;
 
   private basePath: string;
   public fileUpload:boolean = false;
@@ -76,7 +78,7 @@ export class AddContributorsComponent implements OnInit {
   submit() {
     this.enableLoader = true
     const callable = this.functions.httpsCallable('contributors/addContributor');
-      callable({ email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name }).subscribe({
+      callable({ email: this.email, about: this.aboutme, photoUrl: this.currentFileUpload.url, title: this.title, name: this.name, Github: this.githubAccount, LinkedIn: this.linkedInAccount }).subscribe({
         next: (data) => {
           console.log("Successful ");
         },

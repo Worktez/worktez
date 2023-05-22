@@ -26,7 +26,9 @@ import { Team } from 'src/app/Interface/TeamInterface';
 import { ApplicationSettingsService } from 'src/app/services/applicationSettings/application-settings.service';
 import { Tasks } from 'src/app/Interface/TasksInterface';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
-
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { TeamServiceService } from 'src/app/services/team/team-service.service';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
 @Component({
   selector: 'app-gitlab',
   templateUrl: './gitlab.component.html',
@@ -60,7 +62,11 @@ export class GitlabComponent implements OnInit {
   prTask: GitRepoData;
   prFound: boolean =false;
   WtId: string;
-  constructor(private githubService: GithubServiceService,public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService) { }
+  gitData: GitDetails[];
+  projectId: number;
+  
+  constructor(private githubService: GithubServiceService, public gitlabService: GitlabServiceService, public applicationSettingsService: ApplicationSettingsService, private startService: StartServiceService, private userService: UserServiceService, private backendService: BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public validationService: ValidationService, public PopupHandlerService: PopupHandlerService,
+    public teamService: TeamServiceService) { }
 
   ngOnInit(): void {
     this.showClose = false;
@@ -80,22 +86,55 @@ export class GitlabComponent implements OnInit {
     this.team = this.applicationSettingsService.team;
     this.repoLink=this.team.ProjectLink;
     if(this.repoLink!=""){
+      this.getGitDetails();
       this.getPullRequests();
     } else {
       this.noRepoLinked=true;
     }
   }
 
+  getGitDetails() {
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+    const callable = this.functions.httpsCallable('teams/getGitDetails');
+    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+      next: (data) => {
+        this.projectId = data[0]['ProjectId'];
+        return this.projectId;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info('Getting Label Data Successful');
+      }
+    });
+  }
+
   getPullRequests() {
-    this.githubService.getPullRequests(this.repoLink).pipe(map(data => {
-      const prData = data as GitRepoData[];     
-      return prData;
-    })).subscribe(data => {
-      this.prData = data;
-      if(this.prData.length==0){
-          this.noPrExist=true;
-      } else {
-        this.autoCheckPr(this.prData);
+    const orgDomain = this.backendService.getOrganizationDomain();
+    const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+    const callable = this.functions.httpsCallable('teams/getGitDetails');
+    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+      next: (data) => {
+        this.projectId = data[0]['ProjectId'];
+        this.gitlabService.getMergeRequests(this.projectId).pipe(map(data => {
+          const prData = data as GitRepoData[];
+          return prData;
+        })).subscribe(data => {
+          this.prData=data;
+          if(this.prData.length==0){
+            this.noPrExist=true;
+        } else {
+          this.autoCheckPr(this.prData);
+        }
+        })
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.info('Getting Label Data Successful');
       }
     });
   }
@@ -125,13 +164,13 @@ export class GitlabComponent implements OnInit {
     });
   }
 
-  addPrLink(url, apiUrl, prNumber) {
-    this.prLink = url;
+  addPrLink(apiUrl, prNumber) {
+    // this.prLink = url;
     this.prApiLink=apiUrl;
     this.prNumber=prNumber;
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('tasks/addPrLink');
-    callable({ OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: this.prLink, PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
+    callable({  OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: "", PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
       next: (data) => {
         console.log("Successfully added PR link");
         this.prLinked = true;
@@ -147,7 +186,7 @@ export class GitlabComponent implements OnInit {
   }
   onAddingPr(){
     this.linkType = "PR";
-    this.linkURL = this.prLink
+    this.linkURL = this.prApiLink
     const callable = this.functions.httpsCallable('linker/setLink');
     callable({ OrgDomain: this.orgDomain, TaskID: this.taskId, LinkType: this.linkType, LinkURL: this.linkURL }).subscribe({
       next: (data) => {

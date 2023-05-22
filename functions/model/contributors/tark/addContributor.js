@@ -26,6 +26,8 @@ exports.addContributor = function(request, response) {
   const photoUrl = request.body.data.photoUrl;
   const title = request.body.data.title;
   const name = request.body.data.name;
+  const github = request.body.data.Github;
+  const linkedIn = request.body.data.LinkedIn;
 
   let status = 200;
   let result;
@@ -40,7 +42,7 @@ exports.addContributor = function(request, response) {
     const docId = "Contributor"+totalNumberOfContributors;
 
     updateApplication(appDetailsUpdateJson);
-    setContributors(docId, email, about, photoUrl, title, name).then((doc) => {
+    setContributors(docId, email, about, photoUrl, title, name, github, linkedIn).then((doc) => {
       result = { data: doc };
       console.log("Sent contributors successfully");
       return response.status(status).send(result);

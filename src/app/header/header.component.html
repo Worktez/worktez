@@ -111,6 +111,22 @@
                                 </a>
                             </li>
                         </ng-container>
+                        <ng-container>
+                            <li class="nav-item px-1">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="pipeline()">
+                                    <div class="row">
+                                        <div class="col pr-1">
+                                            <span class="material-symbols-outlined">
+                                                key_visualizer
+                                                </span>
+                                        </div>
+                                        <div class="col pl-1">
+                                            pipelines
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ng-container>
                         <ng-container *ngIf="(authService.organizationAvailable) && startService.userReady">
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button"

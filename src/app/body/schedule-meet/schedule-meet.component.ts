@@ -56,7 +56,7 @@ export class ScheduleMeetComponent implements OnInit {
   enableLoader: boolean = false;
   isUpdateMeet: boolean = false;
   link: string;
-  hostName: string;
+  hostEmail: string;
   attendeeEmail: string;
   attendeeEmailsArray: string[] =[]
   minDate:string;
@@ -73,7 +73,7 @@ export class ScheduleMeetComponent implements OnInit {
     this.minDate = dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];
     this.project = this.authService.getTeamId();
     this.time = this.toolsService.time();
-    this.hostName = this.authService.getUserEmail();
+    this.hostEmail = this.authService.getUserEmail();
     this.readTeamData(this.project);
   }
  
@@ -152,12 +152,14 @@ export class ScheduleMeetComponent implements OnInit {
     const startTime = this.estimatedTimeHrs ;
     const endTime = this.estimatedTimeHrs1 ;
     const uid = this.authService.user.uid;
+    const email = this.authService.user.email;
+    this.attendeeEmailsArray.push(email);
     this.enableLoader = true;
     const teamId = this.authService.getTeamId();
     const callable = this.functions.httpsCallable('meet/scheduleMeet');
       if (this.orgDomain == undefined) {
         this.orgDomain = this.backendService.getOrganizationDomain();
-      callable({OrgDomain:this.orgDomain, TeamId:teamId, TeamMembers:this.attendeeEmailsArray, Title:this.title, Description:this.description, HostName:this.hostName, Date: this.date, StartTime: startTime, EndTime: endTime, Uid: uid}).subscribe({
+      callable({OrgDomain:this.orgDomain, TeamId:teamId, Attendees:this.attendeeEmailsArray, Title:this.title, Description:this.description, HostEmail:this.hostEmail, Date: this.date, StartTime: startTime, EndTime: endTime, Uid: uid}).subscribe({
         next: (data) => {
           this.enableLoader = false;
           this.showClose = true;

@@ -13,18 +13,12 @@
 * See the MIT License for more details. 
 ***********************************************************/
 .page {
-    /* background-color: var(--secondary-bg); */
+    background-color: #f4f5f7 ;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .heading{
     font-size: 56px;
     line-height: 4rem;
-
-}
-
-.page {
-    /* background-color: var(--secondary-bg); */
-    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .title {
@@ -38,35 +32,11 @@ p {
     font-size: large;
     line-height: 1.8rem;
     text-align: justify;
-    color: var(--text);
-}
-
-li{
-    font-size: medium;
-    text-align: justify;
-    color: var(--text);
 }
 
 .card {
-    background-color: var(--secondary-bg);
+    background-color: #FFFFFF;
     border: none;
-}
-
-.submenu {
-    background-color: var(--secondary-bg);
-    border-radius: 5px;
-}
-
-.list-group-item:hover {
-    color: var(--primary-color);
-    cursor: pointer;
-}
-
-.feature-item{
-    cursor: pointer;
-    font-size: small;
-    line-height: normal;
-    text-align: left;
 }
 
 .card-title {

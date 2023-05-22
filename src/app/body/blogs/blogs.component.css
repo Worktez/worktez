@@ -14,7 +14,7 @@
 ***********************************************************/
 
 #blogPage {
-    background-color: transparent;
+    background-color: #f4f5f7 ;
     font-family: 'Plus Jakarta Sans', sans-serif;
     width: 100%;
 }
@@ -33,74 +33,19 @@
     line-height: 2.5rem;
 }
 
-#headingLine2 {
-    width: 100%;
-    height: 85%;
-    color: #4E4E4E;
-    font-size: 16px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    line-height: 1.5rem;
-}
-
-#conceptArt {
-    display: inline;
-}
-
-.boxShadow {
-    width: 100%;
-    min-width: 20rem;
-    border-radius: 20px;
-    text-align: justify;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    /* box-shadow: 0px 7px 6px 1px #ebecefa5; */
-    cursor: pointer;
-}
-
-.gitService {
-    background-color: #FFF3E0;
-}
-
-.kanbanService {
-    background-color: #E0F2F1;
-}
-
-.dashService {
-    background-color: #E3F2FD;
-}
-
-.orgService {
-    background-color: #EDE7F6;
-}
-
-.qnService {
-    background-color: #FFF8E1;
-}
-
-.tvService {
-    background-color: #E8EAF6;
-}
-
-.mileService {
-    background-color: #E8F5E9;
-}
-
-.meetService {
-    background-color: #E3F2FD;
-}
-
-.leanrMore {
+.learnMore {
     margin-top: 10%;
     color: #2979FF;
     cursor: pointer;
 }
 
-.leanrMore:hover {
+.learnMore:hover {
     /* font-size: large; */
     font-weight: bold;
 }
 
-#services,
-#features {
+#services
+{
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -117,168 +62,12 @@
     line-height: 2rem;
 }
 
-#gitText {
-    font-size: 24px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#kanbanText {
-    color: #00867D;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#dashboardText {
-    color: #2979FF;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#organizeText {
-    color: #6325AC;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#qnText {
-    color: #FFA000;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#ttText {
-    color: #4042E2;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#milestionesText {
-    color: #087F23;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#meetText {
-    color: #2962FF;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-.icons {
-    width: 3rem;
-    height: 3rem;
-}
-
-.icons1 {
-    width: 5rem;
-    height: 5rem;
-}
-
-.featureHeading {
-    font-size: 24px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#featureContent {
-    color: #767676;
-    font-size: 16px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    line-height: 1.5rem;
-    text-align: justify;
-}
-
-#howItWorks {
-    background-color: #4006BA;
-    height: 100%;
-}
-
-#hiwContent {
-    color: #ffffff;
-    font-size: 24px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-.getStarted {
-    background-color: #ffffff;
-    color: #4006BA;
-    display: block;
-    border-radius:50px;
-    text-align:center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    border: none !important;
-}
-
-#testimonialHeading {
-    color: #4006BA;
-    font-size: 28px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-#testimonial {
-    background-color: #ffffff;
-}
-
-#mover {
-    color: #ffffff;
-}
-
-.showCase {
-    background-color: transparent;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    scroll-behavior: smooth;
-}
-
-.showCase::-webkit-scrollbar {        
-    display: none;  
-}
-
-.arrow {
-    font-size: 34px;
-    cursor: pointer;
-    color: #4006BA;
-}
-
-.arrow:hover {
-    font-size: 40px;
-    font-weight: bolder;
-    color: var(--primary-color);
-}
-
 @media only screen and (max-width: 600px) {
     #headingLine {
         font-size: 35px;
         width: 100%;
     }
-
-    #conceptArt {
-        display: none;
-    }
-
-    .boxShadow {
-        width: 8rem;
-    }
-
-    .icons, .icons1 {
-        width: 50px;
-        height: 50px;
-    }
-
     .serviceButton {
         font-size: 20px;
-    }
-
-    .art {
-        display: none;
-    }
-
-    #featureHeading {
-        font-size: 18px;
-    }
-
-    #featureContent {
-        width: 100%;
-    }
-
-    .arrow {
-        font-size: 20px;
-    }
-
-    .arrow:hover {
-        font-size: 24px;
     }
 }
