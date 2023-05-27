@@ -1,12 +1,15 @@
   .card {
     background-color: var(--primary-bg);
     color: var(--text);
-   
+    border: none !important;
     box-shadow: var(--box-shadow-top), var(--box-shadow-bottom);
     border-radius: 8px;
   }
   
-  
+  .card-header {
+    border: none !important;
+    background: var(--primary-bg);
+  }
   
   
   .table {
