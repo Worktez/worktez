@@ -61,6 +61,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+    console.log(this.table.dataSource);
+    console.log(this.dataSource.paginator);
+    console.log(this.dataSource.sort);
   }
 
   openTaskDetails(id: string) {

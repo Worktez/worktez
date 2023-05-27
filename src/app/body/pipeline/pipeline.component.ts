@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortable, Sort } from '@angular/material/sort';
+import { MatTable } from '@angular/material/table';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
 import { CookieService } from "ngx-cookie-service";
 import { ApplicationSettingsService } from "src/app/services/applicationSettings/application-settings.service";
@@ -24,6 +27,8 @@ export class PipelineComponent {
   appkey:string
   teamId: string;
   projectLink: string;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService) {}
 
