@@ -165,12 +165,12 @@ export class GitlabComponent implements OnInit {
   }
 
   addPrLink(apiUrl, prNumber) {
-    // this.prLink = url;
+    this.prLink = apiUrl;
     this.prApiLink=apiUrl;
     this.prNumber=prNumber;
     this.enableLoader = true;
     const callable = this.functions.httpsCallable('tasks/addPrLink');
-    callable({  OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: "", PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
+    callable({  OrganizationDomain: this.orgDomain, TaskID: this.taskId, PrLink: this.prLink, PrApiLink: this.prApiLink, PrNumber: this.prNumber }).subscribe({
       next: (data) => {
         console.log("Successfully added PR link");
         this.prLinked = true;
