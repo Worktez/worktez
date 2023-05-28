@@ -48,6 +48,7 @@ exports.setMilestone = function(uid, orgDomain, title, description, milestoneId,
     EndDate: endDate,
     MilestoneStatus: milestoneStatus,
     ColorCode: colorCode,
+    Deleted: false
   });
   return Promise.resolve(addMilestonePromise);
 };
@@ -73,7 +74,7 @@ exports.getMilestoneData = function(orgDomain, milestoneId) {
  * @return {any}
  */
 exports.getAllMilestonesData = function(orgDomain, teamId="") {
-  let query = db.collection("Organizations").doc(orgDomain).collection("Milestones");
+  let query = db.collection("Organizations").doc(orgDomain).collection("Milestones").where("Deleted", "==", false);
   if (teamId != "") {
     query = query.where("TeamId", "==", teamId);
   }
