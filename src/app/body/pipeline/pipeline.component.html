@@ -12,10 +12,8 @@
 * See the MIT License for more details. 
 ***********************************************************/ -->
 
-<div class="card">
-  <div class="card-header">
-    <div class="pl-4">
-      <div class="btn-group smallButton">
+  <div class="pl-4">
+      <div class="btn-group smallButton p-4">
         <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
         <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
             <ng-container *ngFor="let item of startService.teams">
@@ -23,8 +21,8 @@
             </ng-container>
         </div>
       </div>
-    </div>
   </div>
+  <div class="card">
   <div class="card-body table-responsive-sm">
     <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="workflows">
       <ng-container matColumnDef="PipelineName">
