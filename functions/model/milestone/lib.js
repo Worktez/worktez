@@ -48,7 +48,6 @@ exports.setMilestone = function(uid, orgDomain, title, description, milestoneId,
     EndDate: endDate,
     MilestoneStatus: milestoneStatus,
     ColorCode: colorCode,
-    Deleted: false,
   });
   return Promise.resolve(addMilestonePromise);
 };

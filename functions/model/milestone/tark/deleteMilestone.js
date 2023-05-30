@@ -28,11 +28,9 @@ exports.deleteMilestone = function(request, response) {
   console.log(deleted, milestoneID, orgDomain);
 
   const promise = getMilestoneData(orgDomain, milestoneID).then((mDoc) => {
-    // console.log("vmdspofospskdfkfkespofkesogjmspogjeospjgesjkgesk[gpkgkiegkiespfkls[pfks[pkl");
     if (mDoc) {
-      console.log(mDoc);
       const updateJson = {
-        Deleted: deleted,
+        MilestoneStatus: "Deleted",
       };
       updateMilestone(updateJson, orgDomain, milestoneID);
       result = { data: "Milestone deleted Successfully" };

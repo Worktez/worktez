@@ -46,7 +46,7 @@ export class MilestoneCardComponent implements OnInit {
     
     callable({OrganizationDomain: orgDomain, MilestoneId: mId}).subscribe({
       next: (data) => {
-        this.milestone.Deleted = true;
+        this.milestone.MilestoneStatus = "Deleted";
       },
       error: (error) => {
         console.error("Error", error);
