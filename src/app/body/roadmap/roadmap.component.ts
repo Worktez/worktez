@@ -40,7 +40,7 @@ export class RoadmapComponent {
   ifexists: boolean = false;
   projectLink: string;
   featuresExpanded: boolean = false;
-  arrowDirection: string = "expand_less";
+  arrowDirection: string = "expand_more";
   roadmapDataReady: boolean = false;
   @Input() startDate: Date = new Date('2021-01-01');
   @Input() endDate: Date = new Date('2021-12-31');
@@ -128,11 +128,11 @@ export class RoadmapComponent {
         this.ifexists=true;
         if(this.featuresExpanded){
           this.featuresExpanded = false;
-          this.arrowDirection = "expand_less";
+          this.arrowDirection = "expand_more";
           break;
         } else {
           this.featuresExpanded = true;
-          this.arrowDirection = "expand_more";
+          this.arrowDirection = "expand_less";
           break;
         }
       } else {
