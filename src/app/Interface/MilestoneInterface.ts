@@ -23,5 +23,4 @@ export interface Milestones {
     StartDate: string;
     EndDate: string;
     ColorCode: string;
-    Deleted: boolean;
   }
