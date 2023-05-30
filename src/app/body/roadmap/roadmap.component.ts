@@ -36,12 +36,14 @@ export class RoadmapComponent {
   rows: RoadmapRow[];
   showLoader: boolean = false;
   teamId: string;
+  rowName: string;
+  ifexists: boolean = false;
   projectLink: string;
   featuresExpanded: boolean = false;
-  arrowDirection: string = "expand_more";
+  arrowDirection: string = "expand_less";
   roadmapDataReady: boolean = false;
   @Input() startDate: Date = new Date('2021-01-01');
-  @Input() endDate: Date = new Date('2021-08-30');
+  @Input() endDate: Date = new Date('2021-12-31');
   chartPeriodDays: number;
   monthAxis: MonthAxis[];
   colourPallete = ['#7C4DFF',
@@ -56,7 +58,7 @@ export class RoadmapComponent {
 
   constructor(public dateService: DateServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService, public authService: AuthService, public backendService: BackendService, public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, private functions: AngularFireFunctions, public teamService: TeamServiceService) {
     this.rows = [
-      {name: 'Roadmap Implementation', startDate: new Date('2021-01-01'),  endDate: new Date('2021-08-31'), events:  [
+      {name: 'Roadmap Implementation', startDate: new Date('2021-01-01'),  endDate: new Date('2021-01-31'), events:  [
                         {name: 'Investigation', startDate: new Date('2021-01-01'),  endDate: new Date('2021-01-31')} as RoadmapEvent,
                         {name: 'Planning', startDate: new Date('2021-02-03'),  endDate: new Date('2021-02-17')} as RoadmapEvent,
                         {name: 'Implementation Phase1', startDate: new Date('2021-03-01'),  endDate: new Date('2021-03-31')} as RoadmapEvent,
@@ -70,8 +72,8 @@ export class RoadmapComponent {
                         mileStones: [
                                     {name:'Feature complete', date: new Date('2021-04-15')} as RoadmapMileStone]
       } as RoadmapRow,
-      {name: 'Market activation', startDate: new Date('2021-01-01'),  endDate: new Date('2021-03-31'), events:  [
-                                    {name: 'Market activity', startDate: new Date('2021-02-15'),  endDate: new Date('2021-02-28')} as RoadmapEvent
+      {name: 'Market activation', startDate: new Date('2021-01-01'),  endDate: new Date('2021-05-31'), events:  [
+                                    {name: 'Market activity', startDate: new Date('2021-02-15'),  endDate: new Date('2021-08-28')} as RoadmapEvent
                                     ],
         mileStones: [{name:'Funding round complete', date: new Date('2021-01-28')} as RoadmapMileStone]
       } as RoadmapRow,
@@ -102,12 +104,10 @@ export class RoadmapComponent {
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
-    console.log(this.rows[0].events[0].name);
   }
 
     /** Given an event calculate the percentage of days over the total gantt chart period */
     getEventDurationPercentage(event: RoadmapEvent): number {
-      console.log(event.endDate, event.startDate);
       const eventDays = DateServiceService.dateDifference(event.endDate, event.startDate);
       return (eventDays/this.chartPeriodDays) * 100;
   
@@ -115,18 +115,29 @@ export class RoadmapComponent {
 
       /** Given an date the percentage of days over the total gantt chart period */
   getEventOffsetPercentage(eventStartDate: Date): number {
-    console.log(eventStartDate);
     const daysPriorToEventStart = DateServiceService.dateDifference(eventStartDate, this.startDate);
     return ((daysPriorToEventStart-1)/this.chartPeriodDays)*100;
   }
 
   changeArrowDirection(rowName: string) {
-    if(this.featuresExpanded){
-      this.featuresExpanded = false;
-      this.arrowDirection = "expand_more"
-    } else {
-      this.featuresExpanded = true;
-      this.arrowDirection = "expand_less";
+    for(let i=0; i<this.rows.length; i++){
+      console.log(this.rows[i].name, rowName)
+      if(this.rows[i].name===rowName){
+        this.rowName = rowName;
+        console.log("check")
+        this.ifexists=true;
+        if(this.featuresExpanded){
+          this.featuresExpanded = false;
+          this.arrowDirection = "expand_less";
+          break;
+        } else {
+          this.featuresExpanded = true;
+          this.arrowDirection = "expand_more";
+          break;
+        }
+      } else {
+        this.ifexists=false;
+      }
     }
   }
 
@@ -149,7 +160,6 @@ export class RoadmapComponent {
   }
 
   getColour(rowIndex: number): string {
-    console.log(rowIndex);
     if(this.rows.length < rowIndex) {
       return '#64b5f6';
     }

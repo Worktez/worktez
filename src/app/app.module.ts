@@ -217,8 +217,6 @@ import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component
 import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
 import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/git-integration-blog.component';
 import { RoadmapComponent } from './body/roadmap/roadmap.component';
-import { AddRoadmapComponent } from './body/roadmap/add-roadmap/add-roadmap.component';
-import { EditRoadmapComponent } from './body/roadmap/edit-roadmap/edit-roadmap.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -400,9 +398,7 @@ import { EditRoadmapComponent } from './body/roadmap/edit-roadmap/edit-roadmap.c
     MetaVerseComponent,
     KanbanBoardBlogComponent,
     GitIntegrationBlogComponent,
-    RoadmapComponent,
-    AddRoadmapComponent,
-    EditRoadmapComponent,
+    RoadmapComponent
   ],
   imports: [
     BrowserModule,

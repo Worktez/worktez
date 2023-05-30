@@ -50,12 +50,6 @@
     <div *ngIf="showLoader" class="text-center">
       <mat-spinner diameter="50"></mat-spinner>
     </div>
-    <mat-paginator [length]="10"
-    [pageSize]="10"
-    [pageIndex]="0"
-    [pageSizeOptions]="[5, 10]"
-    aria-label="Select page">
-    </mat-paginator>
     <div *ngIf="noData" class="text-center">
       <p>No data available</p>
     </div>

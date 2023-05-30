@@ -13,12 +13,15 @@
 ***********************************************************/
 
 .container {
-    min-width: 2000px;
+    min-width: 2085px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: scroll
 }
 .container .row-axis {
     display: flex;
     flex-direction: row;
-    overflow: hidden;
+    overflow: visible;
     text-align: center;
     background-color: #bdbdbd;
     color: white;
@@ -49,17 +52,17 @@
     border-top: 1px solid #e7e7ea;
     display: flex;
     flex-direction: row;
-    overflow: hidden;
+    overflow: auto;
 }
 .container .roadmap-row .row-title {
     font-weight: bold;
-    width: 15rem;
+    width: 13rem;
     border-right: 1px solid #e7e7ea;
     padding: 1rem;
     background-color: #f5f5f5;
 }
 .container .roadmap-row .event-period {
-    height: 40%;
+    /* height: 40%; */
     position: absolute;
     border-radius: 16px 16px 16px 16px;
     text-align: center;
@@ -117,3 +120,14 @@
     margin-left: -5px;
     margin-top: 5px;
 }
+
+.material-icons {
+    margin-left: auto;
+}
+
+/* @media only screen and (max-width: 620px)
+ {
+    .container{
+        overflow-x: visible;
+    }
+} */
