@@ -113,6 +113,25 @@
                         </ng-container>
                         <ng-container>
                             <li class="nav-item px-1">
+                                <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="roadmap()">
+                                    <div class="row">
+                                        <div class="col pr-1">
+                                            <span class="material-symbols-outlined" >
+                                                route
+                                            </span> 
+                                        </div>
+                                        <div class="col pl-1">
+                                            Roadmap
+                                        </div>
+                                    </div>
+                                </a>
+                                <ng-container class="my-0">
+                                    <app-app-roadmap [rows]="rows"></app-app-roadmap>
+                                </ng-container>
+                            </li>
+                        </ng-container>
+                        <ng-container>
+                            <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="pipeline()">
                                     <div class="row">
                                         <div class="col pr-1">

@@ -1,0 +1,133 @@
+/*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : Simran Nigam <nigamsimran14@gmail.com>
+*    
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/
+
+.container {
+    min-width: 2085px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: scroll
+}
+.container .row-axis {
+    display: flex;
+    flex-direction: row;
+    overflow: visible;
+    text-align: center;
+    background-color: #bdbdbd;
+    color: white;
+}
+.container .row-axis .row-title {
+    font-weight: bold;
+    width: 15rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+.container .row-axis .month-axis {
+    font-weight: bold;
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+.container .row-axis .month-axis .month {
+    margin: auto;
+    height: 100%;
+    border-right: solid white;
+}
+.container .row-axis .month-axis .month:first-child {
+    border-left: solid white;
+}
+.container .roadmap-row {
+    font-size: 0.8rem;
+    border-top: 1px solid #e7e7ea;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+}
+.container .roadmap-row .row-title {
+    font-weight: bold;
+    width: 13rem;
+    border-right: 1px solid #e7e7ea;
+    padding: 1rem;
+    background-color: #f5f5f5;
+}
+.container .roadmap-row .event-period {
+    /* height: 40%; */
+    position: absolute;
+    border-radius: 16px 16px 16px 16px;
+    text-align: center;
+}
+.container .roadmap-row .event-period .event-name {
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+.container .roadmap-row .event-milestone {
+    position: absolute;
+    font-size: 0.7rem;
+    color: orange;
+}
+.container .roadmap-row .row-events {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.container .roadmap-row .grid-lines {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.container .roadmap-row .grid-lines .grid-line {
+    border-right: 1px solid #e7e7ea;
+}
+.container .roadmap-row:last-child {
+    border-bottom: 1px solid #e7e7ea;
+}
+.container .roadmap-row:nth-child(odd) .row-events {
+    background-color: #fafafa;
+}
+.container .roadmap-row:first-child {
+    border: none;
+}
+.container .roadmap-row:first-child .row-title {
+    border: none;
+}
+.container .tooltip:hover .tooltip-text {
+    display: block;
+}
+.container .tooltip-text {
+    display: none;
+    color: white;
+    position: fixed;
+    z-index: 1000;
+    background: black;
+    max-width: 10rem;
+    text-align: center;
+    padding: 0.5rem;
+    margin-left: -5px;
+    margin-top: 5px;
+}
+
+.material-icons {
+    margin-left: auto;
+}
+
+/* @media only screen and (max-width: 620px)
+ {
+    .container{
+        overflow-x: visible;
+    }
+} */
