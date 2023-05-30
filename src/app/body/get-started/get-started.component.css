@@ -1,11 +1,11 @@
 .page {
-    /* background-color: var(--secondary-bg); */
+    background-color: #f4f5f7 ;
+    color: #4E4E4E;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .title {
     font-size: xx-large;
-    /* color: #0000e4; */
 }
 
 .sub-title {
@@ -16,7 +16,6 @@ p {
     font-size: large;
     line-height: 1.8rem;
     text-align: justify;
-    color: var(--text);
 }
 a {
     font-size: large;
@@ -27,19 +26,16 @@ a {
 }
 
 .card {
-    background-color: var(--secondary-bg);
     border: none;
 }
 
 .submenu {
-    background-color: var(--secondary-bg);
     border-radius: 5px;
 }
 
 li {
     cursor: pointer;
     font-size: medium;
-    color: var(--text);
 }
 
 .feature-item{

@@ -55,14 +55,14 @@
                     </mat-icon><span class="align-middle">{{this.teamId}}</span>
                   </span>
               </div>
-              <div class="col">
+              <div class="col" *ngIf="provider=='Github'">
                 <a href="{{releaseData.zipball_url}}" class="float-right">
                   <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
                     folder_zip
                   </mat-icon><span class="align-middle">Source Code(zip)</span>
                 </a>
               </div>
-              <div class="col">
+              <div class="col" *ngIf="provider=='Github'">
                 <a href="{{releaseData.tarball_url}}" class="float-end">
                   <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
                     folder_zip
@@ -78,7 +78,7 @@
                     </span>
                   </div>
               </div>
-              <div class="row py-2">
+              <div *ngIf="provider=='Github'" class="row py-2">
                 <div class="col">
                     <span class="title">
                         Target Branch: {{releaseData.target_commitish}}
@@ -100,12 +100,18 @@
                       </mat-icon>
                       Release Date: <span id="sprintStartDate">{{ releaseData.created_at.slice(0,10)}}</span> 
                   </span>
-                  <span type="button" class="btn align-bottom" id="StartDate">
+                  <span type="button" class="btn align-bottom" id="StartDate" *ngIf="provider=='Github'">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                       date_range
                     </mat-icon>
                     Publishe Date: <span id="sprintStartDate">{{ releaseData.published_at.slice(0,10)}}</span> 
-                </span>
+                  </span>
+                  <span type="button" class="btn align-bottom" id="StartDate" *ngIf="provider=='gitlab'">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                      date_range
+                    </mat-icon>
+                    Publishe Date: <span id="sprintStartDate">{{ releaseData.released_at.slice(0,10)}}</span> 
+                  </span>
                 </div>
               </div>
             <div class="row py-2">
@@ -127,13 +133,20 @@
                         <h3 class="font-weight-bold text-muted">&emsp;{{releaseData.created_at.split("T")}}</h3>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="provider=='Github'">
                       <h3 class="font-weight-bold text-muted" >
                         <ul>
                             <div [innerHtml]='releaseDesc'></div>
                         </ul>
                       </h3>
                 </div>
+                <div class="row" *ngIf="provider=='gitlab'">
+                  <h3 class="font-weight-bold text-muted" >
+                    <ul><p>
+                       {{this.releaseData['description']}}
+                    </p></ul>
+                  </h3>
+            </div>
                   </span>
               </ng-container>
             </div>

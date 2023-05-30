@@ -23,6 +23,8 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { Router } from '@angular/router';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
 
 @Component({
   selector: 'app-add-release',
@@ -62,8 +64,12 @@ export class AddReleaseComponent implements OnInit {
   teamName: string;
   gitToken: string;
   title: string;
+  provider: string;
+  projectId: number;
+  orgDomain: string;
+  gitDetails: GitDetails[];
 
-  constructor(public popupHandlerService: PopupHandlerService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService,  private githubService: GithubServiceService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router) { }
+  constructor(public popupHandlerService: PopupHandlerService,  public toolService: ToolsService, public backendService: BackendService, public authService: AuthService,  private githubService: GithubServiceService, public validationService: ValidationService, private functions: AngularFireFunctions, public teamService: TeamServiceService, public router: Router, private gitlabService: GitlabServiceService) { }
 
   ngOnInit(): void {
     this.releaseDate = this.toolService.date();
@@ -151,31 +157,52 @@ export class AddReleaseComponent implements OnInit {
     const projectLink=this.teamService.teamsDataJson[this.teamId].ProjectLink;
     this.gitToken = this.teamService.teamsDataJson[this.teamId].GitToken;
     this.gitToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).subscribe({
-      next: (data) => {
-        this.addReleaseDetailsToDB();
-        this.showLoader = false;
-        this.popupHandlerService.addReleaseActive = false;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("successful");
+    this.provider = this.teamService.teamsDataJson[this.teamId].ProjectLocation;
+    if(this.provider == "Github"){
+      this.githubService.createGithubRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.response2, this.response3, this.response1, projectLink).subscribe({
+        next: (data) => {
+          this.addReleaseDetailsToDB();
+          this.showLoader = false;
+          this.popupHandlerService.addReleaseActive = false;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("successful");
+        }
+      });
+    } else if(this.provider == "gitlab") {
+      this.orgDomain = this.backendService.getOrganizationDomain(); 
+      this.teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+      this.gitDetails=this.teamService.getGitDetails(this.orgDomain, this.teamName);
+      this.projectId = this.gitDetails['ProjectId'];
+       this.gitlabService.createGitlabRelease(this.gitToken, this.releaseName, this.tagName, this.targetBranch, this.description, this.projectId).subscribe({
+         next: (data) => {
+           this.addReleaseDetailsToDB();
+           this.showLoader = false;
+           this.popupHandlerService.addReleaseActive = false;
+         },
+         error: (error) => {
+           console.error(error);
+         },
+         complete: () => {
+           console.log("successful");
+         }
+       });
       }
-    });
-    this.releaseName = "";
-    this.description = "";
-    this.tagName = "";
-    this.targetBranch = "";
-    this.ifDraft = "";
-    this.preRelease = "";
-    this.generateRelease = "";
-    this.releaseDate = "";
-    this.teamId = "";
-    this.title = "";
-    this.getReleases.emit();
-    this.popupHandlerService.addReleaseActive = false;
-    this.showLoader = false;
+       this.releaseName = "";
+       this.description = "";
+       this.tagName = "";
+       this.targetBranch = "";
+       this.ifDraft = "";
+       this.preRelease = "";
+       this.generateRelease = "";
+       this.releaseDate = "";
+       this.teamId = "";
+       this.title = "";
+       this.getReleases.emit();
+       this.popupHandlerService.addReleaseActive = false;
+       this.showLoader = false;
   }
 }

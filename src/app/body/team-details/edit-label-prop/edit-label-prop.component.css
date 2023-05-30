@@ -25,9 +25,12 @@
 #button:focus,
 #button:active,
 #button:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
     outline: none;
     box-shadow: none;
+    color: var(--button-text-hover);
+    cursor: pointer;
+    border: none;
 }
 
 #SuccessIcon{
@@ -59,7 +62,7 @@
 }
 .form-control {
     background-color: var(--input-field);
-    color: var(--text);;
+    color: var(--text);
     font-size: 14px;
     border: none;
     border-radius: 6px;
@@ -120,8 +123,8 @@ input:focus {
 ::-webkit-scrollbar {
     width: 5px;
 }
-  
+
 ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-color); 
+    background: var(--scrollbar-color);
     border-radius: 10px;
 }

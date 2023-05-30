@@ -18,4 +18,6 @@ export interface Contributors {
     Title: string;
     Name: string;
     ContributorId: string;
+    GithubProfile: string;
+    LinkedInProfile: string;
 }

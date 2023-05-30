@@ -1,0 +1,54 @@
+<!-- /*********************************************************** 
+* Copyright (C) 2022 
+* Worktez 
+* Author : MUSKAN SINGH <ssinghmuskan2603@gmail.com>
+*    
+* This program is free software; you can redistribute it and/or 
+* modify it under the terms of the MIT License 
+* 
+* This program is distributed in the hope that it will be useful, 
+* but WITHOUT ANY WARRANTY; without even the implied warranty of 
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+* See the MIT License for more details. 
+***********************************************************/ -->
+
+  <div class="pl-4">
+      <div class="btn-group smallButton p-4">
+        <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
+        <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
+            <ng-container *ngFor="let item of startService.teams">
+                <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
+            </ng-container>
+        </div>
+      </div>
+  </div>
+  <div class="card">
+  <div class="card-body table-responsive-sm">
+    <table mat-table class="full-width-table" matSort aria-label="Elements" [dataSource]="workflows">
+      <ng-container matColumnDef="PipelineName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Pipeline Name</th>
+        <td mat-cell *matCellDef="let workflow">{{ workflow.head_commit.message }}</td>
+      </ng-container>
+      <ng-container matColumnDef="AuthorName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Author name</th>
+        <td mat-cell *matCellDef="let workflow">{{ workflow.head_commit.author.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="WorkflowID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Workflow ID</th>
+        <td mat-cell *matCellDef="let workflow">{{ workflow.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let workflow">{{ workflow.status }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['PipelineName', 'AuthorName', 'WorkflowID', 'Status']; sticky: true"></tr>
+      <tr mat-row *matRowDef="let workflow; columns: ['PipelineName', 'AuthorName', 'WorkflowID', 'Status'];"></tr>
+    </table>
+    <div *ngIf="showLoader" class="text-center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div *ngIf="noData" class="text-center">
+      <p>No data available</p>
+    </div>
+  </div>
+</div>

@@ -52,7 +52,8 @@
 #button:hover {
     outline: none;
     box-shadow: none;
-    background-color: var(--secondary-color);
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
 }
 
 select:focus,

@@ -14,8 +14,11 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ReleaseData } from 'src/app/Interface/ReleaseInterface';
+import { GitDetails } from 'src/app/Interface/TeamInterface';
+import { BackendService } from 'src/app/services/backend/backend.service';
 import { ErrorHandlerService } from 'src/app/services/error-handler/error-handler.service';
 import { GithubServiceService } from 'src/app/services/github-service/github-service.service';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
  
@@ -39,13 +42,15 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
     ifDraft: boolean;
     preRelease: boolean;
     choose: string[] = ["true", "false"];
-
+    provider: string;
     dataReady: boolean = false;
+    gitDetails: GitDetails[];
+    projectId: number;
 
    enableLoader: boolean = false;
    showClose: boolean = false;
    @Output() editReleaseCompleted = new EventEmitter<{ completed: boolean }>();
-   constructor(private validationService:ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, private githubService: GithubServiceService, public teamService: TeamServiceService) { }
+   constructor(private validationService:ValidationService, public functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public backendService: BackendService, private githubService: GithubServiceService, private gitlabService: GitlabServiceService, public teamService: TeamServiceService) { }
  
    ngOnInit(): void {
      this.tagName = this.releaseData.tag_name;
@@ -62,21 +67,42 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
  
    editRelease() {
     this.enableLoader = true;
+    const orgDomain = this.backendService.getOrganizationDomain(); 
+    const teamName = this.teamService.teamsDataJson[this.teamId].TeamName;
+    this.provider = this.teamService.teamsDataJson[this.teamId].ProjectLocation;
+    this.gitDetails=this.teamService.getGitDetails(orgDomain, teamName);
+    this.projectId = this.gitDetails['ProjectId'];
     const projectLink = this.teamService.teamsDataJson[this.teamId].ProjectLink;
     const bearerToken = atob(this.teamService.teamsDataJson[this.teamId].GitToken);
-    this.githubService.updateGithubRelease(this.releaseId, bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.ifDraft, this.preRelease, this.generateRelease, projectLink).subscribe({
-      next: () => {
-
-      },
-      error: () => {
-
-      },
-      complete: () => {
-        console.info('Successful');
-        this.enableLoader = false;
-        this.showClose = true;
-      }
-    });
+    if (this.provider=="Github") {
+      this.githubService.updateGithubRelease(this.releaseId, bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.ifDraft, this.preRelease, this.generateRelease, projectLink).subscribe({
+        next: () => {
+          console.log("Successfuly edited");
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.info('Successful');
+          this.enableLoader = false;
+          this.showClose = true;
+        }
+      });
+    } if (this.provider=="gitlab") {
+        this.gitlabService.updateGitlabRelease(bearerToken, this.tagName, this.targetBranch, this.releaseName, this.description, this.projectId).subscribe({
+          next: () => {
+            console.log("Successfuly edited");
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => {
+            console.info('Successful');
+            this.enableLoader = false;
+            this.showClose = true;
+          }
+        });
+    }
    }
  
   editReleaseDone() {

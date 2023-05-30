@@ -2,13 +2,14 @@
 /* eslint-disable object-curly-spacing */
 /* eslint-disable eol-last */
 /* eslint-disable max-len */
+
 /** *********************************************************
  * Copyright (C) 2022
  * Worktez
- * Author: Muskan Singh <singhmuskan2603@gmail.com>
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the MIT License
  *
+ * Author : Sanjay Krishna S R <sanjaykrishna1203@gmail.com>
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,22 +18,23 @@
  ***********************************************************/
 
 
-const {getUserMeetDetailsById, updateUserMeetDetails} = require("../lib");
+const {getRoomDetailsById, updateUserMeetDetails, updateMeetDetailsByID} = require("../lib");
 
 exports.deleteMeet = function(request, response) {
-  const docId = request.body.data.Id;
-  const uid = request.body.data.Uid;
+  const roomId = request.body.data.RoomId;
   let result;
   const status = 200;
-  const promise = getUserMeetDetailsById(uid, docId).then((MeetData) => {
+  const promise = getRoomDetailsById(roomId).then((MeetData) => {
     if (MeetData == undefined) {
       result = {data: {status: "Meet does not exist"}};
     } else {
       const updateMeetDetailsToJson = {
         Status: "DELETED",
       };
-      updateUserMeetDetails(uid, docId, updateMeetDetailsToJson);
-      console.log("meet details check");
+      updateMeetDetailsByID(updateMeetDetailsToJson, roomId);
+      MeetData.Attendees.forEach((element) => {
+        updateUserMeetDetails(element, roomId, updateMeetDetailsToJson);
+      });
     }
   }).catch((error) => {
     console.log("Error:", error);
