@@ -20,12 +20,10 @@
 const { getMilestoneData, updateMilestone } = require("../lib");
 
 exports.deleteMilestone = function(request, response) {
-  const deleted = true;
   const milestoneID = request.body.data.MilestoneId;
   const orgDomain = request.body.data.OrganizationDomain;
   let result;
   let status = 200;
-  console.log(deleted, milestoneID, orgDomain);
 
   const promise = getMilestoneData(orgDomain, milestoneID).then((mDoc) => {
     if (mDoc) {
