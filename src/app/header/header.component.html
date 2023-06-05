@@ -98,51 +98,30 @@
                         <ng-container>
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="releases()">
-                                    <div class="row">
-                                        <div class="col pr-1">
-                                            <span class="material-symbols-outlined" >
-                                                new_releases
-                                            </span> 
-                                        </div>
-                                        <div class="col pl-1">
-                                            Releases
-                                        </div>
-                                    </div>
+                                    <mat-icon fontSet="material-symbols-outlined" class="align-middle">
+                                        new_releases
+                                    </mat-icon>
+                                    Releases
                                 </a>
                             </li>
                         </ng-container>
                         <ng-container>
                             <li class="nav-item px-1">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="roadmap()">
-                                    <div class="row">
-                                        <div class="col pr-1">
-                                            <span class="material-symbols-outlined" >
-                                                route
-                                            </span> 
-                                        </div>
-                                        <div class="col pl-1">
-                                            Roadmap
-                                        </div>
-                                    </div>
+                                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                        route
+                                    </mat-icon>
+                                    Roadmap
                                 </a>
-                                <ng-container class="my-0">
-                                    <app-app-roadmap [rows]="rows"></app-app-roadmap>
-                                </ng-container>
                             </li>
                         </ng-container>
                         <ng-container>
-                            <li class="nav-item px-1">
+                            <li class="nav-item px-2">
                                 <a class="nav-link" id="navbarDropdownBoards" role="button" (click)="pipeline()">
-                                    <div class="row">
-                                        <div class="col pr-1">
-                                            <span class="material-symbols-outlined">
-                                                deployed_code
-                                                </span>
-                                        </div>
-                                        <div class="col pl-1">
-                                            pipelines
-                                        </div>
-                                    </div>
+                                    <mat-icon fontSet="material-symbols-outlined" class="align-middle">
+                                        deployed_code
+                                    </mat-icon>
+                                    Pipelines
                                 </a>
                             </li>
                         </ng-container>

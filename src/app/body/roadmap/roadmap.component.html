@@ -11,70 +11,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
-<div class="container">
-    <!-- <button class="btn px-4 dropdown-toggle m-2" type="button" id="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{startService.selectedTeamId}}&nbsp;&nbsp;</button>
-    <div class="dropdown-menu dropdown-menu-left" id="dropdownUserCard">
-        <ng-container *ngFor="let item of startService.teams">
-            <button class="dropdown-item" type="button" (click)="updateSelectedTeamId(item)">{{item}}</button>
-        </ng-container>
-    </div> -->
-  <!-- header row-->
-  <div class="row-axis">
-      <div class="row-title" id="headings">
-          Activities
-      </div>
-      <div class="month-axis">
-          <span class="month" *ngFor="let month of monthAxis"
-              [style.width]="month.monthDurationPercentage + '%'"> {{month.monthName}}</span>
-      </div>
-  </div>
-
-   <!-- chart rows-->
-  <div class="roadmap-row" *ngFor="let row of rows; let i = index">
-      <div class="row-title">
-          <div class="row" type="button" (click)="changeArrowDirection(row.name)" data-target="#features" data-toggle="collapse" aria-expanded="true" aria-controls="#features">{{row.name}}
-            <span class="material-icons arrow-icon align-middle">{{arrowDirection}}</span>
-          </div>
-          <div class="row" id="features" *ngFor="let event of row.events">
-            <div *ngIf="this.rowName==row.name">
-                <li class="list-group-item feature-item">{{event.name}} <div style="font-size: 10px;">{{event.startDate.toISOString().substring(0, 10)}} &nbsp; to &nbsp; {{event.endDate.toISOString().substring(0, 10)}}</div></li>
-            </div>
-          </div>
-      </div>
-      <div class="row-title">
-        <!-- <div class="row-events"> -->
-            <!-- event period blocks-->
-        <div class="event-period" *ngFor="let event of row.events"
-            [style.margin-left]="getEventOffsetPercentage(row.startDate)+'%'"
-            [style.width]="getEventDurationPercentage(row) + '%'" [style.background]="getColour(i)" >
-
-                <span class="event-name">{{row.name}}</span>
-                <div class="tooltip-text">
-                    <div><strong>{{row.name}}: </strong></div>
-                   {{row.startDate | date:'mediumDate'}} - {{row.endDate | date:'mediumDate'}}
-                </div>
-        </div>
-        {{event}}
-        <!-- event milestones-->
-        <div class="event-milestone" 
-                *ngFor="let milestone of row.mileStones" 
-                [style.margin-left]="getEventOffsetPercentage(milestone.date)+'%'">
-                <i class="fas fa-star"></i>
-                <div class="tooltip-text">
-                    <div><strong>{{milestone.name}}: </strong></div>
-                   {{milestone.date | date:'mediumDate'}}
-                </div>
-        </div>
-
-        <!-- chart grid lines-->
-        <div class="row-events">
-            <div class="grid-lines">
-                <span class="grid-line" *ngFor="let month of monthAxis"
-                [style.width]="month.monthDurationPercentage + '%'"></span>
-            </div>
-        </div>
-    </div>
-      <!-- </div> -->
-
-  </div>
+<div class="box p-2" *ngIf="milestoneService.milestoneDataReady; else loader">
+  <app-h-calender [milestoneData]="milestoneService.milestoneData"></app-h-calender>
 </div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
