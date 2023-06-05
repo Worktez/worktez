@@ -73,7 +73,7 @@ exports.getMilestoneData = function(orgDomain, milestoneId) {
  * @return {any}
  */
 exports.getAllMilestonesData = function(orgDomain, teamId="") {
-  let query = db.collection("Organizations").doc(orgDomain).collection("Milestones").where("MilestoneStatus", "==", "Deleted");
+  let query = db.collection("Organizations").doc(orgDomain).collection("Milestones").where("MilestoneStatus", "!=", "Deleted");
   if (teamId != "") {
     query = query.where("TeamId", "==", teamId);
   }
