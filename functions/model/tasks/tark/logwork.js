@@ -25,6 +25,7 @@ const { getSprint, updateSprint } = require("../../sprints/lib");
 const { getTask, updateTask } = require("../lib");
 const { taskMailer } = require("../../mailer/lib");
 const { updateSprintBurndownChartData } = require("../../performanceChart/tark/updateSprintBurndownChart");
+const { incrementNumberofCompletedTaskforUser } = require("../../users/tark/incrementUserCounters");
 
 exports.logWork = function(request, response) {
   const assignee = request.body.data.Assignee;
@@ -65,6 +66,8 @@ exports.logWork = function(request, response) {
         const todayDate = dd + "-" + mm + "-" + yyyy;
 
         completiondate = todayDate;
+
+        incrementNumberofCompletedTaskforUser(uid);
       }
       const logWorkInputJson = {
         LogWorkTotalTime: logWorkTotalTime,
