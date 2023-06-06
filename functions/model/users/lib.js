@@ -67,6 +67,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     UserPostsCounter: 0,
     UserReactionCounter: 0,
     UserCommentCounter: 0,
+    CompletedTaskCounter: 0,
   });
   return Promise.resolve(userData);
 };
