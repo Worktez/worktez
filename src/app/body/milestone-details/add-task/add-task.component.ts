@@ -30,6 +30,7 @@ export class AddTaskComponent implements OnInit {
   @Input("milestoneId") milestoneId:string;
   @Output() getTasks: EventEmitter<string> = new EventEmitter();
   showLoader: boolean = false;
+  showClose:boolean;
   componentName = "MILESTONES"
   constructor(public popupHandlerService: PopupHandlerService, public toolsService:ToolsService, public backendService:BackendService, private functions: AngularFireFunctions, public errorHandlerService: ErrorHandlerService, public authService: AuthService) { }
 
@@ -55,6 +56,7 @@ export class AddTaskComponent implements OnInit {
         },  
         complete: (() =>{ this.getTasks.emit()
         this.popupHandlerService.addTaskActive = false;
+        this.showClose = true;
         })
     });
     
