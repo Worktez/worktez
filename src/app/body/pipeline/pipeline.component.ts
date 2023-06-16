@@ -96,9 +96,7 @@ export class PipelineComponent {
           this.gitlab=false;
           this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
             next: (data) => {
-              console.log(data)
               this.workflows = data['workflow_runs'];
-              console.log(this.workflows);
               this.showLoader = false;
               if (this.workflows.length === 0) {
                 this.noData = true;
@@ -119,9 +117,7 @@ export class PipelineComponent {
           this.gitlab=true;
           this.gitlabService.getCompletedWorkflowRuns(this.ProjectId).subscribe({
             next: (data) => {
-              console.log(data)
               this.workflows2 = data;
-              console.log(this.workflows2);
               this.showLoader = false;
               if (this.workflows2.length === 0) {
                 this.noData = true;
