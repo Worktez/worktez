@@ -19,13 +19,13 @@ import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-ser
   styleUrls: ['./pipeline.component.css']
 })
 export class PipelineComponent {
-  componentName = "PIPELINE"
+  componentName = "PIPELINE";
   workflows;
   workflows2;
   showLoader: boolean = false;
   noData: boolean = false;
   teamIds: string[] = [];
-  appkey:string
+  appkey:string;
   teamId: string;
   projectLink: string;
   provider: any;
