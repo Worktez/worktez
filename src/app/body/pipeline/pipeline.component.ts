@@ -92,9 +92,6 @@ export class PipelineComponent {
         this.projectLink = data[0]['ProjectLink'];
         this.provider = data[0]['Provider'];
         this.ProjectId = data[0]['ProjectId'];
-        console.log(this.ProjectId);
-        console.log(this.provider);
-        console.log(this.projectLink);
         if(this.provider=="Github"){
           this.gitlab=false;
           this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
