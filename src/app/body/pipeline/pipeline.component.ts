@@ -10,6 +10,8 @@ import { StartServiceService } from "src/app/services/start/start-service.servic
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { GitlabComponent } from '../task-details/gitlab/gitlab.component';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
 
 @Component({
   selector: 'app-pipeline',
@@ -19,14 +21,18 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 export class PipelineComponent {
   componentName = "PIPELINE"
   workflows;
+  workflows2;
   showLoader: boolean = false;
   noData: boolean = false;
   teamIds: string[] = [];
   appkey:string
   teamId: string;
   projectLink: string;
+  provider: any;
+  ProjectId:number;
+  gitlab : boolean = false;
 
-  constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, public navbarHandler: NavbarHandlerService) {}
+  constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, public navbarHandler: NavbarHandlerService, public gitlabService: GitlabServiceService) {}
 
   ngOnInit() {
     this.navbarHandler.resetNavbar();
@@ -84,25 +90,56 @@ export class PipelineComponent {
       next: (data) => {
         console.log(data[0]);
         this.projectLink = data[0]['ProjectLink'];
+        this.provider = data[0]['Provider'];
+        this.ProjectId = data[0]['ProjectId'];
+        console.log(this.ProjectId);
+        console.log(this.provider);
         console.log(this.projectLink);
-        this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
-          next: (data) => {
-            this.workflows = data['workflow_runs'];
-            console.log(this.workflows);
-            this.showLoader = false;
-            if (this.workflows.length === 0) {
-              this.noData = true;
-            } else {
-              this.noData = false;
+        if(this.provider=="Github"){
+          this.gitlab=false;
+          this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
+            next: (data) => {
+              console.log(data)
+              this.workflows = data['workflow_runs'];
+              console.log(this.workflows);
+              this.showLoader = false;
+              if (this.workflows.length === 0) {
+                this.noData = true;
+              } else {
+                this.noData = false;
+  
+              }
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => {
+              this.githubService.getCompletedWorkflowRuns(this.projectLink);
             }
-          },
-          error: (error) => {
-            console.error(error);
-          },
-          complete: () => {
-            this.githubService.getCompletedWorkflowRuns(this.projectLink);
-          }
-        });
+          });
+        }
+        else{
+          this.gitlab=true;
+          this.gitlabService.getCompletedWorkflowRuns(this.ProjectId).subscribe({
+            next: (data) => {
+              console.log(data)
+              this.workflows2 = data;
+              console.log(this.workflows2);
+              this.showLoader = false;
+              if (this.workflows2.length === 0) {
+                this.noData = true;
+              } else {
+                this.noData = false;
+              }
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => {
+              this.gitlabService.getCompletedWorkflowRuns(this.ProjectId);
+            }
+          });
+        }
       },
       error: (error) => {
         console.error(error);
@@ -115,4 +152,3 @@ export class PipelineComponent {
 
 
 }
-

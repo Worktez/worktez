@@ -208,6 +208,7 @@ export class TaskDetailsComponent implements OnInit {
         this.getTimeDetails();
         this.checkGitRepoExists();
         this.checkGitTokenExists();
+
         this.provider = this.teamService.teamsDataJson[this.task.TeamId].ProjectLocation;
         if (this.task.Watcher.includes(this.newWatcher)) {
           this.addedWatcher = true;
