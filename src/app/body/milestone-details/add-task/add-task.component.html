@@ -26,7 +26,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     </span>
     </div>
     <div class="modal-body" style="max-height: 500px;overflow-y: auto;">
-      <form>
+      <form *ngIf="!showLoader && !showClose">
         <div *ngIf="popupHandlerService.addTaskActive">
           <div class="m-1 border-bottom">
             <div class="row p-1">
@@ -61,6 +61,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           </ng-container>
         </div>
       </form>
+      <app-loader *ngIf="showLoader && !showClose"></app-loader> 
       <div *ngIf="!popupHandlerService.addTaskActive">
         <div class="row mx-5">
           <div class="col-md-4"></div>
