@@ -18,11 +18,9 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
 })
 export class PipelineComponent {
   componentName = "PIPELINE"
-  workflows;
+  workflows: string | any[];
   showLoader: boolean = false;
   noData: boolean = false;
-  teamIds: string[] = [];
-  appkey:string
   teamId: string;
   projectLink: string;
 
@@ -32,24 +30,19 @@ export class PipelineComponent {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
     this.showLoader = true;
-    this.showLoader = true;
     if (this.startService.showTeams) {
-    this.appkey = this.authService.getAppKey();
-    this.backendService.getOrgDetails(this.appkey);
-      this.teamIds = this.backendService.getOrganizationTeamIds();
       this.teamId = this.authService.getTeamId();
+      this.getWorkflows();
+      this.showLoader = false;
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
-          this.appkey = this.authService.getAppKey();
-          this.backendService.getOrgDetails(this.appkey).subscribe(()=>{
-          this.teamIds = this.backendService.getOrganizationTeamIds();
-          });
           this.teamId = this.authService.getTeamId();
+          this.getWorkflows();
+          this.showLoader = false;
         }
       });
     }
-    this.getWorkflows();
   }
 
   updateSelectedTeamId(teamId: string) {
@@ -77,18 +70,17 @@ export class PipelineComponent {
 
 
   getWorkflows() {
+    this.showLoader = true;
     const orgDomain = this.backendService.getOrganizationDomain();
     const teamName = this.startService.teamName;
     const callable = this.functions.httpsCallable('teams/getGitDetails');
     callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
       next: (data) => {
-        console.log(data[0]);
         this.projectLink = data[0]['ProjectLink'];
-        console.log(this.projectLink);
         this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
           next: (data) => {
             this.workflows = data['workflow_runs'];
-            console.log(this.workflows);
+            // console.log(this.workflows);
             this.showLoader = false;
             if (this.workflows.length === 0) {
               this.noData = true;
@@ -100,6 +92,7 @@ export class PipelineComponent {
             console.error(error);
           },
           complete: () => {
+            this.showLoader = false;
             this.githubService.getCompletedWorkflowRuns(this.projectLink);
           }
         });

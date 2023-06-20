@@ -6,8 +6,10 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Get Started</li>
                     <li class="list-group-item features" type="button" data-target="#features" data-toggle="collapse" aria-expanded="true" aria-controls="#features" (click)="changeArrowDirection()">Features
-                      <span class="material-icons arrow-icon align-middle">{{arrowDirection}}</span>
-                   </li>
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            {{arrowDirection}}
+                        </mat-icon>
+                    </li>
                     <ul class="collapse list-group-flush list-group pl-3" id="features">
                       <li class="list-group-item feature-item" (click)="features('boards')">Board</li>
                       <li class="list-group-item feature-item" (click)="features('charts')">Charts</li>

@@ -12,7 +12,7 @@
  * See the MIT License for more details.
  ***********************************************************/
 
-import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
@@ -42,7 +42,6 @@ export class MilestoneDetailsComponent implements OnInit {
   milestoneIdToEdit: string = "";
   fieldToEdit: string = "";
   orgDomain: string;
-  teamIds: string[];
   allTasks: Tasks[];
   changedData: string = ""
   prevVal = []
@@ -59,7 +58,6 @@ export class MilestoneDetailsComponent implements OnInit {
   totalCompletedTasks: number = 0;
   displayColoumns = ['Status', 'Priority', 'Difficulty', 'Id', 'Title', 'WorkDone'];
   modalDisplayColumsn = ['Id', 'Title'];
-  appkey: string = "";
   addTaskActive: boolean = true;
   editMilestoneActive: boolean = false;
   addTask: boolean = false;
@@ -77,10 +75,7 @@ export class MilestoneDetailsComponent implements OnInit {
     this.navbarHandler.addToNavbar(this.milestoneId);
     if (this.startService.showTeams) {
       this.project = this.authService.getTeamId();
-      this.teamIds = this.backendService.getOrganizationTeamIds();
       this.readTeamData(this.project); 
-      this.appkey = this.authService.getAppKey();
-      this.backendService.getOrgDetails(this.appkey);
       this.orgDomain = this.backendService.getOrganizationDomain();
       this.showLoader = true;
       this.taskDataReady = false;
@@ -95,10 +90,8 @@ export class MilestoneDetailsComponent implements OnInit {
       });
      
     } else {
-      this.startService.userDataStateObservable.subscribe((data) => {
+      this.startService.applicationDataStateObservable.subscribe((data) => {
         if (data) {
-          this.appkey = this.authService.getAppKey();
-          this.backendService.getOrgDetails(this.appkey).subscribe(()=>{
             this.orgDomain = this.backendService.getOrganizationDomain();
             this.showLoader = true;
             this.taskDataReady = false;
@@ -112,10 +105,7 @@ export class MilestoneDetailsComponent implements OnInit {
               this.taskDataReady = true;
             });
             this.project = this.authService.getTeamId();
-            this.teamIds = this.backendService.getOrganizationTeamIds();
-            this.readTeamData(this.project); 
-          });
-   
+            this.readTeamData(this.project);
         }
       });
     }
@@ -126,7 +116,6 @@ export class MilestoneDetailsComponent implements OnInit {
     this.location.back()
   }
 
-
   showEditMilestone(milestoneId: string, fieldToEdit: string) {
     this.milestoneIdToEdit = milestoneId;
     this.fieldToEdit = fieldToEdit;
@@ -134,14 +123,14 @@ export class MilestoneDetailsComponent implements OnInit {
 
   getTasks() {
     this.milestoneService.getTasks(this.orgDomain, this.milestoneId);
-      this.milestoneService.taskDataStateObservable.subscribe(()=>{
-        this.getNumberData();
-      });
+    this.milestoneService.taskDataStateObservable.subscribe(()=>{
+      this.getNumberData();
+    });
   }
   activateAdd(){
     this.addTask = true;
     this.popupHandlerService.addTaskActive = true;
-  this.getAllTasks();
+    this.getAllTasks();
   }
 
   getAllTasks(){
@@ -181,12 +170,12 @@ export class MilestoneDetailsComponent implements OnInit {
   submit() {
     let data = [{ label: "milestoneStatus", value: this.milestoneData.MilestoneStatus }];
 
-      this.newVal = [this.milestoneData.MilestoneStatus];
-      this.generateChanges();
-      console.log("Inputs are valid");
-      this.editStatus();
-      this.showLoader=true;
-      this.getMilestoneDetails();
+    this.newVal = [this.milestoneData.MilestoneStatus];
+    this.generateChanges();
+    console.log("Inputs are valid");
+    this.editStatus();
+    this.showLoader=true;
+    this.getMilestoneDetails();
 
   }
 
