@@ -22,7 +22,7 @@
  * @param {any} "../application/lib"
  * @returns {any}
  */
-const { db } = require("../application/lib");
+const { db, currentDate, currentTime } = require("../application/lib");
 
 /**
  * Description
@@ -67,6 +67,7 @@ exports.setUser = function(Uid, PhotoURL, DisplayName, Email, PhoneNumber, Provi
     UserPostsCounter: 0,
     UserReactionCounter: 0,
     UserCommentCounter: 0,
+    UserRewardsCounter: 0,
   });
   return Promise.resolve(userData);
 };
@@ -396,4 +397,24 @@ exports.getAllUserProject = function(uid) {
     return projects;
   });
   return Promise.resolve(getProjectPromise);
+};
+
+/**
+ * Description
+ * @param {any} uid
+ * @param {any} rewardId
+ * @return {any}
+ */
+
+exports.addUserRewards = (uid, rewardId, digitalAssetId, expiryDate, expiryTime, orgDomain) => {
+  const addUserRewardsPromise = db.collection("Users").doc(uid).collection("Rewards").doc(rewardId).set({
+    AchievementDate: currentDate,
+    AchievementTime: currentTime,
+    AchievementId: rewardId,
+    DigitalAssetId: digitalAssetId,
+    ExpiryDate: expiryDate,
+    ExpiryTime: expiryTime,
+    OrgDomain: orgDomain,
+  });
+  return Promise.resolve(addUserRewardsPromise);
 };
