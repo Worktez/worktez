@@ -17,6 +17,11 @@ export class WorkEXPComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  dateConverter(date: string){
+    const newDate = new Date(date)
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[newDate.getMonth()] + " " + newDate.getFullYear()
+  }
   editWork(mode: string, workId: number) {
     this.editWorkDetails.emit({ completed: true, mode: mode, workId: workId  });
   }

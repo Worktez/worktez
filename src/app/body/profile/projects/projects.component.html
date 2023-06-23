@@ -2,7 +2,7 @@
     <div class="row pb-2">
         <div class="col-12">
             <span class="align-middle">Projects</span>
-            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">
+            <span *ngIf="sameUser" type="button" class="btn float-right py-0" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('add', '')">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                     add
                 </mat-icon> 
@@ -11,36 +11,30 @@
     </div>
     <ng-container *ngIf="projects?.length == 0">
         <div class="row">
-            <div class="col-12 mt-3" *ngIf="sameUser">
-                <span>Add your projects</span>
-            </div>
-            <div class="col-12 mt-3" *ngIf="!sameUser">
+            <div class="col-12 text-muted" *ngIf="sameUser">
+            <span>Add your projects</span>
+        </div>
+            <div class="col-12 text-muted" *ngIf="!sameUser">
                 <span>No Projects to Show</span>
             </div>
         </div>
     </ng-container>
     <ng-container *ngFor="let project of projects; let i = index">
-        <div class="row">
+        <div class="row mb-0 pb-0">
             <div class="col-10">
-                <span>{{ project.ProjectName }}</span>
+                <ul class="ml-0 my-0" style="margin-left: 0; padding-left: 12px;">
+                    <li class="ml-0 mb-0 pl-0" style="font-weight: bold;"> {{ project.ProjectName }} </li>
+                </ul>
             </div>
-            <div class="col-2">
-                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" >
+            <div class="col-2 mb-0 pb-0">
+                <span *ngIf="sameUser" type="button" class="btn float-right py-0" data-toggle="modal" data-target="#projectModal" data-whatever="@mdo" (click)="editProject('edit', i)" style="font-size: 16px;">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
                         edit
                     </mat-icon> 
                 </span>
             </div>
         </div>
-        <div class="row text-muted">
-            <div class="col-xl-4" id="projectDescription">
-                <span>{{ project.Description }}</span>
-            </div>
-            <div class="col-xl-8" style="font-size: 10px;">
-                <ul>
-                    <li class="float-right">{{ project.Start }} to {{ project.End }}</li>
-                </ul>
-            </div>
-        </div>
+        <p class="py-0 my-0 pl-3 text-muted" style="font-size: 10px;" >{{ dateConverter(project.Start) }} - {{  dateConverter(project.End) }}</p>
+        <p class="pt-0 mt-0 pl-3" style="font-size: 12px;" >{{ project.Description }}</p>
     </ng-container>
 </div>

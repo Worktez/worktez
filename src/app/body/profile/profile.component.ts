@@ -80,8 +80,9 @@ export class ProfileComponent implements OnInit {
   projects: MyProjectData[];
 
   userData : User[]
+  profileReady: boolean =false;
 
-  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService) {
+  constructor(public functions: AngularFireFunctions, public startService: StartServiceService, private popupHandler: PopupHandlerService, public authService: AuthService, private route: ActivatedRoute, public navbarHandler: NavbarHandlerService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public userService: UserServiceService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -111,6 +112,9 @@ export class ProfileComponent implements OnInit {
           });
         }
       });
+    }
+    if(!this.profileReady){
+      this.router.navigate(['/profile', this.authService.userAppSetting.Username]);
     }
   }
 
@@ -217,6 +221,7 @@ export class ProfileComponent implements OnInit {
       this.website = this.authService.userAppSetting.Website;
       if (this.website.includes("https://") == false) {
         this.website = "https://" + this.website;
+        // this.website= 'github.com'
       }
       this.readUserEducation(this.uid);
       this.readUserExperience(this.uid);
@@ -224,6 +229,7 @@ export class ProfileComponent implements OnInit {
       this.readUserProfilePic(this.uid);
 
       this.sameUser = true;
+      this.profileReady = true;
     }
     else{
         const callable = this.functions.httpsCallable("users/getUserByUsername");
@@ -253,6 +259,7 @@ export class ProfileComponent implements OnInit {
           this.readUserProject(this.uid);
   
           this.sameUser = false;
+          this.profileReady = true;
         },
         error: (error) => {
           console.error(error);

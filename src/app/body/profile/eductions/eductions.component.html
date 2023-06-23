@@ -2,7 +2,7 @@
     <div class="row pb-2">
         <div class="col-12">
             <span class="align-middle">Education</span>
-            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">
+            <span *ngIf="sameUser" type="button" class="btn float-right py-0" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('add', '')">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                     add
                 </mat-icon> 
@@ -11,36 +11,30 @@
     </div>
     <ng-container *ngIf="educations?.length == 0">
         <div class="row">
-            <div class="col-12 mt-3" *ngIf="sameUser">
+            <div class="col-12 text-muted" *ngIf="sameUser">
                 <span>Add your education qualifications</span>
             </div>
-            <div class="col-12 mt-3" *ngIf="!sameUser">
+            <div class="col-12 text-muted" *ngIf="!sameUser">
                 <span>No Education Details to Show</span>
             </div>
         </div>
     </ng-container>
     <ng-container *ngFor="let education of educations; let i = index">
-        <div class="row">
+        <div class="row mb-0 pb-0">
             <div class="col-10">
-                <span>{{ education.InstituteName }}</span>
+                <ul class="ml-0 my-0" style="margin-left: 0; padding-left: 12px;">
+                    <li class="ml-0 pl-0" style="font-weight: bold;"> {{ education.InstituteName }} </li>
+                </ul>
             </div>
             <div class="col-2">
-                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)">
+                <span *ngIf="sameUser" type="button" class="btn float-right align-middle icon py-0" data-toggle="modal" data-target="#eduModal" data-whatever="@mdo" (click)="editEducation('edit', i)">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
                         edit
-                    </mat-icon> 
+                    </mat-icon>
                 </span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xl-4 text-muted">
-                <span>{{ education.Degree }}</span>
-            </div>
-            <div class="col-xl-8 text-muted" style="font-size: 10px;">
-                <ul>
-                    <li class="float-right">{{ education.Start }} to {{ education.End }}</li>
-                </ul>
-            </div>
-        </div>
+        <p class="py-0 my-0 pl-3" style="font-size: 12px;" >{{ education.Degree }}</p>
+        <p class="pt-0 mt-0 pl-3 text-muted" style="font-size: 10px;" > {{dateConverter(education.Start)}} - {{ dateConverter(education.End) }}</p>
     </ng-container>
 </div>

@@ -11,7 +11,7 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 * See the MIT License for more details. 
 ***********************************************************/ -->
-<div id="profileTheme">
+<div id="profileTheme" *ngIf="profileReady; else loader">
     <div class="row">
         <div class="col"></div>
         <div class="col-6">
@@ -43,54 +43,57 @@
                     <div class="row py-2">
                         <div class="col">
                             <span class="card-title my-4" *ngIf="aboutMe">{{aboutMe}}</span>
+                            <span class="card-title my-4 text-muted" data-toggle="modal" *ngIf="!aboutMe" data-target="#exampleModal" data-whatever="@mdo" (click)="editProfile()">
+                                Edit your profile to write about yourself
+                            </span>
                         </div>
                     </div>
-                    <div class="row py-2">
+                    <div class="row py-2" *ngIf="role">
                         <div class="col">
-                            <span class="card-title my-4" *ngIf="role">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</span>
+                            <span class="card-title my-4">{{role}} at {{organizationName}}, {{teamName}} since {{dateOfJoining}}</span>
                         </div>
                     </div>
-                    <div class="row py-2">
+                    <div class="row py-2"  *ngIf="phoneNumber">
                         <div class="col">
-                            <span class="card-title my-4" *ngIf="phoneNumber">
+                            <span class="card-title my-4">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     call
                                 </mat-icon> {{phoneNumber}}
                             </span>
                         </div>
                     </div>
-                    <div class="row py-2">
+                    <div class="row py-2" *ngIf="email">
                         <div class="col">
-                            <span class="card-title my-4" *ngIf="email">
+                            <span class="card-title my-4">
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     email
                                 </mat-icon> {{email}}
                             </span>
                         </div>
                     </div>
-                    <div class="row py-2">
+                    <div class="row py-2" *ngIf="managerEmail">
                         <div class="col">
-                            <span class="card-title my-4" *ngIf="managerEmail">
+                            <span class="card-title my-4" >
                                 <app-profile-icons [profileIcon]="'building'"></app-profile-icons>
                                 Managed by {{ managerEmail }}
                             </span>
                         </div>
                     </div>
                     
-                    <div class="row py-2">
+                    <div class="row py-2" *ngIf="website != 'https://'">
                         <div class="col">
-                            <span class="card-title my-4" *ngIf="website">
+                            <span class="card-title my-4" >
                                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                                     language
                                 </mat-icon>
-                                <a href="{{website}}/" target="_blank">{{website}}</a>
+                                <a href="{{website}}/" target="_blank" >{{website}}</a>
                             </span>
                         </div>
                     </div>
-                    <div class="row py-2">
+                    <div class="row py-2" *ngIf="linkedInProfile || githubProfile|| gitLink">
                         <div class="col">
                             <a href="{{linkedInProfile}}" class="card-link" target="_blank">
-                                <app-profile-icons [profileIcon]="'linkedIn'"></app-profile-icons>
+                                <app-profile-icons [profileIcon]="'linkedIn'" *ngIf="linkedInProfile"></app-profile-icons>
                             </a>
                             <a href="{{githubProfile}}" class="card-link" target="_blank" *ngIf="githubProfile || gitLink">
                                 <app-profile-icons [profileIcon]="'github'"></app-profile-icons>
@@ -154,6 +157,9 @@
         <div class="col-md-1 col-1"></div>
     </div>
 </div>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
 <ng-container *ngIf="editProfileEnabled" id="exampleModal">
     <app-edit-profile [aboutMe]="aboutMe" [email]="email" [displayName]="displayName" [uid]="uid" [phoneNumber]="phoneNumber" [githubProfile]="githubProfile" [linkedInProfile]="linkedInProfile" (editProfileCompleted)="editProfileCompleted($event)" [skills]="skills"
         [education]="education" [experience]="experience" [projects]="projects" [website]="website" [userName]="username"></app-edit-profile>
