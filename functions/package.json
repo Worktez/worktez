@@ -16,7 +16,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "fastify": "^3.25.0",
-    "firebase-admin": "^10.0.2",
+    "firebase-admin": "^11.9.0",
     "firebase-functions": "^4.0.1",
     "razorpay": "^2.8.3"
   },
