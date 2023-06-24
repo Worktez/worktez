@@ -219,7 +219,7 @@ export class ProfileComponent implements OnInit {
       this.dateOfJoining = this.authService.userAppSetting.DateOfJoining;
       this.skills = this.authService.userAppSetting.Skills;
       this.website = this.authService.userAppSetting.Website;
-      if (this.website.includes("https://") == false) {
+      if (this.website.includes("https://") == false && this.website!= "") {
         this.website = "https://" + this.website;
         // this.website= 'github.com'
       }
