@@ -250,7 +250,7 @@ export class ProfileComponent implements OnInit {
           this.skills = data.Skills;
           this.website = data.Website;
           if(this.website != ""){
-            if (this.website.includes("https://") == false) {
+            if (this.website.includes("https://") == false && this.website != "") {
               this.website = "https://" + this.website;
             }
           }
