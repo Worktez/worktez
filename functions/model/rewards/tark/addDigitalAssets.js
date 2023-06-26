@@ -22,12 +22,10 @@ const { addDigitalAssets } = require("../lib");
 
 
 exports.addDigitalAssets = function(req, res) {
-  console.log(req.body);
   const orgDomain = req.body.data.OrgDomain;
   const assetName = req.body.data.AssetName;
   const assetSvgurl = req.body.data.AssetSvgUrl;
   const assetSignature = generateBase64String(assetSvgurl);
-  console.log(assetSignature);
   const assetType = req.body.data.AssetType;
   const orgDomains = [];
   orgDomains.push(orgDomain);
