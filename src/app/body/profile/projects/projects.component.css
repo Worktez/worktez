@@ -2,6 +2,8 @@
     background-color: var(--secondary-bg);
     width: 100%;
     border: none;
+    max-height: 171px;
+    overflow-y: scroll;
 }
 
 .btn {

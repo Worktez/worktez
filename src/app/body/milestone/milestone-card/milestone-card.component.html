@@ -11,57 +11,65 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the MIT License for more details.
  ***********************************************************/ -->
-    <div class="card p-3" (click)="getMilestoneDetails(milestone.MilestoneId)">
-      <div class="milestone d-flex justify-content-between">
-        <span class="heading py-2" >
-          <span class="headId px-2">
-            {{milestone.MilestoneId}}
-          </span>
-          <span>
-            {{milestone.Title}}
-          </span>
-        </span>
-        <div id="milColor" [ngStyle]="{'background-color': color}"></div>
-      </div>
-      <div class="row py-2">
-        <div class="col">
-            <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
-              toc
-            </mat-icon>
-            <span class="align-middle"> {{milestone.Description}}</span>
-        </div>
-      </div>
-      <div class="row py-2">
-        <div class="col-md-3 col-4">
-          <span class="teamId">
-            <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
-              groups_3
-            </mat-icon><span class="align-middle ">{{milestone.TeamId}}</span>
-          </span>
-        </div>
-        <div class="col-md-9 col-8">
-          <span class="teamId">
-            Status:<span> {{milestone.MilestoneStatus}}</span>
-          </span>
-        </div>
-      </div>
-      <div class="row py-2">
-        <div class="col"id="dateAlign">
-          <span type="button" class="btn align-bottom p-0 m-0" id="StartDate">
-              <mat-icon fontSet="material-icons-outlined" class="align-middle">
-                date_range
-              </mat-icon>
-              Start Date: <span id="sprintStartDate">{{ milestone.StartDate }}</span> 
-          </span>
-        </div>
-      </div>
-      <div class="row py-2">
-        <div class="col"id="dateAlign">
-          <span type="button" class="btn align-bottom p-0 m-0" id="EndDate">
-            <mat-icon fontSet="material-icons-outlined" class="align-middle">date_range
-            </mat-icon>
-            End Date: <span id="sprintStartDate">{{ milestone.EndDate }}</span> 
-        </span>
-        </div>
+<div class="card p-3" id="milestoneCard" *ngIf="milestone.MilestoneStatus != 'Deleted'">
+  <div class="milestone d-flex justify-content-between">
+    <span class="heading py-2">
+      <span class="headId px-2">
+        {{milestone.MilestoneId}}
+      </span>
+      <span>
+        {{milestone.Title}}
+      </span>
+    </span>
+    <div id="milColor" [ngStyle]="{'background-color': color}"></div>
+    <div class="col">
+      <mat-icon fontSet="material-icons-outlined" class="align-middle" title="Delete Milestone" type="button"
+        (click)="deleteMilestone(milestone.MilestoneId)">
+        delete
+      </mat-icon>
+    </div>
+  </div>
+  <div (click)="getMilestoneDetails(milestone.MilestoneId)">
+    <div class="row py-2">
+      <div class="col">
+        <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+          toc
+        </mat-icon>
+        <span class="align-middle"> {{milestone.Description}}</span>
       </div>
     </div>
+    <div class="row py-2">
+      <div class="col-md-3 col-4">
+        <span class="teamId">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle mr-2">
+            groups_3
+          </mat-icon><span class="align-middle ">{{milestone.TeamId}}</span>
+        </span>
+      </div>
+      <div class="col-md-9 col-8">
+        <span class="teamId">
+          Status:<span> {{milestone.MilestoneStatus}}</span>
+        </span>
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col" id="dateAlign">
+        <span type="button" class="btn align-bottom p-0 m-0" id="StartDate">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle">
+            date_range
+          </mat-icon>
+          Start Date: <span id="sprintStartDate">{{ milestone.StartDate }}</span>
+        </span>
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col"id="dateAlign">
+        <span type="button" class="btn align-bottom p-0 m-0" id="EndDate">
+          <mat-icon fontSet="material-icons-outlined" class="align-middle">date_range
+          </mat-icon>
+          End Date: <span id="sprintStartDate">{{ milestone.EndDate }}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
