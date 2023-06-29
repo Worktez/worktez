@@ -100,6 +100,7 @@ exports.setApplication = function() {
     TotalNumberSchedularOrg: 0,
     MeetWorktezCounter: 0,
     TotalNumberSchedularSubOrg: 0,
+    TotalNumberOfDigitalAsset: 0,
     MeetCounter: 0,
     PostCounter: 0,
     OrgDomains: [],
