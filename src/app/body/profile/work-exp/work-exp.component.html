@@ -2,7 +2,7 @@
     <div class="row pb-2">
         <div class="col-12">
             <span class="align-middle">Work Experience</span>
-            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">
+            <span *ngIf="sameUser" type="button" class="btn float-right py-0" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('add', '')">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                     add
                 </mat-icon> 
@@ -11,36 +11,30 @@
     </div>
     <ng-container *ngIf="experiences?.length == 0">
         <div class="row">
-            <div class="col-12 mt-3" *ngIf="sameUser">
+            <div class="col-12 text-muted" *ngIf="sameUser">
                 <span>Add your work experience</span>
             </div>
-            <div class="col-12 mt-3" *ngIf="!sameUser">
+            <div class="col-12 text-muted" *ngIf="!sameUser">
                 <span>No Experience to Show</span>
             </div>
         </div>
     </ng-container>
     <ng-container *ngFor="let experience of experiences; let i = index">
-        <div class="row">
+        <div class="row mb-0 py-0">
             <div class="col-10">
-                <span>{{ experience.Position }}</span>
+                <ul class="ml-0 my-0" style="margin-left: 0; padding-left: 12px">
+                    <li class="ml-0 pl-0" style="font-weight: bold;"> {{ experience.Position }} </li>
+                </ul>
             </div>
-            <div class="col-2">
-                <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">
+            <div class="col-2 mb-0 py-0">
+                <span *ngIf="sameUser" type="button" class="btn float-right py-0" data-toggle="modal" data-target="#workModal" data-whatever="@mdo" (click)="editWork('edit', i)" style="font-size: 16px;">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle icon">
                         edit
                     </mat-icon> 
                 </span>
             </div>
         </div>
-        <div class="row text-muted">
-            <div class="col-xl-4">
-                <span>{{ experience.OrganizationName }}</span>
-            </div>
-            <div class="col-xl-8">
-                <ul>
-                    <li class="float-right" style="font-size: 10px;">{{ experience.Start }} to {{ experience.End }}</li>
-                </ul>
-            </div>
-        </div>
+        <p class="py-0 my-0 pl-3 p1" style="font-size: 12px;" >{{ experience.OrganizationName }}</p>
+        <p class="pt-0 mt-0 pl-3 text-muted" style="font-size: 10px;" >{{ dateConverter(experience.Start) }} - {{ dateConverter(experience.End) }}</p>
     </ng-container>
 </div>
