@@ -157,4 +157,9 @@ export class GitlabServiceService {
     return this.httpClient.get(url);
   }
 
+    getCompletedWorkflowRuns(projectID: number) {
+      const url = environment.gitlabApiUrl + "/projects/" + projectID + "/pipelines";
+      return this.httpClient.get(url);
+    }
+
 }
