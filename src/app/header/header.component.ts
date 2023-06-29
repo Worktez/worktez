@@ -34,40 +34,8 @@ export class HeaderComponent implements OnInit {
   uid: string;
   isHomePage: boolean = false;
   userReady: boolean = false;
-  title = 'gantt-chart';
-  rows: RoadmapRow[];
-  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public rbaService :RBAService) {
-    this.rows = [
-      {name: 'Sprint plan', events:  [
-                        {name: 'Design sprint', startDate: new Date('2021-01-01'),  endDate: new Date('2021-01-31')} as RoadmapEvent,
-                        {name: 'Sprint 1', startDate: new Date('2021-02-03'),  endDate: new Date('2021-02-17')} as RoadmapEvent,
-                        {name: 'Design sprint', startDate: new Date('2021-03-01'),  endDate: new Date('2021-03-31')} as RoadmapEvent,
-                        {name: 'Sprint 2', startDate: new Date('2021-04-05'),  endDate: new Date('2021-04-19')} as RoadmapEvent
-                        
-                      ],
-                        mileStones: [
-                                    {name:'Feature complete', date: new Date('2021-04-15')} as RoadmapMileStone]
-      } as RoadmapRow,
-      {name: 'Market activation', events:  [
-                                    {name: 'Market activity', startDate: new Date('2021-02-15'),  endDate: new Date('2021-02-28')} as RoadmapEvent
-                                    ],
-        mileStones: [{name:'Funding round complete', date: new Date('2021-01-28')} as RoadmapMileStone]
-      } as RoadmapRow,
-      {name: 'Google ads campaign', events:  [
-                                    {name: 'Busy period', startDate: new Date('2021-03-02'),  endDate: new Date('2021-03-15')} as RoadmapEvent
-                              ]      
-      } as RoadmapRow,
-      {name: 'Client feedback', events:  [
-                                    {name: 'Manual collection', startDate: new Date('2021-03-15'),  endDate: new Date('2021-03-30')} as RoadmapEvent
-                              ]      
-      } as RoadmapRow,
-      {name: 'Implementation window', events:  [
-                                    {name: 'Busy period', startDate: new Date('2021-04-15'),  endDate: new Date('2021-04-30')} as RoadmapEvent
-                              ]      
-      } as RoadmapRow
 
-    ]
-   }
+  constructor(public startService: StartServiceService, public functions: AngularFireFunctions, public router: Router, public backendService: BackendService, public authService: AuthService, public popupHandlerService: PopupHandlerService, public rbaService :RBAService) { }
 
   ngOnInit(): void {
     if (this.router.url == '/') {
