@@ -35,6 +35,7 @@ export class PopupHandlerService {
   addPrActive:boolean = true;
   addTaskActive:boolean = true;
   requestDemoEnabled:boolean = false;
+  addRoadmapActive:boolean = true;
   constructor() { }
 
   resetPopUps() {

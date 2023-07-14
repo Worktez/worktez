@@ -1,0 +1,115 @@
+.calenderBox {
+    background-color: var(--primary-bg);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+    border-radius: 5px;
+    padding: 0;
+}
+
+table {
+    background-color: var(--secondary-bg);
+    border-radius: 5px;
+    border-collapse: collapse;
+}
+
+.monthBox {
+    border: 1px solid var(--primary-bg);
+    border-style: none solid;
+    text-align: center;
+}
+
+.box {
+    width: 15rem;
+    height: 2rem;
+    text-align: center;
+}
+
+/* .calenderBox::-webkit-scrollbar {        
+    display: none;  
+} */
+
+.calenderBox::-webkit-scrollbar {
+    width: 0px;
+    height: 5px;
+}
+.calenderBox::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.calenderBox::-webkit-scrollbar-thumb {
+    border-radius: 1rem;
+    background-color: var(--primary-color);
+}
+.activities {
+    background-color: var(--secondary-bg);
+    width: 17rem;
+    text-align: center;
+    color: var(--text);
+    position: sticky;
+    left: 0;
+    
+}
+
+.activitiesHead1 {
+    background-color: var(--primary-color);
+    width: 17rem;
+    position: sticky;
+    left: 0;
+}
+
+.activitiesHead {
+    background-color: var(--primary-color);
+    width: 15rem;
+    height: 3rem;
+    text-align: center;
+    color: white;
+}
+
+.dataBox {
+    width: 15rem;
+    height: 1rem;
+    border-radius: 5px;
+}
+
+tr:nth-child(odd) td {
+    background: var(--secondary-bg);
+ }
+ 
+ tr:nth-child(even) td {
+    background: var(--primary-bg);
+ }
+
+ .completed {
+    /* background-color: var(--secondary-color); */
+    
+    width: 17rem;
+    text-align: center;
+    position: sticky;
+    left: 0;
+    color: white;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, var(--primary-color), var(--secondary-color));
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	/* height: 100vh; */
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 35%;
+	}
+    25% {
+        background-position: 35% 65%;
+    }
+	50% {
+		background-position: 100% 65%;
+	}
+    75% {
+        background-position: 65% 35%;
+    }
+	100% {
+		background-position: 0% 35%;
+	}
+}

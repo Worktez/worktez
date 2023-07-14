@@ -20,7 +20,9 @@ import { User } from '../Interface/UserInterface';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { StartServiceService } from '../services/start/start-service.service';
 import { RBAService } from '../services/RBA/rba.service';
-
+import { RoadmapRow } from '../Interface/RoadmapInterface';
+import {RoadmapMileStone } from '../Interface/RoadmapInterface';
+import { RoadmapEvent } from '../Interface/RoadmapInterface';
 
 @Component({
   selector: 'app-header',
@@ -84,6 +86,10 @@ export class HeaderComponent implements OnInit {
 
   pipeline(){
     this.router.navigate(["/Pipeline"])
+  }
+  
+  roadmap(){
+    this.router.navigate(["/Roadmap"])
   }
 
   createNewOrganization() {

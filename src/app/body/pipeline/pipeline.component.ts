@@ -41,11 +41,7 @@ export class PipelineComponent {
     this.navbarHandler.resetNavbar();
     this.navbarHandler.addToNavbar(this.componentName);
     this.showLoader = true;
-    this.showLoader = true;
     if (this.startService.showTeams) {
-    this.appkey = this.authService.getAppKey();
-    this.backendService.getOrgDetails(this.appkey);
-      this.teamIds = this.backendService.getOrganizationTeamIds();
       this.teamId = this.authService.getTeamId();
       this.orgDomain = this.backendService.getOrganizationDomain();
       this.pipeLineDataReady = false;
@@ -97,7 +93,6 @@ export class PipelineComponent {
     const callable = this.functions.httpsCallable('teams/getGitDetails');
     callable({OrganizationDomain: this.orgDomain, TeamName: this.teamName}).subscribe({
       next: (data) => {
-        console.log(data[0]);
         this.projectLink = data[0]['ProjectLink'];
         this.provider = data[0]['Provider'];
         this.ProjectId = data[0]['ProjectId'];
