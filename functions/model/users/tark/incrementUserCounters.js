@@ -89,3 +89,17 @@ exports.incrementNumberofCommentsforUser = function(uid) {
     updateUser(inputPostJson, uid);
   });
 };
+
+exports.incrementNumberofCompletedTaskforUser = function(uid) {
+  getUser(uid, "").then((userData) => {
+    let CompletedTaskCounter = userData.CompletedTaskCounter;
+    if (isNaN(CompletedTaskCounter)) {
+      CompletedTaskCounter = 0;
+    }
+    CompletedTaskCounter = CompletedTaskCounter+1;
+    const inputPostJson = {
+      CompletedTaskCounter: CompletedTaskCounter,
+    };
+    updateUser(inputPostJson, uid);
+  });
+};
