@@ -31,6 +31,9 @@ export class PipelineComponent {
   provider: any;
   ProjectId:number;
   gitlab : boolean = false;
+  orgDomain: string;
+  teamName: string = "";
+  pipeLineDataReady: boolean;
 
   constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, public navbarHandler: NavbarHandlerService, public gitlabService: GitlabServiceService) {}
 
@@ -44,18 +47,23 @@ export class PipelineComponent {
     this.backendService.getOrgDetails(this.appkey);
       this.teamIds = this.backendService.getOrganizationTeamIds();
       this.teamId = this.authService.getTeamId();
+      this.orgDomain = this.backendService.getOrganizationDomain();
+      this.pipeLineDataReady = false;
+      this.getWorkflows();
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
           this.appkey = this.authService.getAppKey();
           this.backendService.getOrgDetails(this.appkey).subscribe(()=>{
           this.teamIds = this.backendService.getOrganizationTeamIds();
-          });
           this.teamId = this.authService.getTeamId();
+          this.orgDomain = this.backendService.getOrganizationDomain();
+          this.pipeLineDataReady = false;
+          this.getWorkflows();
+          });
         }
       });
     }
-    this.getWorkflows();
   }
 
   updateSelectedTeamId(teamId: string) {
@@ -83,10 +91,11 @@ export class PipelineComponent {
 
 
   getWorkflows() {
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const teamName = this.startService.teamName;
+    this.showLoader = true;
+    this.orgDomain = this.backendService.getOrganizationDomain();
+    this.teamName = this.startService.teamName;
     const callable = this.functions.httpsCallable('teams/getGitDetails');
-    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+    callable({OrganizationDomain: this.orgDomain, TeamName: this.teamName}).subscribe({
       next: (data) => {
         console.log(data[0]);
         this.projectLink = data[0]['ProjectLink'];
@@ -139,6 +148,8 @@ export class PipelineComponent {
       },
       complete: () => {
         console.info('Getting Label Data Successful');
+        this.pipeLineDataReady = true;
+        this.showLoader = false;
       }
     });
   }
