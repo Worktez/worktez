@@ -10,6 +10,8 @@ import { StartServiceService } from "src/app/services/start/start-service.servic
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { TeamServiceService } from 'src/app/services/team/team-service.service';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
+import { GitlabComponent } from '../task-details/gitlab/gitlab.component';
+import { GitlabServiceService } from 'src/app/services/gitlab-service/gitlab-service.service';
 
 @Component({
   selector: 'app-pipeline',
@@ -17,14 +19,23 @@ import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-han
   styleUrls: ['./pipeline.component.css']
 })
 export class PipelineComponent {
-  componentName = "PIPELINE"
-  workflows: string | any[];
+  componentName = "PIPELINE";
+  workflows;
+  workflows2;
   showLoader: boolean = false;
   noData: boolean = false;
+  teamIds: string[] = [];
+  appkey:string;
   teamId: string;
   projectLink: string;
+  provider: any;
+  ProjectId:number;
+  gitlab : boolean = false;
+  orgDomain: string;
+  teamName: string = "";
+  pipeLineDataReady: boolean;
 
-  constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, public navbarHandler: NavbarHandlerService) {}
+  constructor(private functions: AngularFireFunctions,private http: HttpClient, private githubService: GithubServiceService,public teamService: TeamServiceService, public startService: StartServiceService, public errorHandlerService: ErrorHandlerService,public authService: AuthService, public backendService: BackendService, public applicationSettingsService: ApplicationSettingsService, public cookieService: CookieService, public navbarHandler: NavbarHandlerService, public gitlabService: GitlabServiceService) {}
 
   ngOnInit() {
     this.navbarHandler.resetNavbar();
@@ -32,14 +43,20 @@ export class PipelineComponent {
     this.showLoader = true;
     if (this.startService.showTeams) {
       this.teamId = this.authService.getTeamId();
+      this.orgDomain = this.backendService.getOrganizationDomain();
+      this.pipeLineDataReady = false;
       this.getWorkflows();
-      this.showLoader = false;
     } else {
       this.startService.userDataStateObservable.subscribe((data) => {
         if (data) {
+          this.appkey = this.authService.getAppKey();
+          this.backendService.getOrgDetails(this.appkey).subscribe(()=>{
+          this.teamIds = this.backendService.getOrganizationTeamIds();
           this.teamId = this.authService.getTeamId();
+          this.orgDomain = this.backendService.getOrganizationDomain();
+          this.pipeLineDataReady = false;
           this.getWorkflows();
-          this.showLoader = false;
+          });
         }
       });
     }
@@ -71,41 +88,66 @@ export class PipelineComponent {
 
   getWorkflows() {
     this.showLoader = true;
-    const orgDomain = this.backendService.getOrganizationDomain();
-    const teamName = this.startService.teamName;
+    this.orgDomain = this.backendService.getOrganizationDomain();
+    this.teamName = this.startService.teamName;
     const callable = this.functions.httpsCallable('teams/getGitDetails');
-    callable({OrganizationDomain: orgDomain, TeamName: teamName}).subscribe({
+    callable({OrganizationDomain: this.orgDomain, TeamName: this.teamName}).subscribe({
       next: (data) => {
         this.projectLink = data[0]['ProjectLink'];
-        this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
-          next: (data) => {
-            this.workflows = data['workflow_runs'];
-            // console.log(this.workflows);
-            this.showLoader = false;
-            if (this.workflows.length === 0) {
-              this.noData = true;
-            } else {
-              this.noData = false;
+        this.provider = data[0]['Provider'];
+        this.ProjectId = data[0]['ProjectId'];
+        if(this.provider=="Github"){
+          this.gitlab=false;
+          this.githubService.getCompletedWorkflowRuns(this.projectLink).subscribe({
+            next: (data) => {
+              this.workflows = data['workflow_runs'];
+              this.showLoader = false;
+              if (this.workflows.length === 0) {
+                this.noData = true;
+              } else {
+                this.noData = false;
+  
+              }
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => {
+              this.githubService.getCompletedWorkflowRuns(this.projectLink);
             }
-          },
-          error: (error) => {
-            console.error(error);
-          },
-          complete: () => {
-            this.showLoader = false;
-            this.githubService.getCompletedWorkflowRuns(this.projectLink);
-          }
-        });
+          });
+        }
+        else{
+          this.gitlab=true;
+          this.gitlabService.getCompletedWorkflowRuns(this.ProjectId).subscribe({
+            next: (data) => {
+              this.workflows2 = data;
+              this.showLoader = false;
+              if (this.workflows2.length === 0) {
+                this.noData = true;
+              } else {
+                this.noData = false;
+              }
+            },
+            error: (error) => {
+              console.error(error);
+            },
+            complete: () => {
+              this.gitlabService.getCompletedWorkflowRuns(this.ProjectId);
+            }
+          });
+        }
       },
       error: (error) => {
         console.error(error);
       },
       complete: () => {
         console.info('Getting Label Data Successful');
+        this.pipeLineDataReady = true;
+        this.showLoader = false;
       }
     });
   }
 
 
 }
-
