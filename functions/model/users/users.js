@@ -46,6 +46,7 @@ const { updateProfilePic } = require("./tark/updateProfilePic");
 const { getUserByUid } = require("./tark/getUserByUid");
 const { getUserByUsername } = require("./tark/getUserByUsername");
 const { checkIfUserAlreadyAMember } = require("./tark/checkIfUserAlreadyAMember");
+const { addUserRewards } = require("./tark/addUserRewards");
 
 
 /**
@@ -343,6 +344,17 @@ fastify.post("/getUserByUsername", (req, res) => {
  */
 fastify.post("/checkIfUserAlreadyAMember", (req, res) => {
   checkIfUserAlreadyAMember(req, res);
+});
+
+/**
+ * Description
+ * @param {any} "/checkIfUserAlreadyAMember"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/addUserRewards", (req, res) => {
+  addUserRewards(req, res);
 });
 
 /**
