@@ -24,7 +24,6 @@
 }
 
 .heading{
-    font-size: 18px;
     font-family: var(--font);
 }
 
@@ -33,7 +32,7 @@
 }
 
 #StartDate {
-    color: var(--danger-color);
+    color: var(--secondary-color);
 }
 
 #button {
@@ -58,7 +57,4 @@
 
 #sprintStartDate {
     color: var(--text);
-}
-#dateAlign{
-    padding-left: 12px;
 }

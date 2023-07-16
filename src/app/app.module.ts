@@ -216,7 +216,8 @@ import { DevOpsComponent } from './body/blogs/dev-ops/dev-ops.component';
 import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component';
 import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
 import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/git-integration-blog.component';
-
+import { RoadmapComponent } from './body/roadmap/roadmap.component';
+import { HCalenderComponent } from './body/common-tools/h-calender/h-calender.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -398,6 +399,8 @@ import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/g
     MetaVerseComponent,
     KanbanBoardBlogComponent,
     GitIntegrationBlogComponent,
+    RoadmapComponent,
+    HCalenderComponent
   ],
   imports: [
     BrowserModule,

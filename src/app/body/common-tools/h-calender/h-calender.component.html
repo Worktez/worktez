@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col"></div>
+    <div class="col-md-11 col-11 calenderBox" #tableContainer>
+        <table *ngIf="dataReady">
+            <tr class="activitiesHead">
+                <th class="activitiesHead1">
+                    <div class="box">
+                        Activities
+                    </div>
+                </th>
+                <ng-container *ngFor="let item of calender | keyvalue">
+                    <th class="monthBox">
+                        <div class="box">
+                            {{item.value.name}} - {{item.value.year}}
+                        </div>
+                    </th>
+                </ng-container>
+            </tr>
+            <tbody>
+                <ng-container *ngFor="let item of data | keyvalue">
+                    <tr>
+                        <th class="activities py-3">{{item.key}}
+                        </th>
+                        <ng-container *ngFor="let element of item.value | keyvalue">
+                            <td class="monthBox p-0">
+                                <div class="dataBox p-0" *ngIf="element.value.check" [style]="{'background-color': element.value.color}">
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+                <tr>
+                    <th class="completed py-3">Completed
+                        <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                            verified
+                        </mat-icon>
+                    </th>
+                </tr>
+                <ng-container *ngFor="let item of completedData | keyvalue">
+                    <tr>
+                        <th class="activities py-3">{{item.key}}
+                        </th>
+                        <ng-container *ngFor="let element of item.value | keyvalue">
+                            <td class="monthBox p-0">
+                                <div class="dataBox p-0" *ngIf="element.value.check" [style]="{'background-color': element.value.color}">
+                                </div>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+          </table>
+    </div>
+    <div class="col"></div>
+</div>

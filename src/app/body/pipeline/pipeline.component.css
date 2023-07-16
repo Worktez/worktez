@@ -1,122 +1,45 @@
-  .card {
-    background-color: var(--primary-bg);
-    color: var(--text);
-    border: none !important;
-    box-shadow: var(--box-shadow-top), var(--box-shadow-bottom);
-    border-radius: 8px;
-  }
-  
-  .card-header {
-    border: none !important;
-    background: var(--primary-bg);
-  }
-  
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-
-  .mat-mdc-table {
-    background: var(--secondary-bg);
-  }
-
-  .mdc-data-table__header-cell {
-    color: currentColor;
-  }
-
-  .table td,
-  .table th {
-    padding: 12px;
-    text-align: left;
-    background-color: white;
-    font-weight: bold;
-  }
-
-  .mat-mdc-cell {
-    color: currentColor;
-  }
-  
-  .table td {
-    background-color: var(--secondary-bg);
-    color: var(--text);
-    border: 1px solid var(--primary-border);
-  }
-  
-  .table tr:first-child td {
-    border-top: none;
-  }
-  
-  .table tr:last-child td {
-    border-bottom: none;
-  }
-  
-  .table tr:hover td {
-    background-color: var(--secondary-header-bg);
-  }
-  
-  .table td:first-child {
-    border-left: none;
-  }
-  
-  .table td:last-child {
-    border-right: none;
-  }
-  
-  .table .first-row td {
-    border-top: none;
-  }
-  
-  .table .last-row td {
-    border-bottom: none;
-  }
-  
-  .table .status {
-    color: white;
-    font-weight: bold;
-    padding: 4px 8px;
-    border-radius: 4px;
-  }
-  
-  .table .status.success {
-    background-color: var(--secondary-color);
-  }
-  
-  .table .status.failure {
-    background-color: var(--danger-color);
-  }
-  
-  .table-responsive-sm {
-    overflow-x: auto;
-  } 
-
-  
-  .dropdown-item {
-    font-size: 12px;
-    color: var(--text);
+.dataTable {
+  background-color: var(--secondary-bg);
+  box-shadow: var(--box-shadow-bottom);
+  font-family: var(--font);
+  border-radius: 5px;
 }
 
-.dropdown-item:hover{
-    color: var(--button-text-hover);
-    background-color: var(--dropdown-hover);
+.full-width-table {
+  width: 100%;
+  background-color: transparent;
+  color: var(--text);
+  font-family: var(--font);
 }
 
-#dropdownUserCard {
-    background-color: var(--secondary-bg);
-    color: var(--text);
+mat-paginator {
+  background-color: var(--secondary-bg);
+  color: var(--text);
 }
-  #repoName {
-    margin-left: 10px;
-    
-  }
 
-  #ownerName {
-    margin-left: 5px;
-  }
+mat-paginator-page-size, mat-select-trigger{
+  background-color: var(--primary-bg);
+    /* color: var(--text); */
+}
+td {
+  background-color: transparent;
+  color: var(--text);
+  border: transparent;
+  font-family: var(--font);
+}
 
-  #button {
-    color:var(--text);
+th {
+  color: var(--button-text);
+  font-family: var(--font);
+}
+
+tr {
+  cursor: pointer;
+  font-family: var(--font);
+}
+
+.mat-row:hover .mat-cell {
+  background-color: var(--primary-bg);
 }
 
 #button:focus,
@@ -137,6 +60,17 @@
     color: var(--button-text-hover);
 }
 
+.dropdown-item {
+  font-size: 12px;
+  color: var(--text);
+}
 
+.dropdown-item:hover{
+  color: var(--button-text-hover);
+  background-color: var(--dropdown-hover);
+}
 
-
+#dropdownUserCard {
+  background-color: var(--secondary-bg);
+  color: var(--text);
+}
