@@ -1,3 +1,11 @@
+.card {
+  background-color: var(--primary-bg);
+  color: var(--text);
+  border: none !important;
+  box-shadow: var(--box-shadow-top), var(--box-shadow-bottom);
+  border-radius: 8px;
+}
+
 .dataTable {
   background-color: var(--secondary-bg);
   box-shadow: var(--box-shadow-bottom);
@@ -7,7 +15,7 @@
 
 .full-width-table {
   width: 100%;
-  background-color: transparent;
+  background-color: var(--secondary-bg) ;
   color: var(--text);
   font-family: var(--font);
 }

@@ -67,6 +67,14 @@
         { "fieldPath": "Status", "order": "ASCENDING" },
         { "fieldPath": "LastUpdatedEpochTime", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "Milestones",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "TeamId", "order": "ASCENDING" },
+        { "fieldPath": "MilestoneStatus", "order": "ASCENDING" }
+      ]
     }
   ]
 }
