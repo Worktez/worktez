@@ -128,6 +128,8 @@ import { GitDetails } from 'src/app/Interface/TeamInterface';
               next: (data) => {
                 this.releaseDesc=data;
                 this.formatReleaseDescription();
+                this.releaseDataReady = true;
+                this.showLoader = false;
               },
               error: (error) => {
                 console.log(error);
@@ -141,8 +143,6 @@ import { GitDetails } from 'src/app/Interface/TeamInterface';
           console.error(error);
         },
         complete() {
-          this.releaseDataReady = true;
-          this.showLoader = false;
           console.log("Success");
         },
       });
@@ -158,13 +158,13 @@ import { GitDetails } from 'src/app/Interface/TeamInterface';
       })).subscribe({
         next: (data) => {
           this.releaseData = data;
+          this.releaseDataReady = true;
+          this.showLoader = false;
         },
         error: (error) => {
           console.error(error);
         },
         complete() {
-          this.releaseDataReady = true;
-          this.showLoader = false;
           console.log("Success");
         },
       })
