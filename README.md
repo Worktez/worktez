@@ -34,8 +34,11 @@ With a vision of the workplace metaverse, we keep innovating towards simplificat
 
 # Basic architecture
 The creation of the components and the end-to-end functionality, without dependency on other components, follows the architecture flow given below: 
+
 ![image](https://github.com/Worktez/worktez/blob/0d145c02519b283a0b2317ec57bfa8cfea320cb1/WorktezArchitecture.png)
 
+# Codebase Map
+The codebase map for the repository is powered by CodeSee. Find it [here!](https://app.codesee.io/maps/public/dcc921a0-288e-11ee-8f89-25d6739bb76b)
 
 # Features
 :heavy_check_mark: Performance inspection of individual and team with comprehensible charts <br>
