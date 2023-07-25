@@ -50,6 +50,9 @@ export class TeamDetailsComponent implements OnInit {
   priorityLabels: string[]; 
   difficultyLabels: string[]; 
   milestoneStatusLabels: string[];
+  showSprintInput: boolean = false;
+  enableTimelyEmail: boolean;
+  enableAutoSprint: boolean;
   
   constructor(public teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -73,6 +76,18 @@ export class TeamDetailsComponent implements OnInit {
         }
       });
     }
+  }
+
+
+  changeSprintSwitch() {
+    if (!this.enableAutoSprint) {
+      this.showSprintInput = !this.showSprintInput;
+    }
+    else {
+      console.log("hello");
+      this.showSprintInput = false;
+    }
+
   }
 
   changeLabels(labelName: string) {
