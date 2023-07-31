@@ -166,3 +166,28 @@ input:focus {
     margin-left: auto;
     margin-right: 20px;
 }
+
+
+.custom-switch.custom-switch-md .custom-control-label {
+    padding-left: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+.custom-switch.custom-switch-md .custom-control-label::before {
+    height: 1.2rem;
+    width: calc(1.5rem + 0.75rem);
+    border-radius: 3rem;
+    background-color: var(--togglebutton-color);
+}
+
+.custom-switch.custom-switch-md .custom-control-label::after {
+    width: calc(1.2rem - 4px);
+    height: calc(1.2rem - 4px);
+    border-radius: calc(2rem - (1.2rem / 2));
+    background-color: var(--danger-color);
+}
+
+.custom-switch.custom-switch-md .custom-control-input:checked ~ .custom-control-label::after {
+    transform: translateX(calc(1.5rem - 0.25rem));
+    background-color: var(--secondary-color);
+}

@@ -70,7 +70,7 @@
                   <span class="align-middle">{{ team.TeamManagerEmail }}</span>
                 </div>
               </div>
-              <div class="col-4 mx-2 counters">
+              <div class="col-3 mx-2 counters">
                 <div class="row py-2">
                   <span> Active Sprint: {{ team.CurrentSprintId }}</span>
                 </div>
@@ -79,6 +79,63 @@
                 </div>
                 <div class="row py-2">
                   <span> Total Backlog Task: {{team.TotalBacklogTask}}</span>
+                </div>
+              </div>
+              <div class="col mx-2 counters">
+                <div class="row mt-3">
+                  <div class="col-8">
+                    <span>Daily email</span>
+                  </div>
+                  <div class="col" >
+                    <div class="custom-control custom-switch custom-switch-md">
+                        <input type="checkbox" [disabled]="showloader" class="custom-control-input" id="customSwitches1"
+                          [(ngModel)]="enableTimelyEmail" >
+                        <label class="custom-control-label" for="customSwitches1" style="font-weight: bold;">
+                        </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-8">
+                    <span>Auto schedule of sprint</span>
+                  </div>
+                  <div class="col" >
+                    <div class="custom-control custom-switch custom-switch-md">
+                        <input type="checkbox" [disabled]="showloader" class="custom-control-input" id="customSwitches"
+                          [(ngModel)]="enableAutoSprint" (click)="changeSprintSwitch()">
+                        <label class="custom-control-label" for="customSwitches" style="font-weight: bold;">
+                        </label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="showSprintInput" >
+                    <div class="modal-content px-2">
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-md-10 col-10 pt-2">
+                              <h2>Create Auto Schedule</h2>
+                          </div>
+                              <div class="col-md-2 col-2 text-right">
+                                  <span class="btn">
+                                      <mat-icon fontSet="material-icons-outlined" class="align-middle "(click)="close()" data-dismiss="modal" title="Close">
+                                          close
+                                      </mat-icon>
+                                  </span>
+                              </div>
+                        </div>
+                        <form #form="ngForm" *ngIf="!showClose" >
+                          <div class="form-row mb-2">
+                            <div class="form-group col-md-12 col">
+                                <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Days</span>
+                                <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="days" [ngModelOptions]="{standalone: true}" placeholder="Enter No. Of Days">
+                            </div>
+                          </div>
+                          <div class="modal-footer mt-1">
+                            <button type="submit" class="btn btn-lg btn-block etc"  [disabled]="enableLoader" aria-label="Close" (click)="submit()">Submit</button>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
