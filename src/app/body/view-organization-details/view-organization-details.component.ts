@@ -176,5 +176,9 @@ export class ViewOrganizationDetailsComponent implements OnInit {
   filterPage(){
     this.router.navigate(['/FilterPage']);
   }
+   
+  RewardsPage(){
+    this.router.navigate(['/RewardsPage']);
+  }
 
 }
