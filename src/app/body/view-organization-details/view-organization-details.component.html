@@ -106,6 +106,16 @@
                             Member Access
                         </a>
                     </li>
+                    <li>
+                        <div *ngIf="(backendService.organizationsData | async)" class="col text-right p-0" >
+                            <button  *ngIf="startService.teamIdExists" class="btn rewardsBtn" type="button"  (click)="RewardsPage()">
+                                <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                                    emoji_events
+                                </mat-icon>
+                                Manage Rewards
+                            </button>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div *ngIf="(backendService.organizationsData | async)" class="col pl-0 text-right" >

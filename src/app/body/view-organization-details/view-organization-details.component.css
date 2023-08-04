@@ -114,6 +114,13 @@ hr {
     font-weight: 500;
 } */
 
+.rewardsBtn{
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    border-width: 20%;
+}
+
+
 @media only screen and (max-width: 600px) {
     .extra2 {
         display: block;

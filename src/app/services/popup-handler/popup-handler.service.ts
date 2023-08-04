@@ -36,6 +36,7 @@ export class PopupHandlerService {
   addTaskActive:boolean = true;
   requestDemoEnabled:boolean = false;
   addRoadmapActive:boolean = true;
+  createNewRewardEnabled:boolean = false;
   constructor() { }
 
   resetPopUps() {
@@ -45,6 +46,7 @@ export class PopupHandlerService {
     this.addLabelEnabled=false
     this.createNewTeamEnabled = false
     this.addNewContributorEnabled = false
+    this.createNewRewardEnabled =false
   }
 
   resetTaskIds() {

@@ -1,0 +1,137 @@
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author:Aditya Khedekar <aditya3034@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/    
+    .text {
+      font-family: var(--font);
+      color: var(--text);
+      text-align: center;
+      font-size: larger;
+
+    }
+
+    .rewardsCard {
+      position: relative;
+      width: 350px;
+      height:230px;
+      margin: 10px;
+      border-radius: 5px;
+    }
+
+
+
+    #button {
+      text-align: center;
+      background-color: var(--primary-color);
+      color: white;
+
+    }
+
+    #button:hover {
+      background-color: var(--dropdown-hover);
+      color: var(--button-text-hover);
+    }
+
+    .btn {
+      color: var(--text);
+    }
+
+    .btn:hover {
+      background-color: var(--dropdown-hover);
+      color: var(--button-text-hover);
+    }
+
+
+    .card {
+      background-color: var(--header-bg);
+      margin: 5px;
+      box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+      border: none;
+    }
+
+    .card-title {
+      font-size: x-large;
+      text-align: left;
+      width: 60%;
+      float: left;
+      font-weight:500;
+      font-family: var(--font);
+      color: var(--text);
+      margin-top: 10px;
+    }
+
+    .card-container {
+      width: 400px;
+      margin: 15px;
+      border-radius: 5px;
+
+    }
+
+    .card-body {
+      width: 350px;
+      border-radius: 5px;
+      background-color: var(--header-bg);
+    }
+
+    .card-text {
+      margin: 15px;
+      font-size: medium;
+      width: 250px;
+      text-align: left;
+      min-width:300px ;
+      max-width: 300px;
+      min-height: 50px;
+      max-height: 50px;
+      overflow: hidden;
+      float: left;
+      font-family: var(--font);
+      color: var(--text);
+    }
+
+    .cards-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .card img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 5px;
+
+    }
+
+    @media (min-width: 768px) {
+      .card img {
+        height: 11em;
+        border-radius: 5px;
+
+      }
+    }
+
+    #round-image {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      object-position: center;
+      overflow: hidden;
+      margin-right: 25px;
+      float: left;
+      margin-bottom: 15px;
+    }
+
+    
+hr {
+  border: none;
+  border-bottom: 2px solid var(--scrollbar-color);
+  margin-top: 18%;
+}

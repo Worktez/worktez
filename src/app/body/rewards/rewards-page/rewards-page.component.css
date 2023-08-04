@@ -1,0 +1,145 @@
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author:Aditya Khedekar <aditya3034@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+.btn-rewards {
+  font-size: 24px;
+  font-weight: bold;
+  border: 2px dashed var(--primary-color);
+  border-radius: 5px;
+  padding: 80px 100px;
+  position: relative;
+  left: 12%;
+}
+
+.btn-rewards:hover {
+  border: 2px solid var(--primary-color);
+}
+
+.rewardsBtn {
+  color: var(--primary-color);
+  background-color: var(--header-bg);
+  position: absolute;
+  top: -3%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 180px;
+  margin-top: 5px;
+}
+
+.rewardsBtn:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
+}
+
+
+.header {
+  height: 300px;
+  padding: 30px;
+}
+
+
+hr {
+  border: none;
+  border-bottom: 2px solid var(--scrollbar-color);
+}
+
+.vertical {
+  border: none;
+  border-left: 2px solid var(--scrollbar-color);
+  height: 255px;
+  position: absolute;
+  left: 20%;
+  margin-top: 25px;
+}
+
+.text {
+  font-family: var(--font);
+  color: var(--text);
+  text-align: center;
+  font-size: larger;
+
+}
+
+#button {
+  text-align: center;
+  background-color: var(--primary-color);
+  color: white;
+
+}
+
+#button:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
+}
+
+.btn {
+  color: var(--text);
+}
+
+.btn:hover {
+  background-color: var(--dropdown-hover);
+  color: var(--button-text-hover);
+}
+
+.rewards {
+  left: 15%;
+  text-align: center;
+  padding-left: 10%;
+  width: 90%;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+
+.pvtRewards {
+  left: 20%;
+  text-align: center;
+  padding-left: 1%;
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+  margin-left: 5px;
+}
+
+.rewards::-webkit-scrollbar {
+  padding-top: 20px;
+  width: 6px;
+}
+
+.rewards::-webkit-scrollbar-track {
+  background: var(--secondary-bg);
+}
+
+.rewards::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #5C60EC;
+}
+
+.pvtRewards::-webkit-scrollbar {
+  padding-top: 20px;
+  width: 6px;
+}
+.pvtRewards::-webkit-scrollbar-track {
+  background: var(--secondary-bg);
+}
+
+.pvtRewards::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #5C60EC;
+}
+
+.private {
+  height: 100%;
+  overflow: hidden;
+}

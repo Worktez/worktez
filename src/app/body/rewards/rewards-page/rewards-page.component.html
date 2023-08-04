@@ -1,0 +1,56 @@
+<!-- /** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author:Aditya Khedekar <aditya3034@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+<ng-container>
+  <div class="container col">
+    <div class="row header pt-0">
+      <div class="col-2 mr-2 h-100 mt-5">
+        <button class="btn btn-rewards row align-items-center mt-4" data-toggle="modal" data-target="#createReward"
+          (click)="createReward()">
+          <mat-icon class="rewardsBtn">add</mat-icon>
+        </button>
+        <h2 class="row-2 text mx-4 mt-2">Add Reward</h2>
+      </div>
+      <div class="col vertical"></div>
+      <div class="col">
+        <div class="text-center" *ngIf="pvtRewardsData.length > 0;else noPvtRewards">
+          <h2 class="text m-2">Private Rewards</h2>
+          <div class="row pvtRewards">
+            <ng-container *ngFor="let rewards of pvtRewardsData">
+              <app-rewards-card [rewards]="rewards"></app-rewards-card>
+            </ng-container>
+          </div>
+        </div>
+        <ng-template #noPvtRewards>
+          <h1 class="text-center text m-2"> No Private Rewards</h1>
+        </ng-template>
+      </div>
+
+    </div>
+    <hr>
+    <div class="text-center" *ngIf="rewardsData.length > 0; else noRewards">
+      <h2 class="text m-2">Open Rewards</h2>
+      <div class="row rewards">
+        <ng-container *ngFor="let rewards of rewardsData">
+          <app-rewards-card [rewards]="rewards"></app-rewards-card>
+        </ng-container>
+      </div>
+    </div>
+    <ng-template #noRewards>
+      <h1 class="text-center text">No  Current Rewards</h1>
+    </ng-template>
+  </div>
+  <app-create-reward *ngIf="createNewReward" [newDaId]="newDaId" (getRewards)="getDigitalAssets()"></app-create-reward>
+  <div class="row pt-2 px-4" *ngIf="rewardsData.length > 0">
+  </div>
+</ng-container>

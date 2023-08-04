@@ -31,7 +31,7 @@ const { db, currentDate } = require("../application/lib");
  * * @return {any}
  */
 
-exports.addDigitalAssets = (assetId, assetName, assetSignature, assetType, orgDomains)=>{
+exports.addDigitalAssets = (assetId, assetName, assetSignature, assetType, orgDomains, description)=>{
   const assetData = db.collection("DigitalAssets").doc(assetId).set({
     AssetCreationDate: currentDate,
     AssetId: assetId,
@@ -39,6 +39,7 @@ exports.addDigitalAssets = (assetId, assetName, assetSignature, assetType, orgDo
     AssetSignature: assetSignature,
     AssetType: assetType,
     OrgDomains: orgDomains,
+    Description: description,
   });
   return Promise.resolve(assetData);
 };
@@ -51,6 +52,23 @@ exports.addDigitalAssets = (assetId, assetName, assetSignature, assetType, orgDo
 exports.getDigitalAssets = function(assetId) {
   const getDigitalAssetPromise = db.collection("DigitalAssets").doc(assetId).get().then((doc) => {
     return doc.data();
+  });
+  return Promise.resolve(getDigitalAssetPromise);
+};
+
+/**
+ * Description
+ * @return {any}
+ */
+exports.getAllDigitalAssets = function() {
+  const getDigitalAssetPromise = db.collection("DigitalAssets").get().then((doc) => {
+    const data=[];
+    doc.forEach((element) => {
+      if (element.exists) {
+        data.push( element.data());
+      }
+    });
+    return data;
   });
   return Promise.resolve(getDigitalAssetPromise);
 };
