@@ -18,27 +18,26 @@
  * See the MIT License for more details.
  ***********************************************************/
 const {getSprint, updateSprint, setSprint} = require("../lib");
+const admin = require("firebase-admin");
 
 exports.updateSprintData = function(teamId, project, orgDomain, previousSprintName, oldStoryPointNumber, storyPointNumber, editedSprintNumber, orgId, editedSprintName, currentSprint) {
   const sprintPromises = [];
   const prevSprintPromise = getSprint(orgDomain, project, previousSprintName).then((prevSprint) => {
     if (prevSprint != undefined) {
-      let totalUnCompletedTask = prevSprint.TotalUnCompletedTask;
-      let totalNumberOfTask = prevSprint.TotalNumberOfTask;
-      totalUnCompletedTask -= 1;
-      totalNumberOfTask -= 1;
+      const totalUnCompletedTask = admin.firestore.FieldValue.increment(-1);
+      const totalNumberOfTask = admin.firestore.FieldValue.increment(-1);
 
       let updatePrevSprintJson;
       if (parseInt(prevSprint.SprintNumber) > 0) {
         if (prevSprint.Status == "Not Started") {
-          const startStoryPointNumber = parseInt(prevSprint.StartStoryPoint) - oldStoryPointNumber;
+          const startStoryPointNumber = admin.firestore.FieldValue.increment(-oldStoryPointNumber);
           updatePrevSprintJson = {
             TotalNumberOfTask: totalNumberOfTask,
             TotalUnCompletedTask: totalUnCompletedTask,
             StartStoryPoint: startStoryPointNumber,
           };
         } else if (prevSprint.SprintNumber == currentSprint) {
-          const midStoryPointNumber = parseInt(prevSprint.MidStoryPoint) - oldStoryPointNumber;
+          const midStoryPointNumber =admin.firestore.FieldValue.increment(-oldStoryPointNumber);
           updatePrevSprintJson = {
             TotalNumberOfTask: totalNumberOfTask,
             TotalUnCompletedTask: totalUnCompletedTask,
@@ -64,23 +63,20 @@ exports.updateSprintData = function(teamId, project, orgDomain, previousSprintNa
 
   const newSprintPromise = getSprint(orgDomain, project, editedSprintName).then((newSprint) => {
     if (newSprint != undefined) {
-      let totalUnCompletedTask = newSprint.TotalUnCompletedTask;
-      let totalNumberOfTask = newSprint.TotalNumberOfTask;
-
-      totalUnCompletedTask += 1;
-      totalNumberOfTask += 1;
+      const totalUnCompletedTask = admin.firestore.FieldValue.increment(1);
+      const totalNumberOfTask = admin.firestore.FieldValue.increment(1);
 
       let updateNewSprintJson;
       if (parseInt(newSprint.SprintNumber) > 0) {
         if (newSprint.Status == "Not Started") {
-          const startStoryPointNumber = storyPointNumber + parseInt(newSprint.StartStoryPoint);
+          const startStoryPointNumber = admin.firestore.FieldValue.increment(storyPointNumber);
           updateNewSprintJson = {
             TotalNumberOfTask: totalNumberOfTask,
             TotalUnCompletedTask: totalUnCompletedTask,
             StartStoryPoint: startStoryPointNumber,
           };
         } else if (newSprint.SprintNumber == currentSprint) {
-          const midStoryPointNumber = storyPointNumber + parseInt(newSprint.MidStoryPoint);
+          const midStoryPointNumber = admin.firestore.FieldValue.increment(storyPointNumber);
           updateNewSprintJson = {
             TotalNumberOfTask: totalNumberOfTask,
             TotalUnCompletedTask: totalUnCompletedTask,

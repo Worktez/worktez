@@ -53,6 +53,7 @@ export class TeamDetailsComponent implements OnInit {
   showSprintInput: boolean = false;
   enableTimelyEmail: boolean;
   enableAutoSprint: boolean;
+  editDuration: boolean = false;
   
   constructor(public teamService: TeamServiceService, public rbaService :RBAService, private userService: UserServiceService, private backendService: BackendService, private route: ActivatedRoute, private navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions,  public errorHandlerService: ErrorHandlerService, public router: Router) { }
 
@@ -78,16 +79,13 @@ export class TeamDetailsComponent implements OnInit {
     }
   }
 
+  editSprintDuration() {
+    this.editDuration = true;
+  }
 
-  changeSprintSwitch() {
-    if (!this.enableAutoSprint) {
-      this.showSprintInput = !this.showSprintInput;
-    }
-    else {
-      console.log("hello");
-      this.showSprintInput = false;
-    }
-
+  saveDuration() {
+    this.updateTeamSprintDetails();
+    this.editDuration = false;
   }
 
   changeLabels(labelName: string) {
@@ -164,6 +162,27 @@ export class TeamDetailsComponent implements OnInit {
       this.teamDataReady = true;
       this.showLoader = false;
     });
+  }
+
+  updateTeamSprintDetails() {
+    const callable = this.functions.httpsCallable('teams/updateTeam');
+    if (this.organizationDomain == undefined) {
+      this.organizationDomain = this.backendService.getOrganizationDomain();
+    }
+
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId, TeamManagerEmail: this.team.TeamManagerEmail, TeamDescription: this.team.TeamDescription, AutoSprint: this.team.AutoSprint, TimelyEmail: this.team.TimelyEmail, SprintDuration: this.team.SprintDuration}).subscribe({
+      next: (data) => {
+        this.enableLoader = false;
+        console.log("Successful");
+
+      },
+      error: (error) => {
+        this.errorHandlerService.showError = true;
+        this.errorHandlerService.getErrorCode(this.componentName, "InternalError","Api");
+        console.error("Error", error);
+      },
+      complete: () => console.info('Successful ')
+  });
   }
 
   updateTeam(team: Team) {

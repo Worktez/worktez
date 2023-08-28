@@ -196,3 +196,23 @@ exports.updateMember = function(inputJson, orgDomain, email) {
   const updateMemberPromise = db.collection("Organizations").doc(orgDomain).collection("Members").doc(email).update(inputJson);
   return Promise.resolve(updateMemberPromise);
 };
+
+/**
+ * Description
+ * @param {any} inputJson
+ * @param {any} orgDomain
+ * @param {any} email
+ * @return {any}
+ */
+exports.getAllOrgs = function() {
+  const orgData = [];
+  const getPromise = db.collection("Organizations").get().then((orgDoc) => {
+    orgDoc.forEach((element) => {
+      if (element.exists) {
+        orgData.push(element.data());
+      }
+    });
+    return orgData;
+  });
+  return Promise.resolve(getPromise);
+};

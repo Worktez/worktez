@@ -25,15 +25,27 @@ exports.updateTeam = function(request, response) {
   const orgDomain = request.body.data.OrganizationDomain;
   const teamName = request.body.data.TeamName;
   const teamManagerEmail = request.body.data.TeamManagerEmail;
+  const autoSprint = request.body.data.AutoSprint;
+  const timelyEmail = request.body.data.TimelyEmail;
+  const sprintDuration = request.body.data.SprintDuration;
   let status = 200;
   let result = { data: "Error in updating team" };
 
+  let updateJson;
   const promise1 = getTeam(orgDomain, teamName).then((team) => {
     if (team) {
-      const updateJson = {
-        TeamManagerEmail: teamManagerEmail,
-        TeamDescription: teamDescription,
-      };
+      if (autoSprint) {
+        updateJson = {
+          AutoSprint: autoSprint,
+          TimelyEmail: timelyEmail,
+          SprintDuration: sprintDuration,
+        };
+      } else {
+        updateJson = {
+          TeamManagerEmail: teamManagerEmail,
+          TeamDescription: teamDescription,
+        };
+      }
       updateTeamDetails(updateJson, orgDomain, teamName);
       result = { data: "Team Updated Successfully" };
       console.log("Team Updated Successfully");

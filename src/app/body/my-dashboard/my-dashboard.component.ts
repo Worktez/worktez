@@ -50,12 +50,14 @@ export class MyDashBoardComponent implements OnInit {
     this.router.navigate(["CreateNewTeam"]);
   }
 
-  // runSchedular() {
-  //     const callable = this.functions.httpsCallable('scheduledFnManually/startSchedular');
-  //     callable({}).subscribe((data) => {
-  //       console.log("Created Schedular document");
-  //     });
-  // }
+  runSchedular() {
+      const appKey = this.backendService.getOrganizationAppKey();
+      const callable = this.functions.httpsCallable('scheduledFnManually/manualStart');
+      console.log(appKey, this.selectedTeamId);
+      callable({TeamId: this.selectedTeamId, AppKey: appKey}).subscribe((data) => {
+        console.log("Created Schedular document");
+      });
+  }
 
   //  runSchedular() {
   //     const callable = this.functions.httpsCallable('scheduledSubFnManually/startSubSchedular');

@@ -203,3 +203,9 @@ exports.currentDate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.get
 exports.currentTime = today.getHours()+"-"+today.getMinutes()+"-"+today.getSeconds();
 exports.milliSeconds = today.getMilliseconds();
 exports.currentEpochTime = today.valueOf();
+
+exports.addDays = function(days) {
+  const day = new Date();
+  day.setDate(day.getDate() + days);
+  return day.getFullYear()+"-"+(day.getMonth()+1)+"-"+day.getDate();
+};

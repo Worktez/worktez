@@ -64,6 +64,9 @@ exports.setTeam = function(orgDomain, teamName, teamDescription, teamAdmin, team
     GitCounter: 0,
     TotalCompletedTask: 0,
     TotalBacklogTask: 0,
+    AutoSprint: false,
+    SprintDuration: 14,
+    TimelyEmail: false,
   });
   return Promise.resolve(setTeam);
 };

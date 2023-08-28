@@ -19,6 +19,10 @@
     font-family: var(--font);
 }
 
+.bg {
+    background-color: var(--header-bg) !important;
+}
+
 .form-control {
     background-color: var(--input-field);
     color: var(--text);
