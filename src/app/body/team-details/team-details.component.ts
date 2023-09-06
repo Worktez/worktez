@@ -170,7 +170,7 @@ export class TeamDetailsComponent implements OnInit {
       this.organizationDomain = this.backendService.getOrganizationDomain();
     }
 
-    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId, TeamManagerEmail: this.team.TeamManagerEmail, TeamDescription: this.team.TeamDescription, AutoSprint: this.team.AutoSprint, TimelyEmail: this.team.TimelyEmail, SprintDuration: this.team.SprintDuration}).subscribe({
+    callable({OrganizationDomain: this.organizationDomain, TeamName: this.team.TeamName, TeamId: this.team.TeamId, TeamManagerEmail: this.team.TeamManagerEmail, TeamDescription: this.team.TeamDescription, AutoSprint: this.team.SchedulerDetails.AutoSprint, TimelyEmail: this.team.SchedulerDetails.TimelyEmail, SprintDuration: this.team.SchedulerDetails.SprintDuration}).subscribe({
       next: (data) => {
         this.enableLoader = false;
         console.log("Successful");

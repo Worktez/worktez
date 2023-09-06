@@ -36,9 +36,11 @@ exports.updateTeam = function(request, response) {
     if (team) {
       if (autoSprint) {
         updateJson = {
-          AutoSprint: autoSprint,
-          TimelyEmail: timelyEmail,
-          SprintDuration: sprintDuration,
+          SchedulerDetails: {
+            AutoSprint: autoSprint,
+            TimelyEmail: timelyEmail,
+            SprintDuration: sprintDuration,
+          },
         };
       } else {
         updateJson = {

@@ -37,7 +37,7 @@ exports.autoSprint = function() {
             doc.forEach(function(tData) {
               const teamData = tData.data();
 
-              if (teamData.AutoSprint == true) {
+              if (teamData.SchedulerDetails.AutoSprint == true) {
                 teamPromises.push(
                     getSprint(orgDomain, teamData.TeamName, createSprintName(teamData.CurrentSprintId))
                         .then(function(sdata) {
@@ -53,7 +53,7 @@ exports.autoSprint = function() {
                 );
               }
 
-              if (teamData.TimelyEmail == true) {
+              if (teamData.SchedulerDetails.TimelyEmail == true) {
               // Send Email about sprint Activity
                 console.log("Sending Timely Emails", teamData.Id);
               }

@@ -45,7 +45,7 @@ exports.updateAutoSprintStatus = function(appKey, teamId) {
       const newSprintIdString = createSprintName(teamDoc.CurrentSprintId+1);
       const newSprintId = parseInt(teamDoc.CurrentSprintId+1);
       const startDate = currentDate;
-      const endDate = addDays(teamDoc.SprintDuration);
+      const endDate = addDays(teamDoc.SchedulerDetails.SprintDuration);
       const sprintStatus = "";
 
       let updateSprintStatusInputJson;

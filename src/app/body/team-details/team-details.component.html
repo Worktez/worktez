@@ -102,15 +102,15 @@
                   <div class="col" >
                     <div class="custom-control custom-switch custom-switch-md">
                         <input type="checkbox" [disabled]="showloader" class="custom-control-input" id="customSwitches2"
-                          [(ngModel)]="team.AutoSprint" (change)="updateTeamSprintDetails();">
+                          [(ngModel)]="team.SchedulerDetails.AutoSprint" (change)="updateTeamSprintDetails();">
                         <label class="custom-control-label" for="customSwitches2" style="font-weight: bold;">
                         </label>
                     </div>
                   </div>
                 </div>
-                <div class="row mt-4" *ngIf="team.AutoSprint">
+                <div class="row mt-4" *ngIf="team.SchedulerDetails.AutoSprint">
                   <div class="col-md-6" [ngClass]="editDuration?'col-md-6':'col-md-10'">
-                    <div>Sprint Duration: <span *ngIf="!editDuration">{{team.SprintDuration}} Days</span></div>
+                    <div>Sprint Duration: <span *ngIf="!editDuration">{{team.SchedulerDetails.SprintDuration}} Days</span></div>
                   </div>
                   <div class="col-md-4" *ngIf="editDuration">
                         <input type="number" min="1" class="form-control form-control-sm"  [ngClass]="editDuration?'bg':''" [disabled]="!editDuration" [(ngModel)]="team.SprintDuration" [ngModelOptions]="{standalone: true}" placeholder="">
