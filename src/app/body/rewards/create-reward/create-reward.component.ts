@@ -44,6 +44,7 @@ export class CreateRewardComponent implements OnInit {
   fileName: string;
   percentage: number = 0;
   imgUploaded: boolean;
+  rewardCreated: boolean;
 
 
 
@@ -72,12 +73,15 @@ export class CreateRewardComponent implements OnInit {
         this.assetSvgurl="";
         this.assetType="";
         this.description=""
+        this.rewardCreated = true;
         this.getRewards.emit();
-        this.popupHandlerService.createNewRewardEnabled = false;
         this.imgUploaded= false;
-        window.location.reload();
       },
     });
+  }
+
+  close(){
+    this.rewardCreated = false;
   }
 
   uploadDigitalAssetToStorage(currentFileUpload, basePath, newDaId){

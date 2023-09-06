@@ -19,14 +19,14 @@
                 <h2 class="modal-title mb-0" id="exampleModalLongTitle">
                     Create Reward
                 </h2>
-                <span type="button" class="btn" aria-label="Close" data-dismiss="modal" aria-hidden="true">
+                <span type="button" class="btn" aria-label="Close" data-dismiss="modal" aria-hidden="true" (click)="close()">
                     <mat-icon fontSet="material-icons-outlined" class="align-middle">
                         close
                     </mat-icon>
                 </span>
             </div>
             <div class="modal-body pt-0">
-                <form *ngIf="popupHandlerService.createNewRewardEnabled">
+                <form *ngIf="!rewardCreated">
                     <div>
                         <div  *ngIf="!imgUploaded; else urlExist " class="uploadContainer ml-4">
                                 <input type="file" id="file" style="display: none;" (change)="onSelectFile($event)">
@@ -76,7 +76,7 @@
                             aria-label="Close" (click)="createReward()">Create New Reward</button>
                     </div>
                 </form>
-                <div *ngIf="!popupHandlerService.createNewRewardEnabled">
+                <div *ngIf="rewardCreated">
                     <div class="row mx-5">
                         <div class="col-md-4"></div>
                         <div class="col-md-4 text-center">

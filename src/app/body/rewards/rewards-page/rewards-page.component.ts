@@ -16,8 +16,6 @@ import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { map } from 'rxjs';
 import { Reward } from 'src/app/Interface/RewardInterface';
 import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
-import { PopupHandlerService } from 'src/app/services/popup-handler/popup-handler.service';
-
 @Component({
   selector: 'app-rewards-page',
   templateUrl: './rewards-page.component.html',
@@ -33,7 +31,7 @@ export class RewardsPageComponent implements OnInit {
   newDaId: string = "";
 
 
-  constructor(public navbarHandler: NavbarHandlerService, public popupHandlerService: PopupHandlerService, private functions: AngularFireFunctions) { }
+  constructor(public navbarHandler: NavbarHandlerService, private functions: AngularFireFunctions) { }
 
   ngOnInit(): void {
     this.navbarHandler.resetNavbar();
@@ -43,7 +41,6 @@ export class RewardsPageComponent implements OnInit {
   
   createReward() {
     this.createNewReward = true;
-    this.popupHandlerService.createNewRewardEnabled = true;
   }
 
   getDigitalAssets() {
