@@ -15,6 +15,7 @@
 import { Component } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 
 @Component({
   selector: 'app-blogs',
@@ -26,9 +27,10 @@ export class BlogsComponent {
   arrowDirection: string = "expand_less";
   featuresExpanded: boolean = true;
 
-  constructor(public router: Router, private titleService: Title, private metaTagService: Meta, private route: ActivatedRoute ) { }
+  constructor(public router: Router, public navbarHandler: NavbarHandlerService, private titleService: Title, private metaTagService: Meta, private route: ActivatedRoute ) { }
 
   ngOnInit(): void {
+    this.navbarHandler.resetNavbar();
     this.titleService.setTitle("Worktez: Blogs");
     this.metaTagService.updateTag(
       {
