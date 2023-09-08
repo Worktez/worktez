@@ -1,0 +1,94 @@
+<!-- /** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author:Aditya Khedekar <aditya3034@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/ -->
+<div class="modal fade" id="createReward" style="z-index: 1050" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content px-2">
+            <div class="modal-header">
+                <h2 class="modal-title mb-0" id="exampleModalLongTitle">
+                    Create Reward
+                </h2>
+                <span type="button" class="btn" aria-label="Close" data-dismiss="modal" aria-hidden="true" (click)="close()">
+                    <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                        close
+                    </mat-icon>
+                </span>
+            </div>
+            <div class="modal-body pt-0">
+                <form *ngIf="!rewardCreated">
+                    <div>
+                        <div  *ngIf="!imgUploaded; else urlExist " class="uploadContainer ml-4">
+                                <input type="file" id="file" style="display: none;" (change)="onSelectFile($event)">
+                                <label  id="insert_photo" for="file">
+                                    <mat-icon aria-hidden="true" fontSet="material-icons-outlined"
+                                        class="align-middle m-1">cloud_upload</mat-icon>
+                                    Upload Your logo
+                                </label>
+                        </div>
+                        <ng-template #urlExist>
+                            <div class="uploadNewImg ml-4">
+                                <img  class="img" id="image" [src]="assetSvgurl" alt="Reward Logo"  placeholder="Reward Logo">
+                                <span class="btn btn-close removeImg"  (click)="removeImg()">
+                                    <mat-icon fontSet="material-icons-outlined"  title="Close">
+                                        close
+                                    </mat-icon>
+                                </span>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="form-row my-2">
+                        <div class="form-group col-md-6 col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Reward Type</span>
+                            <select class="form-control form-control-sm" [(ngModel)]="assetType" [ngModelOptions]="{standalone: true}">
+                                <option  [ngValue]="null" [disabled]="true">Select Task Type</option>
+                                <option>Public</option>
+                                <option>Private</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">Reward Title</span>
+                            <input type="text" class="form-control form-control-sm"
+                                oninput="this.value = this.value.toUpperCase()" [(ngModel)]="assetName"
+                                [ngModelOptions]="{standalone: true}" placeholder="Enter Reward Title">
+                        </div> 
+                    </div>
+                    <div class="form-row my-2">
+                        <div class="form-group col-md-12 col">
+                            <span class="ml-2 text-muted" style="font-size:0.8rem;" id="label">About Your Reward</span>
+                            <textarea required type="text" [(ngModel)]="description"
+                                [ngModelOptions]="{ standalone: true }" class="form-control form-control-sm"
+                                id="recipient-name" placeholder="Write in brief about your reward"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-lg btn-block" id="button" [disabled]="showLoader"
+                            aria-label="Close" (click)="createReward()">Create New Reward</button>
+                    </div>
+                </form>
+                <div *ngIf="rewardCreated">
+                    <div class="row mx-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 text-center">
+                            <mat-icon aria-hidden="false" id="SuccessIcon">
+                                check_circle_outline
+                            </mat-icon>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <h1 class="text-center">Successfully Added Reward</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

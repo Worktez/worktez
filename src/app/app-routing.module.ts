@@ -69,6 +69,8 @@ import { AgileFunctionalitiesComponent } from './body/blogs/agile-functionalitie
 import { DevOpsComponent } from './body/blogs/dev-ops/dev-ops.component';
 import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component';
 import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
+import { RoadmapComponent } from './body/roadmap/roadmap.component';
+import { RewardsPageComponent } from './body/rewards/rewards-page/rewards-page.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -83,6 +85,7 @@ const routes: Routes = [
   { path: 'MyDashboard', component: MyDashBoardComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'techverse', component: SocialPageComponent, title: "Techverse"},
   { path: 'FilterPage', component: FilterPageComponent},
+  { path: 'RewardsPage', component: RewardsPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },
@@ -105,6 +108,7 @@ const routes: Routes = [
   { path: 'setup', component: SetupComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'ViewOrganizationDetails', component: ViewOrganizationDetailsComponent, canActivate: [AngularFireAuthGuard]},
   { path: 'Releases', component:ReleaseComponent},
+  { path: 'Roadmap', component:RoadmapComponent},
   { path: 'ListPatches', component: ListPatchesComponent },
   { path: 'privacy', component: PrivacyComponent, title: "Privacy" },
   { path: 'copyright', component: CopyrightComponent, title: "Copyright" },

@@ -216,7 +216,11 @@ import { DevOpsComponent } from './body/blogs/dev-ops/dev-ops.component';
 import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component';
 import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
 import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/git-integration-blog.component';
-
+import { RoadmapComponent } from './body/roadmap/roadmap.component';
+import { HCalenderComponent } from './body/common-tools/h-calender/h-calender.component';
+import { RewardsPageComponent } from './body/rewards/rewards-page/rewards-page.component';
+import { CreateRewardComponent } from './body/rewards/create-reward/create-reward.component';
+import { RewardsCardComponent } from './body/rewards/rewards-card/rewards-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -398,6 +402,11 @@ import { GitIntegrationBlogComponent } from './body/blogs/git-integration-blog/g
     MetaVerseComponent,
     KanbanBoardBlogComponent,
     GitIntegrationBlogComponent,
+    RoadmapComponent,
+    HCalenderComponent,
+    RewardsPageComponent,
+    CreateRewardComponent,
+    RewardsCardComponent
   ],
   imports: [
     BrowserModule,

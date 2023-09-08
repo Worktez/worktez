@@ -19,6 +19,7 @@
  ***********************************************************/
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
+const { getDigitalAssets } = require("./tark/getDigitalAssets");
 const { addDigitalAssets } = require("./tark/addDigitalAssets");
 
 
@@ -32,6 +33,18 @@ const { addDigitalAssets } = require("./tark/addDigitalAssets");
 fastify.post("/addDigitalAssets", (req, res) => {
   addDigitalAssets(req, res);
 });
+
+/**
+ * Description
+ * @param {any} "/getDigitalAssets"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getDigitalAssets", (req, res) => {
+  getDigitalAssets(req, res);
+});
+
 
 /**
  * Description

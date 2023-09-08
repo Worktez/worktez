@@ -36,7 +36,7 @@ import { GitDetails } from 'src/app/Interface/TeamInterface';
    componentName: string = "RELEASE DETAILS"
 
    releaseData: ReleaseData;
-   releaseDataReady: boolean;
+   releaseDataReady: boolean = false;
    showLoader: boolean;
    releaseId: string;
    editReleaseActive: boolean = false;
@@ -128,6 +128,8 @@ import { GitDetails } from 'src/app/Interface/TeamInterface';
               next: (data) => {
                 this.releaseDesc=data;
                 this.formatReleaseDescription();
+                this.releaseDataReady = true;
+                this.showLoader = false;
               },
               error: (error) => {
                 console.log(error);
@@ -136,8 +138,6 @@ import { GitDetails } from 'src/app/Interface/TeamInterface';
                 console.log("Successfull release markdown")
               }
             });
-            this.releaseDataReady = true;
-            this.showLoader = false;
         },
         error: (error) => {
           console.error(error);

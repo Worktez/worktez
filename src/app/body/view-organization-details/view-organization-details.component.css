@@ -110,6 +110,12 @@ hr {
     display: none;
 }
 
+.rewardsBtn{
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    border-width: 20%;
+}
+
 /* label {
     font-weight: 500;
 } */

@@ -190,11 +190,11 @@ export class KanbanBoardComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       this.showLoader = false;
     } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
       this.editTask(event.previousContainer.data[event.previousIndex], status).subscribe({
         next: (data) => {
           result = data;
           if (result == "OK") {
-            transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
             this.showLoader = false;
           }
         },

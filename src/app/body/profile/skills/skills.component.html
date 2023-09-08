@@ -2,7 +2,7 @@
     <div class="row pb-2">
         <div class="col-12">
             <span class="align-middle">Skills</span>
-            <span *ngIf="sameUser" type="button" class="btn float-right" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()">
+            <span *ngIf="sameUser" type="button" class="btn float-right py-0" data-toggle="modal" data-target="#skillsModal" data-whatever="@mdo" (click)="editSkills()">
                 <mat-icon fontSet="material-icons-outlined" class="align-middle">
                     add
                 </mat-icon> 
@@ -11,10 +11,10 @@
     </div>
     <ng-container *ngIf="skills?.length == 0">
         <div class="row">
-            <div class="col-12 mt-3" *ngIf="sameUser">
+            <div class="col-12 text-muted" *ngIf="sameUser">
                 <span>Add your skills</span>
             </div>
-            <div class="col-12 mt-3" *ngIf="!sameUser">
+            <div class="col-12 text-muted" *ngIf="!sameUser">
                 <span>No Skills to Show</span>
             </div>
         </div>

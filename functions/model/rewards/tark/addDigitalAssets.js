@@ -27,8 +27,10 @@ exports.addDigitalAssets = function(req, res) {
   const assetSvgurl = req.body.data.AssetSvgUrl;
   const assetSignature = generateBase64String(assetSvgurl);
   const assetType = req.body.data.AssetType;
+  const description = req.body.data.Description;
   const orgDomains = [];
   orgDomains.push(orgDomain);
+  console.log(orgDomain, assetName, assetSvgurl, assetSignature, assetType, orgDomains, description);
 
   let status = 200;
 
@@ -40,7 +42,7 @@ exports.addDigitalAssets = function(req, res) {
     };
     const digitalAssetId = "Da" + totalNumberOfDigitalAsset;
     updateApplication(appDetailsUpdateJson);
-    addDigitalAssets(digitalAssetId, assetName, assetSignature, assetType, orgDomains);
+    addDigitalAssets(digitalAssetId, assetName, assetSignature, assetType, orgDomains, description);
   }).catch((error) => {
     console.log("Error:", error);
   });
