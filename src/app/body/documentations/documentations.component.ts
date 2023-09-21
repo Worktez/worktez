@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { NavbarHandlerService } from 'src/app/services/navbar-handler/navbar-handler.service';
 
 @Component({
   selector: 'app-documentations',
@@ -9,10 +10,11 @@ import { Router } from '@angular/router';
 })
 export class DocumentationsComponent implements OnInit {
 
-  constructor(private titleService: Title, public router: Router) { }
+  constructor(private titleService: Title, public router: Router, public navbarHandler: NavbarHandlerService) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Docs");
+    this.navbarHandler.resetNavbar();
+    this.titleService.setTitle("Worktez: Docs");
   }
 
   getStarted() {
