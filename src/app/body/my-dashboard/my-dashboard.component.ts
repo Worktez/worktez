@@ -50,9 +50,13 @@ export class MyDashBoardComponent implements OnInit {
     this.router.navigate(["CreateNewTeam"]);
   }
 
+  // The below function is for manually triggering the Schedulers - Do not Modify / Delete 
+
   // runSchedular() {
-  //     const callable = this.functions.httpsCallable('scheduledFnManually/startSchedular');
-  //     callable({}).subscribe((data) => {
+  //     const appKey = this.backendService.getOrganizationAppKey();
+  //     const callable = this.functions.httpsCallable('scheduledFnManually/manualStart');
+  //     console.log(appKey, this.selectedTeamId);
+  //     callable({TeamId: this.selectedTeamId, AppKey: appKey}).subscribe((data) => {
   //       console.log("Created Schedular document");
   //     });
   // }

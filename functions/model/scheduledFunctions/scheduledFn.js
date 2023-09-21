@@ -20,6 +20,8 @@
 
 const { functions, cors, fastify, requestHandler } = require("../application/lib");
 const { addSchedularOrg } = require("./tark/addSchedular");
+const { autoSprint } = require("./tark/autoSprint");
+const { manualStart } = require("./tark/manualStart");
 const { startSchedular } = require("./tark/startSchedular");
 
 /**
@@ -31,6 +33,10 @@ const { startSchedular } = require("./tark/startSchedular");
 //   cors(req, res, () => {
 exports.scheduledFn = functions.pubsub.schedule("1 23 * * *").onRun((context) => {
   startSchedular();
+});
+
+exports.sprintScheduler = functions.pubsub.schedule("1 00 * * *").onRun((context) => {
+  autoSprint();
 });
 //   });
 // });
@@ -64,6 +70,17 @@ fastify.post("/startSchedular", (req, res) => {
   return res.status(200).send("Success");
 });
 
+/**
+ * Description
+ * @param {any} "/manualStart"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/manualStart", (req, res) => {
+  console.log("Manual scheduler triggered");
+  manualStart(req, res);
+});
 
 /**
  * Description

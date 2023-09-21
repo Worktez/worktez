@@ -46,6 +46,13 @@ export interface Team {
     GitToken: string;
     ProjectLocation: string;
     TotalBacklogTask: number;
+    SchedulerDetails:SchedulerDetails,
+}
+
+export interface SchedulerDetails {
+    AutoSprint: boolean,
+    SprintDuration: 14,
+    TimelyEmail: boolean,
 }
 
 export interface TeamDataId extends Team {id: string;}
