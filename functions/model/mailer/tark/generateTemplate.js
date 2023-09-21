@@ -77,6 +77,12 @@ exports.generateTemplate = function(mailType, valueArray) {
   } else if (mailType == "Demo_Request") {
     templateName = "demoRequest.html";
     mailSubject = "New Demo Request - Worktez";
+  } else if (mailType == "Sprint_Reminder") {
+    templateName = "sprintReminder.html";
+    mailSubject = "Sprint Reminder - Worktez";
+  } else if (mailType == "Sprint_Creation") {
+    templateName = "sprintCreation.html";
+    mailSubject = "New Sprint Started - Worktez";
   }
   const promise = getTemplate(templateName).then((data) => {
     if (templateName == "comment.html") {
@@ -156,6 +162,18 @@ exports.generateTemplate = function(mailType, valueArray) {
       data = data.replace("$userEmail$", valueArray[1]);
       data = data.replace("$userContact$", valueArray[2]);
       data = data.replace("$orgName$", valueArray[3]);
+    } else if (templateName == "sprintReminder.html") {
+      mailSubject = "Sprint Reminder - Worktez" + "( " + valueArray[2] + " )";
+      data = data.replace("$MemberName$", valueArray[0]);
+      data = data.replace("$SprintName$", valueArray[1]);
+      data = data.replace("$TeamName$", valueArray[2]);
+      data = data.replace("$EndDate$", valueArray[3]);
+    } else if (templateName == "sprintCreation.html") {
+      mailSubject = "New Sprint Started - Worktez" + "( " + valueArray[2] + " )";
+      data = data.replace("$MemberName$", valueArray[0]);
+      data = data.replace("$SprintName$", valueArray[1]);
+      data = data.replace("$TeamName$", valueArray[2]);
+      data = data.replace("$StartDate$", valueArray[3]);
     }
     subjectMessage = mailSubject;
     message.push(subjectMessage);

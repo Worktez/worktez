@@ -18,6 +18,7 @@
  ***********************************************************/
 const { sendMail } = require("../email/lib");
 const { getTask } = require("../tasks/lib");
+const { getTeam } = require("../teams/lib");
 const { getUserUseEmail } = require("../users/lib");
 const { generateTemplate } = require("./tark/generateTemplate");
 
@@ -79,6 +80,74 @@ exports.taskMailer = function(mailType, taskId, orgDomain, customParameter) {
   return Promise.resolve(promise);
 };
 
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} sprintName
+ * @param {any} endDate
+ * @return {any}
+ */
+exports.sprintReminderMailer = function(orgDomain, teamName, sprintName, endDate) {
+  let teamMembers = [];
+  let valueArray = [];
+  const promise = getTeam(orgDomain, teamName).then( (teamData) => {
+    teamMembers = teamData.TeamMembers;
+    teamMembers.forEach((member) => {
+      getUserUseEmail(member).then((memberData)=> {
+        valueArray = [];
+        valueArray.push(memberData.displayName);
+        valueArray.push(sprintName);
+        valueArray.push(teamName);
+        valueArray.push(endDate);
+        const mailType = "Sprint_Reminder";
+        generateTemplate(mailType, valueArray).then((data) => {
+          const message = data;
+          sendMail("admin@worktez.com", message[0], message[1]);
+        });
+      });
+    });
+  }).catch((error) => {
+    console.error(error);
+    return error;
+  });
+  return Promise.resolve(promise);
+};
+
+
+/**
+ * Description
+ * @param {any} orgDomain
+ * @param {any} teamName
+ * @param {any} sprintName
+ * @param {any} startDate
+ * @return {any}
+ */
+exports.sprintCreationMailer = function(orgDomain, teamName, sprintName, startDate) {
+  let teamMembers = [];
+  let valueArray = [];
+  const promise = getTeam(orgDomain, teamName).then( (teamData) => {
+    teamMembers = teamData.TeamMembers;
+    teamMembers.forEach((member) => {
+      getUserUseEmail(member).then((memberData)=> {
+        valueArray = [];
+        valueArray.push(memberData.displayName);
+        valueArray.push(sprintName);
+        valueArray.push(teamName);
+        valueArray.push(startDate);
+        const mailType = "Sprint_Reminder";
+        generateTemplate(mailType, valueArray).then((data) => {
+          const message = data;
+          sendMail("admin@worktez.com", message[0], message[1]);
+        });
+      });
+    });
+  }).catch((error) => {
+    console.error(error);
+    return error;
+  });
+  return Promise.resolve(promise);
+};
 
 /**
  * Description
@@ -142,3 +211,4 @@ exports.demoRequestMailer = function(mailType, userName, userEmail, userContact,
     sendMail("admin@worktez.com", message[0], message[1]);
   });
 };
+

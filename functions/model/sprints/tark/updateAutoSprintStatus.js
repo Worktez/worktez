@@ -127,6 +127,7 @@ exports.updateAutoSprintStatus = function(appKey, teamId) {
     result = { data: "Sprint Updated Successfully" };
     console.log("Sprint final Updated Successfully");
     migrateTasks(orgDomain, teamId, teamName, oldSprintNumber, newSprintNumber, orgId);
+    // mailer for creating new sprint.
     return result;
   }).catch((error) => {
     result = { data: error };
