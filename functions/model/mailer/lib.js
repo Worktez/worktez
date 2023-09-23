@@ -135,7 +135,7 @@ exports.sprintCreationMailer = function(orgDomain, teamName, sprintName, startDa
         valueArray.push(sprintName);
         valueArray.push(teamName);
         valueArray.push(startDate);
-        const mailType = "Sprint_Reminder";
+        const mailType = "Sprint_Creation";
         generateTemplate(mailType, valueArray).then((data) => {
           const message = data;
           sendMail("admin@worktez.com", message[0], message[1]);
