@@ -18,6 +18,7 @@
  ***********************************************************/
 
 const { currentDate, currentTime, createSprintName, addDays } = require("../../application/lib");
+const { sprintCreationMailer } = require("../../mailer/lib");
 const { getOrgUseAppKey } = require("../../organization/lib");
 const { migrateTasks } = require("../../tasks/tark/migrateTasks");
 const { getTeamUseTeamId, updateTeamDetails } = require("../../teams/lib");
@@ -114,6 +115,7 @@ exports.updateAutoSprintStatus = function(appKey, teamId) {
       };
       const updateTeamCurrentSprint = updateTeamDetails(inputJson, orgDomain, teamName);
 
+      sprintCreationMailer(orgDomain, teamName, createSprintName(newSprintNumber), startDate);
       const promises = [getSprintPromise, createSprint, updateTeamCurrentSprint];
       return Promise.all(promises);
     }).catch((error) => {
@@ -127,7 +129,6 @@ exports.updateAutoSprintStatus = function(appKey, teamId) {
     result = { data: "Sprint Updated Successfully" };
     console.log("Sprint final Updated Successfully");
     migrateTasks(orgDomain, teamId, teamName, oldSprintNumber, newSprintNumber, orgId);
-    // mailer for creating new sprint.
     return result;
   }).catch((error) => {
     result = { data: error };
