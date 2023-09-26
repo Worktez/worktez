@@ -19,6 +19,7 @@
  ***********************************************************/
 
 const { createSprintName } = require("../../application/lib");
+const { sprintReminderMailer } = require("../../mailer/lib");
 const { getAllOrgs } = require("../../organization/lib");
 const { getSprint } = require("../../sprints/lib");
 const { updateAutoSprintStatus } = require("../../sprints/tark/updateAutoSprintStatus");
@@ -36,13 +37,14 @@ exports.autoSprint = function() {
           const teamsPromise = getAllTeams(orgDomain).then(function(doc) {
             doc.forEach(function(tData) {
               const teamData = tData.data();
+              let endDate;
+              const date = new Date();
 
               if (teamData.SchedulerDetails.AutoSprint == true) {
                 teamPromises.push(
                     getSprint(orgDomain, teamData.TeamName, createSprintName(teamData.CurrentSprintId))
                         .then(function(sdata) {
-                          const endDate = new Date(sdata.EndDate);
-                          const date = new Date();
+                          endDate = new Date(sdata.EndDate);
 
                           console.log(date, endDate);
                           if (date > endDate) {
@@ -54,7 +56,11 @@ exports.autoSprint = function() {
               }
 
               if (teamData.SchedulerDetails.TimelyEmail == true) {
-              // Send Email about sprint Activity
+                const diffTime = Math.abs(endDate - date);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (diffDays<=5) {
+                  sprintReminderMailer(orgDomain, teamData.TeamName, teamData.createSprintName(teamData.currentSprintId));
+                }
                 console.log("Sending Timely Emails", teamData.Id);
               }
             });
