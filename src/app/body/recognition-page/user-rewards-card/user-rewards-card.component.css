@@ -1,0 +1,92 @@
+.label {
+    font-size: 15px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.label:hover {
+    text-decoration: underline;
+}
+
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    overflow-x: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}
+
+.value {
+    font-size: 15px;
+    color: var(--text);
+    cursor: pointer;
+}
+
+#taskID:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.xoverflow {
+    background-color: var(--primary-bg);
+    display: flex;
+    width: 100%;
+    /* overflow-x: auto;
+    overflow-y: auto; */
+    flex-wrap: nowrap;
+    scroll-behavior: smooth;
+    cursor: pointer;
+}
+
+select {
+    width: 100px;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+.form-control{
+    background-color: var(--secondary-bg);
+    color: var(--text);
+}
+
+mat-icon {
+    color: var(--text);
+}
+
+
+#round-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
+    margin-right: 25px;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 5px;
+}
+
+@media (min-width: 768px) {
+  .card img {
+    height: 11em;
+    border-radius: 5px;
+  }
+}
+
+.text {
+    font-family: var(--font);
+    color: var(--text);
+    text-align: center;
+    font-size: larger;
+  
+}

@@ -58,6 +58,22 @@ exports.getDigitalAssets = function(assetId) {
 
 /**
  * Description
+ * @param {any} assetName
+ * @return {any}
+ */
+exports.getDaIdUsingDaName = function(assetName) {
+  const getDigitalAssetPromise = db.collection("DigitalAssets").where("AssetName", "==", assetName).get().then((doc) => {
+    let assetId="";
+    doc.forEach((element) => {
+      assetId = element.data().AssetId;
+    });
+    return assetId;
+  });
+  return Promise.resolve(getDigitalAssetPromise);
+};
+
+/**
+ * Description
  * @return {any}
  */
 exports.getAllDigitalAssets = function() {

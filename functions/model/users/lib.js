@@ -406,15 +406,56 @@ exports.getAllUserProject = function(uid) {
  * @return {any}
  */
 
-exports.addUserRewards = (uid, rewardId, digitalAssetId, expiryDate, expiryTime, orgDomain) => {
+exports.addUserRewards = (uid, rewardName, rewardeeName, logo, rewardId, digitalAssetId, orgDomain, description) => {
   const addUserRewardsPromise = db.collection("Users").doc(uid).collection("Rewards").doc(rewardId).set({
     AchievementDate: currentDate,
     AchievementTime: currentTime,
     AchievementId: rewardId,
     DigitalAssetId: digitalAssetId,
-    ExpiryDate: expiryDate,
-    ExpiryTime: expiryTime,
+    RewardName: rewardName,
+    RewardeeName: rewardeeName,
+    Logo: logo,
+    // ExpiryDate: expiryDate,
+    // ExpiryTime: expiryTime,
     OrgDomain: orgDomain,
+    Description: description,
   });
   return Promise.resolve(addUserRewardsPromise);
+};
+
+
+/**
+ * Description
+ * @param {any} uid
+ */
+
+exports.getAllUserRewards = (uid) => {
+  const getAllUserRewardsPromise = db.collection("Users").doc(uid).collection("Rewards").get().then((doc)=> {
+    let data;
+    const rewards =[];
+    doc.forEach((user) => {
+      data = user.data();
+      rewards.push(data);
+    });
+    if (rewards != undefined) {
+      return rewards;
+    }
+    return undefined;
+  });
+  return Promise.resolve(getAllUserRewardsPromise);
+};
+
+exports.getMyTeamCollection = function(uid, orgAppKey) {
+  const promise = db.collection("Users").doc(uid).collection("MyOrganizations").where("OrgAppKey", "==", orgAppKey).get().then((doc) => {
+    let data;
+    doc.forEach((user) => {
+      data = user.data();
+    });
+    if (data != undefined) {
+      return data.Teams;
+    }
+
+    return undefined;
+  });
+  return Promise.resolve(promise);
 };

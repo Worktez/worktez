@@ -221,6 +221,9 @@ import { HCalenderComponent } from './body/common-tools/h-calender/h-calender.co
 import { RewardsPageComponent } from './body/rewards/rewards-page/rewards-page.component';
 import { CreateRewardComponent } from './body/rewards/create-reward/create-reward.component';
 import { RewardsCardComponent } from './body/rewards/rewards-card/rewards-card.component';
+import { RecognitionPageComponent } from './body/recognition-page/recognition-page.component';
+import { RecognizeComponent } from './body/recognition-page/recognize/recognize.component';
+import { UserRewardsCardComponent } from './body/recognition-page/user-rewards-card/user-rewards-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -406,7 +409,10 @@ import { RewardsCardComponent } from './body/rewards/rewards-card/rewards-card.c
     HCalenderComponent,
     RewardsPageComponent,
     CreateRewardComponent,
-    RewardsCardComponent
+    RewardsCardComponent,
+    RecognitionPageComponent,
+    RecognizeComponent,
+    UserRewardsCardComponent
   ],
   imports: [
     BrowserModule,

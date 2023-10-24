@@ -47,6 +47,7 @@ const { getUserByUid } = require("./tark/getUserByUid");
 const { getUserByUsername } = require("./tark/getUserByUsername");
 const { checkIfUserAlreadyAMember } = require("./tark/checkIfUserAlreadyAMember");
 const { addUserRewards } = require("./tark/addUserRewards");
+const { getUserRewardsList } = require("./tark/getUserRewards");
 
 
 /**
@@ -348,7 +349,7 @@ fastify.post("/checkIfUserAlreadyAMember", (req, res) => {
 
 /**
  * Description
- * @param {any} "/checkIfUserAlreadyAMember"
+ * @param {any} "/addUserRewards"
  * @param {any} req
  * @param {any} res
  * @returns {any}
@@ -356,6 +357,18 @@ fastify.post("/checkIfUserAlreadyAMember", (req, res) => {
 fastify.post("/addUserRewards", (req, res) => {
   addUserRewards(req, res);
 });
+
+/**
+ * Description
+ * @param {any} "/getRewards"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getRewards", (req, res) => {
+  getUserRewardsList(req, res);
+});
+
 
 /**
  * Description

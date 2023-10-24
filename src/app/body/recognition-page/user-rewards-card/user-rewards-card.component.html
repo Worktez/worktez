@@ -1,0 +1,45 @@
+<div *ngIf="rewards">
+    <ng-container *ngFor="let item of rewards">
+        <div class="row p-3  xoverflow align-items-center my-4">
+            <div class="col-1 d-flex justify-content-center" style="cursor: pointer;">
+                <div class="row">
+                    <img class="card-img-top  mt-1 justify-content-center" [src]='item.Logo' id="round-image" alt="{{item.RewardName}} Logo">  
+                </div>
+            </div>
+            <div class="col-2 justify-content-left">
+                <span class="value">
+                    <span class="label px-2">Reward Name</span>
+                </span>
+                {{item.RewardName}}
+            </div>
+            <div class="col-2 d-flex justify-content-center" style="cursor: pointer;">
+                <span class="value">
+                    <span class="label px-2">Asset Id</span>
+                    {{item.DigitalAssetId}}
+                </span>
+            </div>
+            <div class="col-2 d-flex justify-content-center" style="cursor: pointer;">
+                <span class="value">
+                    <span class="label px-2">Rewarded To: </span>
+                    {{item.RewardeeName}}
+                </span>
+            </div>
+            <div class="col-2 d-flex justify-content-center" style="cursor: pointer;">
+                <span class="value">
+                    <span class="label px-2">Description</span>
+                    {{item.Description}}
+                </span>
+            </div>
+            <div class="col-2 d-flex justify-content-center" style="cursor: pointer;">
+                <span class="value">
+                    <span class="label px-2">Created On</span>
+                    {{item.AchievementDate}}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<div *ngIf="len <= 1">
+    <h1 class="text-center text m-2"> No  Rewards History !</h1>
+</div>
+

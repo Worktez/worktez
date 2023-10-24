@@ -71,6 +71,7 @@ import { MetaVerseComponent } from './body/blogs/meta-verse/meta-verse.component
 import { KanbanBoardBlogComponent } from './body/blogs/kanban-board-blog/kanban-board-blog.component';
 import { RoadmapComponent } from './body/roadmap/roadmap.component';
 import { RewardsPageComponent } from './body/rewards/rewards-page/rewards-page.component';
+import { RecognitionPageComponent } from './body/recognition-page/recognition-page.component';
 
 const redirectLoggedInToDashboard = () => redirectLoggedInTo(['MyDashboard']);
 
@@ -86,6 +87,7 @@ const routes: Routes = [
   { path: 'techverse', component: SocialPageComponent, title: "Techverse"},
   { path: 'FilterPage', component: FilterPageComponent},
   { path: 'RewardsPage', component: RewardsPageComponent},
+  { path: 'RecognitionPage/:teamId', component: RecognitionPageComponent},
   { path: 'CreateNewOrganization', component: CreateNewOrganizationComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'CreateNewTeam', component: CreateNewTeamComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'TeamDetails/:teamId', component: TeamDetailsComponent, canActivate: [AngularFireAuthGuard] },

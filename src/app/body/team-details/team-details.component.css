@@ -119,6 +119,11 @@ hr {
     background-color: var(--primary-color);
     color: #FFFFFF;
 }
+.etc1 {
+    width:  7vw;
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
 
 .btn-danger{
     color: #ffff;
