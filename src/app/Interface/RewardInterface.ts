@@ -26,4 +26,12 @@ export interface Reward {
     AssetId:string;
     AssetName:string;
     Description:string;
+    AchievementDate:string;
+    AchievementId:string;
+    AchievementTime:string;
+    DigitalAssetId:string;
+    Logo:string;
+    OrgDomain:string;
+    RewardeeName:string;
+    RewardName:string;
 }

@@ -39,6 +39,7 @@ const {addGitDetails} = require("./tark/addGitDetails");
 const {getGitDetails} = require("./tark/getGitDetails");
 const {updateGitDetails} = require("./tark/updateGitDetails");
 const { reorderLabels } = require("./tark/reorderLabels");
+const { getTeamRewards } = require("./tark/getTeamRewards");
 /**
  * Description
  * @param {any} "/addMember"
@@ -242,6 +243,18 @@ fastify.post("/editLabel", (req, res) => {
  */
 fastify.post("/createDefaultLabels", (req, res) => {
   createDefaultLabels(req, res);
+});
+
+
+/**
+ * Description
+ * @param {any} "/getRewards"
+ * @param {any} req
+ * @param {any} res
+ * @returns {any}
+ */
+fastify.post("/getTeamRewards", (req, res) => {
+  getTeamRewards(req, res);
 });
 
 /**

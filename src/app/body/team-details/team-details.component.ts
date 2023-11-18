@@ -246,4 +246,7 @@ export class TeamDetailsComponent implements OnInit {
   close () {
     this.router.navigate(['ViewOrganizationDetails']);
   }
+  recognitionPage(){
+    this.router.navigate(['/RecognitionPage', this.team.TeamId]);
+  }
 }

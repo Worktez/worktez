@@ -1,0 +1,198 @@
+/** *********************************************************
+ * Copyright (C) 2022
+ * Worktez
+ * Author:Aditya Khedekar <aditya3034@gmail.com>
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the MIT License
+ *
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the MIT License for more details.
+ ***********************************************************/
+ .modal-header {
+    border-bottom: none !important;
+}
+
+.modal-footer {
+    border-top: none !important;
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 6px;
+    justify-content: space-evenly;
+}
+
+.close {
+    color: var(--text);
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    background-color: var(--input-field);
+    color: var(--text);
+    border: none;
+    padding: 7px;
+    border-radius: 6px;
+    opacity: 1;
+    margin: 5px !important;
+}
+
+#button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+#button:focus,
+#button:active,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    cursor: pointer;
+}
+
+.btn {
+    color: var(--text);
+}
+
+.btn:hover,
+#button:hover {
+    background-color: var(--dropdown-hover);
+    color: var(--button-text-hover);
+    border: none;
+}
+
+select:focus,
+input:focus {
+    box-shadow: none;
+    outline: 0 none;
+    border-color: var(--primary-color);
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#Active{
+    background-color: var(--secondary-color);
+    font-size: 9px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#Backlog{
+    background-color: var(--primary-color);
+    font-size: 9px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    width: 300px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--secondary-bg);
+    color: var(--text);
+    border-radius: 2%;
+    box-shadow: var(--box-shadow-bottom);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color); 
+    border-radius: 10px;
+}
+
+#SuccessIcon{
+    color: var(--secondary-color);
+    font-size: 48px;
+    padding-left: 5px;
+    width: 3.5rem;
+    height: 3rem;
+}
+
+.uploadContainer{
+    width: 90%;
+    height: 100px;
+    border: 2px dashed #6c757d;
+    text-align: center;
+    font-size: x-large;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+#insert_photo{
+    width: 100%;
+    height: 100px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    color:#6c757d ;
+    cursor: pointer;
+
+}
+
+#insert_photo:hover{
+    color:var(--primary-color);
+
+}
+
+.uploadLogo{
+    color: var(--primary-color) ;
+    position: absolute;
+    transform: scale(4);
+    top: 35%;
+    left: 25%;
+}
+
+.uploadNewImg{
+    width: 90%;
+    height: 150px;
+
+}
+
+#image{
+    width: 200px;
+    height: 150px;
+    border-radius: 5px;
+}
+
+.text {
+    font-family: var(--font);
+    color:#6c757d;
+    text-align: center;
+    font-size: large;
+    position: absolute;
+    bottom: 45%;
+    /* left: 0; */
+  }
+
+.removeImg{
+    margin-bottom: 25%;
+    left: -12%;
+    top: -2%;
+    position: relative;
+    padding-top: 15px;
+}
+
+.btn-close{
+    height: 45px;
+    width: 50px;
+}

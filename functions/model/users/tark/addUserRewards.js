@@ -18,31 +18,39 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the MIT License for more details.
 ***********************************************************/
-const { getUser, updateUser, addUserRewards } = require("../lib");
+const { getDaIdUsingDaName, getDigitalAssets } = require("../../rewards/lib");
+const { getUserUseEmail, updateUser, addUserRewards } = require("../lib");
 
 exports.addUserRewards = (req, res) => {
-  const uid = req.body.data.Uid;
-  const digitalAssetId = req.body.data.DigitalAssetId;
-  const expiryDate = req.body.data.ExpiryDate;
-  const expiryTime = req.body.data.ExpiryTime;
+  const rewardeeEmail = req.body.data.Email;
+  const rewardName = req.body.data.RewardName;
+  // const expiryDate = req.body.data.ExpiryDate;
+  // const expiryTime = req.body.data.ExpiryTime;
   const orgDomain = req.body.data.OrgDomain;
+  const description = req.body.data.Description;
 
   let status = 200;
 
-
-  const promise1 = getUser(uid, "").then((userData) => {
-    let userRewardsCounter = userData.UserRewardsCounter;
-    userRewardsCounter = userRewardsCounter + 1;
-    const inputPostJson = {
-      UserRewardsCounter: userRewardsCounter,
-    };
-    const rewardId = "R" + userRewardsCounter;
-    updateUser(inputPostJson, uid);
-    addUserRewards(uid, rewardId, digitalAssetId, expiryDate, expiryTime, orgDomain);
-  }).catch((error) => {
-    console.log("Error:", error);
+  const promise1 = getDaIdUsingDaName(rewardName).then((doc)=>{
+    const digitalAssetId = doc;
+    getUserUseEmail(rewardeeEmail).then((userData) => {
+      const uid = userData.uid;
+      getDigitalAssets(digitalAssetId).then((assetData) => {
+        const logo = assetData. AssetSignature;
+        const rewardeeName = userData.displayName;
+        let userRewardsCounter = userData.UserRewardsCounter;
+        userRewardsCounter = userRewardsCounter + 1;
+        const inputPostJson = {
+          UserRewardsCounter: userRewardsCounter,
+        };
+        const rewardId = "R" + userRewardsCounter;
+        updateUser(inputPostJson, uid);
+        addUserRewards(uid, rewardName, rewardeeName, logo, rewardId, digitalAssetId, orgDomain, description);
+      });
+    }).catch((error) => {
+      console.log("Error:", error);
+    });
   });
-
   let result;
   const promises = [promise1];
   return Promise.all(promises).then(() => {

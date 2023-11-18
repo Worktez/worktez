@@ -1,0 +1,19 @@
+<ng-container>
+  <div class="card mx-5 mb-5">
+    <div class="card-header">
+      <div class="d-flex justify-content-between my-2">
+        <h4 class="card-title">Recognitions</h4>
+        <button type="button" class="btn " id="button" data-toggle="modal" data-target="#recognize"
+          (click)="recognize()">Recognize</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item rewards">
+          <app-user-rewards-card [rewards]="rewardsData" [len] = "len"></app-user-rewards-card>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <app-recognize *ngIf="recognizeMember"></app-recognize>
+</ng-container>

@@ -24,6 +24,14 @@
                 <span class="head">{{ team.TeamName }}</span>
               </div>
               <div class="col text-right">
+                  <!-- <div class="row py-2"> -->
+                    <button  class="btn etc1" type="button"  data-bs-placement="top"  title="Add Member"  (click)="recognitionPage()">
+                      <mat-icon fontSet="material-icons-outlined" class="align-middle">
+                          grade
+                      </mat-icon>
+                      Recognitions
+                    </button>
+                <!-- </div> -->
                 <span *ngIf="rbaService.isRbaReady && rbaService.permissions.editTeam" class="btn ml-2">
                   <mat-icon fontSet="material-icons-outlined" class="align-middle " data-toggle="modal"
                     data-target="#updateTeam" (click)="updateTeam(team)" title="manage accounts" data-bs-toggle="tooltip">
@@ -86,6 +94,7 @@
         </div>
         <app-github-integration [team]="team"></app-github-integration>
         <app-gitlab-integration [team]="team"></app-gitlab-integration>
+        
         <hr>
         <div class="row">
           <div class="col-12 col-md-4">
